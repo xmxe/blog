@@ -29,8 +29,36 @@ npm hexo server // 启动服务器。默认情况下，访问网址为： http:/
 下载主题后放置在themes路径下,并修改 _config.yml 内的 theme 设定，即可切换主题
 
 
+#### 四、部署
 
-#### 四、参考
+将 public 目录中的文件和目录推送至 GitHub 仓库
+
+#### 五、 发布文章
+
+```
+npx hexo new post 测试文章 // 在source/_posts下生成文章 如修改_config.yml:post_asset_folder: true 打开这个配置是为了在生成文章的时候生成一个同名的资源目录用于存放图片文件。
+也可以直接在source/_posts下新建md文件 里面内容写上
+---
+title: {title}
+date: {date}
+tags:
+---
+即可
+
+Hexo 有三种默认布局：post、page 和 draft。在创建这三种不同类型的文件时，它们将会被保存到不同的路径；而您自定义的其他布局和 post 相同，都将储存到 source/_posts 文件夹。
+布局	路径
+post	source/_posts
+page	source
+draft	source/_drafts
+
+
+```
+
+
+
+
+
+#### 参考
 
 - [GitHub Pages + Hexo搭建个人博客网站，史上最全教程](https://blog.csdn.net/yaorongke/article/details/119089190)
 - [Hexo文档](https://hexo.io/zh-cn/docs/)

@@ -6,7 +6,7 @@
 
 #### 一、 环境准备
 
-Git、GitGub Pages、NodeJS 
+Git、GitHub Pages、NodeJS 
 
 
 #### 二、 安装Hexo
@@ -53,9 +53,6 @@ draft	source/_drafts
 
 
 ```
-
-
-
 
 
 #### 参考

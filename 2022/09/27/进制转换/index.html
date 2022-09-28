@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xmxe.github.io/blog/assert/code.jpg">
 <meta property="article:published_time" content="2022-09-27T06:17:19.000Z">
-<meta property="article:modified_time" content="2022-09-27T06:25:45.320Z">
+<meta property="article:modified_time" content="2022-09-28T01:38:27.851Z">
 <meta property="article:author" content="xmxe">
 <meta property="article:tag" content="计算机">
 <meta name="twitter:card" content="summary_large_image">
@@ -264,16 +264,20 @@
 <p>6&#x2F;2&#x3D;3余0，3&#x2F;2&#x3D;1余1， 所以6的2进制是110</p>
 <h5 id="二进制转换十进制"><a href="#二进制转换十进制" class="headerlink" title="二进制转换十进制"></a>二进制转换十进制</h5><p>1         0          1 </p>
 <p>1* 2的2次方 + 0 * 2的1次方 + 1 * 2 的0次方 &#x3D; 5</p>
-<h5 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h5><h6 id="“-lt-lt-”左移运算符"><a href="#“-lt-lt-”左移运算符" class="headerlink" title="“&lt;&lt;”左移运算符"></a>“&lt;&lt;”左移运算符</h6><p><strong>转换为二进制后左移 例:2&lt;&lt;3 即2的二进制左移三位</strong></p>
+<h5 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h5><h6 id="“-lt-lt-”-左移运算符"><a href="#“-lt-lt-”-左移运算符" class="headerlink" title="“&lt;&lt;” 左移运算符"></a>“&lt;&lt;” 左移运算符</h6><p><strong>转换为二进制后左移 例:2&lt;&lt;3 即2的二进制左移三位</strong></p>
 <p>2的二进制为2&#x2F;2&#x3D;1余0 ， 10左移三位后补0  （00000010）（00010000）</p>
 <p>n&lt;&lt;3 可以转换为 n * 2 ^ 3</p>
-<h6 id="“-gt-gt-”右移运算符"><a href="#“-gt-gt-”右移运算符" class="headerlink" title="“&gt;&gt;”右移运算符"></a>“&gt;&gt;”右移运算符</h6><p><strong>转换为二进制后右移 例:8&gt;&gt;3 即8的二进制右移三位</strong></p>
+<h6 id="“-gt-gt-”-右移运算符"><a href="#“-gt-gt-”-右移运算符" class="headerlink" title="“&gt;&gt;” 右移运算符"></a>“&gt;&gt;” 右移运算符</h6><p><strong>转换为二进制后右移 例:8&gt;&gt;3 即8的二进制右移三位</strong></p>
 <p>8的二进制为8&#x2F;2&#x3D;4余0 ,4&#x2F;2&#x3D;2余0, 2&#x2F;2&#x3D;1余0, 1000右移三位（删除后三位） （0000001000）（000000001）为1</p>
 <p>n&gt;&gt;3 可以转换为 n&#x2F;2^3</p>
 <h6 id="amp-运算符"><a href="#amp-运算符" class="headerlink" title="&amp; 运算符"></a>&amp; 运算符</h6><p>如果相对应位都是1，则结果为1，否则为0 </p>
 <h6 id="运算符-1"><a href="#运算符-1" class="headerlink" title="|  运算符"></a>|  运算符</h6><p>如果相对应位都是0，则结果为0，否则为1</p>
 <h6 id="运算符-2"><a href="#运算符-2" class="headerlink" title="^ 运算符"></a>^ 运算符</h6><p>如果相对应位值相同，则结果为0，否则为1</p>
-<h6 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h6><p>^：可以不借助第三块空间的方式交换两个变量的值<br>&amp;:  在某些情况下可以取代% 的运算某些情况：当我们拿着一个正数去%上2的n次方数的时候,其实结果等价于我们拿着这个正数&amp;上2的n次方数-1的结果x % 2(n) &#x3D;&#x3D; x &amp; 2(n)-117 % 4 &#x3D;&#x3D; 17 &amp; 399 % 64 &#x3D;&#x3D; 99 &amp; 63</p>
+<h6 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h6><p>^：可以不借助第三块空间的方式交换两个变量的值<br>&amp;:  在某些情况下可以取代% 的运算</p>
+<p>某些情况：当我们拿着一个正数去%上2的n次方数的时候,其实结果等价于我们拿着这个正数&amp;上2的n次方数-1的结果</p>
+<p>x % 2(n) &#x3D;&#x3D; x &amp; 2(n)-1</p>
+<p>17 % 4 &#x3D;&#x3D; 17 &amp; 3</p>
+<p>99 % 64 &#x3D;&#x3D; 99 &amp; 63</p>
 <h5 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h5><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/INYjYfwhPU7uZcNmzBTpNQ">你可能不知道的位运算技巧</a></li>
 </ul>

@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xmxe.github.io/blog/assert/git.jpg">
 <meta property="article:published_time" content="2022-09-27T08:41:30.000Z">
-<meta property="article:modified_time" content="2022-09-27T09:03:20.559Z">
+<meta property="article:modified_time" content="2022-09-28T01:50:51.047Z">
 <meta property="article:author" content="xmxe">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary_large_image">
@@ -272,7 +272,7 @@
 <h6 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout &lt;name&gt; # 切换分支<br>git checkout -b &lt;name&gt; # 创建+切换分支<br>git checkout -- file # 丢弃某个文件工作区的修改（还原修改过的文件）<br>git checkout . # 放弃本地所有修改，没有提交的可以回到未修改前版本，不包括新增删除的文件 <br>git checkout . &amp;&amp; git clean -df # 放弃本地所有修改，包括新增删除的文件<br>git checkout develop &amp;&amp; git merge feature #（先切换到develop分支然后把feature分支合并到develop分支） <br></code></pre></td></tr></table></figure>
 <h6 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git merge &lt;name&gt; # 合并指定分支到当前分支<br></code></pre></td></tr></table></figure>
 <h6 id="git-rebase-和-git-merge-有啥区别？"><a href="#git-rebase-和-git-merge-有啥区别？" class="headerlink" title="git rebase 和 git merge 有啥区别？"></a>git rebase 和 git merge 有啥区别？</h6><p>rebase会把你当前分支的 commit 放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。<br>举例:如果你从 master 拉了个feature分支出来,然后你提交了几个 commit,这个时候刚好有人把他开发的东西合并到 master 了,这个时候 master 就比你拉分支的时候多了几个 commit,如果这个时候你 rebase master 的话，就会把你当前的几个 commit，放到那个人 commit 的后面。<br>merge 会把公共分支和你当前的commit 合并在一起，形成一个新的 commit 提交</p>
-<h6 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">git tag #查看所有标签，可以知道历史版本的tag <br>git tag &lt;tagName&gt; # 打标签，默认为HEAD。比如git tag v1.0<br>git tag &lt;tagName&gt; commit_id # 根据版本号打上标签<br>git tag -a &lt;tagName&gt; -m &quot;&lt;说明&gt;&quot; # 创建带说明的标签。-a指定标签名，-m指定说明文字 <br>git show &lt;tagName&gt; # 查看标签信息 <br>git tag -d &lt;tagName&gt; # 删除标签 <br>git push origin &lt;tagname&gt; # 推送某个标签到远程 <br>git push origin --tags # 一次性推送全部尚未推送到远程的本地标签 <br><br></code></pre></td></tr></table></figure>
+<h6 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">git tag # 查看所有标签，可以知道历史版本的tag <br>git tag &lt;tagName&gt; # 打标签，默认为HEAD。比如git tag v1.0<br>git tag &lt;tagName&gt; commit_id # 根据版本号打上标签<br>git tag -a &lt;tagName&gt; -m &quot;&lt;说明&gt;&quot; # 创建带说明的标签。-a指定标签名，-m指定说明文字 <br>git show &lt;tagName&gt; # 查看标签信息 <br>git tag -d &lt;tagName&gt; # 删除标签 <br>git push origin &lt;tagname&gt; # 推送某个标签到远程 <br>git push origin --tags # 一次性推送全部尚未推送到远程的本地标签 <br><br></code></pre></td></tr></table></figure>
 <h6 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h6><blockquote>
 <p>应用场景：某一天你正在 feature 分支开发新需求，突然产品经理跑过来说线上有bug，必须马上修复。而此时你的功能开发到一半，于是你急忙想切到 master 分支，然后你就会看到以下报错：Your local changes to the following…因为当前有文件更改了，需要提交commit保持工作区干净才能切分支。由于情况紧急，你只有急忙 commit 上去，commit 信息也随便写了个“暂存代码”，于是该分支提交记录就留了一条黑历史，如果你学会 stash，就不用那么狼狈了。你只需要： git stash就这么简单，代码就被存起来了。 当你修复完线上问题，切回 feature 分支，想恢复代码也只需要： git stash apply,但是恢复后，stash 内容并不删除，需要用 git stash drop 来删除</p>
 </blockquote>
@@ -362,9 +362,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2022/09/27/JVM/" title="JVM">
+                      <a href="/blog/2022/09/28/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/" title="JVM知识点">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JVM</span>
+                        <span class="hidden-mobile">JVM知识点</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

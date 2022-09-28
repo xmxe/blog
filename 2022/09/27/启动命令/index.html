@@ -16,16 +16,16 @@
   <meta name="author" content="xmxe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="redis12345.&#x2F;redis-server &#x2F;usr&#x2F;local&#x2F;redis&#x2F;redis.conf .&#x2F;redis-cli -h [127.0.0.1](http:&#x2F;&#x2F;127.0.0.1&#x2F;) -p 6379 -a 123456.&#x2F;redis-cli -h [127.0.0.1](http:&#x2F;&#x2F;127.0.0.1&#x2F;) -p 6379 -a 123456 shutdown #关闭redis  n">
+    <meta name="description" content="redis123.&#x2F;redis-server &#x2F;usr&#x2F;local&#x2F;redis&#x2F;redis.conf .&#x2F;redis-cli -h 127.0.0.1 -p 6379 -a 123456.&#x2F;redis-cli -h 127.0.0.1 -p 6379 -a 123456 shutdown # 关闭redis  nginx123&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -s reloa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="启动命令">
 <meta property="og:url" content="https://xmxe.github.io/blog/2022/09/27/%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="xmxe&#39;s blog">
-<meta property="og:description" content="redis12345.&#x2F;redis-server &#x2F;usr&#x2F;local&#x2F;redis&#x2F;redis.conf .&#x2F;redis-cli -h [127.0.0.1](http:&#x2F;&#x2F;127.0.0.1&#x2F;) -p 6379 -a 123456.&#x2F;redis-cli -h [127.0.0.1](http:&#x2F;&#x2F;127.0.0.1&#x2F;) -p 6379 -a 123456 shutdown #关闭redis  n">
+<meta property="og:description" content="redis123.&#x2F;redis-server &#x2F;usr&#x2F;local&#x2F;redis&#x2F;redis.conf .&#x2F;redis-cli -h 127.0.0.1 -p 6379 -a 123456.&#x2F;redis-cli -h 127.0.0.1 -p 6379 -a 123456 shutdown # 关闭redis  nginx123&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -s reloa">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xmxe.github.io/blog/assert/soft.jpg">
 <meta property="article:published_time" content="2022-09-27T06:27:19.000Z">
-<meta property="article:modified_time" content="2022-09-27T06:40:01.852Z">
+<meta property="article:modified_time" content="2022-09-28T01:19:51.779Z">
 <meta property="article:author" content="xmxe">
 <meta property="article:tag" content="程序">
 <meta name="twitter:card" content="summary_large_image">
@@ -259,28 +259,26 @@
             
               <div class="markdown-body">
                 
-                <h5 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">./redis-server /usr/local/redis/redis.conf <br><br>./redis-cli -h [127.0.0.1](http://127.0.0.1/) -p 6379 -a 123456<br><br>./redis-cli -h [127.0.0.1](http://127.0.0.1/) -p 6379 -a 123456 shutdown #关闭redis<br></code></pre></td></tr></table></figure>
+                <h5 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">./redis-server /usr/local/redis/redis.conf <br>./redis-cli -h 127.0.0.1 -p 6379 -a 123456<br>./redis-cli -h 127.0.0.1 -p 6379 -a 123456 shutdown # 关闭redis<br></code></pre></td></tr></table></figure>
 
-<h5 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">/usr/local/nginx/sbin/nginx -s reload<br><br>/usr/local/nginx/sbin/nginx -s quit  (正常退出，保存相关信息)<br><br>/usr/local/nginx/sbin/nginx -s stop（立即退出，不保存相关信息)<br><br></code></pre></td></tr></table></figure>
+<h5 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">/usr/local/nginx/sbin/nginx -s reload<br>/usr/local/nginx/sbin/nginx -s quit  (正常退出，保存相关信息)<br>/usr/local/nginx/sbin/nginx -s stop（立即退出，不保存相关信息)<br></code></pre></td></tr></table></figure>
 
-<h5 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">./zkServer.sh start<br><br>./zkCli.sh -server 127.0.0.1:2181<br><br></code></pre></td></tr></table></figure>
+<h5 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">./zkServer.sh start<br>./zkCli.sh -server 127.0.0.1:2181<br></code></pre></td></tr></table></figure>
 
-<h5 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">./kafka-server-start.sh ../config/server.properties 1&gt;/dev/null 2&gt;&amp;1 &amp;<br><br>./kafka-server-stop.sh<br><br>./zookeeper-server-start.sh ../conf/zookeeper.properties<br><br>./zookeeper-server-stop.sh<br><br></code></pre></td></tr></table></figure>
+<h5 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">./kafka-server-start.sh ../config/server.properties 1&gt;/dev/null 2&gt;&amp;1 &amp;<br>./kafka-server-stop.sh<br>./zookeeper-server-start.sh ../conf/zookeeper.properties<br>./zookeeper-server-stop.sh<br></code></pre></td></tr></table></figure>
 
 <h5 id="nexus"><a href="#nexus" class="headerlink" title="nexus"></a>nexus</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./bin/nexus start<br></code></pre></td></tr></table></figure>
 
-<p>地址：<a target="_blank" rel="noopener" href="http://192.168.236.131:8081/nexus">http://192.168.236.131:8081/nexus</a></p>
-<p>默认账号:admin&#x2F;admin123</p>
-<h5 id="cas-server"><a href="#cas-server" class="headerlink" title="cas_server"></a>cas_server</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/local/cas/cas-overlay-template<br><br>./build.sh run<br><br>./build.sh clean #清除target文件夹<br><br></code></pre></td></tr></table></figure>
+<p>地址：<a target="_blank" rel="noopener" href="http://192.168.236.131:8081/nexus">http://192.168.236.131:8081/nexus</a> 默认账号:admin&#x2F;admin123</p>
+<h5 id="cas-server"><a href="#cas-server" class="headerlink" title="cas_server"></a>cas_server</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/local/cas/cas-overlay-template<br>./build.sh run<br>./build.sh clean # 清除target文件夹<br><br></code></pre></td></tr></table></figure>
 
-<p>其他命令可以查看build.sh里面的脚本内容,控制台出现READY后访问ip:port&#x2F;cas&#x2F;login 即可登陆</p>
-<p>默认账号：casuser:Mellon</p>
-<h5 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">./startup.sh -m standalone # 单机模式启动<br><br>./startup.sh # 集群启动使用外置数据源 需要配置cluster.conf且节点数量要&gt;=3<br><br>sh startup.sh -p embedded # 集群启动使用内置数据源<br><br></code></pre></td></tr></table></figure>
+<p>其他命令可以查看build.sh里面的脚本内容,控制台出现READY后访问ip:port&#x2F;cas&#x2F;login 即可登陆<br>默认账号：casuser:Mellon</p>
+<h5 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">./startup.sh -m standalone # 单机模式启动<br>./startup.sh # 集群启动使用外置数据源 需要配置cluster.conf且节点数量要&gt;=3<br>sh startup.sh -p embedded # 集群启动使用内置数据源<br></code></pre></td></tr></table></figure>
 
 <p>默认账号：nacos:nacos</p>
-<h5 id="arthas"><a href="#arthas" class="headerlink" title="arthas"></a>arthas</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -jar arthas-boot.jar [java pid]<br><br></code></pre></td></tr></table></figure>
+<h5 id="arthas"><a href="#arthas" class="headerlink" title="arthas"></a>arthas</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -jar arthas-boot.jar [java pid]<br></code></pre></td></tr></table></figure>
 <p>web console： 127.0.0.1:8563 127.0.0.1:3658</p>
-<h5 id="consul"><a href="#consul" class="headerlink" title="consul"></a>consul</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">consul agent -dev # -dev表示开发模式运行，只有本地可以访问，另外还有-server表示服务模式运行<br><br>./consul agent -dev -client 0.0.0.0 -ui #可以使用ip访问<br></code></pre></td></tr></table></figure>
+<h5 id="consul"><a href="#consul" class="headerlink" title="consul"></a>consul</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">consul agent -dev # -dev表示开发模式运行，只有本地可以访问，另外还有-server表示服务模式运行<br>./consul agent -dev -client 0.0.0.0 -ui # 可以使用ip访问<br></code></pre></td></tr></table></figure>
 <p>访问localhost:8500</p>
 <h5 id="weblogic"><a href="#weblogic" class="headerlink" title="weblogic"></a>weblogic</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">/home/test/Oracle/Middleware/Oracle_Home/user_projects/domains/base_domain/bin  # 执行./startWebLogic.sh<br></code></pre></td></tr></table></figure>
 

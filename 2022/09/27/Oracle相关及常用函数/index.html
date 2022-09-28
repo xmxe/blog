@@ -1,0 +1,720 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/panda.png">
+  <link rel="icon" href="/blog/img/panda.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xmxe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Sys 和 System用户区别 Sys:拥有DBA、SysDBA、Sysoper（系统操作员 ）角色或权限，是Oracle权限最高的用户，只能以SysDBA或Sysoper登录，不能以Normal形式登录。 System:拥有DBA、Sysdba权限或角色，可以以普通用户的身份登录。  Sysdba、Sysoper、DBA区别 Sysdba用户: 可以改变字符集、创建删除数据库、登录之后用户是S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle相关及常用函数">
+<meta property="og:url" content="https://xmxe.github.io/blog/2022/09/27/Oracle%E7%9B%B8%E5%85%B3%E5%8F%8A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="xmxe&#39;s blog">
+<meta property="og:description" content="Sys 和 System用户区别 Sys:拥有DBA、SysDBA、Sysoper（系统操作员 ）角色或权限，是Oracle权限最高的用户，只能以SysDBA或Sysoper登录，不能以Normal形式登录。 System:拥有DBA、Sysdba权限或角色，可以以普通用户的身份登录。  Sysdba、Sysoper、DBA区别 Sysdba用户: 可以改变字符集、创建删除数据库、登录之后用户是S">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xmxe.github.io/blog/assert/oracle.jpg">
+<meta property="article:published_time" content="2022-09-27T02:34:11.000Z">
+<meta property="article:modified_time" content="2022-09-27T06:18:29.052Z">
+<meta property="article:author" content="xmxe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xmxe.github.io/blog/assert/oracle.jpg">
+  
+  
+  
+  <title>Oracle相关及常用函数 - xmxe&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xmxe.github.io","root":"/blog/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>xmxe&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/img/j.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Oracle相关及常用函数"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.8k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Oracle相关及常用函数</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h5 id="Sys-和-System用户区别"><a href="#Sys-和-System用户区别" class="headerlink" title="Sys 和 System用户区别"></a>Sys 和 System用户区别</h5><ul>
+<li>Sys:拥有DBA、SysDBA、Sysoper（系统操作员 ）角色或权限，是Oracle权限最高的用户，只能以SysDBA或Sysoper登录，不能以Normal形式登录。</li>
+<li>System:拥有DBA、Sysdba权限或角色，可以以普通用户的身份登录。</li>
+</ul>
+<h5 id="Sysdba、Sysoper、DBA区别"><a href="#Sysdba、Sysoper、DBA区别" class="headerlink" title="Sysdba、Sysoper、DBA区别"></a>Sysdba、Sysoper、DBA区别</h5><ul>
+<li>Sysdba用户: 可以改变字符集、创建删除数据库、登录之后用户是SYS（shutdown、startup）</li>
+<li>Sysoper:用户不可改变字符集、不能创、删数据库、登陆之后用户是PUBLIC （shutdown、startup）</li>
+<li>DBA用户：只有在启动数据库后才能执行各种管理工作。</li>
+<li>Sysdba&gt; Sysoper&gt;普通的DBA</li>
+</ul>
+<h5 id="Oracle中的角色"><a href="#Oracle中的角色" class="headerlink" title="Oracle中的角色"></a>Oracle中的角色</h5><ol>
+<li>CONNECT</li>
+<li>RESOURCE</li>
+<li>DBA</li>
+<li>EXP_FULL_DATABASE</li>
+<li>IMP_FULL_DATABASE</li>
+<li>DELETE_CATALOG_ROLE</li>
+<li>EXECUTE_CATALOG_ROLE</li>
+<li>SELECT_CATALOG_ROLE</li>
+</ol>
+<p> 　 </p>
+<p><strong>CONNECT角色</strong>： –是授予最终用户的典型权利，最基本的 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-number">1.</span> <span class="hljs-keyword">ALTER</span> SESSION <span class="hljs-comment">--修改会话 </span><br><span class="hljs-number">2.</span> <span class="hljs-keyword">CREATE</span> CLUSTER <span class="hljs-comment">--建立聚簇</span><br><span class="hljs-number">3.</span> <span class="hljs-keyword">CREATE</span> DATABASE LINK <span class="hljs-comment">--建立数据库链接</span><br><span class="hljs-number">4.</span> <span class="hljs-keyword">CREATE</span> SEQUENCE <span class="hljs-comment">--建立序列</span><br><span class="hljs-number">5.</span> <span class="hljs-keyword">CREATE</span> SESSION <span class="hljs-comment">--建立会话</span><br><span class="hljs-number">6.</span> <span class="hljs-keyword">CREATE</span> SYNONYM <span class="hljs-comment">--建立同义词</span><br><span class="hljs-number">7.</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> <span class="hljs-comment">--建立视图 www_bitscn_com中国.网管联盟</span><br></code></pre></td></tr></table></figure>
+<p><strong>RESOURCE角色</strong>： –是授予开发人员的</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-number">1.</span> <span class="hljs-keyword">CREATE</span> CLUSTER <span class="hljs-comment">--建立聚簇</span><br><span class="hljs-number">2.</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> <span class="hljs-comment">--建立过程</span><br><span class="hljs-number">3.</span> <span class="hljs-keyword">CREATE</span> SEQUENCE <span class="hljs-comment">--建立序列</span><br><span class="hljs-number">4.</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-comment">--建表</span><br><span class="hljs-number">5.</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-comment">--建立触发器</span><br><span class="hljs-number">6.</span> <span class="hljs-keyword">CREATE</span> TYPE <span class="hljs-comment">--建立类型</span><br></code></pre></td></tr></table></figure>
+<p><strong>DBA角色</strong>：拥有系统所有系统级权限 （系统管理员）</p>
+<p><strong>IMP_FULL_DATABASE角色、EXP_FULL_DATABASE角色</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-number">1.</span> BACKUP <span class="hljs-keyword">ANY</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-comment">--备份任何表</span><br><span class="hljs-number">2.</span> <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">ANY</span> <span class="hljs-keyword">PROCEDURE</span> <span class="hljs-comment">--执行任何操作</span><br><span class="hljs-number">3.</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ANY</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-comment">--查询任何表</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>SELECT_CATALOG_ROLE角色</strong>具有从数据字典查询的权利，<br>(尤其是此处数据字典：就是数据库 运行时的各种信息参考：Oracle 11g 体系结构–数据字典 ) </p>
+<p><strong>EXECUTE_CATALOG_ROLE</strong>角色具有从数据字典中执行部分过程和函数的权利。</p>
+<h5 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h5><p>当表中的数据量不断增大，查询数据的速度就会变慢，应用程序的性能就会下降，这时就应该考虑对表进行分区。表进行分区后，逻辑上表仍然是一张完整的表，只是将表中的数据在物理上存放到多个表空间(物理文件上)，这样查询数据时，不至于每次都扫描整张表。</p>
+<h5 id="PL-x2F-SQL-x2F-Oracle乱码问题解决方案"><a href="#PL-x2F-SQL-x2F-Oracle乱码问题解决方案" class="headerlink" title="PL&#x2F;SQL &#x2F;Oracle乱码问题解决方案"></a>PL&#x2F;SQL &#x2F;Oracle乱码问题解决方案</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Select</span> userenv(‘<span class="hljs-keyword">language</span>’) <span class="hljs-keyword">from</span> dual; <span class="hljs-comment">-- 查看服务器端编码</span><br><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> V$NLS_PARAMETERS；<span class="hljs-comment">-- 查看NLS_LANGUAGE的值与第一个的查询结果是否一致，假如不一致需要设置环境变量，变量名：NLS_LANG  变量值：第1个查到的值 重启PL/SQL (假如在乱码之前已经插入数据，那么配置环境变量后依然乱码，需要删除数据重新导入)</span><br><br></code></pre></td></tr></table></figure>
+<h5 id="Oracle的操作"><a href="#Oracle的操作" class="headerlink" title="Oracle的操作"></a>Oracle的操作</h5><ol>
+<li>cmd进入oracle <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">sqlplus 账户名<span class="hljs-operator">/</span>密码 <span class="hljs-keyword">as</span> 角色名 <span class="hljs-comment">--（sys用户必须带as sysdba）例:sqlplus sys/admin as sysdba</span><br><br>exit <span class="hljs-comment">--退出</span><br></code></pre></td></tr></table></figure></li>
+<li>用户账号相关操作<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建用户</span><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">user</span> xxx identified <span class="hljs-keyword">by</span> xxx;<br><span class="hljs-comment">-- 授权</span><br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">create</span> session, <span class="hljs-keyword">connect</span>, resource <span class="hljs-keyword">to</span> xxx;<br><span class="hljs-comment">-- 删除用户 加cascade可以一同删除用户数据</span><br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">user</span> username cascade;<br><span class="hljs-comment">-- 解锁登陆账号</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">user</span> scott account unlock;<br><span class="hljs-comment">-- 冻结登陆账号</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">user</span> dbaName account lock;<br><span class="hljs-comment">-- 修改登录账号密码</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">user</span> dbaName identified <span class="hljs-keyword">by</span> &quot;password&quot;;<br><br><span class="hljs-comment">-- 查看所有用户相关信息</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> DBA_USERS;<span class="hljs-comment">-- 查询DBA用户</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> ALL_USERS;<span class="hljs-comment">-- 查询所有用户</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> USER_USERS;<span class="hljs-comment">-- 查询系统用户</span><br><br><span class="hljs-comment">-- 查看用户系统权限</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> DBA_SYS_PRIVS;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> USER_SYS_PRIVS;<br><br><span class="hljs-comment">-- 查看用户对象或角色权限</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> DBA_TAB_PRIVS;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> ALL_TAB_PRIVS;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> USER_TAB_PRIVS;<br><br><span class="hljs-comment">-- 查看所有角色</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> DBA_ROLES;<br><br><span class="hljs-comment">-- 查看用户或角色所拥有的角色</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> DBA_ROLE_PRIVS;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> USER_ROLE_PRIVS;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> role_sys_privs<br></code></pre></td></tr></table></figure></li>
+<li>表空间相关<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> Dba_Tablespaces; <span class="hljs-comment">-- 查看所有的表空间</span><br><span class="hljs-keyword">Select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> DBA_DATA_FILES; <span class="hljs-comment">-- 查看所有的表空间以及对应的地址</span><br><br><span class="hljs-comment">-- 创建临时表空间</span><br><span class="hljs-keyword">create</span> temporary tablespace user_temp<br>tempfile <span class="hljs-string">&#x27;D:\APP\ADMINISTRATOR\ORADATA\ORCL\user_temp.dbf&#x27;</span><br>size <span class="hljs-number">50</span>m  <span class="hljs-comment">--初始空间50m</span><br>autoextend <span class="hljs-keyword">on</span> <span class="hljs-comment">-- on为表空间自动扩展</span><br>next <span class="hljs-number">50</span>m maxsize <span class="hljs-number">20480</span>m <span class="hljs-comment">-- 每次50m最大2048m</span><br>extent management <span class="hljs-keyword">local</span>; <span class="hljs-comment">-- 本地管理表空间</span><br><br><span class="hljs-comment">-- 创建数据表空间</span><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span>space user_data<br>logging<br>datafile <span class="hljs-string">&#x27;D:\APP\ADMINISTRATOR\ORADATA\ORCL\user_data.dbf&#x27;</span><br>size <span class="hljs-number">50</span>m<br>autoextend <span class="hljs-keyword">on</span><br>next <span class="hljs-number">50</span>m maxsize <span class="hljs-number">20480</span>m<br>extent management <span class="hljs-keyword">local</span>; <br><br><span class="hljs-comment">-- 创建用户指定表空间</span><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">user</span> 用户名 identified <span class="hljs-keyword">by</span> 密码 <span class="hljs-keyword">default</span> tablespace 表空间名；<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h5 id="Oracle相关函数"><a href="#Oracle相关函数" class="headerlink" title="Oracle相关函数"></a>Oracle相关函数</h5><h6 id="wm-concat-行转列"><a href="#wm-concat-行转列" class="headerlink" title="wm_concat()行转列"></a>wm_concat()行转列</h6><p>wm_concat()函数是oracle中独有的,mysql中有一个group_concat()函数。这两个函数的作用是相同的，它们的功能是：实现行转列功能，即将查询出的某一列值使用逗号进行隔开拼接，成为一条数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 根据年龄获取学生的分数</span><br><span class="hljs-keyword">select</span> age,to_char(wm_concat(name)) <span class="hljs-keyword">as</span> name,to_char(wm_concat(score)) <span class="hljs-keyword">as</span> score <span class="hljs-keyword">from</span> student t <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> age;<br><br><span class="hljs-comment">-- age  name     score</span><br><span class="hljs-comment">-- 18  张三,李四  81,82</span><br><span class="hljs-comment">-- 19  王五,赵六  67,90</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="decode"><a href="#decode" class="headerlink" title="decode"></a>decode</h6><p>decode(c1,c2,c3)&#x2F;decode(c1,c2,c3,c4)&#x2F;decode(c1,c2,c3,c4,c5)&#x2F;decode(c1,[c2,c3],[c4,c5],[c6,c7]….,[C2x,C2x+1] [,C2x+2])<br>从c1之后开始,每两个参数看做是一组数, 拿每组数的第一个参数和c1比较,如果相同则返回第二个参数:比如 如果 c2&#x3D;&#x3D;c1  return  c3 如果该组数的第一个参数和c1不相同,则比较下一组: 比如 如果 c2&lt;&gt;C1 继续判断 C4&#x3D;&#x3D;C1 ?  相同return  c5<br>例  decode(type,’a’,’11’,’b’,’12’,’c’,’13’,’d’,’14’,’e’,’15’,type)</p>
+<h6 id="树形查询"><a href="#树形查询" class="headerlink" title="树形查询"></a>树形查询</h6><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> area_code <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> tableA <span class="hljs-keyword">where</span> isvalid<span class="hljs-operator">=</span><span class="hljs-number">1</span>) <span class="hljs-keyword">start</span> <span class="hljs-keyword">with</span> area_code <span class="hljs-operator">=</span> <span class="hljs-number">5002</span> <span class="hljs-keyword">connect</span> <span class="hljs-keyword">by</span>  prior parent_area_code <span class="hljs-operator">=</span> area_code;<br><br><span class="hljs-comment">-- 父子关系查询（start with connect by prior）</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> tabname t <span class="hljs-keyword">where</span> 条件 <span class="hljs-keyword">start</span> <span class="hljs-keyword">with</span> t.org_parent_code<span class="hljs-operator">=</span><span class="hljs-string">&#x27;10000008&#x27;</span> <span class="hljs-keyword">connect</span> <span class="hljs-keyword">by</span> t.org_code <span class="hljs-operator">=</span> prior t.org_parent_code<br></code></pre></td></tr></table></figure>
+
+<h6 id="数值函数"><a href="#数值函数" class="headerlink" title="数值函数"></a>数值函数</h6><ol>
+<li>mod(x,y) 取模 求余数</li>
+<li>nvl(x,y) 如果x的值为空,则返回y <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> ename,sal,comm,sal<span class="hljs-operator">+</span>nvl(comm,<span class="hljs-number">0</span>) <span class="hljs-keyword">from</span> emp;<br><span class="hljs-comment">-- 数值列可以直接做加减乘除运算,如果数值列值为null 则加减乘除后也是 null 需要使用nvl函数去空</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h6 id="精确指定位数的函数"><a href="#精确指定位数的函数" class="headerlink" title="精确指定位数的函数:"></a>精确指定位数的函数:</h6><ol>
+<li>round(c1,c2) 能够四舍五入</li>
+<li>trunc(c1,c2) 直接舍去</li>
+<li>c2&gt;0 : c2表示有多少位小数<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> round(<span class="hljs-number">21.23512</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">from</span> dual;   <span class="hljs-comment">--  21.24</span><br><span class="hljs-keyword">select</span> trunc(<span class="hljs-number">21.23512</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">from</span> dual;   <span class="hljs-comment">--  21.23</span><br></code></pre></td></tr></table></figure></li>
+<li>c2&lt;0 : c2表示小数点向左精确|c2|位<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> round(<span class="hljs-number">2163.512</span>,<span class="hljs-number">-2</span>) <span class="hljs-keyword">from</span> dual;  <span class="hljs-comment">--  2200</span><br><span class="hljs-keyword">select</span> trunc(<span class="hljs-number">2163.512</span>,<span class="hljs-number">-2</span>) <span class="hljs-keyword">from</span> dual;  <span class="hljs-comment">--  2100</span><br></code></pre></td></tr></table></figure></li>
+<li>c2如果不存在,表示只保留整数部分<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> round(<span class="hljs-number">2163.512</span>,<span class="hljs-number">0</span>) <span class="hljs-keyword">from</span> dual;  <span class="hljs-comment">--  2164</span><br><span class="hljs-keyword">select</span> round(<span class="hljs-number">2163.512</span>) <span class="hljs-keyword">from</span> dual;    <span class="hljs-comment">-- 2164</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h6 id="字符函数"><a href="#字符函数" class="headerlink" title="字符函数"></a>字符函数</h6><ul>
+<li><p>length() 求字符串长度</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询姓名长度为5个字符的员工姓名</span><br><span class="hljs-keyword">select</span> ename,length(ename) <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> length(ename)<span class="hljs-operator">=</span><span class="hljs-number">5</span>;<br></code></pre></td></tr></table></figure></li>
+<li><p>lower() 全部转为小写</p>
+</li>
+<li><p>upper() 全部转为大写</p>
+</li>
+<li><p>initcap() 单词首字母大写其他字母小写</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> ename,<span class="hljs-built_in">lower</span>(ename),<span class="hljs-built_in">upper</span>(ename),initcap(ename) <span class="hljs-keyword">from</span> emp<br></code></pre></td></tr></table></figure></li>
+<li><p>截取字符串:substr(c1,c2[,c3]) c1: 原字符串 c2: 从哪个位置开始截取 c3: 截取长度(默认截取到最后)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询员工姓名,截取员工姓名的第一个字符,再截取姓名的最后一个字符</span><br><span class="hljs-keyword">select</span> ename,sal,substr(ename,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),substr(ename,length(ename)) <span class="hljs-keyword">from</span> emp;<br><span class="hljs-comment">-- 查询员工姓名,截取员工姓名中最中间的一个字符(偶数个截取后一位)</span><br><span class="hljs-keyword">select</span> ename, substr(ename,trunc(length(ename)<span class="hljs-operator">/</span><span class="hljs-number">2</span>)<span class="hljs-operator">+</span><span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">from</span> emp;  <br></code></pre></td></tr></table></figure>
+</li>
+<li><p>索引字符串:instr(c1,c2[,c3[,c4]]) c1: 原字符串 c2: 要查找的字符串 c3: 从哪个位置开始查找 默认值1 c4: 第几次出现 默认值1</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询员工姓名中带有E字符的员工</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> ename <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%E%&#x27;</span>;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> instr(ename,<span class="hljs-string">&#x27;E&#x27;</span>)<span class="hljs-operator">&lt;&gt;</span><span class="hljs-number">0</span>;<br><br><span class="hljs-keyword">select</span> instr(<span class="hljs-string">&#x27;sanhaoxuesheng&#x27;</span>,<span class="hljs-string">&#x27;aow&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- instr能够用来替代like实现模糊查询 </span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> instr(ename,<span class="hljs-string">&#x27;%&#x27;</span>)<span class="hljs-operator">&lt;&gt;</span><span class="hljs-number">0</span>;<span class="hljs-comment">--</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>拼接字符串: 符号: || 函数: concat(c1,c2) 将c1 c2拼接为一个字符串</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> concat(concat(<span class="hljs-string">&#x27;123&#x27;</span>,<span class="hljs-string">&#x27;abc&#x27;</span>),<span class="hljs-string">&#x27;eee&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;123&#x27;</span> <span class="hljs-operator">||</span> <span class="hljs-string">&#x27;abc&#x27;</span> <span class="hljs-operator">||</span> <span class="hljs-string">&#x27;eee&#x27;</span> <span class="hljs-keyword">from</span> dual;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数:"></a>日期函数:</h6><p>两个日期之间可以做减法,单位是天 两个日期之间不能做加法</p>
+<ul>
+<li>add_months(c1,c2) c1日期类型,c2整数 在c1日期的基础上增减c2个月份 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询当前系统时间之前的一个月</span><br><span class="hljs-keyword">select</span> add_months(sysdate,<span class="hljs-number">-1</span>) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- 查询十年后的今天</span><br><span class="hljs-keyword">select</span> add_months(sysdate,<span class="hljs-number">120</span>) <span class="hljs-keyword">from</span> dual;<br></code></pre></td></tr></table></figure></li>
+<li>months_between(c1,c2) c1 c2都是日期类型  计算两个日期之间相差多少个月份<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> round(months_between(sysdate,hiredate),<span class="hljs-number">2</span>) <span class="hljs-keyword">from</span> emp;<br></code></pre></td></tr></table></figure></li>
+<li>last_day(c)<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询给定日期所在月份的最后一天 </span><br><span class="hljs-keyword">select</span> last_day(sysdate) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- 查询下一个月的第一天 </span><br><span class="hljs-keyword">select</span> last_day(sysdate)<span class="hljs-operator">+</span><span class="hljs-number">1</span> <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- 查询上一个月的第一天 </span><br><span class="hljs-keyword">select</span> last_day(add_months(sysdate,<span class="hljs-number">-2</span>))<span class="hljs-operator">+</span><span class="hljs-number">1</span> <span class="hljs-keyword">from</span> dual;<br></code></pre></td></tr></table></figure></li>
+<li>计算日期:<br>round(c1,c2)  四舍五入 trunc(c1,c2)  直接舍去<br>c1:日期类型的值  c2:字符类型,日期格式 在c1日期的基础上,精确到c2指定的日期格式 如果比c2低的日期格式,默认是初始值</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 将当前系统时间精确到年份</span><br><span class="hljs-keyword">select</span> round(sysdate,<span class="hljs-string">&#x27;yyyy&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- 如果当前时间是: 2017-2-11 13:00:00 //2017-1-1 00:00:00</span><br></code></pre></td></tr></table></figure>
+<ol start="5">
+<li>查询本年度的一季度的起始日期<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> trunc(sysdate,<span class="hljs-string">&#x27;yyyy&#x27;</span>),add_months(trunc(sysdate,<span class="hljs-string">&#x27;yyyy&#x27;</span>),<span class="hljs-number">3</span>) <span class="hljs-keyword">from</span> dual;<br></code></pre></td></tr></table></figure></li>
+<li>next_day(c1,c2) c1: 日期类型  c2:字符或整数: 周期值 从c1日期来时,查找c2指定的周期的日期<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询当前系统时间之后的第一个星期一</span><br><span class="hljs-keyword">select</span> sysdate,next_day(sysdate,<span class="hljs-string">&#x27;星期四&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h6 id="转换函数"><a href="#转换函数" class="headerlink" title="转换函数:"></a>转换函数:</h6><ol>
+<li><p>to_date(c1,c2)</p>
+</li>
+<li><p>to_timestamp(c1,c2) c1: 字符类型的日期  c2:日期格式<br>能够根据c2指定的格式将c1字符类型的日期转变为日期类型</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> emp(empno,hiredate) <span class="hljs-keyword">values</span>(<span class="hljs-number">1001</span>, to_date(<span class="hljs-string">&#x27;2017-1-1&#x27;</span>,<span class="hljs-string">&#x27;yyyy-dd-mm&#x27;</span>) );<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> emp(empno,hiredate) <span class="hljs-keyword">values</span>(<span class="hljs-number">1002</span>, to_date(<span class="hljs-string">&#x27;2017-1-1 12:21:20&#x27;</span>,<span class="hljs-string">&#x27;yyyy-dd-mm hh24:mi:ss&#x27;</span>) );<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>to_char()</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 将一个数值转变为一个字符串</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> <span class="hljs-string">&#x27;1&#x27;</span><span class="hljs-operator">=</span><span class="hljs-number">1</span>; <br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> <span class="hljs-string">&#x27;1&#x27;</span><span class="hljs-operator">=</span>to_char(<span class="hljs-number">1</span>);<br><br><span class="hljs-comment">-- 格式化字符串或数值</span><br><span class="hljs-keyword">select</span> to_char(<span class="hljs-number">2341212412</span>,<span class="hljs-string">&#x27;$999,999,999,999.00&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- 第二个参数的长度必须大于第一个参数</span><br><span class="hljs-keyword">select</span> to_char(<span class="hljs-number">2341212412</span>,<span class="hljs-string">&#x27;L999,999,999,999.00&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br><br><span class="hljs-comment">-- 与日期的转换</span><br><span class="hljs-comment">-- to_char(c1,c2) c1: 日期类型的值  c2:日期格式 按照c2指定的日期格式,从c1中取值</span><br><br><span class="hljs-comment">-- 查询当前系统时间的月份</span><br><span class="hljs-keyword">select</span> to_char(sysdate,<span class="hljs-string">&#x27;month&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- 查询当前系统时间的年月日</span><br><span class="hljs-keyword">select</span> to_char(sysdate,<span class="hljs-string">&#x27;yyyy-mm-dd&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br><span class="hljs-comment">-- 查询当前系统时间是本年度第几天</span><br><span class="hljs-keyword">select</span> to_char(sysdate,<span class="hljs-string">&#x27;yyyy-ddd-dd-d&#x27;</span>) <span class="hljs-keyword">from</span> dual;<br></code></pre></td></tr></table></figure></li>
+<li><p>对比to_date 和to_char:<br>to_date(‘2017’,’yyyy’) 将字符串转变成日期  第一个参数是:字符串类型的值<br>to_char(sysdate,’yyyy’) 按照指定的格式将日期转变为字符串 第一个参数是:日期值</p>
+</li>
+</ol>
+<h5 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h5><ul>
+<li>minus 从第一个查询结果中, 减去第二个查询结果中重复出现的数据 剩余: 第一个查询结果中的部分数据<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> ename <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%E%&#x27;</span><br>minus <br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> ename <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%S%&#x27;</span>;<br></code></pre></td></tr></table></figure></li>
+<li>intersect 交集<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> ename <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%E%&#x27;</span><br><span class="hljs-keyword">intersect</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> ename <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%S%&#x27;</span>;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="创建表同时复制数据"><a href="#创建表同时复制数据" class="headerlink" title="创建表同时复制数据"></a>创建表同时复制数据</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> 新表名(列名) <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> 列名 <span class="hljs-keyword">from</span> 旧表 <span class="hljs-keyword">where</span> 条件;<br><span class="hljs-comment">-- 如果表已存在，可以向已存在的表中插入数据：</span><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> 表名(列名) <span class="hljs-keyword">select</span> 列名 <span class="hljs-keyword">from</span> 旧表 <span class="hljs-keyword">where</span> 条件;<br></code></pre></td></tr></table></figure>
+
+
+<h5 id="有则更新-无则新增"><a href="#有则更新-无则新增" class="headerlink" title="有则更新 无则新增"></a>有则更新 无则新增</h5><p>根据源表对目标表进行匹配查询，匹配成功时更新，不成功时插入</p>
+<p>语法<br>MERGE INTO 目标表 a USING 源表 b ON (a.字段1 &#x3D; b.字段2 and a.字段n &#x3D; b.字段n)<br>WHEN MATCHED THEN UPDATE SET a.新字段 &#x3D; b.字段 WHERE 限制条件 WHEN NOT MATCHED THEN INSERT (a.字段名1，a.字段名n) VALUES(b.字段值1, b.字段值n) WHERE 限制条件123456789<br>例子:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">MERGE</span> <span class="hljs-keyword">INTO</span> T_SCHE_PYTHON_JOB T1<br><span class="hljs-keyword">USING</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;1001&#x27;</span> <span class="hljs-keyword">AS</span> JOB_DEF_ID <span class="hljs-keyword">FROM</span> dual) T2<br><span class="hljs-keyword">ON</span> ( T1.JOB_DEF_ID<span class="hljs-operator">=</span>T2.JOB_DEF_ID)<br><span class="hljs-keyword">WHEN</span> MATCHED <span class="hljs-keyword">THEN</span><br>    <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">SET</span> T1.param <span class="hljs-operator">=</span> $&#123;param&#125;<br><span class="hljs-keyword">WHEN</span> <span class="hljs-keyword">NOT</span> MATCHED <span class="hljs-keyword">THEN</span> <br>    <span class="hljs-keyword">INSERT</span> (JOB_DEF_ID,param) <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1001</span>,$&#123;param&#125;); <br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Oracle相关及常用函数</div>
+      <div>https://xmxe.github.io/blog/2022/09/27/Oracle相关及常用函数/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xmxe</div>
+        </div>
+      
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2022/09/27/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" title="进制转换">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">进制转换</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2022/09/26/SQL%20Server%E5%87%BD%E6%95%B0/" title="SQL Server函数">
+                        <span class="hidden-mobile">SQL Server函数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>ky</span> <i class="iconfont icon-love"></i> <span>qr</span> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -36,12 +36,13 @@ npm hexo server // 启动服务器。默认情况下，访问网址为： http:/
 #### 五、 发布文章
 
 ```
-npx hexo new post 测试文章 // 在source/_posts下生成文章 如修改_config.yml:post_asset_folder: true 打开这个配置是为了在生成文章的时候生成一个同名的资源目录用于存放图片文件。
+npx hexo new post 测试文章 // 在source/_posts下生成文章
+如修改_config.yml:post_asset_folder: true 打开这个配置是为了在生成文章的时候生成一个同名的资源目录用于存放图片文件。
+
 也可以直接在source/_posts下新建md文件 里面内容写上
 ---
 title: {title}
 date: {date}
-tags:
 ---
 即可
 
@@ -57,7 +58,8 @@ draft	source/_drafts
 
 #### 参考
 
-- [GitHub Pages + Hexo搭建个人博客网站，史上最全教程](https://blog.csdn.net/yaorongke/article/details/119089190)
+- [GitHub Pages + Hexo搭建个人博客网站](https://blog.csdn.net/yaorongke/article/details/119089190)
 - [Hexo文档](https://hexo.io/zh-cn/docs/)
+- [fluid文档](https://hexo.fluid-dev.com/docs/)
 
 

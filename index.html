@@ -223,6 +223,534 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/29/%E9%94%81/" target="_self">
+          <img src="/blog/assert/lock.jpg" srcset="/blog/img/loading.gif" lazyload alt="锁">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/29/%E9%94%81/" target="_self">
+          锁
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/29/%E9%94%81/" target="_self">
+        <div>
+          悲观锁悲观的认为只要从数据库查询数据就会修改 悲观锁适用于数据库高并发的大量写入操作，本次事务提交之前（事务提交时会释放事务过程中的锁），外界无法修改这些记录。具体使用:mysql数据库首先要设置事务不允许自动提交 set autocommit&#x3D;0 然后select name from table where id &#x3D; ? for update 将查询的结果上锁 这样的话其他得
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 11:07" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/29/Java%E4%B8%AD%E7%9A%84volatile%E5%85%B3%E9%94%AE%E5%AD%97/" target="_self">
+          <img src="/blog/assert/volatile.jpg" srcset="/blog/img/loading.gif" lazyload alt="Java中的volatile关键字">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/29/Java%E4%B8%AD%E7%9A%84volatile%E5%85%B3%E9%94%AE%E5%AD%97/" target="_self">
+          Java中的volatile关键字
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/29/Java%E4%B8%AD%E7%9A%84volatile%E5%85%B3%E9%94%AE%E5%AD%97/" target="_self">
+        <div>
+          原理并发编程中的三个概念: 原子性问题，可见性问题，有序性问题  原子性：即一个操作或者多个操作 要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账  可见性：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值  有序性：即程序执行的顺序按照代码的先后顺序执行   要想并发程序正确地执行，必须要保证原子性、可见性以及有序性。只要有一个
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 11:01" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/29/ThreadLocal/" target="_self">
+          <img src="/blog/assert/threadlocal.jpg" srcset="/blog/img/loading.gif" lazyload alt="ThreadLocal">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/29/ThreadLocal/" target="_self">
+          ThreadLocal
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/29/ThreadLocal/" target="_self">
+        <div>
+          ThreadLocal使用场景当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。 原理每个线程是一个Thread实例，其内部维护一个threadLocals的实例成员，其类型是ThreadLocal.ThreadLocalMap。通过实例化ThreadLocal实例，我们可以对当前运行的线程设置一些线程私有的变量，通过调用ThreadLocal的set和get
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 10:55" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/29/%E7%BA%BF%E7%A8%8B-Thread/" target="_self">
+          <img src="/blog/assert/thread.jpg" srcset="/blog/img/loading.gif" lazyload alt="线程-Thread">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/29/%E7%BA%BF%E7%A8%8B-Thread/" target="_self">
+          线程-Thread
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/29/%E7%BA%BF%E7%A8%8B-Thread/" target="_self">
+        <div>
+          线程创建线程三种方式 继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：public class Thread implements Runnable 实现Runnable接口，重写run()方法。然后调用new Thread（runnable）的方式创建一个线程，再调用start(
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 09:53" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/29/ArrayList&amp;CopyOnWriteArrayList/" target="_self">
+          <img src="/blog/assert/list.jpg" srcset="/blog/img/loading.gif" lazyload alt="ArrayList&amp;CopyOnWriteArrayList">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/29/ArrayList&amp;CopyOnWriteArrayList/" target="_self">
+          ArrayList&amp;CopyOnWriteArrayList
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/29/ArrayList&amp;CopyOnWriteArrayList/" target="_self">
+        <div>
+          ArrayList的扩容机制当添加元素的时候数组是空的，则直接给一个10长度的数组。当需要长度的数组大于现在长度的数组的时候，通过新&#x3D;旧+旧&gt;&gt;1(即新&#x3D;1.5倍的旧)来扩容，当扩容的大小还是不够需要的长度的时候，则将数组大小直接置为需要的长度 ArrayList 的扩容机制了解吗？学会这几行，还不懂ArrayList，你来怼我 CopyOnWriteArrayLi
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 09:49" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/29/HashMap&amp;ConcurrentHashMap/" target="_self">
+          <img src="/blog/assert/hashmap.jpg" srcset="/blog/img/loading.gif" lazyload alt="HashMap&amp;ConcurrentHashMap">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/29/HashMap&amp;ConcurrentHashMap/" target="_self">
+          HashMap&amp;ConcurrentHashMap
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/29/HashMap&amp;ConcurrentHashMap/" target="_self">
+        <div>
+          HashMap为什么hashmap容器长度是2的幂HashMap的默认长度为16和规定数组长度为2的幂,是为了降低hash碰撞的几率加载因子为什么 0.75，而不是其他值？答：可以说是一个经过考量的经验值。加载因子涉及扩容，下次扩容的阈值&#x3D;数组桶的大小*加载因子，如果加载因子太小，这就会导致阈值太小，这就会导致比较容易发生扩容。如果加载因子太大，那就会导致阈值太大，可能冲突会很多，导致查
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 09:38" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/28/%E4%BA%8B%E5%8A%A1/" target="_self">
+          <img src="/blog/assert/transaction.jpg" srcset="/blog/img/loading.gif" lazyload alt="事务">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/28/%E4%BA%8B%E5%8A%A1/" target="_self">
+          事务
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/28/%E4%BA%8B%E5%8A%A1/" target="_self">
+        <div>
+          Spring事务传播机制Spring事务传播机制共7中,可以分为3组+1个特殊来分析或者记忆  REQUIRE组   REQUIRED:当前存在事务则使用当前的事务, 当前不存在事务则创建一个新的事务 REQUIRES_NEW:创建新事务, 如果已经存在事务, 则把已存在的事务挂起   SUPPORT组   SUPPORTS:支持事务. 如果当前存在事务则加入该事务, 如果不存在事务则以无事务状态
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-28 16:44" pubdate>
+              2022-09-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/28/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_self">
+          <img src="/blog/assert/db.jpg" srcset="/blog/img/loading.gif" lazyload alt="数据库相关知识点">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/28/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_self">
+          数据库相关知识点
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/28/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_self">
+        <div>
+          sql查询慢的原因 sql没加索引 sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，可能导致索引失效,like通配符可能导致索引失效,查询条件不满足联合索引的最左匹配原则,在索引列上使用mysql的内置函数,对索引进行列运算（如，+、-、*、&#x2F;）,索引不生效,索引字段上使用（！&#x3D; 或者 &lt; &gt;），索引可能失效,索引字段上使用is null， is no
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-28 16:23" pubdate>
+              2022-09-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/blog/2022/09/28/Docker%E5%AE%89%E8%A3%85/" target="_self">
+          <img src="/blog/assert/docker.jpg" srcset="/blog/img/loading.gif" lazyload alt="Docker安装">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/blog/2022/09/28/Docker%E5%AE%89%E8%A3%85/" target="_self">
+          Docker安装
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/blog/2022/09/28/Docker%E5%AE%89%E8%A3%85/" target="_self">
+        <div>
+          在线安装 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑 &#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。123SELINUX=disabledSELINUXTYPE=targeted 关闭防火墙 安装容器1yum -y install docker-ce 启动服务1
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-28 15:10" pubdate>
+              2022-09-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/">#程序</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/blog/2022/09/28/MySQL%E5%AE%89%E8%A3%85/" target="_self">
           <img src="/blog/assert/mysql.jpg" srcset="/blog/img/loading.gif" lazyload alt="MySQL安装">
         </a>
@@ -279,467 +807,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/28/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_self">
-          <img src="/blog/assert/jvm.jpg" srcset="/blog/img/loading.gif" lazyload alt="JVM知识点">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/28/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_self">
-          JVM知识点
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/28/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_self">
-        <div>
-          JVM5大内存区域 Java虚拟机栈（栈区） 本地方法栈 Java堆（堆区） 方法区 程序计数器  Java堆GC堆是java虚拟机所管理的内存中最大的一块内存区域，也是被各个线程共享的内存区域，在JVM启动时创建。其大小通过-Xms(最小值)和-Xmx(最大值)参数设置，-Xms为JVM启动时申请的最小内存，-Xmx为JVM可申请的最大内存。由于现在收集器都是采用分代收集算法，堆被划分为新生代和
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-28 09:09" pubdate>
-              2022-09-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/blog/categories/java/" class="category-chain-item">java</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/27/Git/" target="_self">
-          <img src="/blog/assert/git.jpg" srcset="/blog/img/loading.gif" lazyload alt="Git">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/27/Git/" target="_self">
-          Git
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/27/Git/" target="_self">
-        <div>
-          Git常用命令上传项目到git远程仓库12345678910111213git initgit add -Agit commit -m &quot;init&quot; git remote add origin https://github.com/xmxe/mySpringBoot.git# 断开连接git remote remove origingit pull --rebase origi
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-27 16:41" pubdate>
-              2022-09-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/blog/tags/git/">#git</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/27/%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/" target="_self">
-          <img src="/blog/assert/mideng.jpg" srcset="/blog/img/loading.gif" lazyload alt="怎么保证幂等性">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/27/%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/" target="_self">
-          怎么保证幂等性
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/27/%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/" target="_self">
-        <div>
-          唯一索引，防止新增脏数据  token机制，防止页面重复提交前端限制:页面的提交按钮只能被点击提交一次后端解决方案：集群环境：采用token加redis（redis单线程的，处理需要排队）单JVM环境：采用token加redis或token加jvm内存处理流程：请求前先生成token ，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-27 16:29" pubdate>
-              2022-09-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/blog/tags/%E5%B9%82%E7%AD%89/">#幂等</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/27/Nginx/" target="_self">
-          <img src="/blog/assert/nginx.jpeg" srcset="/blog/img/loading.gif" lazyload alt="Nginx">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/27/Nginx/" target="_self">
-          Nginx
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/27/Nginx/" target="_self">
-        <div>
-          Nginx知识点nginx判断1、正则表达式匹配： &#x3D;&#x3D;:等值比较;~：与指定正则表达式模式匹配时返回“真”，判断匹配与否时区分字符大小写；~*：与指定正则表达式模式匹配时返回“真”，判断匹配与否时不区分字符大小写；!~：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时区分字符大小写；!~*：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时不区分字符大小写； 2、文
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-27 15:52" pubdate>
-              2022-09-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/">#程序</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/27/Linux%E7%9B%B8%E5%85%B3/" target="_self">
-          <img src="/blog/assert/linux.jpg" srcset="/blog/img/loading.gif" lazyload alt="Linux相关">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/27/Linux%E7%9B%B8%E5%85%B3/" target="_self">
-          Linux相关
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/27/Linux%E7%9B%B8%E5%85%B3/" target="_self">
-        <div>
-          相关命令&gt;&#x2F;dev&#x2F;null这条命令的作用是将标准输出1重定向到&#x2F;dev&#x2F;null中。&#x2F;dev&#x2F;null代表linux的空设备文件，所有往这个文件里面写入的内容都会丢失，俗称“黑洞”。那么执行了&gt;&#x2F;dev&#x2F;null之后，标准输出就会不再存在，没有任何地方能够找到输出的内容。 1&gt;&#x2F;dev&#
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-27 14:42" pubdate>
-              2022-09-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">#计算机</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/27/%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/" target="_self">
-          <img src="/blog/assert/soft.jpg" srcset="/blog/img/loading.gif" lazyload alt="启动命令">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/27/%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/" target="_self">
-          启动命令
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/27/%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/" target="_self">
-        <div>
-          redis123./redis-server /usr/local/redis/redis.conf ./redis-cli -h 127.0.0.1 -p 6379 -a 123456./redis-cli -h 127.0.0.1 -p 6379 -a 123456 shutdown # 关闭redis  nginx123/usr/local/nginx/sbin/nginx -s reloa
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-27 14:27" pubdate>
-              2022-09-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/">#程序</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/27/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" target="_self">
-          <img src="/blog/assert/code.jpg" srcset="/blog/img/loading.gif" lazyload alt="进制转换">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/27/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" target="_self">
-          进制转换
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/27/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" target="_self">
-        <div>
-          十进制转换二进制一直除以2最后的商+余数开始排序 5&#x2F;2&#x3D;2余1，2&#x2F;2 &#x3D;1余0， 所以5的二进制为 101 6&#x2F;2&#x3D;3余0，3&#x2F;2&#x3D;1余1， 所以6的2进制是110 二进制转换十进制1         0          1  1* 2的2次方 + 0 * 2的1次方 + 1 * 2 的0次方 &#x3D; 5
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-27 14:17" pubdate>
-              2022-09-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">#计算机</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/27/Oracle%E7%9B%B8%E5%85%B3%E5%8F%8A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" target="_self">
-          <img src="/blog/assert/oracle.jpg" srcset="/blog/img/loading.gif" lazyload alt="Oracle相关及常用函数">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/27/Oracle%E7%9B%B8%E5%85%B3%E5%8F%8A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" target="_self">
-          Oracle相关及常用函数
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/27/Oracle%E7%9B%B8%E5%85%B3%E5%8F%8A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" target="_self">
-        <div>
-          Sys 和 System用户区别 Sys:拥有DBA、SysDBA、Sysoper（系统操作员 ）角色或权限，是Oracle权限最高的用户，只能以SysDBA或Sysoper登录，不能以Normal形式登录。 System:拥有DBA、Sysdba权限或角色，可以以普通用户的身份登录。  Sysdba、Sysoper、DBA区别 Sysdba用户: 可以改变字符集、创建删除数据库、登录之后用户是S
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-27 10:34" pubdate>
-              2022-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/blog/2022/09/26/SQL%20Server%E5%87%BD%E6%95%B0/" target="_self">
-          <img src="/blog/assert/sqlserver.jpg" srcset="/blog/img/loading.gif" lazyload alt="SQL Server函数">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/blog/2022/09/26/SQL%20Server%E5%87%BD%E6%95%B0/" target="_self">
-          SQL Server函数
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/blog/2022/09/26/SQL%20Server%E5%87%BD%E6%95%B0/" target="_self">
-        <div>
-          sql server 行转列类似MySQL group_concat()使用 stuff() stuff() 将字符串插入到另一个字符串中。 它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。 123456789101112131415select stuff(&#x27;ABCDEFG&#x27;,2,3,&#x27;&#x27;hijk) = Ahi
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-26 16:14" pubdate>
-              2022-09-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/#board">2</a><a class="extend next" rel="next" href="/blog/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/#board">2</a><a class="page-number" href="/blog/page/3/#board">3</a><a class="extend next" rel="next" href="/blog/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

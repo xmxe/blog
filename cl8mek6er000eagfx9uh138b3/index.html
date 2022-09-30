@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/panda.png">
+  <link rel="icon" href="/blog/img/panda.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xmxe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="线程创建线程三种方式 继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：public class Thread implements Runnable 实现Runnable接口，重写run()方法。然后调用new Thread（runnable）的方式创建一个线程，再调用start(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程-Thread">
+<meta property="og:url" content="https://xmxe.github.io/blog/cl8mek6er000eagfx9uh138b3/index.html">
+<meta property="og:site_name" content="xmxe&#39;s blog">
+<meta property="og:description" content="线程创建线程三种方式 继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：public class Thread implements Runnable 实现Runnable接口，重写run()方法。然后调用new Thread（runnable）的方式创建一个线程，再调用start(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xmxe.github.io/blog/assert/thread.jpg">
+<meta property="article:published_time" content="2022-09-29T01:53:37.000Z">
+<meta property="article:modified_time" content="2022-09-30T02:55:12.505Z">
+<meta property="article:author" content="xmxe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xmxe.github.io/blog/assert/thread.jpg">
+  
+  
+  
+  <title>线程-Thread - xmxe&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xmxe.github.io","root":"/blog/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>xmxe&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/img/j.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="线程-Thread"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.5k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">线程-Thread</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><h4 id="创建线程三种方式"><a href="#创建线程三种方式" class="headerlink" title="创建线程三种方式"></a>创建线程三种方式</h4><ol>
+<li>继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：public class Thread implements Runnable</li>
+<li>实现Runnable接口，重写run()方法。然后调用new Thread（runnable）的方式创建一个线程，再调用start()方法启动线程。</li>
+<li>实现Callable接口，重写call()方法。Callable是类似于Runnable的接口，是属于Executor框架中的功能类。具有返回值，并且可以对异常进行声明和抛出</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/G-X82-Fp7zShTTnkWg1N5A">【图解】透彻Java线程状态转换</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cNJQNzoqFpvgeDEbcWmI6A">Thread, Runable, Callable 还傻傻分不清？</a></li>
+</ul>
+<h4 id="线程相关方法"><a href="#线程相关方法" class="headerlink" title="线程相关方法"></a>线程相关方法</h4><h5 id="yield"><a href="#yield" class="headerlink" title="yield()"></a>yield()</h5><p>它让掉当前线程 CPU 的时间片，使正在运行中的线程重新变成就绪状态，并重新竞争 CPU 的调度权。它可能会获取到，也有可能被其他线程获取到。使当前线程从执行状态（运行状态）变为可执行态（就绪状态）。cpu会从众多的可执行态里选择。 也就是说，当前也就是刚刚的那个线程还是有可能会被再次执行到的</p>
+<h5 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h5><p>并行变串行，当前线程等待另一个调用join()方法的线程执行结束后再往下执行, 哪个线程调用join()哪个线程优先执行（前提必须调用start()方法启动线程）</p>
+<h5 id="setDaemon"><a href="#setDaemon" class="headerlink" title="setDaemon()"></a>setDaemon()</h5><p>设置是否为守护线程，线程分为用户线程和守护线程，当用户线程都退出时，无论当jvm里面的守护线程有没有执行完，jvm都会退出，使用setDaemon()必须在thread.start()之前，否则会抛出异常。守护线程服务于用户线程,当用户线程结束后守护线程也会结束,当所有线程都运行结束时，JVM退出，进程结束。<br>例如有一种线程的目的就是无限循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TimerThread</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Thread</span> &#123; <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>		System.out.println(LocalTime.now());<br>		<span class="hljs-keyword">try</span> &#123;<br>			Thread.sleep(<span class="hljs-number">1000</span>);<br>		&#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>			<span class="hljs-keyword">break</span><br>		&#125;<br>	&#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果这个线程不结束，JVM进程就无法结束。问题是，由谁负责结束这个线程？ 然而这类线程经常没有负责人来负责结束它们。但是，当其他线程结束时，JVM进程又必须要结束，怎么办？ 答案是将这个线程设置成守护线程（Daemon Thread）。守护线程是指为其他线程服务的线程。在JVM中，所有非守护线程都执行完毕后，无论有没有守护线程，虚拟机都会自动退出。因此，JVM退出时，不必关心守护线程是否已结束。在守护线程中，编写代码要注意：守护线程不能持有任何需要关闭的资源，例如打开文件等，因为虚拟机退出时，守护线程没有任何机会来关闭文件，这会导致数据丢失</p>
+<h5 id="Thread-interrupted"><a href="#Thread-interrupted" class="headerlink" title="Thread.interrupted()"></a>Thread.interrupted()</h5><p>检测当前线程是否被中断，并且中断状态会被清除（即重置为false）；它是静态方法，即使是线程对象去调用，底层使用的也是判断当前线程的中断状态，而不是被调用线程的中断状态。如果连续两次调用该方法，则第二次调用将返回 false（在第一次调用已清除了其中断状态之后，且第二次调用检验完中断状态前，当前线程再次中断的情况除外）。</p>
+<ul>
+<li><p>this.isInterrupted()<br>检测调用该方法的线程是否被中断，中断状态不会被清除。线程一旦被中断，该方法返回true，而一旦sleep等方法抛出异常，它将清除中断状态，此时方法将返回false。</p>
+</li>
+<li><p>this.interrupt()</p>
+</li>
+</ul>
+<p>中断调用该方法的线程,中断被阻塞的线程，会抛出一个InterruptedException，把线程从阻塞状态中解救出来，会清除中断标志位</p>
+<p>如果当前线程没有中断它自己（这在任何情况下都是允许的），则该线程的 checkAccess 方法就会被调用，这可能抛出 SecurityException。如果线程在调用 Object 类的 wait()、wait(long) 或 wait(long, int) 方法，或者该类的 join()、join(long)、join(long, int)、sleep(long) 或 sleep(long, int) 方法过程中受阻，则其中断状态将被清除，它还将收到一个InterruptedException。如果该线程在可中断的通道上的 I&#x2F;O 操作中受阻，则该通道将被关闭，该线程的中断状态将被设置并且该线程将收到ClosedByInterruptException。如果该线程在一个 Selector 中受阻，则该线程的中断状态将被设置，它将立即从选择操作返回，并可能带有一个非零值，就好像调用了选择器的 wakeup 方法一样。如果以前的条件都没有保存，则该线程的中断状态将被设置。</p>
+<p>中断一个不处于活动状态的线程不需要任何作用。<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J8Acb1FBPhqb1Z7Vur0erQ">如何停止一个正在运行的线程？</a></p>
+<h5 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h5><ul>
+<li><p>Thread.setDefaultUncaughtExceptionHandler()<br>相当于一个全局的捕获异常。用于记录当程序发生你未捕获的异常的时候,调用一个你默认的handler来进行某些操作</p>
+</li>
+<li><p>Thread.getDefaultUncaughtExceptionHandler()<br>返回当线程由于未捕获的异常而突然终止时调用的默认处理程序。 如果返回的值为null，则没有默认值</p>
+</li>
+<li><p>setUncaughtExceptionHandler<br>用来获取线程中产生的异常,建议使用该方法为线程设置异常捕获方法，主线程无法捕获子线程异常，当子线程异常时，可以使用这个方法处理异常</p>
+</li>
+<li><p>getUncaughtExceptionHandler<br>返回该线程由于未捕获的异常而突然终止时调用的处理程序。</p>
+</li>
+</ul>
+<h5 id="线程的优先级"><a href="#线程的优先级" class="headerlink" title="线程的优先级"></a>线程的优先级</h5><ul>
+<li>Thread.MAX_PRIORITY：10</li>
+<li>Thread.MIN _PRIORITY：1</li>
+<li>Thread.NORM_PRIORITY：5 –&gt;默认优先级 </li>
+<li>getPriority():获取线程的优先级 </li>
+<li>setPriority(int p):设置线程的优先级</li>
+</ul>
+<p>说明：⾼优先级的线程要抢占低优先级线程cpu的执⾏权。但是只是从概率上讲，⾼优先级的线程⾼概率的情况下被执⾏。并不意味着只当⾼优先级的线程执⾏完以后，低优先级的线程才执行</p>
+<h5 id="checkAccess"><a href="#checkAccess" class="headerlink" title="checkAccess"></a>checkAccess</h5><p>确定当前运行的线程是否具有修改此线程的权限</p>
+<h5 id="countStackFrames"><a href="#countStackFrames" class="headerlink" title="countStackFrames"></a>countStackFrames</h5><p>计算此线程中的堆栈帧数，当前线程必须被挂起</p>
+<h5 id="getThreadGroup"><a href="#getThreadGroup" class="headerlink" title="getThreadGroup()"></a>getThreadGroup()</h5><p>获取线程所在的线程组</p>
+<h5 id="Thread-activeCount"><a href="#Thread-activeCount" class="headerlink" title="Thread.activeCount()"></a>Thread.activeCount()</h5><p>返回当前线程的线程组中活动线程的数量。返回的值只是一个估计值，因为当此方法遍历内部数据结构时，线程数可能会动态更改</p>
+<h5 id="Thread-dumpStack"><a href="#Thread-dumpStack" class="headerlink" title="Thread.dumpStack()"></a>Thread.dumpStack()</h5><p>打印当前线程的堆栈跟踪到标准错误流。此方法仅用于调试。</p>
+<h5 id="Thread-enumerate-Thread-tarray"><a href="#Thread-enumerate-Thread-tarray" class="headerlink" title="Thread.enumerate(Thread[] tarray)"></a>Thread.enumerate(<strong><strong>Thread[] tarray</strong></strong>)</h5><p>用于将每个活动线程的线程组及其子组复制到指定的数组中。 此方法使用tarray参数调用enumerate方法。此方法使用activeCount方法来估计数组应该有多大。 如果数组的长度太短而无法容纳所有线程，则会以静默方式忽略额外的线程。tarray ：此方法是要复制到的Thread对象数组。返回此方法返回放入数组的线程数。</p>
+<h5 id="Thread-getAllStackTraces"><a href="#Thread-getAllStackTraces" class="headerlink" title="Thread.getAllStackTraces()"></a>Thread.getAllStackTraces()</h5><p>返回所有活动线程的堆栈跟踪的一个映射</p>
+<h5 id="Thread-holdsLock"><a href="#Thread-holdsLock" class="headerlink" title="Thread.holdsLock()"></a>Thread.holdsLock()</h5><p>当且仅当当前线程在指定的对象上保持监视器锁方法返回true</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493938&idx=1&sn=125990919a15c7dd3c4ed4c36451d34b&source=41#wechat_redirect">多线程基础知识、线程相关方法</a></p>
+<h4 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h4><ol>
+<li>synchronized</li>
+<li>使用特殊域变量(volatile)实现线程同步</li>
+<li>使用重入锁实现线程同步（ReentrantLock）</li>
+<li>ThreadLocal与同步机制</li>
+</ol>
+<h4 id="8种保证线程安全的技术"><a href="#8种保证线程安全的技术" class="headerlink" title="8种保证线程安全的技术"></a>8种保证线程安全的技术</h4><ol>
+<li>无状态<br>我们都知道只有多个线程访问公共资源的时候，才可能出现数据安全问题，那么如果我们没有公共资源，是不是就没有这个问题呢？</li>
+<li>不可变 （final）<br>如果多个线程访问公共资源是不可变的，也不会出现数据的安全性问题</li>
+<li>安全的发布 （private）<br>如果类中有公共资源，但是没有对外开放访问权限，即对外安全发布，也没有线程安全问题</li>
+<li>volatile<br>如果有些公共资源只是一个开关，只要求可见性，不要求原子性，这样可以用volidate关键字定义来解决问题。</li>
+<li>synchronized<br>使用JDK内部提供的同步机制，这也是使用比较多的手段，分为：方法同步 和 代码块同步，我们优先使用代码块同步，因为方法同步的范围更大，更消耗性能。每个对象内部都又一把锁，只有抢答那把锁的线程，才能进入代码块里，代码块执行完之后，会自动释放锁</li>
+<li>lock<br>除了使用synchronized关键字实现同步功能之外，JDK还提供了lock显示锁的方式。它包含：可重入锁、读写锁 等更多更强大的功能，有个小问题就是需要手动释放锁，不过在编码时提供了更多的灵活性</li>
+<li>cas<br>JDK除了使用锁的机制解决多线程情况下数据安全问题之外，还提供了cas机制。这种机制是使用CPU中比较和交换指令的原子性，JDK里面是通过Unsafe类实现的。cas需要四个值：旧数据、期望数据、新数据 和 地址，比较旧数据 和 期望的数据如果一样的话，就把旧数据改成新数据，当前线程不断自旋，一直到成功为止。不过可能会出现aba问题，需要使用AtomicStampedReference增加版本号解决。其实，实际工作中很少直接使用Unsafe类的，一般用atomic包下面的类即可。</li>
+<li>threadlocal<br>除了上面几种解决思路之外，JDK还提供了另外一种用空间换时间的新思路：threadlocal。它的核心思想是：共享变量在每个线程都有一个副本，每个线程操作的都是自己的副本，对另外的线程没有影响。特别注意，使用threadlocal时，使用完之后，要记得调用remove方法，不然可能会出现内存泄露问题<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5q130nkGk23CPlqbRK01OA">聊聊保证线程安全的 10 个小技巧</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HZBWUijsI8CA1KKUhHuXKw">4种方法，实现多线程按着指定顺序执行</a></li>
+</ol>
+<h4 id="线程通信（例如：A线程操作到某一步通知B线程）"><a href="#线程通信（例如：A线程操作到某一步通知B线程）" class="headerlink" title="线程通信（例如：A线程操作到某一步通知B线程）"></a>线程通信（例如：A线程操作到某一步通知B线程）</h4><ol>
+<li>thread.join(),</li>
+<li>object.wait(), object.notify()</li>
+<li>CountdownLatch</li>
+<li>使用 volatile 关键字</li>
+<li>使用 ReentrantLock 结合 Condition</li>
+<li>LockSupport 是一种非常灵活的实现线程间阻塞和唤醒的工具，使用它不用关注是等待线程先进行还是唤醒线程先运行，但是得知道线程的名字</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NUJL_mEfXSo0e-nf2UUNJQ">Java 如何线程间通信，面试被问哭</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/47UlDrzbH9cKeQ1g3DHQeQ">线程通信的5中方式</a></p>
+<h4 id="最佳线程数"><a href="#最佳线程数" class="headerlink" title="最佳线程数"></a>最佳线程数</h4><p>QPS&#x3D;每秒钟request数量<br>TPS&#x3D;每秒钟事务数量<br>RT&#x3D;一般取平均响应时间<br>QPS&#x3D;并发数&#x2F;RT 或者 并发数&#x3D;QPS * RT<br>最佳线程数&#x3D;RT&#x2F;CPU Time * CPU核心数 * CPU利用率<br>最大QPS&#x3D;最佳线程数 * 单线程QPS&#x3D;（RT&#x2F;CPU Time * CPU核心数 * CPU利用率）*（1&#x2F;RT) &#x3D; CPU核心数 * CPU利用率&#x2F;CPU time</p>
+<p>最佳线程经验值：<br>IO密集型配置线程数经验值是：2N，其中N代表CPU核数。<br>CPU密集型配置线程数经验值是：N + 1，其中N代表CPU核数。<br>如果获取N的值？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">availableProcessors</span> <span class="hljs-operator">=</span> Runtime.getRuntime().availableProcessors()<br></code></pre></td></tr></table></figure>
+<p>最佳线程数目 &#x3D; （（线程等待时间+线程CPU时间）&#x2F;线程CPU时间 * CPU数目<br>数据库连接池连接数 &#x3D; ((核心数 * 2) + 有效磁盘数)<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D73p4StaBA1sXEoZQZrEaQ">如何设置线程池参数？美团给出了一个让面试官虎躯一震的回答。</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/isjUUOSK64XMiveRO_-3rA">面试官问：高并发下，你都怎么选择最优的线程数？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MPsUd0sy0yojcUoSYl8B2A">线程池最佳线程数量到底要如何配置？</a></p>
+<h4 id="线程顺序执行"><a href="#线程顺序执行" class="headerlink" title="线程顺序执行"></a>线程顺序执行</h4><ol>
+<li>使用线程的join方法</li>
+<li>使用主线程的join方法</li>
+<li>使用线程的wait方法</li>
+<li>使用线程的线程池方法</li>
+<li>使用线程的Condition(条件变量)方法</li>
+<li>使用线程的CountDownLatch(倒计数)方法</li>
+<li>使用线程的CyclicBarrier(回环栅栏)方法</li>
+<li>使用线程的Semaphore(信号量)方法<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NotprQ-F-ivnmVusELkDhg">线程顺序执行的 8 种方法</a></li>
+</ol>
+<h4 id="线程相关文章"><a href="#线程相关文章" class="headerlink" title="线程相关文章"></a>线程相关文章</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DIbxSun2NcD-wbqKGQpRLg">Java 多线程与并发高频面试题解析</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0KmWOLNqhck85WECC9uQ-g">超赞，大牛总结的多线程的问题及答案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dRqLZG7eev87hda9ohlJrA">99 道 Java 多线程面试题，看完我跪了！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hq5GbYBe98YsBDNA3u2s5Q">2 万字长文详解 10 大多线程面试题</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wGJsOWAGUhlE4QlZsNpMXg">两万字！多线程硬核50问！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tDfMAshpUr2N6absPR7Dug">进程间的通信(操作系统间)</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3istnkJ3MMYQnvbtTsdxmA">106道Java并发和多线程基础面试题大集合（2w字）</a></li>
+</ul>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool</span> <span class="hljs-operator">=</span> Executors.newCachedThreadPool();<br><br><span class="hljs-comment">// newCachedThreadPool: 创建一个可缓存线程池，可以无限扩大，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。适用于服务器负载较轻，执行很多短期异步任务。</span><br><br><span class="hljs-comment">// newFixedThreadPool: 创建一个定长、固定大小的线程池，可控制线程最大并发数，超出的线程会在队列中等待，表示同一时刻只能有这么大的并发数，实际线程数量永远不会变化，适用于可以预测线程数量的业务中，或者服务器负载较重，对当前线程数量进行限制。</span><br><br><span class="hljs-comment">// newScheduledThreadPool: 创建一个定长线程池，支持定时及周期性任务执行。可以延时启动，定时启动，适用于需要多个后台线程执行周期任务的场景。</span><br><br><span class="hljs-comment">// newSingleThreadExecutor: 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。是一个单线程的线程池，适用于需要保证顺序执行各个任务，并且在任意时间点，不会有多个线程是活动的场景</span><br><br><span class="hljs-comment">// newWorkStealingPool: 创建一个拥有多个任务队列的线程池，可以减少连接数，创建当前可用cpu数量的线程来并行执行，适用于大耗时的操作，可以并行来执行</span><br><br><span class="hljs-comment">// newSingleThreadScheduledExecutor: 只有一个线程，该线程池可用于定时或周期性任务的执行，类似于Timer，但比Timer要更安全</span><br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EheN1I84uo1zk6ptSqsqcQ">为什么阿里巴巴要禁用Executors创建线程池？</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>(<br><span class="hljs-type">int</span> corePoolSize, <br><span class="hljs-type">int</span> maximumPoolSize, <br><span class="hljs-type">long</span> keepAliveTime,<br>TimeUnit unit, <br>BlockingQueue&lt;Runnable&gt; workQueue,<br>ThreadFactory threadFactory,<br>RejectedExecutionHandler handler)<br><br><span class="hljs-comment">// corePoolSize：线程池的核心线程数(最小线程数)，不管它们创建以后是不是空闲的。线程池需要保持corePoolSize数量的线程，除非设置了allowCoreThreadTimeOut</span><br><br><span class="hljs-comment">// maximumPoolSize：线程池的最大线程数；</span><br><br><span class="hljs-comment">// keepAliveTime：线程池空闲时线程的存活时长；如果经过keepAliveTime时间后，超过核心线程数的线程还没有接受到新的任务，那就销毁，超出线程池核心线程数 小于线程池最大线程数的线程都是借的，没有用了,超时就销毁</span><br><br><span class="hljs-comment">// unit：keepAliveTime时长单位；</span><br><br><span class="hljs-comment">// workQueue：当提交的任务数超过核心线程数大小后，再提交的任务就存放在这里。它仅仅用来存放被execute方法提交的Runnable任务。存放任务的队列，上面提到的线程数超过corePoolSize存放任务的地方；</span><br><span class="hljs-comment">// new ArrayBlockingQueue&lt;Runnable&gt;(10)：是一个基于数组结构的有界阻塞队列，此队列按 FIFO（先进先出）原则对元素进行排序。</span><br><span class="hljs-comment">// new LinkedBlockingQueue&lt;Runnable&gt;(10)：一个基于链表结构的阻塞队列，此队列按FIFO （先进先出） 排序元素，也可以不传参数，默认是Integer.MAX_VALUE</span><br><span class="hljs-comment">// new SynchronousQueue&lt;Runnable&gt;()：一个不存储元素的阻塞队列。每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态，使用SynchronousQueue阻塞队列一般要求maximumPoolSizes为无界(Integer.MAX_VALUE)，避免线程拒绝执行操作。</span><br><span class="hljs-comment">// PriorityBlockingQueue：一个具有优先级的无限阻塞队列。</span><br><span class="hljs-comment">// DelayQueue: DelayQueue中的元素只有当其指定的延迟时间到了，才能够从队列中获取到该元素。DelayQueue是一个没有大小限制的队列，因此往队列中插入数据的操作（生产者）永远不会被阻塞，而只有获取数据的操作（消费者）才会被阻塞。</span><br><br><span class="hljs-comment">// threadFactory：线程工厂，可以自己重写一下，为每个线程赋予一个名字，便于排查问题</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyThreadFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ThreadFactory</span>&#123;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> Thread <span class="hljs-title function_">newThread</span><span class="hljs-params">(Runnable r)</span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(r,<span class="hljs-string">&quot;thread_name&quot;</span>);<br>	&#125;  <br>&#125;<br><br><span class="hljs-comment">// handler：当队列里面放满了任务、最大线程数的线程都在工作时，这时继续提交的任务线程池就处理不了，应该执行怎么样的拒绝策略。</span><br><span class="hljs-comment">//在队列（workQueue）和线程池达到最大线程数（maximumPoolSize）均满时仍有任务的情况下的处理方式即当任务数大于最大线程数并且队列已满时，采用的拒绝策略，分4种，</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>.AbortPolicy <span class="hljs-comment">// 丢弃任务并抛出RejectedExecutionException异常</span><br><span class="hljs-comment">// AbortPolicy策略：默认策略，如果线程池队列满了丢掉这个任务并且抛出RejectedExecutionException异常。</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>.DiscardPolicy <span class="hljs-comment">//丢弃任务，但是不抛出异常</span><br><span class="hljs-comment">// DiscardPolicy策略：如果线程池队列满了，会直接丢掉这个任务并且不会有任何异常。</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>.CallerRunsPolicy<span class="hljs-comment">//（调用者运行）:如果线程池的线程数量达到上限，该策略会把任务队列中的任务放在调用者线程当中运行 由调用线程处理该任务</span><br><span class="hljs-comment">// CallerRunsPolicy策略：如果添加到线程池失败，那么主线程会自己去执行该任务，不会等待线程池中的线程去执行。</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>.DiscardOldestPolicy <span class="hljs-comment">// 抛弃最旧的 丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）</span><br><span class="hljs-comment">// DiscardOldestPolicy策略：如果队列满了，会将最早进入队列的任务删掉腾出空间，再尝试加入队列。</span><br><br><span class="hljs-comment">// demo：</span><br><br><span class="hljs-type">ThreadPoolExecutor</span> <span class="hljs-variable">exec</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>(<br><span class="hljs-number">10</span>, <span class="hljs-number">30</span>, <span class="hljs-number">300</span>, TimeUnit.SECONDS, <br><span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBlockingQueue</span>&lt;Runnable&gt;(<span class="hljs-number">10000</span>), <br>Executors.defaultThreadFactory(), <br><span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>.CallerRunsPolicy());<br><br><span class="hljs-comment">// 核心线程数10，最大线程数30，keepAliveTime是3秒,随着任务数量不断上升，线程池会不断的创建线程，直到到达核心线程数10，就不创建线程了， 这时多余的任务通过加入阻塞队列来运行， 当超出阻塞队列长度+核心线程数时， 这时不得不扩大线程个数来满足当前任务的运行，这时就需要创建新的线程了（最大线程数起作用），上限是最大线程数30 那么超出核心线程数10并小于最大线程数30的可能新创建的这20个线程相当于是“借”的，如果这20个线程空闲时间超过keepAliveTime，就会被退出</span><br><br></code></pre></td></tr></table></figure>
+<p><strong>ArrayBlockingQueue、LinkedBlockingQueue区别</strong><br><img src="/blog/images/ArrayBlockingQueueLinkedBlockingQueue%E5%8C%BA%E5%88%AB.png" srcset="/blog/img/loading.gif" lazyload></p>
+<h4 id="submit与execute区别"><a href="#submit与execute区别" class="headerlink" title="submit与execute区别"></a>submit与execute区别</h4><ol>
+<li>submit在执行过程中与execute不一样，submit不会抛出异常而是把异常保存在成员变量中，在FutureTask.get阻塞获取的时候再把异常抛出来。</li>
+<li>submit有返回值Future，execute无返回值</li>
+<li>execute会抛出异常，sumbit方法不会抛出异常。除非你调用Future.get()。execute直接抛出异常之后线程就死掉了，submit保存异常线程没有死掉，因此execute的线程池可能会出现没有意义的情况，因为线程没有得到重用。而submit不会出现这种情况。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// ①execute方法</span><br>threadPool.execute(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Runnable</span>() &#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>   <span class="hljs-keyword">try</span> &#123;<br>		System.out.println(index);Thread.sleep(<span class="hljs-number">2000</span>);<br>   &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>		e.printStackTrace();<br>   &#125;<br>  &#125;<br>&#125;);<br><br><span class="hljs-comment">// ②submit方法</span><br>Future&lt;String&gt; f = threadPool.submit(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Callable</span>&lt;String&gt;()&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">call</span><span class="hljs-params">()</span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;e&quot;</span>;<br>    &#125;<br>&#125;); <br><br><span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> f.get();<br>FutureTask&lt;String&gt; futureTask = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FutureTask</span>&lt;String&gt;(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Callable</span>()&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">call</span><span class="hljs-params">()</span>&#123;<br>    	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;e&quot;</span>;<br>    &#125;<br>&#125;);<br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(futureTask).start();<span class="hljs-comment">// executor.submit(futureTask);</span><br><span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> futureTask.get(<span class="hljs-number">2000</span>, TimeUnit.MILLISECONDS)<span class="hljs-comment">// 如果在指定时间内，还没获取到结果，就直接返回null</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="线程池相关文章"><a href="#线程池相关文章" class="headerlink" title="线程池相关文章"></a>线程池相关文章</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494021&idx=2&sn=af90e629487ffb76d795fb1f2ff3ccfb&source=41#wechat_redirect">面试官：Java并发-Executor给我讲讲？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oKCJmQt9egsy5RCMgf9xpw">10问10答：你真的了解线程池吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/01MnCUVRxWoqUrCC_xmtEw">如何优雅的自定义 ThreadPoolExecutor 线程池？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UScLWJbiMhWig5doo-coxA">如何优雅的使用线程池！！！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/N76EM8SEjZzZHdheS4jF2Q">深入线程池的问题连环炮</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>线程-Thread</div>
+      <div>https://xmxe.github.io/blog/cl8mek6er000eagfx9uh138b3/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xmxe</div>
+        </div>
+      
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/cl8mft3g6000gagfx31vr200j/" title="ThreadLocal">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ThreadLocal</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/cl8mei5aw000aagfx89zefokg/" title="ArrayList&amp;CopyOnWriteArrayList">
+                        <span class="hidden-mobile">ArrayList&amp;CopyOnWriteArrayList</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>ky</span> <i class="iconfont icon-love"></i> <span>qr</span> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

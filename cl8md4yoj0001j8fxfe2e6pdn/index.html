@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/panda.png">
+  <link rel="icon" href="/blog/img/panda.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xmxe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Git常用命令上传项目到git远程仓库12345678910111213git initgit add -Agit commit -m &quot;init&quot; git remote add origin https:&#x2F;&#x2F;github.com&#x2F;xmxe&#x2F;mySpringBoot.git# 断开连接git remote remove origingit pull --rebase origi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git">
+<meta property="og:url" content="https://xmxe.github.io/blog/cl8md4yoj0001j8fxfe2e6pdn/index.html">
+<meta property="og:site_name" content="xmxe&#39;s blog">
+<meta property="og:description" content="Git常用命令上传项目到git远程仓库12345678910111213git initgit add -Agit commit -m &quot;init&quot; git remote add origin https:&#x2F;&#x2F;github.com&#x2F;xmxe&#x2F;mySpringBoot.git# 断开连接git remote remove origingit pull --rebase origi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xmxe.github.io/blog/assert/git.jpg">
+<meta property="article:published_time" content="2022-09-27T08:41:30.000Z">
+<meta property="article:modified_time" content="2022-09-28T01:50:51.047Z">
+<meta property="article:author" content="xmxe">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xmxe.github.io/blog/assert/git.jpg">
+  
+  
+  
+  <title>Git - xmxe&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xmxe.github.io","root":"/blog/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>xmxe&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/img/j.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Git"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Git</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h5 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h5><h6 id="上传项目到git远程仓库"><a href="#上传项目到git远程仓库" class="headerlink" title="上传项目到git远程仓库"></a>上传项目到git远程仓库</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">git init<br>git add -A<br>git commit -m &quot;init&quot; <br>git remote add origin https://github.com/xmxe/mySpringBoot.git<br><span class="hljs-meta prompt_"># </span><span class="language-bash">断开连接</span><br>git remote remove origin<br>git pull --rebase origin master <br>git push origin master<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">本地生成ssh密钥</span><br>ssh-keygen -t rsa -C &quot;你的邮箱&quot;生成sshkey<br>git remote set-url origin git@github.com:xmxe/springcloud.git<br><br></code></pre></td></tr></table></figure>
+<h6 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git diff # 可以查看当前没有add 的内容修改（不在缓冲区的文件变化） <br>git diff --cached # 查看已经add但没有commit 的改动（在缓冲区的文件变化） <br>git diff HEAD # 是上面两条命令的合并<br><br></code></pre></td></tr></table></figure>
+
+<h6 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset HEAD filename # 撤销git add操作（已经将文件添加到暂存区）如果后面什么都不跟的话 就是上一次add 里面的全部撤销了 <br>git reset --hard HEAD^ # 回退到上一个版本，删除工作空间改动代码，撤销commit，撤销git add . <br>git reset --hard commitid # 回退到指定版本 --hard 强制将暂存区和工作目录都同步到你指定的提交<br>git reset --soft HEAD^ # 不删除工作空间改动代码，撤销commit，不撤销git add <br>git reset --mixed HEAD^ # 不删除工作空间改动代码，撤销commit，并且撤销git add . 操作。这个为默认参数,git reset --mixed HEAD^ 和 git reset HEAD^ 效果是一样的。<br>git revert -n commitid # 回退到指定版本。 与git reset --hard commitid相比 区别是在我们确认了在需要回退的版本之后的提交都可以不需要的时候，我们可以直接使用git reset 命令，但是当我们只是需要撤销某个版本的时候，后面的提交还需要保留，我们就可以使用git revert<br>git revert HEAD # 撤销前一次commit ,此次操作之前和之后的commit都会被保留，并且会把这次撤销作为一次最新的提交 <br><br></code></pre></td></tr></table></figure>
+
+<h6 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git commit -am &#x27;&#x27; # (git add -u + git commit -m &quot;&quot;组合) <br>git commit --amend # 修改注释<br></code></pre></td></tr></table></figure>
+<h6 id="add"><a href="#add" class="headerlink" title="add"></a>add</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add -A # 保存所有的修改 <br>git add . # 保存新的添加和修改，但是不包括删除 <br>git add -u # 保存修改和删除，但是不包括新建文件。 <br><br></code></pre></td></tr></table></figure>
+
+<h6 id="branch"><a href="#branch" class="headerlink" title="branch"></a>branch</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git branch # 查看分支<br>git branch &lt;name&gt; # 创建分支(未切换)<br>git branch -d &lt;name&gt; # 删除分支，不能删除当前所在分支 <br>git branch --set-upstream branch-name origin/branch-name # 建立本地分支和远程分支的关联<br><br></code></pre></td></tr></table></figure>
+
+<h6 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout &lt;name&gt; # 切换分支<br>git checkout -b &lt;name&gt; # 创建+切换分支<br>git checkout -- file # 丢弃某个文件工作区的修改（还原修改过的文件）<br>git checkout . # 放弃本地所有修改，没有提交的可以回到未修改前版本，不包括新增删除的文件 <br>git checkout . &amp;&amp; git clean -df # 放弃本地所有修改，包括新增删除的文件<br>git checkout develop &amp;&amp; git merge feature #（先切换到develop分支然后把feature分支合并到develop分支） <br></code></pre></td></tr></table></figure>
+<h6 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git merge &lt;name&gt; # 合并指定分支到当前分支<br></code></pre></td></tr></table></figure>
+<h6 id="git-rebase-和-git-merge-有啥区别？"><a href="#git-rebase-和-git-merge-有啥区别？" class="headerlink" title="git rebase 和 git merge 有啥区别？"></a>git rebase 和 git merge 有啥区别？</h6><p>rebase会把你当前分支的 commit 放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。<br>举例:如果你从 master 拉了个feature分支出来,然后你提交了几个 commit,这个时候刚好有人把他开发的东西合并到 master 了,这个时候 master 就比你拉分支的时候多了几个 commit,如果这个时候你 rebase master 的话，就会把你当前的几个 commit，放到那个人 commit 的后面。<br>merge 会把公共分支和你当前的commit 合并在一起，形成一个新的 commit 提交</p>
+<h6 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">git tag # 查看所有标签，可以知道历史版本的tag <br>git tag &lt;tagName&gt; # 打标签，默认为HEAD。比如git tag v1.0<br>git tag &lt;tagName&gt; commit_id # 根据版本号打上标签<br>git tag -a &lt;tagName&gt; -m &quot;&lt;说明&gt;&quot; # 创建带说明的标签。-a指定标签名，-m指定说明文字 <br>git show &lt;tagName&gt; # 查看标签信息 <br>git tag -d &lt;tagName&gt; # 删除标签 <br>git push origin &lt;tagname&gt; # 推送某个标签到远程 <br>git push origin --tags # 一次性推送全部尚未推送到远程的本地标签 <br><br></code></pre></td></tr></table></figure>
+<h6 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h6><blockquote>
+<p>应用场景：某一天你正在 feature 分支开发新需求，突然产品经理跑过来说线上有bug，必须马上修复。而此时你的功能开发到一半，于是你急忙想切到 master 分支，然后你就会看到以下报错：Your local changes to the following…因为当前有文件更改了，需要提交commit保持工作区干净才能切分支。由于情况紧急，你只有急忙 commit 上去，commit 信息也随便写了个“暂存代码”，于是该分支提交记录就留了一条黑历史，如果你学会 stash，就不用那么狼狈了。你只需要： git stash就这么简单，代码就被存起来了。 当你修复完线上问题，切回 feature 分支，想恢复代码也只需要： git stash apply,但是恢复后，stash 内容并不删除，需要用 git stash drop 来删除</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">保存当前未commit的代码</span><br>git stash<br><span class="hljs-meta prompt_"># </span><span class="language-bash">保存当前未commit的代码并添加备注</span><br>git stash save &quot;备注的内容&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">列出stash的所有记录</span><br>git stash list<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除stash的所有记录</span><br>git stash clear<br><span class="hljs-meta prompt_"># </span><span class="language-bash">应用最近一次的stash</span><br>git stash apply<br><span class="hljs-meta prompt_"># </span><span class="language-bash">应用最近一次的stash，随后删除该记录</span><br>git stash pop<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除最近的一次stash</span><br>git stash drop<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">当有多条 stash，可以指定操作stash，首先使用stash list 列出所有记录：</span><br>git stash list <br><span class="hljs-meta prompt_"># </span><span class="language-bash">stash@&#123;0&#125;: WIP on ...</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">stash@&#123;1&#125;: WIP on ...</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">stash@&#123;2&#125;: On ...</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">应用第二条记录：</span><br>git stash apply stash@&#123;1&#125;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">pop，drop 同理。</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="config"><a href="#config" class="headerlink" title="config"></a>config</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git config --gloabl http.postBuffer 524288000<br>git config --gloabl http.sslVerify &quot;false&quot;<br>git config --global user.name &quot;your name&quot;<br>git config --global user.email &quot;your email&quot;<br>git config --global credential.helper store<br></code></pre></td></tr></table></figure>
+
+<h6 id="git删除github文件夹但不删除本地的-以-idea为例"><a href="#git删除github文件夹但不删除本地的-以-idea为例" class="headerlink" title="git删除github文件夹但不删除本地的 以.idea为例"></a>git删除github文件夹但不删除本地的 以.idea为例</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git rm -r --cached .idea # --cached不会把本地的.idea删除<br>git commit -m &#x27;delete .idea dir&#x27;<br>git push -u origin master<br></code></pre></td></tr></table></figure>
+<h6 id="git删除大文件"><a href="#git删除大文件" class="headerlink" title="git删除大文件"></a>git删除大文件</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">显示10个最大的文件<span class="hljs-built_in">id</span>列表</span><br>git verify-pack -v .git/objects/pack/pack-*.idx | sort -k 3 -n | tail -10<br><span class="hljs-meta prompt_"># </span><span class="language-bash">根据文件<span class="hljs-built_in">id</span>查询文件路径</span><br>git rev-list --objects --all | grep 08a7475<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除文件的历史记录</span><br>git filter-branch --force --index-filter &#x27;git rm --cached --ignore-unmatch 文件名&#x27; --prune-empty --tag-name-filter cat -- --all<br><br>git filter-branch --index-filter # 让每个提交的文件都复制到索引(.git/index)中 然后运行过滤器命令：git rm --cached --ignore-unmatch文件名 ，让每个提交都删除掉“文件名”文件 然后--prune-empty 把空的提交“修剪”掉 然后--tag-name-filter cat 把每个tag保持原名字，指向修改后的对应提交 最后-- --all 将所有ref（包括branch、tag）都执行上面的重写<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除缓存下来的ref和git操作记录</span><br>git for-each-ref --format=&#x27;delete %(refname)&#x27; refs/original | git update-ref --stdin<br>git reflog expire --expire=now --all<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">垃圾回收</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">上面2步把大文件的索引都切断了，这个时候进行垃圾回收，就可以很明显看到效果了</span><br>git gc --prune=now<br><span class="hljs-meta prompt_"># </span><span class="language-bash">把.git里面的修改推上去  这个时候普通的push是不行的，需要强推</span> <br>git push --force<br><br></code></pre></td></tr></table></figure>
+<h5 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h5><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ct6GWiE_hzoXUNeriLAnng">Git 不要只会 pull 和 push，试试这 5 条提高效率的命令</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MM7sQiFPh2vIuGvg1-813Q">Git 各指令的本质，真是通俗易懂啊！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/csEgAjJwH75_IvAnFBIuvw">Git科普文，Git基本原理&amp;各种骚操作</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xoyQ4TzVKLQb2VjZJLUqFQ">一文快速掌握 Git 用法</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wtPizZ3RlwY3Ex1Lc3Pf4A">精心整理 ：Git 从入门到精通、包教包会、收藏一下、随时学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OchvVMGoBzSFWhou4WhrWw">大牛总结的 Git 使用技巧，写得太好了！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/q6tI0qctvciJhNz_5KLx-w">通过 .git 目录深入理解 Git！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KwTsWyFh07iYdfINqo9UTg">Git 命令全方位学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TW_qUWRVEnberle5q0ws9Q">图解 Git，一目了然！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dYiWQQ5PsSS7F7z7cDLEuw">Git 代码防丢指南，再也不怕丢失代码了！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XB_G7TZqBX8r3CJlvqA0Cg">20 个最常用的 Git 命令，你都会用吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ">合并代码还在用 git merge？我们都用 git rebase！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw">45个 GIT 经典操作场景，专治不会合代码</a></li>
+</ul>
+<h5 id="一图以概览"><a href="#一图以概览" class="headerlink" title="一图以概览"></a>一图以概览</h5><p><img src="/blog/images/git.png" srcset="/blog/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/git/">#git</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Git</div>
+      <div>https://xmxe.github.io/blog/cl8md4yoj0001j8fxfe2e6pdn/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xmxe</div>
+        </div>
+      
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/cl8md4yos0004j8fxcdu3bih7/" title="JVM知识点">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JVM知识点</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/cl8md4yp9000pj8fxdvamdioj/" title="怎么保证幂等性">
+                        <span class="hidden-mobile">怎么保证幂等性</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>ky</span> <i class="iconfont icon-love"></i> <span>qr</span> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

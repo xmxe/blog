@@ -16,24 +16,24 @@
   <meta name="author" content="xmxe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="唯一索引，防止新增脏数据  token机制，防止页面重复提交前端限制:页面的提交按钮只能被点击提交一次后端解决方案：集群环境：采用token加redis（redis单线程的，处理需要排队）单JVM环境：采用token加redis或token加jvm内存处理流程：请求前先生成token ，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码">
+    <meta name="description" content="MQ怎么保证消息可靠性？MQ怎么保证消息100%消费？如何保证消息不会丢失？我们需要保障MQ消息的可靠性，需要从三个层面&#x2F;维度解决：生产者100%投递、MQ持久化、消费者100%消费，这里的100%消费指的是消息不少消费，也不多消费。 消息生产阶段： 从消息被生产出来，然后提交给 MQ 的过程中，只要能正常收到 MQ Broker 的 ack 确认响应，就表示发送成功，所以只要处理好返回">
 <meta property="og:type" content="article">
-<meta property="og:title" content="怎么保证幂等性">
-<meta property="og:url" content="https://xmxe.github.io/blog/2022/09/27/%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/index.html">
+<meta property="og:title" content="消息队列-MQ">
+<meta property="og:url" content="https://xmxe.github.io/blog/2022/09/29/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97-MQ/index.html">
 <meta property="og:site_name" content="xmxe&#39;s blog">
-<meta property="og:description" content="唯一索引，防止新增脏数据  token机制，防止页面重复提交前端限制:页面的提交按钮只能被点击提交一次后端解决方案：集群环境：采用token加redis（redis单线程的，处理需要排队）单JVM环境：采用token加redis或token加jvm内存处理流程：请求前先生成token ，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码">
+<meta property="og:description" content="MQ怎么保证消息可靠性？MQ怎么保证消息100%消费？如何保证消息不会丢失？我们需要保障MQ消息的可靠性，需要从三个层面&#x2F;维度解决：生产者100%投递、MQ持久化、消费者100%消费，这里的100%消费指的是消息不少消费，也不多消费。 消息生产阶段： 从消息被生产出来，然后提交给 MQ 的过程中，只要能正常收到 MQ Broker 的 ack 确认响应，就表示发送成功，所以只要处理好返回">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xmxe.github.io/blog/assert/mideng.jpg">
-<meta property="article:published_time" content="2022-09-27T08:29:30.000Z">
-<meta property="article:modified_time" content="2022-09-30T02:57:15.985Z">
+<meta property="og:image" content="https://xmxe.github.io/blog/assert/mq.jpg">
+<meta property="article:published_time" content="2022-09-29T05:53:30.000Z">
+<meta property="article:modified_time" content="2022-09-29T06:08:35.207Z">
 <meta property="article:author" content="xmxe">
-<meta property="article:tag" content="随笔">
+<meta property="article:tag" content="mq">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xmxe.github.io/blog/assert/mideng.jpg">
+<meta name="twitter:image" content="https://xmxe.github.io/blog/assert/mq.jpg">
   
   
   
-  <title>怎么保证幂等性 - xmxe&#39;s blog</title>
+  <title>消息队列-MQ - xmxe&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="怎么保证幂等性"></span>
+            <span id="subtitle" data-typed-text="消息队列-MQ"></span>
           
         </div>
 
@@ -214,7 +214,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2.1k 字
         
       </span>
     
@@ -254,47 +254,79 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">怎么保证幂等性</h1>
+            <h1 style="display: none">消息队列-MQ</h1>
             
             
               <div class="markdown-body">
                 
-                <ol>
-<li><p>唯一索引，防止新增脏数据</p>
-</li>
-<li><p>token机制，防止页面重复提交<br>前端限制:页面的提交按钮只能被点击提交一次<br>后端解决方案：<br>集群环境：采用token加redis（redis单线程的，处理需要排队）<br>单JVM环境：采用token加redis或token加jvm内存<br>处理流程：请求前先生成token ，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码逻辑将生成的token与已生成且保存的token做对比，token一致的话代表已经生成了一次，本次不允许返回），将生成的token放到redis或jvm内存，并设置token的有效时间，返回给客户端<br><img src="/blog/images/mideng.jpg" srcset="/blog/img/loading.gif" lazyload></p>
-</li>
-</ol>
-<p>客户端携带token请求服务端，服务端查询redis，如果有的话处理请求并删除token，没有的话代表非法请求不做处理</p>
-<p><strong>延申内容<br>现在很多系统处理请求已经不做是否登陆的校验，而是根据用户名密码申请token，将token保存到cookie或者Local Storage或者form隐藏域，请求时携带token，服务端校验处理请求</strong><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X4J56Y2dLzkBVwCC2hlmaQ">Token多平台身份认证架构设计思路</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/GreenSky_Test/article/details/116056661">Token登录认证详解</a><br>3. 悲观锁 获取数据的时候加锁获取</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> table_xxx <span class="hljs-keyword">where</span> id<span class="hljs-operator">=</span><span class="hljs-string">&#x27;xxx&#x27;</span> <span class="hljs-keyword">for</span> <span class="hljs-keyword">update</span>;<br></code></pre></td></tr></table></figure>
-<p>注意：id字段一定是主键或者唯一索引<br>悲观锁使用时一般伴随事务一起使用，数据锁定时间可能会很长，根据实际情况选用</p>
-<ol start="4">
-<li>乐观锁 乐观锁只是在更新数据那一刻锁表，其他时间不锁表，所以相对于悲观锁，效率更高。乐观锁的实现方式多种多样可以通过version或者其他状态条件：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 通过版本号实现</span><br><span class="hljs-keyword">update</span> table_xxx <span class="hljs-keyword">set</span> name<span class="hljs-operator">=</span>#name#,version<span class="hljs-operator">=</span>version<span class="hljs-operator">+</span><span class="hljs-number">1</span> <span class="hljs-keyword">where</span> version<span class="hljs-operator">=</span>#version#<br><span class="hljs-comment">-- 通过条件限制</span><br><span class="hljs-keyword">update</span> tablexxx <span class="hljs-keyword">set</span> avaiamount<span class="hljs-operator">=</span>avaiamount<span class="hljs-operator">-</span>#subAmount# <span class="hljs-keyword">where</span> avaiamount<span class="hljs-operator">-</span>#subAmount# <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure></li>
-<li>分布式锁 </li>
-<li>状态机幂等<br>在设计单据相关的业务，或者是任务相关的业务，肯定会涉及到状态机(状态变更图)，就是业务单据上面有个状态，状态在不同的情况下会发生变更，一般情况下存在有限状态机,如果状态机已经处于下一个状态，这时候来了一个上一个状态的变更，理论上是不能够变更的，这样的话，保证了有限状态机的幂等。注意：订单等单据类业务，存在很长的状态流转，一定要深刻理解状态机，对业务系统设计能力提高有很大帮助</li>
-<li>利用唯一请求编号去重，借用Redis做这个去重——只要这个唯一请求编号在redis存在，证明处理过，那么就认为是重复的</li>
-</ol>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eVHScVN2kcuZaokzs6-QxA">拒绝接口裸奔！开放API接口签名验证！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BENMPLwH8WG60UVL5vXj0A">面试问：你的项目是如何处理重复请求&#x2F;并发请求的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nza76CX-UJxspSTl52B8eQ">Spring Boot 实现接口幂等性的 4 种方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3FJQYVoh_MDXBT0wHoKksQ">高并发下如何保证接口的幂等性？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Hd4T8aqrx8gTmkLRyl7hcA">分布式幂等性如何保证</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Rax8Qb-DrYNpkbc6eTtRlg">消息幂等（去重）通用解决方案，写得真好</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aKStFQXAlFF-1dOax5xg4Q">面试官：给我一个避免消息重复消费的解决方案？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI1NDY0MTkzNQ==&amp;mid=2247497775&amp;idx=1&amp;sn=02f389bfbdb280314e4db32660cd5bc5&amp;scene=21#wechat_redirect">处理接口幂等性的两种常见方案|手把手教你</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ryhX9usir_d-O8eJuItWzA">如何防止订单重复支付？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aQwcHv36y0Du4w9HxT5FSw">保证接口数据安全的10种方案</a></li>
-</ul>
-<p>延申</p>
-<p><strong>微服务系统如何设计一个安全的API</strong></p>
+                <h4 id="MQ怎么保证消息可靠性？MQ怎么保证消息100-消费？如何保证消息不会丢失？"><a href="#MQ怎么保证消息可靠性？MQ怎么保证消息100-消费？如何保证消息不会丢失？" class="headerlink" title="MQ怎么保证消息可靠性？MQ怎么保证消息100%消费？如何保证消息不会丢失？"></a>MQ怎么保证消息可靠性？MQ怎么保证消息100%消费？如何保证消息不会丢失？</h4><p>我们需要保障MQ消息的可靠性，需要从三个层面&#x2F;维度解决：生产者100%投递、MQ持久化、消费者100%消费，这里的100%消费指的是消息不少消费，也不多消费。</p>
+<p>消息生产阶段： 从消息被生产出来，然后提交给 MQ 的过程中，只要能正常收到 MQ Broker 的 ack 确认响应，就表示发送成功，所以只要处理好返回值和异常，这个阶段是不会出现消息丢失的。<br>消息存储阶段： 这个阶段一般会直接交给 MQ 消息中间件来保证，但是你要了解它的原理，比如 Broker 会做副本，保证一条消息至少同步两个节点再返回 ack。<br>消息消费阶段： 消费端从 Broker 上拉取消息，只要消费端在收到消息后，不立即发送消费确认给 Broker，而是等到执行完业务逻辑后，再发送消费确认，也能保证消息的不丢失。</p>
+<p><strong>以kafka为例</strong><br>一、生产者端</p>
 <ol>
-<li>身份认证问题<br>一般情况下服务端均会向客户端颁发appId、partnerId等类似于标识用户身份的唯一ID，此ID关联用户密钥，一旦服务端异常或者受到工具，可以追溯来源，调整ID状态或者来强制下线用户</li>
-<li>信息泄露问题<br>信息泄露主要是要控制报文在网络传输中不要明文传输，根据对称和非对称加密算法的特点，目前主流的做法是使用混合加密，主要流程是，服务端创建RSA密钥对，将公钥传输给客户端，同时客户端创建AES密钥，使用AES密钥加密明文得到密文，接着使用公钥加密AES密钥，最后将加密后的AES密钥和密文传输到服务端。服务端使用自己的私钥解密加密后的AES密钥得到AES密钥，接着使用AES密钥解密密文得到明文</li>
-<li>请求被篡改问题<br>防止请求被篡改主要是要做好加签和验签</li>
-<li>重放攻击问题<br>黑客监听到请求后，重复请求攻击服务端，服务端如何识别是非法请求<br>在请求参数中增加timestamp、randomString参数【此参数是从服务端实时请求的】，服务端在接收到请求后timestamp时间戳和服务端相差1分中之内的才放行，接着判断randomString是否已经存在，如果存在则不响应</li>
+<li>Kafka消息发送端有个ACK机制。设置ack参数：ack&#x3D;0，表示不重试，Kafka不需要返回ack，极有可能各种原因造成丢失；ack&#x3D;1，表示Leader写入成功就返回ack了，Follower不一定同步成功；ack&#x3D;all或ack&#x3D;-1，表示ISR列表中的所有Follower同步完成再返回ack。只要能正常收到 MQ Broker 的 ack 确认响应，就表示发送成功，所以只要处理好返回值和异常，这个阶段是不会出现消息丢失的。</li>
+<li>设置参数unclean.leader.election.enable: false，禁止选举ISR以外的Follower为Leader，只能从ISR列表中的节点中选举Leader；可能会牺牲Kafka的可用性，但是能够提高消息的可靠性。</li>
+<li>重试机制，设置tries &gt; 1，表示消息重发次数。</li>
+<li>设置最小同步副本数min.insync.replicas &gt; 1，没满足该值前，Kafka不提供读写服务，写操作会异常。<br>总结：生产消息时通过设置最小同步副本数和ACK机制，可以让MQ在性能与可靠性上达到平衡。<br>二、消费者端<br>手工提交offset（偏移量）</li>
 </ol>
+<p><strong>以RocketMQ为例</strong><br>需要确保生产者、broker、消费者三者都不丢失数据。</p>
+<ol>
+<li>生产者不丢失消息<br>方案1：confirm消息确认机制(同步发送消息) + 失败重试；<br>方案2：事务消息机制；</li>
+<li>broker不丢失消息，开启同步刷盘策略 + 主从架构同步机制。<br>只要让一个master Broker收到消息之后同步写入磁盘，同时同步复制给其他slave Broker，再返回成功响应给生产者，此时就可以保证MQ自己不会弄丢消息</li>
+<li>消费者不丢失消息，采用RocketMQ的消费者天然就可以保证你处理完消息之后，才会提交消息的offset到broker去，不过别采用多线程异步处理消息的方式。</li>
+</ol>
+<h4 id="如何保证mq有序且只消费一次，怎么解决消息被重复消费的问题？"><a href="#如何保证mq有序且只消费一次，怎么解决消息被重复消费的问题？" class="headerlink" title="如何保证mq有序且只消费一次，怎么解决消息被重复消费的问题？"></a>如何保证mq有序且只消费一次，怎么解决消息被重复消费的问题？</h4><p>最简单的实现方案，就是在数据库(redis或者关系库)中建一张消息日志表， 这个表有两个字段：消息 ID 和消息执行状态</p>
+<h4 id="消息积压"><a href="#消息积压" class="headerlink" title="消息积压"></a>消息积压</h4><p>增加消费端数量</p>
+<h4 id="MQ高可用的相关文章"><a href="#MQ高可用的相关文章" class="headerlink" title="MQ高可用的相关文章"></a>MQ高可用的相关文章</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Yu95odAgq7VVzCa5ttkwow">消息队列消息丢失和消息重复发送的处理策略</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wzYvFEowBHB-MJNQU6N3OQ">消息队列如何保证消息不丢失，且只被消费一次，这篇就教会你</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ON4avaV8pOjmJVll3K90RQ">面试官：如何保障消息100%投递成功、消息幂等性？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tNyJhqzOyQFE2fIEygFyTw">如何保证 MQ消息是有序的？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T3aEpibbP1u48LTat1KxHQ">消息被重复消费，怎么避免？有什么好的解决方案？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b_2OZkTIViA4IbfsfwwbxA">如何保证消息队列里的数据顺序执行？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F6JsNbLfeo_63kCzcBgogA">面试基操：MQ怎么保障消息可靠性？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yVatpQzVd--dlbR5ImBkWg">使用MQ的时候，怎么确保消息100%不丢失</a></li>
+</ul>
+<h4 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493725&idx=1&sn=96eb8c16aa8cfe8336334d93c4034ed2&source=41#wechat_redirect">Kafka 安装及快速入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491187&idx=1&sn=f0f092e675677d87ea0675f65bb1eb14&source=41#wechat_redirect">带你涨姿势的认识一下kafka</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaodf/p/6093261.html">Kafka Shell基本命令</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FP3z5JMRB9Oo5pr22kr3XA">漫画：图解 Kafka，看本篇就足够啦</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lXds_G5LLs7CArMLyTAF6g">你能说出 Kafka 这些原理吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493937&idx=1&sn=3b2710a62cbb51b3f7c607bfd97664c1&source=41#wechat_redirect">Kafka基本架构及原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LAXrK6WT1bv7I63BmvpXQg">9 个 Kafka 面试题，你会几个？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yIPIABpAzaHJvGoJ6pv0kg">Kafka中副本机制的设计和原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ndwrlst-aVdUpcNz-inM3Q">从面试角度一文学完 Kafka</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Fvd_RcdMHzcwm3fBlpT8vw">支持百万级TPS，Kafka是怎么做到的？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494362&idx=1&sn=f16c4f215dd83c81957b0b431b147902&source=41#wechat_redirect">Kafka深度剖析</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2wGCEWisbynCIjRsO2gxDg">Kafka性能篇：为何Kafka这么”快”</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fOhlF6crYGXRNHjV0nLQLQ">Kafka为什么吞吐量大、速度快？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/V3BlPGOuGPnmT36a500o7g">图解 kafka 架构与工作原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cmDqGpTiHKRqcSaQVesJVA">面试官：聊一聊 kafka 线上会遇到哪些问题？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l75MIcG4cf8C59z1JcfygA">《面试八股文》之 Kafka 21卷</a></li>
+</ul>
+<h4 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hj8iqASSOk2AgdtkuLPCCQ">四种策略确保 RabbitMQ 消息发送可靠性！你用哪种？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RzxiXBQk3zjHt9PVI3JSQw">新来个技术总监，把 RabbitMQ 讲的那叫一个透彻，佩服！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5szA0KBpFn9G3DeS9C0U3w">RabbitMQ 高可用之如何确保消息成功消费</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fFqzuN2AnLazoCyahL3EFw">RabbitMQ 中的消息会过期吗</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/inhSj-nIiDCfUf24TrE2XA">RabbitMQ 七种消息传递形式</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/V_XZ2vC2jZmzxm-0ThhiTg">使用rabbitmq延时队列实现超时取消订单</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/38XaTeHdgiH5GfCIQiWlnQ">面试官：引入RabbitMQ后，你如何保证全链路数据100%不丢失？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_G_hd8OX9D76Pd5TmM3_BQ">RabbitMQ详解</a></li>
+</ul>
+<h4 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/804KWy4Gf9EIo9GiNRg5Fg">阿里二面：RocketMQ 消息积压了，增加消费者有用吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_Gl8MqcSa5gASLXSxyhHCg">如何基于RocketMQ设计一套全链路消息不丢失方案？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4k_g85aktaBhwSl9iu6r5A">通过这三个文件彻底搞懂rocketmq的存储原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vIqOEeNBCSQJDB-qNYukTQ">RocketMQ 集群 Broker 挂了，会造成什么影响？</a></li>
+</ul>
+<h4 id="other"><a href="#other" class="headerlink" title="other"></a>other</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mXX2hjRQ7qlPs0wK98Kb4Q">什么是MQ？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/upKoeiT2EvMBBlqyRKiv8g">消息队列原理和选型：Kafka、RocketMQ 、RabbitMQ 和 ActiveMQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pXjLoPkyLNj9AHFoHI-GdA">一篇文章把RabbitMQ、RocketMQ、Kafka三元归一</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mtEdb-vJGF7irOJ26QbnvA">这个队列的思路真的好，现在它是我简历上的亮点了。</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8-zvNtXlad0pACg7Yhh4TA">面试官必问的 3 道 MQ 面试题，还有谁不会？？</a></li>
+</ul>
 
                 
               </div>
@@ -303,11 +335,32 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+        <a href="/blog/tags/mq/">#mq</a>
       
     </div>
   
@@ -319,8 +372,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>怎么保证幂等性</div>
-      <div>https://xmxe.github.io/blog/2022/09/27/怎么保证幂等性/</div>
+      <div>消息队列-MQ</div>
+      <div>https://xmxe.github.io/blog/2022/09/29/消息队列-MQ/</div>
     </div>
     <div class="license-meta">
       
@@ -359,9 +412,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2022/09/27/Git/" title="Git">
+                      <a href="/blog/2022/09/29/%E6%88%91%E7%9A%84%E7%AC%94%E8%AE%B0/" title="我的笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Git</span>
+                        <span class="hidden-mobile">我的笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -369,8 +422,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2022/09/27/Nginx/" title="Nginx">
-                        <span class="hidden-mobile">Nginx</span>
+                      <a href="/blog/2022/09/29/%E9%94%81/" title="锁">
+                        <span class="hidden-mobile">锁</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

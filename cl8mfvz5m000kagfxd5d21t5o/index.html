@@ -24,8 +24,8 @@
 <meta property="og:description" content="悲观锁悲观的认为只要从数据库查询数据就会修改 悲观锁适用于数据库高并发的大量写入操作，本次事务提交之前（事务提交时会释放事务过程中的锁），外界无法修改这些记录。具体使用:mysql数据库首先要设置事务不允许自动提交 set autocommit&#x3D;0 然后select name from table where id &#x3D; ? for update 将查询的结果上锁 这样的话其他得">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xmxe.github.io/blog/assert/lock.jpg">
-<meta property="article:published_time" content="2022-09-29T03:07:15.000Z">
-<meta property="article:modified_time" content="2022-09-29T05:38:19.024Z">
+<meta property="article:published_time" content="2022-09-29T02:30:39.098Z">
+<meta property="article:modified_time" content="2022-10-01T12:40:33.262Z">
 <meta property="article:author" content="xmxe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xmxe.github.io/blog/assert/lock.jpg">

@@ -36,7 +36,7 @@
 
    <style>
     body{
-       background-image: url(medias/cover.jpg);
+       background-image: url(/blog/medias/cover.jpg);
        background-repeat:no-repeat;
        background-size:cover;
        background-attachment:fixed;
@@ -140,40 +140,6 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="" class="waves-effect waves-light">
-
-      
-      <i class="fas fa-seedling" style="zoom: 0.6;"></i>
-      
-      <span>仓库</span>
-      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
-    </a>
-    <ul class="sub-nav menus_item_child ">
-      
-      <li>
-        <a target="_blank" rel="noopener" href="https://github.com/xmxe">
-          
-          <i class="fab fa-github" style="margin-top: -20px; zoom: 0.6;"></i>
-          
-          <span>GitHub</span>
-        </a>
-      </li>
-      
-      <li>
-        <a target="_blank" rel="noopener" href="https://gitee.com/xmxe">
-          
-          <i class="fab fa-gitter" style="margin-top: -20px; zoom: 0.6;"></i>
-          
-          <span>Gitee</span>
-        </a>
-      </li>
-      
-    </ul>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
     <a href="/blog/about" class="waves-effect waves-light">
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
@@ -265,41 +231,6 @@
 				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
 			      
 		          <span>归档</span>
-                  </a>
-                </li>
-              
-            </ul>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="javascript:;">
-			
-				<i class="fa-fw fas fa-seedling"></i>
-			
-			仓库
-			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
-		</a>
-            <ul  style="background:  ;" >
-              
-                <li>
-
-                  <a target="_blank" rel="noopener" href="https://github.com/xmxe " style="margin-left:75px">
-				  
-				   <i class="fa fab fa-github" style="position: absolute;left:50px" ></i>
-			      
-		          <span>GitHub</span>
-                  </a>
-                </li>
-              
-                <li>
-
-                  <a target="_blank" rel="noopener" href="https://gitee.com/xmxe " style="margin-left:75px">
-				  
-				   <i class="fa fab fa-gitter" style="position: absolute;left:50px" ></i>
-			      
-		          <span>Gitee</span>
                   </a>
                 </li>
               
@@ -508,6 +439,11 @@
         <link rel="stylesheet" href="/blog/libs/prism/prism.css">
         
 
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
         
 
         <div class="card-content article-card-content">
@@ -901,7 +837,7 @@
 
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card" style="background-color: white;">
+        <div class="toc-widget card">
             <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
             <div id="toc-content"></div>
         </div>
@@ -1082,8 +1018,18 @@
             
         </div>
         <div class="col s12 m4 l4 social-link ">
-    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="26" height="27" class="icon" viewBox="0 0 75 55" xmlns="http://www.w3.org/2000/svg">
+            <path d="M67.558546,39.8714292 L42.0857966,39.8714292 C40.8627004,39.8720094 39.8710953,40.8633548 39.8701949,42.0864508 L39.8687448,47.623783 C39.867826,48.8471055 40.8592652,49.8390642 42.0825879,49.8393845 C42.0827874,49.8393846 42.0829869,49.8393846 42.0831864,49.8387862 L57.5909484,49.838657 C58.8142711,49.8386283 59.8059783,50.830319 59.8059885,52.0536417 C59.8059885,52.0536479 59.8059885,52.053654 59.8059701,52.0536602 L59.8059701,52.6073539 L59.8059701,52.6073539 L59.8059701,53.161115 C59.8059701,56.8310831 56.8308731,59.80618 53.160905,59.80618 L32.1165505,59.80618 C30.8934034,59.806119 29.9018373,58.8145802 29.9017425,57.5914331 L29.9011625,36.5491188 C29.9008781,32.8791508 32.8758931,29.9039718 36.5458611,29.9038706 C36.5459222,29.9038706 36.5459833,29.9038706 36.5460443,29.9040538 L67.5523638,29.9040538 C68.77515,29.9026795 69.7666266,28.9118177 69.7687593,27.6890325 L69.7721938,22.1516997 C69.774326,20.928378 68.7832423,19.9360642 67.5599198,19.9353054 C67.5594619,19.9353051 67.5590039,19.935305 67.558546,19.9366784 L36.5479677,19.9366784 C27.3730474,19.9366784 19.935305,27.3744208 19.935305,36.549341 L19.935305,67.558546 C19.935305,68.7818687 20.927004,69.7735676 22.1503267,69.7735676 L54.8224984,69.7735676 C63.079746,69.7735676 69.7735676,63.079746 69.7735676,54.8224984 L69.7735676,42.0864509 C69.7735676,40.8631282 68.7818687,39.8714292 67.558546,39.8714292 Z"
+            fill="#FFFFFF">
+            </path>
+      </svg>
     </a>
 
 
@@ -1094,7 +1040,7 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=464817304" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 464817304" data-position="top" data-delay="50">
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=464817304" class="tooltipped" target="_blank" data-tooltip="QQ: 464817304" data-position="top" data-delay="50">
         <i class="fab fa-qq"></i>
     </a>
 

@@ -74,7 +74,7 @@
             <div class="brand-logo">
                 <a href="/blog/" class="waves-effect waves-light">
                     
-                    <img src="/blog/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="/blog/medias/loading.png" data-original="/blog/medias/logo.png" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">熊猫小二</span>
                 </a>
@@ -158,7 +158,7 @@
 
     <div class="mobile-head bg-color">
         
-        <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="/blog/medias/loading.png" data-original="/blog/medias/logo.png" class="logo-img circle responsive-img">
         
         <div class="logo-name">熊猫小二</div>
         <div class="logo-desc">
@@ -389,11 +389,11 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="计算机" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/post/cl8zka719000lxsfxcxpng6i5/">
+                    <a href="/blog/posts/cl8zm7skc000l3wfx7pnq17qg/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/blog/medias/featureimages/9.jpg" class="responsive-img" alt="Linux相关">
+                            <img src="/blog/medias/loading.png" data-original="/blog/medias/featureimages/9.jpg" class="responsive-img" alt="Linux相关">
                             
                             <span class="card-title">Linux相关</span>
                         </div>
@@ -417,11 +417,11 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="计算机" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/post/cl8zka733001sxsfxgpypdwpu/">
+                    <a href="/blog/posts/cl8zm7sl8001s3wfx68d937qr/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/blog/medias/featureimages/1.jpg" class="responsive-img" alt="进制转换">
+                            <img src="/blog/medias/loading.png" data-original="/blog/medias/featureimages/1.jpg" class="responsive-img" alt="进制转换">
                             
                             <span class="card-title">进制转换</span>
                         </div>
@@ -445,11 +445,11 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="计算机" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/post/cl8zka739001uxsfx9fwa7svi/">
+                    <a href="/blog/posts/cl8zm7sle001y3wfx90d1eqoa/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/blog/medias/featureimages/2.jpg" class="responsive-img" alt="软件设计师考点笔记">
+                            <img src="/blog/medias/loading.png" data-original="/blog/medias/featureimages/2.jpg" class="responsive-img" alt="软件设计师考点笔记">
                             
                             <span class="card-title">软件设计师考点笔记</span>
                         </div>
@@ -805,6 +805,19 @@ $(function () {
     <!-- 弹出文字 -->
     
 
-</body>
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
 
 </html>

@@ -74,7 +74,7 @@
             <div class="brand-logo">
                 <a href="/blog/" class="waves-effect waves-light">
                     
-                    <img src="/blog/medias/loading.png" data-original="/blog/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="/blog/medias/logo.png" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">熊猫小二</span>
                 </a>
@@ -158,7 +158,7 @@
 
     <div class="mobile-head bg-color">
         
-        <img src="/blog/medias/loading.png" data-original="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
         
         <div class="logo-name">熊猫小二</div>
         <div class="logo-desc">
@@ -442,15 +442,15 @@
 <p>运行时常量池：是方法区的一部分，其中的主要内容来自于JVM对Class的加载。<br>Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分内容将在类加载后放到方法区的运行时常量池中。</p>
 <p>Java1.7之前，常量池是存放在方法区中的，运行常量池是方法区的一部分。方法区是堆的一个逻辑部分，他有一个名字叫做非堆。</p>
 <blockquote>
-<p>jdk1.7之前<br><img src="/blog/medias/loading.png" data-original="/blog/images/jvm1.7.png"></p>
+<p>jdk1.7之前<br><img src="/blog/images/jvm1.7.png"></p>
 </blockquote>
 <p>Java1.7，把字符串常量池放到了堆中。JVM已经将运行时常量池从方法区中移了出来，在JVM堆开辟了一块区域存放常量池。</p>
 <blockquote>
-<p>jdk1.7<br><img src="/blog/medias/loading.png" data-original="/blog/images/jvm7.png"></p>
+<p>jdk1.7<br><img src="/blog/images/jvm7.png"></p>
 </blockquote>
 <p>Java8之后，取消了整个永久代区域，取而代之的是元空间。方法区概念保留，方法区的实现改为了元空间，元空间也是方法区的一种实现,常量池还是在堆中,没有再对常量池进行调整。元空间占用本地内存，不再占用jvm内存</p>
 <blockquote>
-<p>jdk1.8<br><img src="/blog/medias/loading.png" data-original="/blog/images/jvm1.8.png"></p>
+<p>jdk1.8<br><img src="/blog/images/jvm1.8.png"></p>
 </blockquote>
 <h5 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h5><p>存放下一条指令所在单元地址的地方<br>程序计数器是一块较小的内存空间，可以看作当前线程所执行的字节码的行号指示器。在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成</p>
 <h4 id="线程共享区域"><a href="#线程共享区域" class="headerlink" title="线程共享区域"></a>线程共享区域</h4><ul>
@@ -469,7 +469,7 @@
 <li>在堆内存中按照Foo类型信息分配实例变量内存空间；然后，将栈中引用foo指向foo对象堆内存的首地址。 </li>
 <li>使用引用foo调用方法，根据foo引用的类型Foo调用f方法。</li>
 </ol>
-<p><img src="/blog/medias/loading.png" data-original="/blog/images/jvmdemo.png"><br><img src="/blog/medias/loading.png" data-original="/blog/images/jvmdemo2.jpg"></p>
+<p><img src="/blog/images/jvmdemo.png"><br><img src="/blog/images/jvmdemo2.jpg"></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/doocs/jvm">JVM 底层原理最全知识总结–GitHub</a></li>
 </ul>
@@ -817,10 +817,10 @@ jstat <span class="token parameter variable">-gc</span> pid <span class="token c
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/blog/medias/loading.png" data-original="/blog/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/blog/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
-                        <img src="/blog/medias/loading.png" data-original="/blog/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        <img src="/blog/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
                     </div>
                 </div>
             </div>
@@ -865,7 +865,7 @@ jstat <span class="token parameter variable">-gc</span> pid <span class="token c
                     <div class="card-image">
                         
                         
-                        <img src="/blog/medias/loading.png" data-original="/blog/medias/featureimages/8.jpg" class="responsive-img" alt="MySQL安装">
+                        <img src="/blog/medias/featureimages/8.jpg" class="responsive-img" alt="MySQL安装">
                         
                         <span class="card-title">MySQL安装</span>
                     </div>
@@ -906,7 +906,7 @@ jstat <span class="token parameter variable">-gc</span> pid <span class="token c
                     <div class="card-image">
                         
                         
-                        <img src="/blog/medias/loading.png" data-original="/blog/medias/featureimages/16.jpg" class="responsive-img" alt="Git">
+                        <img src="/blog/medias/featureimages/16.jpg" class="responsive-img" alt="Git">
                         
                         <span class="card-title">Git</span>
                     </div>
@@ -1395,19 +1395,6 @@ $(function () {
     <!-- 弹出文字 -->
     
 
-
-        <style>
-            [bg-lazy] {
-                background-image: none !important;
-                background-color: #eee !important;
-            }
-        </style>
-        <script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                preloadRatio: 1,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
+</body>
 
 </html>

@@ -11,8 +11,6 @@ Git、GitHub Pages、NodeJS
 #### 二、 安装Hexo
 
 ```
-mkdir hexo
-cd hexo
 全局安装 npm install hexo-cli -g 或者单独安装 nmp install hexo // 安装hexo
 npx hexo init <folder> // <folder>为自定义目录，如npx hexo init blog
 cd <folder> // cd blog

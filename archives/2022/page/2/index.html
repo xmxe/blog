@@ -97,44 +97,34 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="" class="waves-effect waves-light">
-
+    <a href="/blog/categories" class="waves-effect waves-light">
       
-      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
       
-      <span>文章</span>
-      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+      <span>分类</span>
     </a>
-    <ul class="sub-nav menus_item_child ">
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/tags" class="waves-effect waves-light">
       
-      <li>
-        <a href="/blog/tags">
-          
-          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
-          
-          <span>标签</span>
-        </a>
-      </li>
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
       
-      <li>
-        <a href="/blog/categories">
-          
-          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
-          
-          <span>分类</span>
-        </a>
-      </li>
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/archives" class="waves-effect waves-light">
       
-      <li>
-        <a href="/blog/archives">
-          
-          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
-          
-          <span>归档</span>
-        </a>
-      </li>
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
       
-    </ul>
+      <span>归档</span>
+    </a>
     
   </li>
   
@@ -195,46 +185,34 @@
         
         <li class="m-nav-item">
 	  
-		<a href="javascript:;">
+		<a href="/blog/categories" class="waves-effect waves-light">
 			
-				<i class="fa-fw fas fa-book"></i>
+			    <i class="fa-fw fas fa-bookmark"></i>
 			
-			文章
-			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+			分类
 		</a>
-            <ul  style="background:  ;" >
-              
-                <li>
-
-                  <a href="/blog/tags " style="margin-left:75px">
-				  
-				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
-			      
-		          <span>标签</span>
-                  </a>
-                </li>
-              
-                <li>
-
-                  <a href="/blog/categories " style="margin-left:75px">
-				  
-				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
-			      
-		          <span>分类</span>
-                  </a>
-                </li>
-              
-                <li>
-
-                  <a href="/blog/archives " style="margin-left:75px">
-				  
-				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
-			      
-		          <span>归档</span>
-                  </a>
-                </li>
-              
-            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
           
         </li>
         
@@ -320,9 +298,12 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
-    var random = "/blog/medias/featureimages/0.jpg"
-    $('.bg-cover').css('background-image', 'url(' + random + ')');
+    // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
+
+    var featureImages = '/medias/featureimages/0.jpg,/medias/featureimages/1.jpg,/medias/featureimages/2.jpg,/medias/featureimages/3.jpg,/medias/featureimages/4.jpg,/medias/featureimages/5.jpg,/medias/featureimages/6.jpg,/medias/featureimages/7.jpg,/medias/featureimages/8.jpg,/medias/featureimages/9.jpg,/medias/featureimages/10.jpg,/medias/featureimages/11.jpg,/medias/featureimages/12.jpg,/medias/featureimages/13.jpg,/medias/featureimages/14.jpg,/medias/featureimages/15.jpg,/medias/featureimages/16.jpg,/medias/featureimages/17.jpg'.split(',')
+    var randomNum = Math.floor(Math.random() * 18 + 1) - 1
+    var randomUrl = "/blog" + featureImages[randomNum]
+    $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 
 
@@ -362,7 +343,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/cl8yjvj8y001sy0fxh3859c0q/">
+                        <a href="/blog/post/cl8zka73d001xxsfx0953dd5a/">
                             <div class="card-image">
                                 
                                 
@@ -415,7 +396,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/cl8yjvj88000fy0fx73sr7ou0/">
+                        <a href="/blog/post/cl8zka70y000fxsfxgu20b4wg/">
                             <div class="card-image">
                                 
                                 
@@ -472,7 +453,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/cl8yjvj8j0011y0fx00kr38l1/">
+                        <a href="/blog/post/cl8zka7250012xsfx806xhb95/">
                             <div class="card-image">
                                 
                                 
@@ -526,7 +507,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/cl8yjvj94001wy0fx0ihn2hoc/">
+                        <a href="/blog/post/cl8zka731001pxsfx3igi4elg/">
                             <div class="card-image">
                                 
                                 
@@ -580,7 +561,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/cl8yjvj7s0001y0fxd3rpb87j/">
+                        <a href="/blog/post/cl8zka6zt0001xsfx0pqi7dzn/">
                             <div class="card-image">
                                 
                                 
@@ -633,7 +614,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/cl8yjvj840009y0fx2j2df8lb/">
+                        <a href="/blog/post/cl8zka70f0006xsfx9xx40o7j/">
                             <div class="card-image">
                                 
                                 
@@ -764,9 +745,9 @@
             Copyright&nbsp;&copy;
             <!--
             
-                <span id="year">2019-2022</span>
+                <span id="year">2022</span>
             
-            <span id="year">2019</span>-->
+            <span id="year">2022</span>-->
 
             <a href="/blog/about" target="_blank">xmxe</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

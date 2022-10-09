@@ -262,3 +262,19 @@ body.DarkMode #stars3:after {
     background: 0 0;
     box-shadow: 519px 875px #fff, 1497px 751px #fff, 1256px 88px #fff, 1168px 1791px #fff, 1884px 109px #fff, 1465px 451px #fff, 450px 370px #fff, 1560px 703px #fff, 1788px 1997px #fff, 1047px 963px #fff, 1281px 119px #fff, 439px 96px #fff, 164px 1956px #fff, 1360px 930px #fff, 1387px 347px #fff, 1073px 1970px #fff, 1296px 284px #fff, 25px 1602px #fff, 455px 944px #fff, 1177px 738px #fff, 633px 1142px #fff, 1730px 1079px #fff, 1283px 1606px #fff, 674px 1186px #fff, 513px 166px #fff, 1077px 636px #fff, 1811px 580px #fff, 971px 1789px #fff, 694px 1756px #fff, 703px 1138px #fff, 1290px 942px #fff, 351px 1509px #fff, 1904px 790px #fff, 68px 819px #fff, 1097px 362px #fff, 1035px 331px #fff, 180px 940px #fff, 1776px 1229px #fff, 1487px 781px #fff, 1131px 1765px #fff, 1684px 536px #fff, 939px 367px #fff, 1102px 1481px #fff, 741px 887px #fff, 167px 1132px #fff, 1756px 529px #fff, 608px 758px #fff, 541px 1025px #fff, 1976px 505px #fff, 1349px 1257px #fff, 815px 1388px #fff, 505px 1351px #fff, 33px 1945px #fff, 861px 1695px #fff, 678px 1360px #fff, 1615px 727px #fff, 1138px 726px #fff, 30px 293px #fff, 1624px 1044px #fff, 683px 1242px #fff, 1781px 1758px #fff, 906px 1328px #fff, 1066px 1764px #fff, 1568px 664px #fff, 1027px 1876px #fff, 775px 1099px #fff, 1605px 208px #fff, 730px 837px #fff, 1475px 1482px #fff, 871px 1759px #fff, 1240px 15px #fff, 1987px 705px #fff, 302px 1049px #fff, 475px 1015px #fff, 1843px 1296px #fff, 493px 631px #fff, 1613px 164px #fff, 1863px 156px #fff, 1479px 423px #fff, 202px 1499px #fff, 886px 969px #fff, 904px 930px #fff, 1853px 535px #fff, 726px 914px #fff, 435px 1205px #fff, 1732px 1824px #fff, 1212px 667px #fff, 499px 31px #fff, 552px 594px #fff, 1715px 1814px #fff, 775px 908px #fff, 1949px 921px #fff, 1267px 718px #fff, 1830px 1960px #fff, 338px 1325px #fff, 466px 1120px #fff, 140px 1675px #fff, 1919px 664px #fff, 1136px 771px #fff, 1888px 1302px #fff;
 }
+
+/*文章内容自动换行*/
+#articleContent {
+    /*在长单词或 URL 地址内部进行换行。normal 只在允许的断字点换行（浏览器保持默认处理）。*/
+    word-wrap: break-word;
+    /*允许在单词内换行。*/
+    word-break: break-all;
+    /*默认。空白会被浏览器忽略。*/
+    white-space: normal;
+}
+
+.chip {
+    height: 22px;
+    line-height: 22px;
+    color: #fff;
+}

@@ -36,8 +36,15 @@ menu:
     url: /archives
     icon: fas fa-archive
   About:
-    url: /about
+    url: "#"
     icon: fas fa-user-circle
+    children:
+      - name: 主页
+        icon: fas fa-seedling
+        url: /about
+      - name: 简历
+        icon: fas fa-pen
+        url: https://xmxe.github.io/zhengfl
   #Contact:
     #url: /contact
     #icon: fas fa-comments
@@ -139,7 +146,7 @@ recommend:
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
 favicon: /favicon.png
-logo: /medias/logo.png
+logo: medias/logo.png
 
 # The configuration of the second button in the home banner,
 # including the display name of the button, the font awesome icon, and the hyperlink to the button.
@@ -185,8 +192,8 @@ code:
 reward:
   enable: true
   title: 你的赏识是我前进的动力
-  wechat: /medias/reward/wechat.jpg
-  alipay: /medias/reward/alipay.jpg
+  wechat: medias/reward/wechat.jpg
+  alipay: medias/reward/alipay.jpg
 
 # Whether to activate the copyright information of the blog and author when copying the post content.
 # minCharNumber: Approve copyright information by copying at least how many characters.
@@ -236,7 +243,7 @@ clicklove:
 # profile in about page, including avatars, career, and personal introductions.
 # 在”关于”页面中配置个人信息，包括头像、职业和个人介绍.
 profile:
-  avatar: /medias/avatar.jpg
+  avatar: medias/avatar.jpg
   career: Software Engineer
   introduction: what does not kill you makes you stronger
 
@@ -293,9 +300,9 @@ mySkills:
 myGallery:
   enable: true
   data:
-    - /medias/featureimages/0.jpg
-    - /medias/featureimages/1.jpg
-    - /medias/featureimages/2.jpg
+    - medias/featureimages/0.jpg
+    - medias/featureimages/1.jpg
+    - medias/featureimages/2.jpg
 
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
@@ -359,7 +366,7 @@ valine:
   avatar: 'mm' # Gravatar style : mm/identicon/monsterid/wavatar/retro/hide
   pageSize: 10
   placeholder: 'just go go' # Comment Box placeholder
-  background: /medias/comment_bg.png
+  background: medias/comment_bg.png
 
 # The configuration of the MiniValine comment module is not activated by default.
 # To use it, activate the configuration item and set appId and appKey.
@@ -498,24 +505,24 @@ libs:
 # The post featured images that needs to be displayed when there is no image.
 # 无文章特色图片时需要显示的文章特色图片.
 featureImages:
-- /medias/featureimages/0.jpg
-- /medias/featureimages/1.jpg
-- /medias/featureimages/2.jpg
-- /medias/featureimages/3.jpg
-- /medias/featureimages/4.jpg
-- /medias/featureimages/5.jpg
-- /medias/featureimages/6.jpg
-- /medias/featureimages/7.jpg
-- /medias/featureimages/8.jpg
-- /medias/featureimages/9.jpg
-- /medias/featureimages/10.jpg
-- /medias/featureimages/11.jpg
-- /medias/featureimages/12.jpg
-- /medias/featureimages/13.jpg
-- /medias/featureimages/14.jpg
-- /medias/featureimages/15.jpg
-- /medias/featureimages/16.jpg
-- /medias/featureimages/17.jpg
+- medias/featureimages/0.jpg
+- medias/featureimages/1.jpg
+- medias/featureimages/2.jpg
+- medias/featureimages/3.jpg
+- medias/featureimages/4.jpg
+- medias/featureimages/5.jpg
+- medias/featureimages/6.jpg
+- medias/featureimages/7.jpg
+- medias/featureimages/8.jpg
+- medias/featureimages/9.jpg
+- medias/featureimages/10.jpg
+- medias/featureimages/11.jpg
+- medias/featureimages/12.jpg
+- medias/featureimages/13.jpg
+- medias/featureimages/14.jpg
+- medias/featureimages/15.jpg
+- medias/featureimages/16.jpg
+- medias/featureimages/17.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则
@@ -554,6 +561,7 @@ tidio:
 tuxiaochao:
   enable: false
   productId:
+
 #背景canvas-nest
 canvas_nest:
   enable: false
@@ -642,7 +650,7 @@ jsDelivr:
 # 网站背景图
 background:
   enable: true
-  url: /blog/medias/cover.jpg
+  url: medias/cover.jpg
 
 # 说说 https://artitalk.js.org/
 artitalk:
@@ -690,6 +698,6 @@ darkMode:
   # 是否展示动画
   animation: false
 
-# 打开文章的标签方式
-  # Available: _blank | _self
-post_url_target: _blank
+# 首页打开链接方式
+# Available: _blank | _self
+url_target: _blank

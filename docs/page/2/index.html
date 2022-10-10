@@ -63,7 +63,7 @@
   <!-- 页面加载动画 -->
   <script>
     $(document).ready(function () {
-      document.body.style.overflow = 'auto';
+      // document.body.style.overflow = 'auto';
       document.getElementById('loading-box').classList.add("loaded")
     })
   </script>
@@ -130,12 +130,35 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/blog/about" class="waves-effect waves-light">
+    <a href="#" class="waves-effect waves-light">
+
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
       <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
     </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-seedling" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://xmxe.github.io/zhengfl">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>简历</span>
+        </a>
+      </li>
+      
+    </ul>
     
   </li>
   
@@ -218,12 +241,36 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/blog/about" class="waves-effect waves-light">
+		<a href="javascript:;">
 			
-			    <i class="fa-fw fas fa-user-circle"></i>
+				<i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
 		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-seedling" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="https://xmxe.github.io/zhengfl " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>简历</span>
+                  </a>
+                </li>
+              
+            </ul>
           
         </li>
         
@@ -298,12 +345,14 @@
 
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
+    // 每天切换banner图.
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
-    var featureImages = '/medias/featureimages/0.jpg,/medias/featureimages/1.jpg,/medias/featureimages/2.jpg,/medias/featureimages/3.jpg,/medias/featureimages/4.jpg,/medias/featureimages/5.jpg,/medias/featureimages/6.jpg,/medias/featureimages/7.jpg,/medias/featureimages/8.jpg,/medias/featureimages/9.jpg,/medias/featureimages/10.jpg,/medias/featureimages/11.jpg,/medias/featureimages/12.jpg,/medias/featureimages/13.jpg,/medias/featureimages/14.jpg,/medias/featureimages/15.jpg,/medias/featureimages/16.jpg,/medias/featureimages/17.jpg'.split(',')
+    // 随机切换banner图
+    var featureImages = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/6.jpg,medias/featureimages/7.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg,medias/featureimages/15.jpg,medias/featureimages/16.jpg,medias/featureimages/17.jpg'.split(',');
     var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = "/blog" + featureImages[randomNum]
+    var randomUrl = '/blog/' + featureImages[randomNum]
+    
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 
@@ -324,7 +373,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8t000opwfx9dcm6wmr/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2g000nbofxdw336jn4/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/mysql.jpg" class="responsive-img" alt="MySQL安装">
@@ -368,16 +417,12 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
                         </div>
                     </div>
 
-                    <!--
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8y000wpwfxasxw8dgy/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2t000wbofx2tjj6ay2/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/oracle.jpg" class="responsive-img" alt="Oracle相关及常用函数">
@@ -421,16 +466,12 @@ System:拥有DBA、Sy
                         </div>
                     </div>
 
-                    <!--
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8z000zpwfxgmv80dd6/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2u000ybofx3lim670d/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/sqlserver.jpg" class="responsive-img" alt="SQL Server函数">
@@ -474,16 +515,12 @@ s
                         </div>
                     </div>
 
-                    <!--
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8g0009pwfx1qmx93rj/" target="_blank">
+                    <a href="/blog/posts/cl92ezz21000abofxefn04sz8/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/jvm.jpg" class="responsive-img" alt="JVM知识点">
@@ -532,16 +569,12 @@ Java堆GC堆是java虚拟机所管理的内存中最大的一块内存区域，�
                         </div>
                     </div>
 
-                    <!--
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9d001fpwfx8pzc2n2s/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3c001ebofx6ofj4yx4/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/mideng.jpg" class="responsive-img" alt="怎么保证幂等性">
@@ -576,7 +609,9 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                                 
                                     
                                         <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                            <span class="chip bg-color">随笔</span>
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
                                         </a>
                                     
                                 
@@ -585,24 +620,12 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                <span class="chip bg-color">随笔</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9g001opwfxedqr2tmi/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3n001pbofx38vz81uy/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/mq.jpg" class="responsive-img" alt="消息队列-MQ">
@@ -641,7 +664,9 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                                 
                                     
                                         <a href="/blog/tags/mq/" target="_blank">
-                                            <span class="chip bg-color">mq</span>
+                                            <span class="chip bg-color">
+                                                mq
+                                            </span>
                                         </a>
                                     
                                 
@@ -650,24 +675,12 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/mq/" target="_blank">
-                                <span class="chip bg-color">mq</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8r000kpwfx4pnu8rsn/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2e000kbofx4ma177y2/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/linux.jpg" class="responsive-img" alt="Linux相关">
@@ -699,7 +712,9 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                                 
                                     
                                         <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" target="_blank">
-                                            <span class="chip bg-color">计算机</span>
+                                            <span class="chip bg-color">
+                                                计算机
+                                            </span>
                                         </a>
                                     
                                 
@@ -708,24 +723,12 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" target="_blank">
-                                <span class="chip bg-color">计算机</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8k000cpwfxhkjee8jc/" target="_blank">
+                    <a href="/blog/posts/cl92ezz27000bbofx3vsqeb77/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/js.jpg" class="responsive-img" alt="JavaScript相关">
@@ -757,18 +760,22 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/JavaScript/" class="post-category" target="_blank">
-                                            JavaScript
+                                        <a href="/blog/categories/JS/" class="post-category" target="_blank">
+                                            JS
                                         </a>
                                     
                                 
                                     
                                         <a href="/blog/tags/%E5%89%8D%E7%AB%AF/" target="_blank">
-                                            <span class="chip bg-color">前端</span>
+                                            <span class="chip bg-color">
+                                                前端
+                                            </span>
                                         </a>
                                     
                                         <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                            <span class="chip bg-color">随笔</span>
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
                                         </a>
                                     
                                 
@@ -777,28 +784,12 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E5%89%8D%E7%AB%AF/" target="_blank">
-                                <span class="chip bg-color">前端</span>
-                            </a>
-                        
-                            <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                <span class="chip bg-color">随笔</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8c0006pwfxhw7p0s5r/" target="_blank">
+                    <a href="/blog/posts/cl92ezz200009bofxgef15m2x/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/hashmap.jpg" class="responsive-img" alt="HashMap&amp;ConcurrentHashMap">
@@ -839,10 +830,6 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
                             </span>
                         </div>
                     </div>
-
-                    <!--
-                    
-                    -->
 
                 </div>
             </div>
@@ -943,22 +930,31 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             
                 <span id="year">2022</span>
             
-            <span id="year">2022</span>-->
+            <span id="year">2022</span>
+            -->
 
-            <a href="/blog/about" target="_blank">xmxe</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <!--
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+
+            <!--
             
             
             
             
             -->
+
             
             <br>
+
             
             <br>
+
             
         </div>
         <div class="col s12 m4 l4 social-link ">

@@ -3,7 +3,7 @@
         <div class="brand">
             <div class="title center-align">
                 <% if (config.subtitle && config.subtitle.length > 0) { %>
-                <%= config.subtitle %>
+                    <%= config.subtitle %>
                 <% } else { %>
                     
                 <% } %>
@@ -17,10 +17,10 @@
                     <script>
                         var typedObj = new Typed("#subtitle", {
                             strings: [ 
-                            <% theme.subtitle.sub.forEach(function (item) {%>
-                                "<%= item %>",
-                            <% }) %>
-                        ],
+                                <% theme.subtitle.sub.forEach(function (item) {%>
+                                    "<%= item %>",
+                                <% }) %>
+                            ],
                             startDelay: <%= theme.subtitle.startDelay %>,
                             typeSpeed: <%= theme.subtitle.typeSpeed %>,
                             loop: <%= theme.subtitle.loop %>,
@@ -76,12 +76,14 @@
 
 <% if (theme.banner.enable) { %>
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
+    // 每天切换banner图.
     // var bannerUrl = "<%- theme.jsDelivr.url %><%- url_for('/medias/banner/') %>" + new Date().getDay() + '.jpg';
 
-    var featureImages = '<%- theme.featureImages %>'.split(',')
+    // 随机切换banner图
+    var featureImages = '<%- theme.featureImages %>'.split(',');
     var randomNum = Math.floor(Math.random() * <%- theme.featureImages.length %> + 1) - 1
-    var randomUrl = "/blog" + featureImages[randomNum]
+    var randomUrl = '<%- config.root %>' + featureImages[randomNum]
+    
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 <% } else { %>

@@ -1,7 +1,7 @@
 ---
 title: JavaScript相关
 sticky: 53
-categories: JavaScript
+categories: JS
 tags: 
 - 前端
 - 随笔

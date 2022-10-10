@@ -63,7 +63,7 @@
   <!-- 页面加载动画 -->
   <script>
     $(document).ready(function () {
-      document.body.style.overflow = 'auto';
+      // document.body.style.overflow = 'auto';
       document.getElementById('loading-box').classList.add("loaded")
     })
   </script>
@@ -130,12 +130,35 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/blog/about" class="waves-effect waves-light">
+    <a href="#" class="waves-effect waves-light">
+
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
       <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
     </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-seedling" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://xmxe.github.io/zhengfl">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>简历</span>
+        </a>
+      </li>
+      
+    </ul>
     
   </li>
   
@@ -218,12 +241,36 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/blog/about" class="waves-effect waves-light">
+		<a href="javascript:;">
 			
-			    <i class="fa-fw fas fa-user-circle"></i>
+				<i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
 		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-seedling" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="https://xmxe.github.io/zhengfl " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>简历</span>
+                  </a>
+                </li>
+              
+            </ul>
           
         </li>
         
@@ -297,12 +344,14 @@
 
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
+    // 每天切换banner图.
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
-    var featureImages = '/medias/featureimages/0.jpg,/medias/featureimages/1.jpg,/medias/featureimages/2.jpg,/medias/featureimages/3.jpg,/medias/featureimages/4.jpg,/medias/featureimages/5.jpg,/medias/featureimages/6.jpg,/medias/featureimages/7.jpg,/medias/featureimages/8.jpg,/medias/featureimages/9.jpg,/medias/featureimages/10.jpg,/medias/featureimages/11.jpg,/medias/featureimages/12.jpg,/medias/featureimages/13.jpg,/medias/featureimages/14.jpg,/medias/featureimages/15.jpg,/medias/featureimages/16.jpg,/medias/featureimages/17.jpg'.split(',')
+    // 随机切换banner图
+    var featureImages = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/6.jpg,medias/featureimages/7.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg,medias/featureimages/15.jpg,medias/featureimages/16.jpg,medias/featureimages/17.jpg'.split(',');
     var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = "/blog" + featureImages[randomNum]
+    var randomUrl = '/blog/' + featureImages[randomNum]
+    
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 
@@ -470,10 +519,10 @@
 
                 
                 
-                <a href="/blog/categories/JavaScript/" title="JavaScript: 1">
+                <a href="/blog/categories/JS/" title="JS: 1">
                     <!--<span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">JavaScript
+                            style="background-color: #F5EEF8;">JS
                         <span class="tag-length">1</span>
                     </span>-->
 
@@ -485,7 +534,7 @@
                                 <div
                                     class="notebook-skin
                                        chip-default ">
-                                    JavaScript
+                                    JS
                                 </div>
                             </div>
                             <div class="notebook-page dotted"></div>
@@ -558,7 +607,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8v000qpwfx276v8t6m/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2n000qbofxet62183e/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/mysql.jpg" class="responsive-img" alt="MySQL相关知识点">
@@ -581,7 +630,7 @@ delimiter &#
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -590,7 +639,7 @@ delimiter &#
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" >
                                             数据库
                                         </a>
                                     
@@ -600,15 +649,12 @@ delimiter &#
                         </div>
                     </div>
 
-                    <!-- 
-                    
-                    -->
                 </div>
             </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v940018pwfxfroh9dk8/" target="_blank">
+                    <a href="/blog/posts/cl92ezz350017bofx6k888tig/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/transaction.jpg" class="responsive-img" alt="事务">
@@ -636,7 +682,7 @@ REQUIRES_NEW:创建新事务,
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -645,11 +691,11 @@ REQUIRES_NEW:创建新事务,
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" >
                                             数据库
                                         </a>
                                     
-                                        <a href="/blog/categories/Spring/" class="post-category" target="_blank">
+                                        <a href="/blog/categories/Spring/" class="post-category" >
                                             Spring
                                         </a>
                                     
@@ -659,15 +705,12 @@ REQUIRES_NEW:创建新事务,
                         </div>
                     </div>
 
-                    <!-- 
-                    
-                    -->
                 </div>
             </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9f001lpwfxh4k6dz8k/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3f001kbofxe6z48ksf/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/db.jpg" class="responsive-img" alt="数据库相关知识点">
@@ -691,7 +734,7 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -700,7 +743,7 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" >
                                             数据库
                                         </a>
                                     
@@ -710,15 +753,12 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
                         </div>
                     </div>
 
-                    <!-- 
-                    
-                    -->
                 </div>
             </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8t000opwfx9dcm6wmr/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2g000nbofxdw336jn4/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/mysql.jpg" class="responsive-img" alt="MySQL安装">
@@ -742,7 +782,7 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -751,7 +791,7 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" >
                                             数据库
                                         </a>
                                     
@@ -761,15 +801,12 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
                         </div>
                     </div>
 
-                    <!-- 
-                    
-                    -->
                 </div>
             </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8y000wpwfxasxw8dgy/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2t000wbofx2tjj6ay2/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/oracle.jpg" class="responsive-img" alt="Oracle相关及常用函数">
@@ -793,7 +830,7 @@ System:拥有DBA、Sy
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -802,7 +839,7 @@ System:拥有DBA、Sy
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" >
                                             数据库
                                         </a>
                                     
@@ -812,15 +849,12 @@ System:拥有DBA、Sy
                         </div>
                     </div>
 
-                    <!-- 
-                    
-                    -->
                 </div>
             </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8z000zpwfxgmv80dd6/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2u000ybofx3lim670d/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/sqlserver.jpg" class="responsive-img" alt="SQL Server函数">
@@ -844,7 +878,7 @@ s
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -853,7 +887,7 @@ s
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" >
                                             数据库
                                         </a>
                                     
@@ -863,9 +897,6 @@ s
                         </div>
                     </div>
 
-                    <!-- 
-                    
-                    -->
                 </div>
             </div>
             
@@ -939,22 +970,31 @@ s
             
                 <span id="year">2022</span>
             
-            <span id="year">2022</span>-->
+            <span id="year">2022</span>
+            -->
 
-            <a href="/blog/about" target="_blank">xmxe</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <!--
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+
+            <!--
             
             
             
             
             -->
+
             
             <br>
+
             
             <br>
+
             
         </div>
         <div class="col s12 m4 l4 social-link ">

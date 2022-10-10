@@ -63,7 +63,7 @@
   <!-- 页面加载动画 -->
   <script>
     $(document).ready(function () {
-      document.body.style.overflow = 'auto';
+      // document.body.style.overflow = 'auto';
       document.getElementById('loading-box').classList.add("loaded")
     })
   </script>
@@ -130,12 +130,35 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/blog/about" class="waves-effect waves-light">
+    <a href="#" class="waves-effect waves-light">
+
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
       <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
     </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-seedling" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://xmxe.github.io/zhengfl">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>简历</span>
+        </a>
+      </li>
+      
+    </ul>
     
   </li>
   
@@ -218,12 +241,36 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/blog/about" class="waves-effect waves-light">
+		<a href="javascript:;">
 			
-			    <i class="fa-fw fas fa-user-circle"></i>
+				<i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
 		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-seedling" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="https://xmxe.github.io/zhengfl " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>简历</span>
+                  </a>
+                </li>
+              
+            </ul>
           
         </li>
         
@@ -304,12 +351,14 @@
 
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
+    // 每天切换banner图.
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
-    var featureImages = '/medias/featureimages/0.jpg,/medias/featureimages/1.jpg,/medias/featureimages/2.jpg,/medias/featureimages/3.jpg,/medias/featureimages/4.jpg,/medias/featureimages/5.jpg,/medias/featureimages/6.jpg,/medias/featureimages/7.jpg,/medias/featureimages/8.jpg,/medias/featureimages/9.jpg,/medias/featureimages/10.jpg,/medias/featureimages/11.jpg,/medias/featureimages/12.jpg,/medias/featureimages/13.jpg,/medias/featureimages/14.jpg,/medias/featureimages/15.jpg,/medias/featureimages/16.jpg,/medias/featureimages/17.jpg'.split(',')
+    // 随机切换banner图
+    var featureImages = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/6.jpg,medias/featureimages/7.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg,medias/featureimages/15.jpg,medias/featureimages/16.jpg,medias/featureimages/17.jpg'.split(',');
     var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = "/blog" + featureImages[randomNum]
+    var randomUrl = '/blog/' + featureImages[randomNum]
+    
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 
@@ -560,7 +609,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"Java","value":9},{"name":"JavaScript","value":1},{"name":"数据库","value":6},{"name":"Spring","value":2}],
+                data: [{"name":"Java","value":9},{"name":"JS","value":1},{"name":"数据库","value":6},{"name":"Spring","value":2}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -767,14 +816,14 @@
         <div class="tag-chips center-align">
             
             
-            <a href="/blog/tags/git/">
-                <span class="chip center-align waves-effect waves-light chip-default">git</span>
+            <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/">
+                <span class="chip center-align waves-effect waves-light chip-default">程序</span>
             </a>
             
             
             
-            <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/">
-                <span class="chip center-align waves-effect waves-light chip-default">程序</span>
+            <a href="/blog/tags/git/">
+                <span class="chip center-align waves-effect waves-light chip-default">git</span>
             </a>
             
             
@@ -820,19 +869,19 @@
         
         
         <div class="photo col s12 m6 l4" data-aos="fade-up">
-            <div class="img-item" data-src="/medias/featureimages/0.jpg">
+            <div class="img-item" data-src="medias/featureimages/0.jpg">
                 <img src="/blog/medias/featureimages/0.jpg" class="responsive-img">
             </div>
         </div>
         
         <div class="photo col s12 m6 l4" data-aos="fade-up">
-            <div class="img-item" data-src="/medias/featureimages/1.jpg">
+            <div class="img-item" data-src="medias/featureimages/1.jpg">
                 <img src="/blog/medias/featureimages/1.jpg" class="responsive-img">
             </div>
         </div>
         
         <div class="photo col s12 m6 l4" data-aos="fade-up">
-            <div class="img-item" data-src="/medias/featureimages/2.jpg">
+            <div class="img-item" data-src="medias/featureimages/2.jpg">
                 <img src="/blog/medias/featureimages/2.jpg" class="responsive-img">
             </div>
         </div>
@@ -923,22 +972,31 @@
             
                 <span id="year">2022</span>
             
-            <span id="year">2022</span>-->
+            <span id="year">2022</span>
+            -->
 
-            <a href="/blog/about" target="_blank">xmxe</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <!--
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+
+            <!--
             
             
             
             
             -->
+
             
             <br>
+
             
             <br>
+
             
         </div>
         <div class="col s12 m4 l4 social-link ">

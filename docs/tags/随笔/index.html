@@ -63,7 +63,7 @@
   <!-- 页面加载动画 -->
   <script>
     $(document).ready(function () {
-      document.body.style.overflow = 'auto';
+      // document.body.style.overflow = 'auto';
       document.getElementById('loading-box').classList.add("loaded")
     })
   </script>
@@ -130,12 +130,35 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/blog/about" class="waves-effect waves-light">
+    <a href="#" class="waves-effect waves-light">
+
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
       <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
     </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-seedling" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://xmxe.github.io/zhengfl">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>简历</span>
+        </a>
+      </li>
+      
+    </ul>
     
   </li>
   
@@ -218,12 +241,36 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/blog/about" class="waves-effect waves-light">
+		<a href="javascript:;">
 			
-			    <i class="fa-fw fas fa-user-circle"></i>
+				<i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
 		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-seedling" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="https://xmxe.github.io/zhengfl " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>简历</span>
+                  </a>
+                </li>
+              
+            </ul>
           
         </li>
         
@@ -297,12 +344,14 @@
 
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
+    // 每天切换banner图.
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
-    var featureImages = '/medias/featureimages/0.jpg,/medias/featureimages/1.jpg,/medias/featureimages/2.jpg,/medias/featureimages/3.jpg,/medias/featureimages/4.jpg,/medias/featureimages/5.jpg,/medias/featureimages/6.jpg,/medias/featureimages/7.jpg,/medias/featureimages/8.jpg,/medias/featureimages/9.jpg,/medias/featureimages/10.jpg,/medias/featureimages/11.jpg,/medias/featureimages/12.jpg,/medias/featureimages/13.jpg,/medias/featureimages/14.jpg,/medias/featureimages/15.jpg,/medias/featureimages/16.jpg,/medias/featureimages/17.jpg'.split(',')
+    // 随机切换banner图
+    var featureImages = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/6.jpg,medias/featureimages/7.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg,medias/featureimages/15.jpg,medias/featureimages/16.jpg,medias/featureimages/17.jpg'.split(',');
     var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = "/blog" + featureImages[randomNum]
+    var randomUrl = '/blog/' + featureImages[randomNum]
+    
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 
@@ -323,20 +372,20 @@
             <div class="tag-chips">
                 
                 
-                <a href="/blog/tags/git/" title="git: 1">
+                <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" title="程序: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="git" style="background-color: #F9EBEA;">git
-                        <span class="tag-length">1</span>
+                            data-tagname="程序" style="background-color: #F9EBEA;">程序
+                        <span class="tag-length">3</span>
                     </span>
                 </a>
                 
                 
-                <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" title="程序: 3">
+                <a href="/blog/tags/git/" title="git: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="程序" style="background-color: #F5EEF8;">程序
-                        <span class="tag-length">3</span>
+                            data-tagname="git" style="background-color: #F5EEF8;">git
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -389,7 +438,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9a001apwfx3edl3w5y/" target="_blank">
+                    <a href="/blog/posts/cl92ezz390019bofxdmh1c8ke/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/ecs.jpg" class="responsive-img" alt="代码块">
@@ -398,6 +447,14 @@
                         </div>
                     </a>
                     <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                fastjson转换
+// json = &#123;"a":1,"b":2,"c":["d":3,"e":4]&#125;
+// json转JSONObject
+JSONObject a = json.getJSONObject("a")
+                            
+                        </div>
                         <div class="publish-info">
                             <span class="publish-date">
                                 <!--
@@ -406,7 +463,7 @@
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -415,8 +472,10 @@
                             <span class="publish-author">
                                 
                                     
-                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                            <span class="chip bg-color">随笔</span>
+                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" >
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
                                         </a>
                                     
                                 
@@ -429,7 +488,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="前端, 随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8k000cpwfxhkjee8jc/" target="_blank">
+                    <a href="/blog/posts/cl92ezz27000bbofx3vsqeb77/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/js.jpg" class="responsive-img" alt="JavaScript相关">
@@ -438,6 +497,11 @@
                         </div>
                     </a>
                     <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                JQuery、JS常用方法json字符串  var str1 &#x3D; ‘{ “name”: “cxh”, “sex”: “man” }’;json对象   var str2 &#x3D; { name: “cxh”, sex: “ma
+                            
+                        </div>
                         <div class="publish-info">
                             <span class="publish-date">
                                 <!--
@@ -446,7 +510,7 @@
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -456,18 +520,22 @@
                                 
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/blog/categories/JavaScript/" class="post-category" target="_blank">
-                                            JavaScript
+                                        <a href="/blog/categories/JS/" class="post-category" >
+                                            JS
                                         </a>
                                     
                                 
                                     
-                                        <a href="/blog/tags/%E5%89%8D%E7%AB%AF/" target="_blank">
-                                            <span class="chip bg-color">前端</span>
+                                        <a href="/blog/tags/%E5%89%8D%E7%AB%AF/" >
+                                            <span class="chip bg-color">
+                                                前端
+                                            </span>
                                         </a>
                                     
-                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                            <span class="chip bg-color">随笔</span>
+                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" >
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
                                         </a>
                                     
                                 
@@ -480,7 +548,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9e001ipwfxc3d78ws8/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3d001hbofx0uaxgn16/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/medias/loading.png" class="responsive-img" alt="我的笔记">
@@ -489,6 +557,11 @@
                         </div>
                     </a>
                     <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                java类加载、代码块、内部类、maven、gradle、代理、String相关、缓存、跨域
+                            
+                        </div>
                         <div class="publish-info">
                             <span class="publish-date">
                                 <!--
@@ -497,7 +570,7 @@
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -506,8 +579,10 @@
                             <span class="publish-author">
                                 
                                     
-                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                            <span class="chip bg-color">随笔</span>
+                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" >
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
                                         </a>
                                     
                                 
@@ -520,7 +595,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9d001fpwfx8pzc2n2s/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3c001ebofx6ofj4yx4/" >
                         <div class="card-image tag-image">
                             
                                 <img src="/blog/assert/mideng.jpg" class="responsive-img" alt="怎么保证幂等性">
@@ -529,6 +604,14 @@
                         </div>
                     </a>
                     <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+唯一索引，防止新增脏数据
+
+token机制，防止页面重复提交前端限制:页面的提交按钮只能被点击提交一次后端解决方案：集群环境：采用token加redis（redis单线程的，处理需要排队）单JVM环境：采用token加redis或toke
+                            
+                        </div>
                         <div class="publish-info">
                             <span class="publish-date">
                                 <!--
@@ -537,7 +620,7 @@
 
                                 
                                     <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" target="_blank">
+                                    <a href="/blog/about" >
                                         xmxe
                                     </a>
                                 
@@ -546,8 +629,10 @@
                             <span class="publish-author">
                                 
                                     
-                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                            <span class="chip bg-color">随笔</span>
+                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" >
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
                                         </a>
                                     
                                 
@@ -627,22 +712,31 @@
             
                 <span id="year">2022</span>
             
-            <span id="year">2022</span>-->
+            <span id="year">2022</span>
+            -->
 
-            <a href="/blog/about" target="_blank">xmxe</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <!--
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+
+            <!--
             
             
             
             
             -->
+
             
             <br>
+
             
             <br>
+
             
         </div>
         <div class="col s12 m4 l4 social-link ">

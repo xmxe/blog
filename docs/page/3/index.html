@@ -63,7 +63,7 @@
   <!-- 页面加载动画 -->
   <script>
     $(document).ready(function () {
-      document.body.style.overflow = 'auto';
+      // document.body.style.overflow = 'auto';
       document.getElementById('loading-box').classList.add("loaded")
     })
   </script>
@@ -130,12 +130,35 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/blog/about" class="waves-effect waves-light">
+    <a href="#" class="waves-effect waves-light">
+
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
       <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
     </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-seedling" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://xmxe.github.io/zhengfl">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>简历</span>
+        </a>
+      </li>
+      
+    </ul>
     
   </li>
   
@@ -218,12 +241,36 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/blog/about" class="waves-effect waves-light">
+		<a href="javascript:;">
 			
-			    <i class="fa-fw fas fa-user-circle"></i>
+				<i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
 		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-seedling" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="https://xmxe.github.io/zhengfl " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>简历</span>
+                  </a>
+                </li>
+              
+            </ul>
           
         </li>
         
@@ -298,12 +345,14 @@
 
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
+    // 每天切换banner图.
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
-    var featureImages = '/medias/featureimages/0.jpg,/medias/featureimages/1.jpg,/medias/featureimages/2.jpg,/medias/featureimages/3.jpg,/medias/featureimages/4.jpg,/medias/featureimages/5.jpg,/medias/featureimages/6.jpg,/medias/featureimages/7.jpg,/medias/featureimages/8.jpg,/medias/featureimages/9.jpg,/medias/featureimages/10.jpg,/medias/featureimages/11.jpg,/medias/featureimages/12.jpg,/medias/featureimages/13.jpg,/medias/featureimages/14.jpg,/medias/featureimages/15.jpg,/medias/featureimages/16.jpg,/medias/featureimages/17.jpg'.split(',')
+    // 随机切换banner图
+    var featureImages = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/6.jpg,medias/featureimages/7.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg,medias/featureimages/15.jpg,medias/featureimages/16.jpg,medias/featureimages/17.jpg'.split(',');
     var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = "/blog" + featureImages[randomNum]
+    var randomUrl = '/blog/' + featureImages[randomNum]
+    
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 
@@ -324,7 +373,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v7x0001pwfxfefz1qd9/" target="_blank">
+                    <a href="/blog/posts/cl92ezz1f0001bofx5wc9cozd/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/list.jpg" class="responsive-img" alt="ArrayList&amp;CopyOnWriteArrayList">
@@ -366,16 +415,12 @@
                         </div>
                     </div>
 
-                    <!--
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8h000apwfx97zch777/" target="_blank">
+                    <a href="/blog/posts/cl92ezz1p0003bofxhu4pg9vr/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/docker.jpg" class="responsive-img" alt="Docker安装">
@@ -408,7 +453,9 @@
                                 
                                     
                                         <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" target="_blank">
-                                            <span class="chip bg-color">程序</span>
+                                            <span class="chip bg-color">
+                                                程序
+                                            </span>
                                         </a>
                                     
                                 
@@ -417,24 +464,12 @@
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" target="_blank">
-                                <span class="chip bg-color">程序</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v840003pwfx77q5c624/" target="_blank">
+                    <a href="/blog/posts/cl92ezz1w0006bofx0b4z82tw/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/git.jpg" class="responsive-img" alt="Git">
@@ -469,7 +504,9 @@ git remote add origin https://github.com/xmxe/mySpringBoot.
                                 
                                     
                                         <a href="/blog/tags/git/" target="_blank">
-                                            <span class="chip bg-color">git</span>
+                                            <span class="chip bg-color">
+                                                git
+                                            </span>
                                         </a>
                                     
                                 
@@ -478,24 +515,12 @@ git remote add origin https://github.com/xmxe/mySpringBoot.
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/git/" target="_blank">
-                                <span class="chip bg-color">git</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8o000ipwfx25fr94ui/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2d000hbofx9tbqajga/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/java.jpg" class="responsive-img" alt="Java各类技术栈架构图汇总">
@@ -551,16 +576,12 @@ git remote add origin https://github.com/xmxe/mySpringBoot.
                         </div>
                     </div>
 
-                    <!--
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v8x000upwfxhbzx223i/" target="_blank">
+                    <a href="/blog/posts/cl92ezz2r000tbofx4v2x9d93/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/nginx.jpeg" class="responsive-img" alt="Nginx">
@@ -593,7 +614,9 @@ git remote add origin https://github.com/xmxe/mySpringBoot.
                                 
                                     
                                         <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" target="_blank">
-                                            <span class="chip bg-color">程序</span>
+                                            <span class="chip bg-color">
+                                                程序
+                                            </span>
                                         </a>
                                     
                                 
@@ -602,24 +625,12 @@ git remote add origin https://github.com/xmxe/mySpringBoot.
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" target="_blank">
-                                <span class="chip bg-color">程序</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9a001apwfx3edl3w5y/" target="_blank">
+                    <a href="/blog/posts/cl92ezz390019bofxdmh1c8ke/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/ecs.jpg" class="responsive-img" alt="代码块">
@@ -654,7 +665,9 @@ JSONObject a = json.getJSONObject("a")
                                 
                                     
                                         <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                            <span class="chip bg-color">随笔</span>
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
                                         </a>
                                     
                                 
@@ -663,24 +676,12 @@ JSONObject a = json.getJSONObject("a")
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
-                                <span class="chip bg-color">随笔</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9c001cpwfxh3jf3yhk/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3b001bbofx94o0hcvo/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/soft.jpg" class="responsive-img" alt="启动命令">
@@ -714,7 +715,9 @@ JSONObject a = json.getJSONObject("a")
                                 
                                     
                                         <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" target="_blank">
-                                            <span class="chip bg-color">程序</span>
+                                            <span class="chip bg-color">
+                                                程序
+                                            </span>
                                         </a>
                                     
                                 
@@ -723,24 +726,12 @@ JSONObject a = json.getJSONObject("a")
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E7%A8%8B%E5%BA%8F/" target="_blank">
-                                <span class="chip bg-color">程序</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9l001upwfxaskbcnvt/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3r001tbofxecigfkm2/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/assert/code.jpg" class="responsive-img" alt="进制转换">
@@ -774,7 +765,9 @@ JSONObject a = json.getJSONObject("a")
                                 
                                     
                                         <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" target="_blank">
-                                            <span class="chip bg-color">计算机</span>
+                                            <span class="chip bg-color">
+                                                计算机
+                                            </span>
                                         </a>
                                     
                                 
@@ -783,24 +776,12 @@ JSONObject a = json.getJSONObject("a")
                         </div>
                     </div>
 
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" target="_blank">
-                                <span class="chip bg-color">计算机</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
-
                 </div>
             </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9231v9k001spwfx1zng9svj/" target="_blank">
+                    <a href="/blog/posts/cl92ezz3p001qbofxcv2u1d9u/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="/blog/medias/loading.png" class="responsive-img" alt="软件设计师考点笔记">
@@ -833,7 +814,9 @@ JSONObject a = json.getJSONObject("a")
                                 
                                     
                                         <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" target="_blank">
-                                            <span class="chip bg-color">计算机</span>
+                                            <span class="chip bg-color">
+                                                计算机
+                                            </span>
                                         </a>
                                     
                                 
@@ -841,18 +824,6 @@ JSONObject a = json.getJSONObject("a")
                             </span>
                         </div>
                     </div>
-
-                    <!--
-                    
-                    <div class="card-action article-tags">
-                        
-                            <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" target="_blank">
-                                <span class="chip bg-color">计算机</span>
-                            </a>
-                        
-                    </div>
-                    
-                    -->
 
                 </div>
             </div>
@@ -952,22 +923,31 @@ JSONObject a = json.getJSONObject("a")
             
                 <span id="year">2022</span>
             
-            <span id="year">2022</span>-->
+            <span id="year">2022</span>
+            -->
 
-            <a href="/blog/about" target="_blank">xmxe</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <!--
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+
+            <!--
             
             
             
             
             -->
+
             
             <br>
+
             
             <br>
+
             
         </div>
         <div class="col s12 m4 l4 social-link ">

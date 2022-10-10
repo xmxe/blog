@@ -82,7 +82,7 @@
     // 随机切换banner图
     var featureImages = '<%- theme.featureImages %>'.split(',');
     var randomNum = Math.floor(Math.random() * <%- theme.featureImages.length %> + 1) - 1
-    var randomUrl = '<%- config.root %>' + featureImages[randomNum]
+    var randomUrl = '<%- theme.jsDelivr.url %><%- config.root %>' + featureImages[randomNum]
     
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>

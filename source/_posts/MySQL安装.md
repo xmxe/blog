@@ -3,7 +3,7 @@ title: MySQL安装
 sticky: 68
 categories: 数据库
 index_img: /assert/mysql.jpg
-img: /assert/mysql.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi9u0Rjv6LANg!!/800?w5=750&h5=375&rf=viewer_421
 ---
 
 #### Linux安装MySQL

@@ -16,16 +16,7 @@ menu:
   #     - name: 归档
   #       url: /archives
   #       icon: fas fa-archive
-  # 仓库: 
-  #   icon: fas fa-seedling
-  #   children: 
-  #     - name: GitHub
-  #       url: https://github.com/xmxe
-  #       icon: fab fa-github
-  #     - name: Gitee
-  #       url: https://gitee.com/xmxe
-  #       icon: fab fa-gitter
-    
+  
   Categories:
     url: /categories
     icon: fas fa-bookmark
@@ -68,8 +59,7 @@ menu:
   #      url: /galleries
   #      icon: fas fa-image
 
-# Website start time.
-# 站点运行开始时间.
+# Website start time.站点运行开始时间.
 time:
   enable: false
   year: 2022 # 年份
@@ -79,8 +69,7 @@ time:
   minute: 00 # 分钟
   second: 00 # 秒
 
-# Index cover carousel configuration.
-# 首页封面轮播图的相关配置.
+# Index cover carousel configuration.首页封面轮播图的相关配置.
 cover:
   showPrevNext: true # 是否显示左右切换按钮. Whether to display the left and right toggle buttons.
   showIndicators: true # 是否显示指示器. # Whether to display the indicators
@@ -90,16 +79,14 @@ cover:
   useConfig: false # 是否使用配置文件, 在 _data/covers.json 下配置推荐文章, false则使用主题在文章中的配置 cover coverImg
   # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/covers.json 移动到 my-blog/source/_data/下修改配置即可
 
-# index page dream text,
-# 配置首页显示"梦想"的语句.
+# index page dream text,配置首页显示"梦想"的语句.
 dream:
   enable: false
   showTitle: true
   title: QR
   text: what does not kill you makes you stronger
 
-# Whether to display the musics.
-# 是否在首页显示音乐.
+# Whether to display the musics.是否在首页显示音乐.
 music:
   enable: true
   title: # 非吸底模式有效
@@ -119,8 +106,7 @@ music:
   listFolded: true  # 列表默认折叠
   hideLrc: true     # 隐藏歌词
 
-# Whether to display the videos.
-# 是否在首页显示视频.
+# Whether to display the videos.是否在首页显示视频.
 video:
   enable: false
   showTitle: true
@@ -135,18 +121,16 @@ video:
   preload: 'auto' # 预加载，可选值: 'none', 'metadata', 'auto'
   volume: 0.7
 
-# Whether to display the title of the recommended posts
-# 是否显示推荐文章的标题
+# Whether to display the title of the recommended posts 是否显示推荐文章的标题
 recommend:
   enable: false
   showTitle: true
   useConfig: false # 是否使用配置文件, 在 _data/recommends.json 下配置推荐文章, false则会走主题配置的 top 属性
   # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/recommends.json 移动到 my-blog/source/_data/下修改配置即可
 
-# Configure website favicon and LOGO
-# 配置网站favicon和网站LOGO
+# Configure website favicon and LOGO 配置网站favicon和网站LOGO
 favicon: /favicon.png
-logo: medias/logo.png
+logo: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThavURjA7olEw!!/800?w5=440&h5=440&rf=viewer_421 # medias/logo.png
 
 # The configuration of the second button in the home banner,
 # including the display name of the button, the font awesome icon, and the hyperlink to the button.
@@ -192,8 +176,8 @@ code:
 reward:
   enable: true
   title: 你的赏识是我前进的动力
-  wechat: medias/reward/wechat.jpg
-  alipay: medias/reward/alipay.jpg
+  wechat: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE948bZ27/V5bCQAyOTM0MDQ3NTgrvURjjd2cDw!!/800?w5=758&h5=716&rf=viewer_421 # medias/reward/wechat.jpg
+  alipay: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE948bZ27/V5bCQAyOTM0MDQ3NTgsvURjTpGQDw!!/800?w5=800&h5=800&rf=viewer_421 # medias/reward/alipay.jpg
 
 # Whether to activate the copyright information of the blog and author when copying the post content.
 # minCharNumber: Approve copyright information by copying at least how many characters.
@@ -243,7 +227,7 @@ clicklove:
 # profile in about page, including avatars, career, and personal introductions.
 # 在”关于”页面中配置个人信息，包括头像、职业和个人介绍.
 profile:
-  avatar: medias/avatar.jpg
+  avatar: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThhvURjM0nNEg!!/800?w5=597&h5=903&rf=viewer_421 # medias/avatar.jpg
   career: Software Engineer
   introduction: what does not kill you makes you stronger
 
@@ -300,9 +284,9 @@ mySkills:
 myGallery:
   enable: true
   data:
-    - medias/featureimages/0.jpg
-    - medias/featureimages/1.jpg
-    - medias/featureimages/2.jpg
+    - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTjpvERj5R.PCw!!/800?w5=1422&h5=800&rf=viewer_421 # medias/featureimages/0.jpg
+    - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi2vERjnqWxCA!!/800?w5=1920&h5=800&rf=viewer_421 # medias/featureimages/1.jpg
+    - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi0vERja0LSCA!!/800?w5=1422&h5=800&rf=viewer_421 # medias/featureimages/2.jpg
 
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
@@ -416,6 +400,7 @@ changyan:
   enable: false
   appId:
   conf:
+
 # Whether to display fork me on github icon and link, default true, You can change it to your repo address
 # 配置是否在 header 中显示 fork me on github 的图标，默认为true，你可以修改为你的仓库地址.
 githubLink:
@@ -460,70 +445,102 @@ baiduPush: true
 # If the specific version is not specified below, you can use the latest version.
 # 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在设置js及css路径中可以直接写.min.xxx
+# 加/docs是针对xmxe仓库特殊化配置
 libs:
   css:
-    matery: /css/matery.css
-    mycss: /css/my.css
-    fontAwesome: /libs/awesome/css/all.css # V5.11.1
-    materialize: /libs/materialize/materialize.min.css # 1.0.0
-    aos: /libs/aos/aos.css
-    animate: /libs/animate/animate.min.css # V3.5.1
-    lightgallery: /libs/lightGallery/css/lightgallery.min.css # V1.6.11
-    aplayer: /libs/aplayer/APlayer.min.css
-    dplayer: /libs/dplayer/DPlayer.min.css
-    gitalk: /libs/gitalk/gitalk.css
-    jqcloud: /libs/jqcloud/jqcloud.css
-    tocbot: /libs/tocbot/tocbot.css
-    prism: /libs/prism/prism.css
-    loading: /css/loading.css
+    matery: /docs/css/matery.css
+    mycss: /docs/css/my.css
+    fontAwesome: /docs/libs/awesome/css/all.css # V5.11.1
+    materialize: /docs/libs/materialize/materialize.min.css # 1.0.0
+    aos: /docs/libs/aos/aos.css
+    animate: /docs/libs/animate/animate.min.css # V3.5.1
+    lightgallery: /docs/libs/lightGallery/css/lightgallery.min.css # V1.6.11
+    aplayer: /docs/libs/aplayer/APlayer.min.css
+    dplayer: /docs/libs/dplayer/DPlayer.min.css
+    gitalk: /docs/libs/gitalk/gitalk.css
+    jqcloud: /docs/libs/jqcloud/jqcloud.css
+    tocbot: /docs/libs/tocbot/tocbot.css
+    prism: /docs/libs/prism/prism.css
+    loading: /docs/css/loading.css
+    my-gitalk: /docs/css/my-gitalk.css
+    gitment-dft: /docs/libs/gitment/gitment-default.css
+    gitment: /docs/css/gitment.css
+    bb: /docs/css/bb.css
+    share: /docs/libs/share/css/share.min.css
   js:
-    matery: /js/matery.js
-    jquery: /libs/jquery/jquery.min.js
-    materialize: /libs/materialize/materialize.min.js # 1.0.0
-    masonry: /libs/masonry/masonry.pkgd.min.js # v4.0.0
-    aos: /libs/aos/aos.js
-    scrollProgress: /libs/scrollprogress/scrollProgress.min.js
-    lightgallery: /libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
-    clicklove: /libs/others/clicklove.js
-    busuanzi: /libs/others/busuanzi.pure.mini.js
-    aplayer: /libs/aplayer/APlayer.min.js
-    dplayer: /libs/dplayer/DPlayer.min.js
-    crypto: /libs/cryptojs/crypto-js.min.js
-    echarts: /libs/echarts/echarts.min.js
-    gitalk: /libs/gitalk/gitalk.min.js
-    valine: /libs/valine/Valine.min.js # 若想保持最新版，请替换为 https://unpkg.com/valine/dist/Valine.min.js  默认为 /libs/valine/Valine.min.js
-    minivaline: /libs/minivaline/MiniValine.js
-    jqcloud: /libs/jqcloud/jqcloud-1.0.4.min.js
-    tocbot: /libs/tocbot/tocbot.min.js
-    canvas_nest: /libs/background/canvas-nest.js
-    ribbon: /libs/background/ribbon.min.js
-    ribbonRefresh: /libs/background/ribbon-refresh.min.js
-    ribbon_dynamic: /libs/background/ribbon-dynamic.js
-    instantpage: /libs/instantpage/instantpage.js
-    buble: /libs/others/buble.js
-    popupText: /libs/others/popupText.js
+    matery: /docs/js/matery.js
+    jquery: /docs/libs/jquery/jquery.min.js
+    materialize: /docs/libs/materialize/materialize.min.js # 1.0.0
+    masonry: /docs/libs/masonry/masonry.pkgd.min.js # v4.0.0
+    aos: /docs/libs/aos/aos.js
+    scrollProgress: /docs/libs/scrollprogress/scrollProgress.min.js
+    lightgallery: /docs/libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
+    clicklove: /docs/libs/others/clicklove.js
+    busuanzi: /docs/libs/others/busuanzi.pure.mini.js
+    aplayer: /docs/libs/aplayer/APlayer.min.js
+    dplayer: /docs/libs/dplayer/DPlayer.min.js
+    crypto: /docs/libs/cryptojs/crypto-js.min.js
+    echarts: /docs/libs/echarts/echarts.min.js
+    gitalk: /docs/libs/gitalk/gitalk.min.js
+    valine: /docs/libs/valine/Valine.min.js # 若想保持最新版，请替换为 https://unpkg.com/valine/dist/Valine.min.js  默认为 /libs/valine/Valine.min.js
+    minivaline: /docs/libs/minivaline/MiniValine.js
+    jqcloud: /docs/libs/jqcloud/jqcloud-1.0.4.min.js
+    tocbot: /docs/libs/tocbot/tocbot.min.js
+    canvas_nest: /docs/libs/background/canvas-nest.js
+    ribbon: /docs/libs/background/ribbon.min.js
+    ribbonRefresh: /docs/libs/background/ribbon-refresh.min.js
+    ribbon_dynamic: /docs/libs/background/ribbon-dynamic.js
+    instantpage: /docs/libs/instantpage/instantpage.js
+    buble: /docs/libs/others/buble.js
+    popupText: /docs/libs/others/popupText.js
+    codeBlockFuction: /docs/libs/codeBlock/codeBlockFuction.js
+    codeLang: /docs/libs/codeBlock/codeLang.js
+    codeCopy: /docs/libs/codeBlock/codeCopy.js
+    codeShrink: /docs/libs/codeBlock/codeShrink.js
+    socialShare: /docs/libs/share/js/social-share.min.js
+    gitment: /docs/libs/gitment/gitment.js
+    av-min: /docs/libs/valine/av-min.js
 
 # The post featured images that needs to be displayed when there is no image.
 # 无文章特色图片时需要显示的文章特色图片.
 featureImages:
-- medias/featureimages/0.jpg
-- medias/featureimages/1.jpg
-- medias/featureimages/2.jpg
-- medias/featureimages/3.jpg
-- medias/featureimages/4.jpg
-- medias/featureimages/5.jpg
-- medias/featureimages/6.jpg
-- medias/featureimages/7.jpg
-- medias/featureimages/8.jpg
-- medias/featureimages/9.jpg
-- medias/featureimages/10.jpg
-- medias/featureimages/11.jpg
-- medias/featureimages/12.jpg
-- medias/featureimages/13.jpg
-- medias/featureimages/14.jpg
-- medias/featureimages/15.jpg
-- medias/featureimages/16.jpg
-- medias/featureimages/17.jpg
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTjpvERj5R.PCw!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi3vERjM4miCA!!/800?w5=1421&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi2vERjnqWxCA!!/800?w5=1920&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi1vERjrtXACA!!/800?w5=1203&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi0vERja0LSCA!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiyvERjC1MaCQ!!/800?w5=1280&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTixvERj7VspCQ!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiwvERjmcg3CQ!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTivvERjRNxHCQ!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiuvERjy7BZCQ!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTitvERjyfx1CQ!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTisvERjr2.JCQ!!/800?w5=1280&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTirvERjeJjDCQ!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiqvERj7nDbCQ!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTipvERj6S4HCg!!/800?w5=1024&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiovERjydE4Cg!!/800?w5=1280&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTinvERjIE1jCg!!/800?w5=1422&h5=800&rf=viewer_421
+  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTimvERjU8c4Cw!!/800?w5=1421&h5=800&rf=viewer_421
+    
+  - medias/featureimages/0.jpg
+  - medias/featureimages/1.jpg
+  - medias/featureimages/2.jpg
+  - medias/featureimages/3.jpg
+  - medias/featureimages/4.jpg
+  - medias/featureimages/5.jpg
+  - medias/featureimages/6.jpg
+  - medias/featureimages/7.jpg
+  - medias/featureimages/8.jpg
+  - medias/featureimages/9.jpg
+  - medias/featureimages/10.jpg
+  - medias/featureimages/11.jpg
+  - medias/featureimages/12.jpg
+  - medias/featureimages/13.jpg
+  - medias/featureimages/14.jpg
+  - medias/featureimages/15.jpg
+  - medias/featureimages/16.jpg
+  - medias/featureimages/17.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则
@@ -651,7 +668,7 @@ jsDelivr:
 # 网站背景图
 background:
   enable: true
-  url: medias/cover.jpg
+  url: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThevURjFwDqEg!!/800?w5=1203&h5=800&rf=viewer_421 # medias/cover.jpg
 
 # 说说 https://artitalk.js.org/
 artitalk:

@@ -6,7 +6,7 @@ tags:
 - 前端
 - 随笔
 index_img: /assert/js.jpg
-img: /assert/js.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjEu0Rj2bh6Ng!!/800?w5=512&h5=512&rf=viewer_421
 ---
 
 #### JQuery、JS常用方法
@@ -432,3 +432,4 @@ $(document).ready(function) = $().ready(function) = $(function)
 [面试官：有了 for 循环 为什么还要 forEach ？](https://mp.weixin.qq.com/s/aPFCrPGBTus_Spf1QL1WWA)
 [每日一题」JS 中的闭包是什么？](https://zhuanlan.zhihu.com/p/22486908)
 [post请求下载excel文档解决方法](https://blog.csdn.net/weixin_44001753/article/details/114266453)
+[不懂Vue的Java猿不是一个好的前端工程师](https://mp.weixin.qq.com/s/QoS5z9Qfokpcw42zDbiE2A)

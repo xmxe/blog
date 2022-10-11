@@ -3,7 +3,7 @@ title: JVM知识点
 sticky: 60
 categories: Java 
 index_img: /assert/jvm.jpg
-img: /assert/jvm.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjDu0RjMVOFNg!!/800?w5=1081&h5=626&rf=viewer_421
 ---
 
 #### JVM5大内存区域

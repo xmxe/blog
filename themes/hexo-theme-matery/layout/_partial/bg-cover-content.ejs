@@ -77,17 +77,17 @@
 <% if (theme.banner.enable) { %>
 <script>
     // 每天切换banner图.
-    // var bannerUrl = "<%- theme.jsDelivr.url %><%- url_for('/medias/banner/') %>" + new Date().getDay() + '.jpg';
+    // var bannerUrl = "<%- url_for('/medias/banner/') %>" + new Date().getDay() + '.jpg';
 
     // 随机切换banner图
     var featureImages = '<%- theme.featureImages %>'.split(',');
     var randomNum = Math.floor(Math.random() * <%- theme.featureImages.length %> + 1) - 1
-    var randomUrl = '<%- theme.jsDelivr.url %><%- config.root %>' + featureImages[randomNum]
+    var randomUrl = '<%- config.root %>' + featureImages[randomNum]
     
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 <% } else { %>
 <script>
-    $('.bg-cover').css('background-image', 'url(<%- theme.jsDelivr.url %><%- url_for('/medias/banner/0.jpg') %>)');
+    $('.bg-cover').css('background-image', 'url(<%- url_for('/medias/banner/0.jpg') %>)');
 </script>
 <% } %>

@@ -3,7 +3,7 @@ title: Java中的volatile关键字
 sticky: 70
 categories: Java 
 index_img: /assert/volatile.jpg
-img: /assert/volatile.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi0u0Rji7IpNw!!/800?w5=1154&h5=579&rf=viewer_421
 ---
 
 ##### 原理

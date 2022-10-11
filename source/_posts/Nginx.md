@@ -3,7 +3,7 @@ title: Nginx
 sticky: 40
 tags: 程序
 index_img: /assert/nginx.jpeg
-img: /assert/nginx.jpeg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi8u0RjCSzMNg!!/800?w5=469&h5=300&rf=viewer_421
 ---
 #### Nginx知识点
 

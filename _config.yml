@@ -1,6 +1,5 @@
 # Hexo Configuration 
-## Docs: https://hexo.io/docs/configuration.html
-## Source: https://github.com/hexojs/hexo/
+## Docs: https://hexo.io/docs/configuration.html Source: https://github.com/hexojs/hexo/
 # use hexo config get more information
 
 server:
@@ -23,12 +22,14 @@ timezone: 'Asia/Shanghai'
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://xmxe.github.io/blog
-root: /blog/docs
+# root: /blog
 permalink: posts/:id/
 permalink_defaults:
 pretty_urls:
-  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
+  # Set to false to remove trailing 'index.html' from permalinks
+  trailing_index: true
+  # Set to false to remove trailing '.html' from permalinks
+  trailing_html: true
 
 # Directory
 source_dir: source
@@ -41,12 +42,16 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+# File name of new posts
+new_post_name: :title.md
 default_layout: post
-titlecase: false # Transform title into titlecase
+# Transform title into titlecase
+titlecase: false
 external_link:
-  enable: true # Open external links in new tab
-  field: site # Apply to the whole site
+  # Open external links in new tab
+  enable: true
+  # Apply to the whole site
+  field: site
   exclude: ''
 filename_case: 0
 render_drafts: false
@@ -65,7 +70,6 @@ prismjs:
   preprocess: true
   line_number: true
   tab_replace: ''
-
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -92,8 +96,7 @@ tag_map:
 meta_generator: true
 
 # Date / Time format
-## Hexo uses Moment.js to parse and display date
-## You can customize the date format as defined in
+## Hexo uses Moment.js to parse and display date You can customize the date format as defined in
 ## http://momentjs.com/docs/#/displaying/format/
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
@@ -111,14 +114,11 @@ include:
 exclude:
 ignore:
 
-# Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
+## Plugins: https://hexo.io/plugins/ Themes: https://hexo.io/themes/
 theme: hexo-theme-matery
 # theme: fluid
 
-# Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
+# Deployment Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
 
@@ -130,4 +130,4 @@ search:
 lazyload:
   enable: false 
   onlypost: false  # 是否只对文章的图片做懒加载
-  loadingImg: /blog/medias/loading.png
+  loadingImg: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThbvURjMR4XEw!!/800?w5=300&h5=300&rf=viewer_421 # medias/loading.png

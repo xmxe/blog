@@ -3,7 +3,7 @@ title: Docker安装
 sticky: 50
 tags: 程序
 index_img: /assert/docker.jpg
-img: /assert/docker.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjJu0RjlohCNg!!/800?w5=1280&h5=800&rf=viewer_421
 ---
 
 #### 在线安装 

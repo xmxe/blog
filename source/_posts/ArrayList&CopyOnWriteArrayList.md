@@ -3,7 +3,7 @@ title: ArrayList&CopyOnWriteArrayList
 sticky: 51
 categories: Java 
 index_img: /assert/list.jpg
-img: /assert/list.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjBu0Rj*.CdNg!!/800?w5=908&h5=498&rf=viewer_421
 ---
 
 #### ArrayList的扩容机制

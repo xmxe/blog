@@ -3,7 +3,7 @@ title: Oracle相关及常用函数
 sticky: 67
 categories: 数据库
 index_img: /assert/oracle.jpg
-img: /assert/oracle.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi7u0RjYrXVNg!!/800?w5=800&h5=480&rf=viewer_421
 ---
 
 ##### Sys 和 System用户区别

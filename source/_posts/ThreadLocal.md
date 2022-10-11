@@ -3,7 +3,7 @@ title: ThreadLocal
 sticky: 75
 categories: Java 
 index_img: /assert/threadlocal.jpg
-img: /assert/threadlocal.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi2u0RjJqwQNw!!/800?w5=1403&h5=680&rf=viewer_421
 ---
 
 #### ThreadLocal

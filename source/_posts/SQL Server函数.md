@@ -3,7 +3,7 @@ title: SQL Server函数
 sticky: 66
 categories: 数据库
 index_img: /assert/sqlserver.jpg
-img: /assert/sqlserver.jpg
+img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi4u0Rj5DAENw!!/800?w5=548&h5=254&rf=viewer_421
 ---
 
 ##### sql server 行转列

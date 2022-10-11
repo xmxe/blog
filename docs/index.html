@@ -12,7 +12,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- 为了引用qq空间图床文件 否则显示'此图片来自qq空间未经允许不可引用' -->
+    <!-- 为了引用qq空间图床文件 -->
     <meta name="referrer" content="no-referrer">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
@@ -37,6 +37,7 @@
 
    <style>
     body{
+        /*注释掉是因为使用qq图床的话有防盗链 直接在<body>标签使用'background'属性 不过是过时的写法*/
        /* background-image: url(http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThevURjFwDqEg!!/800?w5=1203&h5=800&rf=viewer_421); */
        background-repeat:no-repeat;
        background-size:cover;
@@ -403,9 +404,10 @@
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
     // 随机切换banner图
-    var featureImages = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/6.jpg,medias/featureimages/7.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg,medias/featureimages/15.jpg,medias/featureimages/16.jpg,medias/featureimages/17.jpg'.split(',');
-    var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = '/blog/' + featureImages[randomNum]
+    // var featureImages = 'https://s1.ax1x.com/2022/10/11/xN1LKs.jpg,https://s1.ax1x.com/2022/10/11/xN39GF.jpg,https://s1.ax1x.com/2022/10/11/xN3Aq1.jpg,https://s1.ax1x.com/2022/10/11/xN3KRe.jpg,https://s1.ax1x.com/2022/10/11/xN31sA.jpg,https://s1.ax1x.com/2022/10/11/xN3aRg.jpg,https://s1.ax1x.com/2022/10/11/xN3Bss.jpg,https://s1.ax1x.com/2022/10/11/xN36oV.jpg,https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg,https://s1.ax1x.com/2022/10/11/xN3oe1.jpg,https://s1.ax1x.com/2022/10/11/xN3bFK.png,https://s1.ax1x.com/2022/10/11/xN8pwt.jpg,https://s1.ax1x.com/2022/10/11/xN8ElQ.png,https://s1.ax1x.com/2022/10/11/xN8mmn.jpg'.split(',');
+    // var randomNum = Math.floor(Math.random() * 14 + 1) - 1
+    // var randomUrl = featureImages[randomNum]
+    var randomUrl = 'https://s1.ax1x.com/2022/10/11/xN36oV.jpg'
     
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
@@ -462,7 +464,7 @@
         
             
             <div class="carousel-item white-text carousel-post bg-cover"
-                 style="background-image: url('/blog/medias/banner/1.jpg');">
+                 style="background-image: url('https://s1.ax1x.com/2022/10/11/xN3FM9.jpg');">
                 <div class="container">
                     <div class="row">
                         <div class="col s10 offset-s1">
@@ -473,7 +475,7 @@
                                 
                             </div>
                             <div class="cover-btns">
-                                <a href="/blog/posts/cl93v3wgx001370fx1tsu2lba/" class="waves-effect waves-light btn"
+                                <a href="/blog/posts/cl93zg7cr0011p8fxa7xjh11n/" class="waves-effect waves-light btn"
                                    target="_blank">
                                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                                 </a>
@@ -485,7 +487,7 @@
         
             
             <div class="carousel-item white-text carousel-post bg-cover"
-                 style="background-image: url('/blog/medias/banner/4.jpg');">
+                 style="background-image: url('https://s1.ax1x.com/2022/10/11/xN3DLn.jpg');">
                 <div class="container">
                     <div class="row">
                         <div class="col s10 offset-s1">
@@ -496,7 +498,7 @@
                                 
                             </div>
                             <div class="cover-btns">
-                                <a href="/blog/posts/cl93v3wh6001h70fxfk3kfegc/" class="waves-effect waves-light btn"
+                                <a href="/blog/posts/cl93zg7d8001hp8fx727gg1vx/" class="waves-effect waves-light btn"
                                    target="_blank">
                                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                                 </a>
@@ -508,7 +510,7 @@
         
             
             <div class="carousel-item white-text carousel-post bg-cover"
-                 style="background-image: url('/blog/medias/banner/0.jpg');">
+                 style="background-image: url('https://s1.ax1x.com/2022/10/11/xN1njs.jpg');">
                 <div class="container">
                     <div class="row">
                         <div class="col s10 offset-s1">
@@ -519,7 +521,7 @@
                                 
                             </div>
                             <div class="cover-btns">
-                                <a href="/blog/posts/cl93v3wh9001o70fx7jq9bq2l/" class="waves-effect waves-light btn"
+                                <a href="/blog/posts/cl93zg7dc001pp8fx7ame4q9f/" class="waves-effect waves-light btn"
                                    target="_blank">
                                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                                 </a>
@@ -608,7 +610,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgx001370fx1tsu2lba/" target="_blank">
+                    <a href="/blog/posts/cl93zg7cr0011p8fxa7xjh11n/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi5u0RjfIfrNg!!/800?w5=444&h5=314&rf=viewer_421" class="responsive-img" alt="Spring相关">
@@ -655,7 +657,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wh9001o70fx7jq9bq2l/" target="_blank">
+                    <a href="/blog/posts/cl93zg7dc001pp8fx7ame4q9f/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NThEvERjyTHWAQ!!/800?w5=1346&h5=664&rf=viewer_421" class="responsive-img" alt="线程-Thread">
@@ -702,7 +704,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wh6001h70fxfk3kfegc/" target="_blank">
+                    <a href="/blog/posts/cl93zg7d8001hp8fx727gg1vx/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThbvURjMR4XEw!!/800?w5=300&h5=300&rf=viewer_421" class="responsive-img" alt="我的笔记">
@@ -750,7 +752,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3whj001z70fx8jwjgzd4/" target="_blank">
+                    <a href="/blog/posts/cl93zg7dm001wp8fx7wtq7mgn/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjAu0RjkHmoNg!!/800?w5=1200&h5=628&rf=viewer_421" class="responsive-img" alt="锁">
@@ -797,7 +799,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wh7001j70fx0fpq4jdc/" target="_blank">
+                    <a href="/blog/posts/cl93zg7da001kp8fx9x62alsi/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjKu0RjBJQ0Ng!!/800?w5=1575&h5=800&rf=viewer_421" class="responsive-img" alt="数据库相关知识点">
@@ -846,7 +848,7 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wh3001970fx9b669ksm/" target="_blank">
+                    <a href="/blog/posts/cl93zg7cu0017p8fx4bji1tdj/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi1u0Rjn0MeNw!!/800?w5=1301&h5=691&rf=viewer_421" class="responsive-img" alt="事务">
@@ -903,7 +905,7 @@ REQUIRES_NEW:创建新事务,
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgw001170fx95d2ejh9/" target="_blank">
+                    <a href="/blog/posts/cl93zg7cs0013p8fx6mzgdo2n/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi2u0RjJqwQNw!!/800?w5=1403&h5=680&rf=viewer_421" class="responsive-img" alt="ThreadLocal">
@@ -951,7 +953,7 @@ REQUIRES_NEW:创建新事务,
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgi000e70fx2vi96siv/" target="_blank">
+                    <a href="/blog/posts/cl93zg7c5000ep8fx2cty7hsb/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi0u0Rji7IpNw!!/800?w5=1154&h5=579&rf=viewer_421" class="responsive-img" alt="Java中的volatile关键字">
@@ -1002,7 +1004,7 @@ REQUIRES_NEW:创建新事务,
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgp000q70fxg7imd7zr/" target="_blank">
+                    <a href="/blog/posts/cl93zg7cd000qp8fxgykdcpco/" target="_blank">
                         <div class="card-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi9u0Rjv6LANg!!/800?w5=750&h5=375&rf=viewer_421" class="responsive-img" alt="MySQL相关知识点">

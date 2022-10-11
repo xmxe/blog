@@ -4,7 +4,7 @@ sticky: 100
 categories: Spring
 index_img: /assert/spring.jpg
 img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi5u0RjfIfrNg!!/800?w5=444&h5=314&rf=viewer_421
-coverImg: /medias/banner/1.jpg
+coverImg: https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
 cover: true
 summary: Build the apps that make the world run
 ---

@@ -12,7 +12,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- 为了引用qq空间图床文件 否则显示'此图片来自qq空间未经允许不可引用' -->
+    <!-- 为了引用qq空间图床文件 -->
     <meta name="referrer" content="no-referrer">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
@@ -37,6 +37,7 @@
 
    <style>
     body{
+        /*注释掉是因为使用qq图床的话有防盗链 直接在<body>标签使用'background'属性 不过是过时的写法*/
        /* background-image: url(http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThevURjFwDqEg!!/800?w5=1203&h5=800&rf=viewer_421); */
        background-repeat:no-repeat;
        background-size:cover;
@@ -349,9 +350,10 @@
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
     // 随机切换banner图
-    var featureImages = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/6.jpg,medias/featureimages/7.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg,medias/featureimages/15.jpg,medias/featureimages/16.jpg,medias/featureimages/17.jpg'.split(',');
-    var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = '/blog/' + featureImages[randomNum]
+    // var featureImages = 'https://s1.ax1x.com/2022/10/11/xN1LKs.jpg,https://s1.ax1x.com/2022/10/11/xN39GF.jpg,https://s1.ax1x.com/2022/10/11/xN3Aq1.jpg,https://s1.ax1x.com/2022/10/11/xN3KRe.jpg,https://s1.ax1x.com/2022/10/11/xN31sA.jpg,https://s1.ax1x.com/2022/10/11/xN3aRg.jpg,https://s1.ax1x.com/2022/10/11/xN3Bss.jpg,https://s1.ax1x.com/2022/10/11/xN36oV.jpg,https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg,https://s1.ax1x.com/2022/10/11/xN3oe1.jpg,https://s1.ax1x.com/2022/10/11/xN3bFK.png,https://s1.ax1x.com/2022/10/11/xN8pwt.jpg,https://s1.ax1x.com/2022/10/11/xN8ElQ.png,https://s1.ax1x.com/2022/10/11/xN8mmn.jpg'.split(',');
+    // var randomNum = Math.floor(Math.random() * 14 + 1) - 1
+    // var randomUrl = featureImages[randomNum]
+    var randomUrl = 'https://s1.ax1x.com/2022/10/11/xN3aRg.jpg'
     
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
@@ -608,7 +610,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgp000q70fxg7imd7zr/" >
+                    <a href="/blog/posts/cl93zg7cd000qp8fxgykdcpco/" >
                         <div class="card-image tag-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi9u0Rjv6LANg!!/800?w5=750&h5=375&rf=viewer_421" class="responsive-img" alt="MySQL相关知识点">
@@ -655,7 +657,7 @@ delimiter &#
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wh3001970fx9b669ksm/" >
+                    <a href="/blog/posts/cl93zg7cu0017p8fx4bji1tdj/" >
                         <div class="card-image tag-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi1u0Rjn0MeNw!!/800?w5=1301&h5=691&rf=viewer_421" class="responsive-img" alt="事务">
@@ -711,7 +713,7 @@ REQUIRES_NEW:创建新事务,
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wh7001j70fx0fpq4jdc/" >
+                    <a href="/blog/posts/cl93zg7da001kp8fx9x62alsi/" >
                         <div class="card-image tag-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjKu0RjBJQ0Ng!!/800?w5=1575&h5=800&rf=viewer_421" class="responsive-img" alt="数据库相关知识点">
@@ -759,7 +761,7 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgo000n70fxamdef8eh/" >
+                    <a href="/blog/posts/cl93zg7cb000np8fx1i6k2zpm/" >
                         <div class="card-image tag-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi9u0Rjv6LANg!!/800?w5=750&h5=375&rf=viewer_421" class="responsive-img" alt="MySQL安装">
@@ -807,7 +809,7 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgs000w70fx9l125940/" >
+                    <a href="/blog/posts/cl93zg7cl000wp8fx4da2cmn3/" >
                         <div class="card-image tag-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi7u0RjYrXVNg!!/800?w5=800&h5=480&rf=viewer_421" class="responsive-img" alt="Oracle相关及常用函数">
@@ -855,7 +857,7 @@ System:拥有DBA、Sy
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl93v3wgt000y70fxcni6093a/" >
+                    <a href="/blog/posts/cl93zg7cn000yp8fxab8i1im9/" >
                         <div class="card-image tag-image">
                             
                                 <img src="http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTi4u0Rj5DAENw!!/800?w5=548&h5=254&rf=viewer_421" class="responsive-img" alt="SQL Server函数">

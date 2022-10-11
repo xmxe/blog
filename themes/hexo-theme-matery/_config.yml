@@ -445,7 +445,7 @@ baiduPush: true
 # If the specific version is not specified below, you can use the latest version.
 # 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在设置js及css路径中可以直接写.min.xxx
-# 加/docs是针对xmxe仓库特殊化配置
+# 加/docs是针对xmxe仓库特殊化配置 jsdelivr.url为空的话删除/docs/
 libs:
   css:
     matery: /docs/css/matery.css
@@ -504,43 +504,45 @@ libs:
 # The post featured images that needs to be displayed when there is no image.
 # 无文章特色图片时需要显示的文章特色图片.
 featureImages:
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTjpvERj5R.PCw!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi3vERjM4miCA!!/800?w5=1421&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi2vERjnqWxCA!!/800?w5=1920&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi1vERjrtXACA!!/800?w5=1203&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi0vERja0LSCA!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiyvERjC1MaCQ!!/800?w5=1280&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTixvERj7VspCQ!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiwvERjmcg3CQ!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTivvERjRNxHCQ!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiuvERjy7BZCQ!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTitvERjyfx1CQ!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTisvERjr2.JCQ!!/800?w5=1280&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTirvERjeJjDCQ!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiqvERj7nDbCQ!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTipvERj6S4HCg!!/800?w5=1024&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTiovERjydE4Cg!!/800?w5=1280&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTinvERjIE1jCg!!/800?w5=1422&h5=800&rf=viewer_421
-  # - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTimvERjU8c4Cw!!/800?w5=1421&h5=800&rf=viewer_421
-    
-  - medias/featureimages/0.jpg
-  - medias/featureimages/1.jpg
-  - medias/featureimages/2.jpg
-  - medias/featureimages/3.jpg
-  - medias/featureimages/4.jpg
-  - medias/featureimages/5.jpg
-  - medias/featureimages/6.jpg
-  - medias/featureimages/7.jpg
-  - medias/featureimages/8.jpg
-  - medias/featureimages/9.jpg
-  - medias/featureimages/10.jpg
-  - medias/featureimages/11.jpg
-  - medias/featureimages/12.jpg
-  - medias/featureimages/13.jpg
-  - medias/featureimages/14.jpg
-  - medias/featureimages/15.jpg
-  - medias/featureimages/16.jpg
-  - medias/featureimages/17.jpg
+  # 图床
+  # - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
+  - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
+  # - https://s1.ax1x.com/2022/10/11/xN1vV0.jpg
+  - https://s1.ax1x.com/2022/10/11/xN39GF.jpg
+  # - https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
+  - https://s1.ax1x.com/2022/10/11/xN3Aq1.jpg
+  - https://s1.ax1x.com/2022/10/11/xN3KRe.jpg
+  - https://s1.ax1x.com/2022/10/11/xN31sA.jpg
+  - https://s1.ax1x.com/2022/10/11/xN3aRg.jpg
+  - https://s1.ax1x.com/2022/10/11/xN3Bss.jpg
+  # - https://s1.ax1x.com/2022/10/11/xN3DLn.jpg
+  - https://s1.ax1x.com/2022/10/11/xN36oV.jpg
+  - https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg
+  - https://s1.ax1x.com/2022/10/11/xN3oe1.jpg
+  - https://s1.ax1x.com/2022/10/11/xN3bFK.png
+  - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
+  - https://s1.ax1x.com/2022/10/11/xN8ElQ.png
+  - https://s1.ax1x.com/2022/10/11/xN8mmn.jpg
+
+  # 本地  
+  # # - medias/featureimages/0.jpg
+  # - medias/featureimages/1.jpg
+  # # - medias/featureimages/2.jpg
+  # - medias/featureimages/3.jpg
+  # # - medias/featureimages/4.jpg
+  # - medias/featureimages/5.jpg
+  # - medias/featureimages/6.jpg
+  # - medias/featureimages/7.jpg
+  # - medias/featureimages/8.jpg
+  # - medias/featureimages/9.jpg
+  # # - medias/featureimages/10.jpg
+  # - medias/featureimages/11.jpg
+  # - medias/featureimages/12.jpg
+  # - medias/featureimages/13.jpg
+  # - medias/featureimages/14.jpg
+  # - medias/featureimages/15.jpg
+  # - medias/featureimages/16.jpg
+  # - medias/featureimages/17.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则
@@ -605,7 +607,7 @@ ribbon_dynamic:
 # 支持顺序，可选项目为twitter, facebook, google, qq, qzone, wechat, weibo, douban, linkedin.
 sharejs:
   enable: true
-  sites: twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin
+  sites: qq,qzone,wechat,weibo,douban
 
 # addthis文章分享模块.
 addthis:
@@ -716,6 +718,6 @@ darkMode:
   # 是否展示动画
   animation: false
 
-# 首页打开链接方式
+# 首页链接打开方式
 # Available: _blank | _self
 url_target: _blank

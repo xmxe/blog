@@ -5,7 +5,7 @@
                 <% if (config.subtitle && config.subtitle.length > 0) { %>
                     <%= config.subtitle %>
                 <% } else { %>
-                    
+                    <%# 固定的subtitle %>
                 <% } %>
             </div>
 
@@ -80,14 +80,15 @@
     // var bannerUrl = "<%- url_for('/medias/banner/') %>" + new Date().getDay() + '.jpg';
 
     // 随机切换banner图
-    var featureImages = '<%- theme.featureImages %>'.split(',');
-    var randomNum = Math.floor(Math.random() * <%- theme.featureImages.length %> + 1) - 1
-    var randomUrl = '<%- config.root %>' + featureImages[randomNum]
+    // var featureImages = '<%- theme.featureImages %>'.split(',');
+    // var randomNum = Math.floor(Math.random() * <%- theme.featureImages.length %> + 1) - 1
+    // var randomUrl = featureImages[randomNum]
+    var randomUrl = '<%- url_for(theme.featureImages[Math.floor(Math.random() * theme.featureImages.length + 1) - 1]) %>'
     
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
 </script>
 <% } else { %>
 <script>
-    $('.bg-cover').css('background-image', 'url(<%- url_for('/medias/banner/0.jpg') %>)');
+    $('.bg-cover').css('background-image', "url(<%- url_for('/medias/banner/0.jpg') %>)");
 </script>
 <% } %>

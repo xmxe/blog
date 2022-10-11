@@ -20,7 +20,9 @@
         </div>
     </div>
 </div>
-
+<%
+var randomNum = Math.floor(Math.random() * theme.featureImages.length + 1) - 1
+%>
 <% if (theme.banner.enable) { %>
     <script>
         // 每天切换banner图.
@@ -30,7 +32,7 @@
         // var featureImages = '<%- theme.featureImages %>'.split(',');
         // var randomNum = Math.floor(Math.random() * <%- theme.featureImages.length %> + 1) - 1
         // var randomUrl = featureImages[randomNum]
-        var randomUrl = '<%- url_for(theme.featureImages[Math.floor(Math.random() * theme.featureImages.length + 1) - 1]) %>'
+        var randomUrl = '<%- url_for(theme.featureImages[randomNum]) %>'
         
         $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
     </script>

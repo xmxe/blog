@@ -5,8 +5,10 @@ configRoot = (configRoot === null || configRoot === undefined || configRoot === 
 <div id="mobile-nav" class="side-nav sidenav">
 
     <div class="mobile-head bg-color">
-        <% if (theme.logo !== undefined && theme.logo.length > 0) { %>
-        <img src="<%- url_for(theme.logo) %>" class="logo-img circle responsive-img">
+        <% if (theme.enableImageHost && theme.logo.imageHost) { %>
+          <img src="<%- url_for(theme.logo.imageHost) %>" class="logo-img circle responsive-img">
+        <% } else if (theme.logo.local) { %>
+          <img src="<%- url_for(theme.logo.local) %>" class="logo-img circle responsive-img">
         <% } %>
         <div class="logo-name"><%= config.title %></div>
         <div class="logo-desc">

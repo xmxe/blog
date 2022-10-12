@@ -3,7 +3,7 @@ title: Git
 sticky: 49
 tags: git
 index_img: /assert/git.jpg
-img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjHu0Rj.BxYNg!!/800?w5=1600&h5=800&rf=viewer_421
+img: 
 ---
 
 ##### Git常用命令

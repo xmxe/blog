@@ -2,8 +2,8 @@
 title: Java各类技术栈架构图汇总
 sticky: 47
 categories: Java
-index_img: /assert/jvm架构.png
-img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjFu0RjHEFwNg!!/800?w5=893&h5=686&rf=viewer_421
+index_img: /assert/java.jpg
+img: 
 ---
 
 ### 1. java 类加载器架构

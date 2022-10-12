@@ -65,7 +65,10 @@
                             <% } else { %>
                             <%
                                 var featureimg = '/medias/featureimages/0.jpg';
-                                var featureImages = theme.featureImages;
+                                var featureImages = theme.featureImages.local;
+                                if(theme.enableImageHost){
+                                    featureImages = theme.featureImages.imageHost;
+                                }
                                 if (!featureImages || featureImages.length == 0) {
                                     return featureimg;
                                 }

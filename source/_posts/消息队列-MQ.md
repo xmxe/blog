@@ -4,7 +4,7 @@ sticky: 54
 categories: Java
 tags: mq
 index_img: /assert/mq.jpg
-img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NThFvERjOYPMAQ!!/800?w5=641&h5=298&rf=viewer_421
+img: 
 ---
 
 #### MQ怎么保证消息可靠性？MQ怎么保证消息100%消费？如何保证消息不会丢失？

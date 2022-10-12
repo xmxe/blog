@@ -39,7 +39,11 @@
                                 <img src="<%- url_for(post.img) %>" class="responsive-img" alt="<%= post.title %>">
                             <% } else { %>
                             <%
-                                var featureimg = theme.featureImages[Math.abs(hashCode(post.title) % theme.featureImages.length)];
+                                var image = theme.featureImages.local;
+                                if(theme.enableImageHost){
+                                    image = theme.featureImages.imageHost;
+                                }
+                                var featureimg = image[Math.abs(hashCode(post.title) % image.length)];
                             %>
                             <img src="<%- url_for(featureimg) %>" class="responsive-img" alt="<%= post.title %>">
                             <% } %>

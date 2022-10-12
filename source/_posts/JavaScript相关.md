@@ -6,7 +6,7 @@ tags:
 - 前端
 - 随笔
 index_img: /assert/js.jpg
-img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjEu0Rj2bh6Ng!!/800?w5=512&h5=512&rf=viewer_421
+img: 
 ---
 
 #### JQuery、JS常用方法

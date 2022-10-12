@@ -21,7 +21,11 @@
     </div>
 </div>
 <%
-var randomNum = Math.floor(Math.random() * theme.featureImages.length + 1) - 1
+var featureImages = theme.featureImages.local;
+if(theme.enableImageHost){
+    featureImages = theme.featureImages.imageHost;
+}
+var length = featureImages.length;
 %>
 <% if (theme.banner.enable) { %>
     <script>
@@ -29,11 +33,12 @@ var randomNum = Math.floor(Math.random() * theme.featureImages.length + 1) - 1
         // var bannerUrl = "<%- url_for('/medias/banner/') %>" + new Date().getDay() + '.jpg';
 
         // 随机切换banner图
-        // var featureImages = '<%- theme.featureImages %>'.split(',');
-        // var randomNum = Math.floor(Math.random() * <%- theme.featureImages.length %> + 1) - 1
-        // var randomUrl = featureImages[randomNum]
-        var randomUrl = '<%- url_for(theme.featureImages[randomNum]) %>'
-        
+        var randomNum = Math.floor(Math.random() * <%- length %> + 1) - 1
+        var randomUrl = '<%-featureImages%>'.split(',')[randomNum]
+        if(!<%- theme.enableImageHost %>){
+            randomUrl =  '<%- config.root %>' + '<%-featureImages%>'.split(',')[randomNum]
+        }
+
         $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
     </script>
 <% } else { %>

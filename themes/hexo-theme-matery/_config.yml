@@ -59,7 +59,8 @@ menu:
   #      url: /galleries
   #      icon: fas fa-image
 
-# Website start time.站点运行开始时间.
+# Website start time
+# 站点运行开始时间.
 time:
   enable: false
   year: 2022 # 年份
@@ -69,7 +70,8 @@ time:
   minute: 00 # 分钟
   second: 00 # 秒
 
-# Index cover carousel configuration.首页封面轮播图的相关配置.
+# Index cover carousel configuration.
+# 首页封面轮播图的相关配置.
 cover:
   showPrevNext: true # 是否显示左右切换按钮. Whether to display the left and right toggle buttons.
   showIndicators: true # 是否显示指示器. # Whether to display the indicators
@@ -79,14 +81,16 @@ cover:
   useConfig: false # 是否使用配置文件, 在 _data/covers.json 下配置推荐文章, false则使用主题在文章中的配置 cover coverImg
   # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/covers.json 移动到 my-blog/source/_data/下修改配置即可
 
-# index page dream text,配置首页显示"梦想"的语句.
+# index page dream text
+# 配置首页显示"梦想"的语句.
 dream:
   enable: false
   showTitle: true
   title: QR
   text: what does not kill you makes you stronger
 
-# Whether to display the musics.是否在首页显示音乐.
+# Whether to display the musics
+# 是否在首页显示音乐.
 music:
   enable: true
   title: # 非吸底模式有效
@@ -106,7 +110,8 @@ music:
   listFolded: true  # 列表默认折叠
   hideLrc: true     # 隐藏歌词
 
-# Whether to display the videos.是否在首页显示视频.
+# Whether to display the videos
+# 是否在首页显示视频.
 video:
   enable: false
   showTitle: true
@@ -121,19 +126,23 @@ video:
   preload: 'auto' # 预加载，可选值: 'none', 'metadata', 'auto'
   volume: 0.7
 
-# Whether to display the title of the recommended posts 是否显示推荐文章的标题
+# Whether to display the title of the recommended posts
+# 是否显示推荐文章的标题
 recommend:
   enable: false
   showTitle: true
   useConfig: false # 是否使用配置文件, 在 _data/recommends.json 下配置推荐文章, false则会走主题配置的 top 属性
   # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/recommends.json 移动到 my-blog/source/_data/下修改配置即可
 
-# Configure website favicon and LOGO 配置网站favicon和网站LOGO
-favicon: /favicon.png
-logo: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThavURjA7olEw!!/800?w5=440&h5=440&rf=viewer_421 # medias/logo.png
+# Configure website favicon and LOGO
+# 配置网站favicon和网站LOGO
+favicon: /favicon.png  
+logo: 
+  # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+  imageHost: 
+  local: medias/logo.png
 
-# The configuration of the second button in the home banner,
-# including the display name of the button, the font awesome icon, and the hyperlink to the button.
+# The configuration of the second button in the home banner,including the display name of the button, the font awesome icon, and the hyperlink to the button.
 # 首页 banner 中的第二个按钮的配置，包括按钮的显示名称、font awesome图标和按钮的超链接.
 indexbtn:
   enable: false
@@ -141,8 +150,7 @@ indexbtn:
   icon: fab fa-github-alt
   url: https://github.com/xmxe
 
-# The configurations of the second line of home banner
-# icon/button will not show up if you leave the corresponding socialLink empty
+# The configurations of the second line of home banner,icon/button will not show up if you leave the corresponding socialLink empty
 # 首页 banner 中的第二行个人信息配置，留空即不启用
 socialLink:
   github: https://github.com/xmxe
@@ -155,8 +163,7 @@ socialLink:
   zhihu: # https://www.zhihu.com/xxx
   rss: false # true、false
 
-# Whether to activate the Post TOC, and Configure which title types are supported by TOC support.
-# You can add `toc: false` to the Front-matter of a post to turn off the TOC.
+# Whether to activate the Post TOC, and Configure which title types are supported by TOC support.You can add `toc: false` to the Front-matter of a post to turn off the TOC.
 # 是否激活文章 TOC 功能，并配置TOC支持选中哪些标题类型，这是全局配置。
 # 可以在某篇文章的 Front-matter 中再加上`toc: false`，使该篇文章关闭TOC目录功能
 toc:
@@ -176,11 +183,13 @@ code:
 reward:
   enable: true
   title: 你的赏识是我前进的动力
-  wechat: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE948bZ27/V5bCQAyOTM0MDQ3NTgrvURjjd2cDw!!/800?w5=758&h5=716&rf=viewer_421 # medias/reward/wechat.jpg
-  alipay: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE948bZ27/V5bCQAyOTM0MDQ3NTgsvURjTpGQDw!!/800?w5=800&h5=800&rf=viewer_421 # medias/reward/alipay.jpg
+  # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+  imageHost_wechat: 
+  imageHost_alipay: 
+  wechat: medias/reward/wechat.jpg
+  alipay: medias/reward/alipay.jpg
 
-# Whether to activate the copyright information of the blog and author when copying the post content.
-# minCharNumber: Approve copyright information by copying at least how many characters.
+# Whether to activate the copyright information of the blog and author when copying the post content.minCharNumber: Approve copyright information by copying at least how many characters.
 # 是否激活复制文章时追加博客和作者的版权信息.
 copyright:
   enable: false
@@ -188,16 +197,14 @@ copyright:
   description: 本文章著作权归作者所有，任何形式的转载都请注明出处。
 
 # Whether to activate the mathjax, this is a global configuration, but the post still does not open the mathjax rendering.
-# Considering that the mathjax loading is time consuming,
-# you also need to add `mathjax: true` to the Front-matter of the post that needs to be rendered.
+# Considering that the mathjax loading is time consuming,you also need to add `mathjax: true` to the Front-matter of the post that needs to be rendered.
 # 是否激活mathjax数学公式，这是全局配置，但文章仍然不会都开启mathjax渲染，
 # 考虑到mathjax加载比较耗时，你还需要在需要渲染的文章的Front-matter中再加上`mathjax: true`才行.
 mathjax:
   enable: false
   cdn: https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
-# Post word count, reading duration, site total word count.
-# Before you activate, please confirm that you have installed the hexo-wordcount plugin,
+# Post word count, reading duration, site total word count.Before you activate, please confirm that you have installed the hexo-wordcount plugin,
 # install the plugin command: `npm i --save hexo-wordcount`.
 # 文章字数统计、阅读时长、总字数统计等
 # 文章信息--若要开启文章字数统计，需要安装 hexo-wordcount 插件，安装命令: `npm i --save hexo-wordcount`
@@ -227,12 +234,13 @@ clicklove:
 # profile in about page, including avatars, career, and personal introductions.
 # 在”关于”页面中配置个人信息，包括头像、职业和个人介绍.
 profile:
-  avatar: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThhvURjM0nNEg!!/800?w5=597&h5=903&rf=viewer_421 # medias/avatar.jpg
+  # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+  imageHost_avatar: 
+  avatar: medias/avatar.jpg
   career: Software Engineer
   introduction: what does not kill you makes you stronger
 
-# config my projects informations in about page.
-# If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
+# config my projects informations in about page.If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的项目"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myProjects:
   enable: true
@@ -240,7 +248,7 @@ myProjects:
     springboot:
       icon: fas fa-file-alt
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
-      url: http://github.com/xmxe/springboot
+      url: https://github.com/xmxe/springboot
       desc: springboot demo.
     springcloud:
         icon: fas fa-database
@@ -253,8 +261,7 @@ myProjects:
         url: https://github.com/blinkfox/typora-vue-theme
         desc: This is a typora theme inspired by Vue document style.
 
-# config my skills informations in about page.
-# If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
+# config my skills informations in about page.If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的技能"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 mySkills:
   enable: true
@@ -278,30 +285,30 @@ mySkills:
       background: 'linear-gradient(to right, #FFEB3B 0%, #FFF176 100%)'
       percent: 10%
 
-# config gallery of my photos in about page.
-# If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
+# config gallery of my photos in about page.If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的相册"图片，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myGallery:
   enable: true
   data:
-    - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTjpvERj5R.PCw!!/800?w5=1422&h5=800&rf=viewer_421 # medias/featureimages/0.jpg
-    - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi2vERjnqWxCA!!/800?w5=1920&h5=800&rf=viewer_421 # medias/featureimages/1.jpg
-    - http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE93guZHd/V5bCQAyOTM0MDQ3NTi0vERja0LSCA!!/800?w5=1422&h5=800&rf=viewer_421 # medias/featureimages/2.jpg
+    # 本地
+    - medias/featureimages/0.jpg
+    - medias/featureimages/1.jpg
+    - medias/featureimages/2.jpg
+  imageHost_data:
+    # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+    - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
+    - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
+    - https://s1.ax1x.com/2022/10/12/xUPi9K.jpg
 
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
 postCalendar: false
 
-# 不建议使用gittalk,gitment这样权限过高的oauth app,因为它们能够 读写 授权者 所有的公共仓库 ，也就是说拿到你的授权 Token 的人，可以将你的 GitHub 公共仓库删空（这是github权限分的不够细的锅），如果恶意攻击者想获取使用者的 AccessToken，只需要在代码中加上一个 ajax 请求即可。原贴地址:https://www.v2ex.com/t/535608。建议大家看完。（我没有在用gittalk/gitment的网站上评论过，但根据v2ex网友的提示，如果网站自行修改了 gitalk.js 脚本 或者反代了 github api，就很容易拿到你的 Token ）
-
-# https://github.com/utterance/utterances 是个 GitHub App，它的权限仅限于某个仓库。像 hugo hexo 这种静态页面类型的博客，clientID/clientSecret 泄露是不可避免的。我认为较好的解决方式是像 utteras 这种 GitHubApp，只有一个仓库的读写权限，将破坏降到最小。
-
+# 不建议使用gittalk,gitment这样权限过高的oauth app,因为它们能够读写授权者所有的公共仓库 ，也就是说拿到你的授权Token的人，可以将你的GitHub公共仓库删空（这是github权限分的不够细的锅），如果恶意攻击者想获取使用者的 AccessToken，只需要在代码中加上一个 ajax 请求即可。原贴地址:https://www.v2ex.com/t/535608。建议大家看完。（我没有在用gittalk/gitment的网站上评论过，但根据v2ex网友的提示，如果网站自行修改了gitalk.js脚本或者反代了github api，就很容易拿到你的Token）
+# https://github.com/utterance/utterances 是个 GitHub App，它的权限仅限于某个仓库。像hugo hexo这种静态页面类型的博客，clientID/clientSecret泄露是不可避免的。我认为较好的解决方式是像utteras这种GitHubApp，只有一个仓库的读写权限，将破坏降到最小。
 # valine和minivaline都是使用的免费的leancloud开发版资源，即使数据丢了leancloud也不用负任何的责任。此外valine的src目录已在1.4.0后停止更新。。。薛定谔的开源。
-
 # 当初多说国内最大都倒了，livere不一定靠谱。
-
 # disqus被墙了。
-
 # 畅言需要备案。
 
 # the Gitalk config，default disabled
@@ -337,8 +344,7 @@ livere:
   enable: false
   uid:
 
-# The configuration of the Valine comment module is not activated by default.
-# To use it, activate the configuration item and set appId and appKey.
+# The configuration of the Valine comment module is not activated by default.To use it, activate the configuration item and set appId and appKey.
 # Valine 评论模块的配置，默认为不激活，如要使用，就请激活该配置项，并设置 appId 和 appKey.
 valine:
   enable: false
@@ -352,8 +358,7 @@ valine:
   placeholder: 'just go go' # Comment Box placeholder
   background: medias/comment_bg.png
 
-# The configuration of the MiniValine comment module is not activated by default.
-# To use it, activate the configuration item and set appId and appKey.
+# The configuration of the MiniValine comment module is not activated by default.To use it, activate the configuration item and set appId and appKey.
 # MiniValine 评论模块的配置，默认为不激活，如要使用，就请激活该配置项，并设置 appId 和 appKey.
 # See: https://github.com/MiniValine/MiniValine
 minivaline:
@@ -408,8 +413,7 @@ githubLink:
   url: https://github.com/xmxe/
   title: Star Me
 
-# The password verification feature of read post. To use this feature,
-# activate the configuration item and write the 'password' key and Cipher in the post's Front-matter.
+# The password verification feature of read post. To use this feature,activate the configuration item and write the 'password' key and Cipher in the post's Front-matter.
 # Note: In order to ensure that the original password will not be leaked to the web page,
 # the password of the article must be encrypted by 'SHA256' so that it will not be cracked.
 # 阅读文章的密码验证功能，如要使用此功能请激活该配置项，并在对应文章的Front-matter中写上'password'的键和加密后的密文即可.
@@ -441,8 +445,7 @@ baiduAnalytics:
 # 百度搜索资源平台提交链接
 baiduPush: true
 
-# The used front-end library can be replaced with the corresponding CDN address as needed,
-# If the specific version is not specified below, you can use the latest version.
+# The used front-end library can be replaced with the corresponding CDN address as needed,If the specific version is not specified below, you can use the latest version.
 # 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在设置js及css路径中可以直接写.min.xxx
 # 加/docs是针对xmxe仓库特殊化配置 jsdelivr.url为空的话删除/docs/
@@ -504,52 +507,53 @@ libs:
 # The post featured images that needs to be displayed when there is no image.
 # 无文章特色图片时需要显示的文章特色图片.
 featureImages:
-  # 图床
-  # - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
-  - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
-  # - https://s1.ax1x.com/2022/10/11/xN1vV0.jpg
-  - https://s1.ax1x.com/2022/10/11/xN39GF.jpg
-  # - https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
-  - https://s1.ax1x.com/2022/10/11/xN3Aq1.jpg
-  - https://s1.ax1x.com/2022/10/11/xN3KRe.jpg
-  - https://s1.ax1x.com/2022/10/11/xN31sA.jpg
-  - https://s1.ax1x.com/2022/10/11/xN3aRg.jpg
-  - https://s1.ax1x.com/2022/10/11/xN3Bss.jpg
-  # - https://s1.ax1x.com/2022/10/11/xN3DLn.jpg
-  - https://s1.ax1x.com/2022/10/11/xN36oV.jpg
-  - https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg
-  - https://s1.ax1x.com/2022/10/11/xN3oe1.jpg
-  - https://s1.ax1x.com/2022/10/11/xN3bFK.png
-  - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
-  - https://s1.ax1x.com/2022/10/11/xN8ElQ.png
-  - https://s1.ax1x.com/2022/10/11/xN8mmn.jpg
+  imageHost:
+    # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+    - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
+    - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
+    - https://s1.ax1x.com/2022/10/12/xUr79J.jpg
+    - https://s1.ax1x.com/2022/10/11/xN39GF.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
+    - https://s1.ax1x.com/2022/10/12/xUs1uq.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3KRe.jpg
+    - https://s1.ax1x.com/2022/10/11/xN31sA.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3aRg.jpg
+    - https://s1.ax1x.com/2022/10/12/xUrXB6.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3DLn.jpg
+    - https://s1.ax1x.com/2022/10/11/xN36oV.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3oe1.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3bFK.png
+    - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
+    - https://s1.ax1x.com/2022/10/11/xN8ElQ.png
+    - https://s1.ax1x.com/2022/10/11/xN8mmn.jpg
 
-  # 本地  
-  # # - medias/featureimages/0.jpg
-  # - medias/featureimages/1.jpg
-  # # - medias/featureimages/2.jpg
-  # - medias/featureimages/3.jpg
-  # # - medias/featureimages/4.jpg
-  # - medias/featureimages/5.jpg
-  # - medias/featureimages/6.jpg
-  # - medias/featureimages/7.jpg
-  # - medias/featureimages/8.jpg
-  # - medias/featureimages/9.jpg
-  # # - medias/featureimages/10.jpg
-  # - medias/featureimages/11.jpg
-  # - medias/featureimages/12.jpg
-  # - medias/featureimages/13.jpg
-  # - medias/featureimages/14.jpg
-  # - medias/featureimages/15.jpg
-  # - medias/featureimages/16.jpg
-  # - medias/featureimages/17.jpg
+  local:
+    # 本地  
+    - medias/featureimages/0.jpg
+    - medias/featureimages/1.jpg
+    - medias/featureimages/2.jpg
+    - medias/featureimages/3.jpg
+    - medias/featureimages/4.jpg
+    - medias/featureimages/5.jpg
+    - medias/featureimages/6.jpg
+    - medias/featureimages/7.jpg
+    - medias/featureimages/8.jpg
+    - medias/featureimages/9.jpg
+    - medias/featureimages/10.jpg
+    - medias/featureimages/11.jpg
+    - medias/featureimages/12.jpg
+    - medias/featureimages/13.jpg
+    - medias/featureimages/14.jpg
+    - medias/featureimages/15.jpg
+    - medias/featureimages/16.jpg
+    - medias/featureimages/17.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则
 
 # you can define reprint policy for a single article in the front-matter of the specific md file using this key: reprintPolicy
 # 您可以使用在文章md文件的 front-matter 中指定 reprintPolicy 来给单个文章配置转载规则
-
 # 可用的转载规则有（available reprint policies are）：
 # 这些转载规则的意义请参考(you can refer to this link FMI)：https://creativecommons.org/choose/?lang=zh
 # cc_by（知识共享署名 4.0 国际许可协议 Creative Commons Attribution-NoDerivatives 4.0 International License）
@@ -558,7 +562,6 @@ featureImages:
 # cc_by_nc（知识共享署名-非商业性使用 4.0 国际许可协议 Creative Commons Attribution-NoDerivatives 4.0 International License）
 # cc_by_nc_nd（知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License）
 # cc_by_nc_sa（知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License）
-
 # cc0（CC0 1.0 通用 (CC0 1.0) 公共领域贡献 CC0 1.0 Universal (CC0 1.0) Public Domain Dedication） https://creativecommons.org/publicdomain/zero/1.0/deed.zh
 
 # noreprint（不允许转载 not allowed to reprint）
@@ -582,7 +585,7 @@ tuxiaochao:
   enable: false
   productId:
 
-#背景canvas-nest
+# 背景canvas-nest
 canvas_nest:
   enable: false
   color: 0,0,255 # 线条颜色, 默认: '0,0,0' ；三个数字分别为(R,G,B)，注意用,分割
@@ -615,7 +618,7 @@ addthis:
   pubid:  # 前往https://www.addthis.com/获取
 
 # 打字效果副标题.
-# 如果有符号 ‘ ，请在 ’ 前面加上 \
+# 如果有符号‘请在’前面加上 \
 subtitle:
   enable: false
   loop: true # 是否循环
@@ -644,12 +647,12 @@ navMenu:
 instantpage:
   enable: true
 
-# banner 是否每日切换.
-# 若为 false, 则 banner 默认为 /medias/banner/0.jpg
+# banner 是否每日切换.(现为刷新时随机切换,修改bg-cover-content.ejs实现)
+# 若为false, 则banner默认为 /medias/banner/0.jpg
 banner:
   enable: true
 
-#ICP备案信息尾部显示
+# ICP备案信息尾部显示
 icp:
   enable: false
   url: # 备案链接
@@ -670,7 +673,9 @@ jsDelivr:
 # 网站背景图
 background:
   enable: true
-  url: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThevURjFwDqEg!!/800?w5=1203&h5=800&rf=viewer_421 # medias/cover.jpg
+  url: medias/cover.jpg
+  # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+  imageHost_url: https://s1.ax1x.com/2022/10/11/xN1vV0.jpg
 
 # 说说 https://artitalk.js.org/
 artitalk:
@@ -721,3 +726,6 @@ darkMode:
 # 首页链接打开方式
 # Available: _blank | _self
 url_target: _blank
+
+# 是否启用图床
+enableImageHost: true

@@ -1,7 +1,12 @@
+<%
+var backgroundUrl = theme.background.url
+if(theme.enableImageHost){
+    backgroundUrl = theme.background.imageHost_url
+}
+%>
 <style>
     body{
-        /*注释掉是因为使用qq图床的话有防盗链 直接在<body>标签使用'background'属性 不过是过时的写法*/
-       /* background-image: url(<%- url_for(theme.background.url) %>); */
+       background-image: url(<%- url_for(backgroundUrl) %>);
        background-repeat:no-repeat;
        background-size:cover;
        background-attachment:fixed;

@@ -32,7 +32,10 @@
 
     // post feature image.
     var featureimg = '/medias/featureimages/0.jpg';
-    var featureImages = theme.featureImages;
+    var featureImages = theme.featureImages.local;
+    if(theme.enableImageHost){
+        featureImages = theme.featureImages.imageHost;
+    }
     %>
 
     <div id="cd-timeline" class="container">

@@ -3,7 +3,7 @@ title: HashMap&ConcurrentHashMap
 sticky: 52
 categories: Java 
 index_img: /assert/hashmap.jpg
-img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjGu0RjnCNkNg!!/800?w5=842&h5=535&rf=viewer_421
+img: 
 ---
 
 ### HashMap

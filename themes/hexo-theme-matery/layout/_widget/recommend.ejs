@@ -28,7 +28,10 @@
         return hash;
     };
 
-    var featureImages = theme.featureImages;
+    var featureImages = theme.featureImages.local;
+    if(theme.enableImageHost){
+        featureImages = theme.featureImages.imageHost;
+    }
     var imgCount = featureImages.length;
     var bgColorArr = [
             'linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)',

@@ -3,7 +3,7 @@ title: Linux相关
 sticky: 54
 tags: 计算机
 index_img: /assert/linux.jpg
-img: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE919gaa6/V5bCQAyOTM0MDQ3NTjCu0Rj9DiSNg!!/800?w5=1280&h5=800&rf=viewer_421
+img: 
 ---
 
 

@@ -19,8 +19,11 @@
                     <div class="col s12 m12 l4">
                         <div class="profile center-align">
                             <div class="avatar">
-                                <img src="<%- url_for(theme.profile.avatar) %>" alt="<%- config.author %>"
-                                     class="circle responsive-img avatar-img">
+                                <% if (theme.enableImageHost && theme.profile.imageHost_avatar) { %>
+                                    <img src="<%- url_for(theme.profile.imageHost_avatar) %>" alt="<%- config.author %>" class="circle responsive-img avatar-img">
+                                <% } else { %>
+                                    <img src="<%- url_for(theme.profile.avatar) %>" alt="<%- config.author %>" class="circle responsive-img avatar-img">
+                                <% } %>
                             </div>
                             <div class="author">
                                 <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">

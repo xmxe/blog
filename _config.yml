@@ -13,11 +13,11 @@ server:
 # Site
 title: 熊猫小二
 subtitle: ''
-description: '熊猫小二的博客 / xmxe’s blog'
-keywords:
+description: 熊猫小二的博客  xmxe's blog
+keywords: 博客 blog
 author: xmxe
 language: zh-CN
-timezone: 'Asia/Shanghai'
+timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -82,9 +82,9 @@ index_generator:
 
 archive_generator: 
   per_page: 9
-  yearly: false
-  monthly: false
-  daily: false
+  yearly: true
+  monthly: true
+  daily: true
 
 # Category & Tag
 default_category: uncategorized
@@ -130,4 +130,4 @@ search:
 lazyload:
   enable: false 
   onlypost: false  # 是否只对文章的图片做懒加载
-  loadingImg: http://qungz.photo.store.qq.com/qun-qungz/V51g1j7W00cGjy3O92fU33gLE92bPa6p/V5bCQAyOTM0MDQ3NThbvURjMR4XEw!!/800?w5=300&h5=300&rf=viewer_421 # medias/loading.png
+  loadingImg: medias/loading.png

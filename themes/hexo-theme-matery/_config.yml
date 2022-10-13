@@ -136,7 +136,7 @@ recommend:
 
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
-favicon: /favicon.png  
+favicon: /docs/favicon.png  
 logo: 
   # 图床路径 enableImageHost=true时有效 为空则使用本地路径
   imageHost: 
@@ -296,9 +296,17 @@ myGallery:
     - medias/featureimages/2.jpg
   imageHost_data:
     # 图床路径 enableImageHost=true时有效 为空则使用本地路径
-    - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
-    - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
-    - https://s1.ax1x.com/2022/10/12/xUPi9K.jpg
+    - https://pic1.zhimg.com/v2-a15c9d4dd48986974acd43e8b722350d_r.jpg?source=1940ef5c
+    - https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg
+    - https://pic2.zhimg.com/v2-7de23a78e4931770d2606cb99a6eab31_r.jpg
+    - https://pic3.zhimg.com/v2-5575876cc5000976567da583583c87ca_r.jpg
+    - https://pic1.zhimg.com/v2-7382fb7654c33a5e843f51ec139b1da0_r.jpg
+    - https://pic3.zhimg.com/v2-5bcde8862e76568efad97b4c3717bb5a_r.jpg
+    - https://pic2.zhimg.com/v2-b298d8f15b405d7cbbdf81bcd325cb59_r.jpg
+    - https://pic2.zhimg.com/v2-b43a58fbbc249d3fcc278e9b3a70ace1_r.jpg
+    - https://pic1.zhimg.com/v2-e4a868961c59346446a84beebcc7b628_r.jpg
+    - https://pic3.zhimg.com/v2-151f8f85c33a5e04450692886555b55e_r.jpg
+    - https://pic4.zhimg.com/v2-a2b53d3b2b898155a28106a5e8152b13_r.jpg
 
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
@@ -506,6 +514,7 @@ libs:
 
 # The post featured images that needs to be displayed when there is no image.
 # 无文章特色图片时需要显示的文章特色图片.
+# https://www.zhihu.com/question/463305763/answer/1928488880
 featureImages:
   imageHost:
     # 图床路径 enableImageHost=true时有效 为空则使用本地路径

@@ -4,7 +4,7 @@ sticky: 90
 categories: Java 
 index_img: /assert/thread.jpg
 img: 
-coverImg: https://s1.ax1x.com/2022/10/11/xN1njs.jpg
+coverImg: https://pica.zhimg.com/v2-72839d9aecf00f3185303c7f76c597ee_r.jpg?source=1940ef5c
 cover: true
 summary: 线程+线程池
 ---

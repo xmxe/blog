@@ -433,3 +433,4 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 - [图解MVCC！](https://mp.weixin.qq.com/s/1XmvVNYqt5KycmD8pJanug)
 - [再有人问你什么是MVCC，就把这篇文章发给他！](https://mp.weixin.qq.com/s/WZa5UKYgU-pYKbvovLt1YQ)
 - [MySQL 最朴素的监控方式](https://mp.weixin.qq.com/s/meS5Au1o9qdrSv7505mIcA)
+- [1亿条数据批量插入 MySQL，哪种方式最快](https://mp.weixin.qq.com/s/c71ATJLT6_KXtb_iiUlMjg)

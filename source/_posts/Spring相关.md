@@ -9,13 +9,15 @@ cover: true
 summary: Build the apps that make the world run
 ---
 
+> 可以看下我的关于Sring扩展插件的一个[demo](https://github.com/xmxe/springboot/tree/master/springboot-lifecycle)，里面有很多Spring扩展的测试
+
 ### Spring
 
 #### 相关注解
 
 ##### @RequestBody
 
-主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的)；GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交,在方法里面标记，可以作为一个对象接收,也可以作为字符串接收，关键在于Spring中对json的解析配置
+主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的),GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交,在方法里面标记，可以作为一个对象接收,也可以作为字符串接收，关键在于Spring中对json的解析配置.
 ```js
 var data =  {"id" : $("#id").val(),"userId" : $("#userId").val()}
 $.ajax({
@@ -32,13 +34,14 @@ $.ajax({
 
 ##### @PostConstruct和@PreDestroy
 
-@PostConstruct该注解被用来修饰一个非静态的void()方法。被@PostConstruct修饰的方法会当bean创建完成的时候，会后置执行@PostConstruct修饰的方法。PostConstruct在构造函数之后执行，bean的init()方法之前执行。相当于init-method,使用在方法上，当Bean初始化时执行。Constructor(构造方法) -> @Autowired(依赖注入) -> @PostConstruct(注释的方法)
+@PostConstruct该注解被用来修饰一个非静态的void()方法,被@PostConstruct修饰的方法会当bean创建完成的时候，会后置执行@PostConstruct修饰的方法。PostConstruct在构造函数之后执行，bean的init()方法之前执行,相当于init-method,使用在方法上，当Bean初始化时执行,Constructor(构造方法) -> @Autowired(依赖注入) -> @PostConstruct(注释的方法)
+
 @PreDestroy类似于destory-method 在servlet destory()方法之后执行
 
 ##### @Autowired和@Resource区别
 
-1. @Autowired与@Resource都可以用来装配bean. 都可以写在字段上,或写在setter方法上。
-2. @Autowired默认按类型装配（这个注解是属业spring的），默认情况下必须要求依赖对象必须存在，如果要允许null值，可以设置它的required属性为false，如：@Autowired(required=false) ，如果我们想使用名称装配可以结合@Qualifier注解进行使用，如下：
+1. @Autowired与@Resource都可以用来装配bean,都可以写在字段上,或写在setter方法上。
+2. @Autowired默认按类型装配（这个注解是属于spring的）,默认情况下必须要求依赖对象必须存在，如果要允许null值，可以设置它的required属性为false，如：@Autowired(required=false) ，如果我们想使用名称装配可以结合@Qualifier注解进行使用，如下：
 ```java
 @Autowired () 
 @Qualifier ( "baseDao" )
@@ -53,8 +56,8 @@ private BaseDao baseDao;
 
 ##### @Inject
 
-1. @Inject是JSR330 (Dependency Injection for Java)中的规范，需要导入javax.inject.Inject;实现注入。
-2. @Inject是根据类型进行自动装配的，如果需要按名称进行装配，则需要配合@Named；
+1. @Inject是JSR330 (Dependency Injection for Java)中的规范，需要导入javax.inject.Inject,实现注入。
+2. @Inject是根据类型进行自动装配的，如果需要按名称进行装配，则需要配合@Named
 3. @Inject可以作用在变量、setter方法、构造函数上。
 ```java
 private Abc abc;
@@ -85,6 +88,7 @@ public void setAbc(@Named("beanName") Abc abc){
 
 **Bean的生命周期**
 在将一个bean对象配置在ioc容器中之后，这个bean的生命周期就会交由ioc容器进行管理。一般担当管理者的角色是BeanFactory和ApplicationContext。
+```
 1. bean的创建
 在解析ioc容器时，根据解析容器的工厂，决定bean的初始化时间 
 BeanFactory - getBean()方法调用时 初始化bean
@@ -97,7 +101,6 @@ ApplicationContext - 解析ioc容器时 初始化bean
 如果实现了该接口，执行其setBeanFactory(BeanFactory factory)方法，参数是创建Bean的BeanFactory本身
 5. ApplicationContextAware 
 如果这个Bean已经实现了该接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文（同样这个方式也可以实现步骤4的内容，但比4更好，因为ApplicationContext是BeanFactory的子接口，有更多的实现方法）
-```java
 import org.springframework.beans.context.ApplicationContextAware
 // 当需要从spring容器中获取bean时一般使用这种方式获取
 ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext-common.xml");  
@@ -110,8 +113,8 @@ private static ApplicationContext applicationContext;
         applicationContext = arg0;
     }
 }
-```
-注意：从ApplicationContextAware获取ApplicationContext上下文的情况，仅仅适用于当前运行的代码和已启动的Spring代码处于同一个Spring上下文，否则获取到的ApplicationContext是空的
+// 注意：从ApplicationContextAware获取ApplicationContext上下文的情况，仅仅适用于当前运行的代码和已启动的Spring代码处于同一个Spring上下文，否则获取到的ApplicationContext是空的
+
 6. BeanPostProcessor (前置方法)
 ioc容器中如果有bean实现了该接口，那所有的bean在初始化之前都会执行其实例的postProcessBeforeInitialization(Object bean, String beanName)前置方法，BeanPostProcessor经常被用作是Bean内容的更改,该方法最后返回bean
 7. @PostConstruct修饰的非静态方法
@@ -124,7 +127,7 @@ ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都
 12. @PreDestroy修饰的方法
 13. ioc容器关闭时，如果bean实现了DisposableBean接口，则执行其destory()方法，在Bean生命周期结束前调用destory()方法做一些收尾工作,重写destroy()方法
 14. 如果这个Bean在Spring配置了destroy-method属性，执行destory-method属性指向的方法
-
+```
 ![](/images/bean.png)
 
 类构造方法 - postProcessBeforeInitialization前置方法 - @PostConstruct注解的方法 - InitializingBean的afterPropertiesSet()方法- XML中定义的bean init-method方法 - postProcessAfterInitialization后置方法
@@ -138,7 +141,7 @@ ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都
 - [Spring系列之beanFactory与ApplicationContext](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247493943&amp;idx=1&amp;sn=9eaa46ed730874fce003c66f76fe9c7f&amp;source=41#wechat_redirect)
 
 **BeanFactoryPostProcessor、BeanPostProcessor区别**
-BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor接口是针对bean容器的，它的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.
+BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor接口是针对bean容器的，它的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.
 BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：
 1. 实现InitializingBean接口的bean，对应方法为afterPropertiesSet
 2. xml定义中，通过init-method设置的方法,BeanPostProcessor是BeanFactoryPostProcessor之后执行的。

@@ -469,7 +469,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><h4 id="相关注解"><a href="#相关注解" class="headerlink" title="相关注解"></a>相关注解</h4><h5 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h5><p>主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的)；GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交,在方法里面标记，可以作为一个对象接收,也可以作为字符串接收，关键在于Spring中对json的解析配置</p>
+                <blockquote>
+<p>可以看下我的关于Sring扩展插件的一个<a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot/tree/master/springboot-lifecycle">demo</a>，里面有很多Spring扩展的测试</p>
+</blockquote>
+<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><h4 id="相关注解"><a href="#相关注解" class="headerlink" title="相关注解"></a>相关注解</h4><h5 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h5><p>主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的),GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交,在方法里面标记，可以作为一个对象接收,也可以作为字符串接收，关键在于Spring中对json的解析配置.</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> data <span class="token operator">=</span>  <span class="token punctuation">&#123;</span><span class="token string-property property">"id"</span> <span class="token operator">:</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#id"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string-property property">"userId"</span> <span class="token operator">:</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#userId"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
 $<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
 	<span class="token literal-property property">url</span> <span class="token operator">:</span> <span class="token string">"/api/updateFeedback"</span><span class="token punctuation">,</span>
@@ -481,10 +484,11 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 	<span class="token function-variable function">success</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iyubfxmV_8KU8v4cg1A7tg">@RequestBody 接收数组、List 参数、@Deprecated 标记废弃方法</a></p>
-<h5 id="PostConstruct和-PreDestroy"><a href="#PostConstruct和-PreDestroy" class="headerlink" title="@PostConstruct和@PreDestroy"></a>@PostConstruct和@PreDestroy</h5><p>@PostConstruct该注解被用来修饰一个非静态的void()方法。被@PostConstruct修饰的方法会当bean创建完成的时候，会后置执行@PostConstruct修饰的方法。PostConstruct在构造函数之后执行，bean的init()方法之前执行。相当于init-method,使用在方法上，当Bean初始化时执行。Constructor(构造方法) -&gt; @Autowired(依赖注入) -&gt; @PostConstruct(注释的方法)<br>@PreDestroy类似于destory-method 在servlet destory()方法之后执行</p>
+<h5 id="PostConstruct和-PreDestroy"><a href="#PostConstruct和-PreDestroy" class="headerlink" title="@PostConstruct和@PreDestroy"></a>@PostConstruct和@PreDestroy</h5><p>@PostConstruct该注解被用来修饰一个非静态的void()方法,被@PostConstruct修饰的方法会当bean创建完成的时候，会后置执行@PostConstruct修饰的方法。PostConstruct在构造函数之后执行，bean的init()方法之前执行,相当于init-method,使用在方法上，当Bean初始化时执行,Constructor(构造方法) -&gt; @Autowired(依赖注入) -&gt; @PostConstruct(注释的方法)</p>
+<p>@PreDestroy类似于destory-method 在servlet destory()方法之后执行</p>
 <h5 id="Autowired和-Resource区别"><a href="#Autowired和-Resource区别" class="headerlink" title="@Autowired和@Resource区别"></a>@Autowired和@Resource区别</h5><ol>
-<li>@Autowired与@Resource都可以用来装配bean. 都可以写在字段上,或写在setter方法上。</li>
-<li>@Autowired默认按类型装配（这个注解是属业spring的），默认情况下必须要求依赖对象必须存在，如果要允许null值，可以设置它的required属性为false，如：@Autowired(required&#x3D;false) ，如果我们想使用名称装配可以结合@Qualifier注解进行使用，如下：<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<li>@Autowired与@Resource都可以用来装配bean,都可以写在字段上,或写在setter方法上。</li>
+<li>@Autowired默认按类型装配（这个注解是属于spring的）,默认情况下必须要求依赖对象必须存在，如果要允许null值，可以设置它的required属性为false，如：@Autowired(required&#x3D;false) ，如果我们想使用名称装配可以结合@Qualifier注解进行使用，如下：<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> 
 <span class="token annotation punctuation">@Qualifier</span> <span class="token punctuation">(</span> <span class="token string">"baseDao"</span> <span class="token punctuation">)</span>
 <span class="token keyword">private</span> <span class="token class-name">BaseDao</span> baseDao<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li>@Resource（这个注解属于J2EE的），默认按照名称进行装配，名称可以通过name属性进行指定，如果没有指定name属性，当注解写在字段上时，默认取字段名进行安装名称查找，如果注解写在setter方法上默认取属性名进行装配。当找不到与名称匹配的bean时才按照类型进行装配。但是需要注意的是，如果name属性一旦指定，就只会按照名称进行装配。</li>
@@ -496,8 +500,8 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2X5xv8I0b6TcXWVH-SC8Ug">@Autowired的这些骚操作，你都知道吗？</a></li>
 </ul>
 <h5 id="Inject"><a href="#Inject" class="headerlink" title="@Inject"></a>@Inject</h5><ol>
-<li>@Inject是JSR330 (Dependency Injection for Java)中的规范，需要导入javax.inject.Inject;实现注入。</li>
-<li>@Inject是根据类型进行自动装配的，如果需要按名称进行装配，则需要配合@Named；</li>
+<li>@Inject是JSR330 (Dependency Injection for Java)中的规范，需要导入javax.inject.Inject,实现注入。</li>
+<li>@Inject是根据类型进行自动装配的，如果需要按名称进行装配，则需要配合@Named</li>
 <li>@Inject可以作用在变量、setter方法、构造函数上。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Abc</span> abc<span class="token punctuation">;</span>
 <span class="token annotation punctuation">@Inject</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAbc</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Named</span><span class="token punctuation">(</span><span class="token string">"beanName"</span><span class="token punctuation">)</span> <span class="token class-name">Abc</span> abc<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -521,34 +525,44 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lyH72PRAGcR2-aQvMZ1jPA">@Bean 与 @Component 用在同一个类上，会怎么样？</a></li>
 </ul>
 <h4 id="Spring中的Bean对象"><a href="#Spring中的Bean对象" class="headerlink" title="Spring中的Bean对象"></a>Spring中的Bean对象</h4><p><strong>Bean的生命周期</strong><br>在将一个bean对象配置在ioc容器中之后，这个bean的生命周期就会交由ioc容器进行管理。一般担当管理者的角色是BeanFactory和ApplicationContext。</p>
-<ol>
-<li>bean的创建<br>在解析ioc容器时，根据解析容器的工厂，决定bean的初始化时间<br>BeanFactory - getBean()方法调用时 初始化bean<br>ApplicationContext - 解析ioc容器时 初始化bean</li>
-<li>注入<br>根据bean子元素的配置实现bean之间的被动注入</li>
-<li>BeanNameAware<br>如果bean实现了该接口，执行其setBeanName(String name)方法.参数name是bean在容器中的名称,即xml里面bean的id名称</li>
-<li>BeanFactoryAware<br>如果实现了该接口，执行其setBeanFactory(BeanFactory factory)方法，参数是创建Bean的BeanFactory本身</li>
-<li>ApplicationContextAware<br>如果这个Bean已经实现了该接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文（同样这个方式也可以实现步骤4的内容，但比4更好，因为ApplicationContext是BeanFactory的子接口，有更多的实现方法）<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>context<span class="token punctuation">.</span></span><span class="token class-name">ApplicationContextAware</span>
-<span class="token comment">// 当需要从spring容器中获取bean时一般使用这种方式获取</span>
-<span class="token class-name">ApplicationContext</span> appContext <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"applicationContext-common.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-<span class="token class-name">AbcService</span> abcService <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">AbcService</span><span class="token punctuation">)</span>appContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"abcService"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-<span class="token comment">// 但是这样就会存在一个问题：因为它会重新装载applicationContext-common.xml并实例化上下文bean，如果有些线程配置类也是在这个配置文件中，那么会造成做相同工作的的线程会被启两次。一次是web容器初始化时启动，另一次是上述代码显示的实例化了一次。当于重新初始化一遍！这样就产生了冗余,所以可以通过实现ApplicationContextAware接口获取bean,当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有bean。换句话说，就是这个类可以直接获取spring配置文件中，所有有引用到的bean对象</span>
+<pre class="line-numbers language-none"><code class="language-none">1. bean的创建
+在解析ioc容器时，根据解析容器的工厂，决定bean的初始化时间 
+BeanFactory - getBean()方法调用时 初始化bean
+ApplicationContext - 解析ioc容器时 初始化bean
+2. 注入
+根据bean子元素的配置实现bean之间的被动注入
+3. BeanNameAware
+如果bean实现了该接口，执行其setBeanName(String name)方法.参数name是bean在容器中的名称,即xml里面bean的id名称
+4. BeanFactoryAware     
+如果实现了该接口，执行其setBeanFactory(BeanFactory factory)方法，参数是创建Bean的BeanFactory本身
+5. ApplicationContextAware 
+如果这个Bean已经实现了该接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文（同样这个方式也可以实现步骤4的内容，但比4更好，因为ApplicationContext是BeanFactory的子接口，有更多的实现方法）
+import org.springframework.beans.context.ApplicationContextAware
+&#x2F;&#x2F; 当需要从spring容器中获取bean时一般使用这种方式获取
+ApplicationContext appContext &#x3D; new ClassPathXmlApplicationContext(&quot;applicationContext-common.xml&quot;);  
+AbcService abcService &#x3D; (AbcService)appContext.getBean(&quot;abcService&quot;); 
+&#x2F;&#x2F; 但是这样就会存在一个问题：因为它会重新装载applicationContext-common.xml并实例化上下文bean，如果有些线程配置类也是在这个配置文件中，那么会造成做相同工作的的线程会被启两次。一次是web容器初始化时启动，另一次是上述代码显示的实例化了一次。当于重新初始化一遍！这样就产生了冗余,所以可以通过实现ApplicationContextAware接口获取bean,当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有bean。换句话说，就是这个类可以直接获取spring配置文件中，所有有引用到的bean对象
 
-<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ApplicationContext</span> applicationContext<span class="token punctuation">;</span>
- 	<span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setApplicationContext</span><span class="token punctuation">(</span><span class="token class-name">ApplicationContext</span> arg0<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">BeansException</span> <span class="token punctuation">&#123;</span>
-        applicationContext <span class="token operator">=</span> arg0<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-注意：从ApplicationContextAware获取ApplicationContext上下文的情况，仅仅适用于当前运行的代码和已启动的Spring代码处于同一个Spring上下文，否则获取到的ApplicationContext是空的</li>
-<li>BeanPostProcessor (前置方法)<br>ioc容器中如果有bean实现了该接口，那所有的bean在初始化之前都会执行其实例的postProcessBeforeInitialization(Object bean, String beanName)前置方法，BeanPostProcessor经常被用作是Bean内容的更改,该方法最后返回bean</li>
-<li>@PostConstruct修饰的非静态方法</li>
-<li>InitializingBean<br>如果实现了该接口，则允许一个bean在它的所有必须属性被BeanFactory设置后，来执行初始化的工作，会自动调用afterPropertiesSet()方法对Bean进行初始化，实现此接口的话正常情况下配置文件就不用指定 init-method属性了。</li>
-<li>如果Bean在Spring中配置了init-method属性，调用init-method属性指向的方法 此时完成bean的初始化</li>
-<li>BeanPostProcessor(后置方法)<br>ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都会执行其实例的postProcessAfterInitialization(Object bean, String beanName)后置方法</li>
-<li>实现SmartInitializingSingleton的接口后，当所有单例 bean 都初始化完成以后， Spring的IOC容器会回调该接口的afterSingletonsInstantiated()方法,主要应用场合就是在所有单例 bean 创建完成之后，可以在该回调中做一些事情。执行时机在ApplicationContextAware执行之后</li>
-<li>@PreDestroy修饰的方法</li>
-<li>ioc容器关闭时，如果bean实现了DisposableBean接口，则执行其destory()方法，在Bean生命周期结束前调用destory()方法做一些收尾工作,重写destroy()方法</li>
-<li>如果这个Bean在Spring配置了destroy-method属性，执行destory-method属性指向的方法</li>
-</ol>
+private static ApplicationContext applicationContext;
+ 	@Override
+    public void setApplicationContext(ApplicationContext arg0) throws BeansException &#123;
+        applicationContext &#x3D; arg0;
+    &#125;
+&#125;
+&#x2F;&#x2F; 注意：从ApplicationContextAware获取ApplicationContext上下文的情况，仅仅适用于当前运行的代码和已启动的Spring代码处于同一个Spring上下文，否则获取到的ApplicationContext是空的
+
+6. BeanPostProcessor (前置方法)
+ioc容器中如果有bean实现了该接口，那所有的bean在初始化之前都会执行其实例的postProcessBeforeInitialization(Object bean, String beanName)前置方法，BeanPostProcessor经常被用作是Bean内容的更改,该方法最后返回bean
+7. @PostConstruct修饰的非静态方法
+8. InitializingBean
+如果实现了该接口，则允许一个bean在它的所有必须属性被BeanFactory设置后，来执行初始化的工作，会自动调用afterPropertiesSet()方法对Bean进行初始化，实现此接口的话正常情况下配置文件就不用指定 init-method属性了。
+9. 如果Bean在Spring中配置了init-method属性，调用init-method属性指向的方法 此时完成bean的初始化
+10. BeanPostProcessor(后置方法)
+ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都会执行其实例的postProcessAfterInitialization(Object bean, String beanName)后置方法
+11. 实现SmartInitializingSingleton的接口后，当所有单例 bean 都初始化完成以后， Spring的IOC容器会回调该接口的afterSingletonsInstantiated()方法,主要应用场合就是在所有单例 bean 创建完成之后，可以在该回调中做一些事情。执行时机在ApplicationContextAware执行之后
+12. @PreDestroy修饰的方法
+13. ioc容器关闭时，如果bean实现了DisposableBean接口，则执行其destory()方法，在Bean生命周期结束前调用destory()方法做一些收尾工作,重写destroy()方法
+14. 如果这个Bean在Spring配置了destroy-method属性，执行destory-method属性指向的方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="/blog/images/bean.png"></p>
 <p>类构造方法 - postProcessBeforeInitialization前置方法 - @PostConstruct注解的方法 - InitializingBean的afterPropertiesSet()方法- XML中定义的bean init-method方法 - postProcessAfterInitialization后置方法</p>
 <ul>
@@ -560,7 +574,7 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA">Spring Boot 启动扩展点超详细总结，再也不怕面试官问了</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247493943&amp;idx=1&amp;sn=9eaa46ed730874fce003c66f76fe9c7f&amp;source=41#wechat_redirect">Spring系列之beanFactory与ApplicationContext</a></li>
 </ul>
-<p><strong>BeanFactoryPostProcessor、BeanPostProcessor区别</strong><br>BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor接口是针对bean容器的，它的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.<br>BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：</p>
+<p><strong>BeanFactoryPostProcessor、BeanPostProcessor区别</strong><br>BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor接口是针对bean容器的，它的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.<br>BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：</p>
 <ol>
 <li>实现InitializingBean接口的bean，对应方法为afterPropertiesSet</li>
 <li>xml定义中，通过init-method设置的方法,BeanPostProcessor是BeanFactoryPostProcessor之后执行的。</li>

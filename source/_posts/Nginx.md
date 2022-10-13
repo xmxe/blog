@@ -212,7 +212,7 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 
 #### nginx.conf
 
-```conf
+```shell
 # 指定Nginx服务的用户和用户组
 # user  nobody nobody;
 

@@ -6,7 +6,9 @@ index_img: /assert/docker.jpg
 img: 
 ---
 
-#### 在线安装 
+#### 安装
+
+##### 在线安装 
 
 1. 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑 /etc/selinux/config，设置两个关键变量。
 ```shell
@@ -32,7 +34,7 @@ docker run hello-world
 # ubuntu安装命令 apt install docker-ce
 ```
 
-#### 离线安装
+##### 离线安装
 
 1. 下载离线包 https://download.docker.com/linux/static/stable/x86_64/
 2. 解压

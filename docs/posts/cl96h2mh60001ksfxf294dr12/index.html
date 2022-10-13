@@ -464,7 +464,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h4><ol>
+                <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><h5 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h5><ol>
 <li>安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑 &#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">SELINUX</span><span class="token operator">=</span>disabled
 
 <span class="token assign-left variable">SELINUXTYPE</span><span class="token operator">=</span>targeted<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
@@ -477,7 +477,7 @@
 <span class="token comment"># centos7安装命令 yum -y install docker-ce</span>
 <span class="token comment"># ubuntu安装命令 apt install docker-ce</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
-<h4 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h4><ol>
+<h5 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h5><ol>
 <li><p>下载离线包 <a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/">https://download.docker.com/linux/static/stable/x86_64/</a></p>
 </li>
 <li><p>解压</p>

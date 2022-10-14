@@ -2074,10 +2074,10 @@ footer .copy-right {
     -o-transform: rotate(360deg) !important;
     -ms-transform: rotate(360deg) !important;
     transform: rotate(360deg) !important;
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    -o-transition: all .3s;
-    transition: all .3s;
+    -webkit-transition: all .7s;
+    -moz-transition: all .7s;
+    -o-transition: all .7s;
+    transition: all .7s;
 }
 
 .menus_item_child {

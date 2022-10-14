@@ -1,0 +1,13 @@
+<%- partial('_partial/bg-cover') %>
+
+<main class="content">
+    <div class="container about-container">
+        <div class="card">
+            <div class="card-content">
+                <% if (theme.myGallery && theme.myGallery.enable) { %>
+                    <%- partial('_widget/my-gallery') %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</main>

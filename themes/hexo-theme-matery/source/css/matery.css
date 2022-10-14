@@ -238,6 +238,8 @@ mark {
 
 .container .row {
     margin-bottom: 0;
+    height: 10em;
+    overflow: auto;
 }
 
 .bg-color {

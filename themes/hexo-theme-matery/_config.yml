@@ -308,7 +308,7 @@ myGallery:
     - medias/featureimages/2.jpg
   imageHost_data:
     # 图床路径 enableImageHost=true时有效 为空则使用本地路径
-    - https://pic1.zhimg.com/v2-a15c9d4dd48986974acd43e8b722350d_r.jpg?source=1940ef5c
+    - https://pic1.zhimg.com/v2-a15c9d4dd48986974acd43e8b722350d_r.jpg
     - https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg
     - https://pic2.zhimg.com/v2-7de23a78e4931770d2606cb99a6eab31_r.jpg
     - https://pic3.zhimg.com/v2-5575876cc5000976567da583583c87ca_r.jpg
@@ -471,8 +471,8 @@ baiduPush: true
 # 加/docs是针对xmxe仓库特殊化配置 jsdelivr.url为空的话删除/docs/
 libs:
   css:
-    matery: /docs/css/matery.css
-    mycss: /docs/css/my.css
+    matery: /docs/css/matery.min.css
+    mycss: /docs/css/my.min.css
     fontAwesome: /docs/libs/awesome/css/all.css # V5.11.1
     materialize: /docs/libs/materialize/materialize.min.css # 1.0.0
     aos: /docs/libs/aos/aos.css
@@ -484,14 +484,14 @@ libs:
     jqcloud: /docs/libs/jqcloud/jqcloud.css
     tocbot: /docs/libs/tocbot/tocbot.css
     prism: /docs/libs/prism/prism.css
-    loading: /docs/css/loading.css
-    my-gitalk: /docs/css/my-gitalk.css
+    loading: /docs/css/loading.min.css
+    my-gitalk: /docs/css/my-gitalk.min.css
     gitment-dft: /docs/libs/gitment/gitment-default.css
-    gitment: /docs/css/gitment.css
-    bb: /docs/css/bb.css
+    gitment: /docs/css/gitment.min.css
+    bb: /docs/css/bb.min.css
     share: /docs/libs/share/css/share.min.css
   js:
-    matery: /docs/js/matery.js
+    matery: /docs/js/matery.min.js
     jquery: /docs/libs/jquery/jquery.min.js
     materialize: /docs/libs/materialize/materialize.min.js # 1.0.0
     masonry: /docs/libs/masonry/masonry.pkgd.min.js # v4.0.0

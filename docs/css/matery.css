@@ -239,6 +239,9 @@ mark {
 
 .container .row {
     margin-bottom: 0;
+}
+
+.dream .row {
     height: 10em;
     overflow: auto;
 }
@@ -2030,7 +2033,7 @@ footer .copy-right {
     /* fix the problem of hidden failure */
     margin-top: 0.4em;
     /* bg color = bg color under block */
-    background: white;
+    background: #eff4fdc2;
 }
 
 /*二级菜单*/
@@ -2065,12 +2068,12 @@ footer .copy-right {
     color: #000;
 }
 
-.nav-show i[aria-hidden=true] {
-    -webkit-transform: rotate(180deg) !important;
-    -moz-transform: rotate(180deg) !important;
-    -o-transform: rotate(180deg) !important;
-    -ms-transform: rotate(180deg) !important;
-    transform: rotate(180deg) !important;
+.nav-show i {
+    -webkit-transform: rotate(3600deg) !important;
+    -moz-transform: rotate(360deg) !important;
+    -o-transform: rotate(360deg) !important;
+    -ms-transform: rotate(360deg) !important;
+    transform: rotate(360deg) !important;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -o-transition: all .3s;

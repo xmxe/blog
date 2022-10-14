@@ -64,7 +64,7 @@
   <!-- 页面加载动画 -->
   <script>
     $(document).ready(function () {
-      // document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
       document.getElementById('loading-box').classList.add("loaded")
     })
   </script>
@@ -151,20 +151,20 @@
       </li>
       
       <li>
-        <a href="https://xmxe.github.io/zhengfl">
-          
-          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
-          
-          <span>简历</span>
-        </a>
-      </li>
-      
-      <li>
         <a href="/blog/gallery">
           
           <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
           
           <span>相册</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://xmxe.github.io/zhengfl">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>简历</span>
         </a>
       </li>
       
@@ -272,21 +272,21 @@
               
                 <li>
 
-                  <a href="https://xmxe.github.io/zhengfl " style="margin-left:75px">
-				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
-			      
-		          <span>简历</span>
-                  </a>
-                </li>
-              
-                <li>
-
                   <a href="/blog/gallery " style="margin-left:75px">
 				  
 				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
 			      
 		          <span>相册</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="https://xmxe.github.io/zhengfl " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>简历</span>
                   </a>
                 </li>
               
@@ -371,10 +371,10 @@
     // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
 
     // 随机切换banner图
-    var randomNum = Math.floor(Math.random() * 18 + 1) - 1
-    var randomUrl = 'https://s1.ax1x.com/2022/10/11/xN1njs.jpg,https://s1.ax1x.com/2022/10/11/xN1LKs.jpg,https://s1.ax1x.com/2022/10/12/xUr79J.jpg,https://s1.ax1x.com/2022/10/11/xN39GF.jpg,https://s1.ax1x.com/2022/10/11/xN3FM9.jpg,https://s1.ax1x.com/2022/10/12/xUs1uq.jpg,https://s1.ax1x.com/2022/10/11/xN3KRe.jpg,https://s1.ax1x.com/2022/10/11/xN31sA.jpg,https://s1.ax1x.com/2022/10/11/xN3aRg.jpg,https://s1.ax1x.com/2022/10/12/xUrXB6.jpg,https://s1.ax1x.com/2022/10/11/xN3DLn.jpg,https://s1.ax1x.com/2022/10/11/xN36oV.jpg,https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg,https://s1.ax1x.com/2022/10/11/xN3oe1.jpg,https://s1.ax1x.com/2022/10/11/xN3bFK.png,https://s1.ax1x.com/2022/10/11/xN8pwt.jpg,https://s1.ax1x.com/2022/10/11/xN8ElQ.png,https://s1.ax1x.com/2022/10/11/xN8mmn.jpg'.split(',')[randomNum]
+    var randomNum = Math.floor(Math.random() * 15 + 1) - 1
+    var randomUrl = 'https://s1.ax1x.com/2022/10/11/xN1njs.jpg,https://s1.ax1x.com/2022/10/11/xN1LKs.jpg,https://s1.ax1x.com/2022/10/12/xUr79J.jpg,https://s1.ax1x.com/2022/10/11/xN39GF.jpg,https://s1.ax1x.com/2022/10/11/xN3FM9.jpg,https://s1.ax1x.com/2022/10/12/xUs1uq.jpg,https://s1.ax1x.com/2022/10/11/xN3KRe.jpg,https://s1.ax1x.com/2022/10/11/xN8pwt.jpg,https://s1.ax1x.com/2022/10/11/xN3aRg.jpg,https://s1.ax1x.com/2022/10/12/xUrXB6.jpg,https://s1.ax1x.com/2022/10/11/xN3DLn.jpg,https://s1.ax1x.com/2022/10/11/xN36oV.jpg,https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg,https://s1.ax1x.com/2022/10/11/xN3oe1.jpg,https://s1.ax1x.com/2022/10/11/xN3bFK.png'.split(',')[randomNum]
     if(!true){
-        randomUrl =  '/blog/' + 'https://s1.ax1x.com/2022/10/11/xN1njs.jpg,https://s1.ax1x.com/2022/10/11/xN1LKs.jpg,https://s1.ax1x.com/2022/10/12/xUr79J.jpg,https://s1.ax1x.com/2022/10/11/xN39GF.jpg,https://s1.ax1x.com/2022/10/11/xN3FM9.jpg,https://s1.ax1x.com/2022/10/12/xUs1uq.jpg,https://s1.ax1x.com/2022/10/11/xN3KRe.jpg,https://s1.ax1x.com/2022/10/11/xN31sA.jpg,https://s1.ax1x.com/2022/10/11/xN3aRg.jpg,https://s1.ax1x.com/2022/10/12/xUrXB6.jpg,https://s1.ax1x.com/2022/10/11/xN3DLn.jpg,https://s1.ax1x.com/2022/10/11/xN36oV.jpg,https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg,https://s1.ax1x.com/2022/10/11/xN3oe1.jpg,https://s1.ax1x.com/2022/10/11/xN3bFK.png,https://s1.ax1x.com/2022/10/11/xN8pwt.jpg,https://s1.ax1x.com/2022/10/11/xN8ElQ.png,https://s1.ax1x.com/2022/10/11/xN8mmn.jpg'.split(',')[randomNum]
+        randomUrl =  '/blog/' + 'https://s1.ax1x.com/2022/10/11/xN1njs.jpg,https://s1.ax1x.com/2022/10/11/xN1LKs.jpg,https://s1.ax1x.com/2022/10/12/xUr79J.jpg,https://s1.ax1x.com/2022/10/11/xN39GF.jpg,https://s1.ax1x.com/2022/10/11/xN3FM9.jpg,https://s1.ax1x.com/2022/10/12/xUs1uq.jpg,https://s1.ax1x.com/2022/10/11/xN3KRe.jpg,https://s1.ax1x.com/2022/10/11/xN8pwt.jpg,https://s1.ax1x.com/2022/10/11/xN3aRg.jpg,https://s1.ax1x.com/2022/10/12/xUrXB6.jpg,https://s1.ax1x.com/2022/10/11/xN3DLn.jpg,https://s1.ax1x.com/2022/10/11/xN36oV.jpg,https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg,https://s1.ax1x.com/2022/10/11/xN3oe1.jpg,https://s1.ax1x.com/2022/10/11/xN3bFK.png'.split(',')[randomNum]
     }
     
     $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
@@ -397,7 +397,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mhw000pksfxduv2bpbp/" target="_blank">
+                    <a href="/blog/posts/cl982daox000o8sfx44c24qbf/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -447,7 +447,7 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mhz000vksfx7f1sajfj/" target="_blank">
+                    <a href="/blog/posts/cl982dap2000x8sfx329p3wyd/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -497,11 +497,11 @@ System:拥有DBA、Sy
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mi1000zksfx4ntz2q9f/" target="_blank">
+                    <a href="/blog/posts/cl982dap3000z8sfx0ktaamz5/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="https://s1.ax1x.com/2022/10/11/xN8ElQ.png" class="responsive-img" alt="SQL Server函数">
+                            <img src="https://s1.ax1x.com/2022/10/11/xN3DLn.jpg" class="responsive-img" alt="SQL Server函数">
                             
                             <span class="card-title">SQL Server函数</span>
                         </div>
@@ -547,11 +547,11 @@ s
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mhk000aksfx4u2m0lpj/" target="_blank">
+                    <a href="/blog/posts/cl982daoo000b8sfx57uze15j/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="https://s1.ax1x.com/2022/10/11/xN39GF.jpg" class="responsive-img" alt="JVM知识点">
+                            <img src="https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg" class="responsive-img" alt="JVM知识点">
                             
                             <span class="card-title">JVM知识点</span>
                         </div>
@@ -602,11 +602,11 @@ Java堆GC堆是java虚拟机所管理的内存中最大的一块内存区域，�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mib001gksfx2d0xf0iu/" target="_blank">
+                    <a href="/blog/posts/cl982dapd001f8sfx3vswemer/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="https://s1.ax1x.com/2022/10/11/xN3DLn.jpg" class="responsive-img" alt="怎么保证幂等性">
+                            <img src="https://s1.ax1x.com/2022/10/11/xN3FM9.jpg" class="responsive-img" alt="怎么保证幂等性">
                             
                             <span class="card-title">怎么保证幂等性</span>
                         </div>
@@ -654,11 +654,11 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mif001pksfx036m5tqz/" target="_blank">
+                    <a href="/blog/posts/cl982dapi001o8sfx7j8l820q/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="https://s1.ax1x.com/2022/10/12/xUr79J.jpg" class="responsive-img" alt="消息队列-MQ">
+                            <img src="https://s1.ax1x.com/2022/10/11/xN3bFK.png" class="responsive-img" alt="消息队列-MQ">
                             
                             <span class="card-title">消息队列-MQ</span>
                         </div>
@@ -710,7 +710,7 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mhs000jksfx9sch0oht/" target="_blank">
+                    <a href="/blog/posts/cl982daov000l8sfx737pdjo1/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -759,7 +759,7 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mhm000dksfxcdgjfb7x/" target="_blank">
+                    <a href="/blog/posts/cl982daop000c8sfx81az2dvr/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -821,11 +821,11 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl96h2mhh0008ksfxce9a9dr7/" target="_blank">
+                    <a href="/blog/posts/cl982daom00098sfxg2ppfn3o/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="https://s1.ax1x.com/2022/10/12/xUrXB6.jpg" class="responsive-img" alt="HashMap&amp;ConcurrentHashMap">
+                            <img src="https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg" class="responsive-img" alt="HashMap&amp;ConcurrentHashMap">
                             
                             <span class="card-title">HashMap&amp;ConcurrentHashMap</span>
                         </div>

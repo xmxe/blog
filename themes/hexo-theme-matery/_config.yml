@@ -33,12 +33,12 @@ menu:
       - name: 主页
         icon: fas fa-seedling
         url: /about
-      - name: 简历
-        icon: fas fa-pen
-        url: https://xmxe.github.io/zhengfl
       - name: 相册
         icon: fas fa-images
         url: /gallery
+      - name: 简历
+        icon: fas fa-pen
+        url: https://xmxe.github.io/zhengfl
       
   #Contact:
     #url: /contact
@@ -59,9 +59,6 @@ menu:
   #    - name: Books
   #      url: /books
   #      icon: fas fa-book
-  #    - name: Galleries
-  #      url: /galleries
-  #      icon: fas fa-image
 
 # Website start time
 # 站点运行开始时间.
@@ -540,17 +537,14 @@ featureImages:
     - https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
     - https://s1.ax1x.com/2022/10/12/xUs1uq.jpg
     - https://s1.ax1x.com/2022/10/11/xN3KRe.jpg
-    - https://s1.ax1x.com/2022/10/11/xN31sA.jpg
+    - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
     - https://s1.ax1x.com/2022/10/11/xN3aRg.jpg
     - https://s1.ax1x.com/2022/10/12/xUrXB6.jpg
     - https://s1.ax1x.com/2022/10/11/xN3DLn.jpg
     - https://s1.ax1x.com/2022/10/11/xN36oV.jpg
     - https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg
     - https://s1.ax1x.com/2022/10/11/xN3oe1.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3bFK.png
-    - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
-    - https://s1.ax1x.com/2022/10/11/xN8ElQ.png
-    - https://s1.ax1x.com/2022/10/11/xN8mmn.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3bFK.png 
 
   local:
     # 本地  
@@ -560,8 +554,8 @@ featureImages:
     - medias/featureimages/3.jpg
     - medias/featureimages/4.jpg
     - medias/featureimages/5.jpg
-    - medias/featureimages/6.jpg
     - medias/featureimages/7.jpg
+    - medias/featureimages/6.jpg
     - medias/featureimages/8.jpg
     - medias/featureimages/9.jpg
     - medias/featureimages/10.jpg
@@ -569,9 +563,6 @@ featureImages:
     - medias/featureimages/12.jpg
     - medias/featureimages/13.jpg
     - medias/featureimages/14.jpg
-    - medias/featureimages/15.jpg
-    - medias/featureimages/16.jpg
-    - medias/featureimages/17.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则

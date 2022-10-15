@@ -80,7 +80,7 @@ cover:
   duration: 120 # 切换延迟时间. Switching delay time.
   intervalTime: 5000 # 自动切换下一张的间隔时间. Automatically switch the interval of the next one.
   useConfig: false # 是否使用配置文件, 在 _data/covers.json 下配置推荐文章, false则使用主题在文章中的配置 cover coverImg
-  # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/covers.json 移动到 my-blog/source/_data/下修改配置即可
+  # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/covers.json 移动到 blog/source/_data/下修改配置即可
 
 # index page dream text
 # 配置首页显示"梦想"的语句.
@@ -144,11 +144,12 @@ recommend:
   enable: false
   showTitle: true
   useConfig: false # 是否使用配置文件, 在 _data/recommends.json 下配置推荐文章, false则会走主题配置的 top 属性
-  # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/recommends.json 移动到 my-blog/source/_data/下修改配置即可
+  # useConfig 使用方式: 将主题 hexo-theme-matery/source/_data/recommends.json 移动到 blog/source/_data/下修改配置即可
 
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
-favicon: /docs/favicon.png  
+favicon: /docs/favicon.png
+
 logo: 
   # 图床路径 enableImageHost=true时有效 为空则使用本地路径
   imageHost: 
@@ -162,6 +163,13 @@ indexbtn:
   icon: fab fa-github-alt
   url: https://github.com/xmxe
 
+# Whether to display fork me on github icon and link, default true, You can change it to your repo address
+# 配置是否在 header 中显示 fork me on github 的图标，默认为true，你可以修改为你的仓库地址.
+githubLink:
+  enable: false
+  url: https://github.com/xmxe/
+  title: Star Me
+
 # The configurations of the second line of home banner,icon/button will not show up if you leave the corresponding socialLink empty
 # 首页 banner 中的第二行个人信息配置，留空即不启用
 socialLink:
@@ -174,6 +182,61 @@ socialLink:
   weibo: # https://weibo.com/xxx
   zhihu: # https://www.zhihu.com/xxx
   rss: false # true、false
+  
+# 网站背景图
+background:
+  enable: true
+  url: medias/cover.jpg
+  # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+  imageHost_url: https://s1.ax1x.com/2022/10/11/xN1vV0.jpg
+
+# banner 是否每日切换.(现为刷新时随机切换,修改bg-cover-content.ejs实现)
+# 若为false, 则banner默认为 /medias/banner/0.jpg
+banner:
+  enable: true
+
+# 背景canvas-nest
+canvas_nest:
+  enable: false
+  color: 0,0,255 # 线条颜色, 默认: '0,0,0' ；三个数字分别为(R,G,B)，注意用,分割
+  pointColor: 0,0,255 # 交点颜色, 默认: '0,0,0' ；三个数字分别为(R,G,B)，注意用,分割
+  opacity: 0.7 # 线条透明度（0~1）, 默认: 0.5
+  zIndex: -1 # 背景的 z-index 属性，css 属性用于控制所在层的位置, 默认: -1.
+  count: 99 # 线条的总数量, 默认: 99
+
+# 背景静止彩带.
+ribbon:
+  enable: false
+  size: 150 # 彩带大小, 默认: 90.
+  alpha: 0.6 # 彩带透明度 (0 ~ 1), 默认: 0.6.
+  zIndex: -1 # 背景的z-index属性，css属性用于控制所在层的位置, 默认: -1.
+  clickChange: false  # 设置是否每次点击都更换彩带.
+
+# 背景动态彩带.
+ribbon_dynamic:
+  enable: true
+
+# 打字效果副标题.
+# 如果有符号‘请在’前面加上 \
+subtitle:
+  enable: false
+  loop: false # 是否循环
+  showCursor: true # 是否显示光标
+  startDelay: 300 # 开始延迟
+  typeSpeed: 100 # 打字速度
+  backSpeed: 50 # 删除速度
+  sub1: 从来没有真正的绝境, 只有心灵的迷途
+  sub2: Never really desperate, only the lost of the soul
+
+# 一言
+hitokoto:
+  enable: true
+  loop: false # 是否循环
+  showCursor: true # 是否显示光标
+  startDelay: 300 # 开始延迟
+  typeSpeed: 70 # 打字速度
+  backSpeed: 50 # 删除速度
+
 
 # Whether to activate the Post TOC, and Configure which title types are supported by TOC support.You can add `toc: false` to the Front-matter of a post to turn off the TOC.
 # 是否激活文章 TOC 功能，并配置TOC支持选中哪些标题类型，这是全局配置。
@@ -189,7 +252,7 @@ code:
   lang: true # 代码块是否显示名称
   copy: true # 代码块是否可复制
   shrink: true # 代码块是否可以收缩
-  break: false # 代码是否折行
+  break: true # 代码是否折行
 
 # 是否激活文章末尾的打赏功能，默认激活（你替换为的你自己的微信、支付宝二维码图片、或者使用网络图片也可以）.
 reward:
@@ -237,6 +300,17 @@ post:
   startDelay: 300 # 开始延迟
   typeSpeed: 70 # 打字速度
   backSpeed: 50 # 删除速度
+
+# sharejs文章分享模块.
+# 支持顺序，可选项目为twitter, facebook, google, qq, qzone, wechat, weibo, douban, linkedin.
+sharejs:
+  enable: true
+  sites: qq,qzone,wechat,weibo,douban
+
+# addthis文章分享模块.
+addthis:
+  enable: false
+  pubid:  # 前往https://www.addthis.com/获取
 
 # Whether to activate the 'love' effect of clicking on the page.
 # 是否激活点击页面的'爱心'效果，默认激活.
@@ -299,6 +373,7 @@ mySkills:
 
 # config gallery of my photos in about page.If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的相册"图片，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
+# https://www.zhihu.com/question/463305763/answer/1928488880
 myGallery:
   enable: true
   data:
@@ -323,6 +398,116 @@ myGallery:
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
 postCalendar: false
+
+# CDN访问加速 
+# 第一次使用本功能，一定要先配置url，再`hexo cl && hexo g && hexo d`部署到GitHub的仓库，注意！必须是GitHub的仓库！
+# 如果必须要使用国内的coding或者gitee，可以采用双部署，同时将网站部署到两个仓库（其中一个必须是GitHub的仓库）
+# URL配置规则（例子如下）： https://cdn.jsdelivr.net/gh/你的GitHub用户名/你的仓库名
+# 如果想关闭此功能，将 url地址 注释或删除即可！
+#
+# 注：配置了此项，就代表着本地调试的时候，网站依然会去GitHub请求资源（原来的资源），本地调试的时候记得将 此项配置 注释或者删除掉
+# 更多关于访问速度优化，请查看：https://blog.sky03.cn/posts/42790.html
+# 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在上面设置js及css路径中可以直接写.min.xxx
+jsDelivr:
+  url: https://cdn.jsdelivr.net/gh/xmxe
+
+# The used front-end library can be replaced with the corresponding CDN address as needed,If the specific version is not specified below, you can use the latest version.
+# 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
+# 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在设置js及css路径中可以直接写.min.xxx
+# 加/docs是针对xmxe仓库特殊化配置 jsdelivr.url为空的话删除/docs/
+libs:
+  css:
+    matery: /docs/css/matery.min.css
+    mycss: /docs/css/my.min.css
+    fontAwesome: /docs/libs/awesome/css/all.css # V5.11.1
+    materialize: /docs/libs/materialize/materialize.min.css # 1.0.0
+    aos: /docs/libs/aos/aos.css
+    animate: /docs/libs/animate/animate.min.css # V3.5.1
+    lightgallery: /docs/libs/lightGallery/css/lightgallery.min.css # V1.6.11
+    aplayer: /docs/libs/aplayer/APlayer.min.css
+    dplayer: /docs/libs/dplayer/DPlayer.min.css
+    gitalk: /docs/libs/gitalk/gitalk.css
+    jqcloud: /docs/libs/jqcloud/jqcloud.css
+    tocbot: /docs/libs/tocbot/tocbot.css
+    prism: /docs/libs/prism/prism.css
+    loading: /docs/css/loading.min.css
+    my-gitalk: /docs/css/my-gitalk.min.css
+    gitment-dft: /docs/libs/gitment/gitment-default.css
+    gitment: /docs/css/gitment.min.css
+    bb: /docs/css/bb.min.css
+    share: /docs/libs/share/css/share.min.css
+  js:
+    matery: /docs/js/matery.min.js
+    jquery: /docs/libs/jquery/jquery.min.js
+    materialize: /docs/libs/materialize/materialize.min.js # 1.0.0
+    masonry: /docs/libs/masonry/masonry.pkgd.min.js # v4.0.0
+    aos: /docs/libs/aos/aos.js
+    scrollProgress: /docs/libs/scrollprogress/scrollProgress.min.js
+    lightgallery: /docs/libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
+    clicklove: /docs/libs/others/clicklove.js
+    busuanzi: /docs/libs/others/busuanzi.pure.mini.js
+    aplayer: /docs/libs/aplayer/APlayer.min.js
+    dplayer: /docs/libs/dplayer/DPlayer.min.js
+    crypto: /docs/libs/cryptojs/crypto-js.min.js
+    echarts: /docs/libs/echarts/echarts.min.js
+    gitalk: /docs/libs/gitalk/gitalk.min.js
+    valine: /docs/libs/valine/Valine.min.js # 若想保持最新版，请替换为 https://unpkg.com/valine/dist/Valine.min.js  默认为 /libs/valine/Valine.min.js
+    minivaline: /docs/libs/minivaline/MiniValine.js
+    jqcloud: /docs/libs/jqcloud/jqcloud-1.0.4.min.js
+    tocbot: /docs/libs/tocbot/tocbot.min.js
+    canvas_nest: /docs/libs/background/canvas-nest.js
+    ribbon: /docs/libs/background/ribbon.min.js
+    ribbonRefresh: /docs/libs/background/ribbon-refresh.min.js
+    ribbon_dynamic: /docs/libs/background/ribbon-dynamic.js
+    instantpage: /docs/libs/instantpage/instantpage.js
+    buble: /docs/libs/others/buble.js
+    popupText: /docs/libs/others/popupText.js
+    codeBlockFuction: /docs/libs/codeBlock/codeBlockFuction.js
+    codeLang: /docs/libs/codeBlock/codeLang.js
+    codeCopy: /docs/libs/codeBlock/codeCopy.js
+    codeShrink: /docs/libs/codeBlock/codeShrink.js
+    socialShare: /docs/libs/share/js/social-share.min.js
+    gitment: /docs/libs/gitment/gitment.js
+    av-min: /docs/libs/valine/av-min.js
+
+# The post featured images that needs to be displayed when there is no image.
+# 无文章特色图片时需要显示的文章特色图片.
+featureImages:
+  imageHost:
+    # 图床路径 enableImageHost=true时有效 为空则使用本地路径
+    - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
+    - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
+    - https://s1.ax1x.com/2022/10/12/xUr79J.jpg
+    - https://s1.ax1x.com/2022/10/11/xN39GF.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
+    - https://s1.ax1x.com/2022/10/12/xUs1uq.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3KRe.jpg
+    - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3aRg.jpg
+    - https://s1.ax1x.com/2022/10/12/xUrXB6.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3DLn.jpg
+    - https://s1.ax1x.com/2022/10/11/xN36oV.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3oe1.jpg
+    - https://s1.ax1x.com/2022/10/11/xN3bFK.png 
+  local:
+    # 本地  
+    - medias/featureimages/0.jpg
+    - medias/featureimages/1.jpg
+    - medias/featureimages/2.jpg
+    - medias/featureimages/3.jpg
+    - medias/featureimages/4.jpg
+    - medias/featureimages/5.jpg
+    - medias/featureimages/7.jpg
+    - medias/featureimages/6.jpg
+    - medias/featureimages/8.jpg
+    - medias/featureimages/9.jpg
+    - medias/featureimages/10.jpg
+    - medias/featureimages/11.jpg
+    - medias/featureimages/12.jpg
+    - medias/featureimages/13.jpg
+    - medias/featureimages/14.jpg
+
 
 # 不建议使用gittalk,gitment这样权限过高的oauth app,因为它们能够读写授权者所有的公共仓库 ，也就是说拿到你的授权Token的人，可以将你的GitHub公共仓库删空（这是github权限分的不够细的锅），如果恶意攻击者想获取使用者的 AccessToken，只需要在代码中加上一个 ajax 请求即可。原贴地址:https://www.v2ex.com/t/535608。建议大家看完。（我没有在用gittalk/gitment的网站上评论过，但根据v2ex网友的提示，如果网站自行修改了gitalk.js脚本或者反代了github api，就很容易拿到你的Token）
 # https://github.com/utterance/utterances 是个 GitHub App，它的权限仅限于某个仓库。像hugo hexo这种静态页面类型的博客，clientID/clientSecret泄露是不可避免的。我认为较好的解决方式是像utteras这种GitHubApp，只有一个仓库的读写权限，将破坏降到最小。
@@ -426,13 +611,6 @@ changyan:
   appId:
   conf:
 
-# Whether to display fork me on github icon and link, default true, You can change it to your repo address
-# 配置是否在 header 中显示 fork me on github 的图标，默认为true，你可以修改为你的仓库地址.
-githubLink:
-  enable: false
-  url: https://github.com/xmxe/
-  title: Star Me
-
 # The password verification feature of read post. To use this feature,activate the configuration item and write the 'password' key and Cipher in the post's Front-matter.
 # Note: In order to ensure that the original password will not be leaked to the web page,
 # the password of the article must be encrypted by 'SHA256' so that it will not be cracked.
@@ -464,105 +642,6 @@ baiduAnalytics:
 
 # 百度搜索资源平台提交链接
 baiduPush: true
-
-# The used front-end library can be replaced with the corresponding CDN address as needed,If the specific version is not specified below, you can use the latest version.
-# 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
-# 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在设置js及css路径中可以直接写.min.xxx
-# 加/docs是针对xmxe仓库特殊化配置 jsdelivr.url为空的话删除/docs/
-libs:
-  css:
-    matery: /docs/css/matery.min.css
-    mycss: /docs/css/my.min.css
-    fontAwesome: /docs/libs/awesome/css/all.css # V5.11.1
-    materialize: /docs/libs/materialize/materialize.min.css # 1.0.0
-    aos: /docs/libs/aos/aos.css
-    animate: /docs/libs/animate/animate.min.css # V3.5.1
-    lightgallery: /docs/libs/lightGallery/css/lightgallery.min.css # V1.6.11
-    aplayer: /docs/libs/aplayer/APlayer.min.css
-    dplayer: /docs/libs/dplayer/DPlayer.min.css
-    gitalk: /docs/libs/gitalk/gitalk.css
-    jqcloud: /docs/libs/jqcloud/jqcloud.css
-    tocbot: /docs/libs/tocbot/tocbot.css
-    prism: /docs/libs/prism/prism.css
-    loading: /docs/css/loading.min.css
-    my-gitalk: /docs/css/my-gitalk.min.css
-    gitment-dft: /docs/libs/gitment/gitment-default.css
-    gitment: /docs/css/gitment.min.css
-    bb: /docs/css/bb.min.css
-    share: /docs/libs/share/css/share.min.css
-  js:
-    matery: /docs/js/matery.min.js
-    jquery: /docs/libs/jquery/jquery.min.js
-    materialize: /docs/libs/materialize/materialize.min.js # 1.0.0
-    masonry: /docs/libs/masonry/masonry.pkgd.min.js # v4.0.0
-    aos: /docs/libs/aos/aos.js
-    scrollProgress: /docs/libs/scrollprogress/scrollProgress.min.js
-    lightgallery: /docs/libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
-    clicklove: /docs/libs/others/clicklove.js
-    busuanzi: /docs/libs/others/busuanzi.pure.mini.js
-    aplayer: /docs/libs/aplayer/APlayer.min.js
-    dplayer: /docs/libs/dplayer/DPlayer.min.js
-    crypto: /docs/libs/cryptojs/crypto-js.min.js
-    echarts: /docs/libs/echarts/echarts.min.js
-    gitalk: /docs/libs/gitalk/gitalk.min.js
-    valine: /docs/libs/valine/Valine.min.js # 若想保持最新版，请替换为 https://unpkg.com/valine/dist/Valine.min.js  默认为 /libs/valine/Valine.min.js
-    minivaline: /docs/libs/minivaline/MiniValine.js
-    jqcloud: /docs/libs/jqcloud/jqcloud-1.0.4.min.js
-    tocbot: /docs/libs/tocbot/tocbot.min.js
-    canvas_nest: /docs/libs/background/canvas-nest.js
-    ribbon: /docs/libs/background/ribbon.min.js
-    ribbonRefresh: /docs/libs/background/ribbon-refresh.min.js
-    ribbon_dynamic: /docs/libs/background/ribbon-dynamic.js
-    instantpage: /docs/libs/instantpage/instantpage.js
-    buble: /docs/libs/others/buble.js
-    popupText: /docs/libs/others/popupText.js
-    codeBlockFuction: /docs/libs/codeBlock/codeBlockFuction.js
-    codeLang: /docs/libs/codeBlock/codeLang.js
-    codeCopy: /docs/libs/codeBlock/codeCopy.js
-    codeShrink: /docs/libs/codeBlock/codeShrink.js
-    socialShare: /docs/libs/share/js/social-share.min.js
-    gitment: /docs/libs/gitment/gitment.js
-    av-min: /docs/libs/valine/av-min.js
-
-# The post featured images that needs to be displayed when there is no image.
-# 无文章特色图片时需要显示的文章特色图片.
-# https://www.zhihu.com/question/463305763/answer/1928488880
-featureImages:
-  imageHost:
-    # 图床路径 enableImageHost=true时有效 为空则使用本地路径
-    - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
-    - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
-    - https://s1.ax1x.com/2022/10/12/xUr79J.jpg
-    - https://s1.ax1x.com/2022/10/11/xN39GF.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
-    - https://s1.ax1x.com/2022/10/12/xUs1uq.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3KRe.jpg
-    - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3aRg.jpg
-    - https://s1.ax1x.com/2022/10/12/xUrXB6.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3DLn.jpg
-    - https://s1.ax1x.com/2022/10/11/xN36oV.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3oe1.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3bFK.png 
-
-  local:
-    # 本地  
-    - medias/featureimages/0.jpg
-    - medias/featureimages/1.jpg
-    - medias/featureimages/2.jpg
-    - medias/featureimages/3.jpg
-    - medias/featureimages/4.jpg
-    - medias/featureimages/5.jpg
-    - medias/featureimages/7.jpg
-    - medias/featureimages/6.jpg
-    - medias/featureimages/8.jpg
-    - medias/featureimages/9.jpg
-    - medias/featureimages/10.jpg
-    - medias/featureimages/11.jpg
-    - medias/featureimages/12.jpg
-    - medias/featureimages/13.jpg
-    - medias/featureimages/14.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则
@@ -600,71 +679,13 @@ tuxiaochao:
   enable: false
   productId:
 
-# 背景canvas-nest
-canvas_nest:
-  enable: false
-  color: 0,0,255 # 线条颜色, 默认: '0,0,0' ；三个数字分别为(R,G,B)，注意用,分割
-  pointColor: 0,0,255 # 交点颜色, 默认: '0,0,0' ；三个数字分别为(R,G,B)，注意用,分割
-  opacity: 0.7 # 线条透明度（0~1）, 默认: 0.5
-  zIndex: -1 # 背景的 z-index 属性，css 属性用于控制所在层的位置, 默认: -1.
-  count: 99 # 线条的总数量, 默认: 99
-
-# 背景静止彩带.
-ribbon:
-  enable: false
-  size: 150 # 彩带大小, 默认: 90.
-  alpha: 0.6 # 彩带透明度 (0 ~ 1), 默认: 0.6.
-  zIndex: -1 # 背景的z-index属性，css属性用于控制所在层的位置, 默认: -1.
-  clickChange: false  # 设置是否每次点击都更换彩带.
-
-# 背景动态彩带.
-ribbon_dynamic:
-  enable: true
-
-# sharejs文章分享模块.
-# 支持顺序，可选项目为twitter, facebook, google, qq, qzone, wechat, weibo, douban, linkedin.
-sharejs:
-  enable: true
-  sites: qq,qzone,wechat,weibo,douban
-
-# addthis文章分享模块.
-addthis:
-  enable: false
-  pubid:  # 前往https://www.addthis.com/获取
-
-# 打字效果副标题.
-# 如果有符号‘请在’前面加上 \
-subtitle:
-  enable: false
-  loop: true # 是否循环
-  showCursor: true # 是否显示光标
-  startDelay: 300 # 开始延迟
-  typeSpeed: 100 # 打字速度
-  backSpeed: 50 # 删除速度
-  sub1: 从来没有真正的绝境, 只有心灵的迷途
-  sub2: Never really desperate, only the lost of the soul
-
-# 一言
-hitokoto:
-  enable: true
-  loop: false # 是否循环
-  showCursor: true # 是否显示光标
-  startDelay: 300 # 开始延迟
-  typeSpeed: 70 # 打字速度
-  backSpeed: 50 # 删除速度
-
 # 手机二级菜单.
 navMenu:
   mleft: false # 二级侧栏子菜单是否对齐左边
-  bgColor: " " # 二级侧栏子菜单背景颜色,留空即为全局背景色
+  bgColor:  # 二级侧栏子菜单背景颜色,留空即为全局背景色
 
 # 网页预加载.
 instantpage:
-  enable: true
-
-# banner 是否每日切换.(现为刷新时随机切换,修改bg-cover-content.ejs实现)
-# 若为false, 则banner默认为 /medias/banner/0.jpg
-banner:
   enable: true
 
 # ICP备案信息尾部显示
@@ -672,25 +693,6 @@ icp:
   enable: false
   url: # 备案链接
   text: # 备案信息
-
-# CDN访问加速 
-# 第一次使用本功能，一定要先配置url，再`hexo cl && hexo g && hexo d`部署到GitHub的仓库，注意！必须是GitHub的仓库！
-# 如果必须要使用国内的coding或者gitee，可以采用双部署，同时将网站部署到两个仓库（其中一个必须是GitHub的仓库）
-# URL配置规则（例子如下）： https://cdn.jsdelivr.net/gh/你的GitHub用户名/你的仓库名
-# 如果想关闭此功能，将 url地址 注释或删除即可！
-#
-# 注：配置了此项，就代表着本地调试的时候，网站依然会去GitHub请求资源（原来的资源），本地调试的时候记得将 此项配置 注释或者删除掉
-# 更多关于访问速度优化，请查看：https://blog.sky03.cn/posts/42790.html
-# 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在上面设置js及css路径中可以直接写.min.xxx
-jsDelivr:
-  url: https://cdn.jsdelivr.net/gh/xmxe
-  
-# 网站背景图
-background:
-  enable: true
-  url: medias/cover.jpg
-  # 图床路径 enableImageHost=true时有效 为空则使用本地路径
-  imageHost_url: https://s1.ax1x.com/2022/10/11/xN1vV0.jpg
 
 # 说说 https://artitalk.js.org/
 artitalk:
@@ -719,7 +721,7 @@ bbtime:
  serverURLs: # https://你的api
 
 
-# 是否开启页面加载动画
+# 是否开启页面加载动画(loading)
 preloader:
   enable: true
 
@@ -738,7 +740,7 @@ darkMode:
   # 是否展示动画
   animation: false
 
-# 首页链接打开方式
+# 首页链接打开方式(其他页面配置无效)
 # Available: _blank | _self
 url_target: _blank
 

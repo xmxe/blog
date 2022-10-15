@@ -101,9 +101,9 @@ var coverPostsCount = coverPosts.length;
                 return hash;
             };
 
-            var featureImages = theme.featureImages.local;
+            var featureImages = site.data.featureImages.local;
             if(theme.enableImageHost){
-                featureImages = theme.featureImages.imageHost;
+                featureImages = site.data.featureImages.imageHost;
             }
             var imgCount = featureImages.length;
         %>

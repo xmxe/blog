@@ -1,0 +1,4 @@
+---
+title: wallpaper
+layout: "galleries"
+---

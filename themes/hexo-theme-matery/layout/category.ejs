@@ -30,9 +30,9 @@
                                 <img src="<%- url_for(post.img) %>" class="responsive-img" alt="<%= post.title %>">
                             <% } else { %>
                             <%
-                                var images = theme.featureImages.local;
+                                var images = site.data.featureImages.local;
                                 if(theme.enableImageHost){
-                                    images = theme.featureImages.imageHost;
+                                    images = site.data.featureImages.imageHost;
                                 }
                                 var featureimg = images[Math.abs(hashCode(post.title) % images.length)];
                             %>

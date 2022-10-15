@@ -1,11 +1,12 @@
 <%
 // the gallery photos of theme _config.yml.
 
-var gallery = theme.myGallery.data;
-if(theme.enableImageHost){
-    gallery = theme.myGallery.imageHost_data;
+var gallery = [];
+if (site.data && site.data.galleries && site.data.galleries.length > 0) {
+    gallery = site.data.galleries[0].photos.length > 0 
+    ? site.data.galleries[0].photos
+    : site.data.galleries[0].local
 }
-
 %>
 <div id="myGallery" class="my-gallery">
     <div class="title center-align" data-aos="zoom-in-up">

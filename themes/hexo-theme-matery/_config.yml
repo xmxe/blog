@@ -372,28 +372,10 @@ mySkills:
       percent: 10%
 
 # config gallery of my photos in about page.If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
-# 在“关于”页面配置"我的相册"图片，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
+# 在“关于”页面配置"我的相册"图片(现做成单独页面并启用galleries.json配置文件)，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 # https://www.zhihu.com/question/463305763/answer/1928488880
 myGallery:
   enable: true
-  data:
-    # 本地
-    - medias/featureimages/0.jpg
-    - medias/featureimages/1.jpg
-    - medias/featureimages/2.jpg
-  imageHost_data:
-    # 图床路径 enableImageHost=true时有效 为空则使用本地路径
-    - https://pic1.zhimg.com/v2-a15c9d4dd48986974acd43e8b722350d_r.jpg
-    - https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg
-    - https://pic2.zhimg.com/v2-7de23a78e4931770d2606cb99a6eab31_r.jpg
-    - https://pic3.zhimg.com/v2-5575876cc5000976567da583583c87ca_r.jpg
-    - https://pic1.zhimg.com/v2-7382fb7654c33a5e843f51ec139b1da0_r.jpg
-    - https://pic3.zhimg.com/v2-5bcde8862e76568efad97b4c3717bb5a_r.jpg
-    - https://pic2.zhimg.com/v2-b298d8f15b405d7cbbdf81bcd325cb59_r.jpg
-    - https://pic2.zhimg.com/v2-b43a58fbbc249d3fcc278e9b3a70ace1_r.jpg
-    - https://pic1.zhimg.com/v2-e4a868961c59346446a84beebcc7b628_r.jpg
-    - https://pic3.zhimg.com/v2-151f8f85c33a5e04450692886555b55e_r.jpg
-    - https://pic4.zhimg.com/v2-a2b53d3b2b898155a28106a5e8152b13_r.jpg
 
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
@@ -419,6 +401,7 @@ libs:
   css:
     matery: /docs/css/matery.min.css
     mycss: /docs/css/my.min.css
+    gallery: /docs/css/gallery.min.css
     fontAwesome: /docs/libs/awesome/css/all.css # V5.11.1
     materialize: /docs/libs/materialize/materialize.min.css # 1.0.0
     aos: /docs/libs/aos/aos.css
@@ -469,45 +452,6 @@ libs:
     socialShare: /docs/libs/share/js/social-share.min.js
     gitment: /docs/libs/gitment/gitment.js
     av-min: /docs/libs/valine/av-min.js
-
-# The post featured images that needs to be displayed when there is no image.
-# 无文章特色图片时需要显示的文章特色图片.
-featureImages:
-  imageHost:
-    # 图床路径 enableImageHost=true时有效 为空则使用本地路径
-    - https://s1.ax1x.com/2022/10/11/xN1njs.jpg
-    - https://s1.ax1x.com/2022/10/11/xN1LKs.jpg
-    - https://s1.ax1x.com/2022/10/12/xUr79J.jpg
-    - https://s1.ax1x.com/2022/10/11/xN39GF.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3FM9.jpg
-    - https://s1.ax1x.com/2022/10/12/xUs1uq.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3KRe.jpg
-    - https://s1.ax1x.com/2022/10/11/xN8pwt.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3aRg.jpg
-    - https://s1.ax1x.com/2022/10/12/xUrXB6.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3DLn.jpg
-    - https://s1.ax1x.com/2022/10/11/xN36oV.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3oe1.jpg
-    - https://s1.ax1x.com/2022/10/11/xN3bFK.png 
-  local:
-    # 本地  
-    - medias/featureimages/0.jpg
-    - medias/featureimages/1.jpg
-    - medias/featureimages/2.jpg
-    - medias/featureimages/3.jpg
-    - medias/featureimages/4.jpg
-    - medias/featureimages/5.jpg
-    - medias/featureimages/7.jpg
-    - medias/featureimages/6.jpg
-    - medias/featureimages/8.jpg
-    - medias/featureimages/9.jpg
-    - medias/featureimages/10.jpg
-    - medias/featureimages/11.jpg
-    - medias/featureimages/12.jpg
-    - medias/featureimages/13.jpg
-    - medias/featureimages/14.jpg
-
 
 # 不建议使用gittalk,gitment这样权限过高的oauth app,因为它们能够读写授权者所有的公共仓库 ，也就是说拿到你的授权Token的人，可以将你的GitHub公共仓库删空（这是github权限分的不够细的锅），如果恶意攻击者想获取使用者的 AccessToken，只需要在代码中加上一个 ajax 请求即可。原贴地址:https://www.v2ex.com/t/535608。建议大家看完。（我没有在用gittalk/gitment的网站上评论过，但根据v2ex网友的提示，如果网站自行修改了gitalk.js脚本或者反代了github api，就很容易拿到你的Token）
 # https://github.com/utterance/utterances 是个 GitHub App，它的权限仅限于某个仓库。像hugo hexo这种静态页面类型的博客，clientID/clientSecret泄露是不可避免的。我认为较好的解决方式是像utteras这种GitHubApp，只有一个仓库的读写权限，将破坏降到最小。

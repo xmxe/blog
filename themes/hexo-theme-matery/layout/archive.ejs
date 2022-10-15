@@ -32,9 +32,9 @@
 
     // post feature image.
     var featureimg = '/medias/featureimages/0.jpg';
-    var featureImages = theme.featureImages.local;
+    var featureImages = site.data.featureImages.local;
     if(theme.enableImageHost){
-        featureImages = theme.featureImages.imageHost;
+        featureImages = site.data.featureImages.imageHost;
     }
     %>
 
@@ -162,9 +162,9 @@
                       <% if(date(post.date, "YYYY") !== dateCursor) { %>
                         <% dateCursor = date(post.date, "YYYY") %>
                         <p class="h5"><%= dateCursor %></p>
-                      <% } %>
-                      <time><%= date(post.date, "MM-DD") %></time>
+                      <% } %>               
                       <a href="<%= url_for(post.path) %>" class="list-group-item list-group-item-action">
+                        <time><%= date(post.date, "MM-DD") %></time>
                         <div class="list-group-item-title"><%= post.title %></div>
                       </a>
                     <% }) %>

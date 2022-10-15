@@ -16,9 +16,9 @@ if (page.img && theme.postInfo.img) {
         return hash;
     };
 
-    var image = theme.featureImages.local;
+    var image = site.data.featureImages.local;
     if(theme.enableImageHost){
-        image = theme.featureImages.imageHost;
+        image = site.data.featureImages.imageHost;
     }
     var len = image.length;
     var num = Math.abs(hashCode(page.title) % len);

@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "hexo generate",
-    "clean": "hexo clean",
-    "deploy": "hexo deploy",
-    "server": "hexo server"
+    "build": "npx hexo generate",
+    "clean": "npx hexo clean",
+    "deploy": "npx hexo deploy",
+    "server": "npx hexo server"
   },
   "hexo": {
     "version": "6.3.0"
@@ -22,7 +22,6 @@
     "hexo-renderer-ejs": "^2.0.0",
     "hexo-renderer-marked": "^5.0.0",
     "hexo-renderer-stylus": "^2.1.0",
-    "hexo-server": "^3.0.0",
-    "hexo-theme-landscape": "^0.0.3"
+    "hexo-server": "^3.0.0"
   }
 }

@@ -1,7 +1,7 @@
 ---
 title: Git
-sticky: 49
-tags: git
+sticky: 46
+tags: 随笔
 index_img: /assert/git.jpg
 img: 
 ---
@@ -193,5 +193,6 @@ git push --force
 - [合并代码还在用 git merge？我们都用 git rebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
 - [45个 GIT 经典操作场景，专治不会合代码](https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw)
 
-##### 一图以概览
+---
+
 ![](/images/git.png)

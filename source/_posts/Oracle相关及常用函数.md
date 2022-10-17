@@ -1,6 +1,6 @@
 ---
 title: Oracle相关及常用函数
-sticky: 67
+sticky: 24
 categories: 数据库
 index_img: /assert/oracle.jpg
 img: 

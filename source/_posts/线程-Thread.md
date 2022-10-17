@@ -1,19 +1,20 @@
 ---
 title: 线程-Thread
-sticky: 90
+sticky: 43
 categories: Java 
 index_img: /assert/thread.jpg
-img: 
-coverImg: https://pica.zhimg.com/v2-72839d9aecf00f3185303c7f76c597ee_r.jpg?source=1940ef5c
+img: https://pica.zhimg.com/v2-72839d9aecf00f3185303c7f76c597ee_r.jpg
+coverImg: https://pica.zhimg.com/v2-72839d9aecf00f3185303c7f76c597ee_r.jpg
 cover: true
-summary: 线程+线程池
+summary: 线程+线程池+虚拟线程
+top: true
 ---
 
 ### 线程
 
 #### 创建线程三种方式
 
-1. 继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：public class Thread implements Runnable
+1. 继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：**public class Thread implements Runnable**
 2. 实现Runnable接口，重写run()方法。然后调用new Thread（runnable）的方式创建一个线程，再调用start()方法启动线程。
 3. 实现Callable接口，重写call()方法。Callable是类似于Runnable的接口，是属于Executor框架中的功能类。具有返回值，并且可以对异常进行声明和抛出
 - [【图解】透彻Java线程状态转换](https://mp.weixin.qq.com/s/G-X82-Fp7zShTTnkWg1N5A)
@@ -33,6 +34,7 @@ summary: 线程+线程池
 
 设置是否为守护线程，线程分为用户线程和守护线程，当用户线程都退出时，无论当jvm里面的守护线程有没有执行完，jvm都会退出，使用setDaemon()必须在thread.start()之前，否则会抛出异常。守护线程服务于用户线程,当用户线程结束后守护线程也会结束,当所有线程都运行结束时，JVM退出，进程结束。
 例如有一种线程的目的就是无限循环
+
 ```java
 class TimerThread extends Thread { 
   @Override
@@ -110,7 +112,7 @@ class TimerThread extends Thread {
 
 打印当前线程的堆栈跟踪到标准错误流。此方法仅用于调试。
 
-##### Thread.enumerate(****Thread[] tarray****)
+##### Thread.enumerate(Thread[] tarray)
 
 用于将每个活动线程的线程组及其子组复制到指定的数组中。 此方法使用tarray参数调用enumerate方法。此方法使用activeCount方法来估计数组应该有多大。 如果数组的长度太短而无法容纳所有线程，则会以静默方式忽略额外的线程。tarray ：此方法是要复制到的Thread对象数组。返回此方法返回放入数组的线程数。
 
@@ -214,7 +216,7 @@ int availableProcessors = Runtime.getRuntime().availableProcessors()
 
 ### 线程池
 
-#### 介绍
+#### Executors
 
 ```java
 ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -233,6 +235,7 @@ ExecutorService threadPool = Executors.newCachedThreadPool();
 ```
 [为什么阿里巴巴要禁用Executors创建线程池？](https://mp.weixin.qq.com/s/EheN1I84uo1zk6ptSqsqcQ)
 
+#### ThreadPoolExecutor
 ```java
 ExecutorService threadPool = new ThreadPoolExecutor(
 int corePoolSize, 
@@ -336,3 +339,47 @@ String result = futureTask.get(2000, TimeUnit.MILLISECONDS)// 如果在指定时
 - [如何优雅的自定义 ThreadPoolExecutor 线程池？](https://mp.weixin.qq.com/s/01MnCUVRxWoqUrCC_xmtEw)
 - [如何优雅的使用线程池！！！](https://mp.weixin.qq.com/s/UScLWJbiMhWig5doo-coxA)
 - [深入线程池的问题连环炮](https://mp.weixin.qq.com/s/N76EM8SEjZzZHdheS4jF2Q)
+
+
+### 虚拟线程
+
+> JDK 19新推出的虚拟线程，或者叫协程，主要是为了解决在读书操作系统中线程需要依赖内核线程的实现，导致有很多额外开销的问题。通过在Java语言层面引入虚拟线程，通过JVM进行调度管理，从而减少上下文切换的成本。
+虚拟线程是守护线程，所以有可能会没等他执行完虚拟机就会shutdown掉。
+
+#### 虚拟线程与平台线程的区别
+1. **虚拟线程总是守护线程**。setDaemon (false)方法不能将虚拟线程更改为非守护线程。所以，需要注意的是，**当所有启动的非守护进程线程都终止时，JVM将终止。这意味着JVM不会等待虚拟线程完成后才退出。**
+2. 即使使用setPriority()方法，**虚拟线程始终具有normal的优先级**，且不能更改优先级。在虚拟线程上调用此方法没有效果。
+3. 虚拟线程是不支持stop()、suspend()或resume()等方法。这些方法在虚拟线程上调用时会抛出UnsupportedOperationException异常。
+
+#### 如何使用虚拟线程
+
+首先，通过Thread.startVirtualThread()可以运行一个虚拟线程：
+```java
+Thread.startVirtualThread(() -> {
+    System.out.println("虚拟线程执行中...");
+});
+```
+其次，通过Thread.Builder也可以创建虚拟线程，Thread类提供了ofPlatform()来创建一个平台线程、ofVirtual()来创建虚拟现场。
+```java
+Thread.Builder platformBuilder = Thread.ofPlatform().name("平台线程");
+Thread.Builder virtualBuilder = Thread.ofVirtual().name("虚拟线程");
+
+Thread t1 = platformBuilder .start(() -> {...}); 
+Thread t2 = virtualBuilder.start(() -> {...});
+```
+
+另外，线程池也支持了虚拟线程，可以通过Executors.newVirtualThreadPerTaskExecutor()来创建虚拟线程：
+```java
+try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    IntStream.range(0, 10000).forEach(i -> {
+        executor.submit(() -> {
+            Thread.sleep(Duration.ofSeconds(1));
+            return i;
+        });
+    });
+}
+```
+但是，其实并不建议虚拟线程和线程池一起使用，因为Java线程池的设计是为了避免创建新的操作系统线程的开销，但是创建虚拟线程的开销并不大，所以其实没必要放到线程池中。
+
+#### 相关文章
+- [科技与狠活？JDK19中的虚拟线程到底什么鬼？](https://mp.weixin.qq.com/s/1AuTVrBJmONKEku403BHhQ)

@@ -1,6 +1,6 @@
 ---
 title: SQL Server函数
-sticky: 66
+sticky: 22
 categories: 数据库
 index_img: /assert/sqlserver.jpg
 img: 

@@ -1,6 +1,6 @@
 ---
 title: ArrayList&CopyOnWriteArrayList
-sticky: 51
+sticky: 10
 categories: Java 
 index_img: /assert/list.jpg
 img: 

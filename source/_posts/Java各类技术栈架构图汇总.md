@@ -1,6 +1,6 @@
 ---
 title: Java各类技术栈架构图汇总
-sticky: 47
+sticky: 6
 categories: Java
 index_img: /assert/java.jpg
 img: 

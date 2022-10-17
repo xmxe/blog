@@ -1,6 +1,6 @@
 ---
 title: MySQL相关知识点
-sticky: 69
+sticky: 36
 categories: 数据库
 index_img: /assert/mysql.jpg
 img: 

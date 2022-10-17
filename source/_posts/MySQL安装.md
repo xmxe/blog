@@ -1,7 +1,8 @@
 ---
 title: MySQL安装
-sticky: 68
+sticky: 16
 categories: 数据库
+tags: 安装
 index_img: /assert/mysql.jpg
 img: 
 ---

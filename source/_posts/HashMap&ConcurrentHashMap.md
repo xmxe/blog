@@ -1,6 +1,6 @@
 ---
 title: HashMap&ConcurrentHashMap
-sticky: 52
+sticky: 11
 categories: Java 
 index_img: /assert/hashmap.jpg
 img: 

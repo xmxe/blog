@@ -1,10 +1,8 @@
 ---
 title: JavaScript相关
-sticky: 53
+sticky: 45
 categories: JS
-tags: 
-- 前端
-- 随笔
+tags: 随笔
 index_img: /assert/js.jpg
 img: 
 ---

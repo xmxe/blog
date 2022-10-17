@@ -1,7 +1,7 @@
 ---
 title: Docker安装
-sticky: 50
-tags: 程序
+sticky: 13
+tags: 安装
 index_img: /assert/docker.jpg
 img: 
 ---

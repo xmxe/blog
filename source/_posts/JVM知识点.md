@@ -1,9 +1,13 @@
 ---
 title: JVM知识点
-sticky: 60
+sticky: 41
 categories: Java 
 index_img: /assert/jvm.jpg
-img: 
+img: https://pic1.zhimg.com/v2-7382fb7654c33a5e843f51ec139b1da0_r.jpg
+coverImg: https://pic1.zhimg.com/v2-7382fb7654c33a5e843f51ec139b1da0_r.jpg
+cover: true
+summary: JVM内存结构、共享区域、相关命令
+top: true
 ---
 
 #### JVM5大内存区域
@@ -63,7 +67,7 @@ Java8之后，取消了整个永久代区域，取而代之的是元空间。方
 程序计数器是一块较小的内存空间，可以看作当前线程所执行的字节码的行号指示器。在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成
 
 
-#### 线程共享区域
+##### 线程共享区域
 - java堆
 - 方法区
 

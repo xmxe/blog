@@ -69,8 +69,3 @@ sticky:
 即可
 或者直接复制/scaffolds下的模板文件
 ```
-
-#### 参考
-
-- [GitHub Pages + Hexo搭建个人博客网站](https://blog.csdn.net/yaorongke/article/details/119089190)
-- [Hexo文档](https://hexo.io/zh-cn/docs/)

@@ -146,7 +146,7 @@ $(function () {
         }
     }
 
-    	
+    /*导航栏动画*/
 	$(".nav-menu>li").hover(function(){
 		$(this).children('ul').stop(true,true).show();
 		$(this).addClass('nav-show').siblings('li').removeClass('nav-show');

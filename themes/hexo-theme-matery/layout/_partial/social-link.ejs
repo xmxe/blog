@@ -38,6 +38,10 @@
     </a>
 <% } %>
 
+<% if (theme.socialLink.wechat) { %>
+    <%- partial('_partial/wechat-qrcode') %>
+<% } %>
+
 <% if (theme.socialLink.weibo) { %>
     <a href="<%= theme.socialLink.weibo %>" class="tooltipped" target="_blank" data-tooltip="微博: <%= theme.socialLink.weibo %>" data-position="top" data-delay="50">
         <i class="fab fa-weibo"></i>

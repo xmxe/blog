@@ -279,11 +279,11 @@ body.DarkMode #stars3:after {
     color: #fff;
 }
 
-.h5{
+.h5 {
     font-size: 1.9em;
 }
 
-.list-group-item time{
+.list-group-item time {
     flex: 0 0 5em;
     font-size: 1.25em;
 }
@@ -296,47 +296,47 @@ body.DarkMode #stars3:after {
     border-radius: 0.25em;
 }
 
-.list-group a, .list-group p .h5{
+.list-group a, .list-group p .h5 {
     margin-top: 1em;
 }
 
-.list-group-item{
+.list-group-item {
     display: flex;
     background-color: transparent;
     position: relative;
     padding: 0.75em 1.25em;
 }
   
-.list-group-item-title{
+.list-group-item-title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 1.25em;
 }
 
-@media (max-width: 575px){
+@media (max-width: 575px) {
     .list-group-item {
         font-size: .95em;
         padding: 0.5em 0.75em;
     }
-    .list-group-item time{
+    .list-group-item time {
         flex: 0 0 4em;
     }
       
 }
 
-.list-group-item-action{
+.list-group-item-action {
     width: 100%;
     color: var(--text-color);
     text-align: inherit;
 }
 
-.list-group-item-action :focus, .list-group-item-action :hover{
+.list-group-item-action :focus, .list-group-item-action :hover {
     color: var(--link-hover-color);
     background-color: var(--link-hover-bg-color);
 }
 
-.list-group-count{
+.list-group-count {
     margin-left: 0.2em;
     margin-right: 0.2em;
     font-size: 0.9em;

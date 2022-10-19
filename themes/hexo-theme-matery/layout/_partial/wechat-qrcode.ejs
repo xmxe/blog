@@ -1,0 +1,26 @@
+<style>
+    .wechat_qrcode {
+        position: absolute;
+        margin-left: 10px;
+        bottom: 10px;
+        background: url('<%- url_for(theme.socialLink.wechat) %>');
+    }
+
+    .wechat:hover .wechat_qrcode{
+        width: 200px;
+        height: 189px;
+    }
+
+    @media only screen and (max-width: 601px) {
+        .wechat_qrcode {
+            position: absolute;
+            top: -70px;
+            left: 60px;
+        }
+    }
+</style>
+
+<a class="wechat" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
+    <img class="wechat_qrcode">
+</a>

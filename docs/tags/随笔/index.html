@@ -435,7 +435,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxd0015vwfxa62v563z/" >
+                    <a href="/blog/posts/cl9f1cp6i001bd0fx3qoy4trf/" >
                         <div class="card-image tag-image">
                             
                             
@@ -485,7 +485,7 @@ JSONObject a = json.getJSONObject("a");
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeowu000fvwfxgyz67afz/" >
+                    <a href="/blog/posts/cl9f1cp58000dd0fx9euq3rls/" >
                         <div class="card-image tag-image">
                             
                             
@@ -540,7 +540,7 @@ JSONObject a = json.getJSONObject("a");
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxj001evwfx32avh2pi/" >
+                    <a href="/blog/posts/cl9f1cp6m001jd0fxh2otdlft/" >
                         <div class="card-image tag-image">
                             
                                 <img src="https://pic2.zhimg.com/v2-b580b2e91d45b2bfdd5cfb82afd05a15.jpg" class="responsive-img" alt="我的笔记">
@@ -587,7 +587,7 @@ JSONObject a = json.getJSONObject("a");
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeowk0006vwfxcx0x3goz/" >
+                    <a href="/blog/posts/cl9f1cp500006d0fxfrfy4oxk/" >
                         <div class="card-image tag-image">
                             
                             
@@ -638,7 +638,7 @@ git remote add origin https://github.com/xmxe/mySpringBoot.
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxh0018vwfxg06xa7zg/" >
+                    <a href="/blog/posts/cl9f1cp6l001gd0fxes6namjr/" >
                         <div class="card-image tag-image">
                             
                             
@@ -688,7 +688,7 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             
             <div class="article tag-post col s12 m6 l4" data-tags="随笔" data-aos="fade-up">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxi001bvwfxahdsbsj5/" >
+                    <a href="/blog/posts/cl9f1cp6j001dd0fx2yh0b2m1/" >
                         <div class="card-image tag-image">
                             
                             
@@ -861,6 +861,10 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
 
 
     <style>
+    .mobiledevice {
+        display: none;
+    }
+    /*微信二维码*/
     .wechat_qrcode {
         position: absolute;
         margin-left: 10px;
@@ -868,23 +872,28 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
         background: url('/blog/medias/wechat.jpg');
     }
 
-    .wechat:hover .wechat_qrcode{
+    .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 189px;
     }
 
     @media only screen and (max-width: 601px) {
-        .wechat_qrcode {
-            position: absolute;
-            top: -70px;
-            left: 60px;
+        .wechat {
+            display: none;
+        }
+        .mobiledevice {
+            display: inline;
         }
     }
 </style>
 
-<a class="wechat" data-position="top" data-delay="50">
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
     <i class="fab fa-weixin"></i>
     <img class="wechat_qrcode">
+</a>
+
+<a href="javascript:;" class="tooltipped mobiledevice" data-tooltip="微信: 464817304" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
 </a>
 
 

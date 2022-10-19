@@ -430,7 +430,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeoxa000zvwfx56o51nw3/">
+                        <a href="/blog/posts/cl9f1cp630012d0fx8fqpdk4e/">
                             <div class="card-image">
                                 
                                 
@@ -492,7 +492,7 @@ s
                         
                         <p class="h5">2022</p>
                                      
-                      <a href="/blog/posts/cl9ezeoxa000zvwfx56o51nw3/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp630012d0fx8fqpdk4e/" class="list-group-item list-group-item-action">
                         <time>09-26</time>
                         <div class="list-group-item-title">SQL Server函数</div>
                       </a>
@@ -653,6 +653,10 @@ s
 
 
     <style>
+    .mobiledevice {
+        display: none;
+    }
+    /*微信二维码*/
     .wechat_qrcode {
         position: absolute;
         margin-left: 10px;
@@ -660,23 +664,28 @@ s
         background: url('/blog/medias/wechat.jpg');
     }
 
-    .wechat:hover .wechat_qrcode{
+    .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 189px;
     }
 
     @media only screen and (max-width: 601px) {
-        .wechat_qrcode {
-            position: absolute;
-            top: -70px;
-            left: 60px;
+        .wechat {
+            display: none;
+        }
+        .mobiledevice {
+            display: inline;
         }
     }
 </style>
 
-<a class="wechat" data-position="top" data-delay="50">
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
     <i class="fab fa-weixin"></i>
     <img class="wechat_qrcode">
+</a>
+
+<a href="javascript:;" class="tooltipped mobiledevice" data-tooltip="微信: 464817304" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
 </a>
 
 

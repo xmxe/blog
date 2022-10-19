@@ -397,7 +397,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeox5000qvwfx52kp470y/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp5r000qd0fxcjq4dsob/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -455,7 +455,7 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxh0018vwfxg06xa7zg/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp6l001gd0fxes6namjr/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -506,7 +506,7 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxw001yvwfxf54rc09c/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp61000xd0fxan9q3cwo/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -559,7 +559,7 @@ wget https://www.openssl.org/sourc
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeow80001vwfx8b5s48tp/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp4p0003d0fx3izjfzyx/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -609,7 +609,7 @@ wget https://www.openssl.org/sourc
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeowo0009vwfxanuh9bxo/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp540009d0fxf8gy7a22/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -657,7 +657,7 @@ wget https://www.openssl.org/sourc
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeowf0003vwfxcrrhfz8w/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp4d0001d0fx08np78it/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -705,7 +705,7 @@ wget https://www.openssl.org/sourc
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxn001ovwfxgxz9c1t4/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp6y001sd0fxbzs989d5/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -755,7 +755,7 @@ wget https://www.openssl.org/sourc
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeox0000kvwfxfohffkgz/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp5j000kd0fx0vyw0nj2/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -817,7 +817,7 @@ wget https://www.openssl.org/sourc
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxo001qvwfx7zfy83yw/" target="_blank">
+                    <a href="/blog/posts/cl9f1cp70001ud0fx58qvd76b/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1017,6 +1017,10 @@ wget https://www.openssl.org/sourc
 
 
     <style>
+    .mobiledevice {
+        display: none;
+    }
+    /*微信二维码*/
     .wechat_qrcode {
         position: absolute;
         margin-left: 10px;
@@ -1024,23 +1028,28 @@ wget https://www.openssl.org/sourc
         background: url('/blog/medias/wechat.jpg');
     }
 
-    .wechat:hover .wechat_qrcode{
+    .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 189px;
     }
 
     @media only screen and (max-width: 601px) {
-        .wechat_qrcode {
-            position: absolute;
-            top: -70px;
-            left: 60px;
+        .wechat {
+            display: none;
+        }
+        .mobiledevice {
+            display: inline;
         }
     }
 </style>
 
-<a class="wechat" data-position="top" data-delay="50">
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
     <i class="fab fa-weixin"></i>
     <img class="wechat_qrcode">
+</a>
+
+<a href="javascript:;" class="tooltipped mobiledevice" data-tooltip="微信: 464817304" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
 </a>
 
 

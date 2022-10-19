@@ -430,7 +430,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeoxd0015vwfxa62v563z/">
+                        <a href="/blog/posts/cl9f1cp6i001bd0fx3qoy4trf/">
                             <div class="card-image">
                                 
                                 
@@ -493,7 +493,7 @@ JSONObject a = json.getJSONObject("a");
                         
                         <p class="h5">2022</p>
                                      
-                      <a href="/blog/posts/cl9ezeoxd0015vwfxa62v563z/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp6i001bd0fx3qoy4trf/" class="list-group-item list-group-item-action">
                         <time>09-30</time>
                         <div class="list-group-item-title">代码块</div>
                       </a>
@@ -654,6 +654,10 @@ JSONObject a = json.getJSONObject("a");
 
 
     <style>
+    .mobiledevice {
+        display: none;
+    }
+    /*微信二维码*/
     .wechat_qrcode {
         position: absolute;
         margin-left: 10px;
@@ -661,23 +665,28 @@ JSONObject a = json.getJSONObject("a");
         background: url('/blog/medias/wechat.jpg');
     }
 
-    .wechat:hover .wechat_qrcode{
+    .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 189px;
     }
 
     @media only screen and (max-width: 601px) {
-        .wechat_qrcode {
-            position: absolute;
-            top: -70px;
-            left: 60px;
+        .wechat {
+            display: none;
+        }
+        .mobiledevice {
+            display: inline;
         }
     }
 </style>
 
-<a class="wechat" data-position="top" data-delay="50">
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
     <i class="fab fa-weixin"></i>
     <img class="wechat_qrcode">
+</a>
+
+<a href="javascript:;" class="tooltipped mobiledevice" data-tooltip="微信: 464817304" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
 </a>
 
 

@@ -631,7 +631,7 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeox7000tvwfx1lwq6k5t/" >
+                    <a href="/blog/posts/cl9f1cp5y000td0fxetcs1fwa/" >
                         <div class="card-image tag-image">
                             
                             
@@ -679,7 +679,7 @@ delimiter &#
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxc0014vwfxecbgef3l/" >
+                    <a href="/blog/posts/cl9f1cp6g0019d0fx0wcg6fp5/" >
                         <div class="card-image tag-image">
                             
                             
@@ -736,7 +736,7 @@ REQUIRES_NEW:创建新事
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxl001kvwfx2tpigl1l/" >
+                    <a href="/blog/posts/cl9f1cp6o001md0fx0n0qdfgq/" >
                         <div class="card-image tag-image">
                             
                             
@@ -785,7 +785,7 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeox5000qvwfx52kp470y/" >
+                    <a href="/blog/posts/cl9f1cp5r000qd0fxcjq4dsob/" >
                         <div class="card-image tag-image">
                             
                             
@@ -844,7 +844,7 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxk001hvwfxhfev5js0/" >
+                    <a href="/blog/posts/cl9f1cp620010d0fx59j4b339/" >
                         <div class="card-image tag-image">
                             
                             
@@ -893,7 +893,7 @@ System:拥有DBA、Sy
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/blog/posts/cl9ezeoxa000zvwfx56o51nw3/" >
+                    <a href="/blog/posts/cl9f1cp630012d0fx8fqpdk4e/" >
                         <div class="card-image tag-image">
                             
                             
@@ -1066,6 +1066,10 @@ s
 
 
     <style>
+    .mobiledevice {
+        display: none;
+    }
+    /*微信二维码*/
     .wechat_qrcode {
         position: absolute;
         margin-left: 10px;
@@ -1073,23 +1077,28 @@ s
         background: url('/blog/medias/wechat.jpg');
     }
 
-    .wechat:hover .wechat_qrcode{
+    .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 189px;
     }
 
     @media only screen and (max-width: 601px) {
-        .wechat_qrcode {
-            position: absolute;
-            top: -70px;
-            left: 60px;
+        .wechat {
+            display: none;
+        }
+        .mobiledevice {
+            display: inline;
         }
     }
 </style>
 
-<a class="wechat" data-position="top" data-delay="50">
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
     <i class="fab fa-weixin"></i>
     <img class="wechat_qrcode">
+</a>
+
+<a href="javascript:;" class="tooltipped mobiledevice" data-tooltip="微信: 464817304" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
 </a>
 
 

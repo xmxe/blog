@@ -430,7 +430,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeoxn001ovwfxgxz9c1t4/">
+                        <a href="/blog/posts/cl9f1cp6y001sd0fxbzs989d5/">
                             <div class="card-image">
                                 
                                 
@@ -493,7 +493,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeox0000kvwfxfohffkgz/">
+                        <a href="/blog/posts/cl9f1cp5j000kd0fx0vyw0nj2/">
                             <div class="card-image">
                                 
                                 
@@ -567,13 +567,13 @@
                         
                         <p class="h5">2022</p>
                                      
-                      <a href="/blog/posts/cl9ezeoxn001ovwfxgxz9c1t4/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp6y001sd0fxbzs989d5/" class="list-group-item list-group-item-action">
                         <time>09-23</time>
                         <div class="list-group-item-title">软件设计师考点笔记</div>
                       </a>
                     
                                      
-                      <a href="/blog/posts/cl9ezeox0000kvwfxfohffkgz/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp5j000kd0fx0vyw0nj2/" class="list-group-item list-group-item-action">
                         <time>09-23</time>
                         <div class="list-group-item-title">Java各类技术栈架构图汇总</div>
                       </a>
@@ -734,6 +734,10 @@
 
 
     <style>
+    .mobiledevice {
+        display: none;
+    }
+    /*微信二维码*/
     .wechat_qrcode {
         position: absolute;
         margin-left: 10px;
@@ -741,23 +745,28 @@
         background: url('/blog/medias/wechat.jpg');
     }
 
-    .wechat:hover .wechat_qrcode{
+    .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 189px;
     }
 
     @media only screen and (max-width: 601px) {
-        .wechat_qrcode {
-            position: absolute;
-            top: -70px;
-            left: 60px;
+        .wechat {
+            display: none;
+        }
+        .mobiledevice {
+            display: inline;
         }
     }
 </style>
 
-<a class="wechat" data-position="top" data-delay="50">
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
     <i class="fab fa-weixin"></i>
     <img class="wechat_qrcode">
+</a>
+
+<a href="javascript:;" class="tooltipped mobiledevice" data-tooltip="微信: 464817304" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
 </a>
 
 

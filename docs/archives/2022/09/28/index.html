@@ -430,7 +430,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeoxc0014vwfxecbgef3l/">
+                        <a href="/blog/posts/cl9f1cp6g0019d0fx0wcg6fp5/">
                             <div class="card-image">
                                 
                                 
@@ -501,7 +501,7 @@ REQUIRES_NEW:创建新事
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeoxl001kvwfx2tpigl1l/">
+                        <a href="/blog/posts/cl9f1cp6o001md0fx0n0qdfgq/">
                             <div class="card-image">
                                 
                                 
@@ -564,7 +564,7 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeow80001vwfx8b5s48tp/">
+                        <a href="/blog/posts/cl9f1cp4p0003d0fx3izjfzyx/">
                             <div class="card-image">
                                 
                                 
@@ -627,7 +627,7 @@ sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，�
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/blog/posts/cl9ezeox5000qvwfx52kp470y/">
+                        <a href="/blog/posts/cl9f1cp5r000qd0fxcjq4dsob/">
                             <div class="card-image">
                                 
                                 
@@ -697,25 +697,25 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
                         
                         <p class="h5">2022</p>
                                      
-                      <a href="/blog/posts/cl9ezeoxc0014vwfxecbgef3l/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp6g0019d0fx0wcg6fp5/" class="list-group-item list-group-item-action">
                         <time>09-28</time>
                         <div class="list-group-item-title">事务</div>
                       </a>
                     
                                      
-                      <a href="/blog/posts/cl9ezeoxl001kvwfx2tpigl1l/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp6o001md0fx0n0qdfgq/" class="list-group-item list-group-item-action">
                         <time>09-28</time>
                         <div class="list-group-item-title">数据库相关知识点</div>
                       </a>
                     
                                      
-                      <a href="/blog/posts/cl9ezeow80001vwfx8b5s48tp/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp4p0003d0fx3izjfzyx/" class="list-group-item list-group-item-action">
                         <time>09-28</time>
                         <div class="list-group-item-title">Docker安装</div>
                       </a>
                     
                                      
-                      <a href="/blog/posts/cl9ezeox5000qvwfx52kp470y/" class="list-group-item list-group-item-action">
+                      <a href="/blog/posts/cl9f1cp5r000qd0fxcjq4dsob/" class="list-group-item list-group-item-action">
                         <time>09-28</time>
                         <div class="list-group-item-title">MySQL安装</div>
                       </a>
@@ -876,6 +876,10 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
 
 
     <style>
+    .mobiledevice {
+        display: none;
+    }
+    /*微信二维码*/
     .wechat_qrcode {
         position: absolute;
         margin-left: 10px;
@@ -883,23 +887,28 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz解压 解压后位置usr&#x2
         background: url('/blog/medias/wechat.jpg');
     }
 
-    .wechat:hover .wechat_qrcode{
+    .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 189px;
     }
 
     @media only screen and (max-width: 601px) {
-        .wechat_qrcode {
-            position: absolute;
-            top: -70px;
-            left: 60px;
+        .wechat {
+            display: none;
+        }
+        .mobiledevice {
+            display: inline;
         }
     }
 </style>
 
-<a class="wechat" data-position="top" data-delay="50">
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
     <i class="fab fa-weixin"></i>
     <img class="wechat_qrcode">
+</a>
+
+<a href="javascript:;" class="tooltipped mobiledevice" data-tooltip="微信: 464817304" data-position="top" data-delay="50">
+    <i class="fab fa-weixin"></i>
 </a>
 
 

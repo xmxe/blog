@@ -9,6 +9,9 @@
                 <% if (site.data && site.data.galleries) { %>
                     <% var galleries = site.data.galleries; %>
                     <div class="gallery-wrapper row">
+                        <div class="title center-align" data-aos="zoom-in-up">
+                            <i class="fas fa-images"></i>&nbsp;&nbsp;<%- __('gallery') %>
+                        </div>
                         <% for (var i = 0, len = galleries.length; i < len; i++) { %>
                         <% var gallery = galleries[i]; %>
                         <div class="col s6 m4 l4 xl3 gallery-box">

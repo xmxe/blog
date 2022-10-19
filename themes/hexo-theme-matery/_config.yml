@@ -326,7 +326,7 @@ profile:
   # 图床路径 enableImageHost=true时有效 为空则使用本地路径
   imageHost_avatar: 
   avatar: medias/avatar.jpg
-  career: Software Engineer
+  career: 
   introduction: what does not kill you makes you stronger
 
 # config my projects informations in about page.If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.

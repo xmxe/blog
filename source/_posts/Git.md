@@ -14,7 +14,7 @@ img:
 git init
 git add -A
 git commit -m "init" 
-git remote add origin https://github.com/xmxe/mySpringBoot.git
+git remote add origin https://github.com/xmxe/project.git
 # 断开连接
 git remote remove origin
 git pull --rebase origin master 

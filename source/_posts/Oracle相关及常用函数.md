@@ -8,13 +8,13 @@ img:
 
 ##### Sys 和 System用户区别
 
-- Sys:拥有DBA、SysDBA、Sysoper（系统操作员 ）角色或权限，是Oracle权限最高的用户，只能以SysDBA或Sysoper登录，不能以Normal形式登录。
+- Sys:拥有DBA、SysDBA、Sysoper（系统操作员）角色或权限，是Oracle权限最高的用户，只能以SysDBA或Sysoper登录，不能以Normal形式登录。
 - System:拥有DBA、Sysdba权限或角色，可以以普通用户的身份登录。
 
 ##### Sysdba、Sysoper、DBA区别
 
 - Sysdba用户: 可以改变字符集、创建删除数据库、登录之后用户是SYS（shutdown、startup）
-- Sysoper:用户不可改变字符集、不能创、删数据库、登陆之后用户是PUBLIC （shutdown、startup）
+- Sysoper:用户不可改变字符集、不能创、删数据库、登陆之后用户是PUBLIC（shutdown、startup）
 - DBA用户：只有在启动数据库后才能执行各种管理工作。
 - Sysdba> Sysoper>普通的DBA
 
@@ -27,18 +27,18 @@ img:
 5. IMP_FULL_DATABASE
 6. DELETE_CATALOG_ROLE
 7. EXECUTE_CATALOG_ROLE
-8. SELECT_CATALOG_ROLE 　 
+8. SELECT_CATALOG_ROLE
 
-**CONNECT角色**： --是授予最终用户的典型权利，最基本的 
+**CONNECT角色**： --是授予最终用户的典型权利，最基本的
 
 ```sql
-1. ALTER SESSION --修改会话 
+1. ALTER SESSION --修改会话
 2. CREATE CLUSTER --建立聚簇
 3. CREATE DATABASE LINK --建立数据库链接
 4. CREATE SEQUENCE --建立序列
 5. CREATE SESSION --建立会话
 6. CREATE SYNONYM --建立同义词
-7. CREATE VIEW --建立视图 www_bitscn_com中国.网管联盟
+7. CREATE VIEW --建立视图www_bitscn_com中国.网管联盟
 ```
 **RESOURCE角色**： --是授予开发人员的
 
@@ -50,7 +50,7 @@ img:
 5. CREATE TRIGGER --建立触发器
 6. CREATE TYPE --建立类型
 ```
-**DBA角色**：拥有系统所有系统级权限 （系统管理员）
+**DBA角色**：拥有系统所有系统级权限（系统管理员）
 
 **IMP_FULL_DATABASE角色、EXP_FULL_DATABASE角色**：
 
@@ -61,7 +61,7 @@ img:
 ```
 
 **SELECT_CATALOG_ROLE角色**具有从数据字典查询的权利，
-(尤其是此处数据字典：就是数据库 运行时的各种信息参考：Oracle 11g 体系结构--数据字典 ) 
+(尤其是此处数据字典：就是数据库运行时的各种信息参考：Oracle 11g体系结构--数据字典)
 
 **EXECUTE_CATALOG_ROLE**角色具有从数据字典中执行部分过程和函数的权利。
 
@@ -75,7 +75,7 @@ img:
 ```sql
 Select userenv(‘language’) from dual; -- 查看服务器端编码
 
-select * from V$NLS_PARAMETERS；-- 查看NLS_LANGUAGE的值与第一个的查询结果是否一致，假如不一致需要设置环境变量，变量名：NLS_LANG  变量值：第1个查到的值 重启PL/SQL (假如在乱码之前已经插入数据，那么配置环境变量后依然乱码，需要删除数据重新导入)
+select * from V$NLS_PARAMETERS；-- 查看NLS_LANGUAGE的值与第一个的查询结果是否一致，假如不一致需要设置环境变量，变量名：NLS_LANG 变量值：第1个查到的值 重启PL/SQL(假如在乱码之前已经插入数据，那么配置环境变量后依然乱码，需要删除数据重新导入)
 
 ```
 ##### Oracle的操作
@@ -143,7 +143,7 @@ datafile 'D:\APP\ADMINISTRATOR\ORADATA\ORCL\user_data.dbf'
 size 50m
 autoextend on
 next 50m maxsize 20480m
-extent management local; 
+extent management local;
 
 -- 创建用户指定表空间
 create user 用户名 identified by 密码 default tablespace 表空间名；
@@ -166,7 +166,7 @@ select age,to_char(wm_concat(name)) as name,to_char(wm_concat(score)) as score f
 ###### decode
 
 decode(c1,c2,c3)/decode(c1,c2,c3,c4)/decode(c1,c2,c3,c4,c5)/decode(c1,[c2,c3],[c4,c5],[c6,c7]....,[C2x,C2x+1] [,C2x+2])
-从c1之后开始,每两个参数看做是一组数, 拿每组数的第一个参数和c1比较,如果相同则返回第二个参数:比如 如果 c2==c1  return  c3 如果该组数的第一个参数和c1不相同,则比较下一组: 比如 如果 c2<>C1 继续判断 C4==C1 ?  相同return  c5
+从c1之后开始,每两个参数看做是一组数,拿每组数的第一个参数和c1比较,如果相同则返回第二个参数:比如 如果c2==c1 return c3如果该组数的第一个参数和c1不相同,则比较下一组:比如 如果c2<>C1继续判断C4==C1? 相同return c5
 例  decode(type,'a','11','b','12','c','13','d','14','e','15',type)
 
 ###### 树形查询
@@ -248,14 +248,14 @@ select '123' || 'abc' || 'eee' from dual;
 
 ###### 日期函数:
 两个日期之间可以做减法,单位是天 两个日期之间不能做加法
-- add_months(c1,c2) c1日期类型,c2整数 在c1日期的基础上增减c2个月份 
+- add_months(c1,c2) c1日期类型,c2整数在c1日期的基础上增减c2个月份
 ```sql
 -- 查询当前系统时间之前的一个月
 select add_months(sysdate,-1) from dual;
 -- 查询十年后的今天
 select add_months(sysdate,120) from dual;
 ```
-- months_between(c1,c2) c1 c2都是日期类型  计算两个日期之间相差多少个月份
+- months_between(c1,c2) c1 c2都是日期类型 计算两个日期之间相差多少个月份
 ```sql
 select round(months_between(sysdate,hiredate),2) from emp;
 ```
@@ -290,7 +290,7 @@ select sysdate,next_day(sysdate,'星期四') from dual;
 ###### 转换函数:
 1. to_date(c1,c2)
 
-2. to_timestamp(c1,c2) c1: 字符类型的日期  c2:日期格式
+2. to_timestamp(c1,c2) c1: 字符类型的日期 c2:日期格式
 能够根据c2指定的格式将c1字符类型的日期转变为日期类型
 ```sql
 insert into emp(empno,hiredate) values(1001, to_date('2017-1-1','yyyy-dd-mm') );
@@ -300,7 +300,7 @@ insert into emp(empno,hiredate) values(1002, to_date('2017-1-1 12:21:20','yyyy-d
 3. to_char()
 ```sql
 -- 将一个数值转变为一个字符串
-select * from emp where '1'=1; 
+select * from emp where '1'=1;
 select * from emp where '1'=to_char(1);
 
 -- 格式化字符串或数值

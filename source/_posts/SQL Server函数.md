@@ -10,11 +10,11 @@ img:
 
 类似MySQL group_concat()使用 stuff()
 
-stuff() 将字符串插入到另一个字符串中。 它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
+stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
 
 ```sql
 select stuff('ABCDEFG',2,3,''hijk) = AhijkEFG
-SELECT id, value = stuff((SELECT ',' + value FROM temp t WHERE t.id = temp.id FOR xml path('')) , 1 , 1 , '') FROM temp GROUP BY id
+SELECT id, value = stuff((SELECT ',' + value FROM temp t WHERE t.id = temp.id FOR xml path('')),1,1,'') FROM temp GROUP BY id
 
 -- 实例
 SELECT t.unit_id,t.value_param,t.code_param,conf.state
@@ -68,7 +68,7 @@ WHERE tag_code IN('cals.GD_SH05_UUB00W0101Y', 'cals.GD_SH05_UUB00W0102Y', 'cals.
 ```sql
 select row_number() over(partition BY 分组字段 order by 排序字段) as rowNums,* from 表名
 
--- 例：需要 筛选两条数据，一条是每个区间段所有数据中最大的，另外一条是个数*10%的数值
+-- 例：需要筛选两条数据，一条是每个区间段所有数据中最大的，另外一条是个数*10%的数值
 select 
 c.count,c.maxfhl,c.qjd,c.type,b.rownum,b.tag_name,b.fhl
 from
@@ -116,7 +116,7 @@ select substring('abdcsef',1,3) abd
 
 reverse(express) -- 将字符串从尾部到头部排序
 
-charindex( expression1 , expression2 [ , start_location ] )获取某字符第一次出现的位置
+charindex(expression1,expression2[,start_location])获取某字符第一次出现的位置
 expression1 必需 ---要查找的子字符串
 expression2 必需 ---父字符串
 start_location 可选 ---指定从父字符串开始查找的位置，默认位置从1开始
@@ -149,7 +149,7 @@ with cte_child(id,areaName,pid,level)
 as
 (
  --起始条件
-select id,areaName,pid,0 as level from erp_area where id = 1 -- 优先列出第一节点查询条件 或子节点查询条件
+select id,areaName,pid,0 as level from erp_area where id = 1 -- 优先列出第一节点查询条件或子节点查询条件
 
 union all
 --递归条件

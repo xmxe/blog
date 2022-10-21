@@ -22,12 +22,12 @@ img:
 
 ```shell
 # 后台执行abc.jar即便关闭终端也继续运行 不输出任何日志
-nohup java -jar abc.jar >/dev/null 2>&1 & 
+nohup java -jar abc.jar >/dev/null 2>&1 &
 ```
 
 ###### 关闭ssh情况下不退出进程
 
-nohup command & 
+nohup command &
 command参数：要执行的命令行
 但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用>/dev/null 2>&1 
 
@@ -39,16 +39,16 @@ nohup command >/dev/null 2>&1  &
 1:表示标准输出(stdout),系统默认是1
 2:表示错误输出(stderr)
 
-command >/dev/null 2>&1 & == command 1>/dev/null 2>&1 & 
-command:表示shell命令或者为一个可执行程序 
+command >/dev/null 2>&1 & == command 1>/dev/null 2>&1 &
+command:表示shell命令或者为一个可执行程序
 \>:表示重定向到哪里
 /dev/null:表示Linux的空设备文件
 2:表示标准错误输出
 &1:&表示等同于的意思,2>&1,表示2的输出重定向等于于1
 &:表示后台执行,即这条指令执行在后台运行
-1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。 
+1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。
 2>&1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。
-这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空. 
+这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.
 所以可以看出" >/dev/null 2>&1 "常用来避免shell命令或者程序等运行中有内容输出
 
 
@@ -62,7 +62,7 @@ yum -y install net-tools
 apt install net-tools
 ```
 - apt与apt-get的区别
-apt 可以看作 apt-get 和 apt-cache 命令的子集, 可以为包管理提供必要的命令选项。apt-get 虽然没被弃用，但作为普通用户，还是应该首先使用 apt
+apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt
 [centos7更换yum源](https://mirrors.cnnic.cn/help/centos/)
 
 
@@ -119,7 +119,7 @@ systemctl list-unit-files|grep enabled
 systemctl is-enabled firewalld.service
 
 # 端口开放 
-firewall-cmd --zone=public --add-port=80/tcp --permanent    
+firewall-cmd --zone=public --add-port=80/tcp --permanent
 #（--permanent永久生效，没有此参数重启后失效）
 
 # 重新载入
@@ -232,21 +232,21 @@ curl -H "Content-Type: application/json" -X POST -d '{"abc":123,"bcd":"nihao"}' 
 ###### Linux系统服务
 
 ```shell
-# 添加自定义系统服务的目录： 
+# 添加自定义系统服务的目录：
 /lib/systemd/system # lib/systemd/system真实地址是/usr/lib/system/system地址，
 /usr/lib/systemd/system/ # 软件包安装的单元
-/etc/systemd/system/ # 系统管理员安装的单元, 优先级更高
+/etc/systemd/system/ # 系统管理员安装的单元,优先级更高
 # 优先级为 /etc/systemd/system /run/systemd/system /lib/systemd/system
 # 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。
 
-# 开机启动执行命令：编辑/etc/rc.d/rc.local 
+# 开机启动执行命令：编辑/etc/rc.d/rc.local
 # 添加要执行的命令或者脚本,并且赋予执行权限
 chmod +x /etc/rc.d/rc.local
 ```
 
 ###### 复制目录
 ```shell
-cp -r 
+cp -r
 ```
 ###### 查看隐藏目录
 ```shell
@@ -261,10 +261,10 @@ kill -9 gnome-shell pid
 ```shell
 cat /etc/redhat-release
 ```
-###### 重命名文件 
+###### 重命名文件
 
 ```shell
-# 例:把a替换为xxx 
+# 例:把a替换为xxx
 rename “a” “xxx” *.txt
 # 或者使用mv命令
 ```
@@ -273,12 +273,12 @@ rename “a” “xxx” *.txt
 
 ```shell
 netstat -antu # 可以查看所有tcp、udp端口开放情况
-netstat -ntlp # 查看正在运行的端口  (t代表tcp 加u查看udp)
+netstat -ntlp # 查看正在运行的端口 (t代表tcp 加u查看udp)
 netstat -ntulp|grep # 端口号 查看指定端口被哪个进程占用的情况
-ps -ef|grep abc # 查找abc进程 
+ps -ef|grep abc # 查找abc进程
 ps -aux # 显示所有进程
-# 发现A进程占用该端口号 
-ps -ef|grep A 查看pid 
+# 发现A进程占用该端口号
+ps -ef|grep A 查看pid
 
 kill 9 pid杀掉进程
 ```
@@ -315,7 +315,7 @@ head -n -k # 其中-k的意义是除了最后k行的所有行
 head -n -3 filename # 查看filename除了最后3行的所有行
 tail -n +k # 是从第k行开始，输出所有行
 tail -n +3 # 从第三行开始输出所有行
-tail -f finename # 实时跟踪文件，如果文件不存在，则终止 
+tail -f finename # 实时跟踪文件，如果文件不存在，则终止
 tail -F filename # 如果文件不存在，会继续尝试
 ```
 
@@ -326,12 +326,12 @@ tail -F filename # 如果文件不存在，会继续尝试
 # 编译出错时，清除编译生成的文件
 make distclean
 # 编译安装到指定目录下
-make PREFIX=/usr/local/redis install 
+make PREFIX=/usr/local/redis install
 # 卸载
 make uninstall
 ```
 
-###### 设置 keepalived 服务开机启动 
+###### 设置 keepalived 服务开机启动
 
 ```shell
 chkconfig keepalived on
@@ -345,7 +345,7 @@ chkconfig --add name
 ```shell
 # 设置root密码
 sudo passwd root  # 终端会先验证密码 然后在设置root密码
-vi /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf 
+vi /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 # 增加两行  greeter-show-manual-login=true  all-guest=false#不允许guest用户登陆
 cd /etc/pam.d  # 编辑gdm-autologin和gdm-password文件 注释掉auth required pam_succeed_if.so user != root quiet_success
 vi /root/.profile # 将mesg n || true 修改为 tty -s && mesg n || true
@@ -356,11 +356,11 @@ reboot
 [解决Ubuntu的root账号无法登录SSH问题](https://www.cnblogs.com/yixius/articles/6971054.html)
 
 
-###### 查看指定目录大小 
+###### 查看指定目录大小
 ```shell
 du -h --max-depth=1 /usr
 ```
-###### 查看磁盘空间 
+###### 查看磁盘空间
 ```shell
 df -h
 ```
@@ -386,7 +386,7 @@ chmod 754 filename
 
 ```shell
 rpm -qa|grep jdk  # 查看已有的openjdk -q(query) -a(all)
-rpm -ev --nodeps (上条命令的查询结果)  #卸载
+rpm -ev --nodeps (上条命令的查询结果) #卸载
 
 ubuntu 
 apt-get remove openjdk*
@@ -395,89 +395,89 @@ apt-get remove openjdk*
 ###### rpm参数
 
 ```yaml
--a 　查询所有套件。
--b<完成阶段><套件档>+或-t <完成阶段><套件档>+ 　设置包装套件的完成阶段，并指定套件档的文件名称。
--c 　只列出组态配置文件，本参数需配合"-l"参数使用。
--d 　只列出文本文件，本参数需配合"-l"参数使用。
--e<套件档>或--erase<套件档> 　删除指定的套件。
--f<文件>+ 　查询拥有指定文件的套件。
--h或--hash 　套件安装时列出标记。
--i 　显示套件的相关信息。
--i<套件档>或--install<套件档> 　安装指定的套件档。
--l 　显示套件的文件列表。
--p<套件档>+ 　查询指定的RPM套件档。
--q 　使用询问模式，当遇到任何问题时，rpm指令会先询问用户。 
--R 　显示套件的关联性信息。
--s 　显示文件状态，本参数需配合"-l"参数使用。
--U<套件档>或--upgrade<套件档> 升级指定的套件档。
--v 　显示指令执行过程。
--vv 　详细显示指令执行过程，便于排错。
--addsign<套件档>+ 　在指定的套件里加上新的签名认证。
---allfiles 　安装所有文件。
---allmatches 　删除符合指定的套件所包含的文件。
---badreloc 　发生错误时，重新配置文件。
---buildroot<根目录> 　设置产生套件时，欲当作根目录的目录。
---changelog 　显示套件的更改记录。
---checksig<套件档>+ 　检验该套件的签名认证。
---clean 　完成套件的包装后，删除包装过程中所建立的目录。
---dbpath<数据库目录> 　设置欲存放RPM数据库的目录。
---dump 　显示每个文件的验证信息。本参数需配合"-l"参数使用。 
---excludedocs 　安装套件时，不要安装文件。
---excludepath<排除目录> 　忽略在指定目录里的所有文件。
---force 　强行置换套件或文件。
---ftpproxy<主机名称或IP地址> 　指定FTP代理服务器。
---ftpport<通信端口> 　设置FTP服务器或代理服务器使用的通信端口。
---help 　在线帮助。
---httpproxy<主机名称或IP地址> 　指定HTTP代理服务器。
---httpport<通信端口> 　设置HTTP服务器或代理服务器使用的通信端口。
---ignorearch 　不验证套件档的结构正确性。
---ignoreos 　不验证套件档的结构正确性。
---ignoresize 　安装前不检查磁盘空间是否足够。
---includedocs 　安装套件时，一并安装文件。
---initdb 　确认有正确的数据库可以使用。
---justdb 　更新数据库，当不变动任何文件。
---nobulid 　不执行任何完成阶段。
---nodeps 　不验证套件档的相互关联性。
---nofiles 　不验证文件的属性。
---nogpg 　略过所有GPG的签名认证。
---nomd5 　不使用MD5编码演算确认文件的大小与正确性。
---nopgp 　略过所有PGP的签名认证。
---noorder 　不重新编排套件的安装顺序，以便满足其彼此间的关联性。
---noscripts 　不执行任何安装Script文件。
---notriggers 　不执行该套件包装内的任何Script文件。
---oldpackage 　升级成旧版本的套件。
---percent 　安装套件时显示完成度百分比。
---pipe<执行指令> 　建立管道，把输出结果转为该执行指令的输入数据。
---prefix<目的目录> 　若重新配置文件，就把文件放到指定的目录下。
---provides 　查询该套件所提供的兼容度。
---queryformat<档头格式> 　设置档头的表示方式。
---querytags 　列出可用于档头格式的标签。
---rcfile<配置文件> 　使用指定的配置文件。
---rebulid<套件档> 　安装原始代码套件，重新产生二进制文件的套件。
---rebuliddb 　以现有的数据库为主，重建一份数据库。
---recompile<套件档> 　此参数的效果和指定"--rebulid"参数类似，当不产生套件档。
---relocate<原目录>=<新目录> 　把本来会放到原目录下的文件改放到新目录。
---replacefiles 　强行置换文件。
---replacepkgs 　强行置换套件。
---requires 　查询该套件所需要的兼容度。
---resing<套件档>+ 　删除现有认证，重新产生签名认证。
---rmsource 　完成套件的包装后，删除原始代码。
---rmsource<文件> 　删除原始代码和指定的文件。
---root<根目录> 　设置欲当作根目录的目录。
---scripts 　列出安装套件的Script的变量。
---setperms 　设置文件的权限。
---setugids 　设置文件的拥有者和所属群组。
---short-circuit 　直接略过指定完成阶段的步骤。
---sign 　产生PGP或GPG的签名认证。
---target=<安装平台>+ 　设置产生的套件的安装平台。
---test 　仅作测试，并不真的安装套件。
---timecheck<检查秒数> 　设置检查时间的计时秒数。
---triggeredby<套件档> 　查询该套件的包装者。
---triggers 　展示套件档内的包装Script。
---verify 　此参数的效果和指定"-q"参数相同。
---version 　显示版本信息。
---whatprovides<功能特性> 　查询该套件对指定的功能特性所提供的兼容度。
---whatrequires<功能特性> 　查询该套件对指定的功能特性所需要的兼容度。
+-a　查询所有套件。
+-b<完成阶段><套件档>+或-t<完成阶段><套件档>+　设置包装套件的完成阶段，并指定套件档的文件名称。
+-c　只列出组态配置文件，本参数需配合"-l"参数使用。
+-d　只列出文本文件，本参数需配合"-l"参数使用。
+-e<套件档>或--erase<套件档>　删除指定的套件。
+-f<文件>+　查询拥有指定文件的套件。
+-h或--hash　套件安装时列出标记。
+-i　显示套件的相关信息。
+-i<套件档>或--install<套件档>　安装指定的套件档。
+-l　显示套件的文件列表。
+-p<套件档>+　查询指定的RPM套件档。
+-q　使用询问模式，当遇到任何问题时，rpm指令会先询问用户。
+-R　显示套件的关联性信息。
+-s　显示文件状态，本参数需配合"-l"参数使用。
+-U<套件档>或--upgrade<套件档>升级指定的套件档。
+-v　显示指令执行过程。
+-vv　详细显示指令执行过程，便于排错。
+-addsign<套件档>+　在指定的套件里加上新的签名认证。
+--allfiles　安装所有文件。
+--allmatches　删除符合指定的套件所包含的文件。
+--badreloc　发生错误时，重新配置文件。
+--buildroot<根目录>　设置产生套件时，欲当作根目录的目录。
+--changelog　显示套件的更改记录。
+--checksig<套件档>+　检验该套件的签名认证。
+--clean　完成套件的包装后，删除包装过程中所建立的目录。
+--dbpath<数据库目录>　设置欲存放RPM数据库的目录。
+--dump　显示每个文件的验证信息。本参数需配合"-l"参数使用。
+--excludedocs　安装套件时，不要安装文件。
+--excludepath<排除目录>　忽略在指定目录里的所有文件。
+--force　强行置换套件或文件。
+--ftpproxy<主机名称或IP地址>　指定FTP代理服务器。
+--ftpport<通信端口>　设置FTP服务器或代理服务器使用的通信端口。
+--help　在线帮助。
+--httpproxy<主机名称或IP地址>　指定HTTP代理服务器。
+--httpport<通信端口>　设置HTTP服务器或代理服务器使用的通信端口。
+--ignorearch　不验证套件档的结构正确性。
+--ignoreos　不验证套件档的结构正确性。
+--ignoresize　安装前不检查磁盘空间是否足够。
+--includedocs　安装套件时，一并安装文件。
+--initdb　确认有正确的数据库可以使用。
+--justdb　更新数据库，当不变动任何文件。
+--nobulid　不执行任何完成阶段。
+--nodeps　不验证套件档的相互关联性。
+--nofiles　不验证文件的属性。
+--nogpg　略过所有GPG的签名认证。
+--nomd5　不使用MD5编码演算确认文件的大小与正确性。
+--nopgp　略过所有PGP的签名认证。
+--noorder　不重新编排套件的安装顺序，以便满足其彼此间的关联性。
+--noscripts　不执行任何安装Script文件。
+--notriggers　不执行该套件包装内的任何Script文件。
+--oldpackage　升级成旧版本的套件。
+--percent　安装套件时显示完成度百分比。
+--pipe<执行指令>　建立管道，把输出结果转为该执行指令的输入数据。
+--prefix<目的目录>　若重新配置文件，就把文件放到指定的目录下。
+--provides　查询该套件所提供的兼容度。
+--queryformat<档头格式>　设置档头的表示方式。
+--querytags　列出可用于档头格式的标签。
+--rcfile<配置文件>　使用指定的配置文件。
+--rebulid<套件档>　安装原始代码套件，重新产生二进制文件的套件。
+--rebuliddb　以现有的数据库为主，重建一份数据库。
+--recompile<套件档>　此参数的效果和指定"--rebulid"参数类似，当不产生套件档。
+--relocate<原目录>=<新目录>　把本来会放到原目录下的文件改放到新目录。
+--replacefiles　强行置换文件。
+--replacepkgs　强行置换套件。
+--requires　查询该套件所需要的兼容度。
+--resing<套件档>+　删除现有认证，重新产生签名认证。
+--rmsource　完成套件的包装后，删除原始代码。
+--rmsource<文件>　删除原始代码和指定的文件。
+--root<根目录>　设置欲当作根目录的目录。
+--scripts　列出安装套件的Script的变量。
+--setperms　设置文件的权限。
+--setugids　设置文件的拥有者和所属群组。
+--short-circuit　直接略过指定完成阶段的步骤。
+--sign　产生PGP或GPG的签名认证。
+--target=<安装平台>+　设置产生的套件的安装平台。
+--test　仅作测试，并不真的安装套件。
+--timecheck<检查秒数>　设置检查时间的计时秒数。
+--triggeredby<套件档>　查询该套件的包装者。
+--triggers　展示套件档内的包装Script。
+--verify　此参数的效果和指定"-q"参数相同。
+--version　显示版本信息。
+--whatprovides<功能特性>　查询该套件对指定的功能特性所提供的兼容度。
+--whatrequires<功能特性>　查询该套件对指定的功能特性所需要的兼容度。
 
 ```
 
@@ -504,7 +504,7 @@ cd /root/.ssh/
 # 此命令在A机器执行，目的将A的公钥发送至B机器
 scp id_rsa.pub root@BIP地址:/root/.ssh/id_rsa_A.pub
 # 此命令在B机器执行，目的将B的公钥发送至A机器
-scp id_rsa.pub root@AIP地址:/root/.ssh/id_rsa_B.pub 
+scp id_rsa.pub root@AIP地址:/root/.ssh/id_rsa_B.pub
 
 # 如果发送文件夹 使用scp -r /test root@B:/root/test
 
@@ -528,7 +528,7 @@ systemctl set-default multi-user.target  （init 3）
 systemctl set-default graphical.target  (init 5)
 ```
 
-###### 查看系统内核 uname -r 
+###### 查看系统内核 uname -r
 
 ```shell
 # 全部内核
@@ -574,7 +574,7 @@ thread 查看线程
 
 redefine class文件(带class后缀名):热部署 ，修改jvm的class 并不会修改本地的class文件 服务重启后失效 注意class新增属性、方法且方法正在运行的时候会热部署失败
 
-退出arthas 
+退出arthas
 quit或exit 退出当前连接 ，完全退出使用stop(所有客户端连接都会退出)
 
 logger --name ROOT --level debug 动态修改日志级别
@@ -586,7 +586,7 @@ logger --name ROOT --level debug 动态修改日志级别
 
 ###### Linux交换空间(swap space)
 
-交换空间是磁盘上的一块区域，可以是一个分区，也可以是一个文件，或者是他们的组合。简单点说，当系统物理内存吃紧时，Linux 会将内存中不常访问的数据保存到 swap 上，这样系统就有更多的物理内存为各个进程服务，而当系统需要访问 swap 上存储的内容时，再将 swap 上的数据加载到内存中，这就是我们常说的 swap out 和 swap in
+交换空间是磁盘上的一块区域，可以是一个分区，也可以是一个文件，或者是他们的组合。简单点说，当系统物理内存吃紧时，Linux会将内存中不常访问的数据保存到swap上，这样系统就有更多的物理内存为各个进程服务，而当系统需要访问swap上存储的内容时，再将swap上的数据加载到内存中，这就是我们常说的swap out和swap in
 
 **设置交换空间**
 ```shell
@@ -628,9 +628,9 @@ reboot
 
 ###### source filename 与 sh filename 及./filename执⾏脚本的区别
 
-1. 当shell脚本具有可执⾏权限时，⽤sh filename与./filename执⾏脚本是没有区别得。./filename是 因为当前⽬录没有在PATH中，所有”.”是⽤来表⽰当前⽬录的。 
-2. sh filename 重新建⽴⼀个⼦shell，在⼦shell中执⾏脚本⾥⾯的语句，该⼦shell继承⽗shell的环 境变量，但⼦shell新建的、改变的变量不会被带回⽗shell，除⾮使⽤export。 
-3. source filename：这个命令其实只是简单地读取脚本⾥⾯的语句依次在当前shell⾥⾯执⾏，没有 建⽴新的⼦shell。那么脚本⾥⾯所有新建、改变变量的语句都会保存在当前shell⾥⾯
+1. 当shell脚本具有可执⾏权限时，⽤sh filename与./filename执⾏脚本是没有区别得。./filename是因为当前⽬录没有在PATH中，所有”.”是⽤来表⽰当前⽬录的。
+2. sh filename重新建⽴⼀个⼦shell，在⼦shell中执⾏脚本⾥⾯的语句，该⼦shell继承⽗shell的环境变量，但⼦shell新建的、改变的变量不会被带回⽗shell，除⾮使⽤export。
+3. source filename：这个命令其实只是简单地读取脚本⾥⾯的语句依次在当前shell⾥⾯执⾏，没有建⽴新的⼦shell。那么脚本⾥⾯所有新建、改变变量的语句都会保存在当前shell⾥⾯
 
 
 ##### 环境变量
@@ -649,13 +649,13 @@ reboot
 - \~/.profile 若bash是以login方式执行时，读取\~/.bash_profile，若它不存在，则读取\~/.bash_login，若前两者不存在，读取\~/.profile；另外，图形模式登录时，此文件将被读取，即使存在\~/.bash_profile和\~/.bash_login；
 - \~/.bash_login 若bash是以login方式执行时，读取\~/.bash_profile，若它不存在，则读取\~/.bash_login，若前两者都不存在，则读取\~/.profile；
 - \~/.bash_profile Ubuntu默认没有此文件，可新建。只有bash是以login形式执行时，才会读取此文件。通常该配置文件还会配置成去读取\~/.bashrc；
-- \~/.bashrc 当bash是以non-login形式执行时，读取此文件。若是以login形式执行，则不会读取此文件；
-- \~/.bash_logout 注销时，且是login形式，此文件才会读取。也就是说，在文本模式注销时，此文件会被读取，图形模式注销时，此文件不会被读取。
-- /etc/environment 系统的环境变量，系统应用程序的执行与用户环境可以是无关的，但与系统环境是相关的
-1. 在登录时,操作系统定制用户环境时使用的第一个文件就是  /etc/profile  ,此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行。
-2. 在登录时操作系统使用的第二个文件是  /etc/environment  ，系统在读取你自己的profile  前,设置环境文件的环境变量。
-3. 在登录时用到的第三个文件是.profile文件,每个用户都可使用该文件输入专用于自己使用的shell信息,,该 文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件。/etc/bashrc:为每一个运行bash shell的用户执行此文件。当bash shell 被打开时,该文件被读取。
+- \~/.bashrc当bash是以non-login形式执行时，读取此文件。若是以login形式执行，则不会读取此文件；
+- \~/.bash_logout注销时，且是login形式，此文件才会读取。也就是说，在文本模式注销时，此文件会被读取，图形模式注销时，此文件不会被读取。
+- /etc/environment系统的环境变量，系统应用程序的执行与用户环境可以是无关的，但与系统环境是相关的
+1. 在登录时,操作系统定制用户环境时使用的第一个文件就是/etc/profile,此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行。
+2. 在登录时操作系统使用的第二个文件是/etc/environment，系统在读取你自己的profile前,设置环境文件的环境变量。
+3. 在登录时用到的第三个文件是.profile文件,每个用户都可使用该文件输入专用于自己使用的shell信息,,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件。/etc/bashrc:为每一个运行bash shell的用户执行此文件。当bash shell被打开时,该文件被读取。
 4. /etc/environment是设置整个系统的环境，而/etc/profile是设置所有用户的环境，前者与登录用户无关，后者与登录用户有关。
 先执行/etc/enviroment，后执行/etc/profile
 
-[Linux 环境变量配置的 6 种方法](https://mp.weixin.qq.com/s/D32FE4CS2pT89czVUv0SOg)
+[Linux环境变量配置的6种方法](https://mp.weixin.qq.com/s/D32FE4CS2pT89czVUv0SOg)

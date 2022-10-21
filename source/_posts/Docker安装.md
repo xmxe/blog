@@ -449,7 +449,7 @@ docker login -u -p
 -u 登陆的用户名 -p :登陆的密码
 ```
 
-- 登出一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库 Docker Hub
+- 登出一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库Docker Hub
 ```
 docker logout
 ```
@@ -461,21 +461,22 @@ docker tag
 
 #### 相关文章
 
-- [构建 Java 镜像的 10 个最佳实践](https://mp.weixin.qq.com/s/gmZDBuYDXnNdykEx66Y0Cw)
-- [10 个冷门但又非常实用的 Docker 使用技巧！！](https://mp.weixin.qq.com/s/LOmqsoBJd7h1HPwf0i1uwQ)
+- [图解Docker架构，傻瓜都能看懂！](https://mp.weixin.qq.com/s/ELZo2z4fHonoBGXQI0M9CA)
+- [构建Java镜像的10个最佳实践](https://mp.weixin.qq.com/s/gmZDBuYDXnNdykEx66Y0Cw)
+- [10个冷门但又非常实用的Docker使用技巧！！](https://mp.weixin.qq.com/s/LOmqsoBJd7h1HPwf0i1uwQ)
 - [Docker实战总结](https://mp.weixin.qq.com/s/tTsizeLeVyvQ44GXMNqrjA)
-- [Docker 从入门到干活，看这一篇足矣](https://mp.weixin.qq.com/s/t81enr-ypBxk1K4lYqWZww)
+- [Docker从入门到干活，看这一篇足矣](https://mp.weixin.qq.com/s/t81enr-ypBxk1K4lYqWZww)
 - [如何编写最佳的Dockerfile](https://mp.weixin.qq.com/s/x-M5iKvvuseIQwUdVmxSPQ)
-- [Docker：Docker Compose 详解](https://www.jianshu.com/p/658911a8cff3)
+- [Docker：Docker Compose详解](https://www.jianshu.com/p/658911a8cff3)
 - [CentOS/Ubuntu安装Docker和Docker Compose](https://mp.weixin.qq.com/s/fB59zXK7cPBt1asSyUpqDg)
 - [DaoCloud安装docker指南](http://guide.daocloud.io/dcs/docker-9152677.html)
-- [Docker 常用命令，还有谁不会？](https://mp.weixin.qq.com/s/fzlNnJe9SMA5k3TDXOfZUA)
-- [一款吊炸天的 Docker 图形化工具，太强大](https://mp.weixin.qq.com/s/PpI7_fY5ACjmtmnlqr7ZMQ)
-- [5 款顶级 Docker 容器 GUI 管理工具！免费又好用](https://mp.weixin.qq.com/s/w0sFaHApOSrwgva0886ijQ)
+- [Docker常用命令，还有谁不会？](https://mp.weixin.qq.com/s/fzlNnJe9SMA5k3TDXOfZUA)
+- [一款吊炸天的Docker图形化工具，太强大](https://mp.weixin.qq.com/s/PpI7_fY5ACjmtmnlqr7ZMQ)
+- [5款顶级Docker容器GUI管理工具！免费又好用](https://mp.weixin.qq.com/s/w0sFaHApOSrwgva0886ijQ)
 - [Docker轻量级编排创建工具Humpback](https://mp.weixin.qq.com/s/rAOsia2LU2_Fl4vrjQ2tvA)
-- [带着问题学 Kubernetes 架构！](https://mp.weixin.qq.com/s/6smzsvYSbRvSPcpbfnH98A)
-- [为什么大家都在学习 k8s](https://mp.weixin.qq.com/s/B2tIs6YitA93iYxEZ_8Ovw)
-- [Kuboard - Kubernetes 多集群管理界面](https://kuboard.cn/)
+- [带着问题学Kubernetes架构！](https://mp.weixin.qq.com/s/6smzsvYSbRvSPcpbfnH98A)
+- [为什么大家都在学习k8s](https://mp.weixin.qq.com/s/B2tIs6YitA93iYxEZ_8Ovw)
+- [Kuboard-Kubernetes多集群管理界面](https://kuboard.cn/)
 
 
 #### docker加速命令

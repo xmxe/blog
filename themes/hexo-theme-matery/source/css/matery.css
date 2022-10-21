@@ -517,6 +517,22 @@ header .side-nav .social-link {
     padding: 0 15px;
     font-size: 1.35rem;
     color: #fff;
+    display: inline-block;
+    animation: float 1s infinite ease-in-out alternate
+}
+@keyframes float {
+    100% {
+        transform: translateY(-15px)
+        /* box-shadow: 0 40px 10px -18px hsla(0, 0%, 0%, .2), 0 40px 16px -12px hsla(0, 0%, 0%, .2) */
+    }
+}
+
+.cover-social-link a:nth-of-type(odd) {
+    animation-delay: .3s;
+}
+
+.cover-social-link a:hover {
+    animation-play-state: paused
 }
 
 header .go-back {

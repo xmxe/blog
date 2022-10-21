@@ -64,7 +64,7 @@
     let postsOption = {
         title: {
             text: '<%- __("postPublishChart")  %>',
-            top: -5,
+            // top: -5,
             x: 'center'
         },
         tooltip: {
@@ -119,7 +119,7 @@
     let categoriesOption = {
         title: {
             text: '<%- __("categoriesChart")  %>',
-            top: -4,
+            // top: -4,
             x: 'center'
         },
         tooltip: {
@@ -133,6 +133,10 @@
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
                 data: <%- categoryArrJson %>,
+                labelLine: {
+                    length: 9,
+                    length2: 10
+                },
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -168,7 +172,7 @@
     let tagsOption = {
         title: {
             text: '<%- __("top10TagsChart")  %>',
-            top: -5,
+            // top: -5,
             x: 'center'
         },
         tooltip: {},

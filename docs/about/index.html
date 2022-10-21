@@ -635,7 +635,7 @@
     let postsOption = {
         title: {
             text: '文章发布统计图',
-            top: -5,
+            // top: -5,
             x: 'center'
         },
         tooltip: {
@@ -682,7 +682,7 @@
     let categoriesOption = {
         title: {
             text: '文章分类统计图',
-            top: -4,
+            // top: -4,
             x: 'center'
         },
         tooltip: {
@@ -696,6 +696,10 @@
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
                 data: [{"name":"Java","value":9},{"name":"JS","value":1},{"name":"数据库","value":6},{"name":"Spring","value":2}],
+                labelLine: {
+                    length: 9,
+                    length2: 10
+                },
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -712,7 +716,7 @@
     let tagsOption = {
         title: {
             text: 'TOP10 标签统计图',
-            top: -5,
+            // top: -5,
             x: 'center'
         },
         tooltip: {},

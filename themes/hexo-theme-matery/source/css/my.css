@@ -341,3 +341,8 @@ body.DarkMode #stars3:after {
     margin-right: 0.2em;
     font-size: 0.9em;
 }
+
+footer .social-link a svg {
+    width: 17px;
+    height: 17px;
+}

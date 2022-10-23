@@ -273,6 +273,7 @@ body.DarkMode #stars3:after {
     white-space: normal;
 }
 
+/*归档列表*/
 .chip {
     height: 22px;
     line-height: 22px;
@@ -342,7 +343,15 @@ body.DarkMode #stars3:after {
     font-size: 0.9em;
 }
 
+/*码云svg*/
 footer .social-link a svg {
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
+}
+
+@media only screen and (max-width: 601px) {
+    footer .social-link a svg {
+        width: 17px;
+        height: 17px;
+    }
 }

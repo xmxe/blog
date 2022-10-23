@@ -80,7 +80,8 @@ git checkout -b <name> # 创建+切换分支
 git checkout -- file # 丢弃某个文件工作区的修改（还原修改过的文件）
 git checkout . # 放弃本地所有修改，没有提交的可以回到未修改前版本，不包括新增删除的文件 
 git checkout . && git clean -df # 放弃本地所有修改，包括新增删除的文件
-git checkout develop && git merge feature #（先切换到develop分支然后把feature分支合并到develop分支） 
+git checkout develop && git merge feature #（先切换到develop分支然后把feature分支合并到develop分支）
+git checkout commitid [file] # 将某个文件回滚到某个版本
 ```
 ###### merge
 

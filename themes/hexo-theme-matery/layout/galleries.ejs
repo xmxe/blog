@@ -29,7 +29,7 @@ var photos = currentGallery.photos.length > 0 ? currentGallery.photos : currentG
                         <% if (photos) { %>
                             <% Object.keys(photos).forEach(function(photo) { %>
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="<%- photos[photo] %>">
+                                    <div class="img-item" data-src="<%- url_for(photos[photo]) %>">
                                         <img src="<%- url_for(photos[photo]) %>" class="responsive-img">
                                     </div>
                                 </div>

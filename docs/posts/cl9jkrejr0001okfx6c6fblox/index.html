@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/matery.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/my.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/my.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/loading.min.css">
 
     <script src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/jquery/jquery.min.js"></script>
@@ -1078,6 +1078,22 @@
     .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 200px;
+        animation: move .4s linear 1 normal;
+    }
+
+    @keyframes move {
+        0% {
+            transform: translate(100px, 0);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(50px, 0);
+            opacity: .5;
+        }
+        100% {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
     }
 
     @media only screen and (max-width: 601px) {

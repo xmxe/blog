@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/matery.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/my.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/my.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/css/loading.min.css">
 
     <script src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/jquery/jquery.min.js"></script>
@@ -329,49 +329,49 @@
                         
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/0.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/0.jpg">
                                         <img src="/blog/medias/wallpaper/0.jpg" class="responsive-img">
                                     </div>
                                 </div>
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/2.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/2.jpg">
                                         <img src="/blog/medias/wallpaper/2.jpg" class="responsive-img">
                                     </div>
                                 </div>
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/3.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/3.jpg">
                                         <img src="/blog/medias/wallpaper/3.jpg" class="responsive-img">
                                     </div>
                                 </div>
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/4.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/4.jpg">
                                         <img src="/blog/medias/wallpaper/4.jpg" class="responsive-img">
                                     </div>
                                 </div>
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/5.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/5.jpg">
                                         <img src="/blog/medias/wallpaper/5.jpg" class="responsive-img">
                                     </div>
                                 </div>
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/6.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/6.jpg">
                                         <img src="/blog/medias/wallpaper/6.jpg" class="responsive-img">
                                     </div>
                                 </div>
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/7.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/7.jpg">
                                         <img src="/blog/medias/wallpaper/7.jpg" class="responsive-img">
                                     </div>
                                 </div>
                             
                                 <div class="cus" data-aos="fade-up">
-                                    <div class="img-item" data-src="medias/wallpaper/8.jpg">
+                                    <div class="img-item" data-src="/blog/medias/wallpaper/8.jpg">
                                         <img src="/blog/medias/wallpaper/8.jpg" class="responsive-img">
                                     </div>
                                 </div>
@@ -531,6 +531,22 @@
     .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 200px;
+        animation: move .4s linear 1 normal;
+    }
+
+    @keyframes move {
+        0% {
+            transform: translate(100px, 0);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(50px, 0);
+            opacity: .5;
+        }
+        100% {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
     }
 
     @media only screen and (max-width: 601px) {

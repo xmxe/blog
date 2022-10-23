@@ -13,6 +13,22 @@
     .wechat:hover .wechat_qrcode {
         width: 200px;
         height: 200px;
+        animation: move .4s linear 1 normal;
+    }
+
+    @keyframes move {
+        0% {
+            transform: translate(100px, 0);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(50px, 0);
+            opacity: .5;
+        }
+        100% {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
     }
 
     @media only screen and (max-width: 601px) {

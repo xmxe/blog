@@ -640,9 +640,9 @@ session<span class="token punctuation">.</span><span class="token function">getM
 		row<span class="token punctuation">.</span><span class="token function">createCell</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setCellValue</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 		row<span class="token punctuation">.</span><span class="token function">createCell</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setCellValue</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span>
-       <span class="token comment">// 指定本地文件流</span>
+    <span class="token comment">// 指定本地文件流</span>
 	<span class="token class-name">OutputStream</span> os <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileOutputStream</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token comment">// excel写入</span>
+	<span class="token comment">// excel写入</span>
 	wb<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>os<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	os<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -835,10 +835,10 @@ request<span class="token punctuation">.</span><span class="token function">getS
 <span class="token comment">/**css渐变**/</span>
 <span class="token selector">文字</span><span class="token punctuation">&#123;</span>
     <span class="token comment">/**linear-gradient：创建一个表示两种或多种颜色线性渐变的图片**/</span>
-	<span class="token property">background-image</span><span class="token punctuation">:</span><span class="token function">-webkit-linear-gradient</span><span class="token punctuation">(</span>bottom<span class="token punctuation">,</span>#708a41<span class="token punctuation">,</span>#8585a5<span class="token punctuation">,</span>#4b8e9a<span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token comment">/**background-clip属性指定背景绘制区域。border-box	默认值。背景绘制在边框方框内（剪切成边框方框）。padding-box	背景绘制在衬距方框内（剪切成衬距方框）。content-box	背景绘制在内容方框内（剪切成内容方框）。**/</span>
+	<span class="token property">background-image</span><span class="token punctuation">:</span><span class="token function">-webkit-linear-gradient</span><span class="token punctuation">(</span>bottom<span class="token punctuation">,</span>#708a41<span class="token punctuation">,</span>#8585a5<span class="token punctuation">,</span>#4b8e9a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/**background-clip属性指定背景绘制区域。border-box默认值。背景绘制在边框方框内（剪切成边框方框）。padding-box背景绘制在衬距方框内（剪切成衬距方框）。content-box背景绘制在内容方框内（剪切成内容方框）。**/</span>
     <span class="token property">-webkit-background-clip</span><span class="token punctuation">:</span>text<span class="token punctuation">;</span>
-    <span class="token comment">/**文字中填充颜色 transparent:透明色**/</span>
+    <span class="token comment">/**文字中填充颜色transparent:透明色**/</span>
     <span class="token property">-webkit-text-fill-color</span><span class="token punctuation">:</span>transparent<span class="token punctuation">;</span>
     <span class="token comment">/**text-stroke(文本边框)是text-stroke-width和text-stroke-color（边框填充颜色）两个属性的简写**/</span>
     <span class="token property">-webkit-text-stroke</span><span class="token punctuation">:</span>6px transparent<span class="token punctuation">;</span>
@@ -850,23 +850,25 @@ request<span class="token punctuation">.</span><span class="token function">getS
 <span class="token comment">/**文字自动换行**/</span>
 <span class="token comment">/*文章内容自动换行*/</span>
 <span class="token selector">#articleContent</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/*在长单词或 URL 地址内部进行换行。normal 只在允许的断字点换行（浏览器保持默认处理）。*/</span>
+    <span class="token comment">/*break-word:在长单词或URL地址内部进行换行。normal:只在允许的断字点换行（浏览器保持默认处理）。*/</span>
     <span class="token property">word-wrap</span><span class="token punctuation">:</span> break-word<span class="token punctuation">;</span>
-    <span class="token comment">/*允许在单词内换行。*/</span>
+    <span class="token comment">/*normal:使用浏览器默认的换行规则break-all:允许在单词内换行允许在单词内换行。keep-all:只能在半角空格或连字符处换行。*/</span>
     <span class="token property">word-break</span><span class="token punctuation">:</span> break-all<span class="token punctuation">;</span>
-    <span class="token comment">/*默认。空白会被浏览器忽略。*/</span>
+    <span class="token comment">/*normal:忽略多余的空白，只保留一个空白（默认）pre:保留空白(行为方式类似于html中的pre标签)nowrap:文本不会换行，会在在同一行上继续，直到遇到br标签为止pre-wrap:保留空白符序列，正常地进行换行pre-line:合并空白符序列，保留换行符inherit:从父元素继承white-space属性的值。*/</span>
     <span class="token property">white-space</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
 <span class="token comment">/**动画**/</span>
 <span class="token atrule"><span class="token rule">@keyframes</span> float</span> <span class="token punctuation">&#123;</span>
-  <span class="token comment">/**0% 是动画的开始时间，100% 动画的结束时间。或者通过关键词 "from" 和 "to"，等价于 0% 和 100%。**/</span> 	
+  <span class="token comment">/**0%是动画的开始时间，100%动画的结束时间。或者通过关键词"from"和"to"，等价于0%和100%。**/</span>	
   <span class="token selector">100%</span> <span class="token punctuation">&#123;</span>
-   <span class="token comment">/**transform 属性向元素应用 2D 或 3D 转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。**/</span>
+   <span class="token comment">/**transform属性向元素应用2D或3D转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。1.rotate(xxdeg)(2D),rotateX()(3D),rotateY()(3D)：以中心为基点，deg表示旋转的角度，为负数时表示逆时针旋转2.translate(x,y)，translateX(x)，translateY(y)：以中心为基点按照设定的x,y参数值,对元素进行进行平移。3.scale(x,y)，scaleX(X)，scaleY(Y)：缩放基数为1，如果其值大于1元素就放大，反之其值小于1为缩小。4.skew(x,y)，skewX(x)，skewY(y)：以中心为基点，第一个参数是水平方向扭曲角度，第二个参数是垂直方向扭曲角度。**/</span>
    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateY</span><span class="token punctuation">(</span>20px<span class="token punctuation">)</span><span class="token punctuation">;</span>
    <span class="token comment">/**box-shadow属性可以设置一个或多个下拉阴影的框。**/</span>
    <span class="token property">box-shadow</span><span class="token punctuation">:</span> 0 40px 10px -18px <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .2<span class="token punctuation">)</span><span class="token punctuation">,</span> 0 40px 16px -12px <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .2<span class="token punctuation">)</span>
+   <span class="token property">transform-origin</span><span class="token punctuation">:</span> right<span class="token punctuation">;</span><span class="token comment">/**(x,y)来改变元素基点**/</span>
   <span class="token punctuation">&#125;</span>
+   
 <span class="token punctuation">&#125;</span>
 <span class="token selector">div</span><span class="token punctuation">&#123;</span>
     <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>top<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 100%<span class="token punctuation">,</span> .2<span class="token punctuation">)</span> 1px<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 100%<span class="token punctuation">,</span> 0<span class="token punctuation">)</span> 1px<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .1<span class="token punctuation">)</span> 100%<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -902,7 +904,7 @@ request<span class="token punctuation">.</span><span class="token function">getS
     <span class="token property">cursor</span><span class="token punctuation">:</span> pointer<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token comment">/**css 伪类**/</span>
+<span class="token comment">/**css伪类**/</span>
 <span class="token punctuation">:</span>link <span class="token property">应用于未被访问过的链接</span>
 <span class="token punctuation">:</span>hover <span class="token property">应用于鼠标悬停到的元素</span>
 <span class="token punctuation">:</span>active <span class="token property">应用于被激活的元素</span>
@@ -936,7 +938,7 @@ request<span class="token punctuation">.</span><span class="token function">getS
 ::first-line	例: p::first-line	选择每个&lt;p>元素的首行。
 ::selection		例: p::selection 选择用户选择的元素部分。
 ::marker		例: li::marker</span> <span class="token punctuation">&#123;</span><span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">'>'</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span> 把li前面的<span class="token string">'•'</span>变成<span class="token string">'>'</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/css3/at-rule.html">CSS @规则</a></p>
 <h6 id="jsp获取session数据"><a href="#jsp获取session数据" class="headerlink" title="jsp获取session数据"></a>jsp获取session数据</h6><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span><span class="token operator">%=</span>session<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token operator">%</span><span class="token operator">></span>
 or

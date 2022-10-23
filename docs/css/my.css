@@ -355,3 +355,8 @@ footer .social-link a svg {
         height: 17px;
     }
 }
+
+/**首页卡片标题单词长度过长自动换行**/
+.card .card-image .card-title {
+    word-break: break-all;
+}

@@ -126,10 +126,13 @@
     <% if (theme.buble.enable) { %>
     <script type="text/javascript">
         // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        document.write(
-            '<script type="text/javascript" src="<%- theme.jsDelivr.url %><%- url_for(theme.libs.js.buble) %>"><\/script>'
-        );
+        // var windowWidth = $(window).width();
+        <% if (theme.buble.index) { %>
+            document.write('<script type="text/javascript" src="<%- theme.jsDelivr.url %><%- url_for(theme.libs.js.buble) %>"><\/script>');
+        <% } else { %>
+            document.write('<script type="text/javascript" src="<%- theme.jsDelivr.url %><%- url_for(theme.libs.js.bubleAll) %>"><\/script>');
+        <% } %>
+        
     </script>
     <% } %>
 

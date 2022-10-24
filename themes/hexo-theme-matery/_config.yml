@@ -438,6 +438,7 @@ libs:
     ribbon_dynamic: /docs/libs/background/ribbon-dynamic.js
     instantpage: /docs/libs/instantpage/instantpage.js
     buble: /docs/libs/others/buble.js
+    bubleAll: /docs/libs/others/bubleAll.js
     popupText: /docs/libs/others/popupText.js
     codeBlockFuction: /docs/libs/codeBlock/codeBlockFuction.js
     codeLang: /docs/libs/codeBlock/codeLang.js
@@ -663,9 +664,11 @@ bbtime:
 preloader:
   enable: true
 
-# banner 冒泡
+# banner冒泡
 buble:
   enable: true
+  # 是否仅在首页冒泡,false表示在所有的轮播图中冒泡
+  index: false
 
 # 是否激活页面点击弹出文字, 只在桌面版网页启用特效
 popupText:

@@ -1,11 +1,18 @@
-// 上升的气泡
+// 上升的气泡(首页轮播图全部展示)
 function buble() {
-  $(".carousel-item, .pd-header").circleMagic({
-    radius: 10,
-    density: 0.2,
-    color: "rgba(255,255,255,.4)",
-    clearOffset: 0.99,
-  });
+  var elBanner = $(".carousel-item, .pd-header");
+  if (elBanner && elBanner.length > 0) {
+    for (var i = 0; i < elBanner.length; i++) {
+      var el = elBanner[i];
+      $(el).circleMagic({
+        radius: 10,
+        density: 0.2,
+        color: "rgba(255,255,255,.4)",
+        clearOffset: 0.99,
+        i: i
+      });
+    }
+  }
 }
 !(function (p) {
   p.fn.circleMagic = function (t) {
@@ -21,6 +28,7 @@ function buble() {
           radius: 10,
           density: 0.3,
           clearOffset: 0.2,
+          i: 0
         },
         t
       ),
@@ -78,7 +86,7 @@ function buble() {
         (a = l.offsetHeight),
         (function () {
           var t = document.createElement("canvas");
-          t.id = "canvas";
+          t.id = "canvas" + d.i;
           t.style.top = 0;
           t.style.left = 0;
           t.style.right = 0;
@@ -88,7 +96,7 @@ function buble() {
           l.appendChild(t);
           t.parentElement.style.overflow = "hidden";
         })(),
-        ((n = document.getElementById("canvas")).width = o),
+        ((n = document.getElementById("canvas" + d.i)).width = o),
         (n.height = a),
         (r = n.getContext("2d"));
       for (var t = 0; t < o * d.density; t++) {

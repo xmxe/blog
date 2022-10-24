@@ -580,9 +580,14 @@ jquery.extend()将两个或更多对象的内容合并到第一个对象<br>jque
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h4 id="JQuery选择器"><a href="#JQuery选择器" class="headerlink" title="JQuery选择器"></a>JQuery选择器</h4><p><a target="_blank" rel="noopener" href="https://tool.oschina.net/uploads/apidocs/jquery/">jQuery选择器</a></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#select option:selected"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// >: 选择某元素后面的第一代子元素div>p选择其父元素是&lt;div>元素的所有&lt;p>元素。 </span>
+<span class="token comment">// ~: 选取某个元素之后的所有同级元素,.box~h2这句就是选取.box后面所有的h2,.box和h2同级,并且不需要紧邻</span>
+<span class="token comment">// 空格: 选择某元素后面的所有子元素.不一定是直接子元素.孙子元素也可以</span>
+<span class="token comment">// +: 可选择紧接在另一元素后的兄弟元素，且二者有相同父元素,元素需要紧邻. div + p选择所有紧随&lt;div>元素之后的&lt;p>元素。</span>
+
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#select option:selected"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#select option[value='1']"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"selected"</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"p :eq(1)"</span><span class="token punctuation">)</span>  <span class="token comment">// 选择第二个&lt;p>元素：</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"p :eq(1)"</span><span class="token punctuation">)</span>  <span class="token comment">// 选择第二个&lt;p>元素：</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="获取div-class的值"><a href="#获取div-class的值" class="headerlink" title="获取div class的值"></a>获取div class的值</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#divid"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">'class'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// attr基本上选中html原生属性</span>
 <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#divid"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'class'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// prop自定义属性</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -1619,10 +1624,11 @@ $(function () {
     
     <script type="text/javascript">
         // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        document.write(
-            '<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/others/buble.js"><\/script>'
-        );
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/others/bubleAll.js"><\/script>');
+        
+        
     </script>
     
 

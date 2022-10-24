@@ -183,6 +183,11 @@ event.preventDefault();
 [jQuery选择器](https://tool.oschina.net/uploads/apidocs/jquery/)
 
 ```js
+// >: 选择某元素后面的第一代子元素div>p选择其父元素是<div>元素的所有<p>元素。 
+// ~: 选取某个元素之后的所有同级元素,.box~h2这句就是选取.box后面所有的h2,.box和h2同级,并且不需要紧邻
+// 空格: 选择某元素后面的所有子元素.不一定是直接子元素.孙子元素也可以
+// +: 可选择紧接在另一元素后的兄弟元素，且二者有相同父元素,元素需要紧邻. div + p选择所有紧随<div>元素之后的<p>元素。
+
 $("#select option:selected").val();
 $("#select option[value='1']").attr("selected",true);
 $("p :eq(1)")  // 选择第二个<p>元素：

@@ -588,7 +588,7 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 <li><p>&lt;optional&gt;标签<br>projectA依赖projectB,projectB依赖projectC时,当projectA在maven引入projectB时,如果projectB写上&lt;optional&gt;true&lt;&#x2F;optional&gt;时,则projectA不依赖projectC,即projectA可以自己选择是否依赖projectC,如果不写或者是false的时候,则projectA引入projectB时,也会引入projectC<br>默认&lt;optional&gt;的值为false,即子项目必须依赖</p>
 </li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lovejj1994/article/details/80283240">maven中的可选依赖（optional）</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lovejj1994/article/details/80283240">maven中的可选依赖（optional）</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vq6Id8g0IBRVM3xdPRYFbA">如何利用Maven将代码打包成第三方公共jar包？</a></p>
 <h5 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h5><ul>
 <li><p>implementation，默认的scope,取代compile（已弃用）。implementation的作用域会让依赖在编译和运行时均包含在内，但是不会暴露在类库使用者的编译时。举例，如果我们的类库包含了gson，那么其他人使用我们的类库时，编译时不会出现gson的依赖。</p>
 </li>
@@ -1683,10 +1683,11 @@ $(function () {
     
     <script type="text/javascript">
         // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        document.write(
-            '<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/others/buble.js"><\/script>'
-        );
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/others/bubleAll.js"><\/script>');
+        
+        
     </script>
     
 

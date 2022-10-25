@@ -179,6 +179,18 @@ var str2 = str.replace(/dog/g,"cat");
 event.preventDefault();
 ```
 
+**!function(){}()**
+```js
+//!function(){}()写法和(function(){})()是相同的,函数意义相同，叫做立即运行的匿名函bai数(也叫立即调用函数)。
+//js中可以这样创建一个匿名函数：
+(function(){do something...})()
+//或
+(function(){do something...}())
+//而匿名函数后面的小括号()是为了让匿名函数立即执行，其实就是一个函数调用。
+
+alert((new Function("x","y","return x*y;"))(2,3));// "6"
+```
+
 #### JQuery选择器
 [jQuery选择器](https://tool.oschina.net/uploads/apidocs/jquery/)
 

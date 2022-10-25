@@ -375,6 +375,121 @@ myGallery:
 # 设置在归档页面中是否显示'文章日历'控件
 postCalendar: false
 
+# 加/docs是针对xmxe仓库特殊化配置 jsdelivr.url为空的话删除/docs/
+libsCDN: &libsCDN
+  css:
+    matery: /docs/css/matery.min.css
+    mycss: /docs/css/my.min.css
+    gallery: /docs/css/gallery.min.css
+    loading: /docs/css/loading.min.css
+    my-gitalk: /docs/css/my-gitalk.min.css
+    gitment: /docs/css/gitment.min.css
+    bb: /docs/css/bb.min.css
+    fontAwesome: /docs/libs/awesome/css/all.css # V5.11.1
+    materialize: /docs/libs/materialize/materialize.min.css # 1.0.0
+    aos: /docs/libs/aos/aos.css
+    animate: /docs/libs/animate/animate.min.css # V3.5.1
+    lightgallery: /docs/libs/lightGallery/css/lightgallery.min.css # V1.6.11
+    aplayer: /docs/libs/aplayer/APlayer.min.css
+    dplayer: /docs/libs/dplayer/DPlayer.min.css
+    gitalk: /docs/libs/gitalk/gitalk.css
+    jqcloud: /docs/libs/jqcloud/jqcloud.css
+    tocbot: /docs/libs/tocbot/tocbot.css
+    prism: /docs/libs/prism/prism.css
+    gitment-dft: /docs/libs/gitment/gitment-default.css
+    share: /docs/libs/share/css/share.min.css
+  js:
+    matery: /docs/js/matery.min.js
+    buble: /docs/libs/others/buble.min.js
+    bubleAll: /docs/libs/others/bubleAll.min.js
+    popupText: /docs/libs/others/popupText.min.js
+    clicklove: /docs/libs/others/clicklove.js
+    busuanzi: /docs/libs/others/busuanzi.pure.mini.js
+    jquery: /docs/libs/jquery/jquery.min.js
+    materialize: /docs/libs/materialize/materialize.min.js # 1.0.0
+    masonry: /docs/libs/masonry/masonry.pkgd.min.js # v4.0.0
+    aos: /docs/libs/aos/aos.js
+    scrollProgress: /docs/libs/scrollprogress/scrollProgress.min.js
+    lightgallery: /docs/libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
+    aplayer: /docs/libs/aplayer/APlayer.min.js
+    dplayer: /docs/libs/dplayer/DPlayer.min.js
+    crypto: /docs/libs/cryptojs/crypto-js.min.js
+    echarts: /docs/libs/echarts/echarts.min.js
+    gitalk: /docs/libs/gitalk/gitalk.min.js
+    valine: /docs/libs/valine/Valine.min.js # 若想保持最新版，请替换为 https://unpkg.com/valine/dist/Valine.min.js  默认为 /libs/valine/Valine.min.js
+    minivaline: /docs/libs/minivaline/MiniValine.js
+    jqcloud: /docs/libs/jqcloud/jqcloud-1.0.4.min.js
+    tocbot: /docs/libs/tocbot/tocbot.min.js
+    canvas_nest: /docs/libs/background/canvas-nest.js
+    ribbon: /docs/libs/background/ribbon.min.js
+    ribbonRefresh: /docs/libs/background/ribbon-refresh.min.js
+    ribbon_dynamic: /docs/libs/background/ribbon-dynamic.js
+    instantpage: /docs/libs/instantpage/instantpage.js
+    codeBlockFuction: /docs/libs/codeBlock/codeBlockFuction.js
+    codeLang: /docs/libs/codeBlock/codeLang.js
+    codeCopy: /docs/libs/codeBlock/codeCopy.js
+    codeShrink: /docs/libs/codeBlock/codeShrink.js
+    socialShare: /docs/libs/share/js/social-share.min.js
+    gitment: /docs/libs/gitment/gitment.js
+    av-min: /docs/libs/valine/av-min.js
+
+libsLocal: &libsLocal
+  css:
+    matery: /css/matery.css
+    mycss: /css/my.css
+    gallery: /css/gallery.css
+    loading: /css/loading.css
+    my-gitalk: /css/my-gitalk.css
+    gitment: /css/gitment.css
+    bb: /css/bb.css
+    fontAwesome: /libs/awesome/css/all.css # V5.11.1
+    materialize: /libs/materialize/materialize.min.css # 1.0.0
+    aos: /libs/aos/aos.css
+    animate: /libs/animate/animate.min.css # V3.5.1
+    lightgallery: /libs/lightGallery/css/lightgallery.min.css # V1.6.11
+    aplayer: /libs/aplayer/APlayer.min.css
+    dplayer: /libs/dplayer/DPlayer.min.css
+    gitalk: /libs/gitalk/gitalk.css
+    jqcloud: /libs/jqcloud/jqcloud.css
+    tocbot: /libs/tocbot/tocbot.css
+    prism: /libs/prism/prism.css
+    gitment-dft: /libs/gitment/gitment-default.css
+    share: /libs/share/css/share.min.css
+  js:
+    matery: /js/matery.js
+    buble: /libs/others/buble.js
+    bubleAll: /libs/others/bubleAll.js
+    popupText: /libs/others/popupText.js
+    clicklove: /libs/others/clicklove.js
+    busuanzi: /libs/others/busuanzi.pure.mini.js
+    jquery: /libs/jquery/jquery.min.js
+    materialize: /libs/materialize/materialize.min.js # 1.0.0
+    masonry: /libs/masonry/masonry.pkgd.min.js # v4.0.0
+    aos: /libs/aos/aos.js
+    scrollProgress: /libs/scrollprogress/scrollProgress.min.js
+    lightgallery: /libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
+    aplayer: /libs/aplayer/APlayer.min.js
+    dplayer: /libs/dplayer/DPlayer.min.js
+    crypto: /libs/cryptojs/crypto-js.min.js
+    echarts: /libs/echarts/echarts.min.js
+    gitalk: /libs/gitalk/gitalk.min.js
+    valine: /libs/valine/Valine.min.js # 若想保持最新版，请替换为 https://unpkg.com/valine/dist/Valine.min.js  默认为 /libs/valine/Valine.min.js
+    minivaline: /libs/minivaline/MiniValine.js
+    jqcloud: /libs/jqcloud/jqcloud-1.0.4.min.js
+    tocbot: /libs/tocbot/tocbot.min.js
+    canvas_nest: /libs/background/canvas-nest.js
+    ribbon: /libs/background/ribbon.min.js
+    ribbonRefresh: /libs/background/ribbon-refresh.min.js
+    ribbon_dynamic: /libs/background/ribbon-dynamic.js
+    instantpage: /libs/instantpage/instantpage.js
+    codeBlockFuction: /libs/codeBlock/codeBlockFuction.js
+    codeLang: /libs/codeBlock/codeLang.js
+    codeCopy: /libs/codeBlock/codeCopy.js
+    codeShrink: /libs/codeBlock/codeShrink.js
+    socialShare: /libs/share/js/social-share.min.js
+    gitment: /libs/gitment/gitment.js
+    av-min: /libs/valine/av-min.js
+
 # CDN访问加速 
 # 第一次使用本功能，一定要先配置url，再`hexo cl && hexo g && hexo d`部署到GitHub的仓库，注意！必须是GitHub的仓库！
 # 如果必须要使用国内的coding或者gitee，可以采用双部署，同时将网站部署到两个仓库（其中一个必须是GitHub的仓库）
@@ -390,63 +505,8 @@ jsDelivr:
 # The used front-end library can be replaced with the corresponding CDN address as needed,If the specific version is not specified below, you can use the latest version.
 # 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在设置js及css路径中可以直接写.min.xxx
-# 加/docs是针对xmxe仓库特殊化配置 jsdelivr.url为空的话删除/docs/
 libs:
-  css:
-    matery: /docs/css/matery.min.css
-    mycss: /docs/css/my.min.css
-    gallery: /docs/css/gallery.min.css
-    fontAwesome: /docs/libs/awesome/css/all.css # V5.11.1
-    materialize: /docs/libs/materialize/materialize.min.css # 1.0.0
-    aos: /docs/libs/aos/aos.css
-    animate: /docs/libs/animate/animate.min.css # V3.5.1
-    lightgallery: /docs/libs/lightGallery/css/lightgallery.min.css # V1.6.11
-    aplayer: /docs/libs/aplayer/APlayer.min.css
-    dplayer: /docs/libs/dplayer/DPlayer.min.css
-    gitalk: /docs/libs/gitalk/gitalk.css
-    jqcloud: /docs/libs/jqcloud/jqcloud.css
-    tocbot: /docs/libs/tocbot/tocbot.css
-    prism: /docs/libs/prism/prism.css
-    loading: /docs/css/loading.min.css
-    my-gitalk: /docs/css/my-gitalk.min.css
-    gitment-dft: /docs/libs/gitment/gitment-default.css
-    gitment: /docs/css/gitment.min.css
-    bb: /docs/css/bb.min.css
-    share: /docs/libs/share/css/share.min.css
-  js:
-    matery: /docs/js/matery.min.js
-    jquery: /docs/libs/jquery/jquery.min.js
-    materialize: /docs/libs/materialize/materialize.min.js # 1.0.0
-    masonry: /docs/libs/masonry/masonry.pkgd.min.js # v4.0.0
-    aos: /docs/libs/aos/aos.js
-    scrollProgress: /docs/libs/scrollprogress/scrollProgress.min.js
-    lightgallery: /docs/libs/lightGallery/js/lightgallery-all.min.js # V1.6.11
-    clicklove: /docs/libs/others/clicklove.js
-    busuanzi: /docs/libs/others/busuanzi.pure.mini.js
-    aplayer: /docs/libs/aplayer/APlayer.min.js
-    dplayer: /docs/libs/dplayer/DPlayer.min.js
-    crypto: /docs/libs/cryptojs/crypto-js.min.js
-    echarts: /docs/libs/echarts/echarts.min.js
-    gitalk: /docs/libs/gitalk/gitalk.min.js
-    valine: /docs/libs/valine/Valine.min.js # 若想保持最新版，请替换为 https://unpkg.com/valine/dist/Valine.min.js  默认为 /libs/valine/Valine.min.js
-    minivaline: /docs/libs/minivaline/MiniValine.js
-    jqcloud: /docs/libs/jqcloud/jqcloud-1.0.4.min.js
-    tocbot: /docs/libs/tocbot/tocbot.min.js
-    canvas_nest: /docs/libs/background/canvas-nest.js
-    ribbon: /docs/libs/background/ribbon.min.js
-    ribbonRefresh: /docs/libs/background/ribbon-refresh.min.js
-    ribbon_dynamic: /docs/libs/background/ribbon-dynamic.js
-    instantpage: /docs/libs/instantpage/instantpage.js
-    buble: /docs/libs/others/buble.js
-    bubleAll: /docs/libs/others/bubleAll.js
-    popupText: /docs/libs/others/popupText.js
-    codeBlockFuction: /docs/libs/codeBlock/codeBlockFuction.js
-    codeLang: /docs/libs/codeBlock/codeLang.js
-    codeCopy: /docs/libs/codeBlock/codeCopy.js
-    codeShrink: /docs/libs/codeBlock/codeShrink.js
-    socialShare: /docs/libs/share/js/social-share.min.js
-    gitment: /docs/libs/gitment/gitment.js
-    av-min: /docs/libs/valine/av-min.js
+  <<: *libsCDN
 
 # 不建议使用gittalk,gitment这样权限过高的oauth app,因为它们能够读写授权者所有的公共仓库 ，也就是说拿到你的授权Token的人，可以将你的GitHub公共仓库删空（这是github权限分的不够细的锅），如果恶意攻击者想获取使用者的 AccessToken，只需要在代码中加上一个 ajax 请求即可。原贴地址:https://www.v2ex.com/t/535608。建议大家看完。（我没有在用gittalk/gitment的网站上评论过，但根据v2ex网友的提示，如果网站自行修改了gitalk.js脚本或者反代了github api，就很容易拿到你的Token）
 # https://github.com/utterance/utterances 是个 GitHub App，它的权限仅限于某个仓库。像hugo hexo这种静态页面类型的博客，clientID/clientSecret泄露是不可避免的。我认为较好的解决方式是像utteras这种GitHubApp，只有一个仓库的读写权限，将破坏降到最小。

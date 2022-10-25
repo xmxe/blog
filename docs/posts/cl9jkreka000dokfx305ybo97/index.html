@@ -579,6 +579,16 @@ jquery.extend()将两个或更多对象的内容合并到第一个对象<br>jque
 <p><strong>JS阻止原生态提交事件</strong></p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p><strong>!function(){}()</strong></p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//!function()&#123;&#125;()写法和(function()&#123;&#125;)()是相同的,函数意义相同，叫做立即运行的匿名函bai数(也叫立即调用函数)。</span>
+<span class="token comment">//js中可以这样创建一个匿名函数：</span>
+<span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token keyword">do</span> something<span class="token operator">...</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">//或</span>
+<span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token keyword">do</span> something<span class="token operator">...</span><span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">//而匿名函数后面的小括号()是为了让匿名函数立即执行，其实就是一个函数调用。</span>
+
+<span class="token function">alert</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token string">"x"</span><span class="token punctuation">,</span><span class="token string">"y"</span><span class="token punctuation">,</span><span class="token string">"return x*y;"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// "6"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="JQuery选择器"><a href="#JQuery选择器" class="headerlink" title="JQuery选择器"></a>JQuery选择器</h4><p><a target="_blank" rel="noopener" href="https://tool.oschina.net/uploads/apidocs/jquery/">jQuery选择器</a></p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// >: 选择某元素后面的第一代子元素div>p选择其父元素是&lt;div>元素的所有&lt;p>元素。 </span>
 <span class="token comment">// ~: 选取某个元素之后的所有同级元素,.box~h2这句就是选取.box后面所有的h2,.box和h2同级,并且不需要紧邻</span>
@@ -1626,7 +1636,7 @@ $(function () {
         // 只在桌面版网页启用特效
         // var windowWidth = $(window).width();
         
-            document.write('<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/others/bubleAll.js"><\/script>');
+            document.write('<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/others/bubleAll.min.js"><\/script>');
         
         
     </script>

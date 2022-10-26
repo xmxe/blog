@@ -259,11 +259,11 @@ var jsons=JSON.parse(MapToJson(map));
 ```
 
 #### if判断
-if (jsObj) {  } 过滤
-**undefined不能过,null不能过 ,'' 不能过 ,0不能过,{}能过,[] 能过**
-即jsObj != undefined && jsObj != null && jsObj != '' && jsObj != 0
+if(jsObj){}过滤
+**undefined不能过,null不能过 ,''不能过 ,0不能过,{}能过,[]能过**
+即jsObj!=undefined && jsObj!=null && jsObj!='' && jsObj!=0
 
-**if(!! jsObj) 与上面等价 可以隐式转换类型**
+**if(!!jsObj)与上面等价 可以隐式转换类型**
 
 
 #### js判断对象是否为空对象的几种方法

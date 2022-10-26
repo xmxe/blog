@@ -138,7 +138,7 @@ recommend:
 
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
-favicon: /docs/favicon.png
+favicon: /docs/favicon.ico
 
 logo: 
   # 图床路径 enableImageHost=true时有效 为空则使用本地路径

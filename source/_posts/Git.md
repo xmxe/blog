@@ -28,8 +28,8 @@ git remote set-url origin git@github.com:xmxe/springcloud.git
 ###### diff
 
 ```shell
-git diff # 可以查看当前没有add 的内容修改（不在缓冲区的文件变化） 
-git diff --cached # 查看已经add但没有commit 的改动（在缓冲区的文件变化） 
+git diff # 可以查看当前没有add的内容修改（不在缓冲区的文件变化） 
+git diff --cached # 查看已经add但没有commit的改动（在缓冲区的文件变化） 
 git diff HEAD # 是上面两条命令的合并
 
 ```
@@ -37,12 +37,13 @@ git diff HEAD # 是上面两条命令的合并
 ###### reset
 
 ```shell
-git reset HEAD filename # 撤销git add操作（已经将文件添加到暂存区）如果后面什么都不跟的话 就是上一次add 里面的全部撤销了 
+git reset HEAD filename # 撤销git add操作（已经将文件添加到暂存区）不加filename就是上一次add里面的全部撤销了 
 git reset --hard HEAD^ # 回退到上一个版本，删除工作空间改动代码，撤销commit，撤销git add . 
 git reset --hard commitid # 回退到指定版本 --hard 强制将暂存区和工作目录都同步到你指定的提交
-git reset --soft HEAD^ # 不删除工作空间改动代码，撤销commit，不撤销git add 
+git reset --soft HEAD^ # 不删除工作空间改动代码，撤销commit，不撤销git add
 git reset --mixed HEAD^ # 不删除工作空间改动代码，撤销commit，并且撤销git add . 操作。这个为默认参数,git reset --mixed HEAD^ 和 git reset HEAD^ 效果是一样的。
-git revert -n commitid # 回退到指定版本。 与git reset --hard commitid相比 区别是在我们确认了在需要回退的版本之后的提交都可以不需要的时候，我们可以直接使用git reset 命令，但是当我们只是需要撤销某个版本的时候，后面的提交还需要保留，我们就可以使用git revert
+
+git revert -n commitid # 回退到指定版本。 与git reset --hard commitid相比 区别是在我们确认了在需要回退的版本之后的提交都可以不需要的时候，我们可以直接使用git reset命令，但是当我们只是需要撤销某个版本的时候，后面的提交还需要保留，我们就可以使用git revert
 git revert HEAD # 撤销前一次commit ,此次操作之前和之后的commit都会被保留，并且会把这次撤销作为一次最新的提交 
 
 ```
@@ -51,7 +52,7 @@ git revert HEAD # 撤销前一次commit ,此次操作之前和之后的commit都
 
 ```shell
 git commit -am '' # (git add -u + git commit -m ""组合) 
-git commit --amend # 修改注释
+git commit --amend # 修改commit信息
 ```
 ###### add
 
@@ -165,7 +166,7 @@ git rev-list --objects --all | grep 08a7475
 # 删除文件的历史记录
 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch 文件名' --prune-empty --tag-name-filter cat -- --all
 
-git filter-branch --index-filter # 让每个提交的文件都复制到索引(.git/index)中 然后运行过滤器命令：git rm --cached --ignore-unmatch文件名 ，让每个提交都删除掉“文件名”文件 然后--prune-empty 把空的提交“修剪”掉 然后--tag-name-filter cat 把每个tag保持原名字，指向修改后的对应提交 最后-- --all 将所有ref（包括branch、tag）都执行上面的重写
+git filter-branch --index-filter # 让每个提交的文件都复制到索引(.git/index)中 然后运行过滤器命令：git rm --cached --ignore-unmatch文件名，让每个提交都删除掉“文件名”文件 然后--prune-empty 把空的提交“修剪”掉 然后--tag-name-filter cat 把每个tag保持原名字，指向修改后的对应提交 最后-- --all将所有ref（包括branch、tag）都执行上面的重写
 
 # 删除缓存下来的ref和git操作记录
 git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
@@ -174,7 +175,7 @@ git reflog expire --expire=now --all
 # 垃圾回收
 # 上面2步把大文件的索引都切断了，这个时候进行垃圾回收，就可以很明显看到效果了
 git gc --prune=now
-# 把.git里面的修改推上去  这个时候普通的push是不行的，需要强推 
+# 把.git里面的修改推上去 这个时候普通的push是不行的，需要强推 
 git push --force
 
 ```
@@ -193,7 +194,3 @@ git push --force
 - [20个最常用的Git命令，你都会用吗？](https://mp.weixin.qq.com/s/XB_G7TZqBX8r3CJlvqA0Cg)
 - [合并代码还在用gitmerge？我们都用gitrebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
 - [45个GIT经典操作场景，专治不会合代码](https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw)
-
----
-
-![](/images/git.png)

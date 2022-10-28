@@ -1,9 +1,8 @@
 ---
 title: ThreadLocal
-sticky: 55
 categories: Java
 index_img: /assert/threadlocal.jpg
-img: 
+img: https://pic3.zhimg.com/v2-7807ea8fe415abd379c725aa449e814c_1440w.jpg?source=172ae18b
 ---
 
 #### ThreadLocal使用场景

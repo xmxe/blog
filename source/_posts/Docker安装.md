@@ -1,9 +1,8 @@
 ---
 title: Docker安装
-sticky: 13
 tags: 安装
 index_img: /assert/docker.jpg
-img: 
+img: https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg?source=172ae18b
 ---
 
 #### 安装
@@ -45,14 +44,14 @@ tar -xvf docker-18.06.1-ce.tgz
 ```shell
 cp docker/* /usr/bin/
 ```
-4.将docker注册为service ：
+4.将docker注册为service：
 ```shell
 # vim /etc/systemd/system/docker.service
 
-# lib/systemd/system、/usr/lib/systemd/system、/etc/systemd/system都可以 ，lib/systemd/system真实地址是/usr/lib/system/system地址，
+# lib/systemd/system、/usr/lib/systemd/system、/etc/systemd/system都可以，lib/systemd/system真实地址是/usr/lib/system/system地址，
 # /usr/lib/systemd/system/ 软件包安装的单元
 # /etc/systemd/system/ 系统管理员安装的单元, 优先级更高
-# 优先级为 /etc/systemd/system ，/run/systemd/system ，/lib/systemd/system
+# 优先级为 /etc/systemd/system，/run/systemd/system，/lib/systemd/system
 # 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。
 
 [Unit]
@@ -111,7 +110,7 @@ WantedBy=multi-user.target
 
 5. 添加文件权限并启动docker
 ```shell
-chmod +x /etc/systemd/system/docker.service 
+chmod +x /etc/systemd/system/docker.service
 ```
 6. 重载unit配置文件
 ```shell
@@ -286,7 +285,7 @@ docker create 参数同docker run
 - 创建一个新的容器并运行
 ```
 docker run
--i: 以交互模式运行容器，通常与 -t 同时使用
+-i: 以交互模式运行容器，通常与-t同时使用
 -t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用
 -it 以交互模式运行
 -P: 随机端口映射，容器内部端口随机映射到主机的端口
@@ -294,7 +293,7 @@ docker run
 -d 后台运行 并返回容器ID
 -v,--volume 挂载 主机目录:容器目录 绑定一个卷
 -u,--user=""， 指定容器的用户
--a,--attach=[]， 登录容器（必须是以docker run -d启动的容器） 
+-a,--attach=[]， 登录容器（必须是以docker run -d启动的容器）
 -w,--workdir=""， 指定容器的工作目录
 -c,--cpu-shares=0， 设置容器CPU权重，在CPU共享场景使用
 -e username="ritchie",--env=[] 设置环境变量容器中可以使用该环境变量

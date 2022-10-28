@@ -1,9 +1,8 @@
 ---
 title: SQL Server函数
-sticky: 22
 categories: 数据库
 index_img: /assert/sqlserver.jpg
-img: 
+img: https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fzyiz.net%2Fupload%2F202005%2F04%2F202005040525273545.png&refer=http%3A%2F%2Fzyiz.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669537438&t=a417a241134aa979e6092ff8dc5e3229
 ---
 
 ##### sql server 行转列

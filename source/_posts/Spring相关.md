@@ -1,6 +1,5 @@
 ---
 title: Spring相关
-sticky: 40
 categories: Spring
 index_img: /assert/spring.jpg
 img: https://pic4.zhimg.com/v2-13cd8daa0a4eba009b68785cfbbd5007_r.jpg

@@ -1,9 +1,8 @@
 ---
 title: Oracle相关及常用函数
-sticky: 24
 categories: 数据库
 index_img: /assert/oracle.jpg
-img: 
+img: https://gimg2.baidu.com/image_search/src=http%3A%2F%2F29520719.s21i.faiusr.com%2F2%2FABUIABACGAAgpufK7QUoj7DrqQIw6Ac4_QQ%21800x800.jpg&refer=http%3A%2F%2F29520719.s21i.faiusr.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669537603&t=31ddd7a1992896268a14e72c35ed60ed
 ---
 
 ##### Sys 和 System用户区别

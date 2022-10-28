@@ -1,9 +1,8 @@
 ---
 title: Git
-sticky: 46
 tags: 随笔
 index_img: /assert/git.jpg
-img: 
+img: https://pica.zhimg.com/v2-6baae9baaef9c2a3188f9fc301833fba_1440w.jpg?source=172ae18b
 ---
 
 ##### Git常用命令
@@ -28,8 +27,8 @@ git remote set-url origin git@github.com:xmxe/springcloud.git
 ###### diff
 
 ```shell
-git diff # 可以查看当前没有add的内容修改（不在缓冲区的文件变化） 
-git diff --cached # 查看已经add但没有commit的改动（在缓冲区的文件变化） 
+git diff # 可以查看当前没有add的内容修改（不在缓冲区的文件变化）
+git diff --cached # 查看已经add但没有commit的改动（在缓冲区的文件变化）
 git diff HEAD # 是上面两条命令的合并
 
 ```
@@ -37,29 +36,29 @@ git diff HEAD # 是上面两条命令的合并
 ###### reset
 
 ```shell
-git reset HEAD filename # 撤销git add操作（已经将文件添加到暂存区）不加filename就是上一次add里面的全部撤销了 
+git reset HEAD filename # 撤销git add操作（已经将文件添加到暂存区）不加filename就是上一次add里面的全部撤销了
 git reset --hard HEAD^ # 回退到上一个版本，删除工作空间改动代码，撤销commit，撤销git add . 
 git reset --hard commitid # 回退到指定版本 --hard 强制将暂存区和工作目录都同步到你指定的提交
 git reset --soft HEAD^ # 不删除工作空间改动代码，撤销commit，不撤销git add
 git reset --mixed HEAD^ # 不删除工作空间改动代码，撤销commit，并且撤销git add . 操作。这个为默认参数,git reset --mixed HEAD^ 和 git reset HEAD^ 效果是一样的。
 
 git revert -n commitid # 回退到指定版本。 与git reset --hard commitid相比 区别是在我们确认了在需要回退的版本之后的提交都可以不需要的时候，我们可以直接使用git reset命令，但是当我们只是需要撤销某个版本的时候，后面的提交还需要保留，我们就可以使用git revert
-git revert HEAD # 撤销前一次commit ,此次操作之前和之后的commit都会被保留，并且会把这次撤销作为一次最新的提交 
+git revert HEAD # 撤销前一次commit ,此次操作之前和之后的commit都会被保留，并且会把这次撤销作为一次最新的提交
 
 ```
 
 ###### commit
 
 ```shell
-git commit -am '' # (git add -u + git commit -m ""组合) 
+git commit -am '' # (git add -u + git commit -m ""组合)
 git commit --amend # 修改commit信息
 ```
 ###### add
 
 ```shell
-git add -A # 保存所有的修改 
-git add . # 保存新的添加和修改，但是不包括删除 
-git add -u # 保存修改和删除，但是不包括新建文件。 
+git add -A # 保存所有的修改
+git add . # 保存新的添加和修改，但是不包括删除
+git add -u # 保存修改和删除，但是不包括新建文件。
 
 ```
 
@@ -68,7 +67,7 @@ git add -u # 保存修改和删除，但是不包括新建文件。
 ```shell
 git branch # 查看分支
 git branch <name> # 创建分支(未切换)
-git branch -d <name> # 删除分支，不能删除当前所在分支 
+git branch -d <name> # 删除分支，不能删除当前所在分支
 git branch --set-upstream branch-name origin/branch-name # 建立本地分支和远程分支的关联
 
 ```
@@ -79,7 +78,7 @@ git branch --set-upstream branch-name origin/branch-name # 建立本地分支和
 git checkout <name> # 切换分支
 git checkout -b <name> # 创建+切换分支
 git checkout -- file # 丢弃某个文件工作区的修改（还原修改过的文件）
-git checkout . # 放弃本地所有修改，没有提交的可以回到未修改前版本，不包括新增删除的文件 
+git checkout . # 放弃本地所有修改，没有提交的可以回到未修改前版本，不包括新增删除的文件
 git checkout . && git clean -df # 放弃本地所有修改，包括新增删除的文件
 git checkout develop && git merge feature #（先切换到develop分支然后把feature分支合并到develop分支）
 git checkout commitid [file] # 将某个文件回滚到某个版本
@@ -98,14 +97,14 @@ merge会把公共分支和你当前的commit合并在一起，形成一个新的
 ###### tag
 
 ```shell
-git tag # 查看所有标签，可以知道历史版本的tag 
+git tag # 查看所有标签，可以知道历史版本的tag
 git tag <tagName> # 打标签，默认为HEAD。比如git tag v1.0
 git tag <tagName> commit_id # 根据版本号打上标签
-git tag -a <tagName> -m "<说明>" # 创建带说明的标签。-a指定标签名，-m指定说明文字 
-git show <tagName> # 查看标签信息 
-git tag -d <tagName> # 删除标签 
-git push origin <tagname> # 推送某个标签到远程 
-git push origin --tags # 一次性推送全部尚未推送到远程的本地标签 
+git tag -a <tagName> -m "<说明>" # 创建带说明的标签。-a指定标签名，-m指定说明文字
+git show <tagName> # 查看标签信息
+git tag -d <tagName> # 删除标签
+git push origin <tagname> # 推送某个标签到远程
+git push origin --tags # 一次性推送全部尚未推送到远程的本地标签
 
 ```
 ###### stash

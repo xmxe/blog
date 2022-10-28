@@ -1,9 +1,8 @@
 ---
 title: ArrayList&CopyOnWriteArrayList
-sticky: 10
 categories: Java
 index_img: /assert/list.jpg
-img: 
+img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949a73
 ---
 
 #### ArrayList的扩容机制

@@ -1,9 +1,8 @@
 ---
 title: Linux相关
-sticky: 54
 tags: 计算机
 index_img: /assert/linux.jpg
-img: 
+img: https://img2.baidu.com/it/u=1090189516,820941418&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500
 ---
 
 

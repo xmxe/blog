@@ -474,7 +474,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>并发编程中的三个概念: 原子性问题，可见性问题，有序性问题<br><strong>原子性</strong>：即一个操作或者多个操作,要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账<br><strong>可见性</strong>：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值<br><strong>有序性</strong>：即程序执行的顺序按照代码的先后顺序执行<br>要想并发程序正确地执行，必须要保证原子性、可见性以及有序性。只要有一个没有被保证，就有可能会导致程序运行不正确。</p>
+                <h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>并发编程中的三个概念:原子性问题，可见性问题，有序性问题<br><strong>原子性</strong>：即一个操作或者多个操作,要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账<br><strong>可见性</strong>：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值<br><strong>有序性</strong>：即程序执行的顺序按照代码的先后顺序执行<br>要想并发程序正确地执行，必须要保证原子性、可见性以及有序性。只要有一个没有被保证，就有可能会导致程序运行不正确。</p>
 <p>cpu很快,但是cpu从内存里读取数据和写入数据是很慢，为了提高读写内存速度，硬件工程师在cpu上加了一块高速缓存(工作内存),cpu从主内存中读取数据，在高速缓存(工作内存)中建立副本变量，在操作完副本变量后将变量更新到主内存，而volatile关键字则是告诉jvm ，它所修饰的变量不保留拷贝，直接访问主内存中的数据，这样就保证了可见性，其实就是如果一个变量声明成是volatile的，那么当我读变量时，总是能读到它的最新值，这里最新值是指不管其它哪个线程对该变量做了写操作，都会立刻被更新到主存里，我也能从主存里读到这个刚写入的值。也就是说volatile关键字可以保证可见性以及有序性，但不保证原子性</p>
 <p>JMM（java内存模型）允许编译器和处理器对指令重排序的，但是规定了as-if-serial语义，即不管怎么重排序，程序的执行结果不能改变<br><strong>volatile禁止指令重排(指令重排序)，不支持原子性操作</strong><br>volatile变量规则：对一个volatile域的写，happens-before（发生前）于后续对这个volatile域的读 即写在读之前</p>
 <h5 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h5><p>您只能在有限的一些情形下使用volatile变量替代锁。要使volatile变量提供理想的线程安全，必须同时满足下面两个条件：</p>
@@ -488,7 +488,7 @@
 <li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作</li>
 <li>监视器锁规则：对一个线程的解锁，happens-before于随后对这个线程的加锁</li>
 <li>volatile变量规则：对一个volatile域的写，happens-before于后续对这个volatile域的读</li>
-<li>传递性：如果A happens-before B,且B happens-before C,那么 A happens-before C</li>
+<li>传递性：如果A happens-before B,且B happens-before C,那么A happens-before C</li>
 <li>start()规则：如果线程A执行操作ThreadB_start()(启动线程B),那么A线程的ThreadB_start()happens-before于B中的任意操作</li>
 <li>join()原则：如果A执行ThreadB.join()并且成功返回，那么线程B中的任意操作happens-before于线程A从ThreadB.join()操作成功返回。</li>
 <li>interrupt()原则：对线程interrupt()方法的调用先行发生于被中断线程代码检测到中断事件的发生，可以通过Thread.interrupted()方法检测是否有中断发生</li>
@@ -750,8 +750,7 @@
                 <a href="/blog/posts/cl9jkrelc001zokfxdgvw27uy/">
                     <div class="card-image">
                         
-                        
-                        <img src="https://s1.ax1x.com/2022/10/11/xN1njs.jpg" class="responsive-img" alt="锁">
+                        <img src="https://img0.baidu.com/it/u=3445574053,3639932816&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" class="responsive-img" alt="锁">
                         
                         <span class="card-title">锁</span>
                     </div>
@@ -802,8 +801,7 @@
                 <a href="/blog/posts/cl9jkreks0016okfxbtkjb6c1/">
                     <div class="card-image">
                         
-                        
-                        <img src="https://s1.ax1x.com/2022/10/11/xN3bFK.png" class="responsive-img" alt="ThreadLocal">
+                        <img src="https://pic3.zhimg.com/v2-7807ea8fe415abd379c725aa449e814c_1440w.jpg?source=172ae18b" class="responsive-img" alt="ThreadLocal">
                         
                         <span class="card-title">ThreadLocal</span>
                     </div>

@@ -1,6 +1,5 @@
 ---
 title: JVM知识点
-sticky: 41
 categories: Java
 index_img: /assert/jvm.jpg
 img: https://pic1.zhimg.com/v2-7382fb7654c33a5e843f51ec139b1da0_r.jpg

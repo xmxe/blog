@@ -1,9 +1,8 @@
 ---
 title: Java各类技术栈架构图汇总
-sticky: 6
 categories: Java
 index_img: /assert/java.jpg
-img: 
+img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949a73
 ---
 
 ### 1. java 类加载器架构

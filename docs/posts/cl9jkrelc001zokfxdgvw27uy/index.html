@@ -480,7 +480,7 @@
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TIvLTPXec3aOS9rVRKn5UQ">你了解乐观锁和悲观锁吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Zes3vpt33Uk2yiJKKIB77A">浅谈 Java 并发下的乐观锁</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Zes3vpt33Uk2yiJKKIB77A">浅谈Java并发下的乐观锁</a></li>
 </ul>
 <h4 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h4><h5 id="zookeeper分布式锁"><a href="#zookeeper分布式锁" class="headerlink" title="zookeeper分布式锁"></a>zookeeper分布式锁</h5><p>客户端连接zookeeper，并在&#x2F;lock下创建临时的且有序的子节点，第一个客户端对应的子节点为&#x2F;lock&#x2F;lock-0000000000，第二个为&#x2F;lock&#x2F;lock-0000000001，以此类推；客户端获取&#x2F;lock下的子节点列表，判断自己创建的子节点是否为当前子节点列表中序号最小的子节点，如果是则认为获得锁，否则监听刚好在自己之前一位的子节点删除消息，获得子节点变更通知后重复此步骤直至获得锁；执行业务代码；完成业务流程后，删除对应的子节点释放锁。</p>
 <h5 id="redis分布式锁"><a href="#redis分布式锁" class="headerlink" title="redis分布式锁"></a>redis分布式锁</h5><p>使用命令</p>
@@ -777,8 +777,7 @@
                 <a href="/blog/posts/cl9jkrel4001pokfx0fi48u45/">
                     <div class="card-image">
                         
-                        
-                        <img src="https://s1.ax1x.com/2022/10/11/xN3bFK.png" class="responsive-img" alt="消息队列-MQ">
+                        <img src="https://img1.baidu.com/it/u=1369410832,3000356447&fm=253&fmt=auto&app=138&f=PNG?w=500&h=539" class="responsive-img" alt="消息队列-MQ">
                         
                         <span class="card-title">消息队列-MQ</span>
                     </div>
@@ -829,8 +828,7 @@
                 <a href="/blog/posts/cl9jkrekd000hokfxeiuo9cuf/">
                     <div class="card-image">
                         
-                        
-                        <img src="https://s1.ax1x.com/2022/10/11/xN3aRg.jpg" class="responsive-img" alt="Java中的volatile关键字">
+                        <img src="https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg?source=172ae18b" class="responsive-img" alt="Java中的volatile关键字">
                         
                         <span class="card-title">Java中的volatile关键字</span>
                     </div>
@@ -838,7 +836,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            原理并发编程中的三个概念: 原子性问题，可见性问题，有序性问题原子性：即一个操作或者多个操作,要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账可见性：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他
+                            原理并发编程中的三个概念:原子性问题，可见性问题，有序性问题原子性：即一个操作或者多个操作,要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账可见性：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线
                         
                         
                     </div>

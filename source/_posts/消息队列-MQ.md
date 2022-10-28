@@ -1,9 +1,8 @@
 ---
 title: 消息队列-MQ
-sticky: 18
 categories: Java
 index_img: /assert/mq.jpg
-img: 
+img: https://img1.baidu.com/it/u=1369410832,3000356447&fm=253&fmt=auto&app=138&f=PNG?w=500&h=539
 ---
 #### 经典面试题
 

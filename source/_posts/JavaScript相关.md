@@ -1,10 +1,9 @@
 ---
 title: JavaScript相关
-sticky: 45
 categories: JS
 tags: 随笔
 index_img: /assert/js.jpg
-img: 
+img: https://picx1.zhimg.com/v2-ff627d205bd26ab15e4bdefd5daf1dda_1440w.jpg?source=172ae18b
 ---
 
 #### JQuery、JS常用方法
@@ -195,7 +194,7 @@ alert((new Function("x","y","return x*y;"))(2,3));// "6"
 [jQuery选择器](https://tool.oschina.net/uploads/apidocs/jquery/)
 
 ```js
-// >: 选择某元素后面的第一代子元素div>p选择其父元素是<div>元素的所有<p>元素。 
+// >: 选择某元素后面的第一代子元素div>p选择其父元素是<div>元素的所有<p>元素。
 // ~: 选取某个元素之后的所有同级元素,.box~h2这句就是选取.box后面所有的h2,.box和h2同级,并且不需要紧邻
 // 空格: 选择某元素后面的所有子元素.不一定是直接子元素.孙子元素也可以
 // +: 可选择紧接在另一元素后的兄弟元素，且二者有相同父元素,元素需要紧邻. div + p选择所有紧随<div>元素之后的<p>元素。
@@ -334,7 +333,7 @@ function factorial(num) {
 #### 滚动条位置
 
 - scrollTop:获取或设置一个元素的内容垂直滚动的像素数。//页面内容的滚动距离
-- scrollHeight:一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。 //滚动内容的总大小
+- scrollHeight:一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。//滚动内容的总大小
 - clientHeight:元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。//可见网页内容高
 
 
@@ -352,7 +351,7 @@ function factorial(num) {
 #### Promise
 
 什么时候用
-回调地狱时使用，当代码难以维护，常常第一个的函数的输出是第二个函数的输入这种现象时使用promise。Promise 对象用于表示一个异步操作的最终完成(或失败)及其结果值
+回调地狱时使用，当代码难以维护，常常第一个的函数的输出是第二个函数的输入这种现象时使用promise。Promise对象用于表示一个异步操作的最终完成(或失败)及其结果值
 基本用法
 demo1
 ````js

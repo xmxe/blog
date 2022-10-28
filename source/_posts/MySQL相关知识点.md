@@ -1,9 +1,8 @@
 ---
 title: MySQL相关知识点
-sticky: 36
 categories: 数据库
 index_img: /assert/mysql.jpg
-img: 
+img: https://labs.mysql.com/common/logos/mysql-logo.svg
 ---
 
 #### 递归function,父子查询

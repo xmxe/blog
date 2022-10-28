@@ -1,6 +1,5 @@
 ---
 title: 线程-Thread
-sticky: 43
 categories: Java 
 index_img: /assert/thread.jpg
 img: https://pica.zhimg.com/v2-72839d9aecf00f3185303c7f76c597ee_r.jpg
@@ -36,7 +35,7 @@ top: true
 例如有一种线程的目的就是无限循环
 
 ```java
-class TimerThread extends Thread { 
+class TimerThread extends Thread {
   @Override
   public void run() {
 	while (true) {
@@ -213,6 +212,7 @@ int availableProcessors = Runtime.getRuntime().availableProcessors()
 - [两万字！多线程硬核50问！](https://mp.weixin.qq.com/s/wGJsOWAGUhlE4QlZsNpMXg)
 - [进程间的通信(操作系统间)](https://mp.weixin.qq.com/s/tDfMAshpUr2N6absPR7Dug)
 - [106道Java并发和多线程基础面试题大集合（2w字）](https://mp.weixin.qq.com/s/3istnkJ3MMYQnvbtTsdxmA)
+- [面试官：线程池中多余的线程是如何回收的？](https://mp.weixin.qq.com/s/Ts2DGoUJ6SOhdRuDaLa8UQ)
 
 ### 线程池
 
@@ -238,10 +238,10 @@ ExecutorService threadPool = Executors.newCachedThreadPool();
 #### ThreadPoolExecutor
 ```java
 ExecutorService threadPool = new ThreadPoolExecutor(
-int corePoolSize, 
-int maximumPoolSize, 
+int corePoolSize,
+int maximumPoolSize,
 long keepAliveTime,
-TimeUnit unit, 
+TimeUnit unit,
 BlockingQueue<Runnable> workQueue,
 ThreadFactory threadFactory,
 RejectedExecutionHandler handler)
@@ -271,7 +271,7 @@ class MyThreadFactory implements ThreadFactory{
 
 // handler：当队列里面放满了任务、最大线程数的线程都在工作时，这时继续提交的任务线程池就处理不了，应该执行怎么样的拒绝策略。
 //在队列（workQueue）和线程池达到最大线程数（maximumPoolSize）均满时仍有任务的情况下的处理方式即当任务数大于最大线程数并且队列已满时，采用的拒绝策略，分4种，
-new ThreadPoolExecutor.AbortPolicy // 丢弃任务并抛出RejectedExecutionException异常
+new ThreadPoolExecutor.AbortPolicy //丢弃任务并抛出RejectedExecutionException异常
 // AbortPolicy策略：默认策略，如果线程池队列满了丢掉这个任务并且抛出RejectedExecutionException异常。
 new ThreadPoolExecutor.DiscardPolicy //丢弃任务，但是不抛出异常
 // DiscardPolicy策略：如果线程池队列满了，会直接丢掉这个任务并且不会有任何异常。
@@ -306,7 +306,7 @@ threadPool.execute(new Runnable() {
   public void run() {
    try {
 		System.out.println(index);Thread.sleep(2000);
-   } catch (InterruptedException e) {
+   } catch (InterruptedException e){
 		e.printStackTrace();
    }
   }

@@ -486,7 +486,7 @@
 <h4 id="线程相关方法"><a href="#线程相关方法" class="headerlink" title="线程相关方法"></a>线程相关方法</h4><h5 id="yield"><a href="#yield" class="headerlink" title="yield()"></a>yield()</h5><p>它让掉当前线程CPU的时间片，使正在运行中的线程重新变成就绪状态，并重新竞争CPU的调度权。它可能会获取到，也有可能被其他线程获取到。使当前线程从执行状态（运行状态）变为可执行态（就绪状态）。cpu会从众多的可执行态里选择。也就是说，当前也就是刚刚的那个线程还是有可能会被再次执行到的</p>
 <h5 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h5><p>并行变串行，当前线程等待另一个调用join()方法的线程执行结束后再往下执行,哪个线程调用join()哪个线程优先执行（前提必须调用start()方法启动线程）</p>
 <h5 id="setDaemon"><a href="#setDaemon" class="headerlink" title="setDaemon()"></a>setDaemon()</h5><p>设置是否为守护线程，线程分为用户线程和守护线程，当用户线程都退出时，无论当jvm里面的守护线程有没有执行完，jvm都会退出，使用setDaemon()必须在thread.start()之前，否则会抛出异常。守护线程服务于用户线程,当用户线程结束后守护线程也会结束,当所有线程都运行结束时，JVM退出，进程结束。<br>例如有一种线程的目的就是无限循环</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">TimerThread</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">&#123;</span> 
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">TimerThread</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">&#123;</span>
   <span class="token annotation punctuation">@Override</span>
   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -584,6 +584,7 @@
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wGJsOWAGUhlE4QlZsNpMXg">两万字！多线程硬核50问！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tDfMAshpUr2N6absPR7Dug">进程间的通信(操作系统间)</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3istnkJ3MMYQnvbtTsdxmA">106道Java并发和多线程基础面试题大集合（2w字）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ts2DGoUJ6SOhdRuDaLa8UQ">面试官：线程池中多余的线程是如何回收的？</a></li>
 </ul>
 <h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><h4 id="Executors"><a href="#Executors" class="headerlink" title="Executors"></a>Executors</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ExecutorService</span> threadPool <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -600,10 +601,10 @@
 <span class="token comment">// newSingleThreadScheduledExecutor: 只有一个线程，该线程池可用于定时或周期性任务的执行，类似于Timer，但比Timer要更安全</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EheN1I84uo1zk6ptSqsqcQ">为什么阿里巴巴要禁用Executors创建线程池？</a></p>
 <h4 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ExecutorService</span> threadPool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>
-<span class="token keyword">int</span> corePoolSize<span class="token punctuation">,</span> 
-<span class="token keyword">int</span> maximumPoolSize<span class="token punctuation">,</span> 
+<span class="token keyword">int</span> corePoolSize<span class="token punctuation">,</span>
+<span class="token keyword">int</span> maximumPoolSize<span class="token punctuation">,</span>
 <span class="token keyword">long</span> keepAliveTime<span class="token punctuation">,</span>
-<span class="token class-name">TimeUnit</span> unit<span class="token punctuation">,</span> 
+<span class="token class-name">TimeUnit</span> unit<span class="token punctuation">,</span>
 <span class="token class-name">BlockingQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Runnable</span><span class="token punctuation">></span></span> workQueue<span class="token punctuation">,</span>
 <span class="token class-name">ThreadFactory</span> threadFactory<span class="token punctuation">,</span>
 <span class="token class-name">RejectedExecutionHandler</span> handler<span class="token punctuation">)</span>
@@ -633,7 +634,7 @@
 
 <span class="token comment">// handler：当队列里面放满了任务、最大线程数的线程都在工作时，这时继续提交的任务线程池就处理不了，应该执行怎么样的拒绝策略。</span>
 <span class="token comment">//在队列（workQueue）和线程池达到最大线程数（maximumPoolSize）均满时仍有任务的情况下的处理方式即当任务数大于最大线程数并且队列已满时，采用的拒绝策略，分4种，</span>
-<span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor<span class="token punctuation">.</span>AbortPolicy</span> <span class="token comment">// 丢弃任务并抛出RejectedExecutionException异常</span>
+<span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor<span class="token punctuation">.</span>AbortPolicy</span> <span class="token comment">//丢弃任务并抛出RejectedExecutionException异常</span>
 <span class="token comment">// AbortPolicy策略：默认策略，如果线程池队列满了丢掉这个任务并且抛出RejectedExecutionException异常。</span>
 <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor<span class="token punctuation">.</span>DiscardPolicy</span> <span class="token comment">//丢弃任务，但是不抛出异常</span>
 <span class="token comment">// DiscardPolicy策略：如果线程池队列满了，会直接丢掉这个任务并且不会有任何异常。</span>
@@ -661,7 +662,7 @@ threadPool<span class="token punctuation">.</span><span class="token function">e
   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
 		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+   <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
 		e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
    <span class="token punctuation">&#125;</span>
   <span class="token punctuation">&#125;</span>
@@ -967,8 +968,7 @@ threadPool<span class="token punctuation">.</span><span class="token function">e
                 <a href="/blog/posts/cl9jkreks0016okfxbtkjb6c1/">
                     <div class="card-image">
                         
-                        
-                        <img src="https://s1.ax1x.com/2022/10/11/xN3bFK.png" class="responsive-img" alt="ThreadLocal">
+                        <img src="https://pic3.zhimg.com/v2-7807ea8fe415abd379c725aa449e814c_1440w.jpg?source=172ae18b" class="responsive-img" alt="ThreadLocal">
                         
                         <span class="card-title">ThreadLocal</span>
                     </div>
@@ -1020,8 +1020,7 @@ ThreadLocal原理每个线程是一个Thread实例，其内部维护一个thread
                 <a href="/blog/posts/cl9jkrejr0001okfx6c6fblox/">
                     <div class="card-image">
                         
-                        
-                        <img src="https://s1.ax1x.com/2022/10/11/xN1LKs.jpg" class="responsive-img" alt="ArrayList&amp;CopyOnWriteArrayList">
+                        <img src="https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949a73" class="responsive-img" alt="ArrayList&amp;CopyOnWriteArrayList">
                         
                         <span class="card-title">ArrayList&amp;CopyOnWriteArrayList</span>
                     </div>

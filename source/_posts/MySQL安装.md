@@ -1,10 +1,9 @@
 ---
 title: MySQL安装
-sticky: 16
 categories: 数据库
 tags: 安装
 index_img: /assert/mysql.jpg
-img: 
+img: https://img0.baidu.com/it/u=730256309,1700139135&fm=253&fmt=auto&app=138&f=JPEG?w=899&h=500
 ---
 
 #### Linux安装MySQL

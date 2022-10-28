@@ -590,7 +590,7 @@ jquery.extend()将两个或更多对象的内容合并到第一个对象<br>jque
 <span class="token function">alert</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token string">"x"</span><span class="token punctuation">,</span><span class="token string">"y"</span><span class="token punctuation">,</span><span class="token string">"return x*y;"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// "6"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="JQuery选择器"><a href="#JQuery选择器" class="headerlink" title="JQuery选择器"></a>JQuery选择器</h4><p><a target="_blank" rel="noopener" href="https://tool.oschina.net/uploads/apidocs/jquery/">jQuery选择器</a></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// >: 选择某元素后面的第一代子元素div>p选择其父元素是&lt;div>元素的所有&lt;p>元素。 </span>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// >: 选择某元素后面的第一代子元素div>p选择其父元素是&lt;div>元素的所有&lt;p>元素。</span>
 <span class="token comment">// ~: 选取某个元素之后的所有同级元素,.box~h2这句就是选取.box后面所有的h2,.box和h2同级,并且不需要紧邻</span>
 <span class="token comment">// 空格: 选择某元素后面的所有子元素.不一定是直接子元素.孙子元素也可以</span>
 <span class="token comment">// +: 可选择紧接在另一元素后的兄弟元素，且二者有相同父元素,元素需要紧邻. div + p选择所有紧随&lt;div>元素之后的&lt;p>元素。</span>
@@ -696,7 +696,7 @@ float<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 <span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="滚动条位置"><a href="#滚动条位置" class="headerlink" title="滚动条位置"></a>滚动条位置</h4><ul>
 <li>scrollTop:获取或设置一个元素的内容垂直滚动的像素数。&#x2F;&#x2F;页面内容的滚动距离</li>
-<li>scrollHeight:一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。 &#x2F;&#x2F;滚动内容的总大小</li>
+<li>scrollHeight:一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。&#x2F;&#x2F;滚动内容的总大小</li>
 <li>clientHeight:元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。&#x2F;&#x2F;可见网页内容高</li>
 </ul>
 <h4 id="prototype、-proto-与constructor"><a href="#prototype、-proto-与constructor" class="headerlink" title="prototype、__proto__与constructor"></a>prototype、__proto__与constructor</h4><ol>
@@ -709,7 +709,7 @@ float<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 <li><p>constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。constructor属性的作用，是分辨原型对象到底属于哪个构造函数。</p>
 </li>
 </ol>
-<h4 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h4><p>什么时候用<br>回调地狱时使用，当代码难以维护，常常第一个的函数的输出是第二个函数的输入这种现象时使用promise。Promise 对象用于表示一个异步操作的最终完成(或失败)及其结果值<br>基本用法<br>demo1</p>
+<h4 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h4><p>什么时候用<br>回调地狱时使用，当代码难以维护，常常第一个的函数的输出是第二个函数的输入这种现象时使用promise。Promise对象用于表示一个异步操作的最终完成(或失败)及其结果值<br>基本用法<br>demo1</p>
 <pre class="line-numbers language-`js" data-language="`js"><code class="language-`js">let myFirstPromise &#x3D; new Promise(function(resolve,reject)&#123;
 &#x2F;&#x2F;调用then()时,当异步代码执行成功时，调用resolve(...),当异步代码失败时,调用reject(...)
   if()&#123;
@@ -1032,8 +1032,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                 <a href="/blog/posts/cl9jkrekm000tokfxhwpy5crn/">
                     <div class="card-image">
                         
-                        
-                        <img src="https://s1.ax1x.com/2022/10/11/xN3DLn.jpg" class="responsive-img" alt="MySQL相关知识点">
+                        <img src="https://labs.mysql.com/common/logos/mysql-logo.svg" class="responsive-img" alt="MySQL相关知识点">
                         
                         <span class="card-title">MySQL相关知识点</span>
                     </div>

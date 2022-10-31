@@ -2,7 +2,7 @@
 title: ArrayList&CopyOnWriteArrayList
 categories: Java
 index_img: /assert/list.jpg
-img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949a73
+img: https://pic2.zhimg.com/v2-afbb5fb285f0775146b89fe018dbbc93_r.jpg
 ---
 
 #### ArrayList的扩容机制

@@ -658,3 +658,21 @@ reboot
 先执行/etc/enviroment，后执行/etc/profile
 
 [Linux环境变量配置的6种方法](https://mp.weixin.qq.com/s/D32FE4CS2pT89czVUv0SOg)
+
+##### 相关文章
+
+- [程序员必备的150个Linux命令！](https://mp.weixin.qq.com/s/wejhjmbtS16AdlDo0JiLMA)
+- [Linux常用指令，这次真的全！](https://mp.weixin.qq.com/s/zAuInaLxrUShmEyQpq_b8w)
+- [新人必备的Linux命令！](https://mp.weixin.qq.com/s/TvUcd7mLkHxD_botoo7BQg)
+- [作为一名Java开发人员，应该从多大程度上掌握Linux？](https://www.zhihu.com/question/319076999/answer/672319588?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline)
+- [30个实例详解TOP命令](https://mp.weixin.qq.com/s/2FDa8fOm6x4-1MP9l9N7vA)
+- [ping命令的7大用法,看完秒变大神！](https://mp.weixin.qq.com/s/liiz58PC1JlfPaEW81wUpg)
+- [听说你ping用的很6,给我图解一下ping的工作原理](https://mp.weixin.qq.com/s/4pPdcSak3YLyqiz4Ns8htQ)
+- [ping命令还能这么玩？](https://mp.weixin.qq.com/s/fLY3JH5_4_h4vABV7B-4uw)
+- [1000+常用的Linux命令来袭](https://mp.weixin.qq.com/s/43JCaDehv0nbzDKbe0S8Kg)
+- [后端线上问题排查常用命令收藏](https://mp.weixin.qq.com/s/piTFQBZ5fN0LD8rKRNbnSg)
+- [Linux运维必备150个命令，速度收藏～](https://mp.weixin.qq.com/s/TefuD-XiIyEqO8hYNBA7vw)
+- [Java开发常用的Linux命令知识积累](https://mp.weixin.qq.com/s/jlmPjqFTfP4JNmbhpGoHsA)
+- [这篇Linux总结的真棒！](https://mp.weixin.qq.com/s/F_0kiOWgQS4BINx2t2Rqtw)
+- [Linux远程桌面管理工具！功能真心强大](https://mp.weixin.qq.com/s/UT3RYrUGP2E5JQbf1Z8c8w)
+- [在Linux上保护SSH服务器连接的8种方法](https://mp.weixin.qq.com/s/kxvc95RJoSKqcXwwmyrPKg)

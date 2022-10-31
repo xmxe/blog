@@ -6,7 +6,10 @@
     "build": "npx hexo generate",
     "clean": "npx hexo clean",
     "deploy": "npx hexo deploy",
-    "server": "npx hexo server"
+    "start": "npx hexo server --draft",
+    "publish": "npx hexo publish post Tomcat",
+    "draft": "npx hexo new draft title",
+    "page": "npx hexo new page title"
   },
   "hexo": {
     "version": "6.3.0"

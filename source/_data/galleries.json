@@ -1,8 +1,8 @@
 [
     {
+      "description": "收集图床照片",
       "name": "imghost",
       "cover": "https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg",
-      "description": "收集图床照片",
       "photos": [
         "https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg",
         "https://pic2.zhimg.com/v2-7de23a78e4931770d2606cb99a6eab31_r.jpg",
@@ -20,10 +20,11 @@
         "medias/featureimages/2.jpg"
       ]
     },
+
     {
+      "description": "壁纸",
       "name": "wallpaper",
       "cover": "medias/wallpaper/1.jpg",
-      "description": "壁纸",
       "photos": [
         
       ],
@@ -36,7 +37,6 @@
         "medias/wallpaper/6.jpg",
         "medias/wallpaper/7.jpg",
         "medias/wallpaper/8.jpg"
-        
       ]
     }
   ]

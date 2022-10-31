@@ -1,7 +1,7 @@
 ---
 title: Zookeeper
 summary: Zookeeper的基本原理及安装
-img: https://picx1.zhimg.com/v2-0fd0ab66a2f190f2f44cf7884a57ad70_1440w.jpg?source=172ae18b
+img: https://picx1.zhimg.com/v2-0fd0ab66a2f190f2f44cf7884a57ad70_1440w.jpg
 categories: Java
 tags: 安装
 ---

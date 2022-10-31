@@ -2,7 +2,7 @@
 title: Nginx
 tags: 安装
 index_img: /assert/nginx.jpeg
-img: https://picx1.zhimg.com/v2-e68d524210343613129267bd2cb75a0d_1440w.jpg?source=172ae18b
+img: https://picx1.zhimg.com/v2-e68d524210343613129267bd2cb75a0d_1440w.jpg
 ---
 
 #### Nginx安装

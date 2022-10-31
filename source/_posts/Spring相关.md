@@ -2,7 +2,7 @@
 title: Spring相关
 categories: Spring
 index_img: /assert/spring.jpg
-img: https://pic4.zhimg.com/v2-13cd8daa0a4eba009b68785cfbbd5007_r.jpg
+img: https://pic2.zhimg.com/v2-a576f4f763928a2187ec87f161b3f5bc_1440w.jpg
 coverImg: https://pic4.zhimg.com/v2-13cd8daa0a4eba009b68785cfbbd5007_r.jpg
 cover: true
 summary: Spring注解、Bean、循环依赖、Spring MVC、原始XMl配置
@@ -139,6 +139,7 @@ ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都
 - [一文搞定Spring Bean的创建全过程！](https://mp.weixin.qq.com/s/pEKQk-ckeQbcRGPs2mCpQw)
 - [Spring Boot启动扩展点超详细总结，再也不怕面试官问了](https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA)
 - [Spring系列之beanFactory与ApplicationContext](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247493943&amp;idx=1&amp;sn=9eaa46ed730874fce003c66f76fe9c7f&amp;source=41#wechat_redirect)
+- [你知道Spring lazy-init懒加载的原理吗？](https://mp.weixin.qq.com/s/_je69-0J72X5YMCrS-92MQ)
 
 **BeanFactoryPostProcessor、BeanPostProcessor区别**
 BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor接口是针对bean容器的，它的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.

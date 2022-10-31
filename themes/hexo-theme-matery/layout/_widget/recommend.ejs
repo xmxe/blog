@@ -52,15 +52,13 @@
     <% for (var i = 0; i < topPostsCount; i++) { %>
     <%
         var post = topPosts[i];
-        var featureImg = post.img ? url_for(post.img) : url_for(featureImages[Math.abs(hashCode(post.title) % imgCount)]);
+        var featureImg = post.coverImg
+                        ? url_for(post.coverImg)
+                        : post.img ? url_for(post.img) : url_for(featureImages[Math.abs(hashCode(post.title) % imgCount)]);
         var bgColor = bgColorArr[i % colorCount];
     %>
     <div class="col s12 m6" <% if (i > 1) { %>data-aos="zoom-in-up"<% } %>>
-        <% if (post.img) {%>
-             <div class="post-card" style="background-image: url('<%- featureImg %>')">
-        <%}else{%>
-            <div class="post-card" style="background-image: url('<%- featureImg %>')">
-            <% } %>
+        <div class="post-card" style="background-image: url('<%- featureImg %>')">    
             <div class="post-body">
                 <div class="post-categories">
                     <% if (theme.recommend.useConfig) { %>
@@ -99,15 +97,13 @@
             description = post.summary;
         }
 
-        var featureImg = post.img ? url_for(post.img) : url_for(featureImages[Math.abs(hashCode(post.title) % imgCount)]);
+        var featureImg = post.coverImg 
+                        ? url_for(post.coverImg)
+                        : post.img ? url_for(post.img) : url_for(featureImages[Math.abs(hashCode(post.title) % imgCount)]);
         var bgColor = bgColorArr[i % colorCount];
     %>
     <div class="col <%- grid %>" <% if (i > 0) { %>data-aos="zoom-in-up"<% } %>>
-        <% if (post.img) {%>
-             <div class="post-card" style="background-image: url('<%- featureImg %>')">
-        <%}else{%>
-            <div class="post-card" style="background-image: url('<%- featureImg %>')">
-            <% } %>
+        <div class="post-card" style="background-image: url('<%- featureImg %>')">
             <div class="post-body">
                 <div class="post-categories">
                     <% if (theme.recommend.useConfig) { %>

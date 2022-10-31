@@ -2,14 +2,14 @@
 title: Java各类技术栈架构图汇总
 categories: Java
 index_img: /assert/java.jpg
-img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949a73
+img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg
 ---
 
-### 1. java 类加载器架构
+### 1. java类加载器架构
 
 ![](images/java类加载器架构.png)
 
-### 2. JVM 架构
+### 2. JVM架构
 
 ![](images/jvm架构.png)
 
@@ -17,7 +17,7 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/类文件.png)
 
-### 3. Java 技术体系
+### 3. Java技术体系
 
 ![](images/java技术体系.png)
 
@@ -25,23 +25,23 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/线程运行架构.png)
 
-### 5. Java 体系（编译与运行）结构
+### 5. Java体系(编译与运行)结构
 
 ![](images/java体系结构.png)
 
-### 6. JMS 技术架构
+### 6. JMS技术架构
 
 ![](images/jms技术架构1.png)
 
 ![](images/jms技术架构2.png)
 
-### 7. JMX 技术架构
+### 7. JMX技术架构
 
 ![](images/JMX技术架构1.png)
 
 ![](images/JMX技术架构2.png)
 
-### 8. Spring 架构
+### 8. Spring架构
 
 ![](images/spring架构1.png)
 
@@ -49,7 +49,7 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/spring架构3.png)
 
-### 9. Hibernate 架构
+### 9. Hibernate架构
 
 ![](images/hibernate架构1.png)
 
@@ -57,15 +57,15 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/hibernate架构3.png)
 
-### 10. ibatis 架构
+### 10. ibatis架构
 
 ![](images/ibatis架构.png)
 
-### 11. Struts2 架构
+### 11. Struts2架构
 
 ![](images/Struts2架构.png)
 
-### 12. Struts1 架构
+### 12. Struts1架构
 
 ![](images/Struts1架构.png)
 
@@ -73,7 +73,7 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/jbpm.png)
 
-### 14. EJB 技术架构
+### 14. EJB技术架构
 
 ![](images/ejb技术架构1.png)
 
@@ -87,7 +87,7 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/j2ee.png)
 
-### 17. SmartClient Ajax 框架架构
+### 17. SmartClient Ajax框架架构
 
 ![](images/SmartClientAjax框架架构.png)
 
@@ -95,11 +95,11 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/oracle.png)
 
-### 19. MYSQL 架构
+### 19. MYSQL架构
 
 ![](images/mysql.png)
 
-### 20. Android 架构
+### 20. Android架构
 
 ![](images/android架构.png)
 
@@ -107,11 +107,11 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/云计算架构.png)
 
-### 22. LINUX 内核
+### 22. LINUX内核
 
 ![](images/LINUX内核.png)
 
-### 23. vmware 架构
+### 23. vmware架构
 
 ![](images/vmware架构1.png)
 
@@ -121,29 +121,29 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg?source=4e949
 
 ![](images/门户网站应用架构蓝图.png)
 
-### 25. SOA 技术架构
+### 25. SOA技术架构
 
 ![](images/soa技术架构.png)
 
-### 26. MIS 技术架构
+### 26. MIS技术架构
 
 ![](images/mis技术架构.png)
 
-### 27. APUSIC ESB 技术架构
+### 27. APUSIC ESB技术架构
 
 ![](images/APUSIC-ESB技术架构1.png)
 
 ![](images/APUSIC-ESB技术架构2.png)
 
-### 28. GIS esb 技术架构
+### 28. GIS esb技术架构
 
 ![](images/GIS-esb技术架构.png)
 
-### 29. CRM 方案架构
+### 29. CRM方案架构
 
 ![](images/crm方案架构.png)
 
-### 30. OA 架构
+### 30. OA架构
 
 ![](images/oa架构1.png)
 

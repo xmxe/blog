@@ -1,5 +1,5 @@
 ---
-img: https://pic1.zhimg.com/v2-b6be64bd80f0b31a3d5429eda80995fa_1440w.jpg?source=172ae18b
+img: https://pic1.zhimg.com/v2-b6be64bd80f0b31a3d5429eda80995fa_1440w.jpg
 categories: Java
 title: Tomcat
 ---

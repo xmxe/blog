@@ -2,7 +2,7 @@
 title: Git
 tags: 随笔
 index_img: /assert/git.jpg
-img: https://pica.zhimg.com/v2-6baae9baaef9c2a3188f9fc301833fba_1440w.jpg?source=172ae18b
+img: https://pica.zhimg.com/v2-6baae9baaef9c2a3188f9fc301833fba_1440w.jpg
 ---
 
 ##### Git常用命令

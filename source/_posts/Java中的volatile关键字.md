@@ -2,7 +2,7 @@
 title: Java中的volatile关键字
 categories: Java
 index_img: /assert/volatile.jpg
-img: https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg?source=172ae18b
+img: https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg
 ---
 
 ##### 原理

@@ -2,7 +2,7 @@
 title: 线程-Thread
 categories: Java 
 index_img: /assert/thread.jpg
-img: https://pica.zhimg.com/v2-72839d9aecf00f3185303c7f76c597ee_r.jpg
+img: https://pic1.zhimg.com/06a1751875c26f6409149f9380a7899c_r.jpg
 coverImg: https://pica.zhimg.com/v2-72839d9aecf00f3185303c7f76c597ee_r.jpg
 cover: true
 summary: 线程+线程池+虚拟线程

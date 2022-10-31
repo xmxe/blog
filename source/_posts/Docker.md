@@ -1,8 +1,8 @@
 ---
-title: Docker安装
+title: Docker
 tags: 安装
 index_img: /assert/docker.jpg
-img: https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg?source=172ae18b
+img: https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg
 ---
 
 #### 安装
@@ -476,6 +476,7 @@ docker tag
 - [带着问题学Kubernetes架构！](https://mp.weixin.qq.com/s/6smzsvYSbRvSPcpbfnH98A)
 - [为什么大家都在学习k8s](https://mp.weixin.qq.com/s/B2tIs6YitA93iYxEZ_8Ovw)
 - [Kuboard-Kubernetes多集群管理界面](https://kuboard.cn/)
+- [IDEA使用Docker插件，实现一键自动化部署](https://mp.weixin.qq.com/s/yg5ACCeeyJa0AVP1LatUhA)
 
 
 #### docker加速命令

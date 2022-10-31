@@ -2,7 +2,7 @@
 title: JVM知识点
 categories: Java
 index_img: /assert/jvm.jpg
-img: https://pic1.zhimg.com/v2-7382fb7654c33a5e843f51ec139b1da0_r.jpg
+img: https://pic1.zhimg.com/v2-716588f96320420369eb5a5734852aa5_1440w.jpg
 coverImg: https://pic1.zhimg.com/v2-7382fb7654c33a5e843f51ec139b1da0_r.jpg
 cover: true
 summary: JVM内存结构、共享区域、相关命令

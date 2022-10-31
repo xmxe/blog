@@ -3,7 +3,7 @@ title: JavaScript相关
 categories: JS
 tags: 随笔
 index_img: /assert/js.jpg
-img: https://picx1.zhimg.com/v2-ff627d205bd26ab15e4bdefd5daf1dda_1440w.jpg?source=172ae18b
+img: https://picx1.zhimg.com/v2-ff627d205bd26ab15e4bdefd5daf1dda_1440w.jpg
 ---
 
 #### JQuery、JS常用方法

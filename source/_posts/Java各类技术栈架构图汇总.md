@@ -5,6 +5,8 @@ index_img: /assert/java.jpg
 img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg
 ---
 
+## Java各类技术栈架构图汇总
+
 ### 1. java类加载器架构
 
 ![](images/java类加载器架构.png)
@@ -41,7 +43,13 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg
 
 ![](images/JMX技术架构2.png)
 
-### 8. Spring架构
+### 8. J2EE
+
+![](images/j2ee.png)
+
+## 框架
+
+### 1. Spring架构
 
 ![](images/spring架构1.png)
 
@@ -49,7 +57,7 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg
 
 ![](images/spring架构3.png)
 
-### 9. Hibernate架构
+### 2. Hibernate架构
 
 ![](images/hibernate架构1.png)
 
@@ -57,93 +65,93 @@ img: https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg
 
 ![](images/hibernate架构3.png)
 
-### 10. ibatis架构
+### 3. ibatis架构
 
 ![](images/ibatis架构.png)
 
-### 11. Struts2架构
+### 4. Struts2架构
 
 ![](images/Struts2架构.png)
 
-### 12. Struts1架构
+### 5. Struts1架构
 
 ![](images/Struts1架构.png)
 
-### 13. JBPM
+### 6. JBPM
 
 ![](images/jbpm.png)
 
-### 14. EJB技术架构
+### 7. EJB技术架构
 
 ![](images/ejb技术架构1.png)
 
 ![](images/ejb技术架构2.png)
 
-### 15. Portal
+### 8. Portal
 
 ![](images/portal.png)
 
-### 16. J2EE
-
-![](images/j2ee.png)
-
-### 17. SmartClient Ajax框架架构
+### 9. SmartClient Ajax框架架构
 
 ![](images/SmartClientAjax框架架构.png)
 
-### 18. Oracle
+## 数据库
+
+### 1. Oracle
 
 ![](images/oracle.png)
 
-### 19. MYSQL架构
+### 2. MYSQL架构
 
 ![](images/mysql.png)
 
-### 20. Android架构
+## 其他
+
+### 1. Android架构
 
 ![](images/android架构.png)
 
-### 21. 云计算架构
+### 2. 云计算架构
 
 ![](images/云计算架构.png)
 
-### 22. LINUX内核
+### 3. LINUX内核
 
 ![](images/LINUX内核.png)
 
-### 23. vmware架构
+### 4. vmware架构
 
 ![](images/vmware架构1.png)
 
 ![](images/vmware架构2.png)
 
-### 24. 门户网站应用架构蓝图
+### 5. 门户网站应用架构蓝图
 
 ![](images/门户网站应用架构蓝图.png)
 
-### 25. SOA技术架构
+### 6. SOA技术架构
 
 ![](images/soa技术架构.png)
 
-### 26. MIS技术架构
+### 7. MIS技术架构
 
 ![](images/mis技术架构.png)
 
-### 27. APUSIC ESB技术架构
+### 8. APUSIC ESB技术架构
 
 ![](images/APUSIC-ESB技术架构1.png)
 
 ![](images/APUSIC-ESB技术架构2.png)
 
-### 28. GIS esb技术架构
+### 9. GIS esb技术架构
 
 ![](images/GIS-esb技术架构.png)
 
-### 29. CRM方案架构
+### 10. CRM方案架构
 
 ![](images/crm方案架构.png)
 
-### 30. OA架构
+### 11. OA架构
 
 ![](images/oa架构1.png)
 

@@ -493,7 +493,7 @@
 <li>当leader被选举出来，且大多数服务器完成了和leader的状态同步后，leadder election的过程就结束了，就将会进入到Atomic brodcast的过程。</li>
 <li>Atomic Brodcast同步leader和follower之间的信息，保证leader和follower具有形同的系统状态。</li>
 </ul>
-<h4 id="Zookeeper-角色"><a href="#Zookeeper-角色" class="headerlink" title="Zookeeper 角色"></a>Zookeeper 角色</h4><p>启动Zookeeper服务器集群环境后，多个Zookeeper服务器在工作前会选举出一个Leader。选举出 leader前，所有server不区分角色，都需要平等参与投票（obServer除外，不参与投票）；选主过程完成后，存在以下几种角色</p>
+<h4 id="Zookeeper角色"><a href="#Zookeeper角色" class="headerlink" title="Zookeeper角色"></a>Zookeeper角色</h4><p>启动Zookeeper服务器集群环境后，多个Zookeeper服务器在工作前会选举出一个Leader。选举出 leader前，所有server不区分角色，都需要平等参与投票（obServer除外，不参与投票）；选主过程完成后，存在以下几种角色</p>
 <ul>
 <li>领导者（leader）: 领导者负责进行投票的发起和决议，更新系统状态。</li>
 <li>学习者（Learner）或跟随者（Follower）:Follower用于接收客户请求并向客户端返回结果，在选主过程中参与投票。Follower可以接收client请求，如果是写请求将转发给leader来更新系统状态。</li>

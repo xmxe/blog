@@ -1,6 +1,5 @@
 ---
 title: Zookeeper
-summary: Zookeeper的基本原理及安装
 img: https://picx1.zhimg.com/v2-0fd0ab66a2f190f2f44cf7884a57ad70_1440w.jpg
 categories: Java
 tags: 安装
@@ -21,7 +20,7 @@ tags: 安装
 -  当leader被选举出来，且大多数服务器完成了和leader的状态同步后，leadder election的过程就结束了，就将会进入到Atomic brodcast的过程。
 - Atomic Brodcast同步leader和follower之间的信息，保证leader和follower具有形同的系统状态。
 
-#### Zookeeper 角色
+#### Zookeeper角色
 
 启动Zookeeper服务器集群环境后，多个Zookeeper服务器在工作前会选举出一个Leader。选举出 leader前，所有server不区分角色，都需要平等参与投票（obServer除外，不参与投票）；选主过程完成后，存在以下几种角色
 

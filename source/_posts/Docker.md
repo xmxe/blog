@@ -476,6 +476,7 @@ docker tag
 - [带着问题学Kubernetes架构！](https://mp.weixin.qq.com/s/6smzsvYSbRvSPcpbfnH98A)
 - [为什么大家都在学习k8s](https://mp.weixin.qq.com/s/B2tIs6YitA93iYxEZ_8Ovw)
 - [Kuboard-Kubernetes多集群管理界面](https://kuboard.cn/)
+- [图文详解Kubernetes，傻瓜都能看懂！](https://mp.weixin.qq.com/s/WWRp-e9QPcLg8-m-V3UU1Q)
 - [IDEA使用Docker插件，实现一键自动化部署](https://mp.weixin.qq.com/s/yg5ACCeeyJa0AVP1LatUhA)
 
 

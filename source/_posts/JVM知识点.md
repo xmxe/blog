@@ -91,77 +91,6 @@ foo.f();
 - [JVM底层原理最全知识总结--GitHub](https://github.com/doocs/jvm)
 
 
-#### 相关文章
-
-##### JVM内存
-
-- [2万字长文包教包会JVM内存结构](https://mp.weixin.qq.com/s/VDZNpS4Qk0jvv_MctVXhww)
-- [13张图解Java中的内存模型](https://mp.weixin.qq.com/s/T5R_uxTMxo5WBv2Zvb4H7A)
-- [面试官：说说什么是Java内存模型？](https://mp.weixin.qq.com/s/UomhyS-oZK4zjOg9M1F4_Q)
-- [图文并茂，傻瓜都能看懂的JVM内存布局](https://mp.weixin.qq.com/s/oDeO8Td-SJn9g4mRygqtSw)
-- [JVM内存划分](https://mp.weixin.qq.com/s/TxKEYPoTcudoep6EBd-rRA)
-- [小白都能看得懂的java虚拟机内存模型](https://mp.weixin.qq.com/s/m2dp6jv8lfmy-S2gmQDHvA)
-- [深入理解堆外内存Metaspace](https://mp.weixin.qq.com/s/xB-uiqy4eVsNovEknO9_5w)
-- [求你了，别再说Java对象都是在堆内存上分配空间的了](https://mp.weixin.qq.com/s/Owlhu5IFpDAyu0WYcK1EhQ)
-- [终于搞懂了Java 8的内存结构，再也不纠结方法区和常量池了！！](https://mp.weixin.qq.com/s/8uGOt1OJloZMHQl43vrbyQ)
-- [个人笔记，深入理解JVM，很全！](https://mp.weixin.qq.com/s/1rxmi3lg02I7nHwWbldvLA)
-- [JVM内存布局详解，图文并茂，写得太好了！](https://mp.weixin.qq.com/s/RySwVg9SYvSM-ONdB9cOVw)
-- [为啥一问JVM就懵B？？？](https://mp.weixin.qq.com/s/x7YNbT5a2DZRg2qe5jyWPA)
-
-##### JVM垃圾回收
-
-- [7种JVM垃圾回收器及垃圾回收流程](https://mp.weixin.qq.com/s/fyorrpT5-hFpIS5aEDNjZA)
-- [深度解析ZGC](https://mp.weixin.qq.com/s/NYrUEYmuWQw6RrN1VVILpg)
-- [深度揭秘垃圾回收底层，这次让你彻底弄懂它](https://mp.weixin.qq.com/s/pb7h9ROzr5LOLA0gMnquqQ)
-- [看完这篇垃圾回收，和面试官扯皮没问题了](https://mp.weixin.qq.com/s/EcTwdaxP-Z4jG7PDq50nSA)
-- [详解Java性能优化和JVM GC（垃圾回收机制）](https://mp.weixin.qq.com/s/Bfz7sqaI4iJuGe_i5dUXgA)
-- [图文并茂，万字详解，带你掌握JVM垃圾回收！](https://mp.weixin.qq.com/s/EYOD4mQ7ErB11xMrGgzfCw)
-- [垃圾回收-实战篇](https://mp.weixin.qq.com/s/k6NNxnlYGxOS3HiR_jEn_A)
-- [面试的时候按照这个套路回答Java GC的相关问题一定能过！](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247490925&idx=1&sn=e44e924135109d93eb2a34afd6bf280b&source=41#wechat_redirect)
-- [一篇文章搞懂GC垃圾回收](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494090&idx=1&sn=0cb942ee592e277014b6cd16059c13c7&source=41#wechat_redirect)
-- [垃圾回收策略和算法，看这篇就够了](https://mp.weixin.qq.com/s/Anj6PRc9UPiWGDnpKahxUQ)
-- [炸了！一口气问了我18个JVM问题](https://mp.weixin.qq.com/s/U8uzm3YjdqoYCtLPPosSrg)
-- [面试官问我JVM的GC分代收集算法为什么这么设计](https://mp.weixin.qq.com/s/4xM_sg5vH8uxXJeaOQpraw)
-- [一文了解Java 8-18，垃圾回收的十次进化](https://mp.weixin.qq.com/s/nF489_nmrFAWcw1IfFF9lg)
-
-
-##### JVM知识点
-
-- [JVM知识点全面梳理！](https://mp.weixin.qq.com/s/IUw8SroGMJdvqPFQ1xEHxg)
-- [《深入理解Java虚拟机》把这个知识点讲错了？](https://mp.weixin.qq.com/s/4qZLipxi-zjrdI-_6Ae11A)
-- [JVM史上最最最完整知识总结！](https://mp.weixin.qq.com/s/GAXLr0cIcLnGaTXVstHKvA)
-- [JVM面试的30个知识点](https://mp.weixin.qq.com/s/PM_Q3718Du81ZFEx0ARrkw)
-- [满满的一整篇，全是JVM核心知识点！](https://mp.weixin.qq.com/s/GfAfffbF_uiphN0Zd3YouQ)
-- [大白话带你认识JVM、JVM的常用参数](https://mp.weixin.qq.com/s/CZtW-rDXgRl9E_3N2ou5TA)
-- [JVM夺命连环10问](https://mp.weixin.qq.com/s/_0IANOvyP_UNezDm0bxXmg)
-- [【干货】JVM完整深入解析！](https://mp.weixin.qq.com/s/vd72d6wqc_fq7YUgA7d1fA)
-- [如何在面试时搞定Java虚拟机](https://mp.weixin.qq.com/s/6MSezM6g4JPoML0kDtx64Q)
-- [JAVA虚拟机(JVM)面试题](https://mp.weixin.qq.com/s/eNpHYG9T5DIdh7QNpLg4dQ)
-- [JVM史上最最最完整深入解析，不看后悔一百次！](https://mp.weixin.qq.com/s/EYUNHXLP9jjTTA1Ig6vCYQ)
-- [【秒懂！】JVM虚拟机图文详解！一点都不难！](https://mp.weixin.qq.com/s/A4BbKDmy8oe3uBfHfrgGQA)
-- [从JMM透析volatile与synchronized原理](https://mp.weixin.qq.com/s/s2nnXDY7phqKX07nwZiHyA)
-
-
-##### 内存溢出分析
-
-- [常见OOM异常分析](https://mp.weixin.qq.com/s/DssuTRyN1RVWhQgMClP_ng)
-- [大厂的OOM优化和监控方案](https://mp.weixin.qq.com/s/-pZDUcW2ljBSIxZV0w0iSw)
-- [如何排查Java内存泄漏?看完我给跪了!](https://mp.weixin.qq.com/s/fH6Go6_1TcvHfxDPnyZvhg)
-- [常见的OOM异常分析（硬核干货）](https://mp.weixin.qq.com/s/oNWwPZ56yLCp1KQyir17AA)
-- [深入剖析线上内存溢出的原因](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494348&idx=1&sn=0096ff574aace3d725bcbb3323a67d01&source=41#wechat_redirect)
-- [一套完整的Java线上故障排查技巧，建议收藏](https://mp.weixin.qq.com/s/03qoBFLpvkRVhaorwCNJ5Q)
-- [GC垃圾收集器&JVM调优汇总](https://mp.weixin.qq.com/s/UzGeDeuZORaJkzFr_V6-5A)
-- [图解Java虚拟机中GC的复制算法和“标记-整理”算法](https://mp.weixin.qq.com/s/1_Dz7vl9k01FtyYHIn107w)
-
-
-##### JVM分析工具
-
-- [这几款JVM故障诊断处理工具，你还不会？](https://mp.weixin.qq.com/s/b5pnoqWNMIp7JnfUWyWLoA)
-- [JVM性能调优监控工具jps、jstack、jmap、jhat、jstat、hprof使用详解](https://mp.weixin.qq.com/s/72X1qvTsCLneFffzIpKoaA)
-- [有了这款可视化工具，Java应用性能调优so easy！(JVisualVM简介)](https://mp.weixin.qq.com/s/rLhkbpe0Uo3Nsy8Xs68Z7A)
-- [死锁的4种排查工具！](https://mp.weixin.qq.com/s/5l6q1-jcfZNegpUsriaj5g)
-- [6款Java8自带工具，轻松分析定位JVM问题！](https://mp.weixin.qq.com/s/phD24wUysUDQkx5pAjp5tg)
-
 #### jvm相关命令
 
 ##### jps
@@ -329,3 +258,75 @@ java
 
 - 内存泄漏:是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。
 - 内存溢出:指程序申请内存时，没有足够的内存供申请者使用
+
+##### 内存溢出分析
+
+- [Java内存泄漏了，怎么排查？](https://mp.weixin.qq.com/s/OtSoZWIl4XuIzqTayfORHw)
+- [常见OOM异常分析](https://mp.weixin.qq.com/s/DssuTRyN1RVWhQgMClP_ng)
+- [大厂的OOM优化和监控方案](https://mp.weixin.qq.com/s/-pZDUcW2ljBSIxZV0w0iSw)
+- [如何排查Java内存泄漏?看完我给跪了!](https://mp.weixin.qq.com/s/fH6Go6_1TcvHfxDPnyZvhg)
+- [常见的OOM异常分析（硬核干货）](https://mp.weixin.qq.com/s/oNWwPZ56yLCp1KQyir17AA)
+- [深入剖析线上内存溢出的原因](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494348&idx=1&sn=0096ff574aace3d725bcbb3323a67d01&source=41#wechat_redirect)
+- [一套完整的Java线上故障排查技巧，建议收藏](https://mp.weixin.qq.com/s/03qoBFLpvkRVhaorwCNJ5Q)
+- [GC垃圾收集器&JVM调优汇总](https://mp.weixin.qq.com/s/UzGeDeuZORaJkzFr_V6-5A)
+- [图解Java虚拟机中GC的复制算法和“标记-整理”算法](https://mp.weixin.qq.com/s/1_Dz7vl9k01FtyYHIn107w)
+
+
+#### 相关文章
+
+##### JVM内存
+
+- [2万字长文包教包会JVM内存结构](https://mp.weixin.qq.com/s/VDZNpS4Qk0jvv_MctVXhww)
+- [13张图解Java中的内存模型](https://mp.weixin.qq.com/s/T5R_uxTMxo5WBv2Zvb4H7A)
+- [面试官：说说什么是Java内存模型？](https://mp.weixin.qq.com/s/UomhyS-oZK4zjOg9M1F4_Q)
+- [图文并茂，傻瓜都能看懂的JVM内存布局](https://mp.weixin.qq.com/s/oDeO8Td-SJn9g4mRygqtSw)
+- [JVM内存划分](https://mp.weixin.qq.com/s/TxKEYPoTcudoep6EBd-rRA)
+- [小白都能看得懂的java虚拟机内存模型](https://mp.weixin.qq.com/s/m2dp6jv8lfmy-S2gmQDHvA)
+- [深入理解堆外内存Metaspace](https://mp.weixin.qq.com/s/xB-uiqy4eVsNovEknO9_5w)
+- [求你了，别再说Java对象都是在堆内存上分配空间的了](https://mp.weixin.qq.com/s/Owlhu5IFpDAyu0WYcK1EhQ)
+- [终于搞懂了Java 8的内存结构，再也不纠结方法区和常量池了！！](https://mp.weixin.qq.com/s/8uGOt1OJloZMHQl43vrbyQ)
+- [个人笔记，深入理解JVM，很全！](https://mp.weixin.qq.com/s/1rxmi3lg02I7nHwWbldvLA)
+- [JVM内存布局详解，图文并茂，写得太好了！](https://mp.weixin.qq.com/s/RySwVg9SYvSM-ONdB9cOVw)
+- [为啥一问JVM就懵B？？？](https://mp.weixin.qq.com/s/x7YNbT5a2DZRg2qe5jyWPA)
+
+##### JVM垃圾回收
+
+- [7种JVM垃圾回收器及垃圾回收流程](https://mp.weixin.qq.com/s/fyorrpT5-hFpIS5aEDNjZA)
+- [深度解析ZGC](https://mp.weixin.qq.com/s/NYrUEYmuWQw6RrN1VVILpg)
+- [深度揭秘垃圾回收底层，这次让你彻底弄懂它](https://mp.weixin.qq.com/s/pb7h9ROzr5LOLA0gMnquqQ)
+- [看完这篇垃圾回收，和面试官扯皮没问题了](https://mp.weixin.qq.com/s/EcTwdaxP-Z4jG7PDq50nSA)
+- [详解Java性能优化和JVM GC（垃圾回收机制）](https://mp.weixin.qq.com/s/Bfz7sqaI4iJuGe_i5dUXgA)
+- [图文并茂，万字详解，带你掌握JVM垃圾回收！](https://mp.weixin.qq.com/s/EYOD4mQ7ErB11xMrGgzfCw)
+- [垃圾回收-实战篇](https://mp.weixin.qq.com/s/k6NNxnlYGxOS3HiR_jEn_A)
+- [面试的时候按照这个套路回答Java GC的相关问题一定能过！](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247490925&idx=1&sn=e44e924135109d93eb2a34afd6bf280b&source=41#wechat_redirect)
+- [一篇文章搞懂GC垃圾回收](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494090&idx=1&sn=0cb942ee592e277014b6cd16059c13c7&source=41#wechat_redirect)
+- [垃圾回收策略和算法，看这篇就够了](https://mp.weixin.qq.com/s/Anj6PRc9UPiWGDnpKahxUQ)
+- [炸了！一口气问了我18个JVM问题](https://mp.weixin.qq.com/s/U8uzm3YjdqoYCtLPPosSrg)
+- [面试官问我JVM的GC分代收集算法为什么这么设计](https://mp.weixin.qq.com/s/4xM_sg5vH8uxXJeaOQpraw)
+- [一文了解Java 8-18，垃圾回收的十次进化](https://mp.weixin.qq.com/s/nF489_nmrFAWcw1IfFF9lg)
+
+
+##### JVM知识点
+
+- [JVM知识点全面梳理！](https://mp.weixin.qq.com/s/IUw8SroGMJdvqPFQ1xEHxg)
+- [《深入理解Java虚拟机》把这个知识点讲错了？](https://mp.weixin.qq.com/s/4qZLipxi-zjrdI-_6Ae11A)
+- [JVM史上最最最完整知识总结！](https://mp.weixin.qq.com/s/GAXLr0cIcLnGaTXVstHKvA)
+- [JVM面试的30个知识点](https://mp.weixin.qq.com/s/PM_Q3718Du81ZFEx0ARrkw)
+- [满满的一整篇，全是JVM核心知识点！](https://mp.weixin.qq.com/s/GfAfffbF_uiphN0Zd3YouQ)
+- [大白话带你认识JVM、JVM的常用参数](https://mp.weixin.qq.com/s/CZtW-rDXgRl9E_3N2ou5TA)
+- [JVM夺命连环10问](https://mp.weixin.qq.com/s/_0IANOvyP_UNezDm0bxXmg)
+- [【干货】JVM完整深入解析！](https://mp.weixin.qq.com/s/vd72d6wqc_fq7YUgA7d1fA)
+- [如何在面试时搞定Java虚拟机](https://mp.weixin.qq.com/s/6MSezM6g4JPoML0kDtx64Q)
+- [JAVA虚拟机(JVM)面试题](https://mp.weixin.qq.com/s/eNpHYG9T5DIdh7QNpLg4dQ)
+- [JVM史上最最最完整深入解析，不看后悔一百次！](https://mp.weixin.qq.com/s/EYUNHXLP9jjTTA1Ig6vCYQ)
+- [【秒懂！】JVM虚拟机图文详解！一点都不难！](https://mp.weixin.qq.com/s/A4BbKDmy8oe3uBfHfrgGQA)
+- [从JMM透析volatile与synchronized原理](https://mp.weixin.qq.com/s/s2nnXDY7phqKX07nwZiHyA)
+
+
+##### JVM分析工具
+
+- [这几款JVM故障诊断处理工具，你还不会？](https://mp.weixin.qq.com/s/b5pnoqWNMIp7JnfUWyWLoA)
+- [JVM性能调优监控工具jps、jstack、jmap、jhat、jstat、hprof使用详解](https://mp.weixin.qq.com/s/72X1qvTsCLneFffzIpKoaA)
+- [有了这款可视化工具，Java应用性能调优so easy！(JVisualVM简介)](https://mp.weixin.qq.com/s/rLhkbpe0Uo3Nsy8Xs68Z7A)
+- [死锁的4种排查工具！](https://mp.weixin.qq.com/s/5l6q1-jcfZNegpUsriaj5g)
+- [6款Java8自带工具，轻松分析定位JVM问题！](https://mp.weixin.qq.com/s/phD24wUysUDQkx5pAjp5tg)

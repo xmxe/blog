@@ -590,7 +590,7 @@ session<span class="token punctuation">.</span><span class="token function">getM
 
 <h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p>匹配数字，包括小数</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> patten <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^[+-]?(0|([1-9]\d*))(\.\d+)?$</span><span class="token regex-delimiter">/</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>[+-] 中括号表示其内的内容都是符合要求的匹配，所以这个表示“+”或”-“<br><a target="_blank" rel="noopener" href="https://tool.oschina.net/uploads/apidocs/jquery/regexp.html">正则表达式手册</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ABCqcJPNf1VJ7ByGrVlS_A">常用正则表达式最强整理（速查手册）</a><br>Matcher 类中group(0) 表示正则表达式中符合条件的字符串。<br>Matcher 类中group(1) 表示正则表达式中符合条件的字符串中的第一个() 中的字符串。<br>Matcher 类中group(2) 表示正则表达式中符合条件的字符串中的第二个() 中的字符串。<br>Matcher 类中group(3) 表示正则表达式中符合条件的字符串中的第三个() 中的字符串。<br>group是针对（）来说的，group（0）就是指的整个串，group（1） 指的是第一个括号里的东西，group（2）指的第二个括号里的东西。</p>
+<p>[+-] 中括号表示其内的内容都是符合要求的匹配，所以这个表示“+”或”-“<br><a target="_blank" rel="noopener" href="https://tool.oschina.net/uploads/apidocs/jquery/regexp.html">正则表达式手册</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ABCqcJPNf1VJ7ByGrVlS_A">常用正则表达式最强整理（速查手册）</a><br>Matcher 类中group(0) 表示正则表达式中符合条件的字符串。<br>Matcher 类中group(1) 表示正则表达式中符合条件的字符串中的第一个()中的字符串。<br>Matcher 类中group(2) 表示正则表达式中符合条件的字符串中的第二个()中的字符串。<br>Matcher 类中group(3) 表示正则表达式中符合条件的字符串中的第三个()中的字符串。<br>group是针对()来说的，group(0)就是指的整个串，group(1)指的是第一个括号里的东西，group(2)指的第二个括号里的东西。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> line <span class="token operator">=</span> <span class="token string">"123ra9040 123123aj234 adf12322ad 222jsk22"</span><span class="token punctuation">;</span>
 <span class="token class-name">String</span> pattern <span class="token operator">=</span> <span class="token string">"(\\d+)([a-z]+)(\\d+)"</span><span class="token punctuation">;</span>
 <span class="token comment">// 创建Pattern对象</span>
@@ -870,10 +870,12 @@ request<span class="token punctuation">.</span><span class="token function">getS
   <span class="token comment">/**0%是动画的开始时间，100%动画的结束时间。或者通过关键词"from"和"to"，等价于0%和100%。**/</span>	
   <span class="token selector">100%</span> <span class="token punctuation">&#123;</span>
    <span class="token comment">/**transform属性向元素应用2D或3D转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。
-      1.rotate(xxdeg)(2D),rotateX()(3D),rotateY()(3D)：以中心为基点，deg表示旋转的角度，为负数时表示逆时针旋转
+      应用多个属性使用空格如 transform: rotate(45deg)  scale(2)  skew(10deg,5deg)  translate(50px,90px);
+      1.rotate(xxdeg)(2D),rotateX()(3D),rotateY()(3D),rotateZ(180deg)：以中心为基点，deg表示旋转的角度，为负数时表示逆时针旋转
       2.translate(x,y)，translateX(x)，translateY(y)：以中心为基点按照设定的x,y参数值,对元素进行进行平移。
-      3.scale(x,y)，scaleX(X)，scaleY(Y)：缩放基数为1，如果其值大于1元素就放大，反之其值小于1为缩小。
-      4.skew(x,y)，skewX(x)，skewY(y)：以中心为基点，第一个参数是水平方向扭曲角度，第二个参数是垂直方向扭曲角度。**/</span>
+      3.scale(x,y)，scaleX(X)，scaleY(Y)：缩放基数为1，如果其值大于1元素就放大，反之其值小于1为缩小。缩放后不影响文档流,不改变原有布局,元素还是会占用,和relative定位一样,或者可以考虑zoom属性
+      4.skew(x,y)，skewX(x)，skewY(y)：以中心为基点，第一个参数是水平方向扭曲角度，第二个参数是垂直方向扭曲角度。
+   **/</span>
    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateY</span><span class="token punctuation">(</span>20px<span class="token punctuation">)</span><span class="token punctuation">;</span>
    <span class="token comment">/**box-shadow属性可以设置一个或多个下拉阴影的框。**/</span>
    <span class="token property">box-shadow</span><span class="token punctuation">:</span> 0 40px 10px -18px <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .2<span class="token punctuation">)</span><span class="token punctuation">,</span> 0 40px 16px -12px <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .2<span class="token punctuation">)</span>
@@ -916,6 +918,7 @@ request<span class="token punctuation">.</span><span class="token function">getS
         backwards表示等待期为第一帧样式，完成期跳转为初始样式 
         forwards表示等待期保持初始样式，完成期间保持最后一帧样式
     **/</span>
+     
 <span class="token punctuation">&#125;</span>
 <span class="token selector">div</span><span class="token punctuation">&#123;</span>
     <span class="token property">-webkit-transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span>3600deg<span class="token punctuation">)</span> <span class="token important">!important</span><span class="token punctuation">;</span>
@@ -940,6 +943,14 @@ request<span class="token punctuation">.</span><span class="token function">getS
     <span class="token property">cursor</span><span class="token punctuation">:</span> pointer<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
+<span class="token comment">/**鼠标滑过翻转**/</span>
+<span class="token selector">img:hover</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">animation</span><span class="token punctuation">:</span> fadenum 2s<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token atrule"><span class="token rule">@keyframes</span> fadenum</span> <span class="token punctuation">&#123;</span>
+   <span class="token selector">100%</span><span class="token punctuation">&#123;</span> <span class="token property">transform</span><span class="token punctuation">:</span><span class="token function">rotate</span><span class="token punctuation">(</span>360deg<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
 <span class="token comment">/**css伪类**/</span>
 <span class="token punctuation">:</span>link <span class="token property">应用于未被访问过的链接</span>
 <span class="token punctuation">:</span>hover <span class="token property">应用于鼠标悬停到的元素</span>
@@ -957,12 +968,12 @@ request<span class="token punctuation">.</span><span class="token function">getS
 <span class="token punctuation">:</span>last-of-type <span class="token property">选择一个上级元素的最后一个同类子元素；</span>
 <span class="token punctuation">:</span>only-child <span class="token property">选择它的父元素的唯一一个子元素；</span>
 <span class="token punctuation">:</span>only-of-type <span class="token property">选择一个元素是它的上级元素的唯一一个相同类型的子元素；</span>
-<span class="token punctuation">:</span><span class="token property">checked匹配被选中的input元素，这个input元素包括radio和checkbox。</span>
+<span class="token punctuation">:</span>checked <span class="token property">匹配被选中的input元素，这个input元素包括radio和checkbox。</span>
 <span class="token punctuation">:</span>empty <span class="token property">选择的元素里面没有任何内容。</span>
-<span class="token punctuation">:</span><span class="token property">disabled匹配禁用的表单元素。</span>
-<span class="token punctuation">:</span><span class="token property">enabled匹配没有设置disabled属性的表单元素。</span>
-<span class="token punctuation">:</span><span class="token property">valid匹配条件验证正确的表单元素。</span>
-<span class="token punctuation">:</span>in-range选择具有指定范围内的值的&lt;input><span class="token property">元素。</span>
+<span class="token punctuation">:</span>disabled <span class="token property">匹配禁用的表单元素。</span>
+<span class="token punctuation">:</span>enabled <span class="token property">匹配没有设置disabled属性的表单元素。</span>
+<span class="token punctuation">:</span>valid <span class="token property">匹配条件验证正确的表单元素。</span>
+<span class="token punctuation">:</span>in-range 选择具有指定范围内的值的&lt;input><span class="token property">元素。</span>
 <span class="token punctuation">:</span>invalid <span class="token property">input</span><span class="token punctuation">:</span>invalid 选择所有具有无效值的&lt;input><span class="token property">元素。</span>
 <span class="token punctuation">:</span>optional <span class="token property">input</span><span class="token punctuation">:</span>optional 选择不带<span class="token string">"required"</span>属性的&lt;input><span class="token property">元素。</span>
 <span class="token punctuation">:</span><span class="token function">lang</span><span class="token punctuation">(</span>language<span class="token punctuation">)</span>	<span class="token property">p</span><span class="token punctuation">:</span><span class="token function">lang</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span> 选择每个lang属性值以<span class="token string">"it"</span>开头的&lt;p><span class="token property">元素。</span>
@@ -984,7 +995,7 @@ request<span class="token punctuation">.</span><span class="token function">getS
 ::first-line	例: p::first-line 选择每个&lt;p>元素的首行。
 ::selection		例: p::selection 选择用户选择的元素部分。
 ::marker		例: li::marker</span> <span class="token punctuation">&#123;</span><span class="token property">content</span><span class="token punctuation">:</span><span class="token string">'>'</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span> 把li前面的<span class="token string">'•'</span>变成<span class="token string">'>'</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/css3/at-rule.html">CSS @规则</a></p>
 <h4 id="jsp获取session数据"><a href="#jsp获取session数据" class="headerlink" title="jsp获取session数据"></a>jsp获取session数据</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span><span class="token operator">%=</span>session<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token operator">%</span><span class="token operator">></span>
 or

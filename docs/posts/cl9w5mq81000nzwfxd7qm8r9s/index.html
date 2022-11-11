@@ -631,13 +631,14 @@ yum <span class="token function">install</span> crontabs
 
 <h6 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">netstat</span> <span class="token parameter variable">-antu</span> <span class="token comment"># 可以查看所有tcp、udp端口开放情况</span>
 <span class="token function">netstat</span> <span class="token parameter variable">-ntlp</span> <span class="token comment"># 查看正在运行的端口 (t代表tcp 加u查看udp)</span>
+<span class="token function">lsof</span> -i: <span class="token number">9090</span> <span class="token comment"># 查看某一端口运行的程序</span>
 <span class="token function">netstat</span> -ntulp<span class="token operator">|</span><span class="token function">grep</span> <span class="token comment"># 端口号 查看指定端口被哪个进程占用的情况</span>
 <span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> abc <span class="token comment"># 查找abc进程</span>
 <span class="token function">ps</span> <span class="token parameter variable">-aux</span> <span class="token comment"># 显示所有进程</span>
 <span class="token comment"># 发现A进程占用该端口号</span>
 <span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> A 查看pid
 
-<span class="token function">kill</span> <span class="token number">9</span> pid杀掉进程<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">kill</span> <span class="token number">9</span> pid杀掉进程<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h6 id="设置静态ip后无法连接外网的问题"><a href="#设置静态ip后无法连接外网的问题" class="headerlink" title="设置静态ip后无法连接外网的问题"></a>设置静态ip后无法连接外网的问题</h6><p>因为动态ip会自动分配DNS 而静态ip需要手动配置DNS<br>centos7在&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 写入DNS1&#x3D;114.114.114.114<br>ubuntu在&#x2F;etc&#x2F;resolv.conf 写入nameserver 114.114.114.114</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/adforce/p/3363681.html">Linux配置IP地址</a></p>

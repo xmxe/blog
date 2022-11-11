@@ -52,6 +52,7 @@ img: https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg
 - [细数ThreadLocal三大坑，内存泄露仅是小儿科](https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg)
 - [内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal](https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g)
 - [线上系统因为一个ThreadLocal直接内存飙升](https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig)
+- [ThreadLocal搭配线程池时为什么会造成内存泄漏](https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA)
 
 
 #### 相关文章

@@ -273,6 +273,7 @@ rename “a” “xxx” *.txt
 ```shell
 netstat -antu # 可以查看所有tcp、udp端口开放情况
 netstat -ntlp # 查看正在运行的端口 (t代表tcp 加u查看udp)
+lsof -i: 9090 # 查看某一端口运行的程序
 netstat -ntulp|grep # 端口号 查看指定端口被哪个进程占用的情况
 ps -ef|grep abc # 查找abc进程
 ps -aux # 显示所有进程

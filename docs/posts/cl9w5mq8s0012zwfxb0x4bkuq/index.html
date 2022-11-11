@@ -580,6 +580,7 @@ ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA">Spring Boot启动扩展点超详细总结，再也不怕面试官问了</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247493943&amp;idx=1&amp;sn=9eaa46ed730874fce003c66f76fe9c7f&amp;source=41#wechat_redirect">Spring系列之beanFactory与ApplicationContext</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_je69-0J72X5YMCrS-92MQ">你知道Spring lazy-init懒加载的原理吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/brlEwyKhwhSkljHLL1zmBA">如何自己实现一个简单的Spring Bean容器</a></li>
 </ul>
 <p><strong>BeanFactoryPostProcessor、BeanPostProcessor区别</strong><br>BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor接口是针对bean容器的，它的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.<br>BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：</p>
 <ol>
@@ -735,6 +736,7 @@ bw<span class="token punctuation">.</span><span class="token function">setProper
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rn-6QyuYIsM_P5b4B1OIrg">Spring MVC九大组件之ViewResolver深入分析</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/685jUKqg6I6r0RbmirsRxg">编写Spring MVC控制器的14个技巧！涨知识了！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZKBQSCMPV7T9yNcMQ5_pQQ">SpringMVC异常处理体系深入分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DAWdH_0VWZp3oaws_leJhQ">使用Spring MVC的14个顶级技巧！</a></li>
 </ul>
 <h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a><a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot">Spring Boot</a></h3><p><strong>配置文件默认的查找路径如下：</strong></p>
 <ol>

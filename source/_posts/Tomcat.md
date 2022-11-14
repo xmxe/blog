@@ -13,6 +13,6 @@ title: Tomcat
 - [牛逼！硬核图解Tomcat整体架构](https://mp.weixin.qq.com/s/U49ZIWYRvIYYFkL-06aSXA)
 - [Tomcat深入理解](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494316&idx=1&sn=fb6eb1b78ed195a977bdfbe92a7cc6f4&source=41#wechat_redirect)
 - [Tomcat请求处理流程](https://mp.weixin.qq.com/s/Miw5K0OyE4oytn4U65Hn5g)
-- [Tomcat 有哪些组成部分？讲讲工作原理？](https://mp.weixin.qq.com/s/UilzaN7jQEza7wiwzw4bsg)
+- [Tomcat有哪些组成部分？讲讲工作原理？](https://mp.weixin.qq.com/s/UilzaN7jQEza7wiwzw4bsg)
 - [教你用Java写一个自己的Tomcat容器，涨姿势了](https://mp.weixin.qq.com/s/RpMXgOi8WsMm19S4YOh1aw)
 

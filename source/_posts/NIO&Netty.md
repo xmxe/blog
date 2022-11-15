@@ -1,6 +1,6 @@
 ---
 title: NIO&Netty
-img: https://pic1.zhimg.com/v2-9cd48539cd2c998fd21c6b24086b78de_1440w.jpg?source=172ae18b
+img: https://pic1.zhimg.com/v2-9cd48539cd2c998fd21c6b24086b78de_1440w.jpg
 categories: Java
 ---
 
@@ -9,13 +9,13 @@ categories: Java
 
 > [NIO demo](https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/study_demo/nio)
 
-NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区), Selector(选择区) 。
+NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区),Selector(选择区)。
 IO是面向流的，NIO是面向缓冲区的。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。
 
 
 #### Buffer
 
-NIO中的关键Buffer实现有：ByteBuffer, CharBuffer, DoubleBuffer,FloatBuffer,IntBuffer, LongBuffer, ShortBuffer。分别对应基本数据类型: byte, char,double, float,int, long, short。NIO中还有MappedByteBuffer, HeapByteBuffer,DirectByteBuffer等缓冲区,本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装成NIO Buffer对象，并提供了一组方法，用来方便的访问该块内存。 这块内存被包装成NIO。
+NIO中的关键Buffer实现有：ByteBuffer,CharBuffer,DoubleBuffer,FloatBuffer,IntBuffer,LongBuffer,ShortBuffer。分别对应基本数据类型:byte,char,double,float,int,long,short。NIO中还有MappedByteBuffer,HeapByteBuffer,DirectByteBuffer等缓冲区,本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装成NIO Buffer对象，并提供了一组方法，用来方便的访问该块内存。这块内存被包装成NIO。
 
 Buffer对象，并提供了一组方法，用来方便的访问该块内存，Buffer：顾名思义是一块缓冲区，实际上是一个容器，一个连续数组。Channel提供从文件、网络读取数据的渠道，但是读写的数据都必须经过Buffer。
 向Buffer中写数据：从Channel到Buffer使用fileChannel.read(buf).或者通过Buffer的put()方法 buf.put()
@@ -90,8 +90,8 @@ wrap(byte[] array)//这个缓冲区的数据会存放在byte数组中，bytes数
 wrap(byte[] array, int offset, int length) //在上一个方法的基础上可以指定偏移量和长度，这个offset也就是包装后byteBuffer的position，而length呢就是limit-position的大小，从而我们可以得到limit的位置为length+position(offset)
 limit(), limit(10)等//其中读取和设置这4个属性的方法的命名和jQuery中的val(),val(10)类似，一个负责get，一个负责set
 reset()//把position设置成mark的值，相当于之前做过一个标记，现在要退回到之前标记的地方
-clear()//position = 0;limit = capacity;mark = -1;  有点初始化的味道，但是并不影响底层byte数组的内容
-flip()//limit = position;position = 0;mark = -1;  翻转，也就是让flip之后的position到limit这块区域变成之前的0到position这块，翻转就是将一个处于存数据状态的缓冲区变为一个处于准备取数据的状态 一般在从Buffer读出数据前调用。
+clear()//position = 0;limit = capacity;mark = -1;有点初始化的味道，但是并不影响底层byte数组的内容
+flip()//limit = position;position = 0;mark = -1;翻转，也就是让flip之后的position到limit这块区域变成之前的0到position这块，翻转就是将一个处于存数据状态的缓冲区变为一个处于准备取数据的状态 一般在从Buffer读出数据前调用。
 rewind()//把position设为0，mark设为-1，不改变limit的值 一般在把数据重写入Buffer前调用 或者重新读取
 remaining()//return limit - position;返回limit和position之间相对位置差
 hasRemaining()//return position < limit返回是否还有未读内容
@@ -107,7 +107,6 @@ ByteOrder order()//检索此缓冲区的字节顺序。
 ByteBuffer order(ByteOrder bo)//修改缓冲区的字节顺序。
 ByteBuffer putInt(int value)//编写int值的相对put方法（可选操作） 。以当前字节顺序将包含给定int值的四个字节写入当前位置的缓冲区，然后将位置递增四。
 byte[] array()//返回支持此缓冲区的字节数组（可选操作） 。对此缓冲区内容的修改将导致返回的数组的内容被修改，反之亦然。在调用此方法之前调用hasArray方法，以确保此缓冲区具有可访问的后台阵列。
-    
 Buffer.mark()
 //通过调用Buffer.mark()方法，可以标记Buffer中的一个特定position。之后可以通过调用Buffer.reset()方法恢复到这个position
 //可以使用equals()和compareTo()方法两个Buffer。

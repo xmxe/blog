@@ -548,6 +548,60 @@
 </li>
 <li><p>TCC<br>2PC要求参与者实现了XA协议，通常用来解决多个数据库之间的事务问题，比较局限。在多个系统服务利用api接口相互调用的时候，就不遵守XA协议了，这时候2PC就不适用了。现代企业多采用分布式的微服务，因此更多的是要解决多个微服务之间的分布式事务问题。<br>TCC就是一种解决多个微服务之间的分布式事务问题的方案。TCC是Try、Confirm、Cancel三个词的缩写，其本质是一个应用层面上的2PC，同样分为两个阶段：<br><strong>准备阶段</strong>：协调者调用所有的每个微服务提供的try接口，将整个全局事务涉及到的资源锁定住，若锁定成功try接口向协调者返回yes。<br><strong>提交阶段</strong>：若所有的服务的try接口在阶段一都返回yes，则进入提交阶段，协调者调用所有服务的confirm接口，各个服务进行事务提交。如果有任何一个服务的try接口在阶段一返回no或者超时，则协调者调用所有服务的cancel接口<br>这里有个关键问题，既然TCC是一种服务层面上的2PC。它是如何解决2PC无法应对宕机问题的缺陷的呢？答案是不断重试。</p>
 </li>
+<li><p><a target="_blank" rel="noopener" href="http://seata.io/zh-cn/">seata官方网站</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YxlAtPmCZ8h_oyPStXJP_A">一致性协议算法-2PC、3PC、Paxos、Raft、ZAB、NWR详解</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JZnLbBrRx_fDtnsYsRs4Aw">阿里终面：分布式事务原理</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eczKVv7Jgt4f0Mhwaq1JXw">分布式事务，阿里为什么钟爱TCC</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VIuJ5ywyjfGjAWd3Fb-XWg">七种分布式事务的解决方案，一次讲给你听！</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J3BMnwRD-Ag8BAlJQiYuhg">对比7种分布式事务方案，还是偏爱阿里开源的Seata，真香</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hBSY7VwHu9kM_3OrJ8WDwA">实战！阿里神器Seata实现TCC模式解决分布式事务</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Aj_BECgTZWkxX-dy5sayOw">分布式事务的6种解决方案，写得非常好！</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MbPRpBudXtdfl8o4hlqNlQ">我还不懂什么是分布式事务</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494401&amp;idx=1&amp;sn=915f97e20b4cb58bea2f638389ff60e5&amp;source=41#wechat_redirect">一文看懂分布式事务</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QpOwudYMY1HMRpU6SIXjzA">面试官：聊聊分布式事务，再说说解决方案！</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/83-I7hPDuWRTTfrldHJ0VA">看了那么多博客，还是不懂TCC，不妨看看这个案例！</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EQuVJGFi6SEj3Qj2FS-uSg">听说TCC不支持OpenFeign</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/47efAPrm10l1Bxn1zECwvA">五分钟带你体验一把分布式事务</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BJHmVkNrvNL87hBT8DM8vg">XA事务水很深，小伙子我怕你把握不住</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cZabAt7JF4QrQHERHHAWjA">你这Saga事务保“隔离性”吗？</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jcavJfjseBvaETAuTPnRqw">哪种分布式事务处理方案效率最高</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6DOtO5OQyCL8bR03Z-3q9A">一文搞明白分布式事务解决方案</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fzlr-6pDPWKbwVuJlXe8sA">手把手带领小伙伴们写一个分布式事务案例</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NbnCiRwRFUZGym5vDxOoPQ">Spring Boot多数据源如何处理事务</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lwCNNCyG9wwtRHsni5pD8g">亿级流量架构分布式事务如何实现？</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ic57T3Yj2C_5tpdnM39IrQ">SpringBoot分布式事务的解决方案（JTA+Atomic+多数据源）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/29PmqK_bzDgh8bl9SBY3Uw">分布式事务，原理简单，写起来全是坑！</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kiRD3Hmdx2b__cBWeQOTWQ">分布式事务处理方案大PK！</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wTF3LlUKtH3lzsVgCLdCpQ">如何用RabbitMQ解决分布式事务</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XRGIO7S9q9XqAfwqWr0OsQ">MySQL为什么需要两阶段提交？</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nM81BRyQRTWab78a6KTD-g">阿里Seata新版本终于解决了TCC模式的幂等、悬挂和空回滚问题</a></p>
+</li>
 </ul>
 <h4 id="Transactional"><a href="#Transactional" class="headerlink" title="@Transactional"></a>@Transactional</h4><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fNpWQow-CRxSajJ-PNZuSw">使用@Transactional时常犯的N种错误</a></li>

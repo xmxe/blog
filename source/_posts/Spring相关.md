@@ -9,7 +9,7 @@ summary: Spring注解、Bean、循环依赖、Spring MVC、原始XMl配置
 top: true
 ---
 
-> 可以看下我写的关于Spring扩展插件的一个[demo](https://github.com/xmxe/springboot/tree/master/springboot-lifecycle)，里面有很多Spring扩展的测试。
+> 可以看下我写的关于Spring扩展插件的一个[示例](https://github.com/xmxe/springboot/tree/master/springboot-lifecycle)，里面有很多Spring扩展的测试。
 
 ### Spring相关注解
 

@@ -477,8 +477,8 @@
                 <h3 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/study_demo/nio">NIO demo</a></p>
 </blockquote>
-<p>NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区), Selector(选择区) 。<br>IO是面向流的，NIO是面向缓冲区的。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p>
-<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h4><p>NIO中的关键Buffer实现有：ByteBuffer, CharBuffer, DoubleBuffer,FloatBuffer,IntBuffer, LongBuffer, ShortBuffer。分别对应基本数据类型: byte, char,double, float,int, long, short。NIO中还有MappedByteBuffer, HeapByteBuffer,DirectByteBuffer等缓冲区,本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装成NIO Buffer对象，并提供了一组方法，用来方便的访问该块内存。 这块内存被包装成NIO。</p>
+<p>NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区),Selector(选择区)。<br>IO是面向流的，NIO是面向缓冲区的。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p>
+<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h4><p>NIO中的关键Buffer实现有：ByteBuffer,CharBuffer,DoubleBuffer,FloatBuffer,IntBuffer,LongBuffer,ShortBuffer。分别对应基本数据类型:byte,char,double,float,int,long,short。NIO中还有MappedByteBuffer,HeapByteBuffer,DirectByteBuffer等缓冲区,本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装成NIO Buffer对象，并提供了一组方法，用来方便的访问该块内存。这块内存被包装成NIO。</p>
 <p>Buffer对象，并提供了一组方法，用来方便的访问该块内存，Buffer：顾名思义是一块缓冲区，实际上是一个容器，一个连续数组。Channel提供从文件、网络读取数据的渠道，但是读写的数据都必须经过Buffer。<br>向Buffer中写数据：从Channel到Buffer使用fileChannel.read(buf).或者通过Buffer的put()方法 buf.put()<br>从Buffer中读取数据：从Buffer到Channel使用channel.write(buf)) .或者使用get()方法 buf.get()</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
 * JAVA处理大文件，一般用BufferedReader,BufferedInputStream这类带缓冲的IO类，不过如果文件超大的话，更快的方式是采用
@@ -546,8 +546,8 @@
 <span class="token function">wrap</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">,</span> <span class="token keyword">int</span> offset<span class="token punctuation">,</span> <span class="token keyword">int</span> length<span class="token punctuation">)</span> <span class="token comment">//在上一个方法的基础上可以指定偏移量和长度，这个offset也就是包装后byteBuffer的position，而length呢就是limit-position的大小，从而我们可以得到limit的位置为length+position(offset)</span>
 <span class="token function">limit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">limit</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>等<span class="token comment">//其中读取和设置这4个属性的方法的命名和jQuery中的val(),val(10)类似，一个负责get，一个负责set</span>
 <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//把position设置成mark的值，相当于之前做过一个标记，现在要退回到之前标记的地方</span>
-<span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//position = 0;limit = capacity;mark = -1;  有点初始化的味道，但是并不影响底层byte数组的内容</span>
-<span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//limit = position;position = 0;mark = -1;  翻转，也就是让flip之后的position到limit这块区域变成之前的0到position这块，翻转就是将一个处于存数据状态的缓冲区变为一个处于准备取数据的状态 一般在从Buffer读出数据前调用。</span>
+<span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//position = 0;limit = capacity;mark = -1;有点初始化的味道，但是并不影响底层byte数组的内容</span>
+<span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//limit = position;position = 0;mark = -1;翻转，也就是让flip之后的position到limit这块区域变成之前的0到position这块，翻转就是将一个处于存数据状态的缓冲区变为一个处于准备取数据的状态 一般在从Buffer读出数据前调用。</span>
 <span class="token function">rewind</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//把position设为0，mark设为-1，不改变limit的值 一般在把数据重写入Buffer前调用 或者重新读取</span>
 <span class="token function">remaining</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//return limit - position;返回limit和position之间相对位置差</span>
 <span class="token function">hasRemaining</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//return position &lt; limit返回是否还有未读内容</span>
@@ -563,14 +563,13 @@
 <span class="token class-name">ByteBuffer</span> <span class="token function">order</span><span class="token punctuation">(</span><span class="token class-name">ByteOrder</span> bo<span class="token punctuation">)</span><span class="token comment">//修改缓冲区的字节顺序。</span>
 <span class="token class-name">ByteBuffer</span> <span class="token function">putInt</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span><span class="token comment">//编写int值的相对put方法（可选操作） 。以当前字节顺序将包含给定int值的四个字节写入当前位置的缓冲区，然后将位置递增四。</span>
 <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//返回支持此缓冲区的字节数组（可选操作） 。对此缓冲区内容的修改将导致返回的数组的内容被修改，反之亦然。在调用此方法之前调用hasArray方法，以确保此缓冲区具有可访问的后台阵列。</span>
-    
 <span class="token class-name">Buffer</span><span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token comment">//通过调用Buffer.mark()方法，可以标记Buffer中的一个特定position。之后可以通过调用Buffer.reset()方法恢复到这个position</span>
 <span class="token comment">//可以使用equals()和compareTo()方法两个Buffer。</span>
 <span class="token function">equals</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token comment">//当满足下列条件时，表示两个Buffer相等：有相同的类型（byte、char、int等）。Buffer中剩余的byte、char等的个数相等。Buffer中所有剩余的byte、char等都相同。如你所见，equals只是比较Buffer的一部分，不是每一个在它里面的元素都比较。实际上，它只比较Buffer中的剩余元素。</span>
 <span class="token function">compareTo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>方法
-<span class="token comment">//compareTo()方法比较两个Buffer的剩余元素(byte、char等)， 如果满足下列条件，则认为一个Buffer“小于”另一个Buffer：第一个不相等的元素小于另一个Buffer中对应的元素 。所有元素都相等，但第一个Buffer比另一个先耗尽(第一个Buffer的元素个数比另一个少)。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">//compareTo()方法比较两个Buffer的剩余元素(byte、char等)， 如果满足下列条件，则认为一个Buffer“小于”另一个Buffer：第一个不相等的元素小于另一个Buffer中对应的元素 。所有元素都相等，但第一个Buffer比另一个先耗尽(第一个Buffer的元素个数比另一个少)。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <h4 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h4><p>NIO中的Channel的主要实现有：FileChannel(从文件中读写数据) 、DatagramChannel(通过UDP读写网络中的数据)、SocketChannel(通过TCP读写网络中的数据)、ServerSocketChannel(可以监听新进来的TCP连接，像Web服务器那样。对每一个新进来的连接都会创建一个SocketChannel)</p>
@@ -1305,7 +1304,7 @@ key<span class="token punctuation">.</span><span class="token function">readyOps
                 <a href="/blog/posts/clahuatsn0000skfxevq86cac/">
                     <div class="card-image">
                         
-                        <img src="https://pic1.zhimg.com/v2-e69bde8250c0acfa3082076b373d6998_1440w.jpg?source=172ae18b" class="responsive-img" alt="常见的限流算法">
+                        <img src="https://pic1.zhimg.com/v2-e69bde8250c0acfa3082076b373d6998_1440w.jpg" class="responsive-img" alt="常见的限流算法">
                         
                         <span class="card-title">常见的限流算法</span>
                     </div>
@@ -1313,8 +1312,11 @@ key<span class="token punctuation">.</span><span class="token function">readyOps
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            使用AomicInteger实现限流AomicInteger构造方法
-public AtomicInteger(int initialValue) //创建具有给定初始值的新AtomicInteger。参数：initialValue - 初
+                            
+限流算法示例
+
+使用AomicInteger实现限流AomicInteger构造方法
+public AtomicInteger(int initialValue) //创建具有给定初始值的新AtomicInteger。参数：initial
                         
 
                     </div>
@@ -1357,7 +1359,7 @@ public AtomicInteger(int initialValue) //创建具有给定初始值的新Atomic
                 <a href="/blog/posts/clac52pwo000044fx42e41jo7/">
                     <div class="card-image">
                         
-                        <img src="https://pic1.zhimg.com/v2-e3810d2595d2bee7f0c807d8efaac578_1440w.jpg?source=172ae18b" class="responsive-img" alt="延时队列">
+                        <img src="https://pic1.zhimg.com/v2-e3810d2595d2bee7f0c807d8efaac578_1440w.jpg" class="responsive-img" alt="延时队列">
                         
                         <span class="card-title">延时队列</span>
                     </div>

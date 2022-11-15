@@ -5,6 +5,8 @@ index_img: /assert/threadlocal.jpg
 img: https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg
 ---
 
+> [ThreadLocalTest.java](https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/study_demo/thread/ThreadLocalTest.java)
+
 #### ThreadLocal使用场景
 当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。
 

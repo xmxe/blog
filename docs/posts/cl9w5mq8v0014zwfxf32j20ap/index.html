@@ -474,7 +474,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="ThreadLocal使用场景"><a href="#ThreadLocal使用场景" class="headerlink" title="ThreadLocal使用场景"></a>ThreadLocal使用场景</h4><p>当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。</p>
+                <blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/study_demo/thread/ThreadLocalTest.java">ThreadLocalTest.java</a></p>
+</blockquote>
+<h4 id="ThreadLocal使用场景"><a href="#ThreadLocal使用场景" class="headerlink" title="ThreadLocal使用场景"></a>ThreadLocal使用场景</h4><p>当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。</p>
 <h4 id="ThreadLocal原理"><a href="#ThreadLocal原理" class="headerlink" title="ThreadLocal原理"></a>ThreadLocal原理</h4><p>每个线程是一个Thread实例，其内部维护一个threadLocals的实例成员，其类型是ThreadLocal.ThreadLocalMap。通过实例化ThreadLocal实例，我们可以对当前运行的线程设置一些线程私有的变量，通过调用ThreadLocal的set和get方法存取。ThreadLocal本身并不是一个容器，我们存取的value实际上存储在ThreadLocalMap中，ThreadLocal只是作为TheadLocalMap的key。每个线程实例都对应一个TheadLocalMap实例，我们可以在同一个线程里实例化很多个ThreadLocal来存储很多种类型的值，这些ThreadLocal实例分别作为key，对应各自的value，最终存储在Entry table数组中。</p>
 <p>当调用ThreadLocal的set&#x2F;get进行赋值&#x2F;取值操作时，首先获取当前线程的ThreadLocalMap实例，然后就像操作一个普通的map一样，进行put和get。</p>
 <h4 id="ThreadLocalMap为什么使用弱引用而不是强引用？"><a href="#ThreadLocalMap为什么使用弱引用而不是强引用？" class="headerlink" title="ThreadLocalMap为什么使用弱引用而不是强引用？"></a>ThreadLocalMap为什么使用弱引用而不是强引用？</h4><h5 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h5><p>一直活着：类似“Object obj&#x3D;new Object()”这类的引用，只要强引用还存在，垃圾收集器永远不会回收掉被引用的对象实例。</p>
@@ -753,7 +756,10 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            原理并发编程中的三个概念:原子性问题，可见性问题，有序性问题原子性：即一个操作或者多个操作,要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账可见性：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线
+                            
+VolatileTest.java
+
+原理并发编程中的三个概念:原子性问题，可见性问题，有序性问题原子性：即一个操作或者多个操作,要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账可见性：是指当多个线程访问同一个变
                         
 
                     </div>

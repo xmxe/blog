@@ -5,6 +5,8 @@ index_img: /assert/volatile.jpg
 img: https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg
 ---
 
+> [VolatileTest.java](https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/study_demo/thread/VolatileTest.java)
+
 ##### 原理
 
 并发编程中的三个概念:原子性问题，可见性问题，有序性问题

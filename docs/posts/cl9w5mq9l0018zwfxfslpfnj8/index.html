@@ -478,7 +478,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><h4 id="Zookeeper基本原理"><a href="#Zookeeper基本原理" class="headerlink" title="Zookeeper基本原理"></a>Zookeeper基本原理</h4><ol>
+                <blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/study_demo/zookeeper">zookeeper demo</a></p>
+</blockquote>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><h4 id="Zookeeper基本原理"><a href="#Zookeeper基本原理" class="headerlink" title="Zookeeper基本原理"></a>Zookeeper基本原理</h4><ol>
 <li>ZooKeeper分为<strong>服务器端（Server）</strong>和<strong>客户端（Client）</strong>，客户端可以连接到整个ZooKeeper服务的任意服务器上（除非leaderServes参数被显式设置，leader不允许接受客户端连接）。</li>
 <li>客户端使用并维护一个TCP连接，通过这个连接发送请求、接受响应、获取观察的事件以及发送心跳。如果这个TCP连接中断，客户端将自动尝试连接到另外的ZooKeeper服务器。客户端第一次连接到ZooKeeper服务时，接受这个连接的ZooKeeper服务器会为这个客户端建立一个会话。当这个客户端连接到另外的服务器时，这个会话会被新的服务器重新建立。</li>
 <li>上图中每一个Server代表一个安装Zookeeper服务的机器，即是整个提供Zookeeper服务的集群（或者是由伪集群组成）；</li>
@@ -973,7 +976,7 @@ server.3&#x3D;192.168.236.130:2888:3888<span aria-hidden="true" class="line-numb
 Java实现的排序算法
 
 
-漫画：“排序算法” 大总结
+漫画：“排序算法”大总结
 因为排序不明白，被面试官锤了一顿
 史上最好的排序和数据结构入门
 
@@ -984,7 +987,7 @@ Java实现的排序算法
 一口气搞懂「链表」，就靠这20+张图了
 
 栈
-面试
+面试官
                         
 
                     </div>

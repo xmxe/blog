@@ -491,7 +491,7 @@
         <span class="token class-name">OrderDelay</span> oider4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrderDelay</span><span class="token punctuation">(</span><span class="token string">"000004"</span><span class="token punctuation">,</span><span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">MILLISECONDS</span><span class="token punctuation">.</span><span class="token function">convert</span><span class="token punctuation">(</span><span class="token number">31</span><span class="token punctuation">,</span><span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token class-name">OrderDelay</span> oider5 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrderDelay</span><span class="token punctuation">(</span><span class="token string">"000005"</span><span class="token punctuation">,</span><span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">MILLISECONDS</span><span class="token punctuation">.</span><span class="token function">convert</span><span class="token punctuation">(</span><span class="token number">28</span><span class="token punctuation">,</span><span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     
-        <span class="token class-name">DelayQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">OrderDelay</span><span class="token punctuation">></span></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DelayQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">OrderDelay</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token class-name">DelayQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">OrderDelay</span><span class="token punctuation">></span></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DelayQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">OrderDelay</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
         queue<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>oider1<span class="token punctuation">)</span><span class="token punctuation">;</span>
         queue<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>oider2<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -513,7 +513,7 @@
                 <span class="token punctuation">&#125;</span>
                 <span class="token keyword">if</span><span class="token punctuation">(</span>queue<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
             <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token punctuation">&#125;</span>  
         <span class="token punctuation">&#125;</span>
         
@@ -538,7 +538,7 @@
         <span class="token keyword">this</span><span class="token punctuation">.</span>timeout <span class="token operator">=</span> timeout <span class="token operator">+</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
  
-    <span class="token comment">// compareTo 方法必须提供与 getDelay 方法一致的排序</span>
+    <span class="token comment">// compareTo方法必须提供与getDelay方法一致的排序</span>
     <span class="token comment">// 当生产者线程调用put之类的方法加入元素时，会触发Delayed接口中的compareTo方法进行排序，</span>
     <span class="token comment">// 也就是说队列中元素的顺序是按到期时间排序的，而非它们进入队列的顺序。排在队列头部的元素是最早到期的，越往后到期时间赿晚。</span>
     <span class="token comment">// 添加第一个元素不会触发排序</span>
@@ -546,7 +546,7 @@
         <span class="token keyword">if</span> <span class="token punctuation">(</span>other <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">)</span>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
         <span class="token class-name">OrderDelay</span> t <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">OrderDelay</span><span class="token punctuation">)</span> other<span class="token punctuation">;</span>
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"调用compareTo！比较的对象是"</span><span class="token operator">+</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getOrderId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"和"</span><span class="token operator">+</span>t<span class="token punctuation">.</span><span class="token function">getOrderId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 排序 排序的目的是将快要超时的对象放到队头;    </span>
+        <span class="token comment">// 排序 排序的目的是将快要超时的对象放到队头;</span>
         <span class="token keyword">long</span> d <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getDelay</span><span class="token punctuation">(</span><span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">MILLISECONDS</span><span class="token punctuation">)</span> <span class="token operator">-</span> t<span class="token punctuation">.</span><span class="token function">getDelay</span><span class="token punctuation">(</span><span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">MILLISECONDS</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token punctuation">(</span>d <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>d <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
@@ -858,7 +858,7 @@
                 <a href="/blog/posts/clac7o1go000034fxe69ybafn/">
                     <div class="card-image">
                         
-                        <img src="https://pic1.zhimg.com/v2-9cd48539cd2c998fd21c6b24086b78de_1440w.jpg?source=172ae18b" class="responsive-img" alt="NIO&amp;Netty">
+                        <img src="https://pic1.zhimg.com/v2-9cd48539cd2c998fd21c6b24086b78de_1440w.jpg" class="responsive-img" alt="NIO&amp;Netty">
                         
                         <span class="card-title">NIO&amp;Netty</span>
                     </div>
@@ -869,7 +869,7 @@
                             NIO
 NIO demo
 
-NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区), Selector(选择区) 。IO是面向流的，NIO是面向缓冲区的。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Bu
+NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区),Selector(选择区)。IO是面向流的，NIO是面向缓冲区的。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buff
                         
 
                     </div>

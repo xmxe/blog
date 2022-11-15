@@ -7,7 +7,7 @@ img: https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg
 
 #### 安装
 
-##### 在线安装 
+##### 在线安装
 
 1. 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑 /etc/selinux/config，设置两个关键变量。
 ```shell

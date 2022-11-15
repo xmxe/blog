@@ -475,7 +475,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>可以看下我写的关于Spring扩展插件的一个<a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot/tree/master/springboot-lifecycle">demo</a>，里面有很多Spring扩展的测试。</p>
+<p>可以看下我写的关于Spring扩展插件的一个<a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot/tree/master/springboot-lifecycle">示例</a>，里面有很多Spring扩展的测试。</p>
 </blockquote>
 <h3 id="Spring相关注解"><a href="#Spring相关注解" class="headerlink" title="Spring相关注解"></a>Spring相关注解</h3><h5 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h5><p>主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的),GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交,在方法里面标记，可以作为一个对象接收,也可以作为字符串接收，关键在于Spring中对json的解析配置.</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// jquery使用下面的请求时可以使用@RequestBody注解接收参数</span>

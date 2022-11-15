@@ -65,3 +65,5 @@ img: https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg
 - [100%保证线程安全，还有这种黑科技](https://mp.weixin.qq.com/s/gfF3y-mnBrnW-VoGaQIn8g)
 - [ThreadLocal夺命11连问](https://mp.weixin.qq.com/s/s6waqV8X7KPKip8zbOIDqQ)
 - [问到ThreadLocal，看这一篇就够了](https://mp.weixin.qq.com/s/4scjE1UrYntX35qBN3Fxgg)
+- [ThreadLocal父子线程之间该如何传递数据？](https://mp.weixin.qq.com/s/yZNBAtN9AFocQ2-FR9so6g)
+

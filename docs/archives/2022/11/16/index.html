@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: JS, 博客 blog">
+    <meta name="keywords" content="归档: 2022/11, 博客 blog">
     <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>分类: JS | 熊猫小二</title>
+    <title>归档: 2022/11 | 熊猫小二</title>
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/awesome/css/all.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xmxe/blog/docs/libs/materialize/materialize.min.css">
@@ -366,313 +366,176 @@
 
 <main class="content">
 
-    <style>
-    /* 文章分类书本样式 */
-    .chip-container .tag-chips {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-
-    .chip-container .tag-chips a {
-        margin: 0 7px 10px;
-    }
-
-    .chip-container .chip {
-        max-width: calc(100% / 4);
-        min-width: 10em;
-        height: 200px;
-        position: relative;
-        transition: .5s linear;
-        padding: 19px 0;
-        line-height: 20px;
-        z-index: 990;
-        border-radius: 5px 15px 15px 5px;
-        transform-origin: left center 0;
-    }
-
-    .chip-container .notebook-cover::before {
-        content: "";
-        position: absolute;
-        width: 10px;
-        height: calc(100% + 2px);
-        top: -1px;
-        z-index: 100;
-        border-radius: 2px;
-        right: 25px;
-        transition: 2s ease;
-        background: linear-gradient(to right, #1e606e 0, #2e95aa 12%, #1e606e 25%, #2e95aa 37%, #1e606e 50%, #2e95aa 62%, #1e606e 75%, #2e95aa 87%, #1e606e 100%);
-    }
-
-    .chip .notebook-skin {
-        height: 50px;
-        width: 100%;
-        background: #e8e8e0;
-        margin-top: 42px;
-        padding: 10px 32px 64px 10px;
-        font-size: 19px;
-        position: relative;
-        z-index: 10;
-        color: #222;
-        text-align: left;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-    }
-
-    .chip .notebook-skin:before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 15px;
-        left: 0;
-        bottom: 0;
-        background: #cddc39;
-    }
-
-    .notebook-cover {
-        background: #cc4b48;
-        height: 200px;
-        width: 140px;
-        position: absolute;
-        border-radius: 5px 15px 15px 5px;
-        z-index: 10;
-        transition: .5s linear;
-        transform-style: preserve-3d;
-        transform-origin: left center 0;
-    }
-
-    .moleskine-wrapper {
-        max-width: calc(100% / 4);
-        min-width: 10em;
-    }
-
-    .moleskine-notebook:hover .notebook-cover {
-        transform: rotateY(-50deg);
-        z-index: 99;
-        box-shadow: 20px 10px 50px rgba(0, 0, 0, .2);
-    }
-
-    .moleskine-notebook {
-        height: 200px;
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        transition: .5s linear;
-        border-radius: 5px 15px 15px 5px;
-        transform-origin: left center 0;
-    }
-
-    .moleskine-notebook:hover {
-        transform: rotateZ(-10deg);
-    }
-
-    .notebook-page.dotted {
-        background: linear-gradient(to bottom, #fbfae8 9px, #e4e4e4 1px);
-        background-size: 100% 10px;
-    }
-
-    .chip-container .chip:hover {
-        filter: invert(.1);
-    }
-
-    .notebook-page {
-        height: 100%;
-        width: 140px;
-        position: absolute;
-        top: 10px;
-        background-color: #fbfae8;
-        z-index: 0;
-        border-radius: 5px 16px 16px 5px;
-        overflow: hidden;
-    }
-</style>
-
-
-
-<div id="category-cloud" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                
-                
-                <a href="/blog/categories/Java/" title="Java: 20">
-                    <!--<span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">Java
-                        <span class="tag-length">20</span>
-                    </span>-->
-
-                    <div class="moleskine-wrapper">
-                        <div class="moleskine-notebook">
-                            <div class="chip notebook-cover center-align waves-effect waves-light
-                               chip-default "
-                                style="background-color: #F9EBEA;">
-                                <div
-                                    class="notebook-skin
-                                       chip-default ">
-                                    Java
-                                </div>
-                            </div>
-                            <div class="notebook-page dotted"></div>
-                        </div>
-                    </div>
-                </a>
-
-                
-                
-                <a href="/blog/categories/JS/" title="JS: 1">
-                    <!--<span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #F5EEF8;">JS
-                        <span class="tag-length">1</span>
-                    </span>-->
-
-                    <div class="moleskine-wrapper">
-                        <div class="moleskine-notebook">
-                            <div class="chip notebook-cover center-align waves-effect waves-light
-                               chip-active "
-                                style="background-color: #F5EEF8;">
-                                <div
-                                    class="notebook-skin
-                                       chip-active ">
-                                    JS
-                                </div>
-                            </div>
-                            <div class="notebook-page dotted"></div>
-                        </div>
-                    </div>
-                </a>
-
-                
-                
-                <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库: 8">
-                    <!--<span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">数据库
-                        <span class="tag-length">8</span>
-                    </span>-->
-
-                    <div class="moleskine-wrapper">
-                        <div class="moleskine-notebook">
-                            <div class="chip notebook-cover center-align waves-effect waves-light
-                               chip-default "
-                                style="background-color: #D5F5E3;">
-                                <div
-                                    class="notebook-skin
-                                       chip-default ">
-                                    数据库
-                                </div>
-                            </div>
-                            <div class="notebook-page dotted"></div>
-                        </div>
-                    </div>
-                </a>
-
-                
-                
-                <a href="/blog/categories/Spring/" title="Spring: 3">
-                    <!--<span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #E8F8F5;">Spring
-                        <span class="tag-length">3</span>
-                    </span>-->
-
-                    <div class="moleskine-wrapper">
-                        <div class="moleskine-notebook">
-                            <div class="chip notebook-cover center-align waves-effect waves-light
-                               chip-default "
-                                style="background-color: #E8F8F5;">
-                                <div
-                                    class="notebook-skin
-                                       chip-default ">
-                                    Spring
-                                </div>
-                            </div>
-                            <div class="notebook-page dotted"></div>
-                        </div>
-                    </div>
-                </a>
-
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
+    
 
     
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/blog/posts/cl9w5mq7f000dzwfx7wk6a36u/" >
-                        <div class="card-image tag-image">
-                            
-                                <img src="https://picx1.zhimg.com/v2-ff627d205bd26ab15e4bdefd5daf1dda_1440w.jpg" class="responsive-img" alt="JavaScript相关">
-                            
-                            <span class="card-title">JavaScript相关</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                JQuery、JS常用方法json字符串  var str1 &#x3D; ‘{“name”:”cxh”,”sex”:”man”}’;json对象  var str2 &#x3D; {name:”cxh”,sex:”man”};
-**obj
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <!-- 
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
-                                -->
-
-                                
-                                    <i class="fas fa-user fa-fw"></i>
-                                    <a href="/blog/about" >
-                                        xmxe
-                                    </a>
-                                
-                            </span>
-                            <span class="publish-author">
-                                
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                        <a href="/blog/categories/JS/" class="post-category" >
-                                            JS
-                                        </a>
-                                    
-                                
-                      
-                                    
-                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" >
-                                            <span class="chip bg-color">
-                                                随笔
-                                            </span>
-                                        </a>
-                                    
-                                
-                                
-
-                            </span>
-                        </div>
-                    </div>
-
+    <div class="container archive-container ">
+        <div class="card">
+            <div class="card-content">
+                <div class="tag-chips">   
+                    <span onclick="showTime()" id="sp-timeline" class="chip center-align waves-effect waves-light" data-tagname="时间轴" style="background: rgb(249, 235, 234); color: rgba(0, 0, 0, 0.6);">时间轴
+                    </span>
+                    <span onclick="showTable()" id="sp-table" class="chip center-align waves-effect waves-light" data-tagname="时间列表" style="background: linear-gradient(to right, rgb(76, 191, 48) 0%, rgb(15, 157, 88) 100%); color: rgb(255, 255, 255);">时间列表
+                    </span>
                 </div>
             </div>
-            
         </div>
-    </article>
+    </div>
+    
+    <!-- 时间轴 -->
+    <div id="cd-timeline" class="container">
+        
+        <div class="cd-timeline-block">
+
+            
+            
+            
+            <div class="cd-timeline-img year" data-aos="zoom-in-up">
+                <a href="/blog/archives/2022">2022</a>
+            </div>
+            
+
+            
+            
+            
+            <div class="cd-timeline-img month" data-aos="zoom-in-up">
+                <a href="/blog/archives/2022/11">11</a>
+            </div>
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>16</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/blog/posts/clajaqfe500022wfx7eyuev33/">
+                            <div class="card-image">
+                                
+                                <img src="https://picd.zhimg.com/v2-f9c4c6b8a4b0f096032990926e1f0a1a_1440w.jpg" class="responsive-img" alt="Spring Security介绍">
+                                
+                                <span class="card-title">Spring Security介绍</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                    
+github地址
+
+HttpSecurity常用方法
+
+
+
+HttpSecurity常用方法
+说明
+
+
+
+openidLogin()
+用于基于OpenId的验证
+
+
+headers()
+将安全标头添加到响应
+
+
+cors()
+配置跨域资源
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <!--
+                                    <i class="far fa-clock fa-fw icon-date"></i>2022-11-16
+                                    -->
+                                    
+                                        <i class="fas fa-user fa-fw"></i>
+                                        <a href="/blog/about" >
+                                            xmxe
+                                        </a>
+                                    
+                                </span>
+                                <span class="publish-author">
+                                    
+                                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                        
+                                            <a href="/blog/categories/Java/" class="post-category">
+                                                Java
+                                            </a>
+                                        
+                                            <a href="/blog/categories/Spring/" class="post-category">
+                                                Spring
+                                            </a>
+                                        
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+    </div>
+
+    <!-- 时间列表 -->
+    <div id="cd-table" class="container">
+        <div class="card">
+            <div class="card-content">
+                <div class="list-group">    
+                    <hr>
+                    
+                    
+                      
+                        
+                        <p class="h5">2022</p>
+                                     
+                      <a href="/blog/posts/clajaqfe500022wfx7eyuev33/" class="list-group-item list-group-item-action">
+                        <time>11-16</time>
+                        <div class="list-group-item-title">Spring Security介绍</div>
+                      </a>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </main>
 
 
 
+<script>
+    if(sessionStorage.getItem('archive') === 'table'){
+        showTable()
+    }else{
+        showTime()
+    }
+    function showTime() {
+        sessionStorage.setItem('archive','time')
+        $("#cd-timeline").show();
+        $("#cd-table").hide();
+        $("#sp-timeline").css('background', 'linear-gradient(to right, #4cbf30 0%, #0f9d58 100%)');
+        $("#sp-timeline").css('color', '#fff');
+        $("#sp-table").css('background', '#F9EBEA')
+        $("#sp-table").css('color', 'rgba(0,0,0,0.6)');
+    }
+
+    function showTable() {
+        sessionStorage.setItem('archive','table')
+        $("#cd-timeline").hide();
+        $("#cd-table").show();
+        $("#sp-table").css('background', 'linear-gradient(to right, #4cbf30 0%, #0f9d58 100%)');
+        $("#sp-table").css('color', '#fff');
+        $("#sp-timeline").css('background', '#F9EBEA')
+        $("#sp-timeline").css('color', 'rgba(0,0,0,0.6)');
+    }
+
+</script>
 
     <footer class="page-footer bg-color">
     

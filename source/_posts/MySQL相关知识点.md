@@ -409,6 +409,7 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 - [MySQL怎么保证备份数据的一致性？](https://mp.weixin.qq.com/s/zOOBkcl8Ns7Kk-k-WaXNhw)
 - [删库不跑路！我含泪写下了MySQL数据恢复大法…](https://mp.weixin.qq.com/s/jgM0aZY7UJSA2NMnkmKO3Q)
 - [京东一面：MySQL主备延迟有哪些坑？主备切换策略](https://mp.weixin.qq.com/s/SXnwM_n8UVMkKF04cDVNtw)
+- [MySQL主从数据不一致，怎么办？](https://mp.weixin.qq.com/s/ALcivJKxtTZUHS-HTnSsXA)
 
 
 #### other
@@ -434,3 +435,5 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 - [再有人问你什么是MVCC，就把这篇文章发给他！](https://mp.weixin.qq.com/s/WZa5UKYgU-pYKbvovLt1YQ)
 - [MySQL最朴素的监控方式](https://mp.weixin.qq.com/s/meS5Au1o9qdrSv7505mIcA)
 - [1亿条数据批量插入MySQL，哪种方式最快](https://mp.weixin.qq.com/s/c71ATJLT6_KXtb_iiUlMjg)
+- [6种MySQL数据库平滑扩容方案剖析](https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing)
+

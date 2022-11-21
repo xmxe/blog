@@ -402,6 +402,118 @@ test('1234').catch(function(err) {
 [写给Java程序员的前端Promise教程](https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ)
 
 
+#### await、async
+
+async是一个修饰符，async定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数
+```js
+// 0. async基础用法测试
+async function fun0() {
+    console.log(1)
+    return 1
+}
+fun0().then( x => { console.log(x) })  //  输出结果 1， 1，
+
+async function funa() {
+    console.log('a')
+    return 'a'
+}
+funa().then( x => { console.log(x) })  //  输出结果a， a，
+
+async function funo() {
+    console.log({})
+    return {}
+}
+funo().then( x => { console.log(x) })   // 输出结果 {}  {}
+
+async function funp() {
+    console.log('Promise')
+    return new Promise(function(resolve, reject){
+        resolve('Promise')
+    })
+}
+
+funp().then( x => { console.log(x) })   // 输出promise  promise
+```
+await也是一个修饰符，await操作符用于等待一个Promise对象。它只能在异步函数async function中使用(await关键字只能放在async函数内部)，await关键字的作用就是返回Promise对象的处理结果，如果await后面并不是一个Promise的返回值，则会按照同步程序返回该值本身
+```js
+//  await关键字只能放在async函数内部，await关键字的作用就是获取Promise中返回的内容，获取的是Promise函数中resolve或者reject的值
+// 如果await后面并不是一个Promise的返回值，则会按照同步程序返回值处理,为undefined
+const bbb = function(){ return 'string'}
+
+async function funAsy() {
+   const a = await 1
+   const b = await new Promise((resolve, reject)=>{
+        setTimeout(function(){
+           resolve('time')
+        }, 3000)
+   })
+   const c = await bbb()
+   console.log(a, b, c)
+}
+funAsy()  //  运行结果是3秒钟之后输出1，time,string,
+```
+
+那么由此看来async/await的综合用法如下
+
+```js
+// 1.定义一个或多个普通函数，函数必须返回Promise对象，如果返回其他类型的数据，将按照普通同步程序处理
+function log(time) {
+    return new Promise((resolve, reject)=> {
+        setTimeout(function(){
+           console.log(time)
+           resolve()
+        }, time)
+    })
+}
+async function fun() {
+    await log(5000)
+    await log(10000)
+    log(1000)
+    console.log(1)
+}
+fun()
+
+// 2.如果不使用promise的方法的话
+function log2(time) {
+   setTimeout(function(){
+       console.log(time)
+       return 1
+    }, time)
+}
+async function fun1() {
+    const a = await log2(5000)
+    const b = await log2(10000)
+    const c = log2(2000)
+    console.log(a)
+    console.log(1)
+}
+
+fun1()
+// 以上运行结果为：立刻输出undefined 立刻输出1  2秒后输出2000  5秒后输出5000  10秒后输出10000
+
+// 3.async/await的重要应用 
+const asy = function(x, time) {
+    return new Promise((resolve, reject) =>{
+        setTimeout(()=>{
+            resolve(x)
+        }, time)
+    })
+}
+const add = async function() {
+    const a = await asy(3, 5000)
+    console.log(a)
+    const b = await asy(4, 10000)
+    console.log(b)
+    const c =  await asy(5, 15000)
+    console.log(a,b,c)
+    const d = a + b +c  
+    console.log(d)
+}
+add();
+// 5秒后输出3  又10秒后输出4 又15秒后输出5  然后立刻输出3,4,5，然后输出12
+```
+
+
 #### js new
 
 帮我们做了这样几件事：

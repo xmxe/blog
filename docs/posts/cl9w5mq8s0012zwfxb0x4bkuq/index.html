@@ -737,6 +737,7 @@ bw<span class="token punctuation">.</span><span class="token function">setProper
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/685jUKqg6I6r0RbmirsRxg">编写Spring MVC控制器的14个技巧！涨知识了！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZKBQSCMPV7T9yNcMQ5_pQQ">SpringMVC异常处理体系深入分析</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DAWdH_0VWZp3oaws_leJhQ">使用Spring MVC的14个顶级技巧！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uzI-ilR-cv5iX3HWFUOmXA">Spring5里边的新玩法！这种URL请求让我涨见识了</a></li>
 </ul>
 <h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a><a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot">Spring Boot</a></h3><p><strong>配置文件默认的查找路径如下：</strong></p>
 <ol>
@@ -748,6 +749,7 @@ bw<span class="token punctuation">.</span><span class="token function">setProper
 <p>spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:spring.config.location</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">java</span> <span class="token parameter variable">-jar</span> myproject.jar <span class="token parameter variable">--spring.config.location</span><span class="token operator">=</span>classpath:/default.properties,classpath:/override.properties.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这样不会去默认位置加载配置⽂件，⽽是加载类路径下default.properties和override.properties的⽂件，override.properties中的同名配置会覆盖default.properties,如果指定的路径是以&#x2F;结尾则是⽬录配置，会去⽬录下找配置⽂件。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pNAU_w6RQIjzxfaadjV_pA">如何不重新编译让Spring Boot配置文件生效</a></p>
 <p><strong>特定配置</strong><br>在开发、测试、发布过程中，这三个场景⽐较固定，通常会定义三份不同的配置application-{profile}.yml，在使⽤时通过profile参数来切换。applicaiton-dev.yml，applicaiton-test.yml，applicaiton-prd.yml启动时，通过指定spring.profiles.active参数来切换配置⽂件</p>
 <p>springboot项⽬启动的时候可以直接使⽤java jar xxxjar这样。下⾯说说参数的⼀些讲究</p>
 <ol>

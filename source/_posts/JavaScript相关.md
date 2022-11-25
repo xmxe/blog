@@ -4,7 +4,10 @@ categories: JS
 tags: 随笔
 index_img: /assert/js.jpg
 img: https://picx1.zhimg.com/v2-ff627d205bd26ab15e4bdefd5daf1dda_1440w.jpg
+
 ---
+
+### Note
 
 #### JQuery、JS常用方法
 
@@ -191,6 +194,7 @@ alert((new Function("x","y","return x*y;"))(2,3));// "6"
 ```
 
 #### JQuery选择器
+
 [jQuery选择器](https://tool.oschina.net/uploads/apidocs/jquery/)
 
 ```js
@@ -205,6 +209,7 @@ $("p :eq(1)")  // 选择第二个<p>元素：
 ```
 
 #### 获取div class的值
+
 ```js
 $("#divid").attr('class');// attr基本上选中html原生属性
 $("#divid").prop('class');// prop自定义属性
@@ -226,6 +231,7 @@ inline-block元素特点：
 2. 元素的高度、宽度、行高以及顶和底边距都可设置
 
 #### aria-hidden=true
+
 aria-hidden="true"不会导致任何事情,它只是声明作者已经隐藏了该元素.
 
 #### 三种方式脱离文档流
@@ -257,15 +263,15 @@ function MapToJson(m) {
 var jsons=JSON.parse(MapToJson(map));
 ```
 
-#### if判断
+#### if(obj)判断
+
 if(jsObj){}过滤
 **undefined不能过,null不能过 ,''不能过 ,0不能过,{}能过,[]能过**
 即jsObj!=undefined && jsObj!=null && jsObj!='' && jsObj!=0
 
 **if(!!jsObj)与上面等价 可以隐式转换类型**
 
-
-#### js判断对象是否为空对象的几种方法
+**js判断对象是否为空对象的几种方法**
 
 1. 将json对象转化为json字符串，再判断该字符串是否为"{}"
 ```js
@@ -308,7 +314,64 @@ var arr = Object.keys(data);
 alert(arr.length == 0);//true
 ```
 
+#### 滚动条位置
+
+- scrollTop:获取或设置一个元素的内容垂直滚动的像素数。//页面内容的滚动距离
+- scrollHeight:一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。//滚动内容的总大小
+- clientHeight:元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。//可见网页内容高
+
+#### 浏览器展示页面执行顺序
+
+$(document).ready(function) = $().ready(function) = $(function)
+当DOM（文档对象模型）已经加载(页面所有的html标签（包括图片等）都加载完了，即浏览器已经响应完了，加载完了，全部展现到浏览器界面上了。)，并且页面（包括图像）已经完全呈现时，会发生ready事件。
+对于一个HTML文档，浏览器的解析顺序为：按照文档流，从上到下逐步解析页面的结构。JavaScript代码作为通过标签嵌入或引入的脚本，也HTML文档的组成部分。因此，JavaScript代码在装载时的执行顺序也是根据脚本标签<script\>的出现顺序来确定的。
+但是，浏览器加载JavaScript时有个特点，那就是载入之后立即就会执行（先编译后执行），因为JavaScript可能会影响DOM树的结构，所以浏览器在执行完后才能继续加载下面的HTML内容。也就是说，浏览器下载并执行JavaScript的过程会阻塞DOM树的继续建立。所以，引入的多个js文件，会按顺序分开执行。同样的，对于不同<script\>标签嵌入的JavaScript代码，也会分开执行。同一组<script\>标签包括的代码就是一个代码块。后引入的JavaScript文件可以调用先引入的JavaScript文件的资源，下面的代码块可以访问上面代码块的资源，反之则不行。
+由于JavaScript通常需要操作DOM，所以，一般把JavaScript放在</body\>前或者文档结尾处引入。若需要在<head\>中引入，可以通过修改window.onload或者document.ready事件，强制等到DOM加载完成后再执行相关函数。
+
+
+#### 引用
+
+数字、字符串、布尔类型的为原始类型，是值引用
+数组、对象类型为地址引用
+值引用可以深拷贝
+地址引用循环到原始类型方可进行深拷贝
+
+#### http状态码
+
+301永久重定向
+302临时重定向
+400 bad request：错误请求，一般是前端提交数据的字段名称或者是字段类型和后台的实体类不一致(后台接收的数据类型不一致)，导致无法封装。或前端提交的到后台的数据应该是json字符串类型，而前端没有将对象转化为字符串类型；
+403服务器理解请求但拒绝执行，一般是资源权限问题导致,无权限访问
+405 get post等请求类型错误
+406 服务器返回的数据前端无法解析,一般是返回json格式数据前端的Content-Type是text:html
+502 bad gateway 错误的网关,上游服务器出现问题
+连接超时 我们向服务器发送请求,由于服务器当前链接太多，导致服务器方面无法给于正常的响应，产生此类报错
+503过载
+504 gateway time-out
+程序执行时间过长导致响应超时，例如程序需要执行20秒，而nginx最大响应等待时间为10秒，这样就会出现超时
+
+[http状态码详解](http://tool.oschina.net/commons?type=5)
+[请求头响应头等参数详解](https://mp.weixin.qq.com/s/w_FgN5tVGr1DlbqyF5g4gw)
+
+#### GET与POST区别
+
+1. GET在浏览器回退时是无害的，而POST会再次提交请求。
+2. GET产生的URL地址可以被Bookmark，而POST不可以。
+3. GET请求会被浏览器主动cache，而POST不会，除非手动设置。
+4. GET请求只能进行url编码，而POST支持多种编码方式。
+5. GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。
+6. GET请求在URL中传送的参数是有长度限制的，而POST没有。
+7. 对参数的数据类型，GET只接受ASCII字符，而POST没有限制。
+8. GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。
+9. GET参数通过URL传递，POST放在Request body中。
+
+[听我讲完GET、POST原理，面试官给我倒了杯卡布奇诺](https://mp.weixin.qq.com/s/W68JzNIoUpm9hyXinOzkMw)
+
+### JS关键字
+
+
 #### arguments
+
 arguments是js中内置的一个对象数组，存放的是调用函数的参数
 arguments.callee()递归函数(callee是arguments内置的一个函数)
 ```js
@@ -330,23 +393,136 @@ function factorial(num) {
   }
 } 
 ```
-#### 滚动条位置
 
-- scrollTop:获取或设置一个元素的内容垂直滚动的像素数。//页面内容的滚动距离
-- scrollHeight:一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。//滚动内容的总大小
-- clientHeight:元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。//可见网页内容高
+#### prototype、\__proto\__(两个下划线)与constructor
 
+\__proto\__和constructor属性是对象所独有的；prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有\__proto\__和constructor属性。\__proto\__属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的\__proto\__属性所指向的那个对象（父对象）里找，一直找，直到\__proto\__属性的终点null，再往上找就相当于在null上取值，会报错。通过\__proto\__属性将对象连接起来的这条链路即我们所谓的原型链。大多数情况下，\__proto\__可以理解为“构造器的原型”，即**\__proto\__===constructor.prototype**,但是通过Object.create()创建的对象有可能不是，Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的\__proto_\_
+prototype属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即**book1.\__proto\__ === Book.prototype**。
+构造函数有什么缺点呢？构造函数的缺点就是会将构造函数内部的对象都复制一份：
 
-#### prototype、__proto__与constructor
+```js
+function Book(){
+    this.name ='www.flydean.com';
+    this.getName =function (){
+        console.log('flydean');
+    }
+}
+var book1 = new Book();
+var book2  = new Book();
+console.log(book1.getName  === book2.getName);//false
+```
+输出结果是false,说明每次new一个对象，对象中的方法也被拷贝了一份。而这并不是必须的。JavaScript的每个对象都继承另一个对象，后者称为“原型”（prototype）对象。只有null除外，它没有自己的原型对象。原型对象上的所有属性和方法，都能被派生对象共享。这就是JavaScript继承机制的基本设计。通过构造函数生成实例对象时，会自动为实例对象分配原型对象。每一个构造函数都有一个prototype属性，这个属性就是实例对象的原型对象。
 
-1. \__proto\__和constructor属性是对象所独有的；prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有\__proto\__和constructor属性。
+```js
 
-2. \__proto\__属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的\__proto\__属性所指向的那个对象（父对象）里找，一直找，直到\__proto\__属性的终点null，再往上找就相当于在null上取值，会报错。通过\__proto\__属性将对象连接起来的这条链路即我们所谓的原型链。大多数情况下，\__proto\__可以理解为“构造器的原型”，即\__proto\__===constructor.prototype,但是通过Object.create()创建的对象有可能不是，Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的\__proto_\_
+function Book(name){
+    this.name = name;
+}
+Book.prototype.author ='flydean';
+var book1 = new Book();
+var book2 = new Book();
+console.log(book1.author);//flydean
+console.log(book2.author);//flydean
+```
+上面例子中的author属性会被Book的所有实例所继承，Book的prototype对象，就是book1和book2的原型对象。
+原型对象的属性不是实例对象自身的属性。只要修改原型对象，变动就立刻会体现在所有实例对象上。由于原型本身也是对象，又有自己的原型，所以形成了一条原型链（prototype chain）。如果一层层地上溯，所有对象的原型最终都可以上溯到Object.prototype，即Object构造函数的prototype属性指向的那个对象。Object.prototype对象有没有它的原型呢？回答可以是有的，就是没有任何属性和方法的null对象，而null对象没有自己的原型。
 
-3. prototype属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即f1.\__proto\__ === Foo.prototype。
+```js
+console.log(Object.getPrototypeOf(Object.prototype));//null
+```
+prototype对象有一个constructor属性，默认指向prototype对象所在的构造函数.
+```js
+function Book(name){
+    this.name = name;
+}
+var book3 = new Book();
+console.log(book3.constructor);//function Book(name){this.name = name;}
+console.log(book3.constructor === Book.prototype.constructor);//true
+console.log(book3.hasOwnProperty(constructor));//false
+```
+还是刚刚的book，book3.constructor就是function Book本身。它也等于Book.prototype.constructor。
 
-4. constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。constructor属性的作用，是分辨原型对象到底属于哪个构造函数。
+constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。constructor属性的作用，是分辨原型对象到底属于哪个构造函数。因为prototype是一个对象，所以对象可以被赋值，也就是说prototype可以被改变：
 
+```js
+function A(){}
+var a = new A();
+console.log(a instanceof A);//true
+function B(){}
+A.prototype = B.prototype;
+console.log(a instanceof A);//false
+```
+上面的例子中，我们修改了A.prototype，最后a instanceof A值是false。为了保证不会出现这样错误匹配的问题，我们再构建prototype的时候，一定不要直接重写整个的 prototype，只需要修改其中的某个属性就好:
+```js
+// 不要这样写
+A.prototype = {
+    method1:function (){}
+}
+// 比较好的写法
+A.prototype = {
+    constructor:A,
+    method1:function (){}
+}
+// 更好的写法
+A.prototype.method1 = function (){}
+```
+##### Object的prototype操作
+**Object.getPrototypeOf**方法返回一个对象的原型。这是获取原型对象的标准方法.
+
+```js
+// 空对象的prototype是Object.prototype
+console.log(Object.getPrototypeOf({}) === Object.prototype);//true
+// function的prototype是Function.prototype
+function f(){}
+console.log(Object.getPrototypeOf(f)  === Function.prototype);//true
+
+function F(){this.name ='flydean'}
+var f1 = new F();
+console.log(Object.getPrototypeOf(f1) === F.prototype);//true
+var f2 = new f();
+console.log(Object.getPrototypeOf(f2) === f.prototype);//true
+```
+**Object.setPrototypeOf**方法可以为现有对象设置原型，返回一个新对象。
+Object.setPrototypeOf方法接受两个参数，第一个是现有对象，第二个是原型对象。
+
+```js
+var a = {name: 'flydean'};
+var b = Object.setPrototypeOf({},a);
+console.log(b.name);//flydean
+```
+**Object.prototype.isPrototypeOf()**
+对象实例的isPrototypeOf方法，用来判断一个对象是否是另一个对象的原型.
+
+```js
+var a = {name: 'flydean'};
+var b = Object.setPrototypeOf({},a);
+console.log(a.isPrototypeOf(b));//true
+```
+**Object.prototype.proto**
+proto属性（前后各两个下划线）可以改写某个对象的原型对象。还是刚才的例子，这次我们使用proto来改写对象的原型。
+
+```js
+var a = {name: 'flydean'};
+var c ={};
+c.__proto__ = a;
+console.log(Object.getPrototypeOf(c));//{"name": "flydean",[[Prototype]]:object}
+
+//-------
+function Book(name){
+    this.name = name;
+}
+console.log(Book.prototype)//{"author": "flydean",constructor:f Book(name)..}
+var book1 = new Book();
+console.log(book1.__proto__===Book.prototype);//true
+```
+proto属性只有浏览器才需要部署，其他环境可以没有这个属性，而且前后的两根下划线，表示它本质是一个内部属性，不应该对使用者暴露。因此，应该尽量少用这个属性，而是用Object.getPrototypeof()（读取）和Object.setPrototypeOf()（设置），进行原型对象的读写操作
+
+综上，我们有三种获取原型对象的方法：
+```js
+obj.proto
+obj.constructor.prototype
+Object.getPrototypeOf(obj)
+```
 
 #### Promise
 
@@ -513,7 +689,6 @@ add();
 // 5秒后输出3  又10秒后输出4 又15秒后输出5  然后立刻输出3,4,5，然后输出12
 ```
 
-
 #### js new
 
 帮我们做了这样几件事：
@@ -533,61 +708,353 @@ console.log(foo);
 // 等同于
 var foo = new Foo('mm')
 console.log(foo)
-
 ```
 [JavaScript：对象都是这样生成的!※(很重要的一篇文章)！](https://mp.weixin.qq.com/s/QJj9TnUKeXGj1HIX039etg)
 
 
-#### 浏览器展示页面执行顺序
+#### JS this
 
-$(document).ready(function) = $().ready(function) = $(function)
+this总是返回一个对象，简单说，就是返回属性或方法“当前”所在的对象。
+```js
+var book = {
+    name :'flydean',
+    getName : function (){
+        return '书名：'+ this.name;
+    }
+}
+console.log(book.getName());
+//书名：flydean
+```
+这里this的指向是可变的，我们看一个例子 ：
+```js
+var book = {
+    name :'flydean',
+    getName : function (){
+        return '书名：'+ this.name;
+    }
+}
+var car ={
+    name :'car'
+}
+car.getName = book.getName;
+console.log(car.getName());
+//书名：car
+```
+当A对象的方法被赋予B对象，该方法中的this就从指向A对象变成了指向B对象
+上面的例子中，我们把book中的getName方法赋值给了car对象，this对象现在就指向了car。如果某个方法位于多层对象的内部，这时this只是指向当前一层的对象，而不会继承更上面的层。
 
-当DOM（文档对象模型）已经加载(页面所有的html标签（包括图片等）都加载完了，即浏览器已经响应完了，加载完了，全部展现到浏览器界面上了。)，并且页面（包括图像）已经完全呈现时，会发生ready事件。
-对于一个HTML文档，浏览器的解析顺序为：按照文档流，从上到下逐步解析页面的结构。JavaScript代码作为通过标签嵌入或引入的脚本，也HTML文档的组成部分。因此，JavaScript代码在装载时的执行顺序也是根据脚本标签<script\>的出现顺序来确定的。
-但是，浏览器加载JavaScript时有个特点，那就是载入之后立即就会执行（先编译后执行），因为JavaScript可能会影响DOM树的结构，所以浏览器在执行完后才能继续加载下面的HTML内容。也就是说，浏览器下载并执行JavaScript的过程会阻塞DOM树的继续建立。所以，引入的多个js文件，会按顺序分开执行。同样的，对于不同<script\>标签嵌入的JavaScript代码，也会分开执行。同一组<script\>标签包括的代码就是一个代码块。后引入的JavaScript文件可以调用先引入的JavaScript文件的资源，下面的代码块可以访问上面代码块的资源，反之则不行。
-由于JavaScript通常需要操作DOM，所以，一般把JavaScript放在</body\>前或者文档结尾处引入。若需要在<head\>中引入，可以通过修改window.onload或者document.ready事件，强制等到DOM加载完成后再执行相关函数。
+```js
+var book1 = {
+    name :'flydean',
+    book2: {
+        getName : function (){
+            return '书名：'+ this.name;
+        }
+    }
+}
+console.log(book1.book2.getName());
+//书名：undefined
+```
+上面的例子中，this是定义在对象中的函数中，如果是在函数中的函数中定义的this，代表什么呢？
+```js
+var book3 = {
+    name :'flydean',
+    book4: function(){
+        console.log('book4');
+        var getName = function (){
+            console.log(this); //Window
+        }();
+    }
+}
+book3.book4();
+```
+如果在函数中的函数中使用了this，那么内层的this指向的是全局的window对象。所以我们在使用的过程中要避免多层this。由于this的指向是不确定的，所以切勿在函数中包含多层的this。如果在全局环境使用this，它指的就是顶层对象window。
+数组的map和foreach方法，允许提供一个函数作为参数。这个函数内部不应该使用 this。
+```js
+var book5 ={
+    name : 'flydean',
+    author : ['max','jacken'],
+    f: function (){
+        this.author.forEach(function (item) {
+            console.log(this.name+' '+item);
+        })
+    }
+}
+book5.f();
+//undefined max
+//undefined jacken
+```
+foreach方法的回调函数中的this，其实是指向window对象，因此取不到o.v的值。原因跟上一段的多层this是一样的，就是内层的this不指向外部，而指向顶层对象。怎么解决呢？我们使用一个中间变量：
+```js
+var book6 ={
+    name : 'flydean',
+    author : ['max','jacken'],
+    f: function (){
+        var that = this;
+        this.author.forEach(function (item) {
+            console.log(that.name+' '+item);
+        })
+    }
+}
+book6.f();
+//flydean max
+//flydean jacken
+```
+或者将this当作foreach方法的第二个参数，固定它的运行环境：
+```js
+var book7 ={
+    name : 'flydean',
+    author : ['max','jacken'],
+    f: function (){
+        this.author.forEach(function (item) {
+            console.log(this.name+' '+item);
+        },this)
+    }
+}
+book7.f();
+//flydean max
+//flydean jacken
+```
+绑定this的方法,JavaScript提供了call、apply、bind这三个方法，来切换/固定this的指向.
 
+**call**
+函数实例的call方法，可以指定函数内部this的指向（即函数执行时所在的作用域），然后在所指定的作用域中，调用该函数.
+```js
+var book = {};
+var f = function () {
+    return this;
+}
+f()  === this ; //true
+f.call(book) === book; //true
+```
+上面例子中，如果直接调用f()，那么返回的就是全局的window对象。如果传入book对象，那么返回的就是book对象。call方法的参数，应该是一个对象。如果参数为空、null和undefined，则默认传入全局对象。如果call方法的参数是一个原始值，那么这个原始值会自动转成对应的包装对象，然后传入call方法。
 
-#### 引用
-
-数字、字符串、布尔类型的为原始类型，是值引用
-数组、对象类型为地址引用
-值引用可以深拷贝
-地址引用循环到原始类型方可进行深拷贝
-
-#### http状态码
-301永久重定向
-302临时重定向
-400 bad request：错误请求，一般是前端提交数据的字段名称或者是字段类型和后台的实体类不一致(后台接收的数据类型不一致)，导致无法封装。或前端提交的到后台的数据应该是json字符串类型，而前端没有将对象转化为字符串类型；
-403服务器理解请求但拒绝执行，一般是资源权限问题导致,无权限访问
-405 get post等请求类型错误
-406 服务器返回的数据前端无法解析,一般是返回json格式数据前端的Content-Type是text:html
-502 bad gateway 错误的网关,上游服务器出现问题
-连接超时 我们向服务器发送请求,由于服务器当前链接太多，导致服务器方面无法给于正常的响应，产生此类报错
-503过载
-504 gateway time-out
-程序执行时间过长导致响应超时，例如程序需要执行20秒，而nginx最大响应等待时间为10秒，这样就会出现超时
-
-[http状态码详解](http://tool.oschina.net/commons?type=5)
-[请求头响应头等参数详解](https://mp.weixin.qq.com/s/w_FgN5tVGr1DlbqyF5g4gw)
-
-#### GET与POST区别
-
-1. GET在浏览器回退时是无害的，而POST会再次提交请求。
-2. GET产生的URL地址可以被Bookmark，而POST不可以。
-3. GET请求会被浏览器主动cache，而POST不会，除非手动设置。
-4. GET请求只能进行url编码，而POST支持多种编码方式。
-5. GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。
-6. GET请求在URL中传送的参数是有长度限制的，而POST没有。
-7. 对参数的数据类型，GET只接受ASCII字符，而POST没有限制。
-8. GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。
-9. GET参数通过URL传递，POST放在Request body中。
-
-[听我讲完GET、POST原理，面试官给我倒了杯卡布奇诺](https://mp.weixin.qq.com/s/W68JzNIoUpm9hyXinOzkMw)
-
-#### other
-
+```js
+var f = function () {
+    return this;
+}
+console.log(f.call(100));
+//[Number: 100]
+```
+call方法还可以接受多个参数。func.call(thisValue,arg1,arg2, ...);call的第一个参数就是this所要指向的那个对象，后面的参数则是函数调用时所需的参数。call一般用在调用对象的原始方法：
+```js
+var person =  {};
+person.hasOwnProperty('getName');//false
+//覆盖person的getName方法
+person.getName  = function(){
+    return true;
+}
+person.hasOwnProperty('getName');//true
+Object.prototype.hasOwnProperty.call(person,'getName');//false
+```
+**apply**
+apply方法的作用与call方法类似，也是改变this指向，然后再调用该函数。唯一的区别就是，它接收一个数组作为函数执行时的参数.
+```js
+func.apply(thisValue,[arg1,arg2,...])
+```
+**bind**
+call和apply是改变this的指向，然后调用该函数，而bind方法用于将函数体内的this绑定到某个对象，然后返回一个新函数.
+```js
+var d = new Date();
+console.log(d.getTime()); //1600755862787
+var getTime= d.getTime;
+console.log(getTime());//TypeError: this is not a Date object.
+```
+上面的例子中，getTime方法里面调用了this，如果直接把d.getTime赋值给getTime变量，那么 this 将会指向全局的window对象，导致运行错误。我们可以这样修改：
+```js
+var d = new Date();
+console.log(d.getTime()); //1600755862787
+var getTime2= d.getTime.bind(d);
+console.log(getTime2());
+```
+bind比call方法和apply方法更进一步的是，除了绑定this以外，还可以绑定原函数的参数。
+```js
+var add = function(x,y){
+    return x +this.m +  y + this.n;
+}
+var addObj ={
+    m: 10,
+    n: 10
+}
+var newAdd = add.bind(addObj,2);
+console.log(newAdd(3));//25
+```
+上面的例子中，bind将两个参数的add方法，替换成了1个参数的add方法。注意：bind每次调用都会返回一个新的函数，从而导致无法取消之前的绑定。
 [理解js中this的指向](https://www.cnblogs.com/pssp/p/5216085.html)
+
+
+#### class
+
+ES6的class可以看作只是一个语法糖，它的绝大部分功能，ES5都可以做到，新的class写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。
+```js
+class Person {
+    constructor(name,sex) {
+        this.name=name;
+        this.sex =sex;
+    }
+    toString(){
+        return this.name + ' '+ this.sex;
+    }
+}
+```
+构造函数的prototype属性，在ES6的“类”上面继续存在。事实上，类的所有方法都定义在类的prototype属性上面。
+上面的类等同于：
+```js
+Person.prototype = {
+       constructor(name,sex) {
+        this.name=name;
+        this.sex =sex;
+    }
+    toString(){
+        return this.name + ' '+ this.sex;
+    } 
+}
+```
+表达式属性名
+class还支持动态的表达式属性名：
+```js
+let methodName = 'getName';
+class Person {
+    constructor(name,sex) {
+        this.name=name;
+        this.sex =sex;
+    }
+
+    toString(){
+        return this.name + ' '+ this.sex;
+    }
+
+    [methodName](){
+        return this.name;
+    }
+}
+```
+静态方法
+类相当于实例的原型，所有在类中定义的方法，都会被实例继承。如果在一个方法前，加上static关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。
+```js
+class Person {
+    constructor(name,sex) {
+        this.name=name;
+        this.sex =sex;
+    }
+    static getSex(){
+        return '男';
+    }
+}
+console.log(Person.getSex()); //男
+let  p  = new Person();
+console.log(p.getSex());//TypeError: p.getSex is not a function
+```
+静态属性
+静态属性指的是Class本身的属性，即Class.propName，而不是定义在实例对象（this）上的属性.
+```js
+class Person {
+    constructor(name,sex) {
+        this.name=name;
+        this.sex =sex;
+    }
+}
+Person.address ='address';
+console.log(Person.address);
+```
+目前，只有这种写法可行，因为ES6明确规定，Class内部只有静态方法，没有静态属性。
+
+class的继承
+class 的继承一般使用extends关键字：
+```js
+class Boy extends Person{
+    constructor(name,sex,address) {
+        super(name,sex); //调用父类的构造函数
+        this.address =address;
+    }
+    toString() {
+        return super.toString();//调用父类的方法
+    }
+}
+```
+在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错。这是因为子类实例的构建，是基于对父类实例加工，只有super方法才能返回父类实例。
+super作为函数调用时，代表父类的构造函数。ES6要求，子类的构造函数必须执行一次super函数。super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类。
+上面的例子，我们在子类Boy中的toString普通方法中，调用了super.toString()，之前我们也讲了，类的所有方法都定义在类的prototype属性上面。所以 super.toString就是Person中定义的toString 方法。由于super指向父类的原型对象，所以定义在父类实例上的方法或属性，是无法通过super调用的。定义在父类实例上的方法或属性就是指在constructor中定义的方法或者属性。
+Person 类，在constructor中定义了name属性。我们看一下在Boy中的普通方法中访问会有什么问题：
+```js
+class Boy extends Person{
+    constructor(name,sex,address) {
+        super(name,sex); //调用父类的构造函数
+        console.log(super.name);  //undefined
+        console.log(this.name);  //hanmeimei
+        this.address =address;
+    }
+    toString() {
+        return super.toString();//调用父类的方法
+    }
+    getName(){
+        console.log(super.name);  //undefined
+        console.log(this.name);    //hanmeimei
+    }
+}
+var b =new Boy('hanmeimei','女','北京');
+b.getName();
+```
+
+#### 继承
+
+构造函数的继承。
+构造函数的继承第一步是在子类的构造函数中，调用父类的构造函数,让子类实例具有父类实例的属性。然后让子类的原型指向父类的原型，这样子类就可以继承父类原型。
+```js
+function Person (){
+    this.name = 'person';
+}
+
+function Boy(){
+    Person.call(this);
+    this.title = 'boy';
+}
+
+Boy.prototype= Object.create(Person.prototype);
+Boy.prototype.constructor=Boy;
+Boy.prototype.getTitle=function (){console.log(this.title)};
+
+var b =new Boy();
+b.getTitle();
+console.log(b);
+```
+调用父类的构造函数是初始化实例对象的属性。子类的原型指向父类的原型是为了基础父类的原型对象的属性。
+另外一种写法是Boy.prototype等于一个父类实例：
+```js
+Boy.prototype = new Person();
+```
+上面这种写法也有继承的效果，但是子类会具有父类实例的方法。有时，这可能不是我们需要的，所以不推荐使用这种写法.
+JavaScript不提供多重继承功能，即不允许一个对象同时继承多个对象。但是，可以通过变通方法，实现这个功能:
+```
+function Person1 (){
+    this.name = 'person';
+}
+function Person2 (){
+    this.sex = '男';
+}
+
+function Boy(){
+    Person1.call(this);
+    Person2.call(this);
+    this.title = 'boy';
+}
+
+//继承Person1
+Boy.prototype= Object.create(Person1.prototype);
+//继承链加上Person2
+Object.assign(Boy.prototype,Person2.prototype);
+
+Boy.prototype.constructor=Boy;
+Boy.prototype.getTitle=function (){console.log(this.title)};
+
+var b =new Boy();
+b.getTitle();
+console.log(b);
+//Boy { name: 'person', sex: '男', title: 'boy' }
+```
+
+### 相关文章
+
 [万字干货！详解JavaScript执行过程](https://mp.weixin.qq.com/s/wolPlpUDizVnzh-kBKMtxg)
 [面试官：有了for循环为什么还要forEach？](https://mp.weixin.qq.com/s/aPFCrPGBTus_Spf1QL1WWA)
 [每日一题」JS中的闭包是什么？](https://zhuanlan.zhihu.com/p/22486908)

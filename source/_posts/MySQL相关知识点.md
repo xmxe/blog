@@ -436,4 +436,5 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 - [MySQL最朴素的监控方式](https://mp.weixin.qq.com/s/meS5Au1o9qdrSv7505mIcA)
 - [1亿条数据批量插入MySQL，哪种方式最快](https://mp.weixin.qq.com/s/c71ATJLT6_KXtb_iiUlMjg)
 - [6种MySQL数据库平滑扩容方案剖析](https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing)
+- [什么是插入意向锁？](https://mp.weixin.qq.com/s/rDdUBw803tvjHkJALY5P2w)
 

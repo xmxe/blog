@@ -110,3 +110,4 @@ AuthenticationManager.authenticate()-->ProviderManager.authenticate()-->DaoAuthe
 - [Spring Security动态权限实现方案！](https://mp.weixin.qq.com/s/Bau8poOA4fMh3DNb9GaR1A)
 - [Spring Security最佳实践，看了必懂！※](https://mp.weixin.qq.com/s/rJqXpL7Zy9q_TU5B_E7nSw)
 - [认证和授权：前后端分离状态下使用Spring Security实现安全访问控制](https://mp.weixin.qq.com/s/kB2SViBlcKwl2cV91FbidQ)
+- [Spring Security中的RememberMe登录，so easy！](https://mp.weixin.qq.com/s/ZWwlheacryW5Zmo-Xw269g)

@@ -257,7 +257,7 @@ Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFact
 
 ### Spring相关文章
 
-- [Spring中涉及的设计模式总结](https://mp.weixin.qq.com/s/ktNs4T_OZ-neWWvtBmC-cA)
+- [Spring用到了哪些设计模式](https://mp.weixin.qq.com/s/O-gUDExJc5AKwb-t4ZDkNA)
 - [Spring中经典的9种设计模式](https://mp.weixin.qq.com/s/gz2-izPrgW1AGbqqovT0cA)
 - [Java面试中常问的Spring问题，你都会吗？](https://zhuanlan.zhihu.com/p/42092555)
 - [如果我是面试官，我会问你Spring这些问题](https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ)

@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "npx hexo server --draft",
+    "start1": "npx hexo server --draft --config gitee.yml",
     "build": "npx hexo generate",
+    "build1": "npx hexo generate --config gitee.yml",
     "clean": "npx hexo clean",
     "deploy": "npx hexo deploy",
-    "start": "npx hexo server --draft",
-    "publish": "npx hexo publish post Tomcat",
+    "publish": "npx hexo publish post 文章",
     "draft": "npx hexo new draft title",
     "page": "npx hexo new page title"
   },

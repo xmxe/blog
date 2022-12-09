@@ -477,11 +477,12 @@
 <span class="token function">git</span> remote remove origin
 <span class="token function">git</span> pull <span class="token parameter variable">--rebase</span> origin master 
 <span class="token function">git</span> push origin master
+<span class="token comment"># git push --set-upstream origin master</span>
 
 <span class="token comment"># 本地生成ssh密钥</span>
 ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-C</span> <span class="token string">"你的邮箱"</span>生成sshkey
 <span class="token function">git</span> remote set-url origin git@github.com:xmxe/springcloud.git
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h6 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> <span class="token function">diff</span> <span class="token comment"># 可以查看当前没有add的内容修改（不在缓冲区的文件变化）</span>
 <span class="token function">git</span> <span class="token function">diff</span> <span class="token parameter variable">--cached</span> <span class="token comment"># 查看已经add但没有commit的改动（在缓冲区的文件变化）</span>
 <span class="token function">git</span> <span class="token function">diff</span> HEAD <span class="token comment"># 是上面两条命令的合并</span>
@@ -1169,7 +1170,7 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
 
 
 
-    <a href="https://xmxe.github.io/zhengfl" class="tooltipped" target="_blank" data-tooltip="简历" data-position="top" data-delay="50">
+    <a href="https://xmxe.gitee.io/zhengfl" class="tooltipped" target="_blank" data-tooltip="简历" data-position="top" data-delay="50">
         <i class="fas fa-seedling"></i>
     </a>
 

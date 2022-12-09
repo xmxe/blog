@@ -677,3 +677,4 @@ reboot
 - [这篇Linux总结的真棒！](https://mp.weixin.qq.com/s/F_0kiOWgQS4BINx2t2Rqtw)
 - [Linux远程桌面管理工具！功能真心强大](https://mp.weixin.qq.com/s/UT3RYrUGP2E5JQbf1Z8c8w)
 - [在Linux上保护SSH服务器连接的8种方法](https://mp.weixin.qq.com/s/kxvc95RJoSKqcXwwmyrPKg)
+- [发现谁用kill -9关闭程序就开除！](https://mp.weixin.qq.com/s/zmfCC083VBrA8P6uWHL2DQ)

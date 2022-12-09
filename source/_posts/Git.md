@@ -18,6 +18,7 @@ git remote add origin https://github.com/xmxe/project.git
 git remote remove origin
 git pull --rebase origin master 
 git push origin master
+# git push --set-upstream origin master
 
 # 本地生成ssh密钥
 ssh-keygen -t rsa -C "你的邮箱"生成sshkey

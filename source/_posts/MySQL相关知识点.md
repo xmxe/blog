@@ -399,6 +399,8 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 - [MySQL是如何查询数据的](https://mp.weixin.qq.com/s/ymWeGlaBYWYmfogVDFHo5w)
 - [MySQL是如何实现ACID的?](https://mp.weixin.qq.com/s/KbOiJ8SKJ_wFZcIyDVGD9g)
 - [一文讲清，MySQL数据库一行数据在磁盘上是怎么存储的？](https://mp.weixin.qq.com/s/qJINIZ3QcXODHSMm1RTPKQ)
+- [一文讲述MySQL所有的存储引擎](https://mp.weixin.qq.com/s/Oiefzj2b3NZxTwjnRdAFRw)
+- [MySQL的InnoDB引擎原来是这样的](https://mp.weixin.qq.com/s/s2c9L2p5kGC_InjorgDRnQ)
 
 #### 主从复制
 

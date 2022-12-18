@@ -165,6 +165,7 @@ ApplicationContext actx = new FleSystemXmlApplicationContext("config.xml");
 HelloWorld hw = (HelloWorld) actx.getBean("HelloWorld");
 System.out.println(hw.getMsg());
 ```
+[Spring中获取Bean的八种方式](https://mp.weixin.qq.com/s/BW3khRkQwjBsXw7yJhCyXQ)
 
 ### Spring循环依赖
 

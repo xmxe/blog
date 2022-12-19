@@ -746,4 +746,4 @@ darkMode:
 url_target: _blank
 
 # 是否启用图床
-enableImageHost: true
+enableImageHost: false

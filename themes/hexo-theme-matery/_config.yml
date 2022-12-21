@@ -138,7 +138,7 @@ recommend:
 
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
-favicon: /docs/favicon.ico
+favicon: /favicon.ico
 
 logo: 
   # 图床路径 enableImageHost=true时有效 为空则使用本地路径
@@ -325,21 +325,21 @@ profile:
 myProjects:
   enable: true
   data:
-    zhengfl:
+    spring-security:
       icon: fas fa-user
       iconBackground: 'linear-gradient(to bottom right, #29B6F6 0%, #1E88E5 100%)'
-      url: https://github.com/xmxe/zhengfl
-      desc: online resume.
+      url: https://github.com/xmxe/spring-security
+      desc: Spring Security demo.
     springboot:
       icon: fas fa-splotch
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
       url: https://github.com/xmxe/springboot
-      desc: springboot demo.
+      desc: Spring Boot demo.
     springcloud:
         icon: fas fa-cloud
         iconBackground: 'linear-gradient(to bottom right, #F06292 0%, #EF5350 100%)'
         url: https://github.com/xmxe/springcloud
-        desc: springcloud demo.
+        desc: Spring Cloud demo.
 
 # config my skills informations in about page.If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的技能"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
@@ -500,13 +500,13 @@ libsLocal: &libsLocal
 # 更多关于访问速度优化，请查看：https://blog.sky03.cn/posts/42790.html
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在上面设置js及css路径中可以直接写.min.xxx
 jsDelivr:
-  url: https://cdn.jsdelivr.net/gh/xmxe
+  url: # https://cdn.jsdelivr.net/gh/xmxe
 
 # The used front-end library can be replaced with the corresponding CDN address as needed,If the specific version is not specified below, you can use the latest version.
 # 使用到的前端库，可按需替换成对应的CDN地址，如果下面未指定具体的版本号，使用最新的版本即可.
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在设置js及css路径中可以直接写.min.xxx
 libs:
-  <<: *libsCDN
+  <<: *libsLocal
 
 # 不建议使用gittalk,gitment这样权限过高的oauth app,因为它们能够读写授权者所有的公共仓库 ，也就是说拿到你的授权Token的人，可以将你的GitHub公共仓库删空（这是github权限分的不够细的锅），如果恶意攻击者想获取使用者的 AccessToken，只需要在代码中加上一个 ajax 请求即可。原贴地址:https://www.v2ex.com/t/535608。建议大家看完。（我没有在用gittalk/gitment的网站上评论过，但根据v2ex网友的提示，如果网站自行修改了gitalk.js脚本或者反代了github api，就很容易拿到你的Token）
 # https://github.com/utterance/utterances 是个 GitHub App，它的权限仅限于某个仓库。像hugo hexo这种静态页面类型的博客，clientID/clientSecret泄露是不可避免的。我认为较好的解决方式是像utteras这种GitHubApp，只有一个仓库的读写权限，将破坏降到最小。

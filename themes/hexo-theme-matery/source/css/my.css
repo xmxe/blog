@@ -344,13 +344,13 @@ body.DarkMode #stars3:after {
 }
 
 /*码云svg*/
-footer .social-link a svg {
+footer .social-link2 a svg {
     width: 18px;
     height: 18px;
 }
 
 @media only screen and (max-width: 601px) {
-    footer .social-link a svg {
+    footer .social-link2 a svg {
         width: 17px;
         height: 17px;
     }

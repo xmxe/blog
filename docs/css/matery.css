@@ -361,13 +361,13 @@ header .side-nav .fa-fw {
     text-align: left;
 }
 
-header .side-nav .social-link {
+header .side-nav .social-link2 {
     position: absolute;
     bottom: 45px;
     padding-left: 15px;
 }
 
-.social-link a {
+.social-link2 a {
     font-size: 1.2rem;
     display: inline;
     padding: 0 12px;
@@ -506,14 +506,14 @@ header .side-nav .social-link {
     }
 }
 
-.cover-social-link {
+.cover-social-link2 {
     position: relative;
     top: 23vh;
     width: 100%;
     text-align: center;
 }
 
-.cover-social-link a {
+.cover-social-link2 a {
     padding: 0 15px;
     font-size: 1.35rem;
     color: #fff;
@@ -527,11 +527,11 @@ header .side-nav .social-link {
     }
 }
 
-.cover-social-link a:nth-of-type(odd) {
+.cover-social-link2 a:nth-of-type(odd) {
     animation-delay: .3s;
 }
 
-.cover-social-link a:hover {
+.cover-social-link2 a:hover {
     animation-play-state: paused
 }
 
@@ -1645,12 +1645,12 @@ thead {
     color: #777;
 }
 
-#aboutme .social-link {
+#aboutme .social-link2 {
     margin: 0.5rem 0;
     text-align: center;
 }
 
-#aboutme .social-link a {
+#aboutme .social-link2 a {
     display: inline-block;
     width: 2.3rem;
     height: 2.3rem;
@@ -1694,7 +1694,7 @@ thead {
     color: #777;
 }
 
-#aboutme .profile .social-link {
+#aboutme .profile .social-link2 {
     margin: 1.5rem 0 0.8rem 0;
 }
 

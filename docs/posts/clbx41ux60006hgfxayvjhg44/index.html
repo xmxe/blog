@@ -510,7 +510,23 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
 <span class="token function">git</span> branch <span class="token operator">&lt;</span>name<span class="token operator">></span> <span class="token comment"># 创建分支(未切换)</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-d</span> <span class="token operator">&lt;</span>name<span class="token operator">></span> <span class="token comment"># 删除分支，不能删除当前所在分支</span>
 <span class="token function">git</span> branch --set-upstream branch-name origin/branch-name <span class="token comment"># 建立本地分支和远程分支的关联</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<span class="token comment"># 远程分支重命名</span>
+<span class="token comment"># 远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</span>
+<span class="token comment"># 1.先重命名本地分支</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-m</span> 旧分支名称  新分支名称
+<span class="token comment"># 2.删除远程分支</span>
+<span class="token function">git</span> push <span class="token parameter variable">--delete</span> origin 旧分支名称
+<span class="token comment"># 3.上传新修改名称的本地分支</span>
+<span class="token function">git</span> push origin 新分支名称
+<span class="token comment">#4.修改后的本地分支关联远程分支</span>
+<span class="token function">git</span> branch --set-upstream-to origin/新分支名称
+
+<span class="token comment"># 远程仓库修改分支后与本地仓库同步</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-m</span> master <span class="token number">2021</span>.x
+<span class="token function">git</span> fetch origin
+<span class="token function">git</span> branch <span class="token parameter variable">-u</span> origin/2021.x <span class="token number">2021</span>.x
+<span class="token function">git</span> remote set-head origin <span class="token parameter variable">-a</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h6 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> checkout <span class="token operator">&lt;</span>name<span class="token operator">></span> <span class="token comment"># 切换分支</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> <span class="token operator">&lt;</span>name<span class="token operator">></span> <span class="token comment"># 创建+切换分支</span>
@@ -598,7 +614,7 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TW_qUWRVEnberle5q0ws9Q">图解Git，一目了然！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dYiWQQ5PsSS7F7z7cDLEuw">Git代码防丢指南，再也不怕丢失代码了！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XB_G7TZqBX8r3CJlvqA0Cg">20个最常用的Git命令，你都会用吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ">合并代码还在用gitmerge？我们都用gitrebase！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ">合并代码还在用git merge？我们都用git rebase！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw">45个GIT经典操作场景，专治不会合代码</a></li>
 </ul>
 
@@ -1127,7 +1143,8 @@ token机制，防止页面重复提交前端限制:页面的提交按钮只能�
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022</span>
+                <span id="year">2022-2023
+                </span>
             
             
 

@@ -71,6 +71,22 @@ git branch <name> # 创建分支(未切换)
 git branch -d <name> # 删除分支，不能删除当前所在分支
 git branch --set-upstream branch-name origin/branch-name # 建立本地分支和远程分支的关联
 
+# 远程分支重命名
+# 远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
+# 1.先重命名本地分支
+git branch -m 旧分支名称  新分支名称
+# 2.删除远程分支
+git push --delete origin 旧分支名称
+# 3.上传新修改名称的本地分支
+git push origin 新分支名称
+#4.修改后的本地分支关联远程分支
+git branch --set-upstream-to origin/新分支名称
+
+# 远程仓库修改分支后与本地仓库同步
+git branch -m master 2021.x
+git fetch origin
+git branch -u origin/2021.x 2021.x
+git remote set-head origin -a
 ```
 
 ###### checkout
@@ -192,5 +208,5 @@ git push --force
 - [图解Git，一目了然！](https://mp.weixin.qq.com/s/TW_qUWRVEnberle5q0ws9Q)
 - [Git代码防丢指南，再也不怕丢失代码了！](https://mp.weixin.qq.com/s/dYiWQQ5PsSS7F7z7cDLEuw)
 - [20个最常用的Git命令，你都会用吗？](https://mp.weixin.qq.com/s/XB_G7TZqBX8r3CJlvqA0Cg)
-- [合并代码还在用gitmerge？我们都用gitrebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
+- [合并代码还在用git merge？我们都用git rebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
 - [45个GIT经典操作场景，专治不会合代码](https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw)

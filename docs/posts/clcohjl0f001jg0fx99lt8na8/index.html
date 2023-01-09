@@ -1,0 +1,1427 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="TCP&amp;UDP, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>TCP&amp;UDP | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/blog/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/loading.css">
+
+    <script src="/blog/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/blog/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/blog/" class="waves-effect waves-light">
+                    
+                        <img src="/blog/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/download">
+          
+          <i class="fas fa-download" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>下载</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/download " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-download" style="position: absolute;left:50px" ></i>
+			      
+		          <span>下载</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/blog/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ 'TCP&amp;UDP' ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+        max-height: 480px;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                <span class="chip bg-color">计算机</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h4 id="TCP协议三次握手"><a href="#TCP协议三次握手" class="headerlink" title="TCP协议三次握手"></a>TCP协议三次握手</h4><p><strong>第一次握手</strong>：客户端先向服务端发送一个请求连接的报文段，这个报文段SYN位设置为1,序列号Seq(Sequence Number)设置为某一值，假设为X，发送出去之后客户端进入SYN_SEND状态，等待服务器的确认<br><strong>第二次握手</strong>：服务器收到SYN报文段。服务器收到客户端的SYN报文段，需要对这个SYN报文段进行确认，设置Acknowledgment Number为x+1(Sequence Number+1)；同时，自己自己还要发送SYN请求信息，将SYN位置为1，Sequence Number为y。服务器端将上述所有信息放到一个报文段（即SYN+ACK报文段）中，一并发送给客户端，此时服务器进入SYN_RECV状态<br><strong>第三次握手</strong>：客户端收到服务器的SYN+ACK报文段。然后将Acknowledgment Number设置为y+1，向服务器发送ACK报文段，这个报文段发送完毕以后，客户端和服务器端都进入ESTABLISHED状态，完成TCP三次握手。</p>
+<h4 id="为什么要三次握手而不是两次"><a href="#为什么要三次握手而不是两次" class="headerlink" title="为什么要三次握手而不是两次?"></a>为什么要三次握手而不是两次?</h4><p>为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误。如下：</p>
+<blockquote>
+<p>“已失效的连接请求报文段”的产生在这样一种情况下：client发出的第一个连接请求报文段并没有丢失，而是在某个网络结点长时间的滞留了，以致延误到连接释放以后的某个时间才到达server。本来这是一个早已失效的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。</p>
+<p>假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
+<p>采用“三次握手”的办法可以防止上述现象发生。例如刚才那种情况，client不会向server的确认发出确认。server由于收不到确认，就知道client并没有要求建立连接。”，防止了服务器端的一直等待而浪费资源。<br>完成了三次握手，客户端和服务器端就可以开始传送数据</p>
+</blockquote>
+<h4 id="第三次握手失败了怎么办"><a href="#第三次握手失败了怎么办" class="headerlink" title="第三次握手失败了怎么办?"></a>第三次握手失败了怎么办?</h4><p>在tcp三次握手中 第二次握手完成后connect 就成功返回了 如果第三次握手的ack包丢了 此时 客户端已认为连接是成功的,如果没有应用层的心跳包,客户端会一直维护这个连接 请问如何避免这种情况？<br>第二次握手服务器收到SYN包,然后发出SYN+ACK数据包确认收到并且请求建立连接，服务器进入SYN_RECV状态。而这个时候第三次握手时客户端发送ACK给服务器失败了，服务器没办法进入ESTABLISH状态，这个时候肯定不能传输数据的，不论客户端主动发送数据与否，服务器都会有定时器发送第二步SYN+ACK数据包，如果客户端再次发送ACK成功，建立连接。<br>如果一直不成功，服务器肯定会有超时（大概64s）设置，超时之后会给客户端发「RTS报文」 (连接重置)，进入CLOSED状态，防止SYN洪泛攻击，这个时候客户端应该也会关闭连接</p>
+<blockquote>
+<p>SYN洪泛攻击:<br>SYN攻击利用的是TCP的三次握手机制，攻击端利用伪造的IP地址向被攻击端发出请求，而被攻击端发出的响应 报文将永远发送不到目的地，那么「被攻击端在等待关闭这个连接的过程中消耗了资源」，如果有成千上万的这种连接，主机资源将被耗尽，从而达到攻击的目的。</p>
+</blockquote>
+<h4 id="TCP协议四次分手"><a href="#TCP协议四次分手" class="headerlink" title="TCP协议四次分手"></a>TCP协议四次分手</h4><p><strong>第一次分手</strong>：主机1，设置序列号Seq(Sequence Number)和确认包ACK(Acknowledgment Number)，假设seq为x+2,ACK&#x3D;y+1,再将FIN标志位设置为1,向主机2发送FIN报文段；之后主机1进入FIN_WAIT_1状态；这表示主机1没有数据要发送给主机2了；<br><strong>第二次分手</strong>：主机2收到了主机1发送的FIN报文段，向主机1回一个ACK报文段(其值为接收到的FIN报文的seq值+1)；主机1进入FIN_WAIT_2状态,等待主机二的断开请求包FIN；<br><strong>第三次分手</strong>：主机2向主机1发送FIN报文段，意思是我可以断开连接了,请求关闭连接，同时主机2进入CLOSE_WAIT状态；<br><strong>第四次分手</strong> ：主机1收到主机2发送的FIN报文段，向主机2发送ACK报文段,值为刚刚接收到的FIN包Seq值+1，然后主机1进入TIME_WAIT状态；主机2收到主机1的ACK报文段以后，就关闭连接；此时，主机1等待2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，主机1也可以关闭连接了。</p>
+<h4 id="为什么要四次挥手"><a href="#为什么要四次挥手" class="headerlink" title="为什么要四次挥手"></a>为什么要四次挥手</h4><p>TCP是全双工模式，这就意味着，当主机1发出FIN报文段时，只是表示主机1已经没有数据要发送了，主机1告诉主机2，它的数据已经全部发送完毕了；但是，这个时候主机1还是可以接受来自主机2的数据；当主机2返回ACK报文段时，表示它已经知道主机1没有数据发送了，但是主机2还是可以发送数据到主机1的；当主机2也发送了FIN报文段时，这个时候就表示主机2也没有数据要发送了，就会告诉主机1，我也没有数据要发送了，之后彼此就会愉快的中断这次TCP连接。如果要正确的理解四次分手的原理，就需要了解四次分手过程中的状态变化。</p>
+<h4 id="四次挥手状态解释"><a href="#四次挥手状态解释" class="headerlink" title="四次挥手状态解释"></a>四次挥手状态解释</h4><p>FIN_WAIT_1: 这个状态要好好解释一下，其实FIN_WAIT_1和FIN_WAIT_2状态的真正含义都是表示等待对方的FIN报文。而这两种状态的区别是：FIN_WAIT_1状态实际上是当SOCKET在ESTABLISHED状态时，它想主动关闭连接，向对方发送了FIN报文，此时该SOCKET即进入到FIN_WAIT_1状态。「也就是,发出FIN包之后进入FIN_WAIT_1状态」</p>
+<p>而当对方回应ACK报文后，则进入到FIN_WAIT_2状态，当然在实际的正常情况下，无论对方何种情况下，都应该马上回应ACK报文，所以FIN_WAIT_1状态一般是比较难见到的，而FIN_WAIT_2状态还有时常常可以用netstat看到。「也就是,发出ACK报文之后进入FIN_WAIT_2状态」最新面试题整理好了，大家可以在Java面试库小程序在线刷题。</p>
+<p>主动方FIN_WAIT_2：上面已经详细解释了这种状态，实际上FIN_WAIT_2状态下的SOCKET，表示半连接，也即有一方要求close连接，但另外还告诉对方，我暂时还有点数据需要传送给你(ACK信息)，稍后再关闭连接。</p>
+<p>主动方CLOSE_WAIT：这种状态的含义其实是表示在等待关闭。怎么理解呢？当对方close一个SOCKET后发送FIN报文给自己，你系统毫无疑问地会回应一个ACK报文给对方，此时则进入到CLOSE_WAIT状态。接下来呢，实际上你真正需要考虑的事情是察看你是否还有数据发送给对方，如果没有的话，那么你也就可以 close这个SOCKET，发送FIN报文给对方，也即关闭连接。所以你在CLOSE_WAIT状态下，需要完成的事情是等待你去关闭连接。</p>
+<p>被动方LAST_ACK: 这个状态还是比较容易好理解的，它是被动关闭一方在发送FIN报文后，最后等待对方的ACK报文。当收到ACK报文后，也即可以进入到CLOSED可用状态了。「也就是接收到了对方的FIN包,自己发出了ACK以及FIN包之后的状态」</p>
+<p>被动方TIME_WAIT: 表示收到了对方的FIN报文，并发送出了ACK报文，就等2MSL后即可回到CLOSED可用状态了。如果FIN_WAIT1状态下，收到了对方同时带FIN标志和ACK标志的报文时，可以直接进入到TIME_WAIT状态，而无须经过FIN_WAIT_2状态。想成为架构师，这份架构师图谱建议看看，少走弯路。</p>
+<p>主动方CLOSED: 表示连接中断。</p>
+<h4 id="TCP、UDP区别"><a href="#TCP、UDP区别" class="headerlink" title="TCP、UDP区别"></a>TCP、UDP区别</h4><p>TCP是基于连接的，而UDP是基于非连接的。</p>
+<p>tcp传输数据稳定可靠，适用于对网络通讯质量要求较高的场景，需要准确无误的传输给对方，比如，传输文件，发送邮件，浏览网页等等</p>
+<p>udp的优点是速度快，但是可能产生丢包，所以适用于对实时性要求较高但是对少量丢包并没有太大要求的场景。比如：域名查询，语音通话，视频直播等。udp还有一个非常重要的应用场景就是隧道网络，比如：VXLAN</p>
+<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EDsDatrzmY_w09b5s-HrVw">面试官：TCP为什么要三次握手与四次分手？大部分人答不上来！</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/108822858?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline">一文搞定UDP和TCP高频面试题！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0VtugnDC5V30EZrctpGwKA">近两万字TCP硬核知识，教你吊打面试官！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P103z3rEmKmSgqenjUi9lQ">万字长文带你解析23个问题TCP疑难杂症！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qf8L52VtGTzWcF0NB5Filg">15张图，了解一下TCP&#x2F;IP必知也必会的10个问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ACQz-OZN-oitoMzdvI3RfA">网络篇：朋友面试之TCP&#x2F;IP，回去等通知吧</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rT1O1wYoNEcznSGQ3s9FQA">三次握手和四次挥手到底是个什么鬼东西？</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/345263331">带你了解TCP&#x2F;IP，UDP，Socket之间关系</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IDcnAAW-qHDqqH5jq8GcRg">TCP、HTTP、Socket，傻傻分不清？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rbl4WUA8lksfh4s9U9QW3g">理解TCP和UDP协议到底有啥区别？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Rh5BMzZxIYKsHzt-hliKMw">HTTP协议一知半解？这篇帮你全面了解</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eyXZGlRGaqQ6EPNvGFAgBg">RPC核心，万变不离其宗</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tlWDBDu7UBeXaz1LUxA3Jg">大白话告诉你TCP为什么需要三次握手四次挥手</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/upBMDQsc9NfpdAFGZ34O4A">能将三次握手理解到这个深度，面试官拍案叫绝！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Q_A9NGd-2_HKDJKRoMqz1w">字节一面：“为什么网络要分层？每一层的职责、包含哪些协议？”</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EFSYnqOZRAXfHReHTqS5vw">TCP就没什么缺陷吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b_0Q1cAk_z9mYOK32sOz7w">一台服务器最大并发tcp连接数多少？65535？</a></li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/blog/about" rel="external nofollow noreferrer">xmxe</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://xmxe.gitee.io/blog/posts/clcohjl0f001jg0fx99lt8na8/">https://xmxe.gitee.io/blog/posts/clcohjl0f001jg0fx99lt8na8/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/blog/about" target="_blank">xmxe</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                    <span class="chip bg-color">计算机</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/blog/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/blog/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        
+                            <img src="/blog/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        
+                    </div>
+                    <div id="wechat">
+                        
+                            <img src="/blog/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/blog/posts/clcohjl0r001pg0fx0c0l7ok7/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic1.zhimg.com/v2-b6be64bd80f0b31a3d5429eda80995fa_1440w.jpg" class="responsive-img" alt="Tomcat">
+                        
+                        <span class="card-title">Tomcat</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+面试官:Tomcat的生命周期是什么样子的？
+超详细的Tomcat性能监控及调优教程
+Tomcat配置文件server.xml你有深入了解过没？
+一文拆解Tomcat高并发原理与性能调优
+Tomcat调优和JVM参数优化
+牛逼！硬核图解T
+                        
+
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-31
+                            -->
+
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/blog/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/blog/categories/Java/" class="post-category">
+                                        Java
+                                    </a>
+                                
+                            
+
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog/posts/clcohjl18002eg0fxasabfw7u/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic1.zhimg.com/v2-0b4564465bef0355d1568e4b3bdd047a_1440w.jpg" class="responsive-img" alt="数据结构与算法">
+                        
+                        <span class="card-title">数据结构与算法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            排序算法
+Java实现的排序算法
+
+
+漫画：“排序算法”大总结
+因为排序不明白，被面试官锤了一顿
+史上最好的排序和数据结构入门
+
+堆
+一文告诉你Java集合中「堆」的最佳打开方式
+
+链表
+一口气搞懂「链表」，就靠这20+张图了
+
+栈
+面试官
+                        
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-31
+                            -->
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/blog/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                
+                                <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                    <span class="chip bg-color">计算机</span>
+                                </a>
+                                
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/blog/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/blog/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2023
+                </span>
+            
+            
+
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+    <a href="https://xmxe.gitee.io/zhengfl" class="tooltipped" target="_blank" data-tooltip="简历" data-position="top" data-delay="50">
+        <i class="fas fa-seedling"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/blog/medias/wechat.jpg");
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 200px;
+    height: 200px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/blog/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/blog/libs/materialize/materialize.min.js"></script>
+    <script src="/blog/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/blog/libs/aos/aos.js"></script>
+    <script src="/blog/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/blog/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/blog/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/blog/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/blog/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

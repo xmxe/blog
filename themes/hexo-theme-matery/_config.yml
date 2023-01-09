@@ -36,6 +36,9 @@ menu:
       - name: 相册
         icon: fas fa-images
         url: /gallery
+      - name: 下载
+        icon: fas fa-download
+        url: /download
       # - name: 简历
       #   icon: fas fa-pen
       #   url: https://xmxe.github.io/zhengfl

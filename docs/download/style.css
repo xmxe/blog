@@ -57,12 +57,14 @@
   transform-style: preserve-3d;
   transition: background 0.25s;
 }
+
+html,body {
+  height:98%
+}
+
 body {
-  min-height: 100vh;
-  display: grid;
   place-items: center;
   background: var(--bg);
-  overflow: hidden;
 }
 :root {
   --dark: 0;
@@ -134,7 +136,6 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   animation: roll 10s infinite ease-out alternate;
-  animation: roll 10s infinite ease-out alternate;
 }
 .plane__floater {
   position: absolute;
@@ -143,7 +144,6 @@ body {
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  animation: float 2s infinite ease-in-out;
   animation: float 2s infinite ease-in-out;
 }
 .plane__looper {
@@ -154,7 +154,6 @@ body {
   top: 50%;
   left: 50%;
   transform-origin: 50% 0;
-  animation: loop 10s infinite ease-in-out;
   animation: loop 10s infinite ease-in-out;
 }
 .plane * {
@@ -255,7 +254,6 @@ body {
   height: 100%;
   width: 100%;
   animation: spin 0.35s infinite linear;
-  animation: spin 0.35s infinite linear;
 }
 .propellor:after,
 .propellor:before {
@@ -320,16 +318,12 @@ body {
 .cloud__shift {
   height: 100%;
   width: 100%;
-  animation: pan calc(var(--speed, 5) * 1s) calc(var(--delay, 5) * -1s)
-    infinite ease-in-out both;
   animation: pan calc(var(--speed, 5) * 1s) calc(var(--delay, 5) * -1s) infinite
     ease-in-out both;
 }
 .cloud__body {
   height: 100%;
   width: 100%;
-  animation: scale calc(var(--speed, 5) * 1s)
-    calc(var(--delay, 5) * -1s) infinite linear;
   animation: scale calc(var(--speed, 5) * 1s) calc(var(--delay, 5) * -1s)
     infinite linear;
 }
@@ -589,7 +583,7 @@ body {
 .cuboid--vertical-stabilizer div:nth-of-type(4):after {
   content: "";
   background: var(--accent-four);
-  height: 150%;
+  height: 100%;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -608,8 +602,8 @@ body {
   transform-origin: 0 0;
   transform: rotate(-42deg);
   background: var(--accent-three);
-  height: 150%;
-  width: 160%;
+  height: 100%;
+  width: 100%;
 }
 .cuboid--vertical-stabilizer div:nth-of-type(6) {
   background: transparent;
@@ -623,8 +617,8 @@ body {
   transform-origin: 100% 0;
   transform: rotate(42deg);
   background: var(--accent-three);
-  height: 150%;
-  width: 160%;
+  height: 100%;
+  width: 100%;
 }
 .cuboid--wheel-left,
 .cuboid--wheel-right {
@@ -680,7 +674,6 @@ body {
 .cuboid--beacon {
   --thickness: calc(var(--base-size) * 0.02);
   animation: flash calc(var(--dark) * 1s) infinite;
-  animation: flash calc(var(--dark) * 1s) infinite;
 }
 .cuboid--beacon div {
   background: hsla(0, 90%, 50%, var(--alpha));
@@ -688,41 +681,29 @@ body {
 .cuboid--strobe {
   --thickness: calc(var(--base-size) * 0.02);
   animation: flash calc(var(--dark) * 0.5s) infinite;
-  animation: flash calc(var(--dark) * 0.5s) infinite;
 }
 .cuboid--strobe div {
   background: hsla(0, 90%, 98%, var(--alpha));
 }
+
 @keyframes flash {
   50% {
     --alpha: 1;
   }
 }
-@keyframes flash {
-  50% {
-    --alpha: 1;
-  }
-}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+
 @keyframes float {
   50% {
     transform: translate(-50%, -40%);
   }
 }
-@keyframes float {
-  50% {
-    transform: translate(-50%, -40%);
-  }
-}
+
 @keyframes loop {
   0%,
   40% {
@@ -733,16 +714,7 @@ body {
     transform: translate(-50%, -50%) rotateZ(360deg);
   }
 }
-@keyframes loop {
-  0%,
-  40% {
-    transform: translate(-50%, -50%);
-  }
-  50%,
-  100% {
-    transform: translate(-50%, -50%) rotateZ(360deg);
-  }
-}
+
 @keyframes roll {
   0%,
   85% {
@@ -753,26 +725,7 @@ body {
     transform: translate(-50%, -50%) rotateX(-360deg);
   }
 }
-@keyframes roll {
-  0%,
-  85% {
-    transform: translate(-50%, -50%);
-  }
-  90%,
-  100% {
-    transform: translate(-50%, -50%) rotateX(-360deg);
-  }
-}
-@keyframes nightshift {
-  0%,
-  50% {
-    background: var(--bg);
-  }
-  75%,
-  100% {
-    background: var(--night);
-  }
-}
+
 @keyframes nightshift {
   0%,
   50% {
@@ -795,34 +748,16 @@ body {
     transform: scale(1);
   }
 }
-@keyframes scale {
-  0%,
-  5%,
-  95%,
-  100% {
-    transform: scale(0);
-  }
-  10%,
-  90% {
-    transform: scale(1);
-  }
-}
+
 @keyframes pan {
   0% {
-    transform: translate(-1000%, 0);
+    transform: translate(0%, 0);
   }
   100% {
-    transform: translate(1000%, 0);
+    transform: translate(100%, 0);
   }
 }
-@keyframes pan {
-  0% {
-    transform: translate(-1000%, 0);
-  }
-  100% {
-    transform: translate(1000%, 0);
-  }
-}
+
 
 /* dock栏 */
 

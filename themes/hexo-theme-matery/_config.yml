@@ -36,12 +36,6 @@ menu:
       - name: 相册
         icon: fas fa-images
         url: /gallery
-      - name: 下载
-        icon: fas fa-download
-        url: /download
-      # - name: 简历
-      #   icon: fas fa-pen
-      #   url: https://xmxe.github.io/zhengfl
       
   #Contact:
     #url: /contact
@@ -168,7 +162,6 @@ githubLink:
 socialLink:
   github: https://github.com/xmxe
   gitee: https://gitee.com/xmxe
-  resume: https://xmxe.gitee.io/zhengfl
   email: 
   facebook: # https://www.facebook.com/xxx
   twitter: # https://twitter.com/xxx
@@ -179,6 +172,14 @@ socialLink:
   weibo: # https://weibo.com/xxx
   zhihu: # https://www.zhihu.com/xxx
   rss: false # true、false
+  # 自定义展示
+  pages: 
+    - tooltip: 下载
+      url: /download
+      icon: fas fa-download
+    # - tooltip: 下载2
+    #   url: /download
+    #   icon: fas fa-download
   
 # 网站背景图
 background:

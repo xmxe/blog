@@ -1053,6 +1053,1498 @@ console.log(b);
 //Boy { name: 'person', sex: '男', title: 'boy' }
 ```
 
+### code
+
+#### 你应该了解的25个JS技巧
+[12个非常实用的JavaScript函数](https://mp.weixin.qq.com/s/PEIh2psZ28VPUx6HExioKg)
+
+```js
+
+// 1. 类型检查小工具
+const isOfType = (() => {
+  // create a plain object with no prototype
+  const type = Object.create(null);
+  // check for null type
+  type.null = (x) => x === null;
+  // check for undefined type
+  type.undefined = (x) => x === undefined;
+  // check for nil type. Either null or undefined
+  type.nil = (x) => type.null(x) || type.undefined(x);
+  // check for strings and string literal type. e.g: 's', "s", `str`, new String()
+  type.string = (x) => !type.nil(x) && (typeof x === "string" || x instanceof String);
+  // check for number or number literal type. e.g: 12, 30.5, new Number()
+  type.number = (x) =>
+!type.nil(x) && // NaN & Infinity have typeof "number" and this excludes that
+    ((!isNaN(x) && isFinite(x) && typeof x === "number") ||
+      x instanceof Number);
+  // check for boolean or boolean literal type. e.g: true, false, new Boolean()
+  type.boolean = (x) =>
+    !type.nil(x) && (typeof x === "boolean" || x instanceof Boolean);
+  // check for array type
+  type.array = (x) => !type.nil(x) && Array.isArray(x);
+  // check for object or object literal type. e.g: {}, new Object(), Object.create(null)
+  type.object = (x) => ({}.toString.call(x) === "[object Object]");
+  // check for provided type instance
+  type.type = (x, X) => !type.nil(x) && x instanceof X;
+  // check for set type
+  type.set = (x) => type.type(x, Set);
+  // check for map type
+  type.map = (x) => type.type(x, Map);
+  // check for date type
+  type.date = (x) => type.type(x, Date);
+
+  return type;
+})();
+
+// 2. 检查是否为空
+function isEmpty(x) {
+  if (Array.isArray(x) || typeof x === "string" || x instanceof String) {
+    return x.length === 0;
+  }
+  if (x instanceof Map || x instanceof Set) {
+    return x.size === 0;
+  }
+  if ({}.toString.call(x) === "[object Object]") {
+    return Object.keys(x).length === 0;
+  }
+
+  return false;
+}
+
+// 3. 获取列表最后一项
+function lastItem(list) {
+  if (Array.isArray(list)) {
+    return list.slice(-1)[0];
+  }
+
+  if (list instanceof Set) {
+    return Array.from(list).slice(-1)[0];
+  }
+
+  if (list instanceof Map) {
+    return Array.from(list.values()).slice(-1)[0];
+  }
+}
+
+// 4. 带有范围的随机数生成器
+function randomNumber(max = 1, min = 0) {
+  if (min >= max) {
+    return max;
+  }
+
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+// 5. 随机ID生成器
+// create unique id starting from current time in milliseconds
+// incrementing it by 1 everytime requested
+const uniqueId = (() => {
+  const id = (function* () {
+    let mil = new Date().getTime();
+
+    while (true) yield (mil += 1);
+  })();
+
+  return () => id.next().value;
+})();
+// create unique incrementing id starting from provided value or zero
+// good for temporary things or things that id resets
+const uniqueIncrementingId = ((lastId = 0) => {
+  const id = (function* () {
+    let numb = lastId;
+
+    while (true) yield (numb += 1);
+  })();
+
+  return (length = 12) => `${id.next().value}`.padStart(length, "0");
+})();
+// create unique id from letters and numbers
+const uniqueAlphaNumericId = (() => {
+  const heyStack = "0123456789abcdefghijklmnopqrstuvwxyz";
+  const randomInt = () =>
+    Math.floor(Math.random() * Math.floor(heyStack.length));
+
+  return (length = 24) =>
+    Array.from({ length }, () => heyStack[randomInt()]).join("");
+})();
+
+// 6. 创建一个范围内的数字
+function range(maxOrStart, end = null, step = null) {
+  if (!end) {
+    return Array.from({ length: maxOrStart }, (_, i) => i);
+  }
+
+  if (end <= maxOrStart) {
+    return [];
+  }
+
+  if (step !== null) {
+    return Array.from(
+      { length: Math.ceil((end - maxOrStart) / step) },
+      (_, i) => i * step + maxOrStart
+    );
+  }
+
+  return Array.from(
+    { length: Math.ceil(end - maxOrStart) },
+    (_, i) => i + maxOrStart
+  );
+}
+
+// 7. 格式化JSON字符串，stringify任何内容
+const stringify = (() => {
+  const replacer = (key, val) => {
+    if (typeof val === "symbol") {
+      return val.toString();
+    }
+    if (val instanceof Set) {
+      return Array.from(val);
+    }
+    if (val instanceof Map) {
+      return Array.from(val.entries());
+    }
+    if (typeof val === "function") {
+      return val.toString();
+    }
+    return val;
+  };
+
+  return (obj, spaces = 0) => JSON.stringify(obj, replacer, spaces);
+})();
+
+// 8. 顺序执行promise
+const asyncSequentializer = (() => {
+  const toPromise = (x) => {
+    if (x instanceof Promise) {
+      // if promise just return it
+      return x;
+    }
+
+    if (typeof x === "function") {
+      // if function is not async this will turn its result into a promise
+      // if it is async this will await for the result
+      return (async () => await x())();
+    }
+
+    return Promise.resolve(x);
+  };
+
+  return (list) => {
+    const results = [];
+
+    return (
+      list.reduce((lastPromise, currentPromise) => {
+          return lastPromise.then((res) => {
+            results.push(res); // collect the results
+            return toPromise(currentPromise);
+          });
+        }, toPromise(list.shift()))
+        // collect the final result and return the array of results as resolved promise
+        .then((res) => Promise.resolve([...results, res]))
+    );
+  };
+})();
+
+// 9. 轮询数据
+async function poll(fn, validate, interval = 2500) {
+  const resolver = async (resolve, reject) => {
+    try {
+      // catch any error thrown by the "fn" function
+      const result = await fn(); // fn does not need to be asynchronous or return promise
+      // call validator to see if the data is at the state to stop the polling
+      const valid = validate(result);
+      if (valid === true) {
+        resolve(result);
+      } else if (valid === false) {
+        setTimeout(resolver, interval, resolve, reject);
+      } // if validator returns anything other than "true" or "false" it stops polling
+    } catch (e) {
+      reject(e);
+    }
+  };
+  return new Promise(resolver);
+}
+
+// 10. 等待所有promise完成
+const prom1 = Promise.reject(12);
+const prom2 = Promise.resolve(24);
+const prom3 = Promise.resolve(48);
+const prom4 = Promise.resolve("error");
+// completes when all promises resolve or at least one fail
+// if all resolve it will return an array of results in the same order of each promise
+// if fail it will return the error in catch
+
+Promise.all([prom1, prom2, prom3, prom4])
+  .then((res) => console.log("all", res))
+  .catch((err) => console.log("all failed", err));
+
+// completes with an array of objects with "status" and "value" or "reason" of each promise
+// status can be "fullfilled" or "rejected"
+// if fullfilled it will contain a "value" property
+
+// if failed it will contain a "reasor property
+Promise.allSettled([prom1, prom2, prom3, prom4])
+  .then((res) => console.log("allSettled", res))
+  .catch((err) => console.log("allSettled failed", err));
+
+// completes with the first promise that resolves
+// fails if all promises fail
+Promise.any([prom1, prom2, prom3, prom4])
+  .then((res) => console.log("any", res))
+  .catch((err) => console.log("any failed", err));
+
+// completes with the first promise that either resolve or fail
+// whichever comes first
+Promise.race([prom1, prom2, prom3, prom4])
+  .then((res) => console.log("race", res))
+  .catch((err) => console.log("race failed", err));
+
+// 11. 交换数组值的位置
+const array = [12, 24, 48];
+const swap0ldway = (arr, i, j) => {
+  const arrayCopy = [...arr];
+  let temp = arayCopy[i];
+  arrayCopy[i] = arrayCopy[j];
+
+  arrayCopy[j] = temp;
+  return arrayCopy;
+};
+
+const swapNewWay = (arr, i, j) => {
+  const arrayCopy = [...arr];
+  [arrayCopy[0], arrayCopy[2]] = [arrayCopy[2], arrayCopy[0]];
+  return arrayCopy;
+};
+
+console.log(swap0ldWay(array, 0, 2)); // outputs: [48, 24, 12]
+console.log(swapNewWay(array, 0, 2)); // outputs: [48, 24, 12]
+
+// 12. 条件对象键
+let condition = true;
+const man = {
+  someProperty: "some value",
+  // the parenthesis will execute the ternary that will
+  // result in the object with the property you want to insert
+  // or an empty object.then its content is spreaded in the wrapper object
+  ...(condition === true ? { newProperty: "value" } : {}),
+};
+
+// 13. 使用变量作为对象键
+let property = "newValidProp";
+const man2 = {
+  someProperty: "some value",
+  // the "square bracket" notation is a valid way to acces object key
+  // like object[prop] but it is used inside to assign a property as well
+  // using the 'backtick' to first change it into a string
+
+  // but it is optional
+  ["${property}"]: "value",
+};
+
+// 14. 检查对象里的键
+const sample = {
+  prop: "value",
+};
+// using the "in" keyword will still consider proptotype keys
+// which makes it unsafe and one of the issues with "for...in" loop
+console.log("prop" in sample); // prints "true"
+console.log("toString" in sample); // prints "true"
+// using the "hasOwnProperty" methods is safer
+console.log(sample.hasOwnProperty("prop")); // prints "true"
+console.log(sample.hasOwnProperty("toString")); // prints "false"
+
+// 15. 删除数组重复项
+const numberArrays = [undefined,Infinity,
+  12,NaN,false,5,7,null,12,false,5,undefined,89,9,
+  null,Infinity,5, NaN];
+const objArrays = [{ id: 1 }, { id: 4 }, { id: 1 }, { id: 5 }, { id: 4 }];
+console.log(
+  // prints [undefined, Infinity, 12, NaN, false, 5, 7, null, 89, 9]
+  Array.from(new Set(numberArrays)),
+  // prints [{id: 1}, {id: 4}, {id: 1}, {id: 5}, {id: 4}]
+  // nothing changes because even though the ids repeat in some objects
+  // the objects are different instances, different objects
+  Array.from(new Set(objArrays))
+);
+const idSet = new Set();
+console.log(
+  // prints [{id: 1}, {id: 4}, {id: 5}] using id to track id uniqueness
+  objArrays.filter((obj) => {
+    const existingId = idSet.has(obj.id);
+    idSet.add(obj.id);
+    return !existingId;
+  })
+);
+
+// 16. 在ArrayforEach中执行“break”和“continue”
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+for (const number of numbers) {
+  if (number % 2 === 0) {
+    continue;
+  }
+  if (number > 5) {
+    break;
+  }
+  console.log(number);
+}
+numbers.some((number) => {
+  if (number % 2 === 0) {
+    // continue;
+  }
+  if (number > 5) {
+    // break;
+  }
+  console.log(number);
+});
+
+// 17. 使用别名和默认值来销毁
+function demo1({ dt: data }) {
+  // rename "dt" to "data"
+  console.log(data); // prints {name: 'sample', id: 50}
+}
+function demo2({ dt: { name, id = 10 } }) {
+  // deep destruct "dt" and if no "id" use 10 as default
+  console.log(name, id); // prints 'sample', '10'
+}
+demo1({
+  dt: { name: "sample", id: 50 },
+});
+
+demo2({
+  dt: { name: "sample" },
+});
+
+// 18. 可选链和空值合并
+const obj = {
+  data: {
+    container: {
+      name: {
+        value: "sample",
+      },
+      int: {
+        value: 0,
+      },
+    },
+  },
+};
+
+console.log(
+  // even though the "int.value" exists, it is falsy therefore fails to be printed
+  obj.data.container.int.value || "no int value", // prints 'no int value'
+  // the ?? make sure to fallback to the right side only if left is null or undefined
+  obj.data.container.int.value ?? "no int value" // prints 0
+);
+console.log(
+  // "wrapper" does not exist inside "data"
+  obj.data.wrapper.name.value, // throws "Cannot read property 'name' of undefined"
+  // this is better but can be a problem if object is deep
+  (obj && obj.data && obj.data.wrapper && obj.data.wrapper.name) || "no name", // prints 'no name"
+  // using optional chaining "?" is better
+  obj?.data?.wrapper?.name || "no name" // prints 'no name'
+);
+
+// 19. 用函数扩展类
+function Parent() {
+  const privateProp = 12;
+  const privateMethod = () => privateProp + 10;
+  this.publicMethod = (x = 0) => privateMethod() + x;
+  this.publicProp = 10;
+}
+class Child extends Parent {
+  myProp = 20;
+}
+const child = new Child();
+console.log(
+  child.myProp, // prints 20
+  child.publicProp, // prints 10
+  child.publicMethod(40), // prints 62
+  child.privateProp, // prints undefined
+  child.privateMethod() // throws "child.privateMethod is not a function"
+);
+
+// 20. 扩展构造函数
+function Employee() {
+  this.profession = "Software Engineer";
+  this.salary = "$150000";
+}
+
+function DeveloperFreelancer() {
+  this.programmingLanguages = ["Javascript", "Python", " Swift"];
+  this.avgPerHour = "$100";
+}
+
+function Engineer(name) {
+  this.name = name;
+  this.freelancer = {};
+  Employee.apply(this);
+  DeveloperFreelancer.apply(this.freelancer);
+}
+const john = new Engineer("John Doe");
+console.log(
+  john.name, // prints "John Doe"
+  john.profession, // prints "Software Engineer"
+  john.salary, // prints "$150000"
+  john.freelancer // prints {programmingLanguages: ['Javascript', 'Python', 'Swift'], avgPerHour: '$100'}
+);
+
+// 21. 循环任何内容
+function forEach(list, callback) {
+  const entries = Object.entries(list);
+  let i = 0;
+  const len = entries.length;
+
+  for (; i < len; i++) {
+    const res = callback(entries[i][1], entries[i][0], list);
+    if (res === true) break;
+  }
+}
+
+// 22. 使函数参数为required
+function required(argName = "param") {
+  throw new Error(`"${argName}" is required`);
+}
+function iHaveRequiredOptions(arg1 = required("arg1"), arg2 = 10) {
+  console.log(arg1, arg2);
+}
+iHaveRequiredOptions(); // throws "arg1" is required
+iHaveRequiredOptions(12); // prints 12, 10
+iHaveRequiredOptions(12, 24); // prints 12, 24
+iHaveRequiredOptions(undefined, 24); // throws "arg1" is required
+
+// 23. 创建模块或单例
+class Service {
+  name = "service";
+}
+const service = (function (S) {
+  // do something here like preparing data that you can use to initialize service
+  const service = new S();
+  return () => service;
+})(Service);
+const element = (function (S) {
+  const element = document.createElement("DIV");
+  // do something here to grab somethin on the dom
+  // or create elements with javasrcipt setting it all up
+  // than to return it
+  return () => element;
+})();
+
+// 24. 深度克隆对象
+const deepClone = (obj) => {
+  let clone = obj;
+  if (obj && typeof obj === "object") {
+    clone = new obj.constructor();
+
+    Object.getOwnPropertyNames(obj).forEach(
+      (prop) => (clone[prop] = deepClone(obj[prop]))
+    );
+  }
+  return clone;
+};
+
+// 25. 深度冻结对象
+const deepClone2 = (obj) => {
+  let clone = obj;
+  if (obj && typeof obj === "object") {
+    clone = new obj.constructor();
+
+    Object.getOwnPropertyNames(obj).forEach(
+      (prop) => (clone[prop] = deepClone(obj[prop]))
+    );
+  }
+  return clone;
+};
+
+```
+
+#### 9个极其强大的JavaScript技巧
+```js
+// 1. Replace All
+var example = "potato potato";
+console.log(example.replace(/pot/, "tom"));// "tomato potato"
+console.log(example.replace(/pot/g, "tom"));// "tomato tomato"
+// 2. 提取唯一值 我们可以使用Set对象和Spread运算符，创建一个剔除重复值的新数组。
+var entries = [1, 2, 2, 3, 4, 5, 6, 6, 7, 7, 8, 4, 2, 1]
+var unique_entries = [...new Set(entries)];
+console.log(unique_entries);// [1, 2, 3, 4, 5, 6, 7, 8]
+// 3. 将数字转换为字符串
+var converted_number = 5 + "";
+console.log(converted_number);// 5
+console.log(typeof converted_number);// string
+// 4. 将字符串转换为数字 请注意这里的用法，因为它只适用于“字符串数字”。
+var the_string = "123";
+console.log(+the_string);// 123
+the_string = "hello";
+console.log(+the_string);// NaN
+// 5.随机排列数组中的元素
+var my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(my_list.sort(function() {
+    return Math.random() - 0.5
+}));// [4, 8, 2, 9, 1, 3, 6, 5, 7]
+// 6. 展平多维数组
+var entries = [1, [2, 5], [6, 7], 9];
+var flat_entries = [].concat(...entries);// [1, 2, 5, 6, 7, 9]
+// 7. 短路条件
+// available && addToCart()代替
+// if (available) {
+//     addToCart();
+// }
+// 8. 动态属性名称
+const dynamic = 'flavour';
+var item = {
+    name: 'Coke',
+    [dynamic]: 'Cherry'
+}
+console.log(item);// { name: "Coke", flavour: "Cherry" }
+// 9. 使用length调整大小 / 清空数组
+// 如果我们要调整数组的大小：
+var entries = [1, 2, 3, 4, 5, 6, 7];
+console.log(entries.length);// 7
+entries.length = 4;
+console.log(entries.length);// 4
+console.log(entries);// [1, 2, 3, 4]
+// 如果我们要清空数组：
+var entries = [1, 2, 3, 4, 5, 6, 7];
+console.log(entries.length);// 7
+entries.length = 0;
+console.log(entries.length);// 0
+console.log(entries);// []
+```
+
+#### 数组操作
+
+[20个你不可不知的JavaScript数组方法](https://mp.weixin.qq.com/s/80wrfE7OnTr8BL2BPH5gfg)
+
+```js
+
+/**
+ * 数组去重⬇
+ */
+// 方案一：Set + ...
+function noRepeat(arr) {
+  return [...new Set(arr)];
+}
+noRepeat([1, 2, 3, 1, 2, 3]);
+
+// 方案二：Set + Array.from
+function noRepeat(arr) {
+  return Array.from(new Set(arr));
+}
+noRepeat([1, 2, 3, 1, 2, 3]);
+
+// 方案三：双重遍历比对下标
+function noRepeat(arr) {
+  return arr.filter((v, idx) => idx == arr.lastIndexOf(v));
+}
+noRepeat([1, 2, 3, 1, 2, 3]);
+
+// 方案四：单遍历 + Object特性
+// Object的特性是Key不会重复。
+// 这里使用values是因为可以保留类型，keys会变成字符串。
+function noRepeat(arr) {
+  return Object.values(
+    arr.reduce((s, n) => {
+      s[n] = n;
+      return s;
+    }, {})
+  );
+}
+noRepeat([1, 2, 3, 1, 2, 3]);
+
+/**
+ * 查找数组最大⬇
+ */
+// 方案一：Math.max + ...
+function arrayMax(arr) {
+  return Math.max(...arr);
+}
+arrayMax([-1, -4, 5, 2, 0]);
+
+// 方案二：Math.max + apply
+function arrayMax(arr) {
+  return Math.max.apply(Math, arr);
+}
+arrayMax([-1, -4, 5, 2, 0]);
+
+// 方案三：Math.max + 遍历
+function arrayMax(arr) {
+  return arr.reduce((s, n) => Math.max(s, n));
+}
+arrayMax([-1, -4, 5, 2, 0]);
+
+// 方案四：比较、条件运算法 + 遍历
+function arrayMax(arr) {
+  return arr.reduce((s, n) => (s > n ? s : n));
+}
+arrayMax([-1, -4, 5, 2, 0]);
+
+// 方案五：排序
+function arrayMax(arr) {
+  return arr.sort((n, m) => m - n)[0];
+}
+arrayMax([-1, -4, 5, 2, 0]);
+
+/**
+ *  查找数组最小⬇
+ */
+// Math.max换成Math.min
+// s>n?s:n换成s<n?s:n
+// (n,m)=>m-n换成(n,m)=>n-m，或者直接取最后一个元素
+
+/**
+ * 返回已size为长度的数组分割的原数组⬇
+ */
+// 方案一：Array.from + slice
+function chunk(arr, size = 1) {
+  return Array.from(
+    {
+      length: Math.ceil(arr.length / size),
+    },
+    (v, i) => arr.slice(i * size, i * size + size)
+  );
+}
+chunk([1, 2, 3, 4, 5, 6, 7, 8], 3);
+
+// 方案二：Array.from + splice
+function chunk(arr, size = 1) {
+  return Array.from(
+    {
+      length: Math.ceil(arr.length / size),
+    },
+    (v, i) => arr.splice(0, size)
+  );
+}
+chunk([1, 2, 3, 4, 5, 6, 7, 8], 3);
+
+// 方案三：遍历 + splice
+function chunk(arr, size = 1) {
+  var _returnArr = [];
+  while (arr.length) {
+    _returnArr.push(arr.splice(0, size));
+  }
+  return _returnArr;
+}
+chunk([1, 2, 3, 4, 5, 6, 7, 8], 3);
+
+/**
+ * 检查数组中某元素出现的次数⬇
+ */
+// 方案一：reduce
+function countOccurrences(arr, value) {
+  return arr.reduce((a, v) => (v === value ? a + 1 : a + 0), 0);
+}
+countOccurrences([1, 2, 3, 4, 5, 1, 2, 1, 2, 3], 1);
+
+// 方案二：filter
+function countOccurrences(arr, value) {
+  return arr.filter((v) => v === value).length;
+}
+countOccurrences([1, 2, 3, 4, 5, 1, 2, 1, 2, 3], 1);
+
+/**
+ * 扁平化数组⬇
+ */
+// 方案一：递归 + ...
+function flatten(arr, depth = -1) {
+  if (depth === -1) {
+    return [].concat(
+      ...arr.map((v) => (Array.isArray(v) ? this.flatten(v) : v))
+    );
+  }
+  if (depth === 1) {
+    return arr.reduce((a, v) => a.concat(v), []);
+  }
+  return arr.reduce(
+    (a, v) => a.concat(Array.isArray(v) ? this.flatten(v, depth - 1) : v),
+    []
+  );
+}
+flatten([1, [2, [3]]]);
+
+// 方案二：es6原生flat
+function flatten(arr, depth = Infinity) {
+  return arr.flat(depth);
+}
+flatten([1, [2, [3]]]);
+
+/**
+ * 对比两个数组并且返回其中不同的元素⬇
+ */
+// 方案一：filter + includes
+// 他原文有问题，以下方法的4,5没有返回
+
+function diffrence(arrA, arrB) {
+  return arrA.filter((v) => !arrB.includes(v));
+}
+diffrence([1, 2, 3], [3, 4, 5, 2]);
+// 需要再操作一遍
+function diffrence(arrA, arrB) {
+  return arrA
+    .filter((v) => !arrB.includes(v))
+    .concat(arrB.filter((v) => !arrA.includes(v)));
+}
+diffrence([1, 2, 3], [3, 4, 5, 2]);
+
+// 方案二：hash + 遍历
+// 算是方案1的变种吧，优化了includes的性能。
+
+/**
+ * 返回两个数组中相同的元素⬇
+ */
+// 方案一：filter + includes
+function intersection(arr1, arr2) {
+  return arr2.filter((v) => arr1.includes(v));
+}
+intersection([1, 2, 3], [3, 4, 5, 2]);
+
+// 方案二：同理变种用 hash
+function intersection(arr1, arr2) {
+  var set = new Set(arr2);
+  return arr1.filter((v) => set.has(v));
+}
+intersection([1, 2, 3], [3, 4, 5, 2]);
+
+/**
+ * 从右删除n个元素⬇
+ */
+// 方案一：slice
+function dropRight(arr, n = 0) {
+  return n < arr.length ? arr.slice(0, arr.length - n) : [];
+}
+dropRight([1, 2, 3, 4, 5], 2);
+
+// 方案二: splice
+function dropRight(arr, n = 0) {
+  return arr.splice(0, arr.length - n);
+}
+dropRight([1, 2, 3, 4, 5], 2);
+
+// 方案三: slice另一种
+function dropRight(arr, n = 0) {
+  return arr.slice(0, -n);
+}
+dropRight([1, 2, 3, 4, 5], 2);
+
+// 方案四: 修改length
+function dropRight(arr, n = 0) {
+  arr.length = Math.max(arr.length - n, 0);
+  return arr;
+}
+dropRight([1, 2, 3, 4, 5], 2);
+
+/**
+ * 截取第一个符合条件的元素及其以后的元素⬇
+ */
+// 方案一：slice + 循环
+function dropElements(arr, fn) {
+  while (arr.length && !fn(arr[0])) arr = arr.slice(1);
+  return arr;
+}
+dropElements([1, 2, 3, 4, 5, 1, 2, 3], (v) => v == 2);
+
+// 方案二：findIndex + slice
+function dropElements(arr, fn) {
+  return arr.slice(Math.max(arr.findIndex(fn), 0));
+}
+dropElements([1, 2, 3, 4, 5, 1, 2, 3], (v) => v === 3);
+
+// 方案三：splice + 循环
+function dropElements(arr, fn) {
+  while (arr.length && !fn(arr[0])) arr.splice(0, 1);
+  return arr;
+}
+dropElements([1, 2, 3, 4, 5, 1, 2, 3], (v) => v == 2);
+
+/**
+ * 返回数组中下标间隔nth的元素⬇
+ */
+// 方案一：filter
+function everyNth(arr, nth) {
+  return arr.filter((v, i) => i % nth === nth - 1);
+}
+everyNth([1, 2, 3, 4, 5, 6, 7, 8], 2);
+
+// 方案二：方案一修改判断条件
+function everyNth(arr, nth) {
+  return arr.filter((v, i) => (i + 1) % nth === 0);
+}
+everyNth([1, 2, 3, 4, 5, 6, 7, 8], 2);
+
+/**
+ * 返回数组中第n个元素（支持负数）⬇
+ */
+// 方案一：slice
+function nthElement(arr, n = 0) {
+  return (n >= 0 ? arr.slice(n, n + 1) : arr.slice(n))[0];
+}
+nthElement([1, 2, 3, 4, 5], 0);
+nthElement([1, 2, 3, 4, 5], -1);
+
+// 方案二：三目运算符
+function nthElement(arr, n = 0) {
+  return n >= 0 ? arr[0] : arr[arr.length + n];
+}
+nthElement([1, 2, 3, 4, 5], 0);
+nthElement([1, 2, 3, 4, 5], -1);
+
+/**
+ * 返回数组头元素⬇
+ */
+// 方案一：
+function head(arr) {
+  return arr[0];
+}
+head([1, 2, 3, 4]);
+
+// 方案二：
+function head(arr) {
+  return arr.slice(0, 1)[0];
+}
+head([1, 2, 3, 4]);
+
+/**
+ * 返回数组末尾元素⬇
+ */
+// 方案一：
+function last(arr) {
+  return arr[arr.length - 1];
+}
+
+// 方案二：
+function last(arr) {
+  return arr.slice(-1)[0];
+}
+last([1, 2, 3, 4, 5]);
+
+/**
+ * 数组乱排⬇
+ */
+// 方案一：洗牌算法
+function shuffle(arr) {
+  let array = arr;
+  let index = array.length;
+
+  while (index) {
+    index -= 1;
+    let randomInedx = Math.floor(Math.random() * index);
+    let middleware = array[index];
+    array[index] = array[randomInedx];
+    array[randomInedx] = middleware;
+  }
+
+  return array;
+}
+shuffle([1, 2, 3, 4, 5]);
+
+/**
+ * 方案二：sort + random
+ */
+function shuffle(arr) {
+  return arr.sort((n, m) => Math.random() - 0.5);
+}
+shuffle([1, 2, 3, 4, 5]);
+
+/**
+ * 伪数组转换为数组⬇
+ */
+// 方案一：Array.from
+Array.from({ length: 2 });
+// 方案二：prototype.slice
+Array.prototype.slice.call({ length: 2, 1: 1 });
+// 方案三：prototype.splice
+Array.prototype.splice.call({ length: 2, 1: 1 }, 0);
+
+```
+
+#### 浏览器
+
+```js
+// -------浏览器对象 BOM-------
+// 判读浏览器是否支持CSS属性
+/**
+ * 告知浏览器支持的指定css属性情况
+ * @param {String} key - css属性，是属性的名字，不需要加前缀
+ * @returns {String} - 支持的属性情况
+ */
+function validateCssKey(key) {
+  const jsKey = toCamelCase(key); // 有些css属性是连字符号形成
+  if (jsKey in document.documentElement.style) {
+    return key;
+  }
+  let validKey = "";
+  // 属性名为前缀在js中的形式，属性值是前缀在css中的形式
+  // 经尝试，Webkit也可是首字母小写webkit
+  const prefixMap = {
+    Webkit: "-webkit-",
+    Moz: "-moz-",
+    ms: "-ms-",
+    O: "-o-",
+  };
+  for (const jsPrefix in prefixMap) {
+    const styleKey = toCamelCase(`${jsPrefix}-${jsKey}`);
+    if (styleKey in document.documentElement.style) {
+      validKey = prefixMap[jsPrefix] + key;
+      break;
+    }
+  }
+  return validKey;
+}
+
+/**
+ * 把有连字符号的字符串转化为驼峰命名法的字符串
+ */
+function toCamelCase(value) {
+  return value.replace(/-(\w)/g, (matched, letter) => {
+    return letter.toUpperCase();
+  });
+}
+
+/**
+ * 检查浏览器是否支持某个css属性值（es6版）
+ * @param {String} key - 检查的属性值所属的css属性名
+ * @param {String} value - 要检查的css属性值（不要带前缀）
+ * @returns {String} - 返回浏览器支持的属性值
+ */
+function valiateCssValue(key, value) {
+  const prefix = ["-o-", "-ms-", "-moz-", "-webkit-", ""];
+  const prefixValue = prefix.map((item) => {
+    return item + value;
+  });
+  const element = document.createElement("div");
+  const eleStyle = element.style;
+  // 应用每个前缀的情况，且最后也要应用上没有前缀的情况，看最后浏览器起效的何种情况
+  // 这就是最好在prefix里的最后一个元素是''
+  prefixValue.forEach((item) => {
+    eleStyle[key] = item;
+  });
+  return eleStyle[key];
+}
+
+/**
+ * 检查浏览器是否支持某个css属性值
+ * @param {String} key - 检查的属性值所属的css属性名
+ * @param {String} value - 要检查的css属性值（不要带前缀）
+ * @returns {String} - 返回浏览器支持的属性值
+ */
+function valiateCssValue(key, value) {
+  var prefix = ["-o-", "-ms-", "-moz-", "-webkit-", ""];
+  var prefixValue = [];
+  for (var i = 0; i < prefix.length; i++) {
+    prefixValue.push(prefix[i] + value);
+  }
+  var element = document.createElement("div");
+  var eleStyle = element.style;
+  for (var j = 0; j < prefixValue.length; j++) {
+    eleStyle[key] = prefixValue[j];
+  }
+  return eleStyle[key];
+}
+
+function validCss(key, value) {
+  const validCss = validateCssKey(key);
+  if (validCss) {
+    return validCss;
+  }
+  return valiateCssValue(key, value);
+}
+
+/**
+ * 返回当前网页地址⬇
+ */ 
+// 方案一：location
+function currentURL() {
+  return window.location.href;
+}
+currentURL();
+
+// 方案二：a 标签
+function currentURL() {
+  var el = document.createElement("a");
+  el.href = "";
+  return el.href;
+}
+currentURL();
+
+/**
+ * 获取滚动条位置⬇
+ */ 
+function getScrollPosition(el = window) {
+  return {
+    x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
+    y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop,
+  };
+}
+
+/**
+ * 获取url中的参数⬇
+ */ 
+// 方案一：正则 + reduce
+function getURLParameters(url) {
+  return url.match(/([^?=&]+)(=([^&]*))/g).reduce((a, v) => (
+        (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
+      ),{}
+    );
+}
+getURLParameters(location.href);
+
+// 方案二：split + reduce
+function getURLParameters(url) {
+  return url
+    .split("?") //取？分割
+    .slice(1) //不要第一部分
+    .join() //拼接
+    .split("&") //&分割
+    .map((v) => v.split("=")) //=分割
+    .reduce((s, n) => {
+      s[n[0]] = n[1];
+      return s;
+    }, {});
+}
+getURLParameters(location.href);
+// getURLParameters('')
+
+// 方案三: URLSearchParams
+
+/**
+ * 页面跳转，是否记录在 history 中⬇
+ */ 
+// 方案一：
+function redirect(url, asLink = true) {
+  asLink ? (window.location.href = url) : window.location.replace(url);
+}
+// 方案二：
+function redirect(url, asLink = true) {
+  asLink ? window.location.assign(url) : window.location.replace(url);
+}
+
+/**
+ * 滚动条回到顶部动画⬇
+ */ 
+// 方案一： c - c / 8
+// c没有定义
+function scrollToTop() {
+  const scrollTop =
+    document.documentElement.scrollTop || document.body.scrollTop;
+  if (scrollTop > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, c - c / 8);
+  } else {
+    window.cancelAnimationFrame(scrollToTop);
+  }
+}
+scrollToTop();
+
+// 修正之后
+function scrollToTop() {
+  const scrollTop =
+    document.documentElement.scrollTop || document.body.scrollTop;
+  if (scrollTop > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, scrollTop - scrollTop / 8);
+  } else {
+    window.cancelAnimationFrame(scrollToTop);
+  }
+}
+scrollToTop();
+
+/**
+ * 复制文本⬇
+ */ 
+// 方案一：
+function copy(str) {
+  const el = document.createElement("textarea");
+  el.value = str;
+  el.setAttribute("readonly", "");
+  el.style.position = "absolute";
+  el.style.left = "-9999px";
+  el.style.top = "-9999px";
+  document.body.appendChild(el);
+  const selected =
+    document.getSelection().rangeCount > 0
+      ? document.getSelection().getRangeAt(0)
+      : false;
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+  if (selected) {
+    document.getSelection().removeAllRanges();
+    document.getSelection().addRange(selected);
+  }
+}
+// 方案二：cliboard.js
+
+/**
+ * 检测设备类型⬇
+ */ 
+// 方案一： ua
+function detectDeviceType() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+    ? "Mobile"
+    : "Desktop";
+}
+detectDeviceType();
+
+// 方案二：事件属性
+function detectDeviceType() {
+  return "ontouchstart" in window || navigator.msMaxTouchPoints
+    ? "Mobile"
+    : "Desktop";
+}
+detectDeviceType();
+
+```
+
+#### cookie
+
+```js
+// -------cookie-------
+/**
+ *
+ * @param {*} key
+ * @param {*} value
+ * @param {*} expiredays 过期时间
+ */
+function setCookie(key, value, expiredays) {
+  var exdate = new Date();
+  exdate.setDate(exdate.getDate() + expiredays);
+  document.cookie =
+    key +
+    "=" +
+    escape(value) +
+    (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
+}
+/**
+ *
+ * @param {*} name cookie key
+ */
+function delCookie(name) {
+  var exp = new Date();
+  exp.setTime(exp.getTime() - 1);
+  var cval = getCookie(name);
+  if (cval != null) {
+    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+  }
+}
+/**
+ *
+ * @param {*} name cookie key
+ */
+function getCookie(name) {
+  var arr,
+    reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+  if ((arr = document.cookie.match(reg))) {
+    return arr[2];
+  } else {
+    return null;
+  }
+}
+// 清空
+// 有时候我们想清空，但是又无法获取到所有的cookie。
+// 这个时候我们可以了利用写满，然后再清空的办法。
+
+```
+
+#### date
+
+```js
+// ---------日期 Date------------
+
+/**
+ * 获取当前时间戳⬇
+ */ 
+// 方案一：精确到秒
+console.log(Date.parse(new Date())) 
+// 方案二：精确到毫秒
+console.log(Date.now()) 
+// 方案三：精确到毫秒
+console.log(+new Date()) 
+// 方案四：精确到毫秒
+console.log(new Date().getTime()) 
+// 方案五：精确到毫秒
+console.log((new Date()).valueOf())
+
+/**
+ * js字符串转时间戳⬇
+ * mytime是待转换时间字符串，格式：'2018-9-12 9:11:23'
+ * 为了兼容IOS，需先将字符串转换为'2018/9/11 9:11:23'
+ */
+let mytime = '2018-9-12 9:11:23';
+let dateTmp = mytime.replace(/-/g, "/");
+console.log(new Date(dateTmp).getTime());
+console.log(Date.parse(dateTmp));
+
+/**
+ * 时间戳转字符串
+ */ 
+var dateFormat = function (timestamp) {
+  //先将时间戳转为Date对象，然后才能使用Date的方法
+  var time = new Date(timestamp);
+  var year = time.getFullYear(),
+    month = time.getMonth() + 1, //月份是从0开始的
+    day = time.getDate(),
+    hour = time.getHours(),
+    minute = time.getMinutes(),
+    second = time.getSeconds();
+  //add0()方法在后面定义
+  return (
+    year +
+    "-" +
+    this.add0(month) +
+    "-" +
+    this.add0(day) +
+    "" +
+    this.add0(hour) +
+    ":" +
+    this.add0(minute) +
+    ":" +
+    this.add0(second)
+  );
+};
+var add0 = function (m) {
+  return m < 10 ? "0" + m : m;
+};
+/**
+ * 格式化字符串
+ */
+Date.prototype.format = function (fmt) { //author: meizz 
+  var o = {
+      "M+": this.getMonth() + 1, //月份 
+      "d+": this.getDate(), //日 
+      "h+": this.getHours(), //小时 
+      "m+": this.getMinutes(), //分 
+      "s+": this.getSeconds(), //秒 
+      "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+      "S": this.getMilliseconds() //毫秒 
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+  if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
+}
+console.log(new Date().format('yyyy-MM-dd hh:mm:ss'));
+/**
+ * JavaScript Date对象(https://www.w3school.com.cn/js/jsref_obj_date.asp)
+ */
+
+```
+
+#### 文档对象DOM
+
+```js
+/**
+ * 固定滚动条
+ * 功能描述：一些业务场景，如弹框出现时，需要禁止页面滚动，这是兼容安卓和iOS禁止页面滚动的解决方案
+ */
+
+let scrollTop = 0;
+
+function preventScroll() {
+  // 存储当前滚动位置
+  scrollTop = window.scrollY;
+
+  // 将可滚动区域固定定位，可滚动区域高度为0后就不能滚动了
+  document.body.style["overflow-y"] = "hidden";
+  document.body.style.position = "fixed";
+  document.body.style.width = "100%";
+  document.body.style.top = -scrollTop + "px";
+  // document.body.style['overscroll-behavior'] = 'none'
+}
+
+function recoverScroll() {
+  document.body.style["overflow-y"] = "auto";
+  document.body.style.position = "static";
+  // document.querySelector('body').style['overscroll-behavior'] = 'none'
+
+  window.scrollTo(0, scrollTop);
+}
+
+/**
+ * 判断当前位置是否为页面底部
+ * 返回值为true/false
+ */
+
+function bottomVisible() {
+  return (
+    document.documentElement.clientHeight + window.scrollY >=
+    (document.documentElement.scrollHeight ||
+      document.documentElement.clientHeight)
+  );
+}
+/**
+ * 判断元素是否在可视范围内
+ * partiallyVisible为是否为完全可见
+ */
+function elementIsVisibleInViewport(el, partiallyVisible = false) {
+  const { top, left, bottom, right } = el.getBoundingClientRect();
+
+  return partiallyVisible
+    ? ((top > 0 && top < innerHeight) ||
+        (bottom > 0 && bottom < innerHeight)) &&
+        ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
+    : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
+}
+
+/**
+ * 获取元素css样式
+ */
+function getStyle(el, ruleName) {
+  return getComputedStyle(el, null).getPropertyValue(ruleName);
+}
+
+/**
+ * 进入全屏
+ */
+function launchFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
+launchFullscreen(document.documentElement);
+launchFullscreen(document.getElementById("id")); //某个元素进入全屏
+
+/**
+ * 退出全屏
+ */
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+exitFullscreen();
+
+/**
+ * 全屏事件
+ */
+document.addEventListener("fullscreenchange", function (e) {
+  if (document.fullscreenElement) {
+    console.log("进入全屏");
+  } else {
+    console.log("退出全屏");
+  }
+});
+```
+
+#### number
+
+```js
+// ------------数字 Number-------
+
+/**
+ * 数字千分位分割
+ * @param {*} num 
+ */
+function commafy(num) {
+  return num.toString().indexOf(".") !== -1
+    ? num.toLocaleString()
+    : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, "$1,");
+}
+commafy(1000)
+
+/**
+ * 生成随机数
+ * @param {*} min 
+ * @param {*} max 
+ */
+
+function randomNum(min, max) {
+  switch (arguments.length) {
+    case 1:
+      return parseInt(Math.random() * min + 1, 10);
+    case 2:
+      return parseInt(Math.random() * (max - min + 1) + min, 10);
+    default:
+      return 0;
+  }
+}
+randomNum(1,10)
+```
+
+#### spread运算符
+
+```js
+// 插入数组：
+// 看看如下代码，不使用扩展语法：
+var mid = [3, 4];
+var arr = [1, 2, mid, 5, 6];
+console.log(arr);  // [1, 2, [3, 4] , 5, 6]
+// 上面这段代码将得到一个嵌套数组的数组。大部分情况，我们希望一个array（mid）展开后再插入到另一个array（arr）中。
+// 使用spread操作符我们可以这样：
+var mid = [3, 4];
+var arr = [1, 2, ...mid, 5, 6];
+console.log(arr); // [1，2，3，4，5，6]
+
+// 展开数组作为参数
+// 当一个函数接收多个参数，比如Math.max，当我们有一个数组需要找到你了的最大值，我们可以使用如下代码进行调用。
+var arr = [2, 4, 8, 6, 0];
+function max(arr) {
+  return Math.max.apply(null, arr);
+}
+console.log(max(arr)); // 8
+
+// 如果这时候使用spread运算符会变得非常方便。
+var arr = [2, 4, 8, 6, 0];
+var max = Math.max(...arr);
+console.log(max); // 8
+
+// 复制数组
+// 用数组给新数组赋值只是获取到数组引用，并没有达到深复制的效果。
+var arr = ['a', 'b', 'c'];
+var arr2 = arr;
+arr2.push('d');
+console.log(arr);// ["a", "b", "c", "d"]
+
+// 有多重方法可以实现深复制，但是使用spread操作符是最简洁的一种实现：
+var arr = ['a', 'b', 'c'];
+var arr2 = [...arr];
+arr2.push('d');
+console.log(arr);  // ["a", "b", "c"]
+
+// 展开String
+// 如果想将字符串转为字符数组，如果不实用展开操作：
+var str = "hello";
+"hello".split('') // ["h", "e", "l", "l", "o"]
+
+// 使用展开操作符可以这样写：
+var str = "hello";
+var chars = [...str]; // ["h", "e", "l", "l", "o"]
+
+// 展开Object
+// 我们还可以对对象进行展开，如果有两个对象，有不同的key-value, 我们需要将这两个对象合并起来 (需要使用 Object rest spread transform)，我们可以这样：
+
+let Obj1 = {
+ key1: 'value1'
+}
+
+let Obj2 = {
+ key2: 'value3'
+}
+
+let concatValue = {
+ ...Obj1,
+ ...Obj2
+}
+console.log(concatValue) // {key1: 'value1', key2: 'value2'}
+```
+
+
+
+
+
 ### 相关文章
 
 [万字干货！详解JavaScript执行过程](https://mp.weixin.qq.com/s/wolPlpUDizVnzh-kBKMtxg)

@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                <% if (config.subtitle && config.subtitle.length > 0) { %>
+                    <%= config.subtitle %>
+                <% } else { %>
+                    <%# 固定的subtitle %>
+                <% } %>
+            </div>
+
+            <div class="description center-align">
+                <% if (theme.subtitle.enable) { %>
+                    <!-- 打字机 -->
+                    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                    <span id="subtitle"></span>
+                    <script>
+                        var typedObj = new Typed("#subtitle", {
+                            strings: [ 
+                                <% theme.subtitle.sub.forEach(function (item) {%>
+                                    "<%= item %>",
+                                <% }) %>
+                            ],
+                            startDelay: <%= theme.subtitle.startDelay %>,
+                            typeSpeed: <%= theme.subtitle.typeSpeed %>,
+                            loop: <%= theme.subtitle.loop %>,
+                            backSpeed: <%= theme.subtitle.backSpeed %>,
+                            showCursor: <%= theme.subtitle.showCursor %>
+                        });
+                    </script>
+                <% } %>
+                
+                <!-- 一言 -->
+                <% if (theme.hitokoto.enable) { %>
+                    <span id="hitokoto" style="font-size: 2rem;"></span>
+                    <!-- 打字机 -->
+                    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
+                    <script>
+                        var hitokotoContent = ''
+                        function typed(hitokotoContent) {
+                            var typed = new Typed("#hitokoto", {
+                                strings: [
+                                    hitokotoContent
+                                ],
+                                startDelay: <%= theme.hitokoto.startDelay %>,
+                                typeSpeed: <%= theme.hitokoto.typeSpeed %>,
+                                loop: <%= theme.hitokoto.loop %>,
+                                backSpeed: <%= theme.hitokoto.backSpeed %>,
+                                showCursor: <%= theme.hitokoto.showCursor %>
+                            });
+                        }
+                        async function hitokoto() {
+                            hitokotoContent = await fetch('https://v1.hitokoto.cn')
+                                .then(function (res) {
+                                    return res.json();
+                                })
+                                .then(function (data) {
+                                    return (data.hitokoto);
+                                })
+                                .catch(function (err) {
+                                    console.error(err);
+                                })
+                            await typed(hitokotoContent)
+                        }
+                        hitokoto()
+                    </script>
+                <% } else { %>
+                    <%= config.description %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%
+var featureImages = site.data.featureImages.local;
+if(theme.enableImageHost){
+    featureImages = site.data.featureImages.imageHost;
+}
+var length = featureImages.length;
+%>
+
+<% if (theme.banner.enable) { %>
+<script>
+    // 每天切换banner图.
+    // var bannerUrl = "<%- url_for('/medias/banner/') %>" + new Date().getDay() + '.jpg';
+
+    // 随机切换banner图
+    var randomNum = Math.floor(Math.random() * <%- length %> + 1) - 1
+    var randomUrl = '<%-featureImages%>'.split(',')[randomNum]
+    if(!<%- theme.enableImageHost %>){
+        randomUrl =  '<%- config.root %>' + '<%-featureImages%>'.split(',')[randomNum]
+    }
+    
+    $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
+</script>
+<% } else { %>
+<script>
+    $('.bg-cover').css('background-image', "url(<%- url_for('/medias/banner/0.jpg') %>)");
+</script>
+<% } %>

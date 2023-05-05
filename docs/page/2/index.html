@@ -1,0 +1,1785 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/blog/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/loading.css">
+
+    <script src="/blog/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/blog/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/blog/" class="waves-effect waves-light">
+                    
+                        <img src="/blog/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/blog/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                    
+                
+            </div>
+
+            <div class="description center-align">
+                
+                
+                <!-- 一言 -->
+                
+                    <span id="hitokoto" style="font-size: 2rem;"></span>
+                    <!-- 打字机 -->
+                    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
+                    <script>
+                        var hitokotoContent = ''
+                        function typed(hitokotoContent) {
+                            var typed = new Typed("#hitokoto", {
+                                strings: [
+                                    hitokotoContent
+                                ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        }
+                        async function hitokoto() {
+                            hitokotoContent = await fetch('https://v1.hitokoto.cn')
+                                .then(function (res) {
+                                    return res.json();
+                                })
+                                .then(function (data) {
+                                    return (data.hitokoto);
+                                })
+                                .catch(function (err) {
+                                    console.error(err);
+                                })
+                            await typed(hitokotoContent)
+                        }
+                        hitokoto()
+                    </script>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    // 每天切换banner图.
+    // var bannerUrl = "/blog/medias/banner/" + new Date().getDay() + '.jpg';
+
+    // 随机切换banner图
+    var randomNum = Math.floor(Math.random() * 15 + 1) - 1
+    var randomUrl = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/7.jpg,medias/featureimages/6.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg'.split(',')[randomNum]
+    if(!false){
+        randomUrl =  '/blog/' + 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/7.jpg,medias/featureimages/6.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg'.split(',')[randomNum]
+    }
+    
+    $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
+</script>
+
+
+    </div>
+</div>
+
+
+<main class="content">
+
+    
+
+    
+
+    <!-- 所有文章卡片 -->
+    <article id="articles" class="container articles">
+        <div class="row article-row">
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/18fdb5122e14/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-e3810d2595d2bee7f0c807d8efaac578_1440w.jpg" class="responsive-img" alt="延时队列">
+                            
+                            <span class="card-title">延时队列</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                DelayQueue延时队列(DelayQueue)是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到期时间最长。注意：不能将nul
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-11
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Java/" class="post-category" target="_blank">
+                                            Java
+                                        </a>
+                                    
+                                
+                                    
+                                        <a href="/blog/tags/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98/" target="_blank">
+                                            <span class="chip bg-color">
+                                                代码实战
+                                            </span>
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/32a593b381de/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pica.zhimg.com/v2-6e9fdfa6a51b5fd85c96c25a1ba0f289_1440w.jpg" class="responsive-img" alt="计算机网络">
+                            
+                            <span class="card-title">计算机网络</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                TCP与UDPTCP与UDP的区别
+是否面向连接：UDP在传送数据之前不需要先建立连接。而TCP提供面向连接的服务，在传送数据之前必须先建立连接，数据传送结束后要释放连接。
+是否是可靠传输：远地主机在收到UDP报文后，不需要给出任何确认，并
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-31
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    
+                                        <a href="/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" target="_blank">
+                                            <span class="chip bg-color">
+                                                计算机
+                                            </span>
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/dc0180d6f359/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://picx1.zhimg.com/v2-0fd0ab66a2f190f2f44cf7884a57ad70_1440w.jpg" class="responsive-img" alt="Zookeeper">
+                            
+                            <span class="card-title">Zookeeper</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+zookeeper demo
+
+Zookeeper基本原理ZooKeeper重要概念解读Data model（数据模型）ZooKeeper数据模型采用层次化的多叉树形结构，每个节点上都可以存储数据，这些数据可以是数字、字符串或者是二级制序
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-28
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category" target="_blank">
+                                            技术栈
+                                        </a>
+                                    
+                                
+                                    
+                                        <a href="/blog/tags/%E5%AE%89%E8%A3%85/" target="_blank">
+                                            <span class="chip bg-color">
+                                                安装
+                                            </span>
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/1331c2ad85ad/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-a15c9d4dd48986974acd43e8b722350d_r.jpg" class="responsive-img" alt="代码块">
+                            
+                            <span class="card-title">代码块</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Java相关fastjson转换// json = &#123;"a":1,"b":2,"c":["d":3,"e":4]&#125;
+// json转JSONObject
+JSONObject a = json.getJSONObject
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-30
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    
+                                        <a href="/blog/tags/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98/" target="_blank">
+                                            <span class="chip bg-color">
+                                                代码实战
+                                            </span>
+                                        </a>
+                                    
+                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/e47eee220e74/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic2.zhimg.com/v2-a576f4f763928a2187ec87f161b3f5bc_1440w.jpg" class="responsive-img" alt="Spring相关">
+                            
+                            <span class="card-title">Spring相关</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Spring注解、循环依赖、Spring MVC、XMl配置、Spring Boot
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Spring/" class="post-category" target="_blank">
+                                            Spring
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/c12d32c74ecf/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://labs.mysql.com/common/logos/mysql-logo.svg" class="responsive-img" alt="MySQL相关知识点">
+                            
+                            <span class="card-title">MySQL相关知识点</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                MySQL应用知识点递归function,父子查询创建函数时注意分隔符，mysql遇到分号就执行，在创建函数的时候容易报错（use near ‘ ‘at line）,可使用delimiter &#x2F;&#x2F; 定义分隔符
+delim
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                            数据库
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/f5d8fbdfd125/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://picx1.zhimg.com/v2-ff627d205bd26ab15e4bdefd5daf1dda_1440w.jpg" class="responsive-img" alt="JavaScript相关">
+                            
+                            <span class="card-title">JavaScript相关</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                NoteJQuery、JS常用方法json字符串  var str1 &#x3D; ‘{“name”:”cxh”,”sex”:”man”}’;json对象  var str2 &#x3D; {name:”cxh”,sex:”man”};
+o
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/JS/" class="post-category" target="_blank">
+                                            JS
+                                        </a>
+                                    
+                                
+                                    
+                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/8e7bdb140cc5/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-2a72ccd8ac9a0c889b79d9ad021ef08e_r.jpg" class="responsive-img" alt="我的笔记">
+                            
+                            <span class="card-title">我的笔记</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                java类加载、代码块、内部类、maven、gradle、代理、String相关、缓存、跨域
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    
+                                        <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" target="_blank">
+                                            <span class="chip bg-color">
+                                                随笔
+                                            </span>
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/442dc7ae24f1/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://img1.baidu.com/it/u=1369410832,3000356447&fm=253&fmt=auto&app=138&f=PNG?w=500&h=539" class="responsive-img" alt="消息队列-MQ">
+                            
+                            <span class="card-title">消息队列-MQ</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                什么是消息队列？我们可以把消息队列看作是一个存放消息的容器，当我们需要使用消息的时候，直接从容器中取出消息供自己使用即可。由于队列Queue是一种先进先出的数据结构，所以消费消息时也是按照顺序来消费的。
+
+参与消息传递的双方称为生产者和消费
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category" target="_blank">
+                                            技术栈
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/35e64501a595/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic4.zhimg.com/v2-8afc54b4ff671ec44ec51cf703119479_r.jpg" class="responsive-img" alt="锁">
+                            
+                            <span class="card-title">锁</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                悲观锁悲观锁总是假设最坏的情况，认为共享资源每次被访问的时候就会出现问题(比如共享数据被修改)，所以每次在获取资源操作的时候都会上锁，这样其他线程想拿到这个资源就会阻塞直到锁被上一个持有者释放。也就是说，共享资源每次只给一个线程使用，其它线
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Java/" class="post-category" target="_blank">
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/75fb1533e3f4/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg" class="responsive-img" alt="Java中的volatile关键字">
+                            
+                            <span class="card-title">Java中的volatile关键字</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+VolatileTest.java
+
+如何保证变量的可见性？在Java中，volatile关键字可以保证变量的可见性，如果我们将变量声明为volatile，这就指示JVM，这个变量是共享且不稳定的，每次使用它都到主存中进行读取。
+
+
+vo
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Java/" class="post-category" target="_blank">
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/7b1b83ae7caa/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg" class="responsive-img" alt="ThreadLocal">
+                            
+                            <span class="card-title">ThreadLocal</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+ThreadLocalTest.java
+
+ThreadLocal有什么用？通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。如果想实现每一个线程都有自己的专属本地变量该如何解决呢？JDK中自带的ThreadLocal类正是为了
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Java/" class="post-category" target="_blank">
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/50718223d917/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic1.zhimg.com/06a1751875c26f6409149f9380a7899c_r.jpg" class="responsive-img" alt="Java中的线程">
+                            
+                            <span class="card-title">Java中的线程</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                线程+线程池+虚拟线程
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Java/" class="post-category" target="_blank">
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/289bdc29a0ae/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic2.zhimg.com/v2-afbb5fb285f0775146b89fe018dbbc93_r.jpg" class="responsive-img" alt="ArrayList&amp;CopyOnWriteArrayList">
+                            
+                            <span class="card-title">ArrayList&amp;CopyOnWriteArrayList</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                ArrayList简介ArrayList的底层实现是一个Object数组,ArrayList的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组DEFAULTCAPACITY_EMPTY_ELEMENTD
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Java/" class="post-category" target="_blank">
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/366519dedccc/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pica.zhimg.com/v2-617196c5dc7927460c726d1477174464_1440w.jpg" class="responsive-img" alt="HashMap&amp;ConcurrentHashMap">
+                            
+                            <span class="card-title">HashMap&amp;ConcurrentHashMap</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                HashMapHashMap简介HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一，是非线程安全的。
+HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/Java/" class="post-category" target="_blank">
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/5894be866015/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic2.zhimg.com/v2-e350688eea0fb2c0859b7b8a3abec2c8_1440w.jpg" class="responsive-img" alt="事务">
+                            
+                            <span class="card-title">事务</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                什么是事务？事务是逻辑上的一组操作，要么都执行，要么都不执行。相信大家应该都能背上面这句话了，下面我结合我们日常的真实开发来谈一谈。
+我们系统的每个业务方法可能包括了多个原子性的数据库操作，比如下面的savePerson()方法中就有两个原
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-28
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                            数据库
+                                        </a>
+                                    
+                                        <a href="/blog/categories/Spring/" class="post-category" target="_blank">
+                                            Spring
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/3fac38152a0e/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://img1.baidu.com/it/u=3919466326,3051780283&fm=253&fmt=auto&app=138&f=PNG?w=751&h=sq" class="responsive-img" alt="数据库相关知识点">
+                            
+                            <span class="card-title">数据库相关知识点</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                SQL查询慢的原因
+sql没加索引
+sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，可能导致索引失效,like通配符可能导致索引失效,查询条件不满足联合索引的最左匹配原则,在索引列上使用mysql的内置函数,对索引进行列运算（
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-28
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category" target="_blank">
+                                            数据库
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/blog/posts/2eaa11f9c3b9/" target="_blank">
+                        <div class="card-image">
+                            
+                                <img src="https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg" class="responsive-img" alt="Docker">
+                            
+                            <span class="card-title">Docker</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                安装在线安装
+安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!--
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-28
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/blog/about" target="_blank">
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category" target="_blank">
+                                            技术栈
+                                        </a>
+                                    
+                                
+                                    
+                                        <a href="/blog/tags/%E5%AE%89%E8%A3%85/" target="_blank">
+                                            <span class="chip bg-color">
+                                                安装
+                                            </span>
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </article>
+
+</main>
+
+
+<div class="container paging">
+    <div class="row">
+        <div class="col s6 m4 l4">
+            
+            <a href="/blog/"
+               class="left btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            
+        </div>
+        <div class="page-info col m4 l4 hide-on-small-only">
+            <div class="center-align b-text-gray">2 / 3</div>
+        </div>
+        <div class="col s6 m4 l4">
+            
+            <a href="/blog/page/3/"
+               class="right btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/blog/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/blog/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2023
+                </span>
+            
+            
+
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/blog/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/blog/medias/wechat.jpg");
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 200px;
+    height: 200px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/blog/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/blog/libs/materialize/materialize.min.js"></script>
+    <script src="/blog/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/blog/libs/aos/aos.js"></script>
+    <script src="/blog/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/blog/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/blog/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/blog/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/blog/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

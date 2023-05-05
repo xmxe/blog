@@ -1,0 +1,14 @@
+<%
+var backgroundUrl = theme.background.url
+if(theme.enableImageHost){
+    backgroundUrl = theme.background.imageHost_url
+}
+%>
+<style>
+    body{
+       background-image: url(<%- url_for(backgroundUrl) %>);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>

@@ -1,0 +1,36 @@
+{
+    "imageHost": [
+        "https://s1.ax1x.com/2022/10/11/xN1njs.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN1LKs.jpg",
+        "https://s1.ax1x.com/2022/10/12/xUr79J.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN39GF.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN3FM9.jpg",
+        "https://s1.ax1x.com/2022/10/12/xUs1uq.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN3KRe.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN8pwt.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN3aRg.jpg",
+        "https://s1.ax1x.com/2022/10/12/xUrXB6.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN3DLn.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN36oV.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN3hQJ.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN3oe1.jpg",
+        "https://s1.ax1x.com/2022/10/11/xN3bFK.png"
+    ],
+    "local": [
+        "medias/featureimages/0.jpg",
+        "medias/featureimages/1.jpg",
+        "medias/featureimages/2.jpg",
+        "medias/featureimages/3.jpg",
+        "medias/featureimages/4.jpg",
+        "medias/featureimages/5.jpg",
+        "medias/featureimages/7.jpg",
+        "medias/featureimages/6.jpg",
+        "medias/featureimages/8.jpg",
+        "medias/featureimages/9.jpg",
+        "medias/featureimages/10.jpg",
+        "medias/featureimages/11.jpg",
+        "medias/featureimages/12.jpg",
+        "medias/featureimages/13.jpg",
+        "medias/featureimages/14.jpg"
+    ]
+}

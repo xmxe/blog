@@ -1,0 +1,33 @@
+<link rel="stylesheet" type="text/css" href="<%- theme.jsDelivr.url %><%- url_for(theme.libs.css.gallery) %>">
+
+<%- partial('_partial/bg-cover') %>
+
+<main class="content">
+    <div class="container about-container">
+        <div class="card">
+            <div class="card-content">
+                <% if (site.data && site.data.galleries) { %>
+                    <% var galleries = site.data.galleries; %>
+                    <div class="gallery-wrapper row">
+                        <div class="title center-align" data-aos="zoom-in-up">
+                            <i class="fas fa-images"></i>&nbsp;&nbsp;<%- __('gallery') %>
+                        </div>
+                        <% for (var i = 0, len = galleries.length; i < len; i++) { %>
+                        <% var gallery = galleries[i]; %>
+                        <div class="col s6 m4 l4 xl3 gallery-box">
+                            <a href="./<%- gallery.name %>" class="gallery-item" data-aos="zoom-in-up">
+                                <div class="gallery-cover-box" style="background-image: url(<%- url_for(gallery.cover) %>);">
+                                </div>
+                                <p class="gallery-name">
+                                    <%- gallery.name %>
+                                    <strong style="font-size: 0.2em;">(<%- gallery.description %>)</strong>
+                                </p>
+                            </a>
+                        </div>
+                        <% } %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</main>

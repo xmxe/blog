@@ -1,0 +1,56 @@
+<link rel="stylesheet" type="text/css" href="<%- theme.jsDelivr.url %><%- url_for(theme.libs.css.gallery) %>">
+
+<%- partial('_partial/post-cover') %>
+
+<%
+let galleries = [];
+if (site.data && site.data.galleries) {
+    galleries = site.data.galleries;
+}
+var pageTitle = page.title;
+function getCurrentGallery(galleries, pageTitle) {
+    for (let i = 0; i < galleries.length; i++) {
+        if (galleries[i]['name'] == pageTitle) {
+            return galleries[i];
+        }
+    }
+}
+var currentGallery = getCurrentGallery(galleries, pageTitle)
+
+var photos = currentGallery.photos.length > 0 ? currentGallery.photos : currentGallery.local
+%>
+
+<main class="container content">
+    <div id="artDetail">
+        <div class="card">
+            <div class="photo-wrapper">
+                <div id="myGallery" class="my-gallery waterfall">
+                    <div class="row">
+                        <% if (photos) { %>
+                            <% Object.keys(photos).forEach(function(photo) { %>
+                                <div class="cus" data-aos="fade-up">
+                                    <div class="img-item" data-src="<%- url_for(photos[photo]) %>">
+                                        <img src="<%- url_for(photos[photo]) %>" class="responsive-img">
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    $(function () {
+        let animateClass = 'animated pulse';
+        $('#myGallery .cus').hover(function () {
+            $(this).addClass(animateClass);
+        }, function () {
+            $(this).removeClass(animateClass);
+        });
+    });
+
+</script>

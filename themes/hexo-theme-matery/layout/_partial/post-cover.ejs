@@ -1,0 +1,54 @@
+<%
+var featureimg = url_for('/medias/bg.jpg');
+if (page.img && theme.postInfo.img) {
+    featureimg = url_for(page.img);
+} else {
+    var hashCode = function (str) {
+        if (!str && str.length === 0) {
+            return 0;
+        }
+
+        var hash = 0;
+        for (var i = 0, len = str.length; i < len; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash;
+    };
+
+    var image = site.data.featureImages.local;
+    if(theme.enableImageHost){
+        image = site.data.featureImages.imageHost;
+    }
+    var len = image.length;
+    var num = Math.abs(hashCode(page.title) % len);
+
+    featureimg = url_for(image[num]);
+}
+%>
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('<%- featureimg %>')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    <% if (theme.post.enable) { %>
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ '<%= page.title %>' ],
+                                startDelay: <%= theme.post.startDelay %>,
+                                typeSpeed: <%= theme.post.typeSpeed %>,
+                                loop: <%= theme.post.loop %>,
+                                backSpeed: <%= theme.post.backSpeed %>,
+                                showCursor: <%= theme.post.showCursor %>
+                            });
+                        </script>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

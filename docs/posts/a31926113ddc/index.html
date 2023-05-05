@@ -1,0 +1,2786 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Redis详解, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Redis详解 | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/blog/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/loading.css">
+
+    <script src="/blog/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/blog/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/blog/" class="waves-effect waves-light">
+                    
+                        <img src="/blog/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/blog/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/blog/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ 'Redis详解' ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+        max-height: 480px;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="3种常用的缓存读写策略详解"><a href="#3种常用的缓存读写策略详解" class="headerlink" title="3种常用的缓存读写策略详解"></a>3种常用的缓存读写策略详解</h2><p><strong>下面介绍到的三种模式各有优劣，不存在最佳模式，根据具体的业务场景选择适合自己的缓存读写模式。</strong></p>
+<h3 id="Cache-Aside-Pattern（旁路缓存模式）"><a href="#Cache-Aside-Pattern（旁路缓存模式）" class="headerlink" title="Cache Aside Pattern（旁路缓存模式）"></a>Cache Aside Pattern（旁路缓存模式）</h3><p><strong>Cache Aside Pattern是我们平时使用比较多的一个缓存读写模式，比较适合读请求比较多的场景。</strong></p>
+<p>Cache Aside Pattern中服务端需要同时维系db和cache，并且是以db的结果为准。</p>
+<p>下面我们来看一下这个策略模式下的缓存读写步骤。</p>
+<p><strong>写</strong>：</p>
+<ul>
+<li>先更新db</li>
+<li>然后直接删除cache。</li>
+</ul>
+<p>简单画了一张图帮助大家理解写的步骤。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-write.png" alt="img"></p>
+<p><strong>读</strong>:</p>
+<ul>
+<li>从cache中读取数据，读取到就直接返回</li>
+<li>cache中读取不到的话，就从db中读取数据返回</li>
+<li>再把数据放到cache中。</li>
+</ul>
+<p>简单画了一张图帮助大家理解读的步骤。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-read.png" alt="img"></p>
+<p>你仅仅了解了上面这些内容的话是远远不够的，我们还要搞懂其中的原理。</p>
+<p>比如说面试官很可能会追问：“<strong>在写数据的过程中，可以先删除cache，后更新db么？</strong>”</p>
+<p><strong>答案：</strong>那肯定是不行的！因为这样可能会造成<strong>数据库（db）和缓存（Cache）数据不一致</strong>的问题。</p>
+<p>举例：请求1先写数据A，请求2随后读数据A的话，就很有可能产生数据不一致性的问题。</p>
+<p>这个过程可以简单描述为：</p>
+<blockquote>
+<p>请求1先把cache中的A数据删除-&gt;请求2从db中读取数据-&gt;请求1再把db中的A数据更新</p>
+</blockquote>
+<p>当你这样回答之后，面试官可能会紧接着就追问：“<strong>在写数据的过程中，先更新db，后删除cache就没有问题了么？</strong>”</p>
+<p><strong>答案：</strong>理论上来说还是可能会出现数据不一致性的问题，不过概率非常小，因为缓存的写入速度是比数据库的写入速度快很多。</p>
+<p>举例：请求1先读数据A，请求2随后写数据A，并且数据A在请求1请求之前不在缓存中的话，也有可能产生数据不一致性的问题。</p>
+<p>这个过程可以简单描述为：</p>
+<blockquote>
+<p>请求1从db读数据A-&gt;请求2更新db中的数据A（此时缓存中无数据A，故不用执行删除缓存操作）-&gt;请求1将数据A写入cache</p>
+</blockquote>
+<p>现在我们再来分析一下<strong>Cache Aside Pattern的缺陷</strong>。</p>
+<p><strong>缺陷1：首次请求数据一定不在cache的问题</strong></p>
+<p>解决办法：可以将热点数据可以提前放入cache中。</p>
+<p><strong>缺陷2：写操作比较频繁的话导致cache中的数据会被频繁被删除，这样会影响缓存命中率。</strong></p>
+<p>解决办法：</p>
+<ul>
+<li>数据库和缓存数据强一致场景：更新db的时候同样更新cache，不过我们需要加一个锁&#x2F;分布式锁来保证更新cache的时候不存在线程安全问题。</li>
+<li>可以短暂地允许数据库和缓存数据不一致的场景：更新db的时候同样更新cache，但是给缓存加一个比较短的过期时间，这样的话就可以保证即使数据不一致的话影响也比较小。</li>
+</ul>
+<h3 id="Read-x2F-Write-Through-Pattern（读写穿透）"><a href="#Read-x2F-Write-Through-Pattern（读写穿透）" class="headerlink" title="Read&#x2F;Write Through Pattern（读写穿透）"></a>Read&#x2F;Write Through Pattern（读写穿透）</h3><p>Read&#x2F;Write Through Pattern中服务端把cache视为主要数据存储，从中读取数据并将数据写入其中。cache服务负责将此数据读取和写入db，从而减轻了应用程序的职责。</p>
+<p>这种缓存读写策略小伙伴们应该也发现了在平时在开发过程中非常少见。抛去性能方面的影响，大概率是因为我们经常使用的分布式缓存Redis并没有提供cache将数据写入db的功能。</p>
+<p><strong>写（Write Through）：</strong></p>
+<ul>
+<li>先查cache，cache中不存在，直接更新db。</li>
+<li>cache中存在，则先更新cache，然后cache服务自己更新db（<strong>同步更新cache和db</strong>）。</li>
+</ul>
+<p>简单画了一张图帮助大家理解写的步骤。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/write-through.png" alt="img"></p>
+<p><strong>读(Read Through)：</strong></p>
+<ul>
+<li>从cache中读取数据，读取到就直接返回。</li>
+<li>读取不到的话，先从db加载，写入到cache后返回响应。</li>
+</ul>
+<p>简单画了一张图帮助大家理解读的步骤。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/read-through.png" alt="img"></p>
+<p>Read-Through Pattern实际只是在Cache-Aside Pattern之上进行了封装。在Cache-Aside Pattern下，发生读请求的时候，如果cache中不存在对应的数据，是由客户端自己负责把数据写入cache，而Read Through Pattern则是cache服务自己来写入缓存的，这对客户端是透明的。</p>
+<p>和Cache Aside Pattern一样，Read-Through Pattern也有首次请求数据一定不再cache的问题，对于热点数据可以提前放入缓存中。</p>
+<h3 id="Write-Behind-Pattern（异步缓存写入）"><a href="#Write-Behind-Pattern（异步缓存写入）" class="headerlink" title="Write Behind Pattern（异步缓存写入）"></a>Write Behind Pattern（异步缓存写入）</h3><p>Write Behind Pattern和Read&#x2F;Write Through Pattern很相似，两者都是由cache服务来负责cache和db的读写。</p>
+<p>但是，两个又有很大的不同：<strong>Read&#x2F;Write Through是同步更新cache和db，而Write Behind则是只更新缓存，不直接更新db，而是改为异步批量的方式来更新db。</strong></p>
+<p>很明显，这种方式对数据一致性带来了更大的挑战，比如cache数据可能还没异步更新db的话，cache服务可能就就挂掉了。</p>
+<p>这种策略在我们平时开发过程中也非常非常少见，但是不代表它的应用场景少，比如消息队列中消息的异步写入磁盘、MySQL的Innodb Buffer Pool机制都用到了这种策略。</p>
+<p>Write Behind Pattern下db的写性能非常高，非常适合一些数据经常变化又对数据一致性要求没那么高的场景，比如浏览量、点赞量</p>
+<h2 id="Redis5种基本数据结构详解"><a href="#Redis5种基本数据结构详解" class="headerlink" title="Redis5种基本数据结构详解"></a>Redis5种基本数据结构详解</h2><p>Redis共有5种基本数据结构：String（字符串）、List（列表）、Set（集合）、Hash（散列）、Zset（有序集合）。</p>
+<p>这5种数据结构是直接提供给用户使用的，是数据的保存形式，其底层实现主要依赖这8种数据结构：简单动态字符串（SDS）、LinkedList（双向链表）、HashTable（哈希表）、SkipList（跳跃表）、Intset（整数集合）、ZipList（压缩列表）、QuickList（快速列表）。</p>
+<p>Redis基本数据结构的底层数据结构实现如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">String</th>
+<th align="left">List</th>
+<th align="left">Hash</th>
+<th align="left">Set</th>
+<th align="left">Zset</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SDS</td>
+<td align="left">LinkedList&#x2F;ZipList&#x2F;QuickList</td>
+<td align="left">Hash Table、ZipList</td>
+<td align="left">ZipList、Intset</td>
+<td align="left">ZipList、SkipList</td>
+</tr>
+</tbody></table>
+<p>Redis3.2之前，List底层实现是LinkedList或者ZipList。Redis3.2之后，引入了LinkedList和ZipList的结合QuickList，List的底层实现变为QuickList。</p>
+<p>你可以在Redis官网上找到Redis数据结构非常详细的介绍：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.com/redis-enterprise/data-structures/">Redis Data Structures</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/data-types/data-types-tutorial/">Redis Data types tutorial</a></li>
+</ul>
+<p>未来随着Redis新版本的发布，可能会有新的数据结构出现，通过查阅Redis官网对应的介绍，你总能获取到最靠谱的信息。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220720181630203.png" alt="img"></p>
+<h3 id="String（字符串）"><a href="#String（字符串）" class="headerlink" title="String（字符串）"></a>String（字符串）</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>String是Redis中最简单同时也是最常用的一个数据结构。</p>
+<p>String是一种二进制安全的数据结构，可以用来存储任何类型的数据比如字符串、整数、浮点数、图片（图片的base64编码或者解码或者图片的路径）、序列化后的对象。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124403897.png" alt="img"></p>
+<p>虽然Redis是用C语言写的，但是Redis并没有使用C的字符串表示，而是自己构建了一种<strong>简单动态字符串</strong>（Simple Dynamic String，<strong>SDS</strong>）。相比于C的原生字符串，Redis的SDS不光可以保存文本数据还可以保存二进制数据，并且获取字符串长度复杂度为O(1)（C字符串为O(N)）,除此之外，Redis的SDS API是安全的，不会造成缓冲区溢出。</p>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SET key value</td>
+<td>设置指定key的值</td>
+</tr>
+<tr>
+<td>SETNX key value</td>
+<td>只有在key不存在时设置key的值</td>
+</tr>
+<tr>
+<td>GET key</td>
+<td>获取指定key的值</td>
+</tr>
+<tr>
+<td>MSET key1 value1 key2 value2 …</td>
+<td>设置一个或多个指定key的值</td>
+</tr>
+<tr>
+<td>MGET key1 key2 …</td>
+<td>获取一个或多个指定key的值</td>
+</tr>
+<tr>
+<td>STRLEN key</td>
+<td>返回key所储存的字符串值的长度</td>
+</tr>
+<tr>
+<td>INCR key</td>
+<td>将key中储存的数字值增一</td>
+</tr>
+<tr>
+<td>DECR key</td>
+<td>将key中储存的数字值减一</td>
+</tr>
+<tr>
+<td>EXISTS key</td>
+<td>判断指定key是否存在</td>
+</tr>
+<tr>
+<td>DEL key（通用）</td>
+<td>删除指定的key</td>
+</tr>
+<tr>
+<td>EXPIRE key seconds（通用）</td>
+<td>给指定key设置过期时间</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>更多Redis String命令以及详细使用指南，请查看Redis官网对应的介绍：<a target="_blank" rel="noopener" href="https://redis.io/commands/?group=string%E3%80%82">https://redis.io/commands/?group=string。</a></p>
+</blockquote>
+<p><strong>基本操作</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SET key value
+OK
+<span class="token operator">></span> GET key
+<span class="token string">"value"</span>
+<span class="token operator">></span> EXISTS key
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> STRLEN key
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+<span class="token operator">></span> DEL key
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> GET key
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>批量设置</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> MSET key1 value1 key2 value2
+OK
+<span class="token operator">></span> MGET key1 key2 <span class="token comment"># 批量获取多个key对应的value</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value1"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value2"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>计数器（字符串的内容为整数的时候可以使用）：</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SET number <span class="token number">1</span>
+OK
+<span class="token operator">></span> INCR number <span class="token comment">#将key中储存的数字值增一</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+<span class="token operator">></span> GET number
+<span class="token string">"2"</span>
+<span class="token operator">></span> DECR number <span class="token comment"># 将key中储存的数字值减一</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> GET number
+<span class="token string">"1"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>设置过期时间（默认为永不过期）</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> EXPIRE key <span class="token number">60</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> SETNX key <span class="token number">60</span> value <span class="token comment"># 设置值并设置过期时间</span>
+OK
+<span class="token operator">></span> TTL key
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">56</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>需要存储常规数据的场景</strong></p>
+<ul>
+<li>举例：缓存session、token、图片地址、序列化后的对象(相比较于Hash存储更节省内存)。</li>
+<li>相关命令：SET、GET。</li>
+</ul>
+<p><strong>需要计数的场景</strong></p>
+<ul>
+<li>举例：用户单位时间的请求数（简单限流可以用到）、页面单位时间的访问数。</li>
+<li>相关命令：SET、GET、INCR、DECR。</li>
+</ul>
+<p><strong>分布式锁</strong></p>
+<p>利用SETNX key value命令可以实现一个最简易的分布式锁（存在一些缺陷，通常不建议这样实现分布式锁）。</p>
+<h3 id="List（列表）"><a href="#List（列表）" class="headerlink" title="List（列表）"></a>List（列表）</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>Redis中的List其实就是链表数据结构的实现。我在<a target="_blank" rel="noopener" href="https://javaguide.cn/cs-basics/data-structure/linear-data-structure.html">线性数据结构:数组、链表、栈、队列</a>这篇文章中详细介绍了链表这种数据结构，我这里就不多做介绍了。</p>
+<p>许多高级编程语言都内置了链表的实现比如Java中的LinkedList，但是C语言并没有实现链表，所以Redis实现了自己的链表数据结构。Redis的List的实现为一个<strong>双向链表</strong>，即可以支持反向查找和遍历，更方便操作，不过带来了部分额外的内存开销。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124413287.png" alt="img"></p>
+<h4 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RPUSH key value1 value2 …</td>
+<td>在指定列表的尾部（右边）添加一个或多个元素</td>
+</tr>
+<tr>
+<td>LPUSH key value1 value2 …</td>
+<td>在指定列表的头部（左边）添加一个或多个元素</td>
+</tr>
+<tr>
+<td>LSET key index value</td>
+<td>将指定列表索引index位置的值设置为 value</td>
+</tr>
+<tr>
+<td>LPOP key</td>
+<td>移除并获取指定列表的第一个元素(最左边)</td>
+</tr>
+<tr>
+<td>RPOP key</td>
+<td>移除并获取指定列表的最后一个元素(最右边)</td>
+</tr>
+<tr>
+<td>LLEN key</td>
+<td>获取列表元素数量</td>
+</tr>
+<tr>
+<td>LRANGE key start end</td>
+<td>获取列表start和end之间的元素</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>更多Redis List命令以及详细使用指南，请查看Redis官网对应的介绍：<a target="_blank" rel="noopener" href="https://redis.io/commands/?group=list%E3%80%82">https://redis.io/commands/?group=list。</a></p>
+</blockquote>
+<p><strong>通过RPUSH&#x2F;LPOP或者LPUSH&#x2F;RPOP实现队列</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> RPUSH myList value1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> RPUSH myList value2 value3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+<span class="token operator">></span> LPOP myList
+<span class="token string">"value1"</span>
+<span class="token operator">></span> LRANGE myList <span class="token number">0</span> <span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value3"</span>
+<span class="token operator">></span> LRANGE myList <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value3"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>通过RPUSH&#x2F;RPOP或者LPUSH&#x2F;LPOP实现栈</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> RPUSH myList2 value1 value2 value3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+<span class="token operator">></span> RPOP myList2 <span class="token comment"># 将list的头部(最右边)元素取出</span>
+<span class="token string">"value3"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我专门画了一个图方便大家理解RPUSH,LPOP,lpush,RPOP命令：</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/redis-list.png" alt="img"></p>
+<p><strong>通过LRANGE查看对应下标范围的列表元素</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> RPUSH myList value1 value2 value3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+<span class="token operator">></span> LRANGE myList <span class="token number">0</span> <span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value1"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token operator">></span> LRANGE myList <span class="token number">0</span> <span class="token parameter variable">-1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value1"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">"value3"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过LRANGE命令，你可以基于List实现分页查询，性能非常高！</p>
+<p><strong>通过LLEN查看链表长度</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> LLEN myList
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>信息流展示</strong></p>
+<ul>
+<li>举例：最新文章、最新动态。</li>
+<li>相关命令：LPUSH、LRANGE。</li>
+</ul>
+<p><strong>消息队列</strong></p>
+<p>Redis List数据结构可以用来做消息队列，只是功能过于简单且存在很多缺陷，不建议这样做。</p>
+<p>相对来说，Redis5.0新增加的一个数据结构Stream更适合做消息队列一些，只是功能依然非常简陋。和专业的消息队列相比，还是有很多欠缺的地方比如消息丢失和堆积问题不好解决。</p>
+<h3 id="Hash（哈希）"><a href="#Hash（哈希）" class="headerlink" title="Hash（哈希）"></a>Hash（哈希）</h3><h4 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h4><p>Redis中的Hash是一个String类型的field-value（键值对）的映射表，特别适合用于存储对象，后续操作的时候，你可以直接修改这个对象中的某些字段的值。</p>
+<p>Hash类似于JDK1.8前的HashMap，内部实现也差不多(数组+链表)。不过，Redis的Hash做了更多优化。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124421703.png" alt="img"></p>
+<h4 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HSET key field value</td>
+<td>设置指定哈希表中指定字段的值</td>
+</tr>
+<tr>
+<td>HSETNX key field value</td>
+<td>只有指定字段不存在时设置指定字段的值</td>
+</tr>
+<tr>
+<td>HMSET key field1 value1 field2 value2 …</td>
+<td>同时将一个或多个field-value(域-值)对设置到指定哈希表中</td>
+</tr>
+<tr>
+<td>HGET key field</td>
+<td>获取指定哈希表中指定字段的值</td>
+</tr>
+<tr>
+<td>HMGET key field1 field2 …</td>
+<td>获取指定哈希表中一个或者多个指定字段的值</td>
+</tr>
+<tr>
+<td>HGETALL key</td>
+<td>获取指定哈希表中所有的键值对</td>
+</tr>
+<tr>
+<td>HEXISTS key field</td>
+<td>查看指定哈希表中指定的字段是否存在</td>
+</tr>
+<tr>
+<td>HDEL key field1 field2 …</td>
+<td>删除一个或多个哈希表字段</td>
+</tr>
+<tr>
+<td>HLEN key</td>
+<td>获取指定哈希表中字段的数量</td>
+</tr>
+<tr>
+<td>HINCRBY key field increment</td>
+<td>对指定哈希中的指定字段做运算操作（正数为加，负数为减）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>更多Redis Hash命令以及详细使用指南，请查看Redis官网对应的介绍：<a target="_blank" rel="noopener" href="https://redis.io/commands/?group=hash%E3%80%82">https://redis.io/commands/?group=hash。</a></p>
+</blockquote>
+<p><strong>模拟对象数据存储</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> HMSET userInfoKey name <span class="token string">"guide"</span> description <span class="token string">"dev"</span> age <span class="token number">24</span>
+OK
+<span class="token operator">></span> HEXISTS userInfoKey name <span class="token comment"># 查看key对应的value中指定的字段是否存在。</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> HGET userInfoKey name <span class="token comment"># 获取存储在哈希表中指定字段的值。</span>
+<span class="token string">"guide"</span>
+<span class="token operator">></span> HGET userInfoKey age
+<span class="token string">"24"</span>
+<span class="token operator">></span> HGETALL userInfoKey <span class="token comment"># 获取在哈希表中指定key的所有字段和值</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"name"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"guide"</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">"description"</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">"dev"</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">"age"</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">"24"</span>
+<span class="token operator">></span> HSET userInfoKey name <span class="token string">"GuideGeGe"</span>
+<span class="token operator">></span> HGET userInfoKey name
+<span class="token string">"GuideGeGe"</span>
+<span class="token operator">></span> HINCRBY userInfoKey age <span class="token number">2</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">26</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景-2"><a href="#应用场景-2" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>对象数据存储场景</strong></p>
+<ul>
+<li>举例：用户信息、商品信息、文章信息、购物车信息。</li>
+<li>相关命令：HSET（设置单个字段的值）、HMSET（设置多个字段的值）、HGET（获取单个字段的值）、HMGET（获取多个字段的值）。</li>
+</ul>
+<h3 id="Set（集合）"><a href="#Set（集合）" class="headerlink" title="Set（集合）"></a>Set（集合）</h3><h4 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h4><p>Redis中的Set类型是一种无序集合，集合中的元素没有先后顺序但都唯一，有点类似于Java中的HashSet。当你需要存储一个列表数据，又不希望出现重复数据时，Set是一个很好的选择，并且Set提供了判断某个元素是否在一个Set集合内的重要接口，这个也是List所不能提供的。</p>
+<p>你可以基于Set轻易实现交集、并集、差集的操作，比如你可以将一个用户所有的关注人存在一个集合中，将其所有粉丝存在一个集合。这样的话，Set可以非常方便的实现如共同关注、共同粉丝、共同喜好等功能。这个过程也就是求交集的过程。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124430264.png" alt="img"></p>
+<h4 id="常用命令-3"><a href="#常用命令-3" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SADD key member1 member2 …</td>
+<td>向指定集合添加一个或多个元素</td>
+</tr>
+<tr>
+<td>SMEMBERS key</td>
+<td>获取指定集合中的所有元素</td>
+</tr>
+<tr>
+<td>SCARD key</td>
+<td>获取指定集合的元素数量</td>
+</tr>
+<tr>
+<td>SISMEMBER key member</td>
+<td>判断指定元素是否在指定集合中</td>
+</tr>
+<tr>
+<td>SINTER key1 key2 …</td>
+<td>获取给定所有集合的交集</td>
+</tr>
+<tr>
+<td>SINTERSTORE destination key1 key2 …</td>
+<td>将给定所有集合的交集存储在destination中</td>
+</tr>
+<tr>
+<td>SUNION key1 key2 …</td>
+<td>获取给定所有集合的并集</td>
+</tr>
+<tr>
+<td>SUNIONSTORE destination key1 key2 …</td>
+<td>将给定所有集合的并集存储在destination中</td>
+</tr>
+<tr>
+<td>SDIFF key1 key2 …</td>
+<td>获取给定所有集合的差集</td>
+</tr>
+<tr>
+<td>SDIFFSTORE destination key1 key2 …</td>
+<td>将给定所有集合的差集存储在destination中</td>
+</tr>
+<tr>
+<td>SPOP key count</td>
+<td>随机移除并获取指定集合中一个或多个元素</td>
+</tr>
+<tr>
+<td>SRANDMEMBER key count</td>
+<td>随机获取指定集合中指定数量的元素</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>更多Redis Set命令以及详细使用指南，请查看Redis官网对应的介绍：<a target="_blank" rel="noopener" href="https://redis.io/commands/?group=set%E3%80%82">https://redis.io/commands/?group=set。</a></p>
+</blockquote>
+<p><strong>基本操作</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SADD mySet value1 value2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+<span class="token operator">></span> SADD mySet value1 <span class="token comment"># 不允许有重复元素，因此添加失败</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token operator">></span> SMEMBERS mySet
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value1"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token operator">></span> SCARD mySet
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+<span class="token operator">></span> SISMEMBER mySet value1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> SADD mySet2 value2 value3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>mySet</code>:<code>value1</code>、<code>value2</code>。</li>
+<li><code>mySet2</code>：<code>value2</code>、<code>value3</code>。</li>
+</ul>
+<p><strong>求交集</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SINTERSTORE mySet3 mySet mySet2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> SMEMBERS mySet3
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value2"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>求并集</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SUNION mySet mySet2
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value3"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">"value1"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>求差集</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SDIFF mySet mySet2 <span class="token comment"># 差集是由所有属于mySet但不属于A的元素组成的集合</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value1"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景-3"><a href="#应用场景-3" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>需要存放的数据不能重复的场景</strong></p>
+<ul>
+<li>举例：网站UV统计（数据量巨大的场景还是HyperLogLog更适合一些）、文章点赞、动态点赞等场景。</li>
+<li>相关命令：SCARD（获取集合数量）。</li>
+</ul>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719073733851.png" alt="img"></p>
+<p><strong>需要获取多个数据源交集、并集和差集的场景</strong></p>
+<ul>
+<li>举例：共同好友(交集)、共同粉丝(交集)、共同关注(交集)、好友推荐（差集）、音乐推荐（差集）、订阅号推荐（差集+交集）等场景。</li>
+<li>相关命令：SINTER（交集）、SINTERSTORE（交集）、SUNION（并集）、SUNIONSTORE（并集）、SDIFF（差集）、SDIFFSTORE（差集）。</li>
+</ul>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719074543513.png" alt="img"></p>
+<p><strong>需要随机获取数据源中的元素的场景</strong></p>
+<ul>
+<li>举例：抽奖系统、随机。</li>
+<li>相关命令：SPOP（随机获取集合中的元素并移除，适合不允许重复中奖的场景）、SRANDMEMBER（随机获取集合中的元素，适合允许重复中奖的场景）。</li>
+</ul>
+<h3 id="Sorted-Set（有序集合）"><a href="#Sorted-Set（有序集合）" class="headerlink" title="Sorted Set（有序集合）"></a>Sorted Set（有序集合）</h3><h4 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h4><p>Sorted Set类似于Set，但和Set相比，Sorted Set增加了一个权重参数score，使得集合中的元素能够按score进行有序排列，还可以通过score的范围来获取元素的列表。有点像是Java中HashMap和TreeSet的结合体。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124437791.png" alt="img"></p>
+<h4 id="常用命令-4"><a href="#常用命令-4" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ZADD key score1 member1 score2 member2 …</td>
+<td>向指定有序集合添加一个或多个元素</td>
+</tr>
+<tr>
+<td>ZCARD KEY</td>
+<td>获取指定有序集合的元素数量</td>
+</tr>
+<tr>
+<td>ZSCORE key member</td>
+<td>获取指定有序集合中指定元素的score值</td>
+</tr>
+<tr>
+<td>ZINTERSTORE destination numkeys key1 key2 …</td>
+<td>将给定所有有序集合的交集存储在destination中，对相同元素对应的score值进行SUM聚合操作，numkeys为集合数量</td>
+</tr>
+<tr>
+<td>ZUNIONSTORE destination numkeys key1 key2 …</td>
+<td>求并集，其它和ZINTERSTORE类似</td>
+</tr>
+<tr>
+<td>ZDIFFSTORE destination numkeys key1 key2 …</td>
+<td>求差集，其它和ZINTERSTORE类似</td>
+</tr>
+<tr>
+<td>ZRANGE key start end</td>
+<td>获取指定有序集合start和end之间的元素（score从低到高）</td>
+</tr>
+<tr>
+<td>ZREVRANGE key start end</td>
+<td>获取指定有序集合start和end之间的元素（score从高到底）</td>
+</tr>
+<tr>
+<td>ZREVRANK key member</td>
+<td>获取指定有序集合中指定元素的排名(score从大到小排序)</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>更多Redis Sorted Set命令以及详细使用指南，请查看Redis官网对应的介绍：<a target="_blank" rel="noopener" href="https://redis.io/commands/?group=sorted-set%E3%80%82">https://redis.io/commands/?group=sorted-set。</a></p>
+</blockquote>
+<p><strong>基本操作</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> ZADD myZset <span class="token number">2.0</span> value1 <span class="token number">1.0</span> value2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+<span class="token operator">></span> ZCARD myZset
+<span class="token number">2</span>
+<span class="token operator">></span> ZSCORE myZset value1
+<span class="token number">2.0</span>
+<span class="token operator">></span> ZRANGE myZset <span class="token number">0</span> <span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value1"</span>
+<span class="token operator">></span> ZREVRANGE myZset <span class="token number">0</span> <span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"value1"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"value2"</span>
+<span class="token operator">></span> ZADD myZset2 <span class="token number">4.0</span> value2 <span class="token number">3.0</span> value3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>myZset</code>:<code>value1</code>(2.0)、<code>value2</code>(1.0)。</li>
+<li><code>myZset2</code>：<code>value2</code>（4.0）、<code>value3</code>(3.0)。</li>
+</ul>
+<p><strong>获取指定元素的排名</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> ZREVRANK myZset value1
+<span class="token number">0</span>
+<span class="token operator">></span> ZREVRANK myZset value2
+<span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>求交集</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> ZINTERSTORE myZset3 <span class="token number">2</span> myZset myZset2
+<span class="token number">1</span>
+<span class="token operator">></span> ZRANGE myZset3 <span class="token number">0</span> <span class="token number">1</span> WITHSCORES
+value2
+<span class="token number">5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>求并集</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> ZUNIONSTORE myZset4 <span class="token number">2</span> myZset myZset2
+<span class="token number">3</span>
+<span class="token operator">></span> ZRANGE myZset4 <span class="token number">0</span> <span class="token number">2</span> WITHSCORES
+value1
+<span class="token number">2</span>
+value3
+<span class="token number">3</span>
+value2
+<span class="token number">5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>求差集</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> ZDIFF <span class="token number">2</span> myZset myZset2 WITHSCORES
+value1
+<span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景-4"><a href="#应用场景-4" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>需要随机获取数据源中的元素根据某个权重进行排序的场景</strong></p>
+<ul>
+<li>举例：各种排行榜比如直播间送礼物的排行榜、朋友圈的微信步数排行榜、王者荣耀中的段位排行榜、话题热度排行榜等等。</li>
+<li>相关命令：ZRANGE(从小到大排序)、ZREVRANGE（从大到小排序）、ZREVRANK(指定元素排名)。</li>
+</ul>
+<p><strong>需要存储的数据有优先级或者重要程度的场景</strong>比如优先级任务队列。</p>
+<ul>
+<li>举例：优先级任务队列。</li>
+<li>相关命令：ZRANGE(从小到大排序)、ZREVRANGE（从大到小排序）、ZREVRANK(指定元素排名)。</li>
+</ul>
+<h2 id="Redis3种特殊数据结构详解"><a href="#Redis3种特殊数据结构详解" class="headerlink" title="Redis3种特殊数据结构详解"></a>Redis3种特殊数据结构详解</h2><h3 id="Bitmap"><a href="#Bitmap" class="headerlink" title="Bitmap"></a>Bitmap</h3><h4 id="介绍-5"><a href="#介绍-5" class="headerlink" title="介绍"></a>介绍</h4><p>Bitmap存储的是连续的二进制数字（0和1），通过Bitmap,只需要一个bit位来表示某个元素对应的值或者状态，key就是对应元素本身。我们知道8个bit可以组成一个byte，所以Bitmap本身会极大的节省储存空间。</p>
+<p>你可以将Bitmap看作是一个存储二进制数字（0和1）的数组，数组中每个元素的下标叫做offset（偏移量）。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220720194154133.png" alt="img"></p>
+<h4 id="常用命令-5"><a href="#常用命令-5" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SETBIT key offset value</td>
+<td>设置指定offset位置的值</td>
+</tr>
+<tr>
+<td>GETBIT key offset</td>
+<td>获取指定offset位置的值</td>
+</tr>
+<tr>
+<td>BITCOUNT key start end</td>
+<td>获取start和end之前值为1的元素个数</td>
+</tr>
+<tr>
+<td>BITOP operation destkey key1 key2 …</td>
+<td>对一个或多个Bitmap进行运算，可用运算符有AND,OR,XOR以及NOT</td>
+</tr>
+</tbody></table>
+<p><strong>Bitmap基本操作演示</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># SETBIT会返回之前位的值（默认是0）这里会生成7个位</span>
+<span class="token operator">></span> SETBIT mykey <span class="token number">7</span> <span class="token number">1</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token operator">></span> SETBIT mykey <span class="token number">7</span> <span class="token number">0</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> GETBIT mykey <span class="token number">7</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token operator">></span> SETBIT mykey <span class="token number">6</span> <span class="token number">1</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token operator">></span> SETBIT mykey <span class="token number">8</span> <span class="token number">1</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token comment"># 通过bitcount统计被被设置为1的位的数量。</span>
+<span class="token operator">></span> BITCOUNT mykey
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景-5"><a href="#应用场景-5" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>需要保存状态信息（0&#x2F;1即可表示）的场景</strong></p>
+<ul>
+<li>举例：用户签到情况、活跃用户情况、用户行为统计（比如是否点赞过某个视频）。</li>
+<li>相关命令：<code>SETBIT</code>、<code>GETBIT</code>、<code>BITCOUNT</code>、<code>BITOP</code>。</li>
+</ul>
+<h3 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h3><h4 id="介绍-6"><a href="#介绍-6" class="headerlink" title="介绍"></a>介绍</h4><p>HyperLogLog是一种有名的基数计数概率算法，基于LogLog Counting(LLC)优化改进得来，并不是Redis特有的，Redis只是实现了这个算法并提供了一些开箱即用的API。</p>
+<p>Redis提供的HyperLogLog占用空间非常非常小，只需要12k的空间就能存储接近2^64个不同元素。这是真的厉害，这就是数学的魅力么！并且，Redis对HyperLogLog的存储结构做了优化，采用两种方式计数：</p>
+<ul>
+<li><strong>稀疏矩阵</strong>：计数较少的时候，占用空间很小。</li>
+<li><strong>稠密矩阵</strong>：计数达到某个阈值的时候，占用12k的空间。</li>
+</ul>
+<p>Redis官方文档中有对应的详细说明：</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220721091424563.png" alt="img"></p>
+<p>基数计数概率算法为了节省内存并不会直接存储元数据，而是通过一定的概率统计方法预估基数值（集合中包含元素的个数）。因此，HyperLogLog的计数结果并不是一个精确值，存在一定的误差（标准误差为0.81%）。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220720194154133.png" alt="img"></p>
+<blockquote>
+<p>HyperLogLog的使用非常简单，但原理非常复杂。HyperLogLog的原理以及在Redis中的实现可以看这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903785744056333">HyperLogLog算法的原理讲解以及Redis是如何应用它的</a>。<br>再推荐一个可以帮助理解HyperLogLog原理的工具：<a target="_blank" rel="noopener" href="http://content.research.neustar.biz/blog/hll.html">Sketch of the Day: HyperLogLog — Cornerstone of a Big Data Infrastructure</a>。</p>
+</blockquote>
+<h4 id="常用命令-6"><a href="#常用命令-6" class="headerlink" title="常用命令"></a>常用命令</h4><p>HyperLogLog相关的命令非常少，最常用的也就3个。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PFADD key element1 element2 …</td>
+<td>添加一个或多个元素到HyperLogLog中</td>
+</tr>
+<tr>
+<td>PFCOUNT key1 key2</td>
+<td>获取一个或者多个HyperLogLog的唯一计数。</td>
+</tr>
+<tr>
+<td>PFMERGE destkey sourcekey1 sourcekey2 …</td>
+<td>将多个HyperLogLog合并到destkey中，destkey会结合多个源，算出对应的唯一计数。</td>
+</tr>
+</tbody></table>
+<p><strong>HyperLogLog基本操作演示</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> PFADD hll foo bar zap
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> PFADD hll zap zap zap
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token operator">></span> PFADD hll foo bar
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token operator">></span> PFCOUNT hll
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+<span class="token operator">></span> PFADD some-other-hll <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token operator">></span> PFCOUNT hll some-other-hll
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">6</span>
+<span class="token operator">></span> PFMERGE desthll hll some-other-hll
+<span class="token string">"OK"</span>
+<span class="token operator">></span> PFCOUNT desthll
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景-6"><a href="#应用场景-6" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>数量量巨大（百万、千万级别以上）的计数场景</strong></p>
+<ul>
+<li>举例：热门网站每日&#x2F;每周&#x2F;每月访问ip数统计、热门帖子uv统计、</li>
+<li>相关命令：<code>PFADD</code>、<code>PFCOUNT</code>。</li>
+</ul>
+<h3 id="Geospatial-index"><a href="#Geospatial-index" class="headerlink" title="Geospatial index"></a>Geospatial index</h3><h4 id="介绍-7"><a href="#介绍-7" class="headerlink" title="介绍"></a>介绍</h4><p>Geospatial index（地理空间索引，简称GEO）主要用于存储地理位置信息，基于Sorted Set实现。</p>
+<p>通过GEO我们可以轻松实现两个位置距离的计算、获取指定位置附近的元素等功能。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220720194359494.png" alt="img"></p>
+<h4 id="常用命令-7"><a href="#常用命令-7" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GEOADD key longitude1 latitude1 member1 …</td>
+<td>添加一个或多个元素对应的经纬度信息到GEO中</td>
+</tr>
+<tr>
+<td>GEOPOS key member1 member2 …</td>
+<td>返回给定元素的经纬度信息</td>
+</tr>
+<tr>
+<td>GEODIST key member1 member2 M&#x2F;KM&#x2F;FT&#x2F;MI</td>
+<td>返回两个给定元素之间的距离</td>
+</tr>
+<tr>
+<td>GEORADIUS key longitude latitude radius distance</td>
+<td>获取指定位置附近distance范围内的其他元素，支持ASC(由近到远)、DESC（由远到近）、Count(数量)等参数</td>
+</tr>
+<tr>
+<td>GEORADIUSBYMEMBER key member radius distance</td>
+<td>类似于GEORADIUS命令，只是参照的中心点是GEO中的元素</td>
+</tr>
+</tbody></table>
+<p><strong>基本操作</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> GEOADD personLocation <span class="token number">116.33</span> <span class="token number">39.89</span> user1 <span class="token number">116.34</span> <span class="token number">39.90</span> user2 <span class="token number">116.35</span> <span class="token number">39.88</span> user3
+<span class="token number">3</span>
+<span class="token operator">></span> GEOPOS personLocation user1
+<span class="token number">116.3299986720085144</span>
+<span class="token number">39.89000061669732844</span>
+<span class="token operator">></span> GEODIST personLocation user1 user2 km
+<span class="token number">1.4018</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过Redis可视化工具查看personLocation，果不其然，底层就是Sorted Set。</p>
+<p>GEO中存储的地理位置信息的经纬度数据通过GeoHash算法转换成了一个整数，这个整数作为Sorted Set的score(权重参数)使用。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220721201545147.png" alt="img"></p>
+<p><strong>获取指定位置范围内的其他元素</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> GEORADIUS personLocation <span class="token number">116.33</span> <span class="token number">39.87</span> <span class="token number">3</span> km
+user3
+user1
+<span class="token operator">></span> GEORADIUS personLocation <span class="token number">116.33</span> <span class="token number">39.87</span> <span class="token number">2</span> km
+<span class="token operator">></span> GEORADIUS personLocation <span class="token number">116.33</span> <span class="token number">39.87</span> <span class="token number">5</span> km
+user3
+user1
+user2
+<span class="token operator">></span> GEORADIUSBYMEMBER personLocation user1 <span class="token number">5</span> km
+user3
+user1
+user2
+<span class="token operator">></span> GEORADIUSBYMEMBER personLocation user1 <span class="token number">2</span> km
+user1
+user2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>GEORADIUS命令的底层原理解析可以看看阿里的这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903966061363207">Redis到底是怎么实现“附近的人”这个功能的呢？</a>。</p>
+<p><strong>移除元素</strong>：</p>
+<p>GEO底层是Sorted Set，你可以对GEO使用Sorted Set相关的命令。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> ZREM personLocation user1
+<span class="token number">1</span>
+<span class="token operator">></span> ZRANGE personLocation <span class="token number">0</span> <span class="token parameter variable">-1</span>
+user3
+user2
+<span class="token operator">></span> ZSCORE personLocation user2
+<span class="token number">4069879562983946</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="应用场景-7"><a href="#应用场景-7" class="headerlink" title="应用场景"></a>应用场景</h4><p><strong>需要管理使用地理空间数据的场景</strong></p>
+<ul>
+<li>举例：附近的人。</li>
+<li>相关命令:GEOADD、GEORADIUS、GEORADIUSBYMEMBER</li>
+</ul>
+<h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><h3 id="如何使用Redis事务？"><a href="#如何使用Redis事务？" class="headerlink" title="如何使用Redis事务？"></a>如何使用Redis事务？</h3><p>Redis可以通过<strong>MULTI，EXEC，DISCARD和WATCH</strong>等命令来实现事务(transaction)功能。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> MULTI
+OK
+<span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide"</span>
+QUEUED
+<span class="token operator">></span> GET PROJECT
+QUEUED
+<span class="token operator">></span> EXEC
+<span class="token number">1</span><span class="token punctuation">)</span> OK
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"JavaGuide"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://redis.io/commands/multi">MULTI</a>命令后可以输入多个命令，Redis不会立即执行这些命令，而是将它们放到队列，当调用了<a target="_blank" rel="noopener" href="https://redis.io/commands/exec">EXEC</a>命令后，再执行所有的命令。</p>
+<p>这个过程是这样的：</p>
+<ol>
+<li>开始事务（MULTI）；</li>
+<li>命令入队(批量操作Redis的命令，先进先出（FIFO）的顺序执行)；</li>
+<li>执行事务(EXEC)。</li>
+</ol>
+<p>你也可以通过<a target="_blank" rel="noopener" href="https://redis.io/commands/discard">DISCARD</a>命令取消一个事务，它会清空事务队列中保存的所有命令。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> MULTI
+OK
+<span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide"</span>
+QUEUED
+<span class="token operator">></span> GET PROJECT
+QUEUED
+<span class="token operator">></span> DISCARD
+OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>你可以通过<a target="_blank" rel="noopener" href="https://redis.io/commands/watch">WATCH</a>命令监听指定的Key，当调用EXEC命令执行事务时，如果一个被WATCH命令监视的Key被<strong>其他客户端&#x2F;Session</strong>修改的话，整个事务都不会被执行。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 客户端1</span>
+<span class="token operator">></span> SET PROJECT <span class="token string">"RustGuide"</span>
+OK
+<span class="token operator">></span> WATCH PROJECT
+OK
+<span class="token operator">></span> MULTI
+OK
+<span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide"</span>
+QUEUED
+
+<span class="token comment"># 客户端2</span>
+<span class="token comment"># 在客户端1执行EXEC命令提交事务之前修改PROJECT的值</span>
+<span class="token operator">></span> SET PROJECT <span class="token string">"GoGuide"</span>
+
+<span class="token comment"># 客户端1</span>
+<span class="token comment"># 修改失败，因为PROJECT的值被客户端2修改了</span>
+<span class="token operator">></span> EXEC
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+<span class="token operator">></span> GET PROJECT
+<span class="token string">"GoGuide"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>不过，如果<strong>WATCH</strong>与<strong>事务</strong>在同一个Session里，并且被<strong>WATCH</strong>监视的Key被修改的操作发生在事务内部，这个事务是可以被执行成功的（相关issue：<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/1714">WATCH命令碰到MULTI命令时的不同效果</a>）。</p>
+<p>事务内部修改WATCH监视的Key：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide"</span>
+OK
+<span class="token operator">></span> WATCH PROJECT
+OK
+<span class="token operator">></span> MULTI
+OK
+<span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide1"</span>
+QUEUED
+<span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide2"</span>
+QUEUED
+<span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide3"</span>
+QUEUED
+<span class="token operator">></span> EXEC
+<span class="token number">1</span><span class="token punctuation">)</span> OK
+<span class="token number">2</span><span class="token punctuation">)</span> OK
+<span class="token number">3</span><span class="token punctuation">)</span> OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> GET PROJECT
+<span class="token string">"JavaGuide3"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>事务外部修改WATCH监视的Key：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide"</span>
+OK
+<span class="token operator">></span> WATCH PROJECT
+OK
+<span class="token operator">></span> SET PROJECT <span class="token string">"JavaGuide2"</span>
+OK
+<span class="token operator">></span> MULTI
+OK
+<span class="token operator">></span> GET <span class="token environment constant">USER</span>
+QUEUED
+<span class="token operator">></span> EXEC
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>Redis官网相关介绍<a target="_blank" rel="noopener" href="https://redis.io/topics/transactions">https://redis.io/topics/transactions</a></p>
+</blockquote>
+<h3 id="Redis事务支持原子性吗？"><a href="#Redis事务支持原子性吗？" class="headerlink" title="Redis事务支持原子性吗？"></a>Redis事务支持原子性吗？</h3><p>Redis的事务和我们平时理解的关系型数据库的事务不同。我们知道事务具有四大特性：<strong>1.原子性</strong>，<strong>2.隔离性</strong>，<strong>3.持久性</strong>，<strong>4.一致性</strong>。</p>
+<ol>
+<li><strong>原子性（Atomicity）：</strong>事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；</li>
+<li><strong>隔离性（Isolation）：</strong>并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；</li>
+<li><strong>持久性（Durability）：</strong>一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。</li>
+<li><strong>一致性（Consistency）：</strong>执行事务前后，数据保持一致，多个事务对同一个数据读取的结果是相同的；</li>
+</ol>
+<p>Redis事务在运行错误的情况下，除了执行过程中出现错误的命令外，其他命令都能正常执行。并且，Redis事务是不支持回滚（rollback）操作的。因此，Redis事务其实是不满足原子性的（而且不满足持久性）。</p>
+<p>Redis官网也解释了自己为啥不支持回滚。简单来说就是Redis开发者们觉得没必要支持回滚，这样更简单便捷并且性能更好。Redis开发者觉得即使命令执行错误也应该在开发过程中就被发现而不是生产过程中。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/redis-rollback.png" alt="Redis为什么不支持回滚"></p>
+<p>你可以将Redis中的事务就理解为：<strong>Redis事务提供了一种将多个命令请求打包的功能。然后，再按顺序执行打包的所有命令，并且不会被中途打断。</strong></p>
+<p>除了不满足原子性之外，事务中的每条命令都会与Redis服务器进行网络交互，这是比较浪费资源的行为。明明一次批量执行多个命令就可以了，这种操作实在是看不懂。</p>
+<p>因此，Redis事务是不建议在日常开发中使用的。</p>
+<p><strong>相关issue</strong>:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/452">issue452:关于Redis事务不满足原子性的问题</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/491">Issue491:关于redis没有事务回滚？</a></li>
+</ul>
+<h4 id="如何解决Redis事务的缺陷？"><a href="#如何解决Redis事务的缺陷？" class="headerlink" title="如何解决Redis事务的缺陷？"></a>如何解决Redis事务的缺陷？</h4><p>Redis从2.6版本开始支持执行Lua脚本，它的功能和事务非常类似。我们可以利用Lua脚本来批量执行多条Redis命令，这些Redis命令会被提交到Redis服务器一次性执行完成，大幅减小了网络开销。</p>
+<p>一段Lua脚本可以视作一条命令执行，一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰。</p>
+<p>不过，如果Lua脚本运行时出错并中途结束，出错之后的命令是不会被执行的。并且，出错之前执行的命令是无法被撤销的，无法实现类似关系型数据库执行失败可以回滚的那种原子性效果。因此，<strong>严格来说的话，通过Lua脚本来批量执行Redis命令实际也是不完全满足原子性的。</strong></p>
+<p>如果想要让Lua脚本中的命令全部执行，必须保证语句语法和命令都是对的。</p>
+<p>另外，Redis7.0新增了<a target="_blank" rel="noopener" href="https://redis.io/docs/manual/programmability/functions-intro/">Redis functions</a>特性，你可以将Redis functions看作是比Lua更强大的脚本。</p>
+<h2 id="Redis性能优化"><a href="#Redis性能优化" class="headerlink" title="Redis性能优化"></a>Redis性能优化</h2><h3 id="使用批量操作减少网络传输"><a href="#使用批量操作减少网络传输" class="headerlink" title="使用批量操作减少网络传输"></a>使用批量操作减少网络传输</h3><p>一个Redis命令的执行可以简化为以下4步：</p>
+<ol>
+<li>发送命令</li>
+<li>命令排队</li>
+<li>命令执行</li>
+<li>返回结果</li>
+</ol>
+<p>其中，第1步和第4步耗费时间之和称为**Round Trip Time(RTT,往返时间)**，也就是数据在网络上传输的时间。</p>
+<p><strong>使用批量操作可以减少网络传输次数，进而有效减小网络开销，大幅减少RTT。</strong></p>
+<h4 id="原生批量操作命令"><a href="#原生批量操作命令" class="headerlink" title="原生批量操作命令"></a>原生批量操作命令</h4><p>Redis中有一些原生支持批量操作的命令，比如：</p>
+<ul>
+<li>mget(获取一个或多个指定key的值)、mset(设置一个或多个指定key的值)、</li>
+<li>hmget(获取指定哈希表中一个或者多个指定字段的值)、hmset(同时将一个或多个field-value对设置到指定哈希表中)、</li>
+<li>sadd（向指定集合添加一个或多个元素）</li>
+<li>……</li>
+</ul>
+<p>不过，在Redis官方提供的分片集群解决方案Redis Cluster下，使用这些原生批量操作命令可能会存在一些小问题需要解决。就比如说mget无法保证所有的key都在同一个<strong>hash slot</strong>（哈希槽）上，mget可能还是需要多次网络传输，原子操作也无法保证了。不过，相较于非批量操作，还是可以节省不少网络传输次数。</p>
+<p>整个步骤的简化版如下（通常由Redis客户端实现，无需我们自己再手动实现）：</p>
+<ol>
+<li>找到key对应的所有hash slot；</li>
+<li>分别向对应的Redis节点发起mget请求获取数据；</li>
+<li>等待所有请求执行结束，重新组装结果数据，保持跟入参key的顺序一致，然后返回结果。</li>
+</ol>
+<p>如果想要解决这个多次网络传输的问题，比较常用的办法是自己维护key与slot的关系。不过这样不太灵活，虽然带来了性能提升，但同样让系统复杂性提升。</p>
+<blockquote>
+<p>Redis Cluster并没有使用一致性哈希，采用的是<strong>哈希槽分区</strong>，每一个键值对都属于一个<strong>hash slot</strong>（哈希槽）。当客户端发送命令请求的时候，需要先根据key通过上面的计算公示找到的对应的哈希槽，然后再查询哈希槽和节点的映射关系，即可找到目标Redis节点。</p>
+</blockquote>
+<h4 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline</h4><p>对于不支持批量操作的命令，我们可以利用<strong>pipeline(流水线)<strong>将一批Redis命令封装成一组，这些Redis命令会被一次性提交到Redis服务器，只需要一次网络传输。不过，需要注意控制一次批量操作的</strong>元素个数</strong>(例如500以内，实际也和元素字节数有关)，避免网络传输的数据量过大。</p>
+<p>与mget、mset等原生批量操作命令一样，pipeline同样在Redis Cluster上使用会存在一些小问题。原因类似，无法保证所有的key都在同一个<strong>hash slot</strong>（哈希槽）上。如果想要使用的话，客户端需要自己维护key与slot的关系。</p>
+<p>原生批量操作命令和pipeline的是有区别的，使用的时候需要注意：</p>
+<ul>
+<li>原生批量操作命令是原子操作，pipeline是非原子操作；</li>
+<li>pipeline可以打包不同的命令，原生批量操作命令不可以；</li>
+<li>原生批量操作命令是Redis服务端支持实现的，而pipeline需要服务端和客户端的共同实现。</li>
+</ul>
+<p>另外，pipeline不适用于执行顺序有依赖关系的一批命令。就比如说，你需要将前一个命令的结果给后续的命令使用，pipeline就没办法满足你的需求了。对于这种需求，我们可以使用<strong>Lua脚本</strong>。</p>
+<h4 id="Lua脚本"><a href="#Lua脚本" class="headerlink" title="Lua脚本"></a>Lua脚本</h4><p>Lua脚本同样支持批量操作多条命令。一段Lua脚本可以视作一条命令执行，可以看作是原子操作。一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰，这是pipeline所不具备的。</p>
+<p>并且，Lua脚本中支持一些简单的逻辑处理比如使用命令读取值并在Lua脚本中进行处理，这同样是pipeline所不具备的。</p>
+<p>不过，Redis Cluster下Lua脚本的原子操作也无法保证了，原因同样是无法保证所有的key都在同一个<strong>hashslot</strong>（哈希槽）上。</p>
+<h3 id="大量key集中过期问题"><a href="#大量key集中过期问题" class="headerlink" title="大量key集中过期问题"></a>大量key集中过期问题</h3><p>我在前面提到过：对于过期key，Redis采用的是<strong>定期删除+惰性&#x2F;懒汉式删除</strong>策略。</p>
+<p>定期删除执行过程中，如果突然遇到大量过期key的话，客户端请求必须等待定期清理过期key任务线程执行完成，因为这个这个定期任务线程是在Redis主线程中执行的。这就导致客户端请求没办法被及时处理，响应速度会比较慢。</p>
+<p>如何解决呢？下面是两种常见的方法：</p>
+<ol>
+<li>给key设置随机过期时间。</li>
+<li>开启lazy-free（惰性删除&#x2F;延迟释放）。lazy-free特性是Redis4.0开始引入的，指的是让Redis采用异步方式延迟释放key使用的内存，将该操作交给单独的子线程处理，避免阻塞主线程。</li>
+</ol>
+<p>个人建议不管是否开启lazy-free，我们都尽量给key设置随机过期时间。</p>
+<h3 id="Redis-bigkey"><a href="#Redis-bigkey" class="headerlink" title="Redis bigkey"></a>Redis bigkey</h3><h4 id="什么是bigkey？"><a href="#什么是bigkey？" class="headerlink" title="什么是bigkey？"></a>什么是bigkey？</h4><p>简单来说，如果一个key对应的value所占用的内存比较大，那这个key就可以看作是bigkey。具体多大才算大呢？有一个不是特别精确的参考标准：string类型的value超过10kb，复合类型的value包含的元素超过5000个（对于复合类型的value来说，不一定包含的元素越多，占用的内存就越多）。</p>
+<h4 id="bigkey有什么危害？"><a href="#bigkey有什么危害？" class="headerlink" title="bigkey有什么危害？"></a>bigkey有什么危害？</h4><p>除了会消耗更多的内存空间，bigkey对性能也会有比较大的影响。因此，我们应该尽量避免写入bigkey！</p>
+<h4 id="如何发现bigkey？"><a href="#如何发现bigkey？" class="headerlink" title="如何发现bigkey？"></a>如何发现bigkey？</h4><p><strong>1、使用Redis自带的 –bigkeys参数来查找。</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># redis-cli -p 6379 --bigkeys</span>
+
+<span class="token comment"># Scanning the entire keyspace to find biggest keys as well as</span>
+<span class="token comment"># average sizes per key type.  You can use -i 0.1 to sleep 0.1 sec</span>
+<span class="token comment"># per 100 SCAN commands (not usually needed).</span>
+
+<span class="token punctuation">[</span>00.00%<span class="token punctuation">]</span> Biggest string found so far <span class="token string">'"ballcat:oauth:refresh_auth:f6cdb384-9a9d-4f2f-af01-dc3f28057c20"'</span> with <span class="token number">4437</span> bytes
+<span class="token punctuation">[</span>00.00%<span class="token punctuation">]</span> Biggest list   found so far <span class="token string">'"my-list"'</span> with <span class="token number">17</span> items
+
+-------- summary -------
+
+Sampled <span class="token number">5</span> keys <span class="token keyword">in</span> the keyspace<span class="token operator">!</span>
+Total key length <span class="token keyword">in</span> bytes is <span class="token number">264</span> <span class="token punctuation">(</span>avg len <span class="token number">52.80</span><span class="token punctuation">)</span>
+
+Biggest   list found <span class="token string">'"my-list"'</span> has <span class="token number">17</span> items
+Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6cdb384-9a9d-4f2f-af01-dc3f28057c20"'</span> has <span class="token number">4437</span> bytes
+
+<span class="token number">1</span> lists with <span class="token number">17</span> items <span class="token punctuation">(</span><span class="token number">20.00</span>% of keys, avg size <span class="token number">17.00</span><span class="token punctuation">)</span>
+<span class="token number">0</span> hashs with <span class="token number">0</span> fields <span class="token punctuation">(</span>00.00% of keys, avg size <span class="token number">0.00</span><span class="token punctuation">)</span>
+<span class="token number">4</span> strings with <span class="token number">4831</span> bytes <span class="token punctuation">(</span><span class="token number">80.00</span>% of keys, avg size <span class="token number">1207.75</span><span class="token punctuation">)</span>
+<span class="token number">0</span> streams with <span class="token number">0</span> entries <span class="token punctuation">(</span>00.00% of keys, avg size <span class="token number">0.00</span><span class="token punctuation">)</span>
+<span class="token number">0</span> sets with <span class="token number">0</span> members <span class="token punctuation">(</span>00.00% of keys, avg size <span class="token number">0.00</span><span class="token punctuation">)</span>
+<span class="token number">0</span> zsets with <span class="token number">0</span> members <span class="token punctuation">(</span>00.00% of keys, avg size <span class="token number">0.00</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>从这个命令的运行结果，我们可以看出：这个命令会扫描(Scan)Redis中的所有key，会对Redis的性能有一点影响。并且，这种方式只能找出每种数据结构top 1 bigkey（占用内存最大的string数据类型，包含元素最多的复合数据类型）。</p>
+<p><strong>2、分析RDB文件</strong></p>
+<p>通过分析RDB文件来找出bigkey。这种方案的前提是你的Redis采用的是RDB持久化。</p>
+<p>网上有现成的代码&#x2F;工具可以直接拿来使用：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/sripathikrishnan/redis-rdb-tools">redis-rdb-tools</a>：Python语言写的用来分析Redis的RDB快照文件用的工具</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/weiyanwei412/rdb_bigkeys">rdb_bigkeys</a>:Go语言写的用来分析Redis的RDB快照文件用的工具，性能更好。</li>
+</ul>
+<h3 id="Redis内存碎片"><a href="#Redis内存碎片" class="headerlink" title="Redis内存碎片"></a>Redis内存碎片</h3><p><strong>相关问题</strong>：</p>
+<ol>
+<li>什么是内存碎片?为什么会有Redis内存碎片?</li>
+<li>如何清理Redis内存碎片？</li>
+</ol>
+<p><strong>参考答案</strong>：<a target="_blank" rel="noopener" href="https://javaguide.cn/database/redis/redis-memory-fragmentation.html">Redis内存碎片详解</a>。</p>
+<h2 id="Redis生产问题"><a href="#Redis生产问题" class="headerlink" title="Redis生产问题"></a>Redis生产问题</h2><h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><h4 id="什么是缓存穿透？"><a href="#什么是缓存穿透？" class="headerlink" title="什么是缓存穿透？"></a>什么是缓存穿透？</h4><p>缓存穿透说简单点就是大量请求的key是不合理的，<strong>根本不存在于缓存中，也不存在于数据库中</strong>。这就导致这些请求直接到了数据库上，根本没有经过缓存这一层，对数据库造成了巨大的压力，可能直接就被这么多请求弄宕机了。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-penetration.png" alt="缓存穿透"></p>
+<p>举个例子：某个黑客故意制造一些非法的key发起大量请求，导致大量请求落到数据库，结果数据库上也没有查到对应的数据。也就是说这些请求最终都落到了数据库上，对数据库造成了巨大的压力。</p>
+<h4 id="有哪些解决办法？"><a href="#有哪些解决办法？" class="headerlink" title="有哪些解决办法？"></a>有哪些解决办法？</h4><p>最基本的就是首先做好参数校验，一些不合法的参数请求直接抛出异常信息返回给客户端。比如查询的数据库id不能小于0、传入的邮箱格式不对的时候直接返回错误消息给客户端等等。</p>
+<p><strong>1）缓存无效key</strong></p>
+<p>如果缓存和数据库都查不到某个key的数据就写一个到Redis中去并设置过期时间，具体命令如下：<code>SET key value EX 10086</code>。这种方式可以解决请求的key变化不频繁的情况，如果黑客恶意攻击，每次构建不同的请求key，会导致Redis中缓存大量无效的key。很明显，这种方案并不能从根本上解决此问题。如果非要用这种方式来解决穿透问题的话，尽量将无效的key的过期时间设置短一点比如1分钟。</p>
+<p>另外，这里多说一嘴，一般情况下我们是这样设计key的：<code>表名:列名:主键名:主键值</code>。</p>
+<p>如果用Java代码展示的话，差不多是下面这样的：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">getObjectInclNullById</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 从缓存中获取数据</span>
+    <span class="token class-name">Object</span> cacheValue <span class="token operator">=</span> cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 缓存为空</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cacheValue <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 从数据库中获取</span>
+        <span class="token class-name">Object</span> storageValue <span class="token operator">=</span> storage<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 缓存空对象</span>
+        cache<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> storageValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 如果存储数据为空，需要设置一个过期时间(300秒)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>storageValue <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 必须设置过期时间，否则有被攻击的风险</span>
+            cache<span class="token punctuation">.</span><span class="token function">expire</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> storageValue<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> cacheValue<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>2）布隆过滤器</strong></p>
+<p>布隆过滤器是一个非常神奇的数据结构，通过它我们可以非常方便地判断一个给定数据是否存在于海量数据中。我们需要的就是判断key是否合法，有没有感觉布隆过滤器就是我们想要找的那个“人”。</p>
+<p>具体是这样做的：把所有可能存在的请求的值都存放在布隆过滤器中，当用户请求过来，先判断用户发来的请求的值是否存在于布隆过滤器中。不存在的话，直接返回请求参数错误信息给客户端，存在的话才会走下面的流程。</p>
+<p>加入布隆过滤器之后的缓存处理流程图如下。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-penetration-bloom-filter.png" alt="加入布隆过滤器之后的缓存处理流程图"></p>
+<p>但是，需要注意的是布隆过滤器可能会存在误判的情况。总结来说就是：<strong>布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。</strong></p>
+<p><strong>为什么会出现误判的情况呢?我们还要从布隆过滤器的原理来说！</strong></p>
+<p>我们先来看一下，<strong>当一个元素加入布隆过滤器中的时候，会进行哪些操作：</strong></p>
+<ol>
+<li>使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。</li>
+<li>根据得到的哈希值，在位数组中把对应下标的值置为1。</li>
+</ol>
+<p>我们再来看一下，<strong>当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行哪些操作：</strong></p>
+<ol>
+<li>对给定元素再次进行相同的哈希计算；</li>
+<li>得到值之后判断位数组中的每个元素是否都为1，如果值都为1，那么说明这个值在布隆过滤器中，如果存在一个值不为1，说明该元素不在布隆过滤器中。</li>
+</ol>
+<p>然后，一定会出现这样一种情况：<strong>不同的字符串可能哈希出来的位置相同。</strong>（可以适当增加位数组大小或者调整我们的哈希函数来降低概率）</p>
+<blockquote>
+<p>更多关于布隆过滤器的内容可以看我的这篇原创：<a target="_blank" rel="noopener" href="https://javaguide.cn/cs-basics/data-structure/bloom-filter/">《不了解布隆过滤器？一文给你整的明明白白！》</a>，强烈推荐，个人感觉网上应该找不到总结的这么明明白白的文章了。</p>
+</blockquote>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>缓存穿透是指查询一个一定不存在的数据。由于缓存不命中，并且出于容错考虑，如果从数据库查不到数据则不写入缓存，这将导致这个不存在的数据每次请求都要到数据库去查询，失去了缓存的意义<br>解决方案：</p>
+<ol>
+<li>当我们从数据库找不到的时候，我们也将这个空对象设置到缓存里边去。下次再请求的时候，就可以从缓存里边获取了。<br>这种情况我们一般会将空对象设置一个较短的过期时间。</li>
+<li>布隆过滤器<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/soF3F8YYSbynK2lyofGMAg">面试官：大量请求Redis不存在的数据，从而打倒数据库，你有什么方案？</a></li>
+</ol>
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><h4 id="什么是缓存击穿？"><a href="#什么是缓存击穿？" class="headerlink" title="什么是缓存击穿？"></a>什么是缓存击穿？</h4><p>缓存击穿中，请求的key对应的是<strong>热点数据</strong>，该数据<strong>存在于数据库中，但不存在于缓存中（通常是因为缓存中的那份数据已经过期）</strong>。这就可能会导致瞬时大量的请求直接打到了数据库上，对数据库造成了巨大的压力，可能直接就被这么多请求弄宕机了。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-breakdown.png" alt="缓存击穿"></p>
+<p>举个例子：秒杀进行过程中，缓存中的某个秒杀商品的数据突然过期，这就导致瞬时大量对该商品的请求直接落到数据库上，对数据库造成了巨大的压力。</p>
+<h4 id="有哪些解决办法？-1"><a href="#有哪些解决办法？-1" class="headerlink" title="有哪些解决办法？"></a>有哪些解决办法？</h4><ul>
+<li>设置热点数据永不过期或者过期时间比较长。</li>
+<li>针对热点数据提前预热，将其存入缓存中并设置合理的过期时间比如秒杀场景下的数据在秒杀结束之前不过期。</li>
+<li>请求数据库写数据到缓存之前，先获取互斥锁，保证只有一个请求会落到数据库上，减少数据库的压力。</li>
+</ul>
+<h4 id="缓存穿透和缓存击穿有什么区别？"><a href="#缓存穿透和缓存击穿有什么区别？" class="headerlink" title="缓存穿透和缓存击穿有什么区别？"></a>缓存穿透和缓存击穿有什么区别？</h4><p>缓存穿透中，请求的key既不存在于缓存中，也不存在于数据库中。</p>
+<p>缓存击穿中，请求的key对应的是<strong>热点数据</strong>，该数据<strong>存在于数据库中，但不存在于缓存中（通常是因为缓存中的那份数据已经过期）</strong>。</p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>缓存击穿，就是说某个key非常热点，访问非常频繁，处于集中式高并发访问的情况，当这个key在失效的瞬间，大量的请求就击穿了缓存，直接请求数据库，就像是在一道屏障上凿开了一个洞。<br>解决方案：</p>
+<ol>
+<li>可以将热点数据设置为永远不过期</li>
+<li>基于redis or zookeeper实现互斥锁，等待第一个请求构建完缓存之后，再释放锁，进而其它请求才能通过该key访问数据</li>
+</ol>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><h4 id="什么是缓存雪崩？"><a href="#什么是缓存雪崩？" class="headerlink" title="什么是缓存雪崩？"></a>什么是缓存雪崩？</h4><p>实际上，缓存雪崩描述的就是这样一个简单的场景：<strong>缓存在同一时间大面积的失效，导致大量的请求都直接落到了数据库上，对数据库造成了巨大的压力。</strong>这就好比雪崩一样，摧枯拉朽之势，数据库的压力可想而知，可能直接就被这么多请求弄宕机了。</p>
+<p>另外，缓存服务宕机也会导致缓存雪崩现象，导致所有的请求都落到了数据库上。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-avalanche.png" alt="缓存雪崩"></p>
+<p>举个例子：数据库中的大量数据在同一时间过期，这个时候突然有大量的请求需要访问这些过期的数据。这就导致大量的请求直接落到数据库上，对数据库造成了巨大的压力。</p>
+<h4 id="有哪些解决办法？-2"><a href="#有哪些解决办法？-2" class="headerlink" title="有哪些解决办法？"></a>有哪些解决办法？</h4><p><strong>针对Redis服务不可用的情况：</strong></p>
+<ol>
+<li>采用Redis集群，避免单机出现问题整个缓存服务都没办法使用。</li>
+<li>限流，避免同时处理大量的请求。</li>
+</ol>
+<p><strong>针对热点缓存失效的情况：</strong></p>
+<ol>
+<li>设置不同的失效时间比如随机设置缓存的失效时间。</li>
+<li>缓存永不失效（不太推荐，实用性太差）。</li>
+<li>设置二级缓存。</li>
+</ol>
+<h4 id="缓存雪崩和缓存击穿有什么区别？"><a href="#缓存雪崩和缓存击穿有什么区别？" class="headerlink" title="缓存雪崩和缓存击穿有什么区别？"></a>缓存雪崩和缓存击穿有什么区别？</h4><p>缓存雪崩和缓存击穿比较像，但缓存雪崩导致的原因是缓存中的大量或者所有数据失效，缓存击穿导致的原因主要是某个热点数据不存在与缓存中（通常是因为缓存中的那份数据已经过期）。</p>
+<h4 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h4><p>如果我们的缓存挂掉了，这意味着我们的全部请求都跑去数据库了<br>解决方案：</p>
+<ol>
+<li>事发前：实现Redis的高可用(主从架构+Sentinel或者Redis Cluster)，尽量避免Redis挂掉这种情况发生。</li>
+<li>事发中：万一Redis真的挂了，我们可以设置本地缓存(ehcache)+限流(hystrix)，尽量避免我们的数据库被干掉</li>
+<li>事发后：redis持久化，重启后自动从磁盘上加载数据，快速恢复缓存数据</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dig6ZcUzMvQZG0u-Bub2AQ">Redis缓存击穿（失效）、缓存穿透、缓存雪崩怎么解决？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pOUjLIgUSgbjoJ2KtfaQyw">Redis缓存的常见异常及解决方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8cNZ2glJC6p3w0ogtgKQ-w">常说的「缓存穿透」和「击穿」是什么</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7h_IOg7RgR3bFscgbGnGFw">漫话：如何给女朋友解释什么是缓存穿透、缓存击穿、缓存雪崩</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rD6h874mPzUCRlE7l8CnUQ">再也不怕，缓存雪崩、击穿、穿透！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A">一个Redis的雪崩和穿透问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw">烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？</a></li>
+</ul>
+<h3 id="如何保证缓存和数据库数据的一致性？"><a href="#如何保证缓存和数据库数据的一致性？" class="headerlink" title="如何保证缓存和数据库数据的一致性？"></a>如何保证缓存和数据库数据的一致性？</h3><p>下面单独对<strong>Cache Aside Pattern（旁路缓存模式）</strong>来聊聊。</p>
+<p>Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删除cache。</p>
+<p>如果更新数据库成功，而删除缓存这一步失败的情况的话，简单说两个解决方案：</p>
+<ol>
+<li><strong>缓存失效时间变短（不推荐，治标不治本）</strong>：我们让缓存数据的过期时间变短，这样的话缓存就会从数据库中加载数据。另外，这种解决办法对于先操作缓存后操作数据库的场景不适用。</li>
+<li><strong>增加cache更新重试机制（常用）</strong>：如果cache服务当前不可用导致缓存删除失败的话，我们就隔一段时间进行重试，重试次数可以自己定。如果多次重试还是失败的话，我们可以把当前更新失败的key存入队列中，等缓存服务可用之后，再将缓存中对应的key删除即可。</li>
+</ol>
+<blockquote>
+<p>相关文章推荐：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIyOTYxNDI5OA==&mid=2247487312&idx=1&sn=fa19566f5729d6598155b5c676eee62d&chksm=e8beb8e5dfc931f3e35655da9da0b61c79f2843101c130cf38996446975014f958a6481aacf1&scene=178&cur_album_id=1699766580538032128#rd">缓存和数据库一致性问题，看这篇就够了-水滴与银弹</a></p>
+</blockquote>
+<h4 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h4><p>读的时候先读缓存，缓存中没有数据的话就去数据库读取，然后再存入缓存中，同时返回响应。<br>更新的时候，先更新数据库，然后再删除缓存。</p>
+<p><strong>双写一致方案</strong><br>先删除缓存，后更新数据库：<br>解决了缓存删除失败导致库与缓存不一致的问题，适用于并发量不高的业务场景。</p>
+<p><strong>缓存延时双删策略</strong><br>在写库前后都进行Redis的删除操作，并且第二次删除通过延迟的方式进行,第一步：先删除缓存,第二步：再写入数据库,第三步：休眠xxx毫秒（根据具体的业务时间来定）,第四步：再次删除缓存。<br>这种方案解决了高并发情况下，同时有读请求与写请求时导致的不一致问题。读取速度快，如果二次删除失败了，还是会导致缓存脏数据存在的；二次删除前面涉及到休眠，可能导致系统性能降低，可以采用异步的方式，再起一个线程来进行异步删除。</p>
+<p>在分布式系统中，缓存和数据库同时存在时，如果有写操作的时候，先操作数据库，再操作缓存。如下：</p>
+<ol>
+<li>读取缓存中是否有相关数据</li>
+<li>如果缓存中有相关数据value，则返回</li>
+<li>如果缓存中没有相关数据，则从数据库读取相关数据放入缓存中key-&gt;value，再返回</li>
+<li>如果有更新数据，则先更新数据，再删除缓存</li>
+<li>为了保证第四步删除缓存成功，使用binlog异步删除</li>
+<li>如果是主从数据库，binglog取自于从库</li>
+<li>如果是一主多从，每个从库都要采集binlog，然后消费端收到最后一台binlog数据才删除缓存</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FldS8ynxoK8fD1QPVocnjA">如何保证缓存与数据库的双写一致性？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1uJmVb_E980NWn_sCzM6mA">如何保证数据库和缓存双写一致性？</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/D812359/article/details/121645548">解决缓存和数据库双写数据一致性问题✳</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5I4IQFYZDdeNulSZfEj79A">如何保证Redis缓存与数据库双写一致性？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JxdAEt4rfZp5KQwpxRPZlA">高并发场景下，到底先更新缓存还是先更新数据库？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_WCg3TDZCxRKPiVot1dG8Q">MySQL与Redis缓存的同步方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bKtVlr9JZ1HCp1tgEEKENA">数据库跟缓存的双写一致性</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6WxbY-BOjX_5mwHNgoVl8g">Redis和Mysql如何保证数据一致?</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BwKTvDig4BjMqXb_O468Uw">高并发先操作数据库，还是先操作缓存？5个方案告诉你！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HVPsyNd7XxmxiVQ9Nza_TQ">Redis数据更新，是先更新数据库还是先更新缓存？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tpb6Xf4Vf6O6gxbZN3pWfA">缓存一致性方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RqQ2AyDZ5f8vvcP76TyuAA">如何保证mongodb和数据库双写数据一致性</a></li>
+</ul>
+<h2 id="Redis的key过期策略"><a href="#Redis的key过期策略" class="headerlink" title="Redis的key过期策略"></a>Redis的key过期策略</h2><p>我们在set key的时候，可以给它设置一个过期时间，比如expire key 60。指定这key60s后过期，60s后，redis是如何处理的？我们先来介绍几种过期策略：一般有<strong>定时过期、惰性过期、定期过期</strong>三种。</p>
+<h3 id="定时过期"><a href="#定时过期" class="headerlink" title="定时过期"></a>定时过期</h3><p>每个设置过期时间的key都需要创建一个定时器，到过期时间就会立即对key进行清除。该策略可以立即清除过期的数据，对内存很友好；但是会占用大量的CPU资源去处理过期的数据，从而影响缓存的响应时间和吞吐量。</p>
+<h3 id="惰性过期"><a href="#惰性过期" class="headerlink" title="惰性过期"></a>惰性过期</h3><p>只有当访问一个key时，才会判断该key是否已过期，过期则清除。该策略可以最大化地节省CPU资源，却对内存非常不友好。极端情况可能出现大量的过期key没有再次被访问，从而不会被清除，占用大量内存。</p>
+<h3 id="定期过期"><a href="#定期过期" class="headerlink" title="定期过期"></a>定期过期</h3><p>每隔一定的时间，会扫描一定数量的数据库的expires字典中一定数量的key，并清除其中已过期的key。该策略是前两者的一个折中方案。通过调整定时扫描的时间间隔和每次扫描的限定耗时，可以在不同情况下使得CPU和内存资源达到最优的平衡效果。expires字典会保存所有设置了过期时间的key的过期时间数据，其中，key是指向键空间中的某个键的指针，value是该键的毫秒精度的UNIX时间戳表示的过期时间。键空间是指该Redis集群中保存的所有键。</p>
+<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><p>Redis中同时使用了惰性过期和定期过期两种过期策略。<br>假设Redis当前存放30万个key，并且都设置了过期时间，如果你每隔100ms就去检查这全部的key，CPU负载会特别高，最后可能会挂掉。<br>因此，redis采取的是定期过期，每隔100ms就随机抽取一定数量的key来检查和删除的。但是呢，最后可能会有很多已经过期的key没被删除。这时候，redis采用惰性删除。在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间并且已经过期了，此时就会删除。<br>但是，如果定期删除漏掉了很多过期的key，然后也没走惰性删除。就会有很多过期key积在内存内存，直接会导致内存爆的。或者有些时候，业务量大起来了，redis的key被大量使用，内存直接不够了，运维也忘记加大内存了。难道redis直接这样挂掉？不会的！Redis用8种内存淘汰策略保护自己~</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iR8EgI9-p-BXjJEfTs3G7Q">Redis过期key删除，那些不得不说的事情</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qJt0B9p0GeUkekK15xL-jw">Redis的过期数据会被立马删除么？</a></li>
+</ul>
+<h2 id="Redis内存淘汰策略"><a href="#Redis内存淘汰策略" class="headerlink" title="Redis内存淘汰策略"></a>Redis内存淘汰策略</h2><ol>
+<li><strong>volatile-lru（least recently used）</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰(当内存不足以容纳新写入数据时，从设置了过期时间的key中使用LRU（最近最少使用）算法进行淘汰)</li>
+<li><strong>volatile-ttl</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰(当内存不足以容纳新写入数据时，在设置了过期时间的key中，根据过期时间进行淘汰，越早过期的优先被淘汰)</li>
+<li><strong>volatile-random</strong>：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰(当内存不足以容纳新写入数据时，从设置了过期时间的key中，随机淘汰数据)</li>
+<li><strong>allkeys-lru（least recently used）</strong>：当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key（这个是最常用的）(当内存不足以容纳新写入数据时，从所有key中使用LRU（最近最少使用）算法进行淘汰)</li>
+<li><strong>allkeys-random</strong>：从数据集（server.db[i].dict）中任意选择数据淘汰(当内存不足以容纳新写入数据时，从所有key中随机淘汰数据)</li>
+<li><strong>no-eviction</strong>：禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。这个应该没人使用吧！(默认策略，当内存不足以容纳新写入数据时，新写入操作会报错)</li>
+</ol>
+<p>4.0版本后增加以下两种：</p>
+<ol>
+<li><strong>volatile-lfu（least frequently used）</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选最不经常使用的数据淘汰(当内存不足以容纳新写入数据时，在过期的key中，使用LFU（最少访问算法）进行删除key。)</li>
+<li><strong>allkeys-lfu（least frequently used）</strong>：当内存不足以容纳新写入数据时，在键空间中，移除最不经常使用的key(当内存不足以容纳新写入数据时，从所有key中使用LFU算法进行淘汰)</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-kKe_ss01CkLMRERyyjt1Q">Redis内存满了怎么办？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YqkVmIaDRV31-WrcW8K26g">内存耗尽后Redis会发生什么？</a></li>
+</ul>
+<h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h3 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h3><p><strong>AOF（append only file）</strong>持久化，采用日志的形式来记录每个写操作，追加到AOF文件的末尾。Redis默认情况是不开启AOF的。重启时再重新执行AOF文件中的命令来恢复数据。它主要解决数据持久化的实时性问题。AOF是执行完命令后才记录日志的。为什么不先记录日志再执行命令呢？这是因为Redis在向AOF记录日志时，不会先对这些命令进行语法检查，如果先记录日志再执行命令，日志中可能记录了错误的命令，Redis使用日志回复数据时，可能会出错。正是因为执行完命令后才记录日志，所以不会阻塞当前的写操作。但是会存在两个风险：更执行完命令还没记录日志时，宕机了会导致数据丢失,AOF不会阻塞当前命令，但是可能会阻塞下一个操作。这两个风险最好的解决方案是折中</p>
+<h4 id="妙用AOF机制的三种写回策略-appendfsync-："><a href="#妙用AOF机制的三种写回策略-appendfsync-：" class="headerlink" title="妙用AOF机制的三种写回策略(appendfsync)："></a>妙用AOF机制的三种写回策略(appendfsync)：</h4><ul>
+<li>always:同步写回，每个子命令执行完，都立即将日志写回磁盘。</li>
+<li>everysec:每个命令执行完，只是先把日志写到AOF内存缓冲区，每隔一秒同步到磁盘。</li>
+<li>no:只是先把日志写到AOF内存缓冲区，有操作系统去决定何时写入磁盘。</li>
+</ul>
+<p>always同步写回，可以基本保证数据不丢失，no策略则性能高但是数据可能会丢失，一般可以考虑折中选择everysec。如果接受的命令越来越多，AOF文件也会越来越大，文件过大还是会带来性能问题。日志文件过大怎么办呢？AOF重写机制！就是随着时间推移，AOF文件会有一些冗余的命令如：无效命令、过期数据的命令等等，AOF重写机制就是把它们合并为一个命令（类似批处理命令），从而达到精简压缩空间的目的。</p>
+<h4 id="AOF重写会阻塞嘛？"><a href="#AOF重写会阻塞嘛？" class="headerlink" title="AOF重写会阻塞嘛？"></a>AOF重写会阻塞嘛？</h4><p>AOF日志是由主线程会写的，而重写则不一样，重写过程是由后台子进程bgrewriteaof完成。</p>
+<h4 id="AOF优缺点"><a href="#AOF优缺点" class="headerlink" title="AOF优缺点"></a>AOF优缺点</h4><ul>
+<li>AOF的优点：数据的一致性和完整性更高，秒级数据丢失。</li>
+<li>AOF的缺点：相同的数据集，AOF文件体积大于RDB文件。数据恢复也比较慢。</li>
+</ul>
+<h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>因为AOF持久化方式，如果操作日志非常多的话，Redis恢复就很慢。有没有在宕机快速恢复的方法呢，有的，RDB！<strong>RDB</strong>，就是把内存数据以快照的形式保存到磁盘上。和AOF相比，它记录的是某一时刻的数据，，并不是操作。什么是快照?可以这样理解，给当前时刻的数据，拍一张照片，然后保存下来。RDB持久化，是指在指定的时间间隔内，执行指定次数的写操作，将内存中的数据集快照写入磁盘中，它是Redis默认的持久化方式。执行完操作后，在指定目录下会生成一个dump.rdb文件，Redis重启的时候，通过加载dump.rdb文件来恢复数据。RDB触发机制主要有以下几种：</p>
+<ol>
+<li>手动触发<br>save(同步，会阻塞当前redis服务器)bgsave(异步，redis执行fork操作创建子进程)</li>
+<li>自动触发(save m n)m秒内数据集存在n次修改时，自动触发bgsave</li>
+</ol>
+<p>RDB通过bgsave命令的执行全量快照，可以避免阻塞主线程。basave命令会fork一个子进程，然后该子进程会负责创建RDB文件，而服务器进程会继续处理命令。请求快照时，数据能修改嘛？Redis接入操作系统的写时复制技术（copy-on-write，COW）,在执行快照的同时，正常处理写操作。虽然bgsave执行不会阻塞主线程，但是频繁执行全量快照也会带来性能开销。比如bgsave子进程需要通过fork操作从主线程创建出来，创建后不会阻塞主线程，但是创建过程是会阻塞主线程的。可以做增量快照。</p>
+<h4 id="RDB优缺点"><a href="#RDB优缺点" class="headerlink" title="RDB优缺点"></a>RDB优缺点</h4><ul>
+<li>RDB的优点：与AOF相比，恢复大数据集的时候会更快，它适合大规模的数据恢复场景，如备份，全量复制等</li>
+<li>RDB的缺点：没办法做到实时持久化&#x2F;秒级持久化。<br>Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频率执行，两次快照之间，再使用AOF记录这期间的所有命令操作。</li>
+</ul>
+<h3 id="如何选择RDB和AOF"><a href="#如何选择RDB和AOF" class="headerlink" title="如何选择RDB和AOF"></a>如何选择RDB和AOF</h3><p>如果数据不能丢失，RDB和AOF混用<br>如果只作为缓存使用，可以承受几分钟的数据丢失的话，可以只使用RDB。<br>如果只使用AOF，优先使用everysec的写回策略。</p>
+<h4 id="混合持久化"><a href="#混合持久化" class="headerlink" title="混合持久化"></a>混合持久化</h4><p>既然RDB与AOF持久化都存在各自的缺点，那么有没有一种更好的持久化方式？<br>接下来要介绍的是混合持久化。其实就是RDB与AOF的混合模式，这是Redis4之后新增的。</p>
+<ol>
+<li>持久化方式<br>混合持久化是通过aof-use-rdb-preamble参数来开启的。它的操作方式是这样的，在写入的时候先把数据以RDB的形式写入文件的开头，再将后续的写命令以AOF的格式追加到文件中。这样既能保证数据恢复时的速度，同时又能减少数据丢失的风险。</li>
+<li>文件恢复<br>那么混合持久化中是如何来进行数据恢复的呢？在Redis重启时，先加载RDB的内容，然后再重放增量AOF格式命令。这样就避免了AOF持久化时的全量加载，从而使加载速率得到大幅提升。</li>
+</ol>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SVbVwHOAwL1RX0fa-rYGxg">同样是持久化，竟然有这么大的差别！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/G3ct5tWox5Qt4tLUDEpRuw">如何让Redis更持久</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RxhaZFnMAf7bAgYUtTGLuA">Redis宕机，数据丢了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/q7KEOA2Dy2Q5QpDX8FkPjg">小伙用12张图讲明白了Redis持久化！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5IBOKcoBxVoGSMrn3vBGOw">彻底理解Redis的持久化和主从复制</a></li>
+</ul>
+<h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h3><p>主从模式中，一旦主节点由于故障不能提供服务，需要人工将从节点晋升为主节点，同时还要通知应用方更新主节点地址。显然，多数业务场景都不能接受这种故障处理方式。Redis从2.8开始正式提供了Redis Sentinel（哨兵）架构来解决这个问题。<br><strong>哨兵模式</strong>，由一个或多个Sentinel实例组成的Sentinel系统，它可以监视所有的Redis主节点和从节点，并在被监视的主节点进入下线状态时，自动将下线主服务器属下的某个从节点升级为新的主节点。但是呢，一个哨兵进程对Redis节点进行监控，就可能会出现问题（单点问题），因此，可以使用多个哨兵来进行监控Redis节点，并且各个哨兵之间还会进行监控。<br>简单来说，哨兵模式就三个作用：</p>
+<ul>
+<li>发送命令，等待Redis服务器（包括主服务器和从服务器）返回监控其运行状态；</li>
+<li>哨兵监测到主节点宕机，会自动将从节点切换成主节点，然后通过发布订阅模式通知其他的从节点，修改配置文件，让它们切换主机；</li>
+<li>哨兵之间还会相互监控，从而达到高可用。</li>
+</ul>
+<h4 id="故障切换的过程是怎样的呢"><a href="#故障切换的过程是怎样的呢" class="headerlink" title="故障切换的过程是怎样的呢"></a>故障切换的过程是怎样的呢</h4><p>假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为主观下线。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为客观下线。这样对于客户端而言，一切都是透明的。</p>
+<p>哨兵的工作模式如下：<br>每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他Sentinel实例发送一个PING命令。<br>如果一个实例（instance）距离最后一次有效回复PING命令的时间超过down-after-milliseconds选项所指定的值，则这个实例会被Sentinel标记为主观下线。如果一个Master被标记为主观下线，则正在监视这个Master的所有Sentinel要以每秒一次的频率确认Master的确进入了主观下线状态。当有足够数量的Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态，则Master会被标记为客观下线。在一般情况下，每个Sentinel会以每10秒一次的频率向它已知的所有Master，Slave发送INFO命令。<br>当Master被Sentinel标记为客观下线时，Sentinel向下线的Master的所有Slave发送INFO命令的频率会从10秒一次改为每秒一次，若没有足够数量的Sentinel同意Master已经下线，Master的客观下线状态就会被移除；若Master重新向Sentinel的PING命令返回有效回复，Master的主观下线状态就会被移除。</p>
+<h3 id="Cluster集群"><a href="#Cluster集群" class="headerlink" title="Cluster集群"></a>Cluster集群</h3><p>哨兵解决和主从不能自动故障恢复的问题，但是同时也存在难以扩容以及单机存储、读写能力受限的问题，并且集群之前都是一台redis都是全量的数据，这样所有的redis都冗余一份，就会大大消耗内存空间。集群模式实现了Redis数据的分布式存储，实现数据的分片，每个redis节点存储不同的内容，并且解决了在线的节点收缩（下线）和扩容（上线）问题。集群模式真正意义上实现了系统的高可用和高性能，但是集群同时进一步使系统变得越来越复杂，接下来我们来详细的了解集群的运作原理。</p>
+<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PA31mNTzlQ2EGYEXfWagXQ">Redis主库宕机如何快速恢复</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494325&idx=1&sn=0458cd40672c1f3918efb47963e56c9c&source=41#wechat_redirect">Redis官方的高可用性解决方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BPcis9rPiWosFid5w0M40A">一文把Redis主从复制、哨兵、Cluster三种模式摸透</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/U_5Tla4_XzlJsq3uRI2ifA">Redis主从、哨兵、Cluster集群一锅端！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I3GimkIf27DL1uRqxImKWA">Redis的主从复制是如何做的？复制过程中也会产生各种问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oRcOPBHwbimFak6CtooHEg">Redis中主、从库宕机如何恢复？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NEUdCfRtHma3mkJqFKym5A">Redis高可用篇：你管这叫主从架构数据同步原理？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZXz2IzbQjQJzCq_hkpkuEg">如何从0到1构建一个稳定、高性能的Redis集群？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Po85M418zvos3pHev2q0Tg">4种Redis集群方案介绍+优缺点对比</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M1RymGVUqhQG0KnKupnDXQ">详细剖析Redis三种集群策略</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/m9K6acUUc41j44b8zPh28w">一文掌握，单机Redis、哨兵和Redis Cluster的搭建</a></li>
+</ul>
+<h2 id="阿里官方Redis开发规范"><a href="#阿里官方Redis开发规范" class="headerlink" title="阿里官方Redis开发规范"></a>阿里官方Redis开发规范</h2><h3 id="键值设计"><a href="#键值设计" class="headerlink" title="键值设计"></a>键值设计</h3><ol>
+<li>key名设计</li>
+</ol>
+<ul>
+<li>可读性和可管理性<br>以业务名(或数据库名)为前缀(防止key冲突)，用冒号分隔，比如业务名:表名:id - ugc:video:1</li>
+<li>简洁性<br>保证语义的前提下，控制key的长度，当key较多时，内存占用也不容忽视，例如：user:{uid}:friends:messages:{mid}简化为u:{uid}:fr:m:{mid}。<br>不要包含特殊字符<br>反例：包含空格、换行、单双引号以及其他转义字符</li>
+</ul>
+<ol start="2">
+<li>value设计<br>拒绝bigkey<br>防止网卡流量、慢查询，string类型控制在10KB以内，hash、list、set、zset元素个数不要超过5000。<br>反例：一个包含200万个元素的list。<br>非字符串的bigkey，不要使用del删除，使用hscan、sscan、zscan方式渐进式删除，同时要注意防止bigkey过期时间自动删除问题(例如一个200万的zset设置1小时过期，会触发del操作，造成阻塞，而且该操作不会不出现在慢查询中(latency可查))，查找方法和删除方法<br>选择适合的数据类型<br>例如：实体类型(要合理控制和使用数据结构内存编码优化配置,例如ziplist，但也要注意节省内存和性能之间的平衡)<br>反例：<br>set user:1:name tomset user:1:age 19set user:1:favor football<br>正例：<br>hmset user:1 name tom age 19 favor football<br>控制key的生命周期<br>redis不是垃圾桶，建议使用expire设置过期时间(条件允许可以打散过期时间，防止集中过期)，不过期的数据重点关注idletime。</li>
+</ol>
+<h3 id="命令使用"><a href="#命令使用" class="headerlink" title="命令使用"></a>命令使用</h3><ol>
+<li>O(N)命令关注N的数量<br>例如hgetall、lrange、smembers、zrange、sinter等并非不能使用，但是需要明确N的值。有遍历的需求可以使用hscan、sscan、zscan代替。</li>
+<li>禁用命令<br>禁止线上使用keys、flushall、flushdb等，通过redis的rename机制禁掉命令，或者使用scan的方式渐进式处理。</li>
+<li>合理使用select<br>redis的多数据库较弱，使用数字进行区分，很多客户端支持较差，同时多业务用多数据库实际还是单线程处理，会有干扰。</li>
+<li>使用批量操作提高效率<br>原生命令：例如mget、mset。非原生命令：可以使用pipeline提高效率。但要注意控制一次批量操作的元素个数(例如500以内，实际也和元素字节数有关)。<br>注意两者不同：原生是原子操作，pipeline是非原子操作。pipeline可以打包不同的命令，原生做不到,pipeline需要客户端和服务端同时支持。</li>
+<li>不建议过多使用Redis事务功能<br>Redis的事务功能较弱(不支持回滚)，而且集群版本(自研和官方)要求一次事务操作的key必须在一个slot上(可以使用hashtag功能解决)</li>
+<li>Redis集群版本在使用Lua上有特殊要求<br>①所有key都应该由KEYS数组来传递，redis.call&#x2F;pcall里面调用的redis命令，key的位置，必须是KEYS array,否则直接返回error，”-ERR bad lua script for redis cluster, all the keys that the script uses should be passed using the KEYS arrayrn”<br>②所有key，必须在1个slot上，否则直接返回error, “-ERR eval&#x2F;evalsha command keys must in same slotrn”</li>
+<li>monitor命令<br>必要情况下使用monitor命令时，要注意不要长时间使用。</li>
+</ol>
+<h3 id="客户端使用"><a href="#客户端使用" class="headerlink" title="客户端使用"></a>客户端使用</h3><ol>
+<li><p>避免多个应用使用一个Redis实例:不相干的业务拆分，公共数据做服务化。</p>
+</li>
+<li><p>使用连接池:可以有效控制连接，同时提高效率，标准使用方式：<br>执行命令如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+    jedis <span class="token operator">=</span> jedisPool<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//具体的命令</span>
+    jedis<span class="token punctuation">.</span><span class="token function">executeCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    logger<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"op key &#123;&#125; error: "</span> <span class="token operator">+</span> e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> key<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//注意这里不是关闭连接，在JedisPool模式下，Jedis会被归还给资源池。</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>jedis <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>熔断功能:高并发下建议客户端添加熔断功能(例如netflix hystrix)</p>
+</li>
+<li><p>合理的加密:设置合理的密码，如有必要可以使用SSL加密访问（阿里云Redis支持）</p>
+</li>
+<li><p>淘汰策略<br>根据自身业务类型，选好maxmemory-policy(最大内存淘汰策略)，设置好过期时间。<br>默认策略是volatile-lru，即超过最大内存后，在过期键中使用lru算法进行key的剔除，保证不过期数据不被删除，但是可能会出现OOM问题。<br>其他策略如下：<br>allkeys-lru：根据LRU算法删除键，不管数据有没有设置超时属性，直到腾出足够空间为止。<br>allkeys-random：随机删除所有键，直到腾出足够空间为止。<br>volatile-random:随机删除过期键，直到腾出足够空间为止。<br>volatile-ttl：根据键值对象的ttl属性，删除最近将要过期数据。如果没有，回退到noeviction策略。<br>noeviction：不会剔除任何数据，拒绝所有写入操作并返回客户端错误信息”(error) OOM command not allowed when used memory”，此时Redis只响应读操作。</p>
+</li>
+</ol>
+<h3 id="相关工具"><a href="#相关工具" class="headerlink" title="相关工具"></a>相关工具</h3><ol>
+<li>数据同步:redis间数据同步可以使用：redis-port</li>
+<li>big key搜索:redis大key搜索工具</li>
+<li>热点key寻找<br>内部实现使用monitor，所以建议短时间使用facebook的redis-faina 阿里云Redis已经在内核层面解决热点key问题</li>
+</ol>
+<h3 id="删除bigkey"><a href="#删除bigkey" class="headerlink" title="删除bigkey"></a>删除bigkey</h3><p>下面操作可以使用pipeline加速。<br>redis4.0已经支持key的异步删除，欢迎使用。</p>
+<ol>
+<li>Hash删除: hscan + hdel</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delBigHash</span><span class="token punctuation">(</span><span class="token class-name">String</span> host<span class="token punctuation">,</span> <span class="token keyword">int</span> port<span class="token punctuation">,</span> <span class="token class-name">String</span> password<span class="token punctuation">,</span> <span class="token class-name">String</span> bigHashKey<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>password <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">auth</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">ScanParams</span> scanParams <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ScanParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> cursor <span class="token operator">=</span> <span class="token string">"0"</span><span class="token punctuation">;</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ScanResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Entry</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> scanResult <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">hscan</span><span class="token punctuation">(</span>bigHashKey<span class="token punctuation">,</span> cursor<span class="token punctuation">,</span> scanParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Entry</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> entryList <span class="token operator">=</span> scanResult<span class="token punctuation">.</span><span class="token function">getResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>entryList <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>entryList<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Entry</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> entry <span class="token operator">:</span> entryList<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                jedis<span class="token punctuation">.</span><span class="token function">hdel</span><span class="token punctuation">(</span>bigHashKey<span class="token punctuation">,</span> entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        cursor <span class="token operator">=</span> scanResult<span class="token punctuation">.</span><span class="token function">getStringCursor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token string">"0"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>cursor<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//删除bigkey</span>
+    jedis<span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span>bigHashKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
+<li>List删除: ltrim</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delBigList</span><span class="token punctuation">(</span><span class="token class-name">String</span> host<span class="token punctuation">,</span> <span class="token keyword">int</span> port<span class="token punctuation">,</span> <span class="token class-name">String</span> password<span class="token punctuation">,</span> <span class="token class-name">String</span> bigListKey<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>password <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">auth</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">long</span> llen <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">llen</span><span class="token punctuation">(</span>bigListKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> left <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>counter <span class="token operator">&lt;</span> llen<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//每次从左侧截掉100个</span>
+        jedis<span class="token punctuation">.</span><span class="token function">ltrim</span><span class="token punctuation">(</span>bigListKey<span class="token punctuation">,</span> left<span class="token punctuation">,</span> llen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        counter <span class="token operator">+=</span> left<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//最终删除key</span>
+    jedis<span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span>bigListKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>Set删除: sscan + srem</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delBigSet</span><span class="token punctuation">(</span><span class="token class-name">String</span> host<span class="token punctuation">,</span> <span class="token keyword">int</span> port<span class="token punctuation">,</span> <span class="token class-name">String</span> password<span class="token punctuation">,</span> <span class="token class-name">String</span> bigSetKey<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>password <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">auth</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">ScanParams</span> scanParams <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ScanParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> cursor <span class="token operator">=</span> <span class="token string">"0"</span><span class="token punctuation">;</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ScanResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> scanResult <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">sscan</span><span class="token punctuation">(</span>bigSetKey<span class="token punctuation">,</span> cursor<span class="token punctuation">,</span> scanParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> memberList <span class="token operator">=</span> scanResult<span class="token punctuation">.</span><span class="token function">getResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>memberList <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>memberList<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">String</span> member <span class="token operator">:</span> memberList<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                jedis<span class="token punctuation">.</span><span class="token function">srem</span><span class="token punctuation">(</span>bigSetKey<span class="token punctuation">,</span> member<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        cursor <span class="token operator">=</span> scanResult<span class="token punctuation">.</span><span class="token function">getStringCursor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token string">"0"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>cursor<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//删除bigkey</span>
+    jedis<span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span>bigSetKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="4">
+<li>SortedSet删除:zscan + zrem</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delBigZset</span><span class="token punctuation">(</span><span class="token class-name">String</span> host<span class="token punctuation">,</span> <span class="token keyword">int</span> port<span class="token punctuation">,</span> <span class="token class-name">String</span> password<span class="token punctuation">,</span> <span class="token class-name">String</span> bigZsetKey<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>password <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">auth</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">ScanParams</span> scanParams <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ScanParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> cursor <span class="token operator">=</span> <span class="token string">"0"</span><span class="token punctuation">;</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ScanResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple</span><span class="token punctuation">></span></span> scanResult <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">zscan</span><span class="token punctuation">(</span>bigZsetKey<span class="token punctuation">,</span> cursor<span class="token punctuation">,</span> scanParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple</span><span class="token punctuation">></span></span> tupleList <span class="token operator">=</span> scanResult<span class="token punctuation">.</span><span class="token function">getResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>tupleList <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>tupleList<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Tuple</span> tuple <span class="token operator">:</span> tupleList<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                jedis<span class="token punctuation">.</span><span class="token function">zrem</span><span class="token punctuation">(</span>bigZsetKey<span class="token punctuation">,</span> tuple<span class="token punctuation">.</span><span class="token function">getElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        cursor <span class="token operator">=</span> scanResult<span class="token punctuation">.</span><span class="token function">getStringCursor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token string">"0"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>cursor<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//删除bigkey</span>
+    jedis<span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span>bigZsetKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/531067">阿里云Redis开发规范</a></p>
+</blockquote>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/blog/about" rel="external nofollow noreferrer">xmxe</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://xmxe.gitee.io/blog/posts/a31926113ddc/">https://xmxe.gitee.io/blog/posts/a31926113ddc/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/blog/about" target="_blank">xmxe</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/blog/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/blog/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        
+                            <img src="/blog/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        
+                    </div>
+                    <div id="wechat">
+                        
+                            <img src="/blog/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/blog/posts/56b099421a97/">
+                    <div class="card-image">
+                        
+                        <img src="https://picd.zhimg.com/v2-f9c4c6b8a4b0f096032990926e1f0a1a_1440w.jpg" class="responsive-img" alt="Spring Security介绍">
+                        
+                        <span class="card-title">Spring Security介绍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+github地址
+
+HttpSecurity常用方法
+
+
+HttpSecurity常用方法
+说明
+
+
+
+openidLogin()
+用于基于OpenId的验证
+
+
+headers()
+将安全标头添加到响应
+
+
+cors()
+配置跨域资源共
+                        
+
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-16
+                            -->
+
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/blog/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/blog/categories/Spring/" class="post-category">
+                                        Spring
+                                    </a>
+                                
+                            
+
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog/posts/8c045b869342/">
+                    <div class="card-image">
+                        
+                        <img src="https://picd.zhimg.com/v2-06d026cb3aaade2aa5380ee31d099a85_1440w.jpg" class="responsive-img" alt="Oauth2">
+                        
+                        <span class="card-title">Oauth2</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            demo
+fork from oauth2-samples
+
+
+
+
+Demo
+文章
+
+
+
+authorization_code
+这个案例写出来，还怕跟面试官扯不明白OAuth2登录流程？
+
+
+client_credentials
+死磕OAu
+                        
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-15
+                            -->
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/blog/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                        技术栈
+                                    </a>
+                                
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5, h6'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5, h6').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/blog/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/blog/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2023
+                </span>
+            
+            
+
+            <a href="/blog/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/blog/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/blog/medias/wechat.jpg");
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 200px;
+    height: 200px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/blog/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/blog/libs/materialize/materialize.min.js"></script>
+    <script src="/blog/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/blog/libs/aos/aos.js"></script>
+    <script src="/blog/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/blog/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/blog/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/blog/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/blog/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

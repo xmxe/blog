@@ -1,0 +1,4 @@
+---
+title: imghost
+layout: "galleries"
+---

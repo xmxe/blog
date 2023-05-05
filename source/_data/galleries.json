@@ -1,0 +1,45 @@
+[
+    {
+      "description": "收集图床照片",
+      "name": "imghost",
+      "cover": "https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg",
+      "photos": [
+        "https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg",
+        "https://pic2.zhimg.com/v2-7de23a78e4931770d2606cb99a6eab31_r.jpg",
+        "https://pic3.zhimg.com/v2-5575876cc5000976567da583583c87ca_r.jpg",
+        "https://pic3.zhimg.com/v2-5bcde8862e76568efad97b4c3717bb5a_r.jpg",
+        "https://pic2.zhimg.com/v2-b298d8f15b405d7cbbdf81bcd325cb59_r.jpg",
+        "https://pic2.zhimg.com/v2-b43a58fbbc249d3fcc278e9b3a70ace1_r.jpg",
+        "https://pic1.zhimg.com/v2-e4a868961c59346446a84beebcc7b628_r.jpg",
+        "https://pic3.zhimg.com/v2-151f8f85c33a5e04450692886555b55e_r.jpg",
+        "https://pic4.zhimg.com/v2-a2b53d3b2b898155a28106a5e8152b13_r.jpg",
+        "https://pic3.zhimg.com/v2-6a1c351462089ec5c6f1635adc72d1b8_r.jpg",
+        "https://pic3.zhimg.com/v2-5edaf1986a5f9491ee49bcc01cd568d8_1440w.jpg"
+      ],
+      "local": [
+        "medias/featureimages/0.jpg",
+        "medias/featureimages/1.jpg",
+        "medias/featureimages/2.jpg"
+      ]
+    },
+
+    {
+      "description": "壁纸",
+      "name": "wallpaper",
+      "cover": "medias/wallpaper/1.jpg",
+      "photos": [
+        
+      ],
+      "local": [
+        "medias/wallpaper/0.jpg",
+        "medias/wallpaper/1.jpg",
+        "medias/wallpaper/2.jpg",
+        "medias/wallpaper/3.jpg",
+        "medias/wallpaper/4.jpg",
+        "medias/wallpaper/5.jpg",
+        "medias/wallpaper/6.jpg",
+        "medias/wallpaper/7.jpg",
+        "medias/wallpaper/8.jpg"
+      ]
+    }
+  ]

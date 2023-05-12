@@ -18,7 +18,6 @@ git commit -m "init"
 git remote add origin https://github.com/xmxe/project.git
 # 断开连接
 git remote remove origin
-
 # 增加一个新的远程仓库
 #git remote add name url
 # 删除指定远程仓库
@@ -58,14 +57,12 @@ git reset HEAD
 git reset --hard  
 # 重置Commit代码和远程分支代码一样
 git reset --hard origin/master
-# 回退到上个commit
+# 回退到上个commit 删除工作空间改动代码，撤销commit，撤销git add
 git reset --hard HEAD^
 # 回退到前3次提交之前，以此类推，回退到n次提交之前
 git reset --hard HEAD~3
 # 撤销git add操作（已经将文件添加到暂存区）不加filename就是上一次add里面的全部撤销了
 git reset HEAD filename
-# 回退到上一个版本，删除工作空间改动代码，撤销commit，撤销git add
-git reset --hard HEAD^
 # 回退到指定版本 --hard强制将暂存区和工作目录都同步到你指定的提交
 git reset --hard commitid
 # 不删除工作空间改动代码，撤销commit，不撤销git add
@@ -79,8 +76,7 @@ git reset --mixed HEAD^
 > 应用场景：有一天测试突然跟你说，你开发上线的功能有问题，需要马上撤回，否则会影响到系统使用。这时可能会想到用reset回退，可是你看了看分支上最新的提交还有其他同事的代码，用reset会把这部分代码也撤回了。由于情况紧急，又想不到好方法，还是任性的使用reset，然后再让同事把他的代码合一遍（同事听到想打人），于是你的技术形象在同事眼里一落千丈
 
 ```shell
-# 回退到指定版本。与git reset --hard commitid相比区别是在我们确认了在需要回退的版本之后的提交都可以不需要的时候，我们可以直接使用git reset命令，但是当我们只是需要撤销某个版本的时候，后面的提交还需要保留，我们就可以使用git revert
-# revert会生成一条新的提交记录，这时会让你编辑提交信息，编辑完后:wq保存退出就好了。-n/--no edit：这个选项不会打开文本编辑器。它将直接恢复上次的提交。
+# 回退到指定版本。与git reset --hard commitid相比区别是在我们确认了在需要回退的版本之后的提交都可以不需要的时候，我们可以直接使用git reset命令，但是当我们只是需要撤销某个版本的时候，后面的提交还需要保留，我们就可以使用git revert.revert会生成一条新的提交记录，这时会让你编辑提交信息，编辑完后:wq保存退出就好了。-n/--no edit：这个选项不会打开文本编辑器。它将直接恢复上次的提交。
 git revert -n commitid
 # 撤销前一次commit ,此次操作之前和之后的commit都会被保留，并且会把这次撤销作为一次最新的提交
 git revert HEAD
@@ -108,14 +104,15 @@ git commit --amend --author="name <email>" --no-edit
 git add -A # 保存所有的修改
 git add . # 保存新的添加和修改，但是不包括删除
 git add -u # 保存修改和删除，但是不包括新建文件。
-
 ```
 
 #### git branch
 
 ```shell
-# 查看分支
+# 查看本地分支(不包括远程分支)
 git branch
+# 查看远程分支
+git branch -a
 # 列出本地所有分支 并显示最后一次提交的哈希值
 git branch -v
 # 在-v的基础上 并且显示上游分支的名字
@@ -147,6 +144,15 @@ git branch -m master 2021.x
 git fetch origin
 git branch -u origin/2021.x 2021.x
 git remote set-head origin -a
+
+# 下载所有分支
+# git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用git checkout 分支名来下载其他分支
+# 如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。
+git clone --bare https://github.com/xx/project.git .git
+# 或者git config --unset core.bare
+git config --bool core.bare false
+# 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了
+git reset --hard
 ```
 
 #### git checkout
@@ -168,6 +174,22 @@ git checkout . && git clean -df
 git checkout develop && git merge feature
 # 将某个文件回滚到某个版本
 git checkout commitid [file]
+
+# 删除历史提交记录
+# 创建孤立分支,没有以前的提交记录
+git checkout --orphan <name>
+# 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称
+git checkout --orphan latest_branch
+# 暂存所有改动过的文件，内容为当前旧分支的最新版本所有文件
+git add -A
+#提交更改
+git commit -am "commit message"
+#删除原始主分支
+git branch -D main
+#将当前分支重命名为 main
+git branch -m main
+#最后，强制更新您的存储库
+git push -f origin main
 ```
 #### git merge&git rebase
 

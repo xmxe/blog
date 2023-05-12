@@ -1345,6 +1345,11 @@ Java8中，锁粒度更细，synchronized只锁定当前链表或红黑二叉树
 1. 每个锁控制的是一段，当分段很多，并且加锁的分段不连续的时候，内存空间的浪费比较严重。
 2. 如果某个分段特别的大，那么就会影响效率，耽误时间。
 
+### HashMap可以存null，ConcurrentHashMap不可以，为什么？
+
+关于这个问题，其实最有发言权的就是ConcurrentHashMap的作者——Doug Lea
+ConcurrentMap(如ConcurrentHashMap、ConcurrentSkipListMap)不允许使用null值的主要原因是在非并发的Map中(如HashMap)是可以容忍模糊性(二义性)的，而在并发Map中是无法容忍的。假如说，所有的Map都支持null的话，那么map.get(key)就可以返回null，但是这时候就会存在一个不确定性，当你拿到null的时候，你是不知道他是因为本来就存了一个null进去还是说就是因为没找到而返回了null。在HashMap中，因为它的设计就是给单线程用的，所以当我们map.get(key)返回null的时候，我们是可以通过map.contains(key)检查来进行检测的，如果它返回true，则认为是存了一个null，否则就是因为没找到而返回了null。但是像ConcurrentHashMap，它是为并发而生的，它是要用在并发场景中的，当我们map.get(key)返回null的时候，是没办法通过通过map.contains(key)检查来准确的检测，因为在检测过程中可能会被其他线程锁修改，而导致检测结果并不可靠。所以，为了让ConcurrentHashMap的语义更加准确，不存在二义性的问题，他就不支持null。
+
 ### ConcurrentHashMap相关文章
 - [那些年你啃过的ConcurrentHashMap](https://mp.weixin.qq.com/s/ufoKhs4VRXhE8_PT2rXoeg)
 - [面试必问之ConcurrentHashMap线程安全的具体实现方式](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491116&idx=1&sn=30ee6196266dab2cbf46cf7f98d99120&source=41#wechat_redirect)

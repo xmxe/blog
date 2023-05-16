@@ -172,7 +172,7 @@ socialLink:
   twitter: # https://twitter.com/xxx
   qq: 
   wechat: 
-    - medias/wechat.jpg # 桌面设备展示二维码
+    - medias/xcx.png # 桌面设备展示二维码
     - 464817304 # 移动设备展示微信号
   weibo: # https://weibo.com/xxx
   zhihu: # https://www.zhihu.com/xxx

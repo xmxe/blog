@@ -156,7 +156,7 @@ restful_api:
   use_tag_slug: true      # Use slug for filename of tag data
   post: true               # 文章数据
   pages: false             # 额外的Hexo页面数据, 如About
-  swipers_list: ['JVM知识点','Spring中的Bean对象','Spring相关']          # 生成指定的页面信息,填写你文章文件夹名称比如['css','js']，不加后缀名,主要用于轮播图api
+  swipers_list: ['JVM知识点','Spring中的Bean对象','JWT-Json Web Token','ZooKeeper']          # 生成指定的页面信息,填写你文章文件夹名称比如['css','js']，不加后缀名,主要用于轮播图api
   search_all:
     enable: true   # 默认开启
     path: api/search.json

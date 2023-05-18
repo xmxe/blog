@@ -1299,7 +1299,68 @@ b<span class="token punctuation">.</span><span class="token function">getTitle</
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//Boy &#123; name: 'person', sex: '男', title: 'boy' &#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="spread运算符"><a href="#spread运算符" class="headerlink" title="spread运算符"></a>spread运算符</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 插入数组：</span>
+<span class="token comment">// 看看如下代码，不使用扩展语法：</span>
+<span class="token keyword">var</span> mid <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> mid<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// [1, 2, [3, 4] , 5, 6]</span>
+<span class="token comment">// 上面这段代码将得到一个嵌套数组的数组。大部分情况，我们希望一个array（mid）展开后再插入到另一个array（arr）中。</span>
+<span class="token comment">// 使用spread操作符我们可以这样：</span>
+<span class="token keyword">var</span> mid <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token operator">...</span>mid<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1，2，3，4，5，6]</span>
 
+<span class="token comment">// 展开数组作为参数</span>
+<span class="token comment">// 当一个函数接收多个参数，比如Math.max，当我们有一个数组需要找到你了的最大值，我们可以使用如下代码进行调用。</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">max</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 8</span>
+
+<span class="token comment">// 如果这时候使用spread运算符会变得非常方便。</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> max <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token operator">...</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>max<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 8</span>
+
+<span class="token comment">// 复制数组</span>
+<span class="token comment">// 用数组给新数组赋值只是获取到数组引用，并没有达到深复制的效果。</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> arr<span class="token punctuation">;</span>
+arr2<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'d'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// ["a", "b", "c", "d"]</span>
+
+<span class="token comment">// 有多重方法可以实现深复制，但是使用spread操作符是最简洁的一种实现：</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>arr<span class="token punctuation">]</span><span class="token punctuation">;</span>
+arr2<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'d'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// ["a", "b", "c"]</span>
+
+<span class="token comment">// 展开String</span>
+<span class="token comment">// 如果想将字符串转为字符数组，如果不实用展开操作：</span>
+<span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+<span class="token string">"hello"</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token comment">// ["h", "e", "l", "l", "o"]</span>
+
+<span class="token comment">// 使用展开操作符可以这样写：</span>
+<span class="token keyword">var</span> str <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> chars <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>str<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// ["h", "e", "l", "l", "o"]</span>
+
+<span class="token comment">// 展开Object</span>
+<span class="token comment">// 我们还可以对对象进行展开，如果有两个对象，有不同的key-value,我们需要将这两个对象合并起来(需要使用Object rest spread transform)，我们可以这样：</span>
+
+<span class="token keyword">let</span> Obj1 <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+ <span class="token literal-property property">key1</span><span class="token operator">:</span> <span class="token string">'value1'</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">let</span> Obj2 <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+ <span class="token literal-property property">key2</span><span class="token operator">:</span> <span class="token string">'value3'</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">let</span> concatValue <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+ <span class="token operator">...</span>Obj1<span class="token punctuation">,</span>
+ <span class="token operator">...</span>Obj2
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>concatValue<span class="token punctuation">)</span> <span class="token comment">// &#123;key1: 'value1', key2: 'value2'&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web">Web开发技术(mozilla)</a></li>
@@ -1556,7 +1617,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                 <a href="/blog/posts/c12d32c74ecf/">
                     <div class="card-image">
                         
-                        <img src="https://labs.mysql.com/common/logos/mysql-logo.svg" class="responsive-img" alt="MySQL相关知识点">
+                        <img src="https://picx.zhimg.com/v2-3683fb2db4672c8fc119e736dcb1834a_1440w.jpg" class="responsive-img" alt="MySQL相关知识点">
                         
                         <span class="card-title">MySQL相关知识点</span>
                     </div>

@@ -1,7 +1,7 @@
 ---
 title: Java类加载
 categories: Java
-img: https://picx.zhimg.com/v2-fd7b70ced8ef47bd3534278a7693a9fb_1440w.jpg
+img: https://pic1.zhimg.com/v2-2bc1a9883960ccf43a0f4c643178c4c3_1440w.jpg
 
 ---
 

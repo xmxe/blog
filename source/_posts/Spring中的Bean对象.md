@@ -3,7 +3,7 @@
 title: Spring中的Bean对象
 categories: Spring
 index_img: /assert/spring.jpg
-img: https://img0.baidu.com/it/u=3660674060,4236594042&fm=253&fmt=auto&app=138&f=JPEG
+img: https://picx.zhimg.com/v2-5668c094310c3d27b25ea3df98b9e43c_1440w.jpg
 coverImg: https://pic1.zhimg.com/v2-fad63176fa79f25cd1b486baf508abc0_r.jpg
 cover: true
 summary: Spring Bean、生命周期、扩展接口

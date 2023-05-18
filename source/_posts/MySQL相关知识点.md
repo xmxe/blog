@@ -2,7 +2,7 @@
 title: MySQL相关知识点
 categories: 数据库
 index_img: /assert/mysql.jpg
-img: https://labs.mysql.com/common/logos/mysql-logo.svg
+img: https://picx.zhimg.com/v2-3683fb2db4672c8fc119e736dcb1834a_1440w.jpg
 
 ---
 

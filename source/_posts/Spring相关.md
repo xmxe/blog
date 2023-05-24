@@ -100,6 +100,7 @@ Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFact
 - [Spring是如何解决循环依赖的](https://mp.weixin.qq.com/s/e7e-Pct5CcMrHBCsdjsLSQ)
 - [Spring面试题之循环依赖的理解](https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw)
 - [Spring的循环依赖，到底是什么样的](https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA)
+- [面试官:SpringBoot循环依赖，如何解决？](https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw)
 
 
 ## Spring相关注解

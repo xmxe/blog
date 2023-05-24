@@ -1511,6 +1511,7 @@ RabbtiMQ是可以设置过期时间的，也就是TTL。如果消息在queue中�
 - [面试官：引入RabbitMQ后，你如何保证全链路数据100%不丢失？](https://mp.weixin.qq.com/s/38XaTeHdgiH5GfCIQiWlnQ)
 - [RabbitMQ详解](https://mp.weixin.qq.com/s/_G_hd8OX9D76Pd5TmM3_BQ)
 - [RabbitMQ的AMQP协议都是些什么内容呢](https://mp.weixin.qq.com/s/JDkIP7Kzi2uWcWoy9k7SQA)
+- [RabbitMQ有哪几种消息模式？](https://mp.weixin.qq.com/s/yM5NFnt0vZ9A5LaQt3-Kbw)
 
 
 ### Pulsar

@@ -1317,3 +1317,4 @@ body {
 - [CSS@规则](http://c.biancheng.net/css3/at-rule.html)
 - [64个超级有用的CSS资源](https://mp.weixin.qq.com/s/xYUjsf4IKYORqOLNNnEHlA)
 - [HTML、CSS demo](https://www.html5tricks.com/page/26)
+- [10个值得收藏的CSS资源](https://mp.weixin.qq.com/s/Sn22fn_70QHWD753eFZHiQ)

@@ -135,6 +135,9 @@ $.ajax({
 理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。
 [终于搞懂了@Configuration和@Component的区别](https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog)
 
+### 条件注解
+[Spring Boot中条件注解底层如何实现的？](https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ)
+
 ## Spring设计模式
 
 

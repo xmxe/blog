@@ -554,8 +554,7 @@
 <span class="token selector">.class::-webkit-scrollbar</span><span class="token punctuation">&#123;</span> <span class="token property">width</span><span class="token punctuation">:</span>0 <span class="token important">!important</span> <span class="token comment">/*display:none;*/</span><span class="token punctuation">&#125;</span>
 <span class="token selector">::-webkit-scrollbar</span><span class="token punctuation">&#123;</span><span class="token property">width</span><span class="token punctuation">:</span>0 <span class="token important">!important</span> <span class="token comment">/*display:none;*/</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token comment">/**css渐变**/</span>
-<span class="token selector">文字</span><span class="token punctuation">&#123;</span>
+<h2 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">文字</span><span class="token punctuation">&#123;</span>
     <span class="token comment">/**linear-gradient：创建一个表示两种或多种颜色线性渐变的图片**/</span>
 	<span class="token property">background-image</span><span class="token punctuation">:</span><span class="token function">-webkit-linear-gradient</span><span class="token punctuation">(</span>bottom<span class="token punctuation">,</span>#708a41<span class="token punctuation">,</span>#8585a5<span class="token punctuation">,</span>#4b8e9a<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>top<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 100%<span class="token punctuation">,</span> .2<span class="token punctuation">)</span> 1px<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 100%<span class="token punctuation">,</span> 0<span class="token punctuation">)</span> 1px<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .1<span class="token punctuation">)</span> 100%<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -572,9 +571,27 @@
     <span class="token property">-webkit-text-stroke</span><span class="token punctuation">:</span>6px transparent<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token selector">背景图</span><span class="token punctuation">&#123;</span>
-    <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>to right<span class="token punctuation">,</span> #1e473c 0%<span class="token punctuation">,</span> #2f4154 100%<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/*从下到上，从蓝色开始渐变、到高度40%位置是绿色渐变开始、最后以红色结束*/</span>
+    <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>0deg<span class="token punctuation">,</span> blue<span class="token punctuation">,</span> green 40%<span class="token punctuation">,</span> red<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/**创建一个从圆心开始，向四周渐变的径向渐变效果**/</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> <span class="token function">radial-gradient</span><span class="token punctuation">(</span>circle at center<span class="token punctuation">,</span> #ffafbd<span class="token punctuation">,</span> #ffc3a0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/**创建一个从最外部向圆心渐变的径向渐变效果,farthest-corner关键字会将圆心设置在最远的角落，而不是默认的居中位置**/</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> <span class="token function">radial-gradient</span><span class="token punctuation">(</span>circle farthest-corner at center<span class="token punctuation">,</span> #ffafbd<span class="token punctuation">,</span> #ffc3a0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/**
+    radial-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个从一个中心向周围辐射的颜色渐变效果。radial-gradient函数的基本语法如下：background: radial-gradient(shape size at position, start-color, ..., last-color);其中的参数解释如下：
+    shape: 表示渐变形状，可以是circle(默认)或ellipse；
+    size: 表示渐变的大小，可以是closest-side、farthest-side、closest-corner、farthest-corner、contain或cover，其中closest-side表示最近侧的边缘，farthest-side表示最远侧的边缘，closest-corner表示最近角落，farthest-corner表示最远角落，contain表示至少需要占满整个容器，而cover则表示覆盖整个容器；
+    at position: 表示渐变的中心位置，可以是长度(像素或百分比)或关键字(center、top、bottom、left、right等)
+    start-color和last-color: 表示渐变的起始颜色和结束颜色。可以定义多个颜色值，用逗号分隔。
+    
+    linear-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个沿着一条直线方向的颜色渐变效果。linear-gradient函数的基本语法如下：background: linear-gradient(direction, color stop1, color stop2, ...);其中的参数解释如下：	
+    direction: 表示渐变的方向，可以是角度、关键字（top、bottom、left、right、to top left、to bottom right等）以及渐变轴线（由坐标(x1,y1)和(x2,y2)确定的一条直线，可使用两个坐标的百分比表示），也可以是任意组合;
+    color stop: 表示渐变的颜色及其所在的位置，可以定义多个颜色值，用逗号分隔。例如，color stop1可以表示位于渐变的起始点的颜色停止点，而color stop2则对应着终点的颜色停止点。
+    */</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">/**
+CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的效果。为了添加透明度，我们使用rgba()函数来定义颜色节点。rgba() 函数中的最后一个参数可以是从0到1的值，它定义了颜色的透明度：0表示完全透明，1表示完全不透明。
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="文字自动换行"><a href="#文字自动换行" class="headerlink" title="文字自动换行"></a>文字自动换行</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token comment">/*文章内容自动换行*/</span>
 <span class="token selector">#articleContent</span> <span class="token punctuation">&#123;</span>

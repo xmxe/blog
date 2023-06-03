@@ -36,7 +36,6 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
 ## 渐变
 
 ```css
-/**css渐变**/
 文字{
     /**linear-gradient：创建一个表示两种或多种颜色线性渐变的图片**/
 	background-image:-webkit-linear-gradient(bottom,#708a41,#8585a5,#4b8e9a);
@@ -54,9 +53,27 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
     -webkit-text-stroke:6px transparent;
 }
 背景图{
-    background-image: linear-gradient(to right, #1e473c 0%, #2f4154 100%);
+    /*从下到上，从蓝色开始渐变、到高度40%位置是绿色渐变开始、最后以红色结束*/
+    background-image: linear-gradient(0deg, blue, green 40%, red);
+    /**创建一个从圆心开始，向四周渐变的径向渐变效果**/
+    background: radial-gradient(circle at center, #ffafbd, #ffc3a0);
+    /**创建一个从最外部向圆心渐变的径向渐变效果,farthest-corner关键字会将圆心设置在最远的角落，而不是默认的居中位置**/
+    background: radial-gradient(circle farthest-corner at center, #ffafbd, #ffc3a0);
+    /**
+    radial-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个从一个中心向周围辐射的颜色渐变效果。radial-gradient函数的基本语法如下：background: radial-gradient(shape size at position, start-color, ..., last-color);其中的参数解释如下：
+    shape: 表示渐变形状，可以是circle(默认)或ellipse；
+    size: 表示渐变的大小，可以是closest-side、farthest-side、closest-corner、farthest-corner、contain或cover，其中closest-side表示最近侧的边缘，farthest-side表示最远侧的边缘，closest-corner表示最近角落，farthest-corner表示最远角落，contain表示至少需要占满整个容器，而cover则表示覆盖整个容器；
+    at position: 表示渐变的中心位置，可以是长度(像素或百分比)或关键字(center、top、bottom、left、right等)
+    start-color和last-color: 表示渐变的起始颜色和结束颜色。可以定义多个颜色值，用逗号分隔。
+    
+    linear-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个沿着一条直线方向的颜色渐变效果。linear-gradient函数的基本语法如下：background: linear-gradient(direction, color stop1, color stop2, ...);其中的参数解释如下：	
+    direction: 表示渐变的方向，可以是角度、关键字（top、bottom、left、right、to top left、to bottom right等）以及渐变轴线（由坐标(x1,y1)和(x2,y2)确定的一条直线，可使用两个坐标的百分比表示），也可以是任意组合;
+    color stop: 表示渐变的颜色及其所在的位置，可以定义多个颜色值，用逗号分隔。例如，color stop1可以表示位于渐变的起始点的颜色停止点，而color stop2则对应着终点的颜色停止点。
+    */
 }
-
+/**
+CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的效果。为了添加透明度，我们使用rgba()函数来定义颜色节点。rgba() 函数中的最后一个参数可以是从0到1的值，它定义了颜色的透明度：0表示完全透明，1表示完全不透明。
+ */
 ```
 
 ## 文字自动换行

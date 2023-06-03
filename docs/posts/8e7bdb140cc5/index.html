@@ -750,10 +750,9 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <h3 id="Java8中的接口和抽象类到底还有啥区别？"><a href="#Java8中的接口和抽象类到底还有啥区别？" class="headerlink" title="Java8中的接口和抽象类到底还有啥区别？"></a>Java8中的接口和抽象类到底还有啥区别？</h3><p>既然接口都能写默认方法了，那么还要抽象类干嘛呢？<br>区别1：首先抽象类是一个“类”，而接口只是一个“接口”，两者的概念和应用场景不一样，这也是抽象类和接口的主要区别。<br>区别2：即使在Java8中接口也能写实现方法了，但却不能写构造方法，而在抽象类是可以写构造方法的，意味着抽象类是参与类的实例化过程的，而接口则不是。抽象类不可以new<br>区别3：抽象类可以有自己的各种成员变量，并且可以通过自己的非抽象方法进行改变，而接口中的变量默认全是public static final修饰的，意味着都是常量，并且不能被自己和外部修改。<br>区别4：接口可以实现多继承，而抽象类只能单继承</p>
 <h3 id="Comparable和Comparator区别"><a href="#Comparable和Comparator区别" class="headerlink" title="Comparable和Comparator区别"></a>Comparable和Comparator区别</h3><p>一个类实现了Comparable接口，意味着该类的对象可以直接进行比较（排序），但比较（排序）的方式只有一种，很单一。<br>一个类如果想要保持原样，又需要进行不同方式的比较（排序），就可以定制比较器（实现Comparator接口）。<br>Comparable接口在java.lang包下，而Comparator接口在java.util包下<br>如果对象的排序需要基于自然顺序，请选择Comparable，如果需要按照对象的不同属性进行排序，请选择Comparator</p>
 <h3 id="过滤器和拦截器的区别"><a href="#过滤器和拦截器的区别" class="headerlink" title="过滤器和拦截器的区别"></a>过滤器和拦截器的区别</h3><ol>
-<li>Filter需要在web.xml中配置，依赖于Servlet；</li>
-<li>Interceptor需要在SpringMVC中配置，依赖于框架；</li>
+<li>Filter需要在web.xml中配置，依赖于Servlet；Interceptor需要在SpringMVC中配置，依赖于框架；</li>
 <li>Filter的执行顺序在Interceptor之前</li>
-<li>两者的本质区别：拦截器（Interceptor）是基于Java的反射机制，而过滤器（Filter）是基于函数回调。从灵活性上说拦截器功能更强大些，Filter能做的事情，都能做，而且可以在请求前，请求后执行，比较灵活。<br>Filter主要是针对URL地址做一个编码的事情、过滤掉没用的参数、安全校验（比较泛的，比如登录不登录之类），<br>太细的话，还是建议用interceptor。不过还是根据不同情况选择合适的。</li>
+<li>两者的本质区别：拦截器（Interceptor）是基于Java的反射机制，而过滤器（Filter）是基于函数回调。从灵活性上说拦截器功能更强大些，Filter能做的事情，都能做，而且可以在请求前，请求后执行，比较灵活。Filter主要是针对URL地址做一个编码的事情、过滤掉没用的参数、安全校验（比较泛的，比如登录不登录之类），太细的话，还是建议用interceptor。不过还是根据不同情况选择合适的。</li>
 <li>拦截器可以访问action上下文、值栈里的对象，而过滤器不能访问。</li>
 <li>在action的生命周期中，拦截器可以多次被调用，而过滤器只能在容器初始化时被调用一次。init(),destroy()各一次，dofilter()多次</li>
 <li>拦截的请求范围不同,过滤器几乎可以对所有进入容器的请求起作用，而拦截器只会对Controller中请求或访问static目录下的资源请求起作用。</li>

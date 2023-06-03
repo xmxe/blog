@@ -39,7 +39,9 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: "download/**"
+skip_render: 
+  - "download/**"
+  - "static/**"
 
 # Writing
 # File name of new posts
@@ -133,30 +135,41 @@ lazyload:
   loadingImg: medias/loading.png
 
 restful_api:
-  # site 可配置为数组选择性生成某些属性
+  # site可配置为数组选择性生成某些属性
   # site: ['title', 'subtitle', 'description', 'author', 'since', email', 'favicon', 'avatar']
-  site: true        # hexo.config mix theme.config
-  posts_size: 10    # 文章列表分页，0 表示不分页
-  posts_props:      # 文章列表项的需要生成的属性
+  # hexo.config mix theme.config
+  site: true
+  # 文章列表分页，0表示不分页
+  posts_size: 10
+  # 文章列表项的需要生成的属性
+  posts_props:
     title: true
     slug: true
-    date: false
+    date: true
     updated: false
     comments: false
     path: true
     excerpt: true
-    cover: true      # 封面图，取文章第一张图片
+    # 封面图，取文章第一张图片
+    cover: true
     content: false
     keywords: false
     categories: true
     tags: true
-  categories: true         # 分类数据
-  use_category_slug: true # Use slug for filename of category data
-  tags: true               # 标签数据
-  use_tag_slug: true      # Use slug for filename of tag data
-  post: true               # 文章数据
-  pages: false             # 额外的Hexo页面数据, 如About
-  swipers_list: ['JVM知识点','Spring中的Bean对象','JWT-Json Web Token','ZooKeeper']          # 生成指定的页面信息,填写你文章文件夹名称比如['css','js']，不加后缀名,主要用于轮播图api
+  # 分类数据
+  categories: true
+  # Use slug for filename of category data
+  use_category_slug: true
+  # 标签数据
+  tags: true
+  # Use slug for filename of tag data
+  use_tag_slug: true
+  # 文章数据
+  post: true
+  # 额外的Hexo页面数据, 如About
+  pages: false
+  # 生成指定的页面信息,填写你文章文件夹名称比如['css','js']，不加后缀名,主要用于轮播图api
+  swipers_list: []
   search_all:
     enable: true   # 默认开启
     path: api/search.json

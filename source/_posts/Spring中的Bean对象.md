@@ -856,3 +856,4 @@ System.out.println(hw.getMsg());
 - [Spring注入Bean的7种方式，还有谁不会？？](https://mp.weixin.qq.com/s/i0Y-p7mda5FJCWCMJ8msdg)
 - [Spring注解@Bean和@Component的区别,你知道吗？](https://mp.weixin.qq.com/s/6CwABJAePAT6hzTmfk7Jjg)
 - [@Bean与@Component用在同一个类上，会怎么样？](https://mp.weixin.qq.com/s/lyH72PRAGcR2-aQvMZ1jPA)
+- [Bean异步初始化，让你的应用启动飞起来](https://mp.weixin.qq.com/s/aZCgJS3Uaj28UiKTtUFcmw)

@@ -11,9 +11,9 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
 
 ```html
 <!-- div居中,需要设置宽度-->
-<div style="margin : 0 auto;width:100%"></div>
+<div style="margin : 0 auto;width:80%"></div>
 <!-- div里面的内容居中-->
-<div style="margin : 0 auto;width:100%;text-align:center">
+<div style="margin : 0 auto;width:80%;text-align:center">
     <button></button>
 </div>
 
@@ -22,6 +22,23 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
 
 <!--margin外间距是外边距，即盒子与盒子之间的距离，而padding是内边距，是盒子的边与盒子内部元素的距离。margin是用来隔开元素与元素的间距；padding是用来隔开元素与内容的间隔。margin是指从自身边框到另一个容器边框之间的距离，就是容器外距离。padding是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离。
 例如两个文本框的距离使用margin，文本框的边框和文本内容之间的距离使用padding-->
+<!-- 使用弹性容器 -->
+<div class="container">
+    <div class="centered">
+    	<p>要居中的内容</p>
+    </div>
+</div>
+```
+```css
+.container {
+    display: flex; /* 设置为Flex容器 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 100vh; /* 设置容器高度 */
+}
+.centered {
+  /* 可以给要居中的元素设置一些样式 */
+}
 ```
 [42种前端常用布局方案总结](https://mp.weixin.qq.com/s/5ZSMlbjcvaMksx4zakhgzA)
 
@@ -73,8 +90,9 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
 }
 /**
 CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的效果。为了添加透明度，我们使用rgba()函数来定义颜色节点。rgba() 函数中的最后一个参数可以是从0到1的值，它定义了颜色的透明度：0表示完全透明，1表示完全不透明。
- */
+*/
 ```
+[超精美渐变色动态背景完整示例](https://blog.csdn.net/A757291228/article/details/124611342)
 
 ## 文字自动换行
 

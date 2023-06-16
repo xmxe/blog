@@ -125,10 +125,9 @@ git branch <name>
 git branch -d <name>
 # 设置分支上游
 git branch --set-upstream-to origin/master
-# 建立本地分支和远程分支的关联
-git branch --set-upstream branch-name origin/branch-name
 
 # 远程分支重命名
+# 方案1
 # 远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
 # 1.先重命名本地分支
 git branch -m 旧分支名称 新分支名称
@@ -136,13 +135,16 @@ git branch -m 旧分支名称 新分支名称
 git push --delete origin 旧分支名称
 # 3.上传新修改名称的本地分支
 git push origin 新分支名称
-#4.修改后的本地分支关联远程分支
+# 4.修改后的本地分支关联远程分支
 git branch --set-upstream-to origin/新分支名称
 
-# 远程仓库修改分支后与本地仓库同步
+# 方案2:远程仓库修改分支后与本地仓库同步
 git branch -m master 2021.x
+# 获取源分支
 git fetch origin
+# 切换源分支为远程分支
 git branch -u origin/2021.x 2021.x
+# 设置远程分支
 git remote set-head origin -a
 
 # 下载所有分支

@@ -568,11 +568,11 @@
 <p><img src="https://oss.javaguide.cn/%E6%BA%90%E7%A0%81/dubbo/dubbo-relation.jpg" alt="dubbo-relation"></p>
 <p>上述节点简单介绍以及他们之间的关系：</p>
 <ul>
-<li><strong>Container：</strong>服务运行容器，负责加载、运行服务提供者。必须。</li>
-<li><strong>Provider：</strong>暴露服务的服务提供方，会向注册中心注册自己提供的服务。必须。</li>
-<li><strong>Consumer：</strong>调用远程服务的服务消费方，会向注册中心订阅自己所需的服务。必须。</li>
-<li><strong>Registry：</strong>服务注册与发现的注册中心。注册中心会返回服务提供者地址列表给消费者。非必须。</li>
-<li><strong>Monitor：</strong>统计服务的调用次数和调用时间的监控中心。服务消费者和提供者会定时发送统计数据到监控中心。非必须。</li>
+<li><strong>Container</strong>：服务运行容器，负责加载、运行服务提供者。必须。</li>
+<li><strong>Provider</strong>：暴露服务的服务提供方，会向注册中心注册自己提供的服务。必须。</li>
+<li><strong>Consumer</strong>：调用远程服务的服务消费方，会向注册中心订阅自己所需的服务。必须。</li>
+<li><strong>Registry</strong>：服务注册与发现的注册中心。注册中心会返回服务提供者地址列表给消费者。非必须。</li>
+<li><strong>Monitor</strong>：统计服务的调用次数和调用时间的监控中心。服务消费者和提供者会定时发送统计数据到监控中心。非必须。</li>
 </ul>
 <h3 id="Dubbo中的Invoker概念了解么？"><a href="#Dubbo中的Invoker概念了解么？" class="headerlink" title="Dubbo中的Invoker概念了解么？"></a>Dubbo中的Invoker概念了解么？</h3><p>Invoker是Dubbo领域模型中非常重要的一个概念，你如果阅读过Dubbo源码的话，你会无数次看到这玩意。就比如下面我要说的负载均衡这块的源码中就有大量Invoker的身影。</p>
 <p>简单来说，Invoker就是Dubbo对远程调用的抽象。</p>
@@ -633,7 +633,7 @@
 
 <p>其他还有很多可供扩展的选择，你可以在<a target="_blank" rel="noopener" href="https://cn.dubbo.apache.org/zh-cn/overview/home/">官方文档</a>中找到。</p>
 <h3 id="Dubbo的微内核架构了解吗？"><a href="#Dubbo的微内核架构了解吗？" class="headerlink" title="Dubbo的微内核架构了解吗？"></a>Dubbo的微内核架构了解吗？</h3><p>Dubbo采用微内核（Microkernel）+插件（Plugin）模式，简单来说就是微内核架构。微内核只负责组装插件。</p>
-<p><strong>何为微内核架构呢？</strong>《软件架构模式》这本书是这样介绍的：</p>
+<p><strong>何为微内核架构呢</strong>？《软件架构模式》这本书是这样介绍的：</p>
 <blockquote>
 <p>微内核架构模式（有时被称为插件架构模式）是实现基于产品应用程序的一种自然模式。基于产品的应用程序是已经打包好并且拥有不同版本，可作为第三方插件下载的。然后，很多公司也在开发、发布自己内部商业应用像有版本号、说明及可加载插件式的应用软件（这也是这种模式的特征）。微内核系统可让用户添加额外的应用如插件，到核心应用，继而提供了可扩展性和功能分离的用法。</p>
 </blockquote>

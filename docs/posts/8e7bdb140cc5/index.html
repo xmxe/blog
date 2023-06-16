@@ -773,7 +773,7 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <li>CSRF需要用户先登录网站A,获取cookie;XSS不需要登录。</li>
 <li>CSRF是利用网站A本身的漏洞,去请求网站A的api;XSS是向网站A注入JS代码,然后执行JS里的代码,篡改网站A的内容。（XSS利用的是站点内的信任用户，而CSRF则是通过伪装来自受信任用户的请求来利用受信任的网站。你可以这么理解CSRF攻击：攻击者盗用了你的身份，以你的名义向第三方网站发送恶意请求。）</li>
 </ol>
-<h2 id="web-xml详解"><a href="#web-xml详解" class="headerlink" title="web.xml详解"></a>web.xml详解</h2><p>**&lt;context-param\&gt;**元素含有一对参数名和参数值，用作应用的Servlet上下文初始化参数，参数名在整个Web应用中必须是惟一的，在web应用的整个生命周期中上下文初始化参数都存在，任意的Servlet和jsp都可以随时随地访问它。在JSP网页中可以使用下列方法来取得：</p>
+<h2 id="web-xml详解"><a href="#web-xml详解" class="headerlink" title="web.xml详解"></a>web.xml详解</h2><p><strong>&lt;context-param\&gt;</strong> 元素含有一对参数名和参数值，用作应用的Servlet上下文初始化参数，参数名在整个Web应用中必须是惟一的，在web应用的整个生命周期中上下文初始化参数都存在，任意的Servlet和jsp都可以随时随地访问它。在JSP网页中可以使用下列方法来取得：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">$<span class="token punctuation">&#123;</span>initParam<span class="token punctuation">.</span>param_name<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>若在Servlet可以使用下列方法来获得：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> param_name<span class="token operator">=</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInitParamter</span><span class="token punctuation">(</span><span class="token string">"param_name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -782,7 +782,7 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <p>也可以在Servlet中直接调用</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInitParameter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>，<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>两者是等价的。</p>
-<p>**&lt;listener\&gt;**为web应用程序定义监听器，监听器用来监听各种事件，比如：application和session事件，所有的监听器按照相同的方式定义，功能取决去它们各自实现的接口，常用的Web事件接口有如下几个：</p>
+<p><strong>&lt;listener\&gt;</strong> 为web应用程序定义监听器，监听器用来监听各种事件，比如：application和session事件，所有的监听器按照相同的方式定义，功能取决去它们各自实现的接口，常用的Web事件接口有如下几个：</p>
 <ol>
 <li>ServletContextListener：用于监听Web应用的启动和关闭；</li>
 <li>ServletContextAttributeListener：用于监听ServletContext范围（application）内属性的改变；</li>

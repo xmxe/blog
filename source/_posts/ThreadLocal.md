@@ -10,7 +10,7 @@ img: https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg
 
 ### ThreadLocal有什么用？
 
-通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。**如果想实现每一个线程都有自己的专属本地变量该如何解决呢？**JDK中自带的ThreadLocal类正是为了解决这样的问题。**ThreadLocal类主要解决的就是让每个线程绑定自己的值，可以将ThreadLocal类形象的比喻成存放数据的盒子，盒子中可以存储每个线程的私有数据。**如果你创建了一个ThreadLocal变量，那么访问这个变量的每个线程都会有这个变量的本地副本，这也是ThreadLocal变量名的由来。他们可以使用get()和set()方法来获取默认值或将其值更改为当前线程所存的副本的值，从而避免了线程安全问题。
+通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。**如果想实现每一个线程都有自己的专属本地变量该如何解决呢**？JDK中自带的ThreadLocal类正是为了解决这样的问题。**ThreadLocal类主要解决的就是让每个线程绑定自己的值，可以将ThreadLocal类形象的比喻成存放数据的盒子，盒子中可以存储每个线程的私有数据**。如果你创建了一个ThreadLocal变量，那么访问这个变量的每个线程都会有这个变量的本地副本，这也是ThreadLocal变量名的由来。他们可以使用get()和set()方法来获取默认值或将其值更改为当前线程所存的副本的值，从而避免了线程安全问题。
 再举个简单的例子：两个人去宝屋收集宝物，这两个共用一个袋子的话肯定会产生争执，但是给他们两个人每个人分配一个袋子的话就不会出现这样的问题。如果把这两个人比作线程的话，那么ThreadLocal就是用来避免这两个线程竞争的。
 
 ThreadLocal使用场景:当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。
@@ -127,7 +127,7 @@ ThreadLocalMap getMap(Thread t) {
 }
 ```
 
-通过上面这些内容，我们足以通过猜测得出结论：**最终的变量是放在了当前线程的ThreadLocalMap中，并不是存在ThreadLocal上，ThreadLocal可以理解为只是ThreadLocalMap的封装，传递了变量值。**ThrealLocal类中可以通过Thread.currentThread()获取到当前线程对象后，直接通过getMap(Thread t)可以访问到该线程的ThreadLocalMap对象。
+通过上面这些内容，我们足以通过猜测得出结论：**最终的变量是放在了当前线程的ThreadLocalMap中，并不是存在ThreadLocal上，ThreadLocal可以理解为只是ThreadLocalMap的封装，传递了变量值**。ThrealLocal类中可以通过Thread.currentThread()获取到当前线程对象后，直接通过getMap(Thread t)可以访问到该线程的ThreadLocalMap对象。
 
 **每个Thread中都具备一个ThreadLocalMap，而ThreadLocalMap可以存储以ThreadLocal为key，Object对象为value的键值对。**
 
@@ -281,7 +281,7 @@ public class ThreadLocalDemo {
 new ThreadLocal<>().set(s);
 ```
 
-所以这里在GC之后，key就会被回收，我们看到上面debug中的referent=null,如果**改动一下代码：**
+所以这里在GC之后，key就会被回收，我们看到上面debug中的referent=null,如果**改动一下代码**：
 
 ![img](https://javaguide.cn/assets/4.c4285c13.png)
 
@@ -393,25 +393,25 @@ HashMap中解决冲突的方法是在数组上构造一个**链表**结构，冲
 
 往ThreadLocalMap中set数据（**新增**或者**更新**数据）分为好几种情况，针对不同的情况我们画图来说明。
 
-**第一种情况：**通过hash计算后的槽位对应的Entry数据为空：
+**第一种情况**：通过hash计算后的槽位对应的Entry数据为空：
 
 ![img](https://javaguide.cn/assets/9.3269651c.png)
 
 这里直接将数据放到该槽位即可。
 
-**第二种情况：**槽位数据不为空，key值与当前ThreadLocal通过hash计算获取的key值一致：
+**第二种情况**：槽位数据不为空，key值与当前ThreadLocal通过hash计算获取的key值一致：
 
 ![img](https://javaguide.cn/assets/10.706954d1.png)
 
 这里直接更新该槽位的数据。
 
-**第三种情况：**槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，没有遇到key过期的Entry：
+**第三种情况**：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，没有遇到key过期的Entry：
 
 ![img](https://javaguide.cn/assets/11.bb4e1504.png)
 
 遍历散列数组，线性往后查找，如果找到Entry为null的槽位，则将数据放入该槽位中，或者往后遍历过程中，遇到了**key值相等**的数据，直接更新即可。
 
-**第四种情况：**槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，遇到key过期的Entry，如下图，往后遍历过程中，遇到了index=7的槽位数据Entry的key=null：
+**第四种情况**：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，遇到key过期的Entry，如下图，往后遍历过程中，遇到了index=7的槽位数据Entry的key=null：
 
 ![img](https://javaguide.cn/assets/12.7f276023.png)
 
@@ -429,7 +429,7 @@ HashMap中解决冲突的方法是在数组上构造一个**链表**结构，冲
 
 上面向前迭代的操作是为了更新探测清理过期数据的起始下标slotToExpunge的值，这个值在后面会讲解，它是用来判断当前过期槽位staleSlot之前是否还有过期元素。
 
-接着开始以staleSlot位置(index=7)向后迭代，**如果找到了相同key值的Entry数据：**
+接着开始以staleSlot位置(index=7)向后迭代，**如果找到了相同key值的Entry数据**：
 
 ![img](https://javaguide.cn/assets/14.28205930.png)
 
@@ -805,11 +805,11 @@ private void resize() {
 
 ###### ThreadLocalMap.get()图解
 
-**第一种情况：**通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回：
+**第一种情况**:通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回：
 
 ![img](https://javaguide.cn/assets/26.ff0553de.png)
 
-**第二种情况：**slot位置中的Entry.key和要查找的key不一致：
+**第二种情况**:slot位置中的Entry.key和要查找的key不一致：
 
 ![img](https://javaguide.cn/assets/27.9c78c2a2.png)
 

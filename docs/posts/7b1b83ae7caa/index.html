@@ -536,7 +536,7 @@
                 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/study_demo/thread/ThreadLocalTest.java">ThreadLocalTest.java</a></p>
 </blockquote>
-<h3 id="ThreadLocal有什么用？"><a href="#ThreadLocal有什么用？" class="headerlink" title="ThreadLocal有什么用？"></a>ThreadLocal有什么用？</h3><p>通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。<strong>如果想实现每一个线程都有自己的专属本地变量该如何解决呢？</strong>JDK中自带的ThreadLocal类正是为了解决这样的问题。<strong>ThreadLocal类主要解决的就是让每个线程绑定自己的值，可以将ThreadLocal类形象的比喻成存放数据的盒子，盒子中可以存储每个线程的私有数据。</strong>如果你创建了一个ThreadLocal变量，那么访问这个变量的每个线程都会有这个变量的本地副本，这也是ThreadLocal变量名的由来。他们可以使用get()和set()方法来获取默认值或将其值更改为当前线程所存的副本的值，从而避免了线程安全问题。<br>再举个简单的例子：两个人去宝屋收集宝物，这两个共用一个袋子的话肯定会产生争执，但是给他们两个人每个人分配一个袋子的话就不会出现这样的问题。如果把这两个人比作线程的话，那么ThreadLocal就是用来避免这两个线程竞争的。</p>
+<h3 id="ThreadLocal有什么用？"><a href="#ThreadLocal有什么用？" class="headerlink" title="ThreadLocal有什么用？"></a>ThreadLocal有什么用？</h3><p>通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。<strong>如果想实现每一个线程都有自己的专属本地变量该如何解决呢</strong>？JDK中自带的ThreadLocal类正是为了解决这样的问题。<strong>ThreadLocal类主要解决的就是让每个线程绑定自己的值，可以将ThreadLocal类形象的比喻成存放数据的盒子，盒子中可以存储每个线程的私有数据</strong>。如果你创建了一个ThreadLocal变量，那么访问这个变量的每个线程都会有这个变量的本地副本，这也是ThreadLocal变量名的由来。他们可以使用get()和set()方法来获取默认值或将其值更改为当前线程所存的副本的值，从而避免了线程安全问题。<br>再举个简单的例子：两个人去宝屋收集宝物，这两个共用一个袋子的话肯定会产生争执，但是给他们两个人每个人分配一个袋子的话就不会出现这样的问题。如果把这两个人比作线程的话，那么ThreadLocal就是用来避免这两个线程竞争的。</p>
 <p>ThreadLocal使用场景:当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。</p>
 <h3 id="如何使用ThreadLocal？"><a href="#如何使用ThreadLocal？" class="headerlink" title="如何使用ThreadLocal？"></a>如何使用ThreadLocal？</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>text<span class="token punctuation">.</span></span><span class="token class-name">SimpleDateFormat</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Random</span></span><span class="token punctuation">;</span>
@@ -630,7 +630,7 @@ Thread Name= 9 formatter = yy-M-d ah:mm<span aria-hidden="true" class="line-numb
     <span class="token keyword">return</span> t<span class="token punctuation">.</span>threadLocals<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>通过上面这些内容，我们足以通过猜测得出结论：<strong>最终的变量是放在了当前线程的ThreadLocalMap中，并不是存在ThreadLocal上，ThreadLocal可以理解为只是ThreadLocalMap的封装，传递了变量值。</strong>ThrealLocal类中可以通过Thread.currentThread()获取到当前线程对象后，直接通过getMap(Thread t)可以访问到该线程的ThreadLocalMap对象。</p>
+<p>通过上面这些内容，我们足以通过猜测得出结论：<strong>最终的变量是放在了当前线程的ThreadLocalMap中，并不是存在ThreadLocal上，ThreadLocal可以理解为只是ThreadLocalMap的封装，传递了变量值</strong>。ThrealLocal类中可以通过Thread.currentThread()获取到当前线程对象后，直接通过getMap(Thread t)可以访问到该线程的ThreadLocalMap对象。</p>
 <p><strong>每个Thread中都具备一个ThreadLocalMap，而ThreadLocalMap可以存储以ThreadLocal为key，Object对象为value的键值对。</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ThreadLocalMap</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> firstKey<span class="token punctuation">,</span> <span class="token class-name">Object</span> firstValue<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">//......</span>
@@ -740,7 +740,7 @@ size<span class="token operator">:</span> <span class="token number">0</span><sp
 <p>如图所示，因为这里创建的ThreadLocal并没有指向任何值，也就是没有任何引用：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">new</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>所以这里在GC之后，key就会被回收，我们看到上面debug中的referent&#x3D;null,如果<strong>改动一下代码：</strong></p>
+<p>所以这里在GC之后，key就会被回收，我们看到上面debug中的referent&#x3D;null,如果<strong>改动一下代码</strong>：</p>
 <p><img src="https://javaguide.cn/assets/4.c4285c13.png" alt="img"></p>
 <p>这个问题刚开始看，如果没有过多思考，<strong>弱引用</strong>，还有<strong>垃圾回收</strong>，那么肯定会觉得是null。</p>
 <p>其实是不对的，因为题目说的是在做ThreadLocal.get()操作，证明其实还是有<strong>强引用</strong>存在的，所以key并不为null，如下图所示，ThreadLocal的<strong>强引用</strong>仍然是存在的。</p>
@@ -808,16 +808,16 @@ size<span class="token operator">:</span> <span class="token number">0</span><sp
 <p>这里还画了一个Entry中的key为null的数据（<strong>Entry&#x3D;2的灰色块数据</strong>），因为key值是<strong>弱引用</strong>类型，所以会有这种数据存在。在set过程中，如果遇到了key过期的Entry数据，实际上是会进行一轮<strong>探测式清理</strong>操作的，具体操作方式后面会讲到。</p>
 <h5 id="ThreadLocalMap-set-详解"><a href="#ThreadLocalMap-set-详解" class="headerlink" title="ThreadLocalMap.set()详解"></a>ThreadLocalMap.set()详解</h5><h6 id="ThreadLocalMap-set-原理图解"><a href="#ThreadLocalMap-set-原理图解" class="headerlink" title="ThreadLocalMap.set()原理图解"></a>ThreadLocalMap.set()原理图解</h6><p>看完了ThreadLocal<strong>hash算法</strong>后，我们再来看set是如何实现的。</p>
 <p>往ThreadLocalMap中set数据（<strong>新增</strong>或者<strong>更新</strong>数据）分为好几种情况，针对不同的情况我们画图来说明。</p>
-<p><strong>第一种情况：</strong>通过hash计算后的槽位对应的Entry数据为空：</p>
+<p><strong>第一种情况</strong>：通过hash计算后的槽位对应的Entry数据为空：</p>
 <p><img src="https://javaguide.cn/assets/9.3269651c.png" alt="img"></p>
 <p>这里直接将数据放到该槽位即可。</p>
-<p><strong>第二种情况：</strong>槽位数据不为空，key值与当前ThreadLocal通过hash计算获取的key值一致：</p>
+<p><strong>第二种情况</strong>：槽位数据不为空，key值与当前ThreadLocal通过hash计算获取的key值一致：</p>
 <p><img src="https://javaguide.cn/assets/10.706954d1.png" alt="img"></p>
 <p>这里直接更新该槽位的数据。</p>
-<p><strong>第三种情况：</strong>槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，没有遇到key过期的Entry：</p>
+<p><strong>第三种情况</strong>：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，没有遇到key过期的Entry：</p>
 <p><img src="https://javaguide.cn/assets/11.bb4e1504.png" alt="img"></p>
 <p>遍历散列数组，线性往后查找，如果找到Entry为null的槽位，则将数据放入该槽位中，或者往后遍历过程中，遇到了<strong>key值相等</strong>的数据，直接更新即可。</p>
-<p><strong>第四种情况：</strong>槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，遇到key过期的Entry，如下图，往后遍历过程中，遇到了index&#x3D;7的槽位数据Entry的key&#x3D;null：</p>
+<p><strong>第四种情况</strong>：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，遇到key过期的Entry，如下图，往后遍历过程中，遇到了index&#x3D;7的槽位数据Entry的key&#x3D;null：</p>
 <p><img src="https://javaguide.cn/assets/12.7f276023.png" alt="img"></p>
 <p>散列数组下标为7位置对应的Entry数据key为null，表明此数据key值已经被垃圾回收掉了，此时就会执行replaceStaleEntry()方法，该方法含义是<strong>替换过期数据的逻辑</strong>，以<strong>index&#x3D;7</strong>位起点开始遍历，进行探测式数据清理工作。</p>
 <p>初始化探测式清理过期数据扫描的开始位置：slotToExpunge&#x3D;staleSlot&#x3D;7</p>
@@ -826,7 +826,7 @@ size<span class="token operator">:</span> <span class="token number">0</span><sp
 <p><img src="https://javaguide.cn/assets/13.130fe75c.png" alt="img"></p>
 <p>以当前节点(index&#x3D;7)向前迭代，检测是否有过期的Entry数据，如果有则更新slotToExpunge值。碰到null则结束探测。以上图为例slotToExpunge被更新为0。</p>
 <p>上面向前迭代的操作是为了更新探测清理过期数据的起始下标slotToExpunge的值，这个值在后面会讲解，它是用来判断当前过期槽位staleSlot之前是否还有过期元素。</p>
-<p>接着开始以staleSlot位置(index&#x3D;7)向后迭代，<strong>如果找到了相同key值的Entry数据：</strong></p>
+<p>接着开始以staleSlot位置(index&#x3D;7)向后迭代，<strong>如果找到了相同key值的Entry数据</strong>：</p>
 <p><img src="https://javaguide.cn/assets/14.28205930.png" alt="img"></p>
 <p>从当前节点staleSlot向后查找key值相等的Entry元素，找到后更新Entry的值并交换staleSlot元素的位置(staleSlot位置为过期元素)，更新Entry数据，然后开始进行过期Entry的清理工作，如下图所示：</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/java-guide-blog/view.png" alt="img">向后遍历过程中，如果没有找到相同key值的Entry数据：</p>
@@ -1102,9 +1102,9 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h5 id="ThreadLocalMap-get-详解"><a href="#ThreadLocalMap-get-详解" class="headerlink" title="ThreadLocalMap.get()详解"></a>ThreadLocalMap.get()详解</h5><p>上面已经看完了set()方法的源码，其中包括set数据、清理数据、优化数据桶的位置等操作，接着看看get()操作的原理。</p>
-<h6 id="ThreadLocalMap-get-图解"><a href="#ThreadLocalMap-get-图解" class="headerlink" title="ThreadLocalMap.get()图解"></a>ThreadLocalMap.get()图解</h6><p><strong>第一种情况：</strong>通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回：</p>
+<h6 id="ThreadLocalMap-get-图解"><a href="#ThreadLocalMap-get-图解" class="headerlink" title="ThreadLocalMap.get()图解"></a>ThreadLocalMap.get()图解</h6><p><strong>第一种情况</strong>:通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回：</p>
 <p><img src="https://javaguide.cn/assets/26.ff0553de.png" alt="img"></p>
-<p><strong>第二种情况：</strong>slot位置中的Entry.key和要查找的key不一致：</p>
+<p><strong>第二种情况</strong>:slot位置中的Entry.key和要查找的key不一致：</p>
 <p><img src="https://javaguide.cn/assets/27.9c78c2a2.png" alt="img"></p>
 <p>我们以get(ThreadLocal1)为例，通过hash计算后，正确的slot位置应该是4，而index&#x3D;4的槽位已经有了数据，且key值不等于ThreadLocal1，所以需要继续往后迭代查找。</p>
 <p>迭代到index&#x3D;5的数据时，此时Entry.key&#x3D;null，触发一次探测式数据回收操作，执行expungeStaleEntry()方法，执行完后，index 5,8的数据都会被回收，而index 6,7的数据都会前移。index 6,7前移之后，继续从index&#x3D;5往后迭代，于是就在index&#x3D;5找到了key值相等的Entry数据，如下图所示：</p>

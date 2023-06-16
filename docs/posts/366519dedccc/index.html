@@ -615,7 +615,7 @@
 <p>将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树。</p>
 <p>当链表长度大于阈值（默认为8）时，会首先调用treeifyBin()方法。这个方法会根据HashMap数组来决定是否转换为红黑树。只有当数组长度大于或者等于64的情况下，才会执行转换红黑树操作，以减少搜索时间。否则，就是只是执行resize()方法对数组扩容。相关源码这里就不贴了，重点关注treeifyBin()方法即可！</p>
 <p><img src="https://oscimg.oschina.net/oscnet/up-bba283228693dae74e78da1ef7a9a04c684.png" alt="img"></p>
-<p><strong>类的属性：</strong></p>
+<p><strong>类的属性</strong>：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span> <span class="token keyword">extends</span> <span class="token class-name">AbstractMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span> <span class="token keyword">implements</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span><span class="token punctuation">,</span> <span class="token class-name">Cloneable</span><span class="token punctuation">,</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 序列号</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token number">362498820763181265L</span><span class="token punctuation">;</span>
@@ -768,7 +768,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h4><p>HashMap只提供了put用于添加元素，putVal方法只是给put方法调用的一个方法，并没有提供给用户使用。</p>
-<p><strong>对putVal方法添加元素的分析如下：</strong></p>
+<p><strong>对putVal方法添加元素的分析如下</strong>：</p>
 <ol>
 <li>如果定位到的数组位置没有元素就直接插入。</li>
 <li>如果定位到的数组位置有元素就和要插入的key比较，如果key相同就直接覆盖，如果key不相同，就判断p是否是一个树节点，如果是就调用<code>e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this,tab,hash,key,value)</code>将元素添加进入。如果不是就遍历链表插入(插入的是链表尾部)。</li>
@@ -852,7 +852,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>我们再来对比一下JDK1.7put方法的代码</strong></p>
-<p><strong>对于put方法的分析如下：</strong></p>
+<p><strong>对于put方法的分析如下</strong>：</p>
 <ul>
 <li>①如果定位到的数组位置没有元素就直接插入。</li>
 <li>②如果定位到的数组位置有元素，遍历以这个元素为头结点的链表，依次和插入的key比较，如果key相同就直接覆盖，不同就采用头插法插入元素。</li>
@@ -1236,7 +1236,7 @@
 <li><p>计算要put的key的位置，获取指定位置的Segment。</p>
 </li>
 <li><p>如果指定位置的Segment为空，则初始化这个Segment.</p>
-<p><strong>初始化Segment流程：</strong></p>
+<p><strong>初始化Segment流程</strong>：</p>
 <ol>
 <li>检查计算得到的位置的Segment是否为null.</li>
 <li>为null继续初始化，使用Segment[0]的容量和负载因子创建一个HashEntry数组。</li>
@@ -1602,7 +1602,7 @@
 <p>有些同学可能对Synchronized的性能存在疑问，其实Synchronized锁自从引入锁升级策略后，性能不再是问题，有兴趣的同学可以自己了解下Synchronized的<strong>锁升级</strong>。</p>
 <h3 id="ConcurrentHashMap和Hashtable的区别"><a href="#ConcurrentHashMap和Hashtable的区别" class="headerlink" title="ConcurrentHashMap和Hashtable的区别"></a>ConcurrentHashMap和Hashtable的区别</h3><p>ConcurrentHashMap和Hashtable的区别主要体现在实现线程安全的方式上不同。</p>
 <ul>
-<li><strong>底层数据结构：</strong>JDK1.7的ConcurrentHashMap底层采用<strong>分段的数组+链表</strong>实现，JDK1.8采用的数据结构跟HashMap1.8的结构一样，数组+链表&#x2F;红黑二叉树。Hashtable和JDK1.8之前的HashMap的底层数据结构类似都是采用<strong>数组+链表</strong>的形式，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的；</li>
+<li><strong>底层数据结构</strong>:JDK1.7的ConcurrentHashMap底层采用<strong>分段的数组+链表</strong>实现，JDK1.8采用的数据结构跟HashMap1.8的结构一样，数组+链表&#x2F;红黑二叉树。Hashtable和JDK1.8之前的HashMap的底层数据结构类似都是采用<strong>数组+链表</strong>的形式，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的；</li>
 <li><strong>实现线程安全的方式（重要）</strong>：<ul>
 <li>在JDK1.7的时候，ConcurrentHashMap对整个桶数组进行了分割分段(<strong>Segment</strong>，分段锁)，每一把锁只锁容器其中一部分数据（下面有示意图），多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。</li>
 <li>到了JDK1.8的时候，ConcurrentHashMap已经摒弃了<strong>Segment</strong>的概念，而是直接用Node数组+链表+红黑树的数据结构来实现，并发控制使用synchronized和CAS来操作。（JDK1.6以后synchronized锁做了很多优化）整个看起来就像是优化过且线程安全的HashMap，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是为了兼容旧版本；</li>
@@ -1644,7 +1644,7 @@
 <p>Segment的结构和HashMap类似，是一种数组和链表结构，一个Segment包含一个HashEntry数组，每个HashEntry是一个链表结构的元素，每个Segment守护着一个HashEntry数组里的元素，当对HashEntry数组的数据进行修改时，必须首先获得对应的Segment的锁。也就是说，对同一Segment的并发写入会被阻塞，不同Segment的写入是可以并发执行的。</p>
 <h4 id="JDK1-8之后-1"><a href="#JDK1-8之后-1" class="headerlink" title="JDK1.8之后"></a>JDK1.8之后</h4><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java8_concurrenthashmap.png" alt="Java8 ConcurrentHashMap存储结构"></p>
 <p>Java8几乎完全重写了ConcurrentHashMap，代码量从原来Java7中的1000多行，变成了现在的6000多行。</p>
-<p><strong>ConcurrentHashMap取消了Segment分段锁，采用Node+CAS+synchronized来保证并发安全。</strong>数据结构跟HashMap1.8的结构类似，数组+链表&#x2F;红黑二叉树。Java8在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为O(N)）转换为红黑树（寻址时间复杂度为O(log(N))）。</p>
+<p><strong>ConcurrentHashMap取消了Segment分段锁，采用Node+CAS+synchronized来保证并发安全</strong>。数据结构跟HashMap1.8的结构类似，数组+链表&#x2F;红黑二叉树。Java8在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为O(N)）转换为红黑树（寻址时间复杂度为O(log(N))）。</p>
 <p>Java8中，锁粒度更细，synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，就不会影响其他Node的读写，效率大幅提升。</p>
 <h3 id="JDK1-7和JDK1-8的ConcurrentHashMap实现有什么不同？"><a href="#JDK1-7和JDK1-8的ConcurrentHashMap实现有什么不同？" class="headerlink" title="JDK1.7和JDK1.8的ConcurrentHashMap实现有什么不同？"></a>JDK1.7和JDK1.8的ConcurrentHashMap实现有什么不同？</h3><ul>
 <li><strong>线程安全实现方式</strong>：JDK1.7采用Segment分段锁来保证安全，Segment是继承自ReentrantLock。JDK1.8放弃了Segment分段锁的设计，采用Node+CAS+synchronized保证线程安全，锁粒度更细，synchronized只锁定当前链表或红黑二叉树的首节点。</li>
@@ -1666,13 +1666,13 @@
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Hb7JCkMrri0VDiPcl8HnBQ">ConcurrentHashMap是如何保证线程安全的</a></li>
 </ul>
 <h2 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h2><h3 id="HashMap和Hashtable的区别"><a href="#HashMap和Hashtable的区别" class="headerlink" title="HashMap和Hashtable的区别"></a>HashMap和Hashtable的区别</h3><ul>
-<li><strong>线程是否安全：</strong>HashMap是非线程安全的，Hashtable是线程安全的,因为Hashtable内部的方法基本都经过synchronized修饰。（如果你要保证线程安全的话就使用ConcurrentHashMap）；</li>
-<li><strong>效率：</strong>因为线程安全的问题，HashMap要比Hashtable效率高一点。另外，Hashtable基本被淘汰，不要在代码中使用它；</li>
-<li><strong>对Null key和Null value的支持：</strong>HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多个；Hashtable不允许有null键和null值，否则会抛出NullPointerException。</li>
-<li><strong>初始容量大小和每次扩充容量大小的不同：</strong>①创建时如果不指定容量初始值，Hashtable默认的初始大小为11，之后每次扩充，容量变为原来的2n+1。HashMap默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。②创建时如果给定了容量初始值，那么Hashtable会直接使用你给定的大小，而HashMap会将其扩充为2的幂次方大小（HashMap中的tableSizeFor()方法保证，下面给出了源代码）。也就是说HashMap总是使用2的幂作为哈希表的大小,后面会介绍到为什么是2的幂次方。</li>
-<li><strong>底层数据结构：</strong>JDK1.8以后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树），以减少搜索时间（后文中我会结合源码对这一过程进行分析）。Hashtable没有这样的机制。</li>
+<li><strong>线程是否安全</strong>：HashMap是非线程安全的，Hashtable是线程安全的,因为Hashtable内部的方法基本都经过synchronized修饰。（如果你要保证线程安全的话就使用ConcurrentHashMap）；</li>
+<li><strong>效率</strong>：因为线程安全的问题，HashMap要比Hashtable效率高一点。另外，Hashtable基本被淘汰，不要在代码中使用它；</li>
+<li><strong>对Null key和Null value的支持</strong>：HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多个；Hashtable不允许有null键和null值，否则会抛出NullPointerException。</li>
+<li><strong>初始容量大小和每次扩充容量大小的不同</strong>：①创建时如果不指定容量初始值，Hashtable默认的初始大小为11，之后每次扩充，容量变为原来的2n+1。HashMap默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。②创建时如果给定了容量初始值，那么Hashtable会直接使用你给定的大小，而HashMap会将其扩充为2的幂次方大小（HashMap中的tableSizeFor()方法保证，下面给出了源代码）。也就是说HashMap总是使用2的幂作为哈希表的大小,后面会介绍到为什么是2的幂次方。</li>
+<li><strong>底层数据结构</strong>：JDK1.8以后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树），以减少搜索时间（后文中我会结合源码对这一过程进行分析）。Hashtable没有这样的机制。</li>
 </ul>
-<p><strong>HashMap中带有初始容量的构造函数：</strong></p>
+<p><strong>HashMap中带有初始容量的构造函数</strong>：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">HashMap</span><span class="token punctuation">(</span><span class="token keyword">int</span> initialCapacity<span class="token punctuation">,</span> <span class="token keyword">float</span> loadFactor<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>initialCapacity <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
         <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"Illegal initial capacity: "</span> <span class="token operator">+</span>

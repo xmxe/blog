@@ -619,10 +619,9 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> branch <span class="token parameter variable">-d</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 设置分支上游</span>
 <span class="token function">git</span> branch --set-upstream-to origin/master
-<span class="token comment"># 建立本地分支和远程分支的关联</span>
-<span class="token function">git</span> branch --set-upstream branch-name origin/branch-name
 
 <span class="token comment"># 远程分支重命名</span>
+<span class="token comment"># 方案1</span>
 <span class="token comment"># 远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</span>
 <span class="token comment"># 1.先重命名本地分支</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-m</span> 旧分支名称 新分支名称
@@ -630,13 +629,16 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> push <span class="token parameter variable">--delete</span> origin 旧分支名称
 <span class="token comment"># 3.上传新修改名称的本地分支</span>
 <span class="token function">git</span> push origin 新分支名称
-<span class="token comment">#4.修改后的本地分支关联远程分支</span>
+<span class="token comment"># 4.修改后的本地分支关联远程分支</span>
 <span class="token function">git</span> branch --set-upstream-to origin/新分支名称
 
-<span class="token comment"># 远程仓库修改分支后与本地仓库同步</span>
+<span class="token comment"># 方案2:远程仓库修改分支后与本地仓库同步</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-m</span> master <span class="token number">2021</span>.x
+<span class="token comment"># 获取源分支</span>
 <span class="token function">git</span> fetch origin
+<span class="token comment"># 切换源分支为远程分支</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-u</span> origin/2021.x <span class="token number">2021</span>.x
+<span class="token comment"># 设置远程分支</span>
 <span class="token function">git</span> remote set-head origin <span class="token parameter variable">-a</span>
 
 <span class="token comment"># 下载所有分支</span>
@@ -646,7 +648,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 或者git config --unset core.bare</span>
 <span class="token function">git</span> config <span class="token parameter variable">--bool</span> core.bare <span class="token boolean">false</span>
 <span class="token comment"># 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了</span>
-<span class="token function">git</span> reset <span class="token parameter variable">--hard</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> reset <span class="token parameter variable">--hard</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a>git checkout</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 切换分支</span>
 <span class="token function">git</span> checkout <span class="token operator">&lt;</span>name<span class="token operator">></span>

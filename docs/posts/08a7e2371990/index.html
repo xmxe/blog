@@ -627,7 +627,7 @@ SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c<span aria-hidden="true" class="line-
 <li>请求服务端并携带JWT的常见做法是将其放在HTTP Header的<code>Authorization</code>字段中（<code>Authorization:BearerToken</code>）。</li>
 </ol>
 <blockquote>
-<p>**<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/spring-security-jwt-guide">spring-security-jwt-guide</a>**就是一个基于JWT来做身份认证的简单案例，感兴趣的可以看看。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/spring-security-jwt-guide">spring-security-jwt-guide</a></strong> 就是一个基于JWT来做身份认证的简单案例，感兴趣的可以看看。</p>
 </blockquote>
 <h2 id="如何防止JWT被篡改？"><a href="#如何防止JWT被篡改？" class="headerlink" title="如何防止JWT被篡改？"></a>如何防止JWT被篡改？</h2><p>有了签名之后，即使JWT被泄露或者截获，黑客也没办法同时篡改Signature、Header、Payload。</p>
 <p>这是为什么呢？因为服务端拿到JWT之后，会解析出其中包含的Header、Payload以及Signature。服务端会根据Header、Payload、密钥再次生成一个Signature。拿新生成的Signature和JWT中的Signature作对比，如果一样就说明Header和Payload没有被修改。</p>
@@ -649,8 +649,8 @@ SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c<span aria-hidden="true" class="line-
 <h3 id="无状态"><a href="#无状态" class="headerlink" title="无状态"></a>无状态</h3><p>JWT自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储Session信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。</p>
 <p>不过，也正是由于JWT的无状态，也导致了它最大的缺点：<strong>不可控！</strong></p>
 <p>就比如说，我们想要在JWT有效期内废弃一个JWT或者更改它的权限的话，并不会立即生效，通常需要等到有效期过后才可以。再比如说，当用户Log out的话，JWT也还有效。除非，我们在后端增加额外的处理逻辑比如将失效的JWT存储起来，后端先验证JWT是否有效再进行处理。具体的解决办法，我们会在后面的内容中详细介绍到，这里只是简单提一下。</p>
-<h3 id="有效避免了CSRF攻击"><a href="#有效避免了CSRF攻击" class="headerlink" title="有效避免了CSRF攻击"></a>有效避免了CSRF攻击</h3><p><strong>CSRF（CrossSiteRequestForgery）</strong>一般被翻译为<strong>跨站请求伪造</strong>，属于网络攻击领域范围。相比于SQL脚本注入、XSS等安全攻击方式，CSRF的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆Google的产品Gmail也曾在2007年的时候爆出过CSRF漏洞，这给Gmail的用户造成了很大的损失。</p>
-<p><strong>那么究竟什么是跨站请求伪造呢？</strong>简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。</p>
+<h3 id="有效避免了CSRF攻击"><a href="#有效避免了CSRF攻击" class="headerlink" title="有效避免了CSRF攻击"></a>有效避免了CSRF攻击</h3><p><strong>CSRF（CrossSiteRequestForgery）一般被翻译为跨站请求伪造</strong>，属于网络攻击领域范围。相比于SQL脚本注入、XSS等安全攻击方式，CSRF的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆Google的产品Gmail也曾在2007年的时候爆出过CSRF漏洞，这给Gmail的用户造成了很大的损失。</p>
+<p><strong>那么究竟什么是跨站请求伪造呢</strong>？简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。</p>
 <p>举个简单的例子：小壮登录了某网上银行，他来到了网上银行的帖子区，看到一个帖子下面有一个链接写着“科学理财，年盈利率过万”，小壮好奇的点开了这个链接，结果发现自己的账户少了10000元。这是这么回事呢？原来黑客在链接中藏了一个请求，这个请求直接利用小壮的身份给银行发送了一个转账请求，也就是通过你的Cookie向银行发出请求。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.mybank.com/Transfer?bankId=11&amp;money=10000<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>科学理财，年盈利率过万<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 

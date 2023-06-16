@@ -569,7 +569,7 @@
 <h2 id="谈谈反射机制的优缺点"><a href="#谈谈反射机制的优缺点" class="headerlink" title="谈谈反射机制的优缺点"></a>谈谈反射机制的优缺点</h2><p><strong>优点</strong>：可以让咱们的代码更加灵活、为各种框架提供开箱即用的功能提供了便利</p>
 <p><strong>缺点</strong>：让我们在运行时有了分析操作类的能力，这同样也增加了安全问题。比如可以无视泛型参数的安全检查（泛型参数的安全检查发生在编译时）。另外，反射的性能也要稍差点，不过，对于框架来说实际是影响不大的。相关阅读：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow">Java Reflection:Why is it so slow?</a></p>
 <h2 id="反射实战"><a href="#反射实战" class="headerlink" title="反射实战"></a>反射实战</h2><h3 id="获取Class对象的四种方式"><a href="#获取Class对象的四种方式" class="headerlink" title="获取Class对象的四种方式"></a>获取Class对象的四种方式</h3><p>如果我们动态获取到这些信息，我们需要依靠Class对象。Class类对象将一个类的方法、变量等信息告诉运行的程序。Java提供了四种方式获取Class对象:</p>
-<p><strong>1. 知道具体类的情况下可以使用：</strong></p>
+<p><strong>1. 知道具体类的情况下可以使用</strong>：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Class</span> alunbarClass <span class="token operator">=</span> <span class="token class-name">TargetObject</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>但是我们一般是不知道具体类的，基本都是通过遍历包下面的类来获取Class对象，通过此方式获取Class对象不会进行初始化</p>

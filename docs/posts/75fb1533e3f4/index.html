@@ -541,7 +541,7 @@
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/concurrent/jmm2.png" alt="JMM(Java内存模型)强制在主存中进行读取"></p>
 <p>volatile关键字其实并非是Java语言特有的，在C语言里也有，它最原始的意义就是禁用CPU缓存。如果我们将一个变量使用volatile修饰，这就指示编译器，这个变量是共享且不稳定的，每次使用它都到主存中进行读取。</p>
 <p>volatile关键字能保证数据的可见性，但不能保证数据的原子性。synchronized关键字两者都能保证。</p>
-<h3 id="如何禁止指令重排序？"><a href="#如何禁止指令重排序？" class="headerlink" title="如何禁止指令重排序？"></a>如何禁止指令重排序？</h3><p><strong>在Java中，volatile关键字除了可以保证变量的可见性，还有一个重要的作用就是防止JVM的指令重排序。</strong>如果我们将变量声明为<strong>volatile</strong>，在对这个变量进行读写操作的时候，会通过插入特定的<strong>内存屏障</strong>的方式来禁止指令重排序。</p>
+<h3 id="如何禁止指令重排序？"><a href="#如何禁止指令重排序？" class="headerlink" title="如何禁止指令重排序？"></a>如何禁止指令重排序？</h3><p><strong>在Java中，volatile关键字除了可以保证变量的可见性，还有一个重要的作用就是防止JVM的指令重排序</strong>。如果我们将变量声明为<strong>volatile</strong>，在对这个变量进行读写操作的时候，会通过插入特定的<strong>内存屏障</strong>的方式来禁止指令重排序。</p>
 <p>在Java中，Unsafe类提供了三个开箱即用的内存屏障相关的方法，屏蔽了操作系统底层的差异：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">loadFence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">storeFence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>

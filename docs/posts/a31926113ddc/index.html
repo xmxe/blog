@@ -553,15 +553,15 @@
 <p>简单画了一张图帮助大家理解读的步骤。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-read.png" alt="img"></p>
 <p>你仅仅了解了上面这些内容的话是远远不够的，我们还要搞懂其中的原理。</p>
-<p>比如说面试官很可能会追问：“<strong>在写数据的过程中，可以先删除cache，后更新db么？</strong>”</p>
-<p><strong>答案：</strong>那肯定是不行的！因为这样可能会造成<strong>数据库（db）和缓存（Cache）数据不一致</strong>的问题。</p>
+<p>比如说面试官很可能会追问：<strong>在写数据的过程中，可以先删除cache，后更新db么？</strong></p>
+<p><strong>答案：那肯定是不行的！因为这样可能会造成数据库（db）和缓存（Cache）数据不一致的问题</strong>。</p>
 <p>举例：请求1先写数据A，请求2随后读数据A的话，就很有可能产生数据不一致性的问题。</p>
 <p>这个过程可以简单描述为：</p>
 <blockquote>
 <p>请求1先把cache中的A数据删除-&gt;请求2从db中读取数据-&gt;请求1再把db中的A数据更新</p>
 </blockquote>
-<p>当你这样回答之后，面试官可能会紧接着就追问：“<strong>在写数据的过程中，先更新db，后删除cache就没有问题了么？</strong>”</p>
-<p><strong>答案：</strong>理论上来说还是可能会出现数据不一致性的问题，不过概率非常小，因为缓存的写入速度是比数据库的写入速度快很多。</p>
+<p>当你这样回答之后，面试官可能会紧接着就追问：<strong>在写数据的过程中，先更新db，后删除cache就没有问题了么？</strong></p>
+<p>答案：理论上来说还是可能会出现数据不一致性的问题，不过概率非常小，因为缓存的写入速度是比数据库的写入速度快很多。</p>
 <p>举例：请求1先读数据A，请求2随后写数据A，并且数据A在请求1请求之前不在缓存中的话，也有可能产生数据不一致性的问题。</p>
 <p>这个过程可以简单描述为：</p>
 <blockquote>
@@ -1402,10 +1402,10 @@ QUEUED
 </blockquote>
 <h3 id="Redis事务支持原子性吗？"><a href="#Redis事务支持原子性吗？" class="headerlink" title="Redis事务支持原子性吗？"></a>Redis事务支持原子性吗？</h3><p>Redis的事务和我们平时理解的关系型数据库的事务不同。我们知道事务具有四大特性：<strong>1.原子性</strong>，<strong>2.隔离性</strong>，<strong>3.持久性</strong>，<strong>4.一致性</strong>。</p>
 <ol>
-<li><strong>原子性（Atomicity）：</strong>事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；</li>
-<li><strong>隔离性（Isolation）：</strong>并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；</li>
-<li><strong>持久性（Durability）：</strong>一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。</li>
-<li><strong>一致性（Consistency）：</strong>执行事务前后，数据保持一致，多个事务对同一个数据读取的结果是相同的；</li>
+<li><strong>原子性（Atomicity）</strong>：事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；</li>
+<li><strong>隔离性（Isolation）</strong>：并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；</li>
+<li><strong>持久性（Durability）</strong>：一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。</li>
+<li><strong>一致性（Consistency）</strong>：执行事务前后，数据保持一致，多个事务对同一个数据读取的结果是相同的；</li>
 </ol>
 <p>Redis事务在运行错误的情况下，除了执行过程中出现错误的命令外，其他命令都能正常执行。并且，Redis事务是不支持回滚（rollback）操作的。因此，Redis事务其实是不满足原子性的（而且不满足持久性）。</p>
 <p>Redis官网也解释了自己为啥不支持回滚。简单来说就是Redis开发者们觉得没必要支持回滚，这样更简单便捷并且性能更好。Redis开发者觉得即使命令执行错误也应该在开发过程中就被发现而不是生产过程中。</p>
@@ -1555,7 +1555,7 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>对给定元素再次进行相同的哈希计算；</li>
 <li>得到值之后判断位数组中的每个元素是否都为1，如果值都为1，那么说明这个值在布隆过滤器中，如果存在一个值不为1，说明该元素不在布隆过滤器中。</li>
 </ol>
-<p>然后，一定会出现这样一种情况：<strong>不同的字符串可能哈希出来的位置相同。</strong>（可以适当增加位数组大小或者调整我们的哈希函数来降低概率）</p>
+<p>然后，一定会出现这样一种情况：<strong>不同的字符串可能哈希出来的位置相同</strong>。（可以适当增加位数组大小或者调整我们的哈希函数来降低概率）</p>
 <blockquote>
 <p>更多关于布隆过滤器的内容可以看我的这篇原创：<a target="_blank" rel="noopener" href="https://javaguide.cn/cs-basics/data-structure/bloom-filter/">《不了解布隆过滤器？一文给你整的明明白白！》</a>，强烈推荐，个人感觉网上应该找不到总结的这么明明白白的文章了。</p>
 </blockquote>
@@ -1579,7 +1579,7 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>可以将热点数据设置为永远不过期</li>
 <li>基于redis or zookeeper实现互斥锁，等待第一个请求构建完缓存之后，再释放锁，进而其它请求才能通过该key访问数据</li>
 </ol>
-<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><h4 id="什么是缓存雪崩？"><a href="#什么是缓存雪崩？" class="headerlink" title="什么是缓存雪崩？"></a>什么是缓存雪崩？</h4><p>实际上，缓存雪崩描述的就是这样一个简单的场景：<strong>缓存在同一时间大面积的失效，导致大量的请求都直接落到了数据库上，对数据库造成了巨大的压力。</strong>这就好比雪崩一样，摧枯拉朽之势，数据库的压力可想而知，可能直接就被这么多请求弄宕机了。</p>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><h4 id="什么是缓存雪崩？"><a href="#什么是缓存雪崩？" class="headerlink" title="什么是缓存雪崩？"></a>什么是缓存雪崩？</h4><p>实际上，缓存雪崩描述的就是这样一个简单的场景：<strong>缓存在同一时间大面积的失效，导致大量的请求都直接落到了数据库上，对数据库造成了巨大的压力</strong>。这就好比雪崩一样，摧枯拉朽之势，数据库的压力可想而知，可能直接就被这么多请求弄宕机了。</p>
 <p>另外，缓存服务宕机也会导致缓存雪崩现象，导致所有的请求都落到了数据库上。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-avalanche.png" alt="缓存雪崩"></p>
 <p>举个例子：数据库中的大量数据在同一时间过期，这个时候突然有大量的请求需要访问这些过期的数据。这就导致大量的请求直接落到数据库上，对数据库造成了巨大的压力。</p>
@@ -1610,7 +1610,7 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A">一个Redis的雪崩和穿透问题</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw">烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？</a></li>
 </ul>
-<h3 id="如何保证缓存和数据库数据的一致性？"><a href="#如何保证缓存和数据库数据的一致性？" class="headerlink" title="如何保证缓存和数据库数据的一致性？"></a>如何保证缓存和数据库数据的一致性？</h3><p>下面单独对<strong>Cache Aside Pattern（旁路缓存模式）</strong>来聊聊。</p>
+<h3 id="如何保证缓存和数据库数据的一致性？"><a href="#如何保证缓存和数据库数据的一致性？" class="headerlink" title="如何保证缓存和数据库数据的一致性？"></a>如何保证缓存和数据库数据的一致性？</h3><p>下面单独对<strong>Cache Aside Pattern（旁路缓存模式）</strong> 来聊聊。</p>
 <p>Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删除cache。</p>
 <p>如果更新数据库成功，而删除缓存这一步失败的情况的话，简单说两个解决方案：</p>
 <ol>
@@ -1673,7 +1673,7 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-kKe_ss01CkLMRERyyjt1Q">Redis内存满了怎么办？</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YqkVmIaDRV31-WrcW8K26g">内存耗尽后Redis会发生什么？</a></li>
 </ul>
-<h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h3 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h3><p><strong>AOF（append only file）</strong>持久化，采用日志的形式来记录每个写操作，追加到AOF文件的末尾。Redis默认情况是不开启AOF的。重启时再重新执行AOF文件中的命令来恢复数据。它主要解决数据持久化的实时性问题。AOF是执行完命令后才记录日志的。为什么不先记录日志再执行命令呢？这是因为Redis在向AOF记录日志时，不会先对这些命令进行语法检查，如果先记录日志再执行命令，日志中可能记录了错误的命令，Redis使用日志回复数据时，可能会出错。正是因为执行完命令后才记录日志，所以不会阻塞当前的写操作。但是会存在两个风险：更执行完命令还没记录日志时，宕机了会导致数据丢失,AOF不会阻塞当前命令，但是可能会阻塞下一个操作。这两个风险最好的解决方案是折中</p>
+<h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h3 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h3><p><strong>AOF（append only file）</strong> 持久化，采用日志的形式来记录每个写操作，追加到AOF文件的末尾。Redis默认情况是不开启AOF的。重启时再重新执行AOF文件中的命令来恢复数据。它主要解决数据持久化的实时性问题。AOF是执行完命令后才记录日志的。为什么不先记录日志再执行命令呢？这是因为Redis在向AOF记录日志时，不会先对这些命令进行语法检查，如果先记录日志再执行命令，日志中可能记录了错误的命令，Redis使用日志回复数据时，可能会出错。正是因为执行完命令后才记录日志，所以不会阻塞当前的写操作。但是会存在两个风险：更执行完命令还没记录日志时，宕机了会导致数据丢失,AOF不会阻塞当前命令，但是可能会阻塞下一个操作。这两个风险最好的解决方案是折中</p>
 <h4 id="妙用AOF机制的三种写回策略-appendfsync-："><a href="#妙用AOF机制的三种写回策略-appendfsync-：" class="headerlink" title="妙用AOF机制的三种写回策略(appendfsync)："></a>妙用AOF机制的三种写回策略(appendfsync)：</h4><ul>
 <li>always:同步写回，每个子命令执行完，都立即将日志写回磁盘。</li>
 <li>everysec:每个命令执行完，只是先把日志写到AOF内存缓冲区，每隔一秒同步到磁盘。</li>

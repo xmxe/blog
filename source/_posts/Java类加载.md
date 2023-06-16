@@ -172,11 +172,11 @@ Java类的继承关系由类索引、父类索引和接口索引集合三项确�
 
 ![字段表的结构](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/字段表的结构.png)
 
-- **access_flags:**字段的作用域（`public`,`private`,`protected`修饰符），是实例变量还是类变量（`static`修饰符）,可否被序列化（transient修饰符）,可变性（final）,可见性（volatile修饰符，是否强制从主内存读写）。
-- **name_index:**对常量池的引用，表示的字段的名称；
-- **descriptor_index:**对常量池的引用，表示字段和方法的描述符；
-- **attributes_count:**一个字段还会拥有一些额外的属性，attributes_count存放属性的个数；
-- **attributes[attributes_count]:**存放具体属性具体内容。
+- **access_flags**:字段的作用域（`public`,`private`,`protected`修饰符），是实例变量还是类变量（`static`修饰符）,可否被序列化（transient修饰符）,可变性（final）,可见性（volatile修饰符，是否强制从主内存读写）。
+- **name_index**:对常量池的引用，表示的字段的名称；
+- **descriptor_index**:对常量池的引用，表示字段和方法的描述符；
+- **attributes_count**:一个字段还会拥有一些额外的属性，attributes_count存放属性的个数；
+- **attributes[attributes_count]**:存放具体属性具体内容。
 
 上述这些信息中，各个修饰符都是布尔值，要么有某个修饰符，要么没有，很适合使用标志位来表示。而字段叫什么名字、字段被定义为什么数据类型这些都是无法固定的，只能引用常量池中常量来描述。
 
@@ -306,7 +306,7 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 
 #### 解析
 
-**解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程。**解析动作主要针对类或接口、字段、类方法、接口方法、方法类型、方法句柄和调用限定符7类符号引用进行。
+**解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程**。解析动作主要针对类或接口、字段、类方法、接口方法、方法类型、方法句柄和调用限定符7类符号引用进行。
 
 《深入理解Java虚拟机》7.34节第三版对符号引用和直接引用的解释如下：
 
@@ -337,7 +337,7 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 3. 初始化一个类，如果其父类还未初始化，则先触发该父类的初始化。
 4. 当虚拟机启动时，用户需要定义一个要执行的主类(包含main方法的那个类)，虚拟机会先初始化这个类。
 5. MethodHandle和VarHandle可以看作是轻量级的反射调用机制，而要想使用这2个调用，就必须先使用findStaticVarHandle来初始化要调用的类。
-6. **补充，来自[issue745](https://github.com/Snailclimb/JavaGuide/issues/745) **当一个接口中定义了JDK8新加入的默认方法（被default关键字修饰的接口方法）时，如果有这个接口的实现类发生了初始化，那该接口要在其之前被初始化。
+6. **补充，来自[issue745](https://github.com/Snailclimb/JavaGuide/issues/745)** 当一个接口中定义了JDK8新加入的默认方法（被default关键字修饰的接口方法）时，如果有这个接口的实现类发生了初始化，那该接口要在其之前被初始化。
 
 
 ##### 类的引用（主动引用，一定会初始化）
@@ -385,7 +385,7 @@ Java在new一个对象的时候，会先查看对象所属的类有没有被加�
 
 ### 类卸载
 
-> 卸载这部分内容来自[issue#662](https://github.com/Snailclimb/JavaGuide/issues/662)由 **[guang19](https://github.com/guang19)**补充完善。
+> 卸载这部分内容来自[issue#662](https://github.com/Snailclimb/JavaGuide/issues/662)由 **[guang19](https://github.com/guang19)** 补充完善。
 
 **卸载类即该类的Class对象被GC。**
 
@@ -459,7 +459,7 @@ class Class<T> {
 }
 ```
 
-简单来说，**类加载器的主要作用就是加载Java类的字节码（.class文件）到JVM中（在内存中生成一个代表该类的Class对象）。**字节码可以是Java源程序（.java文件）经过javac编译得来，也可以是通过工具动态生成或者通过网络下载得来。
+简单来说，**类加载器的主要作用就是加载Java类的字节码（.class文件）到JVM中（在内存中生成一个代表该类的Class对象）**。字节码可以是Java源程序（.java文件）经过javac编译得来，也可以是通过工具动态生成或者通过网络下载得来。
 
 其实除了加载类之外，类加载器还可以加载Java应用所需的资源如文本、图像、配置文件、视频等等文件资源。本文只讨论其核心功能：加载类。
 
@@ -520,7 +520,7 @@ public abstract class ClassLoader {
 }
 ```
 
-**为什么获取到ClassLoader为null就是BootstrapClassLoader加载的呢？**这是因为BootstrapClassLoader由C++实现，由于这个C++实现的类加载器在Java中是没有与之对应的类的，所以拿到的结果是null。
+**为什么获取到ClassLoader为null就是BootstrapClassLoader加载的呢**？这是因为BootstrapClassLoader由C++实现，由于这个C++实现的类加载器在Java中是没有与之对应的类的，所以拿到的结果是null。
 
 下面我们来看一个获取ClassLoader的小案例：
 

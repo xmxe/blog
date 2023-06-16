@@ -145,7 +145,7 @@ HMACSHA256(
 1. 建议将JWT存放在localStorage中，放在Cookie中会有CSRF风险。
 2. 请求服务端并携带JWT的常见做法是将其放在HTTP Header的`Authorization`字段中（`Authorization:BearerToken`）。
 
-> **[spring-security-jwt-guide](https://github.com/Snailclimb/spring-security-jwt-guide)**就是一个基于JWT来做身份认证的简单案例，感兴趣的可以看看。
+> **[spring-security-jwt-guide](https://github.com/Snailclimb/spring-security-jwt-guide)** 就是一个基于JWT来做身份认证的简单案例，感兴趣的可以看看。
 
 ## 如何防止JWT被篡改？
 
@@ -187,9 +187,9 @@ JWT自身包含了身份验证所需要的所有信息，因此，我们的服�
 
 ### 有效避免了CSRF攻击
 
-**CSRF（CrossSiteRequestForgery）**一般被翻译为**跨站请求伪造**，属于网络攻击领域范围。相比于SQL脚本注入、XSS等安全攻击方式，CSRF的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆Google的产品Gmail也曾在2007年的时候爆出过CSRF漏洞，这给Gmail的用户造成了很大的损失。
+**CSRF（CrossSiteRequestForgery）一般被翻译为跨站请求伪造**，属于网络攻击领域范围。相比于SQL脚本注入、XSS等安全攻击方式，CSRF的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆Google的产品Gmail也曾在2007年的时候爆出过CSRF漏洞，这给Gmail的用户造成了很大的损失。
 
-**那么究竟什么是跨站请求伪造呢？**简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。
+**那么究竟什么是跨站请求伪造呢**？简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。
 
 举个简单的例子：小壮登录了某网上银行，他来到了网上银行的帖子区，看到一个帖子下面有一个链接写着“科学理财，年盈利率过万”，小壮好奇的点开了这个链接，结果发现自己的账户少了10000元。这是这么回事呢？原来黑客在链接中藏了一个请求，这个请求直接利用小壮的身份给银行发送了一个转账请求，也就是通过你的Cookie向银行发出请求。
 

@@ -35,7 +35,7 @@ JSON.parse(str)
 ```
 注意：单引号写在{}外，每个属性名都必须用双引号，否则会抛出异常。
 
-**Object.assign(target1,target2,...,targetn)：**合并对象，对象合并到第一个对象中，注意目标对象target1也会改变
+**Object.assign(target1,target2,...,targetn)**：合并对象，对象合并到第一个对象中，注意目标对象target1也会改变
 
 **join(separator)** :用于把数组中的所有元素放入一个字符串。separator可选，指定要使用的分隔符。如果省略该参数，则使用逗号作为分隔符。
 
@@ -135,7 +135,7 @@ console.log( arr.every( function( item, index, array ){
 **padEnd(maxLength,fillString)**
 
 **setInterval()** :方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
-setInterval()方法会不停地调用函数，直到**clearInterval()**被调用或窗口被关闭。由setInterval()返回的ID值可用作clearInterval()方法的参数。
+setInterval()方法会不停地调用函数，直到**clearInterval()** 被调用或窗口被关闭。由setInterval()返回的ID值可用作clearInterval()方法的参数。
 
 **setTimeout()** :方法用于在指定的毫秒数后调用函数或计算表达式。
 
@@ -281,14 +281,15 @@ if(jsObj){}过滤
 **if(!!jsObj)与上面等价 可以隐式转换类型**
 
 **js判断对象是否为空对象的几种方法**
-
-1. 将json对象转化为json字符串，再判断该字符串是否为"{}"
+1、将json对象转化为json字符串，再判断该字符串是否为"{}"
 ```js
 var data = {};
 var b = (JSON.stringify(data) == "{}");
 alert(b);//true
 ```
-2. for in 循环判断
+
+2、for in循环判断
+
 ```js
 var obj = {};
 var b = function() {
@@ -299,7 +300,8 @@ return true;
 
 alert(b());//true
 ```
-3. jquery的**isEmptyObject**方法
+
+3、jquery的**isEmptyObject**方法
 
 此方法是jquery将2方法(for in)进行封装，使用时需要依赖jquery
 ```js
@@ -307,7 +309,8 @@ var data = {};
 var b = $.isEmptyObject(data);
 alert(b);//true
 ```
-4. **Object.getOwnPropertyNames()**方法
+
+4、**Object.getOwnPropertyNames()** 方法
 
 此方法是使用Object对象的getOwnPropertyNames方法，获取到对象中的属性名，存到一个数组中，返回数组对象，我们可以通过判断数组的length来判断此对象是否为空。注意：此方法不兼容ie8，其余浏览器没有测试
 ```js
@@ -315,7 +318,8 @@ var data = {};
 var arr = Object.getOwnPropertyNames(data);
 alert(arr.length == 0);//true
 ```
-5. 使用ES6的**Object.keys()**方法
+
+5、使用ES6的**Object.keys()** 方法
 与4方法类似，是ES6的新方法,返回值也是对象中属性名组成的数组
 ```js
 var data = {};

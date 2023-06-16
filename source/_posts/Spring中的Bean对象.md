@@ -15,7 +15,7 @@ top: true
 
 ### 谈谈自己对于Spring IoC的了解
 
-**IoC（InversionofControl:控制反转）**是一种设计思想，而不是一个具体的技术实现。IoC的思想就是将原本在程序中手动创建对象的控制权，交由Spring框架来管理。不过，IoC并非Spring特有，在其他语言中也有应用。
+**IoC（InversionofControl:控制反转）** 是一种设计思想，而不是一个具体的技术实现。IoC的思想就是将原本在程序中手动创建对象的控制权，交由Spring框架来管理。不过，IoC并非Spring特有，在其他语言中也有应用。
 
 **为什么叫控制反转？**
 
@@ -121,7 +121,7 @@ Spring内置的@Autowired以及JDK内置的@Resource和@Inject都可以用于注
 
 Autowired属于Spring内置的注解，默认的注入方式为byType（根据类型进行匹配），也就是说会优先根据接口类型去匹配并注入Bean（接口的实现类）。
 
-**这会有什么问题呢？**当一个接口存在多个实现类的话，byType这种方式就无法正确注入对象了,因为这个时候Spring会同时找到多个满足条件的选择，默认情况下它自己不知道选择哪一个。
+**这会有什么问题呢**？当一个接口存在多个实现类的话，byType这种方式就无法正确注入对象了,因为这个时候Spring会同时找到多个满足条件的选择，默认情况下它自己不知道选择哪一个。
 
 这种情况下，注入方式会变为byName（根据名称进行匹配），这个名称通常就是类名（首字母小写）。就比如说下面代码中的smsService就是我这里所说的名称，这样应该比较好理解了吧。
 
@@ -305,10 +305,10 @@ public Person personPrototype() {
 #### 第一阶段获取Bean
 
 这里的流程图的入口在`AbstractBeanFactory`类的`doGetBean`方法，这里可以配合前面的getBean方法分析文章进行阅读。主要流程就是
-**1、**先处理Bean的名称，因为如果以“&”开头的Bean名称表示获取的是对应的FactoryBean对象
-**2、**从缓存中获取单例Bean，有则进一步判断这个Bean是不是在创建中，如果是的就等待创建完毕，否则直接返回这个Bean对象
-**3、**如果不存在单例Bean缓存，则先进行循环依赖的解析
-**4、**解析完毕之后先获取父类BeanFactory，获取到了则调用父类的getBean方法，不存在则先合并然后创建Bean
+1. 先处理Bean的名称，因为如果以“&”开头的Bean名称表示获取的是对应的FactoryBean对象
+2. 从缓存中获取单例Bean，有则进一步判断这个Bean是不是在创建中，如果是的就等待创建完毕，否则直接返回这个Bean对象
+3. 如果不存在单例Bean缓存，则先进行循环依赖的解析
+4. 解析完毕之后先获取父类BeanFactory，获取到了则调用父类的getBean方法，不存在则先合并然后创建Bean
 
 ### 二、创建Bean
 
@@ -318,8 +318,8 @@ public Person personPrototype() {
 
 **在真正创建Bean之前逻辑**
 这个流程图对应的代码在`AbstractAutowireCapableBeanFactory`类的`createBean`方法中。
-**1、**这里会先获取`RootBeanDefinition`对象中的Class对象并确保已经关联了要创建的Bean的Class。
-**2、**这里会检查3个条件
+1. 这里会先获取`RootBeanDefinition`对象中的Class对象并确保已经关联了要创建的Bean的Class。
+2. 这里会检查3个条件
 （1）Bean的属性中的`beforeInstantiationResolved`字段是否为true，默认是false。
 （2）Bean是原生的Bean
 （3）Bean的`hasInstantiationAwareBeanPostProcessors`属性为true，这个属性在Spring准备刷新容器BeanPostProcessors的时候会设置，如果当前Bean实现了`InstantiationAwareBeanPostProcessor`则这个就会是true。
@@ -350,7 +350,7 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
     }
 ```
 
-**3、**如果上面3个条件其中一个不满足就不会调用实现的方法。默认这里都不会调用的这些`BeanPostProcessors`的实现方法。然后继续执行后面的`doCreateBean`方法。
+3. 如果上面3个条件其中一个不满足就不会调用实现的方法。默认这里都不会调用的这些`BeanPostProcessors`的实现方法。然后继续执行后面的`doCreateBean`方法。
 
 #### 2.2 真正的创建Bean，doCreateBean
 
@@ -358,16 +358,16 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
 
 **doCreateBean方法逻辑**
 这个代码的实现还是在`AbstractAutowireCapableBeanFactory`方法中。流程是
-**1、**先检查`instanceWrapper`变量是不是null，这里一般是null，除非当前正在创建的Bean在`factoryBeanInstanceCache`中存在这个是保存还没创建完成的FactoryBean的集合。
-**2、**调用createBeanInstance方法实例化Bean，这个方法在后面会讲解
-**3、**如果当前`RootBeanDefinition`对象还没有调用过实现了的`MergedBeanDefinitionPostProcessor`接口的方法，则会进行调用。
-**4**、当满足以下三点
+1. 先检查`instanceWrapper`变量是不是null，这里一般是null，除非当前正在创建的Bean在`factoryBeanInstanceCache`中存在这个是保存还没创建完成的FactoryBean的集合。
+2. 调用createBeanInstance方法实例化Bean，这个方法在后面会讲解
+3. 如果当前`RootBeanDefinition`对象还没有调用过实现了的`MergedBeanDefinitionPostProcessor`接口的方法，则会进行调用。
+4. 当满足以下三点
 （1）是单例Bean
 （2）尝试解析bean之间的循环引用
 （3）bean目前正在创建中
 则会进一步检查是否实现了`SmartInstantiationAwareBeanPostProcessor`接口如果实现了则调用是实现的`getEarlyBeanReference`方法
-**5、**调用`populateBean`方法进行属性填充，这里后面会讲解
-**6、**调用`initializeBean`方法对Bean进行初始化，这里后面会讲解
+5. 调用`populateBean`方法进行属性填充，这里后面会讲解
+6. 调用`initializeBean`方法对Bean进行初始化，这里后面会讲解
 
 ##### 2.2.1 实例化Bean，createBeanInstance
 
@@ -430,19 +430,19 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
     }
 ```
 
-**1、**先检查Class是否已经关联了，并且对应的修饰符是否是public的
-**2、**如果用户定义了Bean实例化的函数，则调用并返回
-**3、**如果当前Bean实现了`FactoryBean`接口则调用对应的`FactoryBean`接口的`getObject`方法
-**4、**根据getBean时候是否传入构造参数进行处理
-**4.1**如果没有传入构造参数，则检查是否存在已经缓存的无参构造器，有则使用构造器直接创建，没有就会调用`instantiateBean`方法先获取实例化的策略默认是`CglibSubclassingInstantiationStrategy`，然后实例化Bean。最后返回
-**4.2**如果传入了构造参数，则会先检查是否实现了`SmartInstantiationAwareBeanPostProcessor`接口，如果实现了会调用`determineCandidateConstructors`获取返回的候选构造器。
-**4.3**检查4个条件是否满足一个
+1. 先检查Class是否已经关联了，并且对应的修饰符是否是public的
+2. 如果用户定义了Bean实例化的函数，则调用并返回
+3. 如果当前Bean实现了`FactoryBean`接口则调用对应的`FactoryBean`接口的`getObject`方法
+4. 根据getBean时候是否传入构造参数进行处理
+4.1如果没有传入构造参数，则检查是否存在已经缓存的无参构造器，有则使用构造器直接创建，没有就会调用`instantiateBean`方法先获取实例化的策略默认是`CglibSubclassingInstantiationStrategy`，然后实例化Bean。最后返回
+4.2如果传入了构造参数，则会先检查是否实现了`SmartInstantiationAwareBeanPostProcessor`接口，如果实现了会调用`determineCandidateConstructors`获取返回的候选构造器。
+4.3检查4个条件是否满足一个
 （1）构造器不为null，
 （2）从RootBeanDefinition中获取到的关联的注入方式是构造器注入（没有构造参数就是setter注入，有则是构造器注入）
 （3）含有构造参数
 （4）getBean方法传入构造参数不是空
 满足其中一个则会调用返回的候选构造器实例化Bean并返回，如果都不满足，则会根据构造参数选则合适的有参构造器然后实例化Bean并返回
-**5、**如果上面都没有合适的构造器，则直接使用无参构造器创建并返回Bean。
+5. 如果上面都没有合适的构造器，则直接使用无参构造器创建并返回Bean。
 
 ##### 2.2.2 填充Bean，populateBean
 
@@ -536,10 +536,10 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
     }
 ```
 
-**1、**检查当前Bean是否实现了`InstantiationAwareBeanPostProcessor`的`postProcessAfterInstantiation`方法则调用，并结束Bean的填充。
-**2、**将按照类型跟按照名称注入的Bean分开，如果注入的Bean还没有实例化的这里会实例化，然后放到`PropertyValues`对象中。
-**3、**如果实现了`InstantiationAwareBeanPostProcessor`类的`postProcessProperties`则调用这个方法并获取返回值，如果返回值是null，则有可能是实现了过期的`postProcessPropertyValues`方法，这里需要进一步调用`postProcessPropertyValues`方法
-**4、**进行参数填充
+1. 检查当前Bean是否实现了`InstantiationAwareBeanPostProcessor`的`postProcessAfterInstantiation`方法则调用，并结束Bean的填充。
+2. 将按照类型跟按照名称注入的Bean分开，如果注入的Bean还没有实例化的这里会实例化，然后放到`PropertyValues`对象中。
+3. 如果实现了`InstantiationAwareBeanPostProcessor`类的`postProcessProperties`则调用这个方法并获取返回值，如果返回值是null，则有可能是实现了过期的`postProcessPropertyValues`方法，这里需要进一步调用`postProcessPropertyValues`方法
+4. 进行参数填充
 
 ##### 2.2.3 初始化Bean，initializeBean
 
@@ -548,8 +548,8 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
 **初始化Bean**
 同时这里根据代码跟流程图来说明
 
-**1、**如果Bean实现了`BeanNameAware`,`BeanClassLoaderAware`,`BeanFactoryAware`则调用对应实现的方法。
-**2、**Bean不为null并且bean不是合成的，如果实现了`BeanPostProcessor`的`postProcessBeforeInitialization`则会调用实现的`postProcessBeforeInitialization`方法。在`ApplicationContextAwareProcessor`类中实现了`postProcessBeforeInitialization`方法。而这个类会在Spring刷新容器准备`beanFactory`的时候会加进去，这里就会被调用，而调用里面会检查Bean是不是`EnvironmentAware`,`EmbeddedValueResolverAware`,`ResourceLoaderAware`,`ApplicationEventPublisherAware`,`MessageSourceAware`,`ApplicationContextAware`的实现类。这里就会调用对应的实现方法。代码如下
+1. 如果Bean实现了`BeanNameAware`,`BeanClassLoaderAware`,`BeanFactoryAware`则调用对应实现的方法。
+2. Bean不为null并且bean不是合成的，如果实现了`BeanPostProcessor`的`postProcessBeforeInitialization`则会调用实现的`postProcessBeforeInitialization`方法。在`ApplicationContextAwareProcessor`类中实现了`postProcessBeforeInitialization`方法。而这个类会在Spring刷新容器准备`beanFactory`的时候会加进去，这里就会被调用，而调用里面会检查Bean是不是`EnvironmentAware`,`EmbeddedValueResolverAware`,`ResourceLoaderAware`,`ApplicationEventPublisherAware`,`MessageSourceAware`,`ApplicationContextAware`的实现类。这里就会调用对应的实现方法。代码如下
 
 ```java
     protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
@@ -583,8 +583,8 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
     }
 ```
 
-**1、**实例化Bean然后，检查是否实现了`InitializingBean`的`afterPropertiesSet`方法，如果实现了就会调用
-**2、**Bean不为null并且bean不是合成的，如果实现了`BeanPostProcessor`的`postProcessBeforeInitialization`则会调用实现的`postProcessAfterInitialization`方法。
+1. 实例化Bean然后，检查是否实现了`InitializingBean`的`afterPropertiesSet`方法，如果实现了就会调用
+2. Bean不为null并且bean不是合成的，如果实现了`BeanPostProcessor`的`postProcessBeforeInitialization`则会调用实现的`postProcessAfterInitialization`方法。
 
 到此创建Bean的流程就没了，剩下的就是容器销毁的时候的了
 
@@ -662,7 +662,6 @@ public DisposableBeanAdapter(Object bean, String beanName, RootBeanDefinition be
                 }
             }
         }
-......
     }
 ```
 
@@ -728,11 +727,11 @@ AbcService abcService = (AbcService)appContext.getBean("abcService");
 // 但是这样就会存在一个问题：因为它会重新装载applicationContext-common.xml并实例化上下文Bean，如果有些线程配置类也是在这个配置文件中，那么会造成做相同工作的的线程会被启两次。一次是web容器初始化时启动，另一次是上述代码显示的实例化了一次。当于重新初始化一遍！这样就产生了冗余,所以可以通过实现ApplicationContextAware接口获取Bean,当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有Bean。换句话说，就是这个类可以直接获取Spring配置文件中，所有有引用到的Bean对象
 
 private static ApplicationContext applicationContext;
- 	@Override
-    public void setApplicationContext(ApplicationContext arg0) throws BeansException {
-        applicationContext = arg0;
-    }
+@Override
+public void setApplicationContext(ApplicationContext arg0) throws BeansException {
+    applicationContext = arg0;
 }
+
 // 注意：从ApplicationContextAware获取ApplicationContext上下文的情况，仅仅适用于当前运行的代码和已启动的Spring代码处于同一个Spring上下文，否则获取到的ApplicationContext是空的
 
 6. BeanPostProcessor (前置方法)

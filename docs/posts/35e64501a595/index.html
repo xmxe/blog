@@ -610,7 +610,7 @@ OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><
 <li><strong>NX</strong>：只有当lockKey对应的key值不存在的时候才能SET成功；</li>
 <li><strong>EX</strong>：过期时间设置（秒为单位）EX3标示这个锁有一个3秒的自动过期时间。与EX对应的是PX（毫秒为单位），这两个都是过期时间设置。</li>
 </ul>
-<p><strong>一定要保证设置指定key的值和过期时间是一个原子操作！！！</strong>不然的话，依然可能会出现锁无法被释放的问题。</p>
+<p><strong>一定要保证设置指定key的值和过期时间是一个原子操作</strong>!!不然的话，依然可能会出现锁无法被释放的问题。</p>
 <p>这样确实可以解决问题，不过，这种解决办法同样存在漏洞：<strong>如果操作共享资源的时间大于过期时间，就会出现锁提前过期的问题，进而导致分布式锁直接失效。如果锁的超时时间设置过长，又会影响到性能。</strong></p>
 <p>你或许在想：<strong>如果操作共享资源的操作还未完成，锁过期时间能够自己续期就好了！</strong></p>
 <h4 id="如何实现锁的优雅续期？"><a href="#如何实现锁的优雅续期？" class="headerlink" title="如何实现锁的优雅续期？"></a>如何实现锁的优雅续期？</h4><p>对于Java开发的小伙伴来说，已经有了现成的解决方案：**<a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">Redisson</a>**。其他语言的解决方案，可以在Redis官方文档中找到，地址：<a target="_blank" rel="noopener" href="https://redis.io/topics/distlock%E3%80%82">https://redis.io/topics/distlock。</a></p>
@@ -710,7 +710,7 @@ lock<span class="token punctuation">.</span><span class="token function">lock</s
 <p>如果不是非要实现绝对可靠的分布式锁的话，其实单机版Redis就完全够了，实现简单，性能也非常高。如果你必须要实现一个绝对可靠的分布式锁的话，可以基于ZooKeeper来做，只是性能会差一些。</p>
 <h3 id="基于ZooKeeper实现分布式锁"><a href="#基于ZooKeeper实现分布式锁" class="headerlink" title="基于ZooKeeper实现分布式锁"></a>基于ZooKeeper实现分布式锁</h3><p>Redis实现分布式锁性能较高，ZooKeeper实现分布式锁可靠性更高。实际项目中，我们应该根据业务的具体需求来选择。</p>
 <h4 id="如何基于ZooKeeper实现分布式锁？"><a href="#如何基于ZooKeeper实现分布式锁？" class="headerlink" title="如何基于ZooKeeper实现分布式锁？"></a>如何基于ZooKeeper实现分布式锁？</h4><p>客户端连接zookeeper，并在&#x2F;lock下创建临时的且有序的子节点，第一个客户端对应的子节点为&#x2F;lock&#x2F;lock-0000000000，第二个为&#x2F;lock&#x2F;lock-0000000001，以此类推；客户端获取&#x2F;lock下的子节点列表，判断自己创建的子节点是否为当前子节点列表中序号最小的子节点，如果是则认为获得锁，否则监听刚好在自己之前一位的子节点删除消息，获得子节点变更通知后重复此步骤直至获得锁；执行业务代码；完成业务流程后，删除对应的子节点释放锁。</p>
-<p>ZooKeeper分布式锁是基于<strong>临时顺序节点</strong>和<strong>Watcher（事件监听器）</strong>实现的。</p>
+<p>ZooKeeper分布式锁是基于<strong>临时顺序节点</strong>和<strong>Watcher（事件监听器）</strong> 实现的。</p>
 <p>获取锁：</p>
 <ol>
 <li>首先我们要有一个持久节点&#x2F;locks，客户端获取锁就是在locks下创建临时顺序节点。</li>
@@ -892,7 +892,7 @@ client<span class="token punctuation">.</span><span class="token function">close
 <li>synchronized关键字加到实例方法上是给对象实例上锁；</li>
 <li>尽量不要使用synchronized(String a)因为JVM中，字符串常量池具有缓存功能。</li>
 </ul>
-<h4 id="构造方法可以用synchronized修饰么？"><a href="#构造方法可以用synchronized修饰么？" class="headerlink" title="构造方法可以用synchronized修饰么？"></a>构造方法可以用synchronized修饰么？</h4><p>先说结论：<strong>构造方法不能使用synchronized关键字修饰。</strong>构造方法本身就属于线程安全的，不存在同步的构造方法一说。</p>
+<h4 id="构造方法可以用synchronized修饰么？"><a href="#构造方法可以用synchronized修饰么？" class="headerlink" title="构造方法可以用synchronized修饰么？"></a>构造方法可以用synchronized修饰么？</h4><p>先说结论：<strong>构造方法不能使用synchronized关键字修饰</strong>。构造方法本身就属于线程安全的，不存在同步的构造方法一说。</p>
 <h4 id="synchronized底层原理了解吗？"><a href="#synchronized底层原理了解吗？" class="headerlink" title="synchronized底层原理了解吗？"></a>synchronized底层原理了解吗？</h4><p>synchronized关键字底层原理属于JVM层面的东西。</p>
 <h5 id="synchronized同步语句块的情况"><a href="#synchronized同步语句块的情况" class="headerlink" title="synchronized同步语句块的情况"></a>synchronized同步语句块的情况</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SynchronizedDemo</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>

@@ -116,3 +116,4 @@ AuthenticationManager.authenticate()-->ProviderManager.authenticate()-->DaoAuthe
 - [Spring Security中的RememberMe登录](https://mp.weixin.qq.com/s/ZWwlheacryW5Zmo-Xw269g)
 - [一文带你搞懂Spring Security](https://mp.weixin.qq.com/s/3L-RTpvB9Q248_g7fBtDVA)
 - [盘点Spring Security框架中的八大经典设计模式](https://mp.weixin.qq.com/s/xZrsy7bp8xN3EJblz7TLHw)
+- [Spring Security6全新写法，大变样！](https://mp.weixin.qq.com/s/RXNt1M3KND4aJbr0ZhHing)

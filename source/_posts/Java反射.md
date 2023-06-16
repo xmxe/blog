@@ -65,7 +65,7 @@ public class DebugInvocationHandler implements InvocationHandler {
 
 如果我们动态获取到这些信息，我们需要依靠Class对象。Class类对象将一个类的方法、变量等信息告诉运行的程序。Java提供了四种方式获取Class对象:
 
-**1. 知道具体类的情况下可以使用：**
+**1. 知道具体类的情况下可以使用**：
 
 ```java
 Class alunbarClass = TargetObject.class;

@@ -125,7 +125,7 @@ final void treeifyBin(Node<K,V>[] tab, int hash) {
 
 ![img](https://oscimg.oschina.net/oscnet/up-bba283228693dae74e78da1ef7a9a04c684.png)
 
-**类的属性：**
+**类的属性**：
 
 ```java
 public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, Serializable {
@@ -298,7 +298,7 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
 
 HashMap只提供了put用于添加元素，putVal方法只是给put方法调用的一个方法，并没有提供给用户使用。
 
-**对putVal方法添加元素的分析如下：**
+**对putVal方法添加元素的分析如下**：
 
 1. 如果定位到的数组位置没有元素就直接插入。
 2. 如果定位到的数组位置有元素就和要插入的key比较，如果key相同就直接覆盖，如果key不相同，就判断p是否是一个树节点，如果是就调用`e = ((TreeNode<K,V>)p).putTreeVal(this,tab,hash,key,value)`将元素添加进入。如果不是就遍历链表插入(插入的是链表尾部)。
@@ -386,7 +386,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
 
 **我们再来对比一下JDK1.7put方法的代码**
 
-**对于put方法的分析如下：**
+**对于put方法的分析如下**：
 
 - ①如果定位到的数组位置没有元素就直接插入。
 - ②如果定位到的数组位置有元素，遍历以这个元素为头结点的链表，依次和插入的key比较，如果key相同就直接覆盖，不同就采用头插法插入元素。
@@ -840,7 +840,7 @@ private Segment<K,V> ensureSegment(int k) {
 
 2. 如果指定位置的Segment为空，则初始化这个Segment.
 
-   **初始化Segment流程：**
+   **初始化Segment流程**：
 
    1. 检查计算得到的位置的Segment是否为null.
    2. 为null继续初始化，使用Segment[0]的容量和负载因子创建一个HashEntry数组。
@@ -1244,7 +1244,7 @@ Java8中的ConcurrentHashMap使用的Synchronized锁加CAS的机制。结构也�
 
 ConcurrentHashMap和Hashtable的区别主要体现在实现线程安全的方式上不同。
 
-- **底层数据结构：**JDK1.7的ConcurrentHashMap底层采用**分段的数组+链表**实现，JDK1.8采用的数据结构跟HashMap1.8的结构一样，数组+链表/红黑二叉树。Hashtable和JDK1.8之前的HashMap的底层数据结构类似都是采用**数组+链表**的形式，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的；
+- **底层数据结构**:JDK1.7的ConcurrentHashMap底层采用**分段的数组+链表**实现，JDK1.8采用的数据结构跟HashMap1.8的结构一样，数组+链表/红黑二叉树。Hashtable和JDK1.8之前的HashMap的底层数据结构类似都是采用**数组+链表**的形式，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的；
 - **实现线程安全的方式（重要）**：
   - 在JDK1.7的时候，ConcurrentHashMap对整个桶数组进行了分割分段(**Segment**，分段锁)，每一把锁只锁容器其中一部分数据（下面有示意图），多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。
   - 到了JDK1.8的时候，ConcurrentHashMap已经摒弃了**Segment**的概念，而是直接用Node数组+链表+红黑树的数据结构来实现，并发控制使用synchronized和CAS来操作。（JDK1.6以后synchronized锁做了很多优化）整个看起来就像是优化过且线程安全的HashMap，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是为了兼容旧版本；
@@ -1313,7 +1313,7 @@ Segment的结构和HashMap类似，是一种数组和链表结构，一个Segmen
 
 Java8几乎完全重写了ConcurrentHashMap，代码量从原来Java7中的1000多行，变成了现在的6000多行。
 
-**ConcurrentHashMap取消了Segment分段锁，采用Node+CAS+synchronized来保证并发安全。**数据结构跟HashMap1.8的结构类似，数组+链表/红黑二叉树。Java8在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为O(N)）转换为红黑树（寻址时间复杂度为O(log(N))）。
+**ConcurrentHashMap取消了Segment分段锁，采用Node+CAS+synchronized来保证并发安全**。数据结构跟HashMap1.8的结构类似，数组+链表/红黑二叉树。Java8在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为O(N)）转换为红黑树（寻址时间复杂度为O(log(N))）。
 
 Java8中，锁粒度更细，synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，就不会影响其他Node的读写，效率大幅提升。
 
@@ -1360,13 +1360,13 @@ ConcurrentMap(如ConcurrentHashMap、ConcurrentSkipListMap)不允许使用null�
 
 ### HashMap和Hashtable的区别
 
-- **线程是否安全：**HashMap是非线程安全的，Hashtable是线程安全的,因为Hashtable内部的方法基本都经过synchronized修饰。（如果你要保证线程安全的话就使用ConcurrentHashMap）；
-- **效率：**因为线程安全的问题，HashMap要比Hashtable效率高一点。另外，Hashtable基本被淘汰，不要在代码中使用它；
-- **对Null key和Null value的支持：**HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多个；Hashtable不允许有null键和null值，否则会抛出NullPointerException。
-- **初始容量大小和每次扩充容量大小的不同：**①创建时如果不指定容量初始值，Hashtable默认的初始大小为11，之后每次扩充，容量变为原来的2n+1。HashMap默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。②创建时如果给定了容量初始值，那么Hashtable会直接使用你给定的大小，而HashMap会将其扩充为2的幂次方大小（HashMap中的tableSizeFor()方法保证，下面给出了源代码）。也就是说HashMap总是使用2的幂作为哈希表的大小,后面会介绍到为什么是2的幂次方。
-- **底层数据结构：**JDK1.8以后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树），以减少搜索时间（后文中我会结合源码对这一过程进行分析）。Hashtable没有这样的机制。
+- **线程是否安全**：HashMap是非线程安全的，Hashtable是线程安全的,因为Hashtable内部的方法基本都经过synchronized修饰。（如果你要保证线程安全的话就使用ConcurrentHashMap）；
+- **效率**：因为线程安全的问题，HashMap要比Hashtable效率高一点。另外，Hashtable基本被淘汰，不要在代码中使用它；
+- **对Null key和Null value的支持**：HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多个；Hashtable不允许有null键和null值，否则会抛出NullPointerException。
+- **初始容量大小和每次扩充容量大小的不同**：①创建时如果不指定容量初始值，Hashtable默认的初始大小为11，之后每次扩充，容量变为原来的2n+1。HashMap默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。②创建时如果给定了容量初始值，那么Hashtable会直接使用你给定的大小，而HashMap会将其扩充为2的幂次方大小（HashMap中的tableSizeFor()方法保证，下面给出了源代码）。也就是说HashMap总是使用2的幂作为哈希表的大小,后面会介绍到为什么是2的幂次方。
+- **底层数据结构**：JDK1.8以后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树），以减少搜索时间（后文中我会结合源码对这一过程进行分析）。Hashtable没有这样的机制。
 
-**HashMap中带有初始容量的构造函数：**
+**HashMap中带有初始容量的构造函数**：
 
 ```java
 public HashMap(int initialCapacity, float loadFactor) {

@@ -64,6 +64,7 @@ public class B {
 7. 此时将A对象放入Map并从Map2中删除。
 
 **二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？**
+
 从上面的流程中我们可以看到使用两级缓存可以完美解决循环依赖的问题，但是Spring中还有另外一个问题需要解决，这就是初始化过程中的AOP实现。AOP是Spring的重要功能，实现方式就是使用代理模式动态增强类的功能。动态单例目前有两种技术可以实现，一种是JDK自带的基于接口的动态Proxy技术，一种是CGlib基于字节码动态生成的Proxy技术，这两种技术都是需要原始对象创建完毕，之后基于原始对象生成代理对象的。那么我们发现，在二级缓存的设计下，我们需要在放入缓存Map之前将代理对象生成好。
 将流程改为：
 1. 实例化Bean对象，为Bean对象在内存中分配空间，各属性赋值为默认值
@@ -143,19 +144,19 @@ $.ajax({
 
 ### 控制反转(IoC)和依赖注入(DI)
 
-**IoC(Inversion of Control,控制反转)**是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。
+**IoC(Inversion of Control,控制反转)** 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。
 
 **IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则。**
 
 ![ioc-patterns](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ioc-patterns.png)
 
-**Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。**IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。
+**Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的**。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。
 
 在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。
 
 > 关于Spring IOC的理解，推荐看一下这个[知乎回答](https://www.zhihu.com/question/23277575/answer/169698662)，非常不错。
 
-**控制反转怎么理解呢?**举个例子："对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中"。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。
+**控制反转怎么理解呢?** 举个例子："对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中"。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。
 
 **DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去。**
 
@@ -200,7 +201,7 @@ public class App {
 - 对于频繁使用的对象，可以省略创建对象所花费的时间，这对于那些重量级对象而言，是非常可观的一笔系统开销；
 - 由于new操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻GC压力，缩短GC停顿时间。
 
-**Spring中bean的默认作用域就是singleton(单例)的。**除了singleton作用域，Spring中bean还有下面几种作用域：
+**Spring中bean的默认作用域就是singleton(单例)的**。除了singleton作用域，Spring中bean还有下面几种作用域：
 
 - **prototype**:每次获取都会创建一个新的bean实例。也就是说，连续getBean()两次，得到的是不同的Bean实例。
 - **request**（仅Web应用可用）:每一次HTTP请求都会产生一个新的bean（请求bean），该bean仅在当前HTTPrequest内有效。
@@ -258,7 +259,7 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 **代理模式在AOP中的应用**
 
-**AOP(Aspect-Oriented Programming，面向切面编程)**能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
+**AOP(Aspect-Oriented Programming，面向切面编程)** 能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
 
 **Spring AOP就是基于动态代理的**，如果要代理的对象，实现了某个接口，那么Spring AOP会使用**JDKProxy**去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用**Cglib**生成一个被代理对象的子类来作为代理，如下图所示：
 
@@ -270,7 +271,7 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 ### Spring AOP和AspectJ AOP有什么区别?
 
-**Spring AOP属于运行时增强，而AspectJ是编译时增强。**Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。
+**Spring AOP属于运行时增强，而AspectJ是编译时增强**。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。
 
 Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，
 
@@ -467,7 +468,7 @@ Spring框架中用到了哪些设计模式？
 - **单例设计模式**:Spring中的Bean默认都是单例的。
 - **模板方法模式**:Spring中jdbcTemplate、hibernateTemplate等以Template结尾的对数据库操作的类，它们就使用到了模板模式。
 - **包装器设计模式**:我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。
-- **观察者模式:**Spring事件驱动模型就是观察者模式很经典的一个应用。
+- **观察者模式**:Spring事件驱动模型就是观察者模式很经典的一个应用。
 - **适配器模式**:Spring AOP的增强或通知(Advice)使用到了适配器模式、Spring MVC中也是用到了适配器模式适配Controller。
 - .....
 
@@ -489,19 +490,20 @@ Spring框架中用到了哪些设计模式？
 - [手写Spring框架](https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA)
 - [Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？](https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw)
 - [聊聊Spring核心](https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ)
+- [揭秘Spring依赖注入和SpEL表达式](https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw)
 
 ## Spring MVC
 
 ### 组件
 
-**Handle：**Handler是一个Controller的对象和请求方式的组合的一个Object对象
+**Handle**:Handler是一个Controller的对象和请求方式的组合的一个Object对象
 **HandleExcutionChains**是HandleMapping返回的一个处理执行链，它是对Handle的二次封装，将拦截器关联到一起。然后，在DispatcherServlert中完成了拦截器链对handler的过滤。**DispatcherServlet**要将一个请求交给哪个特定的Controller，它需要咨询一个Bean——这个Bean为“HandlerMapping”。HandlerMapping是把一个URL指定到一个Controller上，（就像应用系统的web.xml文件使用<servlet-mapping\>将URL映射到servlet）。
 **DispatcherServlet**：作为前端控制器，整个流程控制的中心，控制其它组件执行，统一调度，降低组件之间的耦合性，提高每个组件的扩展性。
 作用：接收请求，响应结果，相当于转发器，中央处理器。有了dispatcherServlet减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请,dispatcherServlet的存在降低了组件之间的耦合性
-**HandlerMapping：**通过扩展处理器映射器实现不同的映射方式，作用:根据请求的url查找Handler,HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等
-**HandlAdapter：**通过扩展处理器适配器，支持更多类型的处理器。
+**HandlerMapping**:通过扩展处理器映射器实现不同的映射方式，作用:根据请求的url查找Handler,HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等
+**HandlAdapter**:通过扩展处理器适配器，支持更多类型的处理器。
 作用：按照特定规则（HandlerAdapter要求的规则）去执行Handler，通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。
-**ViewResolver：**通过扩展视图解析器，支持更多类型的视图解析，例如：jsp、freemarker、pdf、excel等。作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）
+**ViewResolver**:通过扩展视图解析器，支持更多类型的视图解析，例如：jsp、freemarker、pdf、excel等。作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）
 作用：View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。springmvc框架提供了很多的View视图类型，包括：jstlView、freemarkerView、pdfView等。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由工程师根据业务需求开发具体的页面。
 
 ### DispatcherServlet的工作流程
@@ -627,7 +629,7 @@ classpath:/METAINF/resources/，classpath:/resources/，classpath:/static/，cla
 Spring 3.0.x中使用了<mvc:annotation-driven />后，默认会帮我们注册默认处理请求，参数和返回值的类，其中最主要的两个类：DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter，分别为HandlerMapping的实现类和HandlerAdapter的实现类。从3.1.x版本开始对应实现类改为了RequestMappingHandlerMapping和RequestMappingHandlerAdapter。
 
 ### <context:component-scan />
-当配置了<mvc:annotation-driven />后，Spring就知道了我们启用注解驱动。然后Spring通过**<context:component-scan />**标签的配置，会自动为我们将扫描到的@Component,@Controller,@Service,@Repository等注解标记的组件注册到工厂中，来处理我们的请求.
+当配置了<mvc:annotation-driven />后，Spring就知道了我们启用注解驱动。然后Spring通过<context:component-scan />标签的配置，会自动为我们将扫描到的@Component,@Controller,@Service,@Repository等注解标记的组件注册到工厂中，来处理我们的请求.
 <context:component-scan />标签是告诉Spring来扫描指定包下的类，并注册被@Component，@Controller，@Service，@Repository等注解标记的组件。而<mvc:annotation-driven />是告知Spring，我们启用注解驱动
 
 ### <mvc:default-servlet-handler />

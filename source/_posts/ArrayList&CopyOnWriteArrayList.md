@@ -26,12 +26,12 @@ public class ArrayList<E> extends AbstractList<E>
 
 ### Arraylist和Vector的区别
 
-1. **ArrayList**是**List**的主要实现类，底层使用**Object[]**存储，适用于频繁的查找工作，线程不安全；
-2. **Vector**是**List**的古老实现类，底层使用**Object[]**存储，线程安全的。
+1. **ArrayList**是**List**的主要实现类，底层使用Object[]存储，适用于频繁的查找工作，线程不安全；
+2. **Vector**是**List**的古老实现类，底层使用Object[]存储，线程安全的。
 
 ### Arraylist与LinkedList区别
 
-1. **是否保证线程安全：**ArrayList和LinkedList都是不同步的，也就是ArrayList和LinkedList都不是线程安全的，以add为例,源码如下
+1. **是否保证线程安全**：ArrayList和LinkedList都是不同步的，也就是ArrayList和LinkedList都不是线程安全的，以add为例,源码如下
 ```java
 elementData[size++] = e;
 // 它由两步操作构成
@@ -39,10 +39,10 @@ elementData[size] = e;
 size = size + 1;
 ```
 在单线程执行这两条代码时，那当然没有任何问题，但是当多线程环境下执行时，可能就会发生一个线程添加的值覆盖另一个线程添加的值。举个例子：假设size = 0，我们要往这个数组的末尾添加元素，线程A开始添加一个元素，值为A。此时它执行第一条操作，将A放在了数组elementData下标为0的位置上，接着线程B刚好也要开始添加一个值为B的元素，且走到了第一步操作。此时线程B获取到的size值依然为0，于是它将B也放在了elementData下标为0的位置上，线程A开始增加size的值，size = 1,线程B开始增加size的值，size = 2,这样，线程A、B 都执行完毕后，理想的情况应该是size = 2，elementData[0] = A，elementData[1] = B。而实际情况变成了size = 2，elementData[0] = B（线程B覆盖了线程A的操作），下标1的位置上什么都没有。并且后续除非我们使用set方法修改下标为1的值，否则这个位置上将一直为null，因为在末尾添加元素时将会从size = 2的位置上开始。
-2. **底层数据结构：**Arraylist底层使用的是**Object数组**；LinkedList底层使用的是**双向链表**数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别）
-3. **插入和删除是否受元素位置的影响：**①**ArrayList采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。**比如：执行`add(E e)`方法的时候，`ArrayList`会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置i插入和删除元素的话（`add(int index, E element)`）时间复杂度就为O(n-i)。因为在进行上述操作的时候集合中第i和第i个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。②**LinkedList采用链表存储，所以对于`add(E e)`方法的插入，删除元素时间复杂度不受元素位置的影响，近似O(1)，如果是要在指定位置`i`插入和删除元素的话（`(add(int index, E element)`）时间复杂度近似为`o(n))`因为需要先移动到指定位置再插入。**
-4. **是否支持快速随机访问：**LinkedList不支持高效的随机元素访问，而ArrayList支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于`get(int index)`方法)。
-5. **内存空间占用：**ArrayList的空间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。
+2. **底层数据结构**：Arraylist底层使用的是**Object数组**；LinkedList底层使用的是**双向链表** 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别）
+3. **插入和删除是否受元素位置的影响**：①**ArrayList采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响**。比如：执行`add(E e)`方法的时候，`ArrayList`会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置i插入和删除元素的话（`add(int index, E element)`）时间复杂度就为O(n-i)。因为在进行上述操作的时候集合中第i和第i个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。②**LinkedList采用链表存储，所以对于`add(E e)`方法的插入，删除元素时间复杂度不受元素位置的影响，近似O(1)，如果是要在指定位置`i`插入和删除元素的话（`(add(int index, E element)`）时间复杂度近似为`o(n))`因为需要先移动到指定位置再插入**。
+4. **是否支持快速随机访问**：LinkedList不支持高效的随机元素访问，而ArrayList支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于`get(int index)`方法)。
+5. **内存空间占用**：ArrayList的空间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。
 
 ### ArrayList核心源码解读
 
@@ -556,7 +556,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 #### 先从ArrayList的构造函数说起
 
-**（JDK8）ArrayList有三种方式来初始化，构造方法源码如下：**
+**（JDK8）ArrayList有三种方式来初始化，构造方法源码如下**：
 
 ```java
    /**
@@ -713,17 +713,17 @@ private void grow(int minCapacity) {
 }
 ```
 
-**int newCapacity = oldCapacity + (oldCapacity >> 1),所以ArrayList每次扩容之后容量都会变为原来的1.5倍左右（oldCapacity为偶数就是1.5倍，否则是1.5倍左右）！**奇偶不同，比如：10+10/2 = 15,33+33/2=49。如果是奇数的话会丢掉小数.
+**int newCapacity = oldCapacity + (oldCapacity >> 1),所以ArrayList每次扩容之后容量都会变为原来的1.5倍左右（oldCapacity为偶数就是1.5倍，否则是1.5倍左右）**。奇偶不同，比如：10+10/2 = 15,33+33/2=49。如果是奇数的话会丢掉小数.
 
 > ">>"（移位运算符）：>>1右移一位相当于除2，右移n位相当于除以2的n次方。这里oldCapacity明显右移了1位所以相当于oldCapacity/2。对于大数据的2进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源
 
-**我们再来通过例子探究一下grow()方法：**
+**我们再来通过例子探究一下grow()方法**：
 
 - 当add第1个元素时，oldCapacity为0，经比较后第一个if判断成立，newCapacity = minCapacity(为10)。但是第二个if判断不会成立，即newCapacity不比MAX_ARRAY_SIZE大，则不会进入hugeCapacity方法。数组容量为10，add方法中return true,size增为1。
 - 当add第11个元素进入grow方法时，newCapacity为15，比minCapacity（为11）大，第一个if判断不成立。新容量没有大于数组最大size，不会进入hugeCapacity方法。数组容量扩为15，add方法中return true,size增为11。
 - 以此类推······
 
-**这里补充一点比较重要，但是容易被忽视掉的知识点：**
+**这里补充一点比较重要，但是容易被忽视掉的知识点**：
 
 - java中的length属性是针对数组说的,比如说你声明了一个数组,想知道这个数组的长度则用到了length这个属性.
 - java中的length()方法是针对字符串说的,如果想看这个字符串的长度则用到length()这个方法.
@@ -864,10 +864,10 @@ public class ArrayscopyOfTest {
 
 ##### 两者联系和区别
 
-**联系：**
+**联系**：
 看两者源代码可以发现`copyOf()`内部实际调用了`System.arraycopy()`方法
 
-**区别：**
+**区别**：
 `arraycopy()`需要目标数组，将原数组拷贝到你自己定义的数组里或者原数组，而且可以选择拷贝的起点和长度以及放入新数组中的位置,`copyOf()`是系统自动在内部新建一个数组，并返回该数组。
 
 #### ensureCapacity()方法

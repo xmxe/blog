@@ -562,17 +562,17 @@
 <h3 id="降低系统耦合性"><a href="#降低系统耦合性" class="headerlink" title="降低系统耦合性"></a>降低系统耦合性</h3><p>使用消息队列还可以降低系统耦合性。我们知道如果模块之间不存在直接调用，那么新增模块或者修改模块就对其他模块影响较小，这样系统的可扩展性无疑更好一些。还是直接上图吧：</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97-%E8%A7%A3%E8%80%A6.png" alt="解耦"></p>
 <p>生产者（客户端）发送消息到消息队列中去，接受者（服务端）处理消息，需要消费的系统直接去消息队列取消息进行消费即可而不需要和其他系统有耦合，这显然也提高了系统的扩展性。</p>
-<p><strong>消息队列使用发布-订阅模式工作，消息发送者（生产者）发布消息，一个或多个消息接受者（消费者）订阅消息。</strong>从上图可以看到<strong>消息发送者（生产者）和消息接受者（消费者）之间没有直接耦合</strong>，消息发送者将消息发送至分布式消息队列即结束对消息的处理，消息接受者从分布式消息队列获取该消息后进行后续处理，并不需要知道该消息从何而来。<strong>对新增业务，只要对该类消息感兴趣，即可订阅该消息，对原有系统和业务没有任何影响，从而实现网站业务的可扩展性设计</strong>。</p>
+<p><strong>消息队列使用发布-订阅模式工作，消息发送者（生产者）发布消息，一个或多个消息接受者（消费者）订阅消息</strong>。从上图可以看到<strong>消息发送者（生产者）和消息接受者（消费者）之间没有直接耦合</strong>，消息发送者将消息发送至分布式消息队列即结束对消息的处理，消息接受者从分布式消息队列获取该消息后进行后续处理，并不需要知道该消息从何而来。<strong>对新增业务，只要对该类消息感兴趣，即可订阅该消息，对原有系统和业务没有任何影响，从而实现网站业务的可扩展性设计</strong>。</p>
 <p>消息接受者对消息进行过滤、处理、包装后，构造成一个新的消息类型，将消息继续发送出去，等待其他消息接受者订阅该消息。因此基于事件（消息对象）驱动的业务架构可以是一系列流程。</p>
 <p>另外，为了避免消息队列服务器宕机造成消息丢失，会将成功发送到消息队列的消息存储在消息生产者服务器上，等消息真正被消费者服务器处理后才删除消息。在消息队列服务器宕机后，生产者服务器会选择分布式消息队列服务器集群中的其他服务器发布消息。</p>
-<p><strong>备注：</strong>不要认为消息队列只能利用发布-订阅模式工作，只不过在解耦这个特定业务环境下是使用发布-订阅模式的。除了发布-订阅模式，还有点对点订阅模式（一个消息只有一个消费者），我们比较常用的是发布-订阅模式。另外，这两种消息模型是JMS提供的，AMQP协议还提供了另外5种消息模型。</p>
+<p><strong>备注</strong>：不要认为消息队列只能利用发布-订阅模式工作，只不过在解耦这个特定业务环境下是使用发布-订阅模式的。除了发布-订阅模式，还有点对点订阅模式（一个消息只有一个消费者），我们比较常用的是发布-订阅模式。另外，这两种消息模型是JMS提供的，AMQP协议还提供了另外5种消息模型。</p>
 <h3 id="实现分布式事务"><a href="#实现分布式事务" class="headerlink" title="实现分布式事务"></a>实现分布式事务</h3><p>我们知道分布式事务的解决方案之一就是MQ事务。</p>
 <p>RocketMQ、Kafka、Pulsar、QMQ都提供了事务相关的功能。事务允许事件流应用将消费，处理，生产消息整个过程定义为一个原子操作。</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/csdn/07b338324a7d8894b8aef4b659b76d92.png" alt="分布式事务详解-MQ事务"></p>
 <h2 id="使用消息队列会带来哪些问题？"><a href="#使用消息队列会带来哪些问题？" class="headerlink" title="使用消息队列会带来哪些问题？"></a>使用消息队列会带来哪些问题？</h2><ul>
-<li><strong>系统可用性降低：</strong>系统可用性在某种程度上降低，为什么这样说呢？在加入MQ之前，你不用考虑消息丢失或者说MQ挂掉等等的情况，但是，引入MQ之后你就需要去考虑了！</li>
-<li><strong>系统复杂性提高：</strong>加入MQ之后，你需要保证消息没有被重复消费、处理消息丢失的情况、保证消息传递的顺序性等等问题！</li>
-<li><strong>一致性问题：</strong>我上面讲了消息队列可以实现异步，消息队列带来的异步确实可以提高系统响应速度。但是，万一消息的真正消费者并没有正确消费消息怎么办？这样就会导致数据不一致的情况了!</li>
+<li><strong>系统可用性降低</strong>：系统可用性在某种程度上降低，为什么这样说呢？在加入MQ之前，你不用考虑消息丢失或者说MQ挂掉等等的情况，但是，引入MQ之后你就需要去考虑了！</li>
+<li><strong>系统复杂性提高</strong>：加入MQ之后，你需要保证消息没有被重复消费、处理消息丢失的情况、保证消息传递的顺序性等等问题！</li>
+<li><strong>一致性问题</strong>：我上面讲了消息队列可以实现异步，消息队列带来的异步确实可以提高系统响应速度。但是，万一消息的真正消费者并没有正确消费消息怎么办？这样就会导致数据不一致的情况了!</li>
 </ul>
 <h2 id="JMS和AMQP"><a href="#JMS和AMQP" class="headerlink" title="JMS和AMQP"></a>JMS和AMQP</h2><h3 id="JMS是什么？"><a href="#JMS是什么？" class="headerlink" title="JMS是什么？"></a>JMS是什么？</h3><p>JMS（JAVA Message Service,java消息服务）是Java的消息服务，JMS的客户端之间可以通过JMS服务进行异步的消息传输。<strong>JMS（JAVA Message Service，Java消息服务）API是一个消息服务的标准或者说是规范</strong>，允许应用程序组件基于JavaEE平台创建、发送、接收和读取消息。它使分布式通信耦合度更低，消息服务更加可靠以及异步性。</p>
 <p>JMS定义了五种不同的消息正文格式以及调用的消息类型，允许你发送并接收以一些不同形式的数据：</p>
@@ -644,7 +644,7 @@
 <ol>
 <li><strong>消息队列</strong>：发布和订阅消息流，这个功能类似于消息队列，这也是Kafka也被归类为消息队列的原因。</li>
 <li><strong>容错的持久方式存储记录消息流</strong>：Kafka会把消息持久化到磁盘，有效避免了消息丢失的风险。</li>
-<li><strong>流式处理平台：</strong>在消息发布的时候进行处理，Kafka提供了一个完整的流式处理类库。</li>
+<li><strong>流式处理平台</strong>：在消息发布的时候进行处理，Kafka提供了一个完整的流式处理类库。</li>
 </ol>
 <p>Kafka是一个分布式系统，由通过高性能TCP网络协议进行通信的服务器和客户端组成，可以部署在在本地和云环境中的裸机硬件、虚拟机和容器上。</p>
 <p>在Kafka2.8之前，Kafka最被大家诟病的就是其重度依赖于Zookeeper做元数据管理和集群的高可用。在Kafka2.8之后，引入了基于Raft协议的KRaft模式，不再依赖Zookeeper，大大简化了Kafka的架构，让你可以以一种轻量级的方式来使用Kafka。</p>
@@ -781,7 +781,7 @@ isolation.level
 <ol>
 <li><strong>消息队列</strong>：发布和订阅消息流，这个功能类似于消息队列，这也是Kafka也被归类为消息队列的原因。</li>
 <li><strong>容错的持久方式存储记录消息流</strong>：Kafka会把消息持久化到磁盘，有效避免了消息丢失的风险。</li>
-<li><strong>流式处理平台：</strong>在消息发布的时候进行处理，Kafka提供了一个完整的流式处理类库。</li>
+<li><strong>流式处理平台</strong>：在消息发布的时候进行处理，Kafka提供了一个完整的流式处理类库。</li>
 </ol>
 <p>Kafka主要有两大应用场景：</p>
 <ol>
@@ -799,7 +799,7 @@ isolation.level
 <p>题外话：早期的JMS和AMQP属于消息服务领域权威组织所做的相关的标准，我在<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide#%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E4%B8%AD%E9%97%B4%E4%BB%B6">《消息队列其实很简单》</a>这篇文章中介绍过。但是，这些标准的进化跟不上消息队列的演进速度，这些标准实际上已经属于废弃状态。所以，可能存在的情况是：不同的消息队列都有自己的一套消息模型。</p>
 </blockquote>
 <h5 id="队列模型：早期的消息模型"><a href="#队列模型：早期的消息模型" class="headerlink" title="队列模型：早期的消息模型"></a>队列模型：早期的消息模型</h5><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E9%98%9F%E5%88%97%E6%A8%A1%E5%9E%8B23.png" alt="队列模型"></p>
-<p><strong>使用队列（Queue）作为消息通信载体，满足生产者与消费者模式，一条消息只能被一个消费者使用，未被消费的消息在队列中保留直到被消费或超时。</strong>比如：我们生产者发送100条消息的话，两个消费者来消费一般情况下两个消费者会按照消息发送的顺序各自消费一半（也就是你一个我一个的消费。）</p>
+<p><strong>使用队列（Queue）作为消息通信载体，满足生产者与消费者模式，一条消息只能被一个消费者使用，未被消费的消息在队列中保留直到被消费或超时</strong>。比如：我们生产者发送100条消息的话，两个消费者来消费一般情况下两个消费者会按照消息发送的顺序各自消费一半（也就是你一个我一个的消费。）</p>
 <p><strong>队列模型存在的问题：</strong></p>
 <p>假如我们存在这样一种情况：我们需要将生产者产生的消息分发给多个消费者，并且每个消费者都能接收到完整的消息内容。</p>
 <p>这种情况，队列模型就不好解决了。很多比较杠精的人就说：我们可以为每个消费者创建一个单独的队列，让生产者发送多份。这是一种非常愚蠢的做法，浪费资源不说，还违背了使用消息队列的目的。</p>
@@ -837,7 +837,7 @@ isolation.level
 <li>Partition可以指定对应的Replica数,这也极大地提高了消息存储的安全性,提高了容灾能力，不过也相应的增加了所需要的存储空间。</li>
 </ol>
 <h4 id="Zookeeper在Kafka中的作用知道吗？"><a href="#Zookeeper在Kafka中的作用知道吗？" class="headerlink" title="Zookeeper在Kafka中的作用知道吗？"></a>Zookeeper在Kafka中的作用知道吗？</h4><blockquote>
-<p><strong>要想搞懂zookeeper在Kafka中的作用一定要自己搭建一个Kafka环境然后自己进zookeeper去看一下有哪些文件夹和Kafka有关，每个节点又保存了什么信息。</strong>一定不要光看不实践，这样学来的也终会忘记！这部分内容参考和借鉴了这篇文章：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a036405f989c%E3%80%82">https://www.jianshu.com/p/a036405f989c。</a></p>
+<p><strong>要想搞懂zookeeper在Kafka中的作用一定要自己搭建一个Kafka环境然后自己进zookeeper去看一下有哪些文件夹和Kafka有关，每个节点又保存了什么信息</strong>。一定不要光看不实践，这样学来的也终会忘记！这部分内容参考和借鉴了这篇文章：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a036405f989c%E3%80%82">https://www.jianshu.com/p/a036405f989c。</a></p>
 </blockquote>
 <p>下图就是我的本地Zookeeper，它成功和我本地的Kafka关联上（以下文件夹结构借助idea插件Zookeepertool实现）。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/zookeeper-kafka.jpg" alt="img"></p>
@@ -896,7 +896,7 @@ future<span class="token punctuation">.</span><span class="token function">addCa
 <p>我们知道消息在被追加到Partition(分区)的时候都会分配一个特定的偏移量（offset）。偏移量(offset)表示Consumer当前消费到的Partition(分区)的所在的位置。Kafka通过偏移量（offset）可以保证消息在分区内的顺序性。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/kafka-offset.jpg" alt="kafka offset"></p>
 <p>当消费者拉取到了分区的某个消息之后，消费者会自动提交了offset。自动提交的话会有一个问题，试想一下，当消费者刚拿到这个消息准备进行真正消费的时候，突然挂掉了，消息实际上并没有被消费，但是offset却被自动提交了。</p>
-<p><strong>解决办法也比较粗暴，我们手动关闭自动提交offset，每次在真正消费完消息之后再自己手动提交offset。</strong>但是，细心的朋友一定会发现，这样会带来消息被重新消费的问题。比如你刚刚消费完消息之后，还没提交offset，结果自己挂掉了，那么这个消息理论上就会被消费两次。</p>
+<p><strong>解决办法也比较粗暴，我们手动关闭自动提交offset，每次在真正消费完消息之后再自己手动提交offset</strong>。但是，细心的朋友一定会发现，这样会带来消息被重新消费的问题。比如你刚刚消费完消息之后，还没提交offset，结果自己挂掉了，那么这个消息理论上就会被消费两次。</p>
 <ol start="3">
 <li>Kafka弄丢了消息</li>
 </ol>
@@ -1110,7 +1110,7 @@ future<span class="token punctuation">.</span><span class="token function">addCa
 <p>也不是说Dledger是个完美的方案，至少在Dledger选举过程中是无法提供服务的，而且他必须要使用三个节点或以上，如果多数节点同时挂掉他也是无法保证可用性的，而且要求消息复制半数以上节点的效率和直接异步复制还是有一定的差距的。</p>
 </blockquote>
 <h6 id="存储机制"><a href="#存储机制" class="headerlink" title="存储机制"></a>存储机制</h6><p>还记得上面我们一开始的三个问题吗？到这里第三个问题已经解决了。</p>
-<p>但是，在Topic中的<strong>队列是以什么样的形式存在的？队列中的消息又是如何进行存储持久化的呢？</strong>还未解决，其实这里涉及到了RocketMQ是如何设计它的存储结构了。我首先想大家介绍RocketMQ消息存储架构中的三大角色——CommitLog、ConsumeQueue和IndexFile。</p>
+<p>但是，在Topic中的<strong>队列是以什么样的形式存在的？队列中的消息又是如何进行存储持久化的呢</strong>？还未解决，其实这里涉及到了RocketMQ是如何设计它的存储结构了。我首先想大家介绍RocketMQ消息存储架构中的三大角色——CommitLog、ConsumeQueue和IndexFile。</p>
 <ul>
 <li>CommitLog：<strong>消息主体以及元数据的存储主体</strong>，存储Producer端写入的消息主体内容,消息内容不是定长的。单个文件大小默认1G，文件名长度为20位，左边补零，剩余为起始偏移量，比如00000000000000000000代表了第一个文件，起始偏移量为0，文件大小为1G&#x3D;1073741824；当第一个文件写满了，第二个文件为00000000001073741824，起始偏移量为1073741824，以此类推。消息主要是<strong>顺序写入日志文件</strong>，当文件满了，写入下一个文件。</li>
 <li>ConsumeQueue：消息消费队列，<strong>引入的目的主要是提高消息消费的性能</strong>(我们再前面也讲了)，由于RocketMQ是基于主题Topic的订阅模式，消息消费是针对主题进行的，如果要遍历commitlog文件中根据Topic检索消息是非常低效的。Consumer即可根据ConsumeQueue来查找待消费的消息。其中，ConsumeQueue（逻辑消费队列）<strong>作为消费消息的索引</strong>，保存了指定Topic下的队列消息在CommitLog中的<strong>起始物理偏移量offset，消息大小size和消息Tag的HashCode值。consumequeue文件可以看成是基于topic的commitlog索引文件</strong>，故consumequeue文件夹的组织方式如下：topic&#x2F;queue&#x2F;file三层组织结构，具体存储路径为：$HOME&#x2F;store&#x2F;consumequeue&#x2F;{topic}&#x2F;{queueId}&#x2F;{fileName}。同样consumequeue文件采取定长设计，每一个条目共20个字节，分别为8字节的commitlog物理偏移量、4字节的消息长度、8字节taghashcode，单个文件由30W个条目组成，可以像数组一样随机访问每一个条目，每个ConsumeQueue文件大小约5.72M；</li>
@@ -1316,14 +1316,14 @@ future<span class="token punctuation">.</span><span class="token function">addCa
 <h4 id="RabbitMQ基础知识总结"><a href="#RabbitMQ基础知识总结" class="headerlink" title="RabbitMQ基础知识总结"></a>RabbitMQ基础知识总结</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>RabbitMQ是采用Erlang语言实现AMQP(AdvancedMessageQueuingProtocol，高级消息队列协议)的消息中间件，它最初起源于金融系统，用于在分布式系统中存储转发消息。</p>
 <p>RabbitMQ发展到今天，被越来越多的人认可，这和它在易用性、扩展性、可靠性和高可用性等方面的卓著表现是分不开的。RabbitMQ的具体特点可以概括为以下几点：</p>
 <ul>
-<li><strong>可靠性：</strong>RabbitMQ使用一些机制来保证消息的可靠性，如持久化、传输确认及发布确认等。</li>
-<li><strong>灵活的路由：</strong>在消息进入队列之前，通过交换器来路由消息。对于典型的路由功能，RabbitMQ己经提供了一些内置的交换器来实现。针对更复杂的路由功能，可以将多个交换器绑定在一起，也可以通过插件机制来实现自己的交换器。这个后面会在我们讲RabbitMQ核心概念的时候详细介绍到。</li>
-<li><strong>扩展性：</strong>多个RabbitMQ节点可以组成一个集群，也可以根据实际业务情况动态地扩展集群中节点。</li>
-<li><strong>高可用性：</strong>队列可以在集群中的机器上设置镜像，使得在部分节点出现问题的情况下队列仍然可用。</li>
-<li><strong>支持多种协议：</strong>RabbitMQ除了原生支持AMQP协议，还支持STOMP、MQTT等多种消息中间件协议。</li>
-<li><strong>多语言客户端：</strong>RabbitMQ几乎支持所有常用语言，比如Java、Python、Ruby、PHP、C#、JavaScript等。</li>
-<li><strong>易用的管理界面：</strong>RabbitMQ提供了一个易用的用户界面，使得用户可以监控和管理消息、集群中的节点等。在安装RabbitMQ的时候会介绍到，安装好RabbitMQ就自带管理界面。</li>
-<li><strong>插件机制：</strong>RabbitMQ提供了许多插件，以实现从多方面进行扩展，当然也可以编写自己的插件。感觉这个有点类似Dubbo的SPI机制</li>
+<li><strong>可靠性</strong>：RabbitMQ使用一些机制来保证消息的可靠性，如持久化、传输确认及发布确认等。</li>
+<li><strong>灵活的路由</strong>：在消息进入队列之前，通过交换器来路由消息。对于典型的路由功能，RabbitMQ己经提供了一些内置的交换器来实现。针对更复杂的路由功能，可以将多个交换器绑定在一起，也可以通过插件机制来实现自己的交换器。这个后面会在我们讲RabbitMQ核心概念的时候详细介绍到。</li>
+<li><strong>扩展性</strong>：多个RabbitMQ节点可以组成一个集群，也可以根据实际业务情况动态地扩展集群中节点。</li>
+<li><strong>高可用性</strong>：队列可以在集群中的机器上设置镜像，使得在部分节点出现问题的情况下队列仍然可用。</li>
+<li><strong>支持多种协议</strong>：RabbitMQ除了原生支持AMQP协议，还支持STOMP、MQTT等多种消息中间件协议。</li>
+<li><strong>多语言客户端</strong>：RabbitMQ几乎支持所有常用语言，比如Java、Python、Ruby、PHP、C#、JavaScript等。</li>
+<li><strong>易用的管理界面</strong>：RabbitMQ提供了一个易用的用户界面，使得用户可以监控和管理消息、集群中的节点等。在安装RabbitMQ的时候会介绍到，安装好RabbitMQ就自带管理界面。</li>
+<li><strong>插件机制</strong>：RabbitMQ提供了许多插件，以实现从多方面进行扩展，当然也可以编写自己的插件。感觉这个有点类似Dubbo的SPI机制</li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">RabbitMQ官网</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.rabbitmq.com/news.html">RabbitMQ更新记录</a></p>
@@ -1337,9 +1337,9 @@ future<span class="token punctuation">.</span><span class="token function">addCa
 </ul>
 <p>消息一般由2部分组成：<strong>消息头</strong>（或者说是标签Label）和<strong>消息体</strong>。消息体也可以称为payLoad,消息体是不透明的，而消息头则由一系列的可选属性组成，这些属性包括routing-key（路由键）、priority（相对于其他消息的优先权）、delivery-mode（指出该消息可能需要持久性存储）等。生产者把消息交由RabbitMQ后，RabbitMQ会根据消息头把消息发送给感兴趣的Consumer(消费者)。</p>
 <p><strong>Exchange(交换器)</strong></p>
-<p>在RabbitMQ中，消息并不是直接被投递到**Queue(消息队列)<strong>中的，中间还必须经过</strong>Exchange(交换器)<strong>这一层，</strong>Exchange(交换器)<strong>会把我们的消息分配到对应的</strong>Queue(消息队列)**中。</p>
-<p>**Exchange(交换器)<strong>用来接收生产者发送的消息并将这些消息路由给服务器中的队列中，如果路由不到，或许会返回给</strong>Producer(生产者)**，或许会被直接丢弃掉。这里可以将RabbitMQ中的交换器看作一个简单的实体。</p>
-<p><strong>RabbitMQ的Exchange(交换器)有4种类型，不同的类型对应着不同的路由策略</strong>：<strong>direct(默认)<strong>，</strong>fanout</strong>,<strong>topic</strong>,和<strong>headers</strong>，不同类型的Exchange转发消息的策略有所区别。这个会在介绍**ExchangeTypes(交换器类型)**的时候介绍到。</p>
+<p>在RabbitMQ中，消息并不是直接被投递到<strong>Queue(消息队列)</strong> 中的，中间还必须经过<strong>Exchange(交换器)</strong> 这一层，<strong>Exchange(交换器)</strong> 会把我们的消息分配到对应的<strong>Queue(消息队列)</strong> 中。</p>
+<p><strong>Exchange(交换器)</strong> 用来接收生产者发送的消息并将这些消息路由给服务器中的队列中，如果路由不到，或许会返回给**Producer(生产者)**，或许会被直接丢弃掉。这里可以将RabbitMQ中的交换器看作一个简单的实体。</p>
+<p><strong>RabbitMQ的Exchange(交换器)有4种类型，不同的类型对应着不同的路由策略</strong>：<strong>direct(默认)<strong>，</strong>fanout</strong>,<strong>topic</strong>,和<strong>headers</strong>，不同类型的Exchange转发消息的策略有所区别。这个会在介绍<strong>ExchangeTypes(交换器类型)</strong> 的时候介绍到。</p>
 <p>Exchange(交换器)示意图如下：</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/rabbitmq/24007899.jpg" alt="Exchange(交换器)示意图"></p>
 <p>生产者将消息发给交换器的时候，一般会指定一个<strong>RoutingKey(路由键)<strong>，用来指定这个消息的路由规则，而这个</strong>RoutingKey需要与交换器类型和绑定键(BindingKey)联合使用才能最终生效</strong>。</p>
@@ -1348,8 +1348,8 @@ future<span class="token punctuation">.</span><span class="token function">addCa
 <p><img src="https://oss.javaguide.cn/github/javaguide/rabbitmq/70553134.jpg" alt="Binding(绑定)示意图"></p>
 <p>生产者将消息发送给交换器时，需要一个RoutingKey,当BindingKey和RoutingKey相匹配时，消息会被路由到对应的队列中。在绑定多个队列到同一个交换器的时候，这些绑定允许使用相同的BindingKey。BindingKey并不是在所有的情况下都生效，它依赖于交换器类型，比如fanout类型的交换器就会无视，而是将消息路由到所有绑定到该交换器的队列中。</p>
 <p><strong>Queue(消息队列)</strong></p>
-<p>**Queue(消息队列)**用来保存消息直到发送给消费者。它是消息的容器，也是消息的终点。一个消息可投入一个或多个队列。消息一直在队列里面，等待消费者连接到这个队列将其取走。</p>
-<p><strong>RabbitMQ</strong>中消息只能存储在<strong>队列</strong>中，这一点和<strong>Kafka</strong>这种消息中间件相反。Kafka将消息存储在<strong>topic（主题）</strong>这个逻辑层面，而相对应的队列逻辑只是topic实际存储文件中的位移标识。RabbitMQ的生产者生产消息并最终投递到队列中，消费者可以从队列中获取消息并消费。</p>
+<p><strong>Queue(消息队列)</strong> 用来保存消息直到发送给消费者。它是消息的容器，也是消息的终点。一个消息可投入一个或多个队列。消息一直在队列里面，等待消费者连接到这个队列将其取走。</p>
+<p><strong>RabbitMQ</strong>中消息只能存储在<strong>队列</strong>中，这一点和<strong>Kafka</strong>这种消息中间件相反。Kafka将消息存储在<strong>topic（主题）</strong> 这个逻辑层面，而相对应的队列逻辑只是topic实际存储文件中的位移标识。RabbitMQ的生产者生产消息并最终投递到队列中，消费者可以从队列中获取消息并消费。</p>
 <p><strong>多个消费者可以订阅同一个队列</strong>，这时队列中的消息会被平均分摊（Round-Robin，即轮询）给多个消费者进行处理，而不是每个消费者都收到所有的消息并处理，这样避免消息被重复消费。</p>
 <p><strong>RabbitMQ</strong>不支持队列层面的广播消费,如果有广播消费的需求，需要在其上进行二次开发,这样会很麻烦，不建议这样做。</p>
 <p><strong>Broker（消息中间件的服务节点）</strong></p>
@@ -1507,9 +1507,15 @@ Setting permissions <span class="token keyword">for</span> user <span class="tok
 <li>**绑定(Binding)**：一套规则，告知交换器消息应该将消息投递给哪个队列。</li>
 </ul>
 <h5 id="说说生产者Producer和消费者Consumer"><a href="#说说生产者Producer和消费者Consumer" class="headerlink" title="说说生产者Producer和消费者Consumer?"></a>说说生产者Producer和消费者Consumer?</h5><p><strong>生产者</strong>:</p>
-<p>-消息生产者，就是投递消息的一方。<br>-消息一般包含两个部分：消息体(<code>payload</code>)和标签(<code>Label</code>)。</p>
+<ul>
+<li>消息生产者，就是投递消息的一方。</li>
+<li>消息一般包含两个部分：消息体(<code>payload</code>)和标签(<code>Label</code>)。</li>
+</ul>
 <p><strong>消费者</strong>：</p>
-<p>-消费消息，也就是接收消息的一方。<br>-消费者连接到RabbitMQ服务器，并订阅到队列上。消费消息时只消费消息体，丢弃标签。</p>
+<ul>
+<li>消费消息，也就是接收消息的一方。</li>
+<li>消费者连接到RabbitMQ服务器，并订阅到队列上。消费消息时只消费消息体，丢弃标签。</li>
+</ul>
 <h5 id="说说Broker服务节点、Queue队列、Exchange交换器？"><a href="#说说Broker服务节点、Queue队列、Exchange交换器？" class="headerlink" title="说说Broker服务节点、Queue队列、Exchange交换器？"></a>说说Broker服务节点、Queue队列、Exchange交换器？</h5><ul>
 <li><strong>Broker</strong>：可以看做RabbitMQ的服务节点。一般请下一个Broker可以看做一个RabbitMQ服务器。</li>
 <li><strong>Queue</strong>:RabbitMQ的内部对象，用于存储消息。多个消费者可以订阅同一队列，这时队列中的消息会被平摊（轮询）给多个消费者进行处理。</li>

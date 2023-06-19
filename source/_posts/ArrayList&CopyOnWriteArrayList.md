@@ -678,8 +678,8 @@ private void ensureExplicitCapacity(int minCapacity) {
 
 我们来仔细分析一下：
 
-- 当我们要add进第1个元素到ArrayList时，elementData.length为0（因为还是一个空的list），因为执行了ensureCapacityInternal()方法，所以minCapacity此时为10。此时，**minCapacity - elementData.length > 0**成立，所以会进入**grow(minCapacity)**方法。
-- 当add第2个元素时，minCapacity为2，此时elementData.length(容量)在添加第一个元素后扩容成10了。此时，**minCapacity - elementData.length > 0**不成立，所以不会进入（执行）**grow(minCapacity)**方法。
+- 当我们要add进第1个元素到ArrayList时，elementData.length为0（因为还是一个空的list），因为执行了ensureCapacityInternal()方法，所以minCapacity此时为10。此时，**minCapacity - elementData.length > 0**成立，所以会进入**grow(minCapacity)** 方法。
+- 当add第2个元素时，minCapacity为2，此时elementData.length(容量)在添加第一个元素后扩容成10了。此时，**minCapacity - elementData.length > 0**不成立，所以不会进入（执行）**grow(minCapacity)** 方法。
 - 添加第3、4···到第10个元素时，依然不会执行grow方法，数组容量都为10。
 
 直到添加第11个元素，minCapacity(为11)比elementData.length（为10）要大。进入grow方法进行扩容。

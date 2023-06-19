@@ -763,7 +763,7 @@ client<span class="token punctuation">.</span><span class="token function">close
 <p>我们通常是将znode分为4大类：</p>
 <ul>
 <li><strong>持久（PERSISTENT）节点</strong>：一旦创建就一直存在即使ZooKeeper集群宕机，直到将其删除。</li>
-<li><strong>临时（EPHEMERAL）节点</strong>：临时节点的生命周期是与<strong>客户端会话（session）</strong>绑定的，<strong>会话消失则节点消失</strong>。并且，<strong>临时节点只能做叶子节点</strong>，不能创建子节点。</li>
+<li><strong>临时（EPHEMERAL）节点</strong>：临时节点的生命周期是与客户端会话（session）绑定的，会话消失则节点消失。并且，临时节点只能做叶子节点，不能创建子节点。</li>
 <li><strong>持久顺序（PERSISTENT_SEQUENTIAL）节点</strong>：除了具有持久（PERSISTENT）节点的特性之外，子节点的名称还具有顺序性。比如<code>/node1/app0000000001</code>、<code>/node1/app0000000002</code>。</li>
 <li><strong>临时顺序（EPHEMERAL_SEQUENTIAL）节点</strong>：除了具备临时（EPHEMERAL）节点的特性之外，子节点的名称还具有顺序性。</li>
 </ul>

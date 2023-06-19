@@ -1410,7 +1410,7 @@ SELECT a.* FROM 表 1 a, (select id from 表 1 where 条件 LIMIT 100000,20 ) b 
 3. **【强制】** 当某一列的值全是NULL时，count(col)的返回结果为0，但sum(col)的返回结果为 NULL，因此使用sum()时需注意NPE问题。
 正例：可以使用如下方式来避免sum的NPE问题：SELECT IFNULL(SUM(column), 0) FROM table;
 
-4. **【强制】** 使用**ISNULL()**来判断是否为NULL值。
+4. **【强制】** 使用**ISNULL()** 来判断是否为NULL值。
 说明：NULL与任何值的直接比较都为NULL
 1)**NULL<>NULL**的返回结果是NULL，而不是false
 2)**NULL=NULL**的返回结果是NULL，而不是true

@@ -69,7 +69,7 @@ Java堆是垃圾收集器管理的主要区域，因此也被称作**GC堆（Gar
 
 下图所示的Eden区、两个Survivor区S0和S1都属于新生代，中间一层属于老年代，最下面一层属于永久代。
 
-![hotspot-heap-structure](/assets/hotspot-heap-structure.41533631.png)
+![hotspot-heap-structure](https://javaguide.cn/assets/hotspot-heap-structure.41533631.png)
 
 **JDK8版本之后PermGen(永久)已被Metaspace(元空间)取代，元空间使用的是本地内存。**。
 
@@ -133,7 +133,7 @@ Java方法有两种返回方式，一种是return语句正常返回，一种是�
 - **StackOverFlowError**：若栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前Java虚拟机栈的最大深度的时候，就抛出StackOverFlowError错误。
 - **OutOfMemoryError**：如果栈的内存大小可以动态扩展，如果虚拟机在动态扩展栈时无法申请到足够的内存空间，则抛出OutOfMemoryError异常。
 
-![img](/assets/《深入理解虚拟机》第三版的第2章-虚拟机栈.f4f863a2.png)
+![img](https://javaguide.cn/assets/《深入理解虚拟机》第三版的第2章-虚拟机栈.f4f863a2.png)
 
 
 
@@ -289,7 +289,7 @@ JDK1.7之前，字符串常量池存放在永久代。JDK1.7字符串常量池�
 
 直接内存并不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用。而且也可能导致`OutOfMemoryError`错误出现。
 
-JDK1.4中新加入的**NIO(New Input/Output)类**，引入了一种基于**通道（Channel）**与**缓存区（Buffer）**的I/O方式，它可以直接使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样就能在一些场景中显著提高性能，因为**避免了在Java堆和Native堆之间来回复制数据**。
+JDK1.4中新加入的**NIO(New Input/Output)类**，引入了一种基于通道（Channel）与缓存区（Buffer）的I/O方式，它可以直接使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样就能在一些场景中显著提高性能，因为避免了在Java堆和Native堆之间来回复制数据。
 
 直接内存的分配不会受到Java堆的限制，但是，既然是内存就会受到本机总内存大小以及处理器寻址空间的限制。
 

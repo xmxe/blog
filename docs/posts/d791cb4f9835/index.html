@@ -1533,7 +1533,7 @@ count<span class="token punctuation">.</span><span class="token function">addAnd
 </li>
 <li><p><strong>【强制】</strong> 当某一列的值全是NULL时，count(col)的返回结果为0，但sum(col)的返回结果为 NULL，因此使用sum()时需注意NPE问题。<br>正例：可以使用如下方式来避免sum的NPE问题：SELECT IFNULL(SUM(column), 0) FROM table;</p>
 </li>
-<li><p><strong>【强制】</strong> 使用**ISNULL()**来判断是否为NULL值。<br>说明：NULL与任何值的直接比较都为NULL<br>1)<strong>NULL&lt;&gt;NULL</strong>的返回结果是NULL，而不是false<br>2)<strong>NULL&#x3D;NULL</strong>的返回结果是NULL，而不是true<br>3)<strong>NULL&lt;&gt;1</strong>的返回结果是NULL，而不是true<br>反例：在SQL语句中，如果在null前换行，影响可读性。select * from table where column1 is null and column3 is not null;而’ISNULL(co山mn)’是一个整体，简洁易懂。从性能数据上分析，’ISNULL(column)’ 执行效率更快一些。</p>
+<li><p><strong>【强制】</strong> 使用<strong>ISNULL()</strong> 来判断是否为NULL值。<br>说明：NULL与任何值的直接比较都为NULL<br>1)<strong>NULL&lt;&gt;NULL</strong>的返回结果是NULL，而不是false<br>2)<strong>NULL&#x3D;NULL</strong>的返回结果是NULL，而不是true<br>3)<strong>NULL&lt;&gt;1</strong>的返回结果是NULL，而不是true<br>反例：在SQL语句中，如果在null前换行，影响可读性。select * from table where column1 is null and column3 is not null;而’ISNULL(co山mn)’是一个整体，简洁易懂。从性能数据上分析，’ISNULL(column)’ 执行效率更快一些。</p>
 </li>
 <li><p><strong>【强制】</strong> 代码中写分页查询逻辑时，若count为0应直接返回，避免执行后面的分页语句。</p>
 </li>

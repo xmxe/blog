@@ -413,7 +413,7 @@ function factorial(num) {
 
 ### prototype、\__proto\__(两个下划线)与constructor
 
-\__proto\__和constructor属性是对象所独有的；prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有\__proto\__和constructor属性。\__proto\__属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的\__proto\__属性所指向的那个对象（父对象）里找，一直找，直到\__proto\__属性的终点null，再往上找就相当于在null上取值，会报错。通过\__proto\__属性将对象连接起来的这条链路即我们所谓的原型链。大多数情况下，\__proto\__可以理解为“构造器的原型”，即**\__proto\__===constructor.prototype**,但是通过Object.create()创建的对象有可能不是，Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的\__proto_\_
+\__proto\__和constructor属性是对象所独有的；prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有\__proto\__和constructor属性。\__proto\__属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的\__proto\__属性所指向的那个对象（父对象）里找，一直找，直到\__proto\__属性的终点null，再往上找就相当于在null上取值，会报错。通过\__proto\__属性将对象连接起来的这条链路即我们所谓的原型链。大多数情况下，\__proto\__可以理解为“构造器的原型”，即\__proto\__===constructor.prototype,但是通过Object.create()创建的对象有可能不是，Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的\__proto_\_
 prototype属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即**book1.\__proto\__ === Book.prototype**。
 构造函数有什么缺点呢？构造函数的缺点就是会将构造函数内部的对象都复制一份：
 

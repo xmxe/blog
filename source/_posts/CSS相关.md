@@ -42,6 +42,76 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
 ```
 [42种前端常用布局方案总结](https://mp.weixin.qq.com/s/5ZSMlbjcvaMksx4zakhgzA)
 
+## n个元素等比例在一行展示
+
+```html
+<div class="image-container">
+    <img src="image1.jpg" alt="Image 1" />
+    <img src="image2.jpg" alt="Image 2" />
+    <img src="image3.jpg" alt="Image 3" />
+    <img src="image4.jpg" alt="Image 4" />
+</div>
+```
+```css
+.image-container {
+    display: flex; /* 使用 Flexbox 布局 */
+    flex-wrap: wrap; /* 等比例图片自动换行到下一行 */
+    justify-content: space-between; /* 图片之间间距相等 */
+}
+img {
+    width: 25%; /* 将每个图片的宽度设置为 25% 使其等比例放缩 */
+    height: auto; /* 高度设置为 auto，使其自适应宽度 */
+    margin-bottom: 1rem; /* 使用 margin 来设置图片之间的间距 */
+    object-fit: cover; /* 自适应填充图片容器，保持图片比例 */
+}
+```
+> 扩展**display:flex**
+
+```css
+div{
+	display: flex
+	flex-direction: row;/*属性决定主轴的方向（即项目的排列方向）*/
+    /*
+    - row（默认值）:主轴为水平方向，起点在左端。
+    - row-reverse:主轴为水平方向，起点在右端。
+    - column:主轴为垂直方向，起点在上沿。
+    - column-reverse:主轴为垂直方向，起点在下沿。
+    */
+    flex-wrap: nowrap;/*属性决定了如果一条轴线排不下,如何换行*/
+    /*
+    - nowrap（默认）:不换行。
+    - wrap:换行，第一行在上方。
+    - wrap-reverse:换行，第一行在下方。
+    */
+    justify-content: flex-start;/*属性定义了项目在主轴上的对齐方式。*/
+    /*
+    - flex-start（默认值）:左对齐
+    - flex-end:右对齐
+    - center:居中
+    - space-between:两端对齐，项目之间的间隔都相等。
+    - space-around:每个项目两侧的间隔相等。
+    */
+    align-items: stretch;/*属性定义项目在交叉轴上如何对齐。简单来讲，假如我们将flex-direction设置为row，即主轴为行。align-items可以决定元素在列上的布局*/
+    /*
+    - flex-start:交叉轴的起点对齐，一行根据上边对齐。
+    - flex-end:交叉轴的终点对齐，一行根据下边对齐。
+    - center:交叉轴的中点对齐。
+    - baseline:项目的第一行文字的基线对齐。
+    - stretch（默认值）:如果项目未设置高度或设为auto，将占满整个容器的高度。
+    */
+    align-content: stretch;/*属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。简单来讲，假如我们将flex-direction设置为row，即主轴为行。align-content决定了出现很多行时，这些行之间怎么对齐。其有一下几个属性：*/
+    /*
+    - flex-start:与交叉轴的起点对齐，跟作文一样，一行一行紧挨着。
+    - flex-end:与交叉轴的终点对齐，跟 flex-start类型，不过时从底部开始数。
+    - center:与交叉轴的中点对齐，从中间向下向上扩散。
+    - space-between:与交叉轴两端对齐，轴线之间的间隔平均分布。
+    - space-around:每根轴线两侧的间隔都相等。
+    - stretch（默认值）:轴线占满整个交叉轴。
+    */
+}
+
+```
+
 ## 隐藏滚动条
 
 ```css
@@ -62,10 +132,12 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
      * border-box默认值。背景绘制在边框方框内（剪切成边框方框）。
      * padding-box背景绘制在衬距方框内（剪切成衬距方框）。
      * content-box背景绘制在内容方框内（剪切成内容方框）。
-     **/
+     */
     -webkit-background-clip:text;
+    
     /**文字中填充颜色transparent:透明色**/
     -webkit-text-fill-color:transparent;
+    
     /**text-stroke(文本边框)是text-stroke-width和text-stroke-color（边框填充颜色）两个属性的简写**/
     -webkit-text-stroke:6px transparent;
 }
@@ -76,21 +148,31 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
     background: radial-gradient(circle at center, #ffafbd, #ffc3a0);
     /**创建一个从最外部向圆心渐变的径向渐变效果,farthest-corner关键字会将圆心设置在最远的角落，而不是默认的居中位置**/
     background: radial-gradient(circle farthest-corner at center, #ffafbd, #ffc3a0);
-    /**
-    radial-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个从一个中心向周围辐射的颜色渐变效果。radial-gradient函数的基本语法如下：background: radial-gradient(shape size at position, start-color, ..., last-color);其中的参数解释如下：
+    /*
+    radial-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个从一个中心向周围辐射的颜色渐变效果。
+    radial-gradient函数的基本语法如下：background: radial-gradient(shape size at position, start-color, ..., last-color);其中的参数解释如下：
     shape: 表示渐变形状，可以是circle(默认)或ellipse；
-    size: 表示渐变的大小，可以是closest-side、farthest-side、closest-corner、farthest-corner、contain或cover，其中closest-side表示最近侧的边缘，farthest-side表示最远侧的边缘，closest-corner表示最近角落，farthest-corner表示最远角落，contain表示至少需要占满整个容器，而cover则表示覆盖整个容器；
+    size: 表示渐变的大小
+        closest-side表示最近侧的边缘，
+        farthest-side表示最远侧的边缘，
+        closest-corner表示最近角落，
+        farthest-corner表示最远角落，
+        contain表示至少需要占满整个容器，
+        cover则表示覆盖整个容器；
     at position: 表示渐变的中心位置，可以是长度(像素或百分比)或关键字(center、top、bottom、left、right等)
     start-color和last-color: 表示渐变的起始颜色和结束颜色。可以定义多个颜色值，用逗号分隔。
+    */
     
+    /*
     linear-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个沿着一条直线方向的颜色渐变效果。linear-gradient函数的基本语法如下：background: linear-gradient(direction, color stop1, color stop2, ...);其中的参数解释如下：	
     direction: 表示渐变的方向，可以是角度、关键字（top、bottom、left、right、to top left、to bottom right等）以及渐变轴线（由坐标(x1,y1)和(x2,y2)确定的一条直线，可使用两个坐标的百分比表示），也可以是任意组合;
     color stop: 表示渐变的颜色及其所在的位置，可以定义多个颜色值，用逗号分隔。例如，color stop1可以表示位于渐变的起始点的颜色停止点，而color stop2则对应着终点的颜色停止点。
     */
+    
+    /*
+    CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的效果。为了添加透明度，我们使用rgba()函数来定义颜色节点。rgba() 函数中的最后一个参数可以是从0到1的值，它定义了颜色的透明度：0表示完全透明，1表示完全不透明。
+    */
 }
-/**
-CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的效果。为了添加透明度，我们使用rgba()函数来定义颜色节点。rgba() 函数中的最后一个参数可以是从0到1的值，它定义了颜色的透明度：0表示完全透明，1表示完全不透明。
-*/
 ```
 [超精美渐变色动态背景完整示例](https://blog.csdn.net/A757291228/article/details/124611342)
 
@@ -99,10 +181,15 @@ CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的�
 ```css
 /*文章内容自动换行*/
 #articleContent {
-    /*break-word:在长单词或URL地址内部进行换行。normal:只在允许的断字点换行（浏览器保持默认处理）。*/
+    /*break-word:在长单词或URL地址内部进行换行。
+    normal:只在允许的断字点换行（浏览器保持默认处理）。*/
     word-wrap: break-word;
-    /*normal:使用浏览器默认的换行规则break-all:允许在单词内换行允许在单词内换行。keep-all:只能在半角空格或连字符处换行。*/
+    
+    /*normal:使用浏览器默认的换行规则
+    break-all:允许在单词内换行允许在单词内换行。
+    keep-all:只能在半角空格或连字符处换行。*/
     word-break: break-all;
+    
     /*
      * normal:忽略多余的空白，只保留一个空白（默认）
      * pre:保留空白(行为方式类似于html中的pre标签)
@@ -124,14 +211,14 @@ CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的�
   /**0%是动画的开始时间，100%动画的结束时间。或者通过关键词"from"和"to"，等价于0%和100%。**/	
   100% {
    /*
-    * transform属性向元素应用2D或3D转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。
-    * 应用多个属性使用空格如transform: rotate(45deg) scale(2) skew(10deg,5deg) translate(50px,90px);
+    * transform属性向元素应用2D或3D转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。应用多个属性使用空格如transform: rotate(45deg) scale(2) skew(10deg,5deg) translate(50px,90px);
     * 1.rotate(xxdeg)(2D),rotateX()(3D),rotateY()(3D),rotateZ(180deg)：以中心为基点，deg表示旋转的角度，为负数时表示逆时针旋转
     * 2.translate(x,y)，translateX(x)，translateY(y)：以中心为基点按照设定的x,y参数值,对元素进行进行平移。
     * 3.scale(x,y)，scaleX(X)，scaleY(Y)：缩放基数为1，如果其值大于1元素就放大，反之其值小于1为缩小。缩放后不影响文档流,不改变原有布局,元素还是会占用,和relative定位一样,或者可以考虑zoom属性
     * 4.skew(x,y)，skewX(x)，skewY(y)：以中心为基点，第一个参数是水平方向扭曲角度，第二个参数是垂直方向扭曲角度。
     */
    transform: translateY(20px);
+   
    /**box-shadow属性可以设置一个或多个下拉阴影的框。**/
    box-shadow: 0 40px 10px -18px hsla(0, 0%, 0%, .2), 0 40px 16px -12px hsla(0, 0%, 0%, .2)
    transform-origin: right;/**(x,y)来改变元素基点**/
@@ -162,12 +249,12 @@ div{
      * animation-name:规定需要绑定到选择器的keyframe名称。
      * animation-duration:规定完成动画所花费的时间，以秒或毫秒计
      * animation-timing-function:规定动画的速度曲线。
-     *  linear:动画从头到尾的速度是相同的
-     *  ease:默认。动画以低速开始，然后加快,在结束前变慢
-     *  ease-in:动画以低速开始
-     *  ease-out:动画以低速结束
-     *  ease-in-out:动画以低速开始和结束
-     *  cubic-bezier(n,n,n,n):在cubic-bezier函数中自己的值
+     *     linear:动画从头到尾的速度是相同的
+     *     ease:默认。动画以低速开始，然后加快,在结束前变慢
+     *     ease-in:动画以低速开始
+     *     ease-out:动画以低速结束
+     *     ease-in-out:动画以低速开始和结束
+     *     cubic-bezier(n,n,n,n):在cubic-bezier函数中自己的值
      * animation-delay:规定在动画开始之前的延迟。
      * animation-iteration-count:规定动画应该播放的次数。默认为1次，可以填写数字
      * animation-direction:规定是否应该轮流反向播放动画。如果animation-direction值是“alternate”，则动画会在奇数次数（1、3、5等等）正常播放，而在偶数次数（2、4、6等等）向后播放。如果把动画设置为只播放一次，则该属性没有效果
@@ -178,10 +265,11 @@ div{
 div:hover{
     /*
      * animation-play-state属性规定动画正在运行还是暂停。只有两个属性可以设置：
-     * paused规定动画已暂停
-     * running规定动画正在播放
+     * paused:规定动画已暂停
+     * running:规定动画正在播放
      */
 	animation-play-state: paused
+     
     /*
      * animation-fill-mode属性规定动画在播放之前或之后，其动画效果是否可见。(规定当动画不播放时（当动画完成时或当动画有一个延迟为开始播放时）要用到的元素样式)
      * none表示等待期和完成期，元素样式都为初始状态样式，不受动画定义（@keyframes）的影响
@@ -189,7 +277,7 @@ div:hover{
      * backwards表示等待期为第一帧样式，完成期跳转为初始样式
      * forwards表示等待期保持初始样式，完成期间保持最后一帧样式
      */
-     
+     animation-fill-mode:none;
 }
 
 /**鼠标滑过翻转**/
@@ -212,17 +300,18 @@ div{
     -o-transform: rotate(360deg) !important;
     -ms-transform: rotate(360deg) !important;
     transform: rotate(360deg) !important;
+    
     /*
      * transition属性是一个简写属性，用于设置四个过渡属性.
      * transition-property:规定设置过渡效果的CSS属性的名称。none没有属性会获得过渡效果。all所有属性都将获得过渡效果。property定义应用过渡效果的CSS属性名称列表，列表以逗号分隔。
      * transition-duration:规定完成过渡效果需要多少秒或毫秒。
      * transition-timing-function:规定速度效果的速度曲线。
-     *  inear规定以相同速度开始至结束的过渡效果（等于cubic-bezier(0,0,1,1)）
-     *  ease规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）
-     *  ease-in规定以慢速开始的过渡效果（等于cubic-bezier(0.42,0,1,1)）
-     *  ease-out规定以慢速结束的过渡效果（等于cubic-bezier(0,0,0.58,1)）
-     *  ease-in-out规定以慢速开始和结束的过渡效果（等于cubic-bezier(0.42,0,0.58,1)）。
-     *  cubic-bezier(n,n,n,n)在cubic-bezier函数中定义自己的值。可能的值是0至1之间的数值。
+     *     inear规定以相同速度开始至结束的过渡效果（等于cubic-bezier(0,0,1,1)）
+     *     ease规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）
+     *     ease-in规定以慢速开始的过渡效果（等于cubic-bezier(0.42,0,1,1)）
+     *     ease-out规定以慢速结束的过渡效果（等于cubic-bezier(0,0,0.58,1)）
+     *     ease-in-out规定以慢速开始和结束的过渡效果（等于cubic-bezier(0.42,0,0.58,1)）。
+     *     cubic-bezier(n,n,n,n)在cubic-bezier函数中定义自己的值。可能的值是0至1之间的数值。
      * transition-delay:定义过渡效果何时开始。
      */
     -webkit-transition: all .7s;

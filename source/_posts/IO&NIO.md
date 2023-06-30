@@ -550,7 +550,7 @@ RandomAccessFile可以帮助我们合并文件分片，示例代码如下：
 
 > [原文链接](https://javaguide.cn/java/io/io-basis.html)
 
-
+[高效快捷读写文件之RandomAccessFile类解说](https://mp.weixin.qq.com/s/CYXVyNsNm36SCu_jrAp5qQ)
 
 ### IO设计模式总结
 
@@ -947,6 +947,8 @@ AIO也就是NIO2。Java7中引入了NIO的改进版NIO2,它是异步IO模型。
 - [NIO和IO到底有什么区别？别说你不会！](https://mp.weixin.qq.com/s/Lda80PTxJnd5oZh5VWSi4Q)
 - [万字长文：助你攻破JAVA NIO技术壁垒](https://mp.weixin.qq.com/s/H5sNv_a992MKUKXxK2QQEA)
 - [JAVA语言异步非阻塞设计模式](https://mp.weixin.qq.com/s/6PsSQXamf6w0w-B-ZgGNsg)
+- [一篇带你彻底读懂IO流技术！](https://mp.weixin.qq.com/s/pS2SXhmF7O3Gk8WRkCFZaw)
+- [文件读写操作与常用技巧分享](https://mp.weixin.qq.com/s/LJS6joxDCt71M9tEJ6GxFA)
 
 
 ## NIO

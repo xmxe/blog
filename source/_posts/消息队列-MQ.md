@@ -1051,6 +1051,7 @@ class Broker {
 - [通过这三个文件彻底搞懂rocketmq的存储原理](https://mp.weixin.qq.com/s/4k_g85aktaBhwSl9iu6r5A)
 - [RocketMQ集群Broker挂了，会造成什么影响？](https://mp.weixin.qq.com/s/vIqOEeNBCSQJDB-qNYukTQ)
 - [RocketMQ高级功能代码实现](https://mp.weixin.qq.com/s/WVZRVMUACXuYwuJLjGIUHA)
+- [解读RocketMQ5.0全新的高可用设计](https://mp.weixin.qq.com/s/uXL5LKYBMzNsmWtRk6MYAg)
 
 ### RabbitMQ
 

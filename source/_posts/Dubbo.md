@@ -11,9 +11,7 @@ img: https://picd.zhimg.com/v2-5f6b4a9d35a1add123ac6b3f444b2291_1440w.jpg
 
 ![img](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/427f2168-1930-4c14-8760-415fac8db1d0-20200802184737978.png)
 
-[Apache Dubbo](https://github.com/apache/dubbo)|ˈdʌbəʊ|是一款高性能、轻量级的开源Java RPC框架。
-
-根据 [Dubbo官方文档](https://dubbo.apache.org/zh/)的介绍，Dubbo提供了六大核心能力
+[Apache Dubbo](https://github.com/apache/dubbo)|ˈdʌbəʊ|是一款高性能、轻量级的开源Java RPC框架。根据 [Dubbo官方文档](https://dubbo.apache.org/zh/)的介绍，Dubbo提供了六大核心能力
 
 1. 面向接口代理的高性能RPC调用。
 2. 智能容错和负载均衡。
@@ -24,19 +22,15 @@ img: https://picd.zhimg.com/v2-5f6b4a9d35a1add123ac6b3f444b2291_1440w.jpg
 
 ![Dubbo提供的六大核心能力](https://oss.javaguide.cn/源码/dubbo/dubbo提供的六大核心能力.png)
 
-简单来说就是：**Dubbo不光可以帮助我们调用远程服务，还提供了一些其他开箱即用的功能比如智能负载均衡。**
-
-Dubbo目前已经有接近34.4k的Star。Dubbo是由阿里开源，后来加入了Apache。正是由于Dubbo的出现，才使得越来越多的公司开始使用以及接受分布式架构。
+简单来说就是：**Dubbo不光可以帮助我们调用远程服务，还提供了一些其他开箱即用的功能比如智能负载均衡**。Dubbo目前已经有接近34.4k的Star。Dubbo是由阿里开源，后来加入了Apache。正是由于Dubbo的出现，才使得越来越多的公司开始使用以及接受分布式架构。
 
 ### 为什么要用Dubbo?
 
-随着互联网的发展，网站的规模越来越大，用户数量越来越多。单一应用架构、垂直应用架构无法满足我们的需求，这个时候分布式服务架构就诞生了。
+随着互联网的发展，网站的规模越来越大，用户数量越来越多。单一应用架构、垂直应用架构无法满足我们的需求，这个时候分布式服务架构就诞生了。分布式服务架构下，系统被拆分成不同的服务比如短信服务、安全服务，每个服务独立提供系统的某个核心服务。
 
-分布式服务架构下，系统被拆分成不同的服务比如短信服务、安全服务，每个服务独立提供系统的某个核心服务。
+我们可以使用Java RMI（Java Remote Method Invocation）、Hessian这种支持远程调用的框架来简单地暴露和引用远程服务。但是当服务越来越多之后，服务调用关系越来越复杂。当应用访问压力越来越大后，负载均衡以及服务监控的需求也迫在眉睫。我们可以用F5这类硬件来做负载均衡，但这样增加了成本，并且存在单点故障的风险。
 
-我们可以使用Java RMI（Java Remote Method Invocation）、Hessian这种支持远程调用的框架来简单地暴露和引用远程服务。但是！当服务越来越多之后，服务调用关系越来越复杂。当应用访问压力越来越大后，负载均衡以及服务监控的需求也迫在眉睫。我们可以用F5这类硬件来做负载均衡，但这样增加了成本，并且存在单点故障的风险。
-
-不过，Dubbo的出现让上述问题得到了解决。**Dubbo帮助我们解决了什么问题呢？**
+不过，Dubbo的出现让上述问题得到了解决。**Dubbo帮助我们解决了什么问题呢**？
 
 1. **负载均衡**：同一个服务部署在不同的机器时该调用哪一台机器上的服务。
 2. **服务调用链路生成**：随着系统的发展，服务越来越多，服务间依赖关系变得错踪复杂，甚至分不清哪个应用要在哪个应用之前启动，架构师都不能完整的描述应用的架构关系。Dubbo可以为我们解决服务之间互相是如何调用的。
@@ -46,8 +40,6 @@ Dubbo目前已经有接近34.4k的Star。Dubbo是由阿里开源，后来加入�
 ![img](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/43050183.jpg)
 
 另外，Dubbo除了能够应用在分布式系统中，也可以应用在现在比较火的微服务系统中。不过，由于Spring Cloud在微服务中应用更加广泛，所以，我觉得一般我们提Dubbo的话，大部分是分布式系统的情况。
-
-**我们刚刚提到了分布式这个概念，下面再给大家介绍一下什么是分布式？为什么要分布式？**
 
 ## 分布式基础
 
@@ -59,9 +51,7 @@ Dubbo目前已经有接近34.4k的Star。Dubbo是由阿里开源，后来加入�
 
 ### 为什么要分布式?
 
-从开发角度来讲单体应用的代码都集中在一起，而分布式系统的代码根据业务被拆分。所以，每个团队可以负责一个服务的开发，这样提升了开发效率。另外，代码根据业务拆分之后更加便于维护和扩展。
-
-另外，我觉得将系统拆分成分布式之后不光便于系统扩展和维护，更能提高整个系统的性能。你想一想嘛？把整个系统拆分成不同的服务/系统，然后每个服务/系统单独部署在一台服务器上，是不是很大程度上提高了系统性能呢？
+从开发角度来讲单体应用的代码都集中在一起，而分布式系统的代码根据业务被拆分。所以，每个团队可以负责一个服务的开发，这样提升了开发效率。另外，代码根据业务拆分之后更加便于维护和扩展。另外，我觉得将系统拆分成分布式之后不光便于系统扩展和维护，更能提高整个系统的性能。你想一想嘛？把整个系统拆分成不同的服务/系统，然后每个服务/系统单独部署在一台服务器上，是不是很大程度上提高了系统性能呢？
 
 ## Dubbo架构
 
@@ -81,9 +71,7 @@ Dubbo目前已经有接近34.4k的Star。Dubbo是由阿里开源，后来加入�
 
 ### Dubbo中的Invoker概念了解么？
 
-Invoker是Dubbo领域模型中非常重要的一个概念，你如果阅读过Dubbo源码的话，你会无数次看到这玩意。就比如下面我要说的负载均衡这块的源码中就有大量Invoker的身影。
-
-简单来说，Invoker就是Dubbo对远程调用的抽象。
+Invoker是Dubbo领域模型中非常重要的一个概念，你如果阅读过Dubbo源码的话，你会无数次看到这玩意。就比如下面我要说的负载均衡这块的源码中就有大量Invoker的身影。简单来说，Invoker就是Dubbo对远程调用的抽象。
 
 ![dubbo_rpc_invoke.jpg](https://oss.javaguide.cn/java-guide-blog/dubbo_rpc_invoke.jpg)
 
@@ -114,13 +102,9 @@ Invoker是Dubbo领域模型中非常重要的一个概念，你如果阅读过Du
 
 ### Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？
 
-SPI（Service Provider Interface）机制被大量用在开源项目中，它可以帮助我们动态寻找服务/功能（比如负载均衡策略）的实现。
+SPI（Service Provider Interface）机制被大量用在开源项目中，它可以帮助我们动态寻找服务/功能（比如负载均衡策略）的实现。SPI的具体原理是这样的：我们将接口的实现类放在配置文件中，我们在程序运行过程中读取配置文件，通过反射加载实现类。这样，我们可以在运行的时候，动态替换接口的实现类。和IoC的解耦思想是类似的。Java本身就提供了SPI机制的实现。不过，Dubbo没有直接用，而是对Java原生的SPI机制进行了增强，以便更好满足自己的需求。
 
-SPI的具体原理是这样的：我们将接口的实现类放在配置文件中，我们在程序运行过程中读取配置文件，通过反射加载实现类。这样，我们可以在运行的时候，动态替换接口的实现类。和IoC的解耦思想是类似的。
-
-Java本身就提供了SPI机制的实现。不过，Dubbo没有直接用，而是对Java原生的SPI机制进行了增强，以便更好满足自己的需求。
-
-**那我们如何扩展Dubbo中的默认实现呢？**
+**那我们如何扩展Dubbo中的默认实现呢**？
 
 比如说我们想要实现自己的负载均衡策略，我们创建对应的实现类XxxLoadBalance实现LoadBalance接口或者AbstractLoadBalance类。
 
@@ -173,13 +157,7 @@ Dubbo采用微内核（Microkernel）+插件（Plugin）模式，简单来说就
 
 ![img](https://oss.javaguide.cn/source-code/dubbo/微内核架构示意图.png)
 
-核心系统提供系统所需核心能力，插件模块可以扩展系统的功能。因此，基于微内核架构的系统，非常易于扩展功能。
-
-我们常见的一些IDE，都可以看作是基于微内核架构设计的。绝大多数IDE比如IDEA、VSCode都提供了插件来丰富自己的功能。
-
-正是因为Dubbo基于微内核架构，才使得我们可以随心所欲替换Dubbo的功能点。比如你觉得Dubbo的序列化模块实现的不满足自己要求，没关系,你自己实现一个序列化模块就好了
-
-通常情况下，微核心都会采用Factory、IoC、OSGi等方式管理插件生命周期。Dubbo不想依赖Spring等IoC容器，也不想自己造一个小的IoC容器（过度设计），因此采用了一种最简单的Factory方式管理插件：**JDK标准的SPI扩展机制**（java.util.ServiceLoader）。
+核心系统提供系统所需核心能力，插件模块可以扩展系统的功能。因此，基于微内核架构的系统，非常易于扩展功能。我们常见的一些IDE，都可以看作是基于微内核架构设计的。绝大多数IDE比如IDEA、VSCode都提供了插件来丰富自己的功能。正是因为Dubbo基于微内核架构，才使得我们可以随心所欲替换Dubbo的功能点。比如你觉得Dubbo的序列化模块实现的不满足自己要求，没关系,你自己实现一个序列化模块就好了。通常情况下，微核心都会采用Factory、IoC、OSGi等方式管理插件生命周期。Dubbo不想依赖Spring等IoC容器，也不想自己造一个小的IoC容器（过度设计），因此采用了一种最简单的Factory方式管理插件：**JDK标准的SPI扩展机制**（java.util.ServiceLoader）。
 
 ### 关于Dubbo架构的一些自测小问题
 
@@ -206,8 +184,6 @@ Dubbo采用微内核（Microkernel）+插件（Plugin）模式，简单来说就
 先来看一下稍微官方点的解释。下面这段话摘自维基百科对负载均衡的定义：
 
 > 负载均衡改善了跨多个计算资源（例如计算机，计算机集群，网络链接，中央处理单元或磁盘驱动）的工作负载分布。负载平衡旨在优化资源使用，最大化吞吐量，最小化响应时间，并避免任何单个资源的过载。使用具有负载平衡而不是单个组件的多个组件可以通过冗余提高可靠性和可用性。负载平衡通常涉及专用软件或硬件。
-
-**上面讲的大家可能不太好理解，再用通俗的话给大家说一下。**
 
 我们的系统中的某个服务的访问量特别大，我们将这个服务部署在了多台服务器上，当客户端发起请求的时候，多台服务器都可以处理这个请求。那么，如何正确选择处理该请求的服务器就很关键。假如，你就要一台服务器来处理该服务的请求，那该服务部署在多台服务器的意义就不复存在了。负载均衡就是为了避免单个服务器响应同一请求，容易造成服务器宕机、崩溃等问题，我们从负载均衡的这四个字就能明显感受到它的意义。
 
@@ -295,17 +271,9 @@ public class RandomLoadBalance extends AbstractLoadBalance {
 
 #### LeastActiveLoadBalance
 
-LeastActiveLoadBalance直译过来就是**最小活跃数负载均衡**。
+LeastActiveLoadBalance直译过来就是**最小活跃数负载均衡**。这个名字起得有点不直观，不仔细看官方对活跃数的定义，你压根不知道这玩意是干嘛的。我这么说吧！初始状态下所有服务提供者的活跃数均为0（每个服务提供者的中特定方法都对应一个活跃数，我在后面的源码中会提到），每收到一个请求后，对应的服务提供者的活跃数+1，当这个请求处理完之后，活跃数-1。因此，**Dubbo就认为谁的活跃数越少，谁的处理速度就越快，性能也越好，这样的话，我就优先把请求给活跃数少的服务提供者处理**。
 
-这个名字起得有点不直观，不仔细看官方对活跃数的定义，你压根不知道这玩意是干嘛的。
-
-我这么说吧！初始状态下所有服务提供者的活跃数均为0（每个服务提供者的中特定方法都对应一个活跃数，我在后面的源码中会提到），每收到一个请求后，对应的服务提供者的活跃数+1，当这个请求处理完之后，活跃数-1。
-
-因此，**Dubbo就认为谁的活跃数越少，谁的处理速度就越快，性能也越好，这样的话，我就优先把请求给活跃数少的服务提供者处理。**
-
-**如果有多个服务提供者的活跃数相等怎么办？**
-
-很简单，那就再走一遍RandomLoadBalance。
+**如果有多个服务提供者的活跃数相等怎么办**？很简单，那就再走一遍RandomLoadBalance。
 
 ```java
 public class LeastActiveLoadBalance extends AbstractLoadBalance {
@@ -388,9 +356,7 @@ public class RpcStatus {
 
 #### ConsistentHashLoadBalance
 
-ConsistentHashLoadBalance小伙伴们应该也不会陌生，在分库分表、各种集群中就经常使用这个负载均衡策略。
-
-ConsistentHashLoadBalance即**一致性Hash负载均衡策略**。ConsistentHashLoadBalance中没有权重的概念，具体是哪个服务提供者处理请求是由你的请求的参数决定的，也就是说相同参数的请求总是发到同一个服务提供者。
+ConsistentHashLoadBalance小伙伴们应该也不会陌生，在分库分表、各种集群中就经常使用这个负载均衡策略。ConsistentHashLoadBalance即**一致性Hash负载均衡策略**。ConsistentHashLoadBalance中没有权重的概念，具体是哪个服务提供者处理请求是由你的请求的参数决定的，也就是说相同参数的请求总是发到同一个服务提供者。
 
 ![img](https://oss.javaguide.cn/java-guide-blog/consistent-hash-data-incline.jpg)
 
@@ -398,19 +364,13 @@ ConsistentHashLoadBalance即**一致性Hash负载均衡策略**。ConsistentHash
 
 ![img](https://oss.javaguide.cn/java-guide-blog/consistent-hash-invoker.jpg)
 
-官方有详细的[源码分析](https://dubbo.apache.org/zh/docs/v2.7/dev/source/loadbalance/#23-consistenthashloadbalance)。这里还有一个相关的[PR#5440](https://github.com/apache/dubbo/pull/5440)来修复老版本中ConsistentHashLoadBalance存在的一些Bug。感兴趣的小伙伴，可以多花点时间研究一下。
+> 官方有详细的[源码分析](https://dubbo.apache.org/zh/docs/v2.7/dev/source/loadbalance/#23-consistenthashloadbalance)。这里还有一个相关的[PR#5440](https://github.com/apache/dubbo/pull/5440)来修复老版本中ConsistentHashLoadBalance存在的一些Bug。感兴趣的小伙伴，可以多花点时间研究一下。
 
 #### RoundRobinLoadBalance
 
 加权轮询负载均衡。
 
-轮询就是把请求依次分配给每个服务提供者。加权轮询就是在轮询的基础上，让更多的请求落到权重更大的服务提供者上。比如假如有两个提供相同服务的服务器S1,S2，S1的权重为7，S2的权重为3。
-
-如果我们有10次请求，那么7次会被S1处理，3次被S2处理。
-
-但是，如果是RandomLoadBalance的话，很可能存在10次请求有9次都被S1处理的情况（概率性问题）。
-
-Dubbo中的RoundRobinLoadBalance的代码实现被修改重建了好几次，Dubbo-2.6.5版本的RoundRobinLoadBalance为平滑加权轮询算法。
+轮询就是把请求依次分配给每个服务提供者。加权轮询就是在轮询的基础上，让更多的请求落到权重更大的服务提供者上。比如假如有两个提供相同服务的服务器S1,S2，S1的权重为7，S2的权重为3。如果我们有10次请求，那么7次会被S1处理，3次被S2处理。但是，如果是RandomLoadBalance的话，很可能存在10次请求有9次都被S1处理的情况（概率性问题）。Dubbo中的RoundRobinLoadBalance的代码实现被修改重建了好几次，Dubbo-2.6.5版本的RoundRobinLoadBalance为平滑加权轮询算法。
 
 ## Dubbo序列化协议
 
@@ -426,14 +386,14 @@ Dubbo默认使用的序列化方式是hessian2。
 
 一般我们不会直接使用JDK自带的序列化方式。主要原因有两个：
 
-1. **不支持跨语言调用**:如果调用的是其他语言开发的服务的时候就不支持了。
+1. **不支持跨语言调用**：如果调用的是其他语言开发的服务的时候就不支持了。
 2. **性能差**：相比于其他序列化框架性能更低，主要原因是序列化之后的字节数组体积较大，导致传输成本加大。
 
 JSON序列化由于性能问题，我们一般也不会考虑使用。
 
 像Protostuff，ProtoBuf、hessian2这些都是跨语言的序列化方式，如果有跨语言需求的话可以考虑使用。
 
-Kryo和FST这两种序列化方式是Dubbo后来才引入的，性能非常好。不过，这两者都是专门针对Java语言的。Dubbo官网的一篇文章中提到说推荐使用Kryo作为生产环境的序列化方式。([文章地址](https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/))
+Kryo和FST这两种序列化方式是Dubbo后来才引入的，性能非常好。不过，这两者都是专门针对Java语言的。Dubbo官网的[一篇文章](https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/)中提到说推荐使用Kryo作为生产环境的序列化方式。
 
 ![img](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/569e541a-22b2-4846-aa07-0ad479f07440.png)
 

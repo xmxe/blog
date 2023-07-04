@@ -10,9 +10,7 @@ img: https://pica.zhimg.com/v2-617196c5dc7927460c726d1477174464_1440w.jpg
 
 ### HashMap简介
 
-HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一，是非线程安全的。
-
-HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多个
+HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一，是非线程安全的。HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多个。
 
 JDK1.8之前HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8以后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。
 
@@ -26,7 +24,7 @@ JDK1.8之前HashMap底层是**数组和链表**结合在一起使用也就是**�
 
 所谓扰动函数指的就是HashMap的hash方法。使用hash方法也就是扰动函数是为了防止一些实现比较差的hashCode()方法,换句话说使用扰动函数之后可以减少碰撞。
 
-**JDK1.8HashMap的hash方法源码:**
+**JDK1.8HashMap的hash方法源码**：
 
 JDK1.8的hash方法相比于JDK1.7hash方法更加简化，但是原理不变。
 ```java
@@ -162,7 +160,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
 loadFactor加载因子是控制数组存放数据的疏密程度，loadFactor越趋近于1，那么数组中存放的数据(entry)也就越多，也就越密，也就是会让链表的长度增加，loadFactor越小，也就是趋近于0，数组中存放的数据(entry)也就越少，也就越稀疏。**loadFactor太大导致查找元素效率低，太小导致数组的利用率低，存放的数据会很分散。loadFactor的默认值为0.75f是官方给出的一个比较好的临界值**。给定的默认容量为16，负载因子为0.75。Map在使用过程中不断的往里面存放数据，当数量达到了16*0.75=12就需要将当前16的容量进行扩容，而扩容这个过程涉及到rehash、复制数据等操作，所以非常消耗性能。
 
 - **threshold**
-**threshold=capacity\*loadFactor**，**当Size>=threshold**的时候，那么就要考虑对数组的扩增了，也就是说，这个的意思就是**衡量数组是否需要扩增的一个标准**。
+**threshold=capacity\*loadFactor**，**当Size>=threshold**的时候，那么就要考虑对数组的扩增了，也就是说，这个的意思就是衡量数组是否需要扩增的一个标准。
 
 **Node节点类源码:**
 
@@ -384,12 +382,10 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
 }
 ```
 
-**我们再来对比一下JDK1.7put方法的代码**
+**我们再来对比一下JDK1.7put方法的代码，对于put方法的分析如下**：
 
-**对于put方法的分析如下**：
-
-- ①如果定位到的数组位置没有元素就直接插入。
-- ②如果定位到的数组位置有元素，遍历以这个元素为头结点的链表，依次和插入的key比较，如果key相同就直接覆盖，不同就采用头插法插入元素。
+①如果定位到的数组位置没有元素就直接插入。
+②如果定位到的数组位置有元素，遍历以这个元素为头结点的链表，依次和插入的key比较，如果key相同就直接覆盖，不同就采用头插法插入元素。
 
 ```java
 public V put(K key, V value)
@@ -619,37 +615,40 @@ public class HashMapDemo {
 
 为了能让HashMap存取高效，尽量较少碰撞，也就是要尽量把数据分配均匀。我们上面也讲到了过了，Hash值的范围值-2147483648到2147483647，前后加起来大概40亿的映射空间，只要哈希函数映射得比较均匀松散，一般应用是很难出现碰撞的。但问题是一个40亿长度的数组，内存是放不下的。所以这个散列值是不能直接拿来用的。用之前还要先做对数组的长度取模运算，得到的余数才能用来要存放的位置也就是对应的数组下标。这个数组下标的计算方法是(n - 1) & hash。（n代表数组长度）。这也就解释了HashMap的长度为什么是2的幂次方。
 
-**这个算法应该如何设计呢？**
+**这个算法应该如何设计呢**？
 
-我们首先可能会想到采用%取余的操作来实现。但是，重点来了：**“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&)操作（也就是说hash%length==hash&(length-1)的前提是length是2的n次方；）”**。并且**采用二进制位操作&，相对于%能够提高运算效率，这就解释了HashMap的长度为什么是2的幂次方。**
+我们首先可能会想到采用%取余的操作来实现。但是，重点来了：
+
+> “取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&)操作（也就是说hash%length==hash&(length-1)的前提是length是2的n次方；）”。并且采用二进制位操作&，相对于%能够提高运算效率，这就解释了HashMap的长度为什么是2的幂次方。
 
 #### 加载因子为什么0.75，而不是其他值？
 答：可以说是一个经过考量的经验值。加载因子涉及扩容，下次扩容的阈值=数组桶的大小\*加载因子，如果加载因子太小，这就会导致阈值太小，这就会导致比较容易发生扩容。如果加载因子太大，那就会导致阈值太大，可能冲突会很多，导致查找效率下降。负载因子为什么是0.75，如果负载因子为0.5甚至更低的可能的话，最后得到的临时阈值明显会很小，这样的情况就会造成分配的内存的浪费，存在多余的没用的内存空间，也不满足了哈希表均匀分布的情况。如果负载因子达到了1的情况，也就是Entry数组存满了才发生扩容，这样会出现大量的哈希冲突的情况，出现链表过长，因此造成get查询数据的效率。因此选择了0.5~1的折中数也就是0.75，均衡解决了上面出现的情况。
-[面试官竟然问我为啥HashMap的负载因子不设置成1！](https://mp.weixin.qq.com/s/kbLASf0lcF4PDJ3qBsFyUg)
-[面试官：为什么HashMap的加载因子是0.75？](https://mp.weixin.qq.com/s/ZxwU2qSXvdEZVAIbY_5EPQ)
+> [面试官竟然问我为啥HashMap的负载因子不设置成1！](https://mp.weixin.qq.com/s/kbLASf0lcF4PDJ3qBsFyUg)
+> [面试官：为什么HashMap的加载因子是0.75？](https://mp.weixin.qq.com/s/ZxwU2qSXvdEZVAIbY_5EPQ)
 
 #### 为什么不能将实数作为HashMap的key？
 
-答：java中浮点数的表示比较复杂，特别是牵涉到-0.0,NaN,正负无穷这种，所以不适宜用来作为Map的key
+答：java中浮点数的表示比较复杂，特别是牵涉到-0.0,NaN,正负无穷这种，所以不适宜用来作为Map的key。
 
 #### HashMap多线程操作导致死循环问题
 
 答：准确的讲应该是JDK1.7的HashMap链表会有死循环的可能，因为JDK1.7是采用的头插法，在多线程环境下有可能会使链表形成环状，从而导致死循环。JDK1.8做了改进，用的是尾插法，不会产生死循环。
-我们从put()方法开始，最终找到线程不安全的那个方法。这里省略中间不重要的过程，我只把方法的跳转流程贴出来：
-//添加元素方法->添加新节点方法->扩容方法->把原数组元素重新分配到新数组中
-put()-->addEntry()-->resize()-->transfer()
+我们从`put()`方法开始，最终找到线程不安全的那个方法。这里省略中间不重要的过程，我只把方法的跳转流程贴出来：
+> //添加元素方法->添加新节点方法->扩容方法->把原数组元素重新分配到新数组中
+> put()-->addEntry()-->resize()-->transfer()
+
 现在，有两个线程都执行transfer方法。每个线程都会在它们自己的工作内存生成一个newTable的数组，用于存储变化后的链表，它们互不影响（这里互不影响，指的是两个新数组本身互不影响）。但是，需要注意的是，它们操作的数据却是同一份。一番扩容操作后出现环形链表，这时，有的同学可能就会问了，就算他们成环了，又怎样，跟死循环有什么关系？我们看下get()方法（最终调用getEntry方法），可以看到查找元素时，只要e不为空，就会一直循环查找下去。若有某个元素C的hash值也落在了和A，B元素同一个桶中，则会由于，A，B互相指向，e.next永远不为空，就会形成死循环。
 
 主要原因在于并发下的Rehash会造成元素之间会形成一个循环链表。不过，jdk1.8后解决了这个问题，但是还是不建议在多线程下使用HashMap,因为多线程下使用HashMap还是会存在其他问题比如数据丢失。并发环境下推荐使用ConcurrentHashMap。
 
-- [JAVA HASHMAP的死循环](https://coolshell.cn/articles/9606.html)
-- [美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）](https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ)
-- [多线程环境下，HashMap为什么会出现死循环？](https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg)
+> [JAVA HASHMAP的死循环](https://coolshell.cn/articles/9606.html)
+> [美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）](https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ)
+> [多线程环境下，HashMap为什么会出现死循环？](https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg)
 
 #### HashMap有哪几种常见的遍历方式?
 
-[HashMap的7种遍历方式与性能分析](https://mp.weixin.qq.com/s/zQBN3UvJDhRTKP6SzcZFKw)
-
+> [HashMap的7种遍历方式与性能分析](https://mp.weixin.qq.com/s/zQBN3UvJDhRTKP6SzcZFKw)
+> 
 > [原文链接](https://javaguide.cn/java/collection/java-collection-questions-02.html)
 
 ### HashMap相关文章
@@ -756,9 +755,9 @@ public ConcurrentHashMap(int initialCapacity,float loadFactor, int concurrencyLe
 总结一下在Java7中ConcurrnetHashMap的初始化逻辑。
 
 1. 必要参数校验。
-2. 校验并发级别concurrencyLevel大小，如果大于最大值，重置为最大值。无参构造**默认值是16.**
+2. 校验并发级别concurrencyLevel大小，如果大于最大值，重置为最大值。无参构造**默认值是16**。
 3. 寻找并发级别concurrencyLevel之上最近的**2的幂次方**值，作为初始化容量大小，**默认是16**。
-4. 记录segmentShift偏移量，这个值为【容量=2的N次方】中的N，在后面Put时计算位置时会用到。**默认是32-sshift=28**.
+4. 记录segmentShift偏移量，这个值为【容量=2的N次方】中的N，在后面Put时计算位置时会用到。**默认是32-sshift=28**。
 5. 记录segmentMask，默认是ssize-1=16-1=15.
 6. **初始化segments[0]**，**默认大小为2**，**负载因子0.75**，**扩容阀值是2\*0.75=1.5**，插入第二个值时才会进行扩容。
 
@@ -838,16 +837,14 @@ private Segment<K,V> ensureSegment(int k) {
 
 1. 计算要put的key的位置，获取指定位置的Segment。
 
-2. 如果指定位置的Segment为空，则初始化这个Segment.
-
-   **初始化Segment流程**：
+2. 如果指定位置的Segment为空，则初始化这个Segment。**初始化Segment流程**：
 
    1. 检查计算得到的位置的Segment是否为null.
    2. 为null继续初始化，使用Segment[0]的容量和负载因子创建一个HashEntry数组。
    3. 再次检查计算得到的指定位置的Segment是否为null.
    4. 使用创建的HashEntry数组初始化这个Segment.
    5. 自旋判断计算得到的指定位置的Segment是否为null，使用CAS在这个位置赋值为Segment.
-
+   
 3. Segment.put插入key,value值。
 
 上面探究了获取Segment段和初始化Segment段的操作。最后一行的Segment的put方法还没有查看，继续分析。
@@ -908,21 +905,19 @@ final V put(K key, int hash, V value, boolean onlyIfAbsent) {
 
 1. tryLock()获取锁，获取不到使用**scanAndLockForPut**方法继续获取。
 2. 计算put的数据要放入的index位置，然后获取这个位置上的HashEntry。
-3. 遍历put新元素，为什么要遍历？因为这里获取的HashEntry可能是一个空元素，也可能是链表已存在，所以要区别对待。
-
-   如果这个位置上的**HashEntry不存在**：
+3. 遍历put新元素，为什么要遍历？因为这里获取的HashEntry可能是一个空元素，也可能是链表已存在，所以要区别对待。如果这个位置上的**HashEntry不存在**：
 
    1. 如果当前容量大于扩容阀值，小于最大容量，**进行扩容**。
    2. 直接头插法插入。
-
+   
    如果这个位置上的**HashEntry存在**：
 
    1. 判断链表当前元素key和hash值是否和要put的key和hash值一致。一致则替换值
    2. 不一致，获取链表下一个节点，直到发现相同进行值替换，或者链表表里完毕没有相同的。
       1. 如果当前容量大于扩容阀值，小于最大容量，**进行扩容**。
       2. 直接链表头插法插入。
-
-4. 如果要插入的位置之前已经存在，替换后返回旧值，否则返回null.
+   
+4. 如果要插入的位置之前已经存在，替换后返回旧值，否则返回null。
 
 这里面的第一步中的scanAndLockForPut操作这里没有介绍，这个方法做的操作就是不断的自旋tryLock()获取锁。当自旋次数大于指定次数时，使用lock()阻塞获取锁。在自旋时顺表获取下hash位置的HashEntry。
 
@@ -1229,7 +1224,7 @@ public V get(Object key) {
 3. 如果头节点hash值小于0，说明正在扩容或者是红黑树，查找之。
 4. 如果是链表，遍历查找之。
 
-总的来说ConcurrentHashMap在Java8中相对于Java7来说变化还是挺大的，
+总的来说ConcurrentHashMap在Java8中相对于Java7来说变化还是挺大的。
 
 #### 3.总结
 
@@ -1237,17 +1232,17 @@ Java7中ConcurrentHashMap使用的分段锁，也就是每一个Segment上同时
 
 Java8中的ConcurrentHashMap使用的Synchronized锁加CAS的机制。结构也由Java7中的**Segment数组+HashEntry数组+链表**进化成了**Node数组+链表/红黑树**，Node是类似于一个HashEntry的结构。它的冲突再达到一定大小时会转化成红黑树，在冲突小于一定数量时又退回链表。
 
-有些同学可能对Synchronized的性能存在疑问，其实Synchronized锁自从引入锁升级策略后，性能不再是问题，有兴趣的同学可以自己了解下Synchronized的**锁升级**。
+有些同学可能对Synchronized的性能存在疑问，其实Synchronized锁自从引入锁升级策略后，性能不再是问题，有兴趣的同学可以自己了解下Synchronized的锁升级。
 
 
 ### ConcurrentHashMap和Hashtable的区别
 
 ConcurrentHashMap和Hashtable的区别主要体现在实现线程安全的方式上不同。
 
-- **底层数据结构**:JDK1.7的ConcurrentHashMap底层采用**分段的数组+链表**实现，JDK1.8采用的数据结构跟HashMap1.8的结构一样，数组+链表/红黑二叉树。Hashtable和JDK1.8之前的HashMap的底层数据结构类似都是采用**数组+链表**的形式，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的；
+- **底层数据结构**：JDK1.7的ConcurrentHashMap底层采用**分段的数组+链表**实现，JDK1.8采用的数据结构跟HashMap1.8的结构一样，数组+链表/红黑二叉树。Hashtable和JDK1.8之前的HashMap的底层数据结构类似都是采用**数组+链表**的形式，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的；
 - **实现线程安全的方式（重要）**：
-  - 在JDK1.7的时候，ConcurrentHashMap对整个桶数组进行了分割分段(**Segment**，分段锁)，每一把锁只锁容器其中一部分数据（下面有示意图），多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。
-  - 到了JDK1.8的时候，ConcurrentHashMap已经摒弃了**Segment**的概念，而是直接用Node数组+链表+红黑树的数据结构来实现，并发控制使用synchronized和CAS来操作。（JDK1.6以后synchronized锁做了很多优化）整个看起来就像是优化过且线程安全的HashMap，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是为了兼容旧版本；
+  - 在JDK1.7的时候，ConcurrentHashMap对整个桶数组进行了分割分段(Segment，分段锁)，每一把锁只锁容器其中一部分数据（下面有示意图），多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。
+  - 到了JDK1.8的时候，ConcurrentHashMap已经摒弃了Segment的概念，而是直接用Node数组+链表+红黑树的数据结构来实现，并发控制使用synchronized和CAS来操作。（JDK1.6以后synchronized锁做了很多优化）整个看起来就像是优化过且线程安全的HashMap，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是为了兼容旧版本；
   - Hashtable(同一把锁):使用synchronized来保证线程安全，效率非常低下。当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或轮询状态，如使用put添加元素，另一个线程不能使用put添加元素，也不能使用get，竞争会越来越激烈效率越低。
 
 下面，我们再来看看两者底层数据结构的对比图。
@@ -1320,7 +1315,7 @@ Java8中，锁粒度更细，synchronized只锁定当前链表或红黑二叉树
 ### JDK1.7和JDK1.8的ConcurrentHashMap实现有什么不同？
 
 - **线程安全实现方式**：JDK1.7采用Segment分段锁来保证安全，Segment是继承自ReentrantLock。JDK1.8放弃了Segment分段锁的设计，采用Node+CAS+synchronized保证线程安全，锁粒度更细，synchronized只锁定当前链表或红黑二叉树的首节点。
-- **Hash碰撞解决方法**:JDK1.7采用拉链法，JDK1.8采用拉链法结合红黑树（链表长度超过一定阈值时，将链表转换为红黑树）。
+- **Hash碰撞解决方法**：JDK1.7采用拉链法，JDK1.8采用拉链法结合红黑树（链表长度超过一定阈值时，将链表转换为红黑树）。
 - **并发度**：JDK1.7最大并发度是Segment的个数，默认是16。JDK1.8最大并发度是Node数组的大小，并发度更大。
 
 
@@ -1477,7 +1472,7 @@ TreeMap<Person, String> treeMap = new TreeMap<>((person1, person2) -> {
 });
 ```
 
-**综上，相比于HashMap来说TreeMap主要多了对集合中的元素根据键排序的能力以及对集合内元素的搜索的能力。**
+**综上，相比于HashMap来说TreeMap主要多了对集合中的元素根据键排序的能力以及对集合内元素的搜索的能力**。
 
 ### HashSet如何检查重复?
 

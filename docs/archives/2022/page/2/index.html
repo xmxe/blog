@@ -656,7 +656,7 @@ ThreadLocal有什么用？通常情况下，我们创建的变量是可以被任
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    ArrayList简介ArrayList的底层实现是一个Object数组,ArrayList的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组DEFAULTCAPACITY_EMPTY_ELEMENTD
+                                    ArrayListArrayList的底层实现是一个Object数组,ArrayList的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组DEFAULTCAPACITY_EMPTY_ELEMENTDAT
                                 
                             </div>
                             <div class="publish-info">
@@ -716,8 +716,7 @@ ThreadLocal有什么用？通常情况下，我们创建的变量是可以被任
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    HashMapHashMap简介HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一，是非线程安全的。
-HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有
+                                    HashMapHashMap简介HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一，是非线程安全的。HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多
                                 
                             </div>
                             <div class="publish-info">
@@ -777,8 +776,7 @@ HashMap可以存储null的key和value，但null作为键只能有一个，null�
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    什么是事务？事务是逻辑上的一组操作，要么都执行，要么都不执行。相信大家应该都能背上面这句话了，下面我结合我们日常的真实开发来谈一谈。
-我们系统的每个业务方法可能包括了多个原子性的数据库操作，比如下面的savePerson()方法中就有两个原
+                                    什么是事务？事务是逻辑上的一组操作，要么都执行，要么都不执行。我们系统的每个业务方法可能包括了多个原子性的数据库操作，比如下面的savePerson()方法中就有两个原子性的数据库操作。这些原子性的数据库操作是有依赖的，它们要么都执行，要不
                                 
                             </div>
                             <div class="publish-info">
@@ -1169,7 +1167,9 @@ git remote add origin https://github.com/xmxe/project.
                                 
                                     幂等性的几种方案
 唯一索引，防止新增脏数据
-token机制，防止页面重复提交前端限制:页面的提交按钮只能被点击提交一次后端解决方案：集群环境：采用token加redis（redis单线程的，处理需要排队）单JVM环境：采用token加red
+前端限制:页面的提交按钮只能被点击提交一次后端解决方案：
+集群环境：采用token加redis（redis单线程的，处理需要排队）
+单JVM环境：采用token加redis或token加jvm内存
                                 
                             </div>
                             <div class="publish-info">
@@ -1543,8 +1543,7 @@ System:拥有DBA、Sysdb
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    sql server行转列类似MySQL group_concat()使用stuff()
-stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
+                                    sql server行转列类似MySQL group_concat()使用stuff()。stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
 selec
                                 
                             </div>

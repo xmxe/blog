@@ -540,10 +540,9 @@
 <li><a target="_blank" rel="noopener" href="https://xie.infoq.cn/article/8b6ed4195e475bfb32dacc5cb">Java双刃剑之Unsafe类详解-码农参上-2021</a></li>
 </ul>
 </blockquote>
-<p>阅读过JUC源码的同学，一定会发现很多并发工具类都调用了一个叫做Unsafe的类。</p>
-<p>那这个类主要是用来干什么的呢？有什么使用场景呢？这篇文章就带你搞清楚！</p>
+<p>阅读过JUC源码的同学，一定会发现很多并发工具类都调用了一个叫做Unsafe的类。那这个类主要是用来干什么的呢？有什么使用场景呢？</p>
 <h2 id="Unsafe介绍"><a href="#Unsafe介绍" class="headerlink" title="Unsafe介绍"></a>Unsafe介绍</h2><p>Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。</p>
-<p>另外，Unsafe提供的这些功能的实现需要依赖本地方法（Native Method）。你可以将本地方法看作是Java中使用其他编程语言编写的方法。本地方法使用<strong>native</strong>关键字修饰，Java代码中只是声明方法头，具体的实现则交给<strong>本地代码</strong>。</p>
+<p>另外，Unsafe提供的这些功能的实现需要依赖本地方法（Native Method）。你可以将本地方法看作是Java中使用其他编程语言编写的方法。本地方法使用<strong>native</strong>关键字修饰，Java代码中只是声明方法头，具体的实现则交给本地代码。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/java/basis/unsafe/image-20220717115231125.png" alt="img"></p>
 <p><strong>为什么要使用本地方法呢？</strong></p>
 <ol>
@@ -576,11 +575,11 @@
  at sun.misc.Unsafe.getUnsafe<span class="token punctuation">(</span>Unsafe.java:90<span class="token punctuation">)</span>
  at com.cn.test.GetUnsafeTest.main<span class="token punctuation">(</span>GetUnsafeTest.java:12<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>为什么public static方法无法被直接调用呢？</strong></p>
+<p><strong>为什么public static方法无法被直接调用呢</strong>？</p>
 <p>这是因为在getUnsafe方法中，会对调用者的classLoader进行检查，判断当前类是否由Bootstrap classLoader加载，如果不是的话那么就会抛出一个SecurityException异常。也就是说，只有启动类加载器加载的类才能够调用Unsafe类中的方法，来防止这些方法在不可信的代码中被调用。</p>
-<p><strong>为什么要对Unsafe类进行这么谨慎的使用限制呢?</strong></p>
+<p><strong>为什么要对Unsafe类进行这么谨慎的使用限制呢</strong>？</p>
 <p>Unsafe提供的功能过于底层（如直接访问系统内存资源、自主管理内存资源等），安全隐患也比较大，使用不当的话，很容易出现很严重的问题。</p>
-<p><strong>如若想使用Unsafe这个类的话，应该如何获取其实例呢？</strong></p>
+<p><strong>如若想使用Unsafe这个类的话，应该如何获取其实例呢</strong>？</p>
 <p>这里介绍两个可行的方案。</p>
 <p>1、利用反射获得Unsafe类中已经实例化完成的单例对象theUnsafe。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">Unsafe</span> <span class="token function">reflectGetUnsafe</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -660,7 +659,7 @@ addr3: 2433733894944
 <li>提升程序I&#x2F;O操作的性能。通常在I&#x2F;O通信过程中，会存在堆内内存到堆外内存的数据拷贝操作，对于需要频繁进行内存间数据拷贝且生命周期较短的暂存数据，都建议存储到堆外内存。</li>
 </ul>
 <h4 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h4><p>DirectByteBuffer是Java用于实现堆外内存的一个重要类，通常用在通信过程中做缓冲池，如在Netty、MINA等NIO框架中应用广泛。DirectByteBuffer对于堆外内存的创建、使用、销毁等逻辑均由Unsafe提供的堆外内存API来实现。</p>
-<p>下图为DirectByteBuffer构造函数，创建DirectByteBuffer的时候，通过Unsafe.allocateMemory分配内存、Unsafe.setMemory进行内存初始化，而后构建Cleaner对象用于跟踪DirectByteBuffer对象的垃圾回收，以实现当DirectByteBuffer被垃圾回收时，分配的堆外内存一起被释放。</p>
+<p>下面为DirectByteBuffer构造函数，创建DirectByteBuffer的时候，通过Unsafe.allocateMemory分配内存、Unsafe.setMemory进行内存初始化，而后构建Cleaner对象用于跟踪DirectByteBuffer对象的垃圾回收，以实现当DirectByteBuffer被垃圾回收时，分配的堆外内存一起被释放。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">DirectByteBuffer</span><span class="token punctuation">(</span><span class="token keyword">int</span> cap<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>                   <span class="token comment">// package-private</span>
 
     <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> cap<span class="token punctuation">,</span> cap<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -691,8 +690,7 @@ addr3: 2433733894944
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="内存屏障"><a href="#内存屏障" class="headerlink" title="内存屏障"></a>内存屏障</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>在介绍内存屏障前，需要知道编译器和CPU会在保证程序输出结果一致的情况下，会对代码进行重排序，从指令优化角度提升性能。而指令重排序可能会带来一个不好的结果，导致CPU的高速缓存和内存中数据的不一致，而内存屏障（Memory Barrier）就是通过阻止屏障两边的指令重排序从而避免编译器和硬件的不正确优化情况。</p>
-<p>在硬件层面上，内存屏障是CPU为了防止代码进行重排序而提供的指令，不同的硬件平台上实现内存屏障的方法可能并不相同。在Java8中，引入了3个内存屏障的函数，它屏蔽了操作系统底层的差异，允许在代码中定义、并统一由JVM来生成内存屏障指令，来实现内存屏障的功能。</p>
-<p>Unsafe中提供了下面三个内存屏障相关方法：</p>
+<p>在硬件层面上，内存屏障是CPU为了防止代码进行重排序而提供的指令，不同的硬件平台上实现内存屏障的方法可能并不相同。在Java8中，引入了3个内存屏障的函数，它屏蔽了操作系统底层的差异，允许在代码中定义、并统一由JVM来生成内存屏障指令，来实现内存屏障的功能。Unsafe中提供了下面三个内存屏障相关方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//内存屏障，禁止load操作重排序。屏障前的load操作不能被重排序到屏障后，屏障后的load操作不能被重排序到屏障前</span>
 <span class="token keyword">public</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">loadFence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//内存屏障，禁止store操作重排序。屏障前的store操作不能被重排序到屏障后，屏障后的store操作不能被重排序到屏障前</span>
@@ -740,7 +738,7 @@ main thread end<span aria-hidden="true" class="line-numbers-rows"><span></span><
 <p>而如果删掉上面代码中的loadFence方法，那么主线程将无法感知到flag发生的变化，会一直在while中循环。可以用图来表示上面的过程：</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/java/basis/unsafe/image-20220717144703446.png" alt="img"></p>
 <p>了解Java内存模型（JMM）的小伙伴们应该清楚，运行中的线程不是直接读取主内存中的变量的，只能操作自己工作内存中的变量，然后同步到主内存中，并且线程的工作内存是不能共享的。上面的图中的流程就是子线程借助于主内存，将修改后的结果同步给了主线程，进而修改主线程中的工作空间，跳出循环。</p>
-<h4 id="典型应用-1"><a href="#典型应用-1" class="headerlink" title="典型应用"></a>典型应用</h4><p>在Java8中引入了一种锁的新机制——StampedLock，它可以看成是读写锁的一个改进版本。StampedLock提供了一种乐观读锁的实现，这种乐观读锁类似于无锁的操作，完全不会阻塞写线程获取写锁，从而缓解读多写少时写线程“饥饿”现象。由于StampedLock提供的乐观读锁不阻塞写线程获取读锁，当线程共享变量从主内存load到线程工作内存时，会存在数据不一致问题。</p>
+<h4 id="典型应用-1"><a href="#典型应用-1" class="headerlink" title="典型应用"></a>典型应用</h4><p>在Java8中引入了一种锁的新机制——<strong>StampedLock</strong>，它可以看成是读写锁的一个改进版本。StampedLock提供了一种乐观读锁的实现，这种乐观读锁类似于无锁的操作，完全不会阻塞写线程获取写锁，从而缓解读多写少时写线程“饥饿”现象。由于StampedLock提供的乐观读锁不阻塞写线程获取读锁，当线程共享变量从主内存load到线程工作内存时，会存在数据不一致问题。</p>
 <p>为了解决这个问题，StampedLock的validate方法会通过Unsafe的loadFence方法加入一个load内存屏障。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">validate</span><span class="token punctuation">(</span><span class="token keyword">long</span> stamp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
    <span class="token class-name">U</span><span class="token punctuation">.</span><span class="token function">loadFence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -960,7 +958,7 @@ unpark mainThread success<span aria-hidden="true" class="line-numbers-rows"><spa
 <p>在上面的代码中首先创建一个User对象，这是因为如果一个类没有被实例化，那么它的静态属性也不会被初始化，最后获取的字段属性将是null。所以在获取静态属性前，需要调用shouldBeInitialized方法，判断在获取前是否需要初始化这个类。如果删除创建User对象的语句，运行结果会变为：</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">truenull<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><strong>使用defineClass方法允许程序在运行时动态地创建一个类</strong></p>
+<p>使用defineClass方法允许程序在运行时动态地创建一个类</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">native</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> <span class="token function">defineClass</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">,</span> <span class="token class-name">ClassLoader</span> loader<span class="token punctuation">,</span><span class="token class-name">ProtectionDomain</span> protectionDomain<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>在实际使用过程中，可以只传入字节数组、起始字节的下标以及读取的字节长度，默认情况下，类加载器（ClassLoader）和保护域（ProtectionDomain）来源于调用此方法的实例。下面的例子中实现了反编译生成后的class文件的功能：</p>

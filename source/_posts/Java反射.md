@@ -7,23 +7,13 @@ img: https://pica.zhimg.com/v2-710586d41488c451dd9dd70bc33eb121_1440w.jpg
 ---
 
 
-## 何为反射？
+## 何为反射
 
-如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。
+如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些方法和属性。
 
-反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。
+## 反射的应用场景
 
-通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些方法和属性。
-
-## 反射的应用场景了解么？
-
-像咱们平时大部分时候都是在写业务代码，很少会接触到直接使用反射机制的场景。
-
-但是，这并不代表反射没有用。相反，正是因为反射，你才能这么轻松地使用各种框架。像Spring/SpringBoot、MyBatis等等框架中都大量使用了反射机制。
-
-**这些框架中也大量使用了动态代理，而动态代理的实现也依赖反射。**
-
-比如下面是通过JDK实现动态代理的示例代码，其中就使用了反射类`Method`来调用指定的方法。
+像咱们平时大部分时候都是在写业务代码，很少会接触到直接使用反射机制的场景。但是，这并不代表反射没有用。相反，正是因为反射，你才能这么轻松地使用各种框架。像Spring/SpringBoot、MyBatis等等框架中都大量使用了反射机制。这些框架中也大量使用了动态代理，而动态代理的实现也依赖反射。比如下面是通过JDK实现动态代理的示例代码，其中就使用了反射类`Method`来调用指定的方法。
 
 
 ```java
@@ -47,17 +37,17 @@ public class DebugInvocationHandler implements InvocationHandler {
 }
 ```
 
-另外，像Java中的一大利器**注解**的实现也用到了反射。
-
-为什么你使用Spring的时候，一个@Component注解就声明了一个类为Spring Bean呢？为什么你通过一个@Value注解就读取到配置文件中的值呢？究竟是怎么起作用的呢？
+另外，像Java中的一大利器注解的实现也用到了反射。为什么你使用Spring的时候，一个@Component注解就声明了一个类为Spring Bean呢？为什么你通过一个@Value注解就读取到配置文件中的值呢？究竟是怎么起作用的呢？
 
 这些都是因为你可以基于反射分析类，然后获取到类/属性/方法/方法的参数上的注解。你获取到注解之后，就可以做进一步的处理。
 
-## 谈谈反射机制的优缺点
+## 反射机制的优缺点
 
 **优点**：可以让咱们的代码更加灵活、为各种框架提供开箱即用的功能提供了便利
 
-**缺点**：让我们在运行时有了分析操作类的能力，这同样也增加了安全问题。比如可以无视泛型参数的安全检查（泛型参数的安全检查发生在编译时）。另外，反射的性能也要稍差点，不过，对于框架来说实际是影响不大的。相关阅读：[Java Reflection:Why is it so slow?](https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow)
+**缺点**：让我们在运行时有了分析操作类的能力，这同样也增加了安全问题。比如可以无视泛型参数的安全检查（泛型参数的安全检查发生在编译时）。另外，反射的性能也要稍差点，不过，对于框架来说实际是影响不大的。
+
+> 相关阅读：[Java Reflection:Why is it so slow?](https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow)
 
 ## 反射实战
 
@@ -73,20 +63,20 @@ Class alunbarClass = TargetObject.class;
 
 但是我们一般是不知道具体类的，基本都是通过遍历包下面的类来获取Class对象，通过此方式获取Class对象不会进行初始化
 
-**2. 通过Class.forName()传入类的全路径获取：**
+**2. 通过Class.forName()传入类的全路径获取**：
 
 ```java
 Class alunbarClass1 = Class.forName("cn.javaguide.TargetObject");
 ```
 
-**3. 通过对象实例instance.getClass()获取：**
+**3. 通过对象实例instance.getClass()获取**：
 
 ```java
 TargetObject o = new TargetObject();
 Class alunbarClass2 = o.getClass();
 ```
 
-**4. 通过类加载器xxxClassLoader.loadClass()传入类路径获取:**
+**4. 通过类加载器xxxClassLoader.loadClass()传入类路径获取**：
 
 ```java
 ClassLoader.getSystemClassLoader().loadClass("cn.javaguide.TargetObject");
@@ -141,15 +131,11 @@ public class Main {
         for (Method method : methods) {
             System.out.println(method.getName());
         }
-
         /**
          * 获取指定方法并调用
          */
-        Method publicMethod = targetClass.getDeclaredMethod("publicMethod",
-                String.class);
-
+        Method publicMethod = targetClass.getDeclaredMethod("publicMethod",String.class);
         publicMethod.invoke(targetObject, "JavaGuide");
-
         /**
          * 获取指定参数并对参数进行修改
          */
@@ -157,7 +143,6 @@ public class Main {
         //为了对类中的参数进行修改我们取消安全检查
         field.setAccessible(true);
         field.set(targetObject, "JavaGuide");
-
         /**
          * 调用private方法
          */
@@ -246,7 +231,7 @@ public class ReflectTest {
 
 ## 相关文章
 
-[Java反射机制你还不会？那怎么看Spring源码？](https://mp.weixin.qq.com/s/jV9kE2ajB40f3fOU_lT9ng)
-[Java反射是什么？看这篇绝对会了！](https://mp.weixin.qq.com/s/QbacsQwTyvBJi12LYPNKJw)
-[学会这篇反射，我就可以去吹牛逼了。](https://mp.weixin.qq.com/s/Dyg4qSqiyjSJTne8yvUYpQ)
-[深入理解Java：类加载机制及反射](https://mp.weixin.qq.com/s/kTYLjg_FlKBdAAQQvSAF9g)
+- [Java反射机制你还不会？那怎么看Spring源码？](https://mp.weixin.qq.com/s/jV9kE2ajB40f3fOU_lT9ng)
+- [Java反射是什么？看这篇绝对会了！](https://mp.weixin.qq.com/s/QbacsQwTyvBJi12LYPNKJw)
+- [学会这篇反射，我就可以去吹牛逼了。](https://mp.weixin.qq.com/s/Dyg4qSqiyjSJTne8yvUYpQ)
+- [深入理解Java：类加载机制及反射](https://mp.weixin.qq.com/s/kTYLjg_FlKBdAAQQvSAF9g)

@@ -561,7 +561,9 @@
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> stop <span class="token comment"># 立即停止nginx，不保存相关信息</span>
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> quit  <span class="token comment"># 正常退出nginx，保存相关信息</span>
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> reload <span class="token comment"># 重启</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lovexinyi8/p/5845017.html">Linux安装Nginx详细图解教程</a></p>
+</blockquote>
 <h5 id="将nginx做成系统服务并且开机自启动"><a href="#将nginx做成系统服务并且开机自启动" class="headerlink" title="将nginx做成系统服务并且开机自启动"></a>将nginx做成系统服务并且开机自启动</h5><p>由于是源码安装，需要手动创建nginx.service服务</p>
 <blockquote>
 <p>不止nginx，其他源码安装的想要实现开机自启动就在&#x2F;lib&#x2F;systemd&#x2F;system目录下自定义服务即可</p>
@@ -981,7 +983,9 @@ access_log &#x2F;data&#x2F;httplogs&#x2F;proxy-$host-aceess.log;
                         
                             幂等性的几种方案
 唯一索引，防止新增脏数据
-token机制，防止页面重复提交前端限制:页面的提交按钮只能被点击提交一次后端解决方案：集群环境：采用token加redis（redis单线程的，处理需要排队）单JVM环境：采用token加red
+前端限制:页面的提交按钮只能被点击提交一次后端解决方案：
+集群环境：采用token加redis（redis单线程的，处理需要排队）
+单JVM环境：采用token加redis或token加jvm内存
                         
 
                     </div>

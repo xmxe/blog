@@ -7,15 +7,9 @@ img: https://pic1.zhimg.com/v2-3ec9f9b98b4c3596e09b40d143410f0e_1440w.jpg
 
 ## 3种常用的缓存读写策略详解
 
-下面介绍到的三种模式各有优劣，不存在最佳模式，根据具体的业务场景选择适合自己的缓存读写模式。
-
 ### Cache Aside Pattern（旁路缓存模式）
 
-Cache Aside Pattern是我们平时使用比较多的一个缓存读写模式，比较适合读请求比较多的场景。
-
-Cache Aside Pattern中服务端需要同时维系db和cache，并且是以db的结果为准。
-
-下面我们来看一下这个策略模式下的缓存读写步骤。
+Cache Aside Pattern是我们平时使用比较多的一个缓存读写模式，比较适合读请求比较多的场景。Cache Aside Pattern中服务端需要同时维系db和cache，并且是以db的结果为准。下面我们来看一下这个策略模式下的缓存读写步骤。
 
 **写**：
 
@@ -26,7 +20,7 @@ Cache Aside Pattern中服务端需要同时维系db和cache，并且是以db的�
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-write.png)
 
-**读**:
+**读**：
 
 - 从cache中读取数据，读取到就直接返回
 - cache中读取不到的话，就从db中读取数据返回
@@ -36,25 +30,15 @@ Cache Aside Pattern中服务端需要同时维系db和cache，并且是以db的�
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-read.png)
 
-你仅仅了解了上面这些内容的话是远远不够的，我们还要搞懂其中的原理。
+你仅仅了解了上面这些内容的话是远远不够的，我们还要搞懂其中的原理。比如说面试官很可能会追问：**在写数据的过程中，可以先删除cache，后更新db么？答案：那肯定是不行的！因为这样可能会造成数据库（db）和缓存（Cache）数据不一致的问题**。
 
-比如说面试官很可能会追问：**在写数据的过程中，可以先删除cache，后更新db么？**
-
-**答案：那肯定是不行的！因为这样可能会造成数据库（db）和缓存（Cache）数据不一致的问题**。
-
-举例：请求1先写数据A，请求2随后读数据A的话，就很有可能产生数据不一致性的问题。
-
-这个过程可以简单描述为：
+举例：请求1先写数据A，请求2随后读数据A的话，就很有可能产生数据不一致性的问题。这个过程可以简单描述为：
 
 > 请求1先把cache中的A数据删除->请求2从db中读取数据->请求1再把db中的A数据更新
 
-当你这样回答之后，面试官可能会紧接着就追问：**在写数据的过程中，先更新db，后删除cache就没有问题了么？**
+当你这样回答之后，面试官可能会紧接着就追问：**在写数据的过程中，先更新db，后删除cache就没有问题了么？答案：理论上来说还是可能会出现数据不一致性的问题，不过概率非常小，因为缓存的写入速度是比数据库的写入速度快很多。**
 
-答案：理论上来说还是可能会出现数据不一致性的问题，不过概率非常小，因为缓存的写入速度是比数据库的写入速度快很多。
-
-举例：请求1先读数据A，请求2随后写数据A，并且数据A在请求1请求之前不在缓存中的话，也有可能产生数据不一致性的问题。
-
-这个过程可以简单描述为：
+举例：请求1先读数据A，请求2随后写数据A，并且数据A在请求1请求之前不在缓存中的话，也有可能产生数据不一致性的问题。这个过程可以简单描述为：
 
 > 请求1从db读数据A->请求2更新db中的数据A（此时缓存中无数据A，故不用执行删除缓存操作）->请求1将数据A写入cache
 
@@ -73,11 +57,9 @@ Cache Aside Pattern中服务端需要同时维系db和cache，并且是以db的�
 
 ### Read/Write Through Pattern（读写穿透）
 
-Read/Write Through Pattern中服务端把cache视为主要数据存储，从中读取数据并将数据写入其中。cache服务负责将此数据读取和写入db，从而减轻了应用程序的职责。
+Read/Write Through Pattern中服务端把cache视为主要数据存储，从中读取数据并将数据写入其中。cache服务负责将此数据读取和写入db，从而减轻了应用程序的职责。这种缓存读写策略小伙伴们应该也发现了在平时在开发过程中非常少见。抛去性能方面的影响，大概率是因为我们经常使用的分布式缓存Redis并没有提供cache将数据写入db的功能。
 
-这种缓存读写策略小伙伴们应该也发现了在平时在开发过程中非常少见。抛去性能方面的影响，大概率是因为我们经常使用的分布式缓存Redis并没有提供cache将数据写入db的功能。
-
-**写（Write Through）：**
+**写（Write Through）**：
 
 - 先查cache，cache中不存在，直接更新db。
 - cache中存在，则先更新cache，然后cache服务自己更新db（**同步更新cache和db**）。
@@ -86,7 +68,7 @@ Read/Write Through Pattern中服务端把cache视为主要数据存储，从中�
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/write-through.png)
 
-**读(Read Through)：**
+**读(Read Through)**：
 
 - 从cache中读取数据，读取到就直接返回。
 - 读取不到的话，先从db加载，写入到cache后返回响应。
@@ -95,58 +77,34 @@ Read/Write Through Pattern中服务端把cache视为主要数据存储，从中�
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/read-through.png)
 
-Read-Through Pattern实际只是在Cache-Aside Pattern之上进行了封装。在Cache-Aside Pattern下，发生读请求的时候，如果cache中不存在对应的数据，是由客户端自己负责把数据写入cache，而Read Through Pattern则是cache服务自己来写入缓存的，这对客户端是透明的。
-
-和Cache Aside Pattern一样，Read-Through Pattern也有首次请求数据一定不再cache的问题，对于热点数据可以提前放入缓存中。
+Read-Through Pattern实际只是在Cache-Aside Pattern之上进行了封装。在Cache-Aside Pattern下，发生读请求的时候，如果cache中不存在对应的数据，是由客户端自己负责把数据写入cache，而Read Through Pattern则是cache服务自己来写入缓存的，这对客户端是透明的。和Cache Aside Pattern一样，Read-Through Pattern也有首次请求数据一定不再cache的问题，对于热点数据可以提前放入缓存中。
 
 ### Write Behind Pattern（异步缓存写入）
 
-Write Behind Pattern和Read/Write Through Pattern很相似，两者都是由cache服务来负责cache和db的读写。
-
-但是，两个又有很大的不同：**Read/Write Through是同步更新cache和db，而Write Behind则是只更新缓存，不直接更新db，而是改为异步批量的方式来更新db。**
-
-很明显，这种方式对数据一致性带来了更大的挑战，比如cache数据可能还没异步更新db的话，cache服务可能就就挂掉了。
-
-这种策略在我们平时开发过程中也非常非常少见，但是不代表它的应用场景少，比如消息队列中消息的异步写入磁盘、MySQL的Innodb Buffer Pool机制都用到了这种策略。
-
-Write Behind Pattern下db的写性能非常高，非常适合一些数据经常变化又对数据一致性要求没那么高的场景，比如浏览量、点赞量
-
-
+Write Behind Pattern和Read/Write Through Pattern很相似，两者都是由cache服务来负责cache和db的读写。但是，两个又有很大的不同：**Read/Write Through是同步更新cache和db，而Write Behind则是只更新缓存，不直接更新db，而是改为异步批量的方式来更新db**。很明显，这种方式对数据一致性带来了更大的挑战，比如cache数据可能还没异步更新db的话，cache服务可能就就挂掉了。这种策略在我们平时开发过程中也非常非常少见，但是不代表它的应用场景少，比如消息队列中消息的异步写入磁盘、MySQL的Innodb Buffer Pool机制都用到了这种策略。Write Behind Pattern下db的写性能非常高，非常适合一些数据经常变化又对数据一致性要求没那么高的场景，比如浏览量、点赞量
 
 ## Redis5种基本数据结构详解
 
-Redis共有5种基本数据结构：String（字符串）、List（列表）、Set（集合）、Hash（散列）、Zset（有序集合）。
-
-这5种数据结构是直接提供给用户使用的，是数据的保存形式，其底层实现主要依赖这8种数据结构：简单动态字符串（SDS）、LinkedList（双向链表）、HashTable（哈希表）、SkipList（跳跃表）、Intset（整数集合）、ZipList（压缩列表）、QuickList（快速列表）。
-
-Redis基本数据结构的底层数据结构实现如下：
+Redis共有5种基本数据结构：String（字符串）、List（列表）、Set（集合）、Hash（散列）、Zset（有序集合）。这5种数据结构是直接提供给用户使用的，是数据的保存形式，其底层实现主要依赖这8种数据结构：简单动态字符串（SDS）、LinkedList（双向链表）、HashTable（哈希表）、SkipList（跳跃表）、Intset（整数集合）、ZipList（压缩列表）、QuickList（快速列表）。Redis基本数据结构的底层数据结构实现如下：
 
 | String | List                         | Hash                | Set             | Zset              |
 | :----- | :--------------------------- | :------------------ | :-------------- | :---------------- |
 | SDS    | LinkedList/ZipList/QuickList | Hash Table、ZipList | ZipList、Intset | ZipList、SkipList |
 
-Redis3.2之前，List底层实现是LinkedList或者ZipList。Redis3.2之后，引入了LinkedList和ZipList的结合QuickList，List的底层实现变为QuickList。
+Redis3.2之前，List底层实现是LinkedList或者ZipList。Redis3.2之后，引入了LinkedList和ZipList的结合QuickList，List的底层实现变为QuickList。你可以在Redis官网上找到Redis数据结构非常详细的介绍：
 
-你可以在Redis官网上找到Redis数据结构非常详细的介绍：
-
-- [Redis Data Structures](https://redis.com/redis-enterprise/data-structures/)
-- [Redis Data types tutorial](https://redis.io/docs/manual/data-types/data-types-tutorial/)
-
-未来随着Redis新版本的发布，可能会有新的数据结构出现，通过查阅Redis官网对应的介绍，你总能获取到最靠谱的信息。
-
-![img](https://oss.javaguide.cn/github/javaguide/database/redis/image-20220720181630203.png)
+> [Redis Data Structures](https://redis.com/redis-enterprise/data-structures/)
+> [Redis Data types tutorial](https://redis.io/docs/manual/data-types/data-types-tutorial/)
 
 ### String（字符串）
 
 #### 介绍
 
-String是Redis中最简单同时也是最常用的一个数据结构。
-
-String是一种二进制安全的数据结构，可以用来存储任何类型的数据比如字符串、整数、浮点数、图片（图片的base64编码或者解码或者图片的路径）、序列化后的对象。
+String是Redis中最简单同时也是最常用的一个数据结构。String是一种二进制安全的数据结构，可以用来存储任何类型的数据比如字符串、整数、浮点数、图片（图片的base64编码或者解码或者图片的路径）、序列化后的对象。
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124403897.png)
 
-虽然Redis是用C语言写的，但是Redis并没有使用C的字符串表示，而是自己构建了一种**简单动态字符串**（Simple Dynamic String，**SDS**）。相比于C的原生字符串，Redis的SDS不光可以保存文本数据还可以保存二进制数据，并且获取字符串长度复杂度为O(1)（C字符串为O(N)）,除此之外，Redis的SDS API是安全的，不会造成缓冲区溢出。
+虽然Redis是用C语言写的，但是Redis并没有使用C的字符串表示，而是自己构建了一种**简单动态字符串（Simple Dynamic String，SDS**）。相比于C的原生字符串，Redis的SDS不光可以保存文本数据还可以保存二进制数据，并且获取字符串长度复杂度为O(1)（C字符串为O(N)）,除此之外，Redis的SDS API是安全的，不会造成缓冲区溢出。
 
 #### 常用命令
 
@@ -241,7 +199,9 @@ OK
 
 #### 介绍
 
-Redis中的List其实就是链表数据结构的实现。我在[线性数据结构:数组、链表、栈、队列](https://javaguide.cn/cs-basics/data-structure/linear-data-structure.html)这篇文章中详细介绍了链表这种数据结构，我这里就不多做介绍了。
+Redis中的List其实就是链表数据结构的实现。
+
+> 我在[线性数据结构:数组、链表、栈、队列](https://javaguide.cn/cs-basics/data-structure/linear-data-structure.html)这篇文章中详细介绍了链表这种数据结构，我这里就不多做介绍了。
 
 许多高级编程语言都内置了链表的实现比如Java中的LinkedList，但是C语言并没有实现链表，所以Redis实现了自己的链表数据结构。Redis的List的实现为一个**双向链表**，即可以支持反向查找和遍历，更方便操作，不过带来了部分额外的内存开销。
 
@@ -333,9 +293,7 @@ Redis List数据结构可以用来做消息队列，只是功能过于简单且�
 
 #### 介绍
 
-Redis中的Hash是一个String类型的field-value（键值对）的映射表，特别适合用于存储对象，后续操作的时候，你可以直接修改这个对象中的某些字段的值。
-
-Hash类似于JDK1.8前的HashMap，内部实现也差不多(数组+链表)。不过，Redis的Hash做了更多优化。
+Redis中的Hash是一个String类型的field-value（键值对）的映射表，特别适合用于存储对象，后续操作的时候，你可以直接修改这个对象中的某些字段的值。Hash类似于JDK1.8前的HashMap，内部实现也差不多(数组+链表)。不过，Redis的Hash做了更多优化。
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124421703.png)
 
@@ -392,9 +350,7 @@ OK
 
 #### 介绍
 
-Redis中的Set类型是一种无序集合，集合中的元素没有先后顺序但都唯一，有点类似于Java中的HashSet。当你需要存储一个列表数据，又不希望出现重复数据时，Set是一个很好的选择，并且Set提供了判断某个元素是否在一个Set集合内的重要接口，这个也是List所不能提供的。
-
-你可以基于Set轻易实现交集、并集、差集的操作，比如你可以将一个用户所有的关注人存在一个集合中，将其所有粉丝存在一个集合。这样的话，Set可以非常方便的实现如共同关注、共同粉丝、共同喜好等功能。这个过程也就是求交集的过程。
+Redis中的Set类型是一种无序集合，集合中的元素没有先后顺序但都唯一，有点类似于Java中的HashSet。当你需要存储一个列表数据，又不希望出现重复数据时，Set是一个很好的选择，并且Set提供了判断某个元素是否在一个Set集合内的重要接口，这个也是List所不能提供的。你可以基于Set轻易实现交集、并集、差集的操作，比如你可以将一个用户所有的关注人存在一个集合中，将其所有粉丝存在一个集合。这样的话，Set可以非常方便的实现如共同关注、共同粉丝、共同喜好等功能。这个过程也就是求交集的过程。
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124430264.png)
 
@@ -578,7 +534,7 @@ value1
 - 举例：各种排行榜比如直播间送礼物的排行榜、朋友圈的微信步数排行榜、王者荣耀中的段位排行榜、话题热度排行榜等等。
 - 相关命令：ZRANGE(从小到大排序)、ZREVRANGE（从大到小排序）、ZREVRANK(指定元素排名)。
 
-**需要存储的数据有优先级或者重要程度的场景**比如优先级任务队列。
+**需要存储的数据有优先级或者重要程度的场景**，比如优先级任务队列。
 
 - 举例：优先级任务队列。
 - 相关命令：ZRANGE(从小到大排序)、ZREVRANGE（从大到小排序）、ZREVRANK(指定元素排名)。
@@ -589,9 +545,7 @@ value1
 
 #### 介绍
 
-Bitmap存储的是连续的二进制数字（0和1），通过Bitmap,只需要一个bit位来表示某个元素对应的值或者状态，key就是对应元素本身。我们知道8个bit可以组成一个byte，所以Bitmap本身会极大的节省储存空间。
-
-你可以将Bitmap看作是一个存储二进制数字（0和1）的数组，数组中每个元素的下标叫做offset（偏移量）。
+Bitmap存储的是连续的二进制数字（0和1），通过Bitmap,只需要一个bit位来表示某个元素对应的值或者状态，key就是对应元素本身。我们知道8个bit可以组成一个byte，所以Bitmap本身会极大的节省储存空间。你可以将Bitmap看作是一个存储二进制数字（0和1）的数组，数组中每个元素的下标叫做offset（偏移量）。
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/image-20220720194154133.png)
 
@@ -634,9 +588,7 @@ Bitmap存储的是连续的二进制数字（0和1），通过Bitmap,只需要�
 
 #### 介绍
 
-HyperLogLog是一种有名的基数计数概率算法，基于LogLog Counting(LLC)优化改进得来，并不是Redis特有的，Redis只是实现了这个算法并提供了一些开箱即用的API。
-
-Redis提供的HyperLogLog占用空间非常非常小，只需要12k的空间就能存储接近2^64个不同元素。这是真的厉害，这就是数学的魅力么！并且，Redis对HyperLogLog的存储结构做了优化，采用两种方式计数：
+HyperLogLog是一种有名的基数计数概率算法，基于LogLog Counting(LLC)优化改进得来，并不是Redis特有的，Redis只是实现了这个算法并提供了一些开箱即用的API。Redis提供的HyperLogLog占用空间非常非常小，只需要12k的空间就能存储接近2^64个不同元素。这是真的厉害，这就是数学的魅力么！并且，Redis对HyperLogLog的存储结构做了优化，采用两种方式计数：
 
 - **稀疏矩阵**：计数较少的时候，占用空间很小。
 - **稠密矩阵**：计数达到某个阈值的时候，占用12k的空间。
@@ -748,7 +700,7 @@ user1
 user2
 ```
 
-GEORADIUS命令的底层原理解析可以看看阿里的这篇文章：[Redis到底是怎么实现“附近的人”这个功能的呢？](https://juejin.cn/post/6844903966061363207)。
+> GEORADIUS命令的底层原理解析可以看看阿里的这篇文章：[Redis到底是怎么实现“附近的人”这个功能的呢？](https://juejin.cn/post/6844903966061363207)。
 
 **移除元素**：
 
@@ -790,9 +742,7 @@ QUEUED
 2) "JavaGuide"
 ```
 
-[MULTI](https://redis.io/commands/multi)命令后可以输入多个命令，Redis不会立即执行这些命令，而是将它们放到队列，当调用了[EXEC](https://redis.io/commands/exec)命令后，再执行所有的命令。
-
-这个过程是这样的：
+[MULTI](https://redis.io/commands/multi)命令后可以输入多个命令，Redis不会立即执行这些命令，而是将它们放到队列，当调用了[EXEC](https://redis.io/commands/exec)命令后，再执行所有的命令。这个过程是这样的：
 
 1. 开始事务（MULTI）；
 2. 命令入队(批量操作Redis的命令，先进先出（FIFO）的顺序执行)；
@@ -836,7 +786,7 @@ QUEUED
 "GoGuide"
 ```
 
-不过，如果**WATCH**与**事务**在同一个Session里，并且被**WATCH**监视的Key被修改的操作发生在事务内部，这个事务是可以被执行成功的（相关issue：[WATCH命令碰到MULTI命令时的不同效果](https://github.com/Snailclimb/JavaGuide/issues/1714)）。
+不过，如果WATCH与事务在同一个Session里，并且被**WATCH**监视的Key被修改的操作发生在事务内部，这个事务是可以被执行成功的（相关issue：[WATCH命令碰到MULTI命令时的不同效果](https://github.com/Snailclimb/JavaGuide/issues/1714)）。
 
 事务内部修改WATCH监视的Key：
 
@@ -883,7 +833,7 @@ QUEUED
 
 ### Redis事务支持原子性吗？
 
-Redis的事务和我们平时理解的关系型数据库的事务不同。我们知道事务具有四大特性：**1.原子性**，**2.隔离性**，**3.持久性**，**4.一致性**。
+Redis的事务和我们平时理解的关系型数据库的事务不同。我们知道事务具有四大特性：**原子性，隔离性，持久性，一致性**。
 
 1. **原子性（Atomicity）**：事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；
 2. **隔离性（Isolation）**：并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；
@@ -896,11 +846,7 @@ Redis官网也解释了自己为啥不支持回滚。简单来说就是Redis开�
 
 ![Redis为什么不支持回滚](https://oss.javaguide.cn/github/javaguide/database/redis/redis-rollback.png)
 
-你可以将Redis中的事务就理解为：**Redis事务提供了一种将多个命令请求打包的功能。然后，再按顺序执行打包的所有命令，并且不会被中途打断。**
-
-除了不满足原子性之外，事务中的每条命令都会与Redis服务器进行网络交互，这是比较浪费资源的行为。明明一次批量执行多个命令就可以了，这种操作实在是看不懂。
-
-因此，Redis事务是不建议在日常开发中使用的。
+你可以将Redis中的事务就理解为：**Redis事务提供了一种将多个命令请求打包的功能。然后，再按顺序执行打包的所有命令，并且不会被中途打断**。除了不满足原子性之外，事务中的每条命令都会与Redis服务器进行网络交互，这是比较浪费资源的行为。明明一次批量执行多个命令就可以了，这种操作实在是看不懂。因此，Redis事务是不建议在日常开发中使用的。
 
 **相关issue**:
 
@@ -909,15 +855,7 @@ Redis官网也解释了自己为啥不支持回滚。简单来说就是Redis开�
 
 #### 如何解决Redis事务的缺陷？
 
-Redis从2.6版本开始支持执行Lua脚本，它的功能和事务非常类似。我们可以利用Lua脚本来批量执行多条Redis命令，这些Redis命令会被提交到Redis服务器一次性执行完成，大幅减小了网络开销。
-
-一段Lua脚本可以视作一条命令执行，一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰。
-
-不过，如果Lua脚本运行时出错并中途结束，出错之后的命令是不会被执行的。并且，出错之前执行的命令是无法被撤销的，无法实现类似关系型数据库执行失败可以回滚的那种原子性效果。因此，**严格来说的话，通过Lua脚本来批量执行Redis命令实际也是不完全满足原子性的。**
-
-如果想要让Lua脚本中的命令全部执行，必须保证语句语法和命令都是对的。
-
-另外，Redis7.0新增了[Redis functions](https://redis.io/docs/manual/programmability/functions-intro/)特性，你可以将Redis functions看作是比Lua更强大的脚本。
+Redis从2.6版本开始支持执行Lua脚本，它的功能和事务非常类似。我们可以利用Lua脚本来批量执行多条Redis命令，这些Redis命令会被提交到Redis服务器一次性执行完成，大幅减小了网络开销。一段Lua脚本可以视作一条命令执行，一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰。不过，如果Lua脚本运行时出错并中途结束，出错之后的命令是不会被执行的。并且，出错之前执行的命令是无法被撤销的，无法实现类似关系型数据库执行失败可以回滚的那种原子性效果。因此，**严格来说的话，通过Lua脚本来批量执行Redis命令实际也是不完全满足原子性的**。如果想要让Lua脚本中的命令全部执行，必须保证语句语法和命令都是对的。另外，Redis7.0新增了[Redis functions](https://redis.io/docs/manual/programmability/functions-intro/)特性，你可以将Redis functions看作是比Lua更强大的脚本。
 
 ## Redis性能优化
 
@@ -930,9 +868,7 @@ Redis从2.6版本开始支持执行Lua脚本，它的功能和事务非常类似
 3. 命令执行
 4. 返回结果
 
-其中，第1步和第4步耗费时间之和称为**Round Trip Time(RTT,往返时间)**，也就是数据在网络上传输的时间。
-
-**使用批量操作可以减少网络传输次数，进而有效减小网络开销，大幅减少RTT。**
+其中，第1步和第4步耗费时间之和称为**Round Trip Time(RTT,往返时间)**，也就是数据在网络上传输的时间。使用批量操作可以减少网络传输次数，进而有效减小网络开销，大幅减少RTT。
 
 #### 原生批量操作命令
 
@@ -943,9 +879,7 @@ Redis中有一些原生支持批量操作的命令，比如：
 - sadd（向指定集合添加一个或多个元素）
 - ......
 
-不过，在Redis官方提供的分片集群解决方案Redis Cluster下，使用这些原生批量操作命令可能会存在一些小问题需要解决。就比如说mget无法保证所有的key都在同一个**hash slot**（哈希槽）上，mget可能还是需要多次网络传输，原子操作也无法保证了。不过，相较于非批量操作，还是可以节省不少网络传输次数。
-
-整个步骤的简化版如下（通常由Redis客户端实现，无需我们自己再手动实现）：
+不过，在Redis官方提供的分片集群解决方案Redis Cluster下，使用这些原生批量操作命令可能会存在一些小问题需要解决。就比如说mget无法保证所有的key都在同一个**hash slot**（哈希槽）上，mget可能还是需要多次网络传输，原子操作也无法保证了。不过，相较于非批量操作，还是可以节省不少网络传输次数。整个步骤的简化版如下（通常由Redis客户端实现，无需我们自己再手动实现）：
 
 1. 找到key对应的所有hash slot；
 2. 分别向对应的Redis节点发起mget请求获取数据；
@@ -957,33 +891,23 @@ Redis中有一些原生支持批量操作的命令，比如：
 
 #### pipeline
 
-对于不支持批量操作的命令，我们可以利用**pipeline(流水线)**将一批Redis命令封装成一组，这些Redis命令会被一次性提交到Redis服务器，只需要一次网络传输。不过，需要注意控制一次批量操作的**元素个数**(例如500以内，实际也和元素字节数有关)，避免网络传输的数据量过大。
-
-与mget、mset等原生批量操作命令一样，pipeline同样在Redis Cluster上使用会存在一些小问题。原因类似，无法保证所有的key都在同一个**hash slot**（哈希槽）上。如果想要使用的话，客户端需要自己维护key与slot的关系。
-
-原生批量操作命令和pipeline的是有区别的，使用的时候需要注意：
+对于不支持批量操作的命令，我们可以利用**pipeline(流水线)**将一批Redis命令封装成一组，这些Redis命令会被一次性提交到Redis服务器，只需要一次网络传输。不过，需要注意控制一次批量操作的**元素个数**(例如500以内，实际也和元素字节数有关)，避免网络传输的数据量过大。与mget、mset等原生批量操作命令一样，pipeline同样在Redis Cluster上使用会存在一些小问题。原因类似，无法保证所有的key都在同一个**hash slot**（哈希槽）上。如果想要使用的话，客户端需要自己维护key与slot的关系。原生批量操作命令和pipeline的是有区别的，使用的时候需要注意：
 
 - 原生批量操作命令是原子操作，pipeline是非原子操作；
 - pipeline可以打包不同的命令，原生批量操作命令不可以；
 - 原生批量操作命令是Redis服务端支持实现的，而pipeline需要服务端和客户端的共同实现。
 
-另外，pipeline不适用于执行顺序有依赖关系的一批命令。就比如说，你需要将前一个命令的结果给后续的命令使用，pipeline就没办法满足你的需求了。对于这种需求，我们可以使用**Lua脚本**。
+另外，pipeline不适用于执行顺序有依赖关系的一批命令。就比如说，你需要将前一个命令的结果给后续的命令使用，pipeline就没办法满足你的需求了。对于这种需求，我们可以使用Lua脚本。
 
 #### Lua脚本
 
-Lua脚本同样支持批量操作多条命令。一段Lua脚本可以视作一条命令执行，可以看作是原子操作。一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰，这是pipeline所不具备的。
-
-并且，Lua脚本中支持一些简单的逻辑处理比如使用命令读取值并在Lua脚本中进行处理，这同样是pipeline所不具备的。
-
-不过，Redis Cluster下Lua脚本的原子操作也无法保证了，原因同样是无法保证所有的key都在同一个**hashslot**（哈希槽）上。
+Lua脚本同样支持批量操作多条命令。一段Lua脚本可以视作一条命令执行，可以看作是原子操作。一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰，这是pipeline所不具备的。并且，Lua脚本中支持一些简单的逻辑处理比如使用命令读取值并在Lua脚本中进行处理，这同样是pipeline所不具备的。不过，Redis Cluster下Lua脚本的原子操作也无法保证了，原因同样是无法保证所有的key都在同一个**hashslot**（哈希槽）上。
 
 ### 大量key集中过期问题
 
 我在前面提到过：对于过期key，Redis采用的是**定期删除+惰性/懒汉式删除**策略。
 
-定期删除执行过程中，如果突然遇到大量过期key的话，客户端请求必须等待定期清理过期key任务线程执行完成，因为这个这个定期任务线程是在Redis主线程中执行的。这就导致客户端请求没办法被及时处理，响应速度会比较慢。
-
-如何解决呢？下面是两种常见的方法：
+定期删除执行过程中，如果突然遇到大量过期key的话，客户端请求必须等待定期清理过期key任务线程执行完成，因为这个这个定期任务线程是在Redis主线程中执行的。这就导致客户端请求没办法被及时处理，响应速度会比较慢。如何解决呢？下面是两种常见的方法：
 
 1. 给key设置随机过期时间。
 2. 开启lazy-free（惰性删除/延迟释放）。lazy-free特性是Redis4.0开始引入的，指的是让Redis采用异步方式延迟释放key使用的内存，将该操作交给单独的子线程处理，避免阻塞主线程。
@@ -1035,9 +959,7 @@ Biggest string found '"ballcat:oauth:refresh_auth:f6cdb384-9a9d-4f2f-af01-dc3f28
 
 **2、分析RDB文件**
 
-通过分析RDB文件来找出bigkey。这种方案的前提是你的Redis采用的是RDB持久化。
-
-网上有现成的代码/工具可以直接拿来使用：
+通过分析RDB文件来找出bigkey。这种方案的前提是你的Redis采用的是RDB持久化。网上有现成的代码/工具可以直接拿来使用：
 
 - [redis-rdb-tools](https://github.com/sripathikrishnan/redis-rdb-tools)：Python语言写的用来分析Redis的RDB快照文件用的工具
 - [rdb_bigkeys](https://github.com/weiyanwei412/rdb_bigkeys):Go语言写的用来分析Redis的RDB快照文件用的工具，性能更好。
@@ -1049,7 +971,7 @@ Biggest string found '"ballcat:oauth:refresh_auth:f6cdb384-9a9d-4f2f-af01-dc3f28
 1. 什么是内存碎片?为什么会有Redis内存碎片?
 2. 如何清理Redis内存碎片？
 
-**参考答案**：[Redis内存碎片详解](https://javaguide.cn/database/redis/redis-memory-fragmentation.html)。
+> 参考答案：[Redis内存碎片详解](https://javaguide.cn/database/redis/redis-memory-fragmentation.html)。
 
 ## Redis生产问题
 
@@ -1101,22 +1023,16 @@ public Object getObjectInclNullById(Integer id) {
 
 布隆过滤器是一个非常神奇的数据结构，通过它我们可以非常方便地判断一个给定数据是否存在于海量数据中。我们需要的就是判断key是否合法，有没有感觉布隆过滤器就是我们想要找的那个“人”。
 
-具体是这样做的：把所有可能存在的请求的值都存放在布隆过滤器中，当用户请求过来，先判断用户发来的请求的值是否存在于布隆过滤器中。不存在的话，直接返回请求参数错误信息给客户端，存在的话才会走下面的流程。
-
-加入布隆过滤器之后的缓存处理流程图如下。
+具体是这样做的：把所有可能存在的请求的值都存放在布隆过滤器中，当用户请求过来，先判断用户发来的请求的值是否存在于布隆过滤器中。不存在的话，直接返回请求参数错误信息给客户端，存在的话才会走下面的流程。加入布隆过滤器之后的缓存处理流程图如下。
 
 ![加入布隆过滤器之后的缓存处理流程图](https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-penetration-bloom-filter.png)
 
-但是，需要注意的是布隆过滤器可能会存在误判的情况。总结来说就是：**布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。**
-
-**为什么会出现误判的情况呢?我们还要从布隆过滤器的原理来说！**
-
-我们先来看一下，**当一个元素加入布隆过滤器中的时候，会进行哪些操作：**
+但是，需要注意的是布隆过滤器可能会存在误判的情况。总结来说就是：**布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。为什么会出现误判的情况呢?我们还要从布隆过滤器的原理来说**！我们先来看一下，当一个元素加入布隆过滤器中的时候，会进行哪些操作：
 
 1. 使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。
 2. 根据得到的哈希值，在位数组中把对应下标的值置为1。
 
-我们再来看一下，**当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行哪些操作：**
+我们再来看一下，**当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行哪些操作**：
 
 1. 对给定元素再次进行相同的哈希计算；
 2. 得到值之后判断位数组中的每个元素是否都为1，如果值都为1，那么说明这个值在布隆过滤器中，如果存在一个值不为1，说明该元素不在布隆过滤器中。
@@ -1128,18 +1044,18 @@ public Object getObjectInclNullById(Integer id) {
 
 #### 总结
 
-缓存穿透是指查询一个一定不存在的数据。由于缓存不命中，并且出于容错考虑，如果从数据库查不到数据则不写入缓存，这将导致这个不存在的数据每次请求都要到数据库去查询，失去了缓存的意义
-解决方案：
+缓存穿透是指查询一个一定不存在的数据。由于缓存不命中，并且出于容错考虑，如果从数据库查不到数据则不写入缓存，这将导致这个不存在的数据每次请求都要到数据库去查询，失去了缓存的意义。解决方案：
 1. 当我们从数据库找不到的时候，我们也将这个空对象设置到缓存里边去。下次再请求的时候，就可以从缓存里边获取了。
 这种情况我们一般会将空对象设置一个较短的过期时间。
 2. 布隆过滤器
-[面试官：大量请求Redis不存在的数据，从而打倒数据库，你有什么方案？](https://mp.weixin.qq.com/s/soF3F8YYSbynK2lyofGMAg)
+
+> [面试官：大量请求Redis不存在的数据，从而打倒数据库，你有什么方案？](https://mp.weixin.qq.com/s/soF3F8YYSbynK2lyofGMAg)
 
 ### 缓存击穿
 
 #### 什么是缓存击穿？
 
-缓存击穿中，请求的key对应的是**热点数据**，该数据**存在于数据库中，但不存在于缓存中（通常是因为缓存中的那份数据已经过期）**。这就可能会导致瞬时大量的请求直接打到了数据库上，对数据库造成了巨大的压力，可能直接就被这么多请求弄宕机了。
+缓存击穿中，请求的key对应的是热点数据，该数据存在于数据库中，但不存在于缓存中（通常是因为缓存中的那份数据已经过期）。这就可能会导致瞬时大量的请求直接打到了数据库上，对数据库造成了巨大的压力，可能直接就被这么多请求弄宕机了。
 
 ![缓存击穿](https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-breakdown.png)
 
@@ -1155,12 +1071,11 @@ public Object getObjectInclNullById(Integer id) {
 
 缓存穿透中，请求的key既不存在于缓存中，也不存在于数据库中。
 
-缓存击穿中，请求的key对应的是**热点数据**，该数据**存在于数据库中，但不存在于缓存中（通常是因为缓存中的那份数据已经过期）**。
+缓存击穿中，请求的key对应的是热点数据，该数据存在于数据库中，但不存在于缓存中（通常是因为缓存中的那份数据已经过期）。
 
 #### 总结
 
-缓存击穿，就是说某个key非常热点，访问非常频繁，处于集中式高并发访问的情况，当这个key在失效的瞬间，大量的请求就击穿了缓存，直接请求数据库，就像是在一道屏障上凿开了一个洞。
-解决方案：
+缓存击穿，就是说某个key非常热点，访问非常频繁，处于集中式高并发访问的情况，当这个key在失效的瞬间，大量的请求就击穿了缓存，直接请求数据库，就像是在一道屏障上凿开了一个洞。解决方案：
 1. 可以将热点数据设置为永远不过期
 2. 基于redis or zookeeper实现互斥锁，等待第一个请求构建完缓存之后，再释放锁，进而其它请求才能通过该key访问数据
 
@@ -1168,9 +1083,7 @@ public Object getObjectInclNullById(Integer id) {
 
 #### 什么是缓存雪崩？
 
-实际上，缓存雪崩描述的就是这样一个简单的场景：**缓存在同一时间大面积的失效，导致大量的请求都直接落到了数据库上，对数据库造成了巨大的压力**。这就好比雪崩一样，摧枯拉朽之势，数据库的压力可想而知，可能直接就被这么多请求弄宕机了。
-
-另外，缓存服务宕机也会导致缓存雪崩现象，导致所有的请求都落到了数据库上。
+实际上，缓存雪崩描述的就是这样一个简单的场景：**缓存在同一时间大面积的失效，导致大量的请求都直接落到了数据库上，对数据库造成了巨大的压力**。这就好比雪崩一样，摧枯拉朽之势，数据库的压力可想而知，可能直接就被这么多请求弄宕机了。另外，缓存服务宕机也会导致缓存雪崩现象，导致所有的请求都落到了数据库上。
 
 ![缓存雪崩](https://oss.javaguide.cn/github/javaguide/database/redis/redis-cache-avalanche.png)
 
@@ -1194,28 +1107,23 @@ public Object getObjectInclNullById(Integer id) {
 缓存雪崩和缓存击穿比较像，但缓存雪崩导致的原因是缓存中的大量或者所有数据失效，缓存击穿导致的原因主要是某个热点数据不存在与缓存中（通常是因为缓存中的那份数据已经过期）。
 
 #### 总结
-如果我们的缓存挂掉了，这意味着我们的全部请求都跑去数据库了
-解决方案：
+如果我们的缓存挂掉了，这意味着我们的全部请求都跑去数据库了。解决方案：
 1. 事发前：实现Redis的高可用(主从架构+Sentinel或者Redis Cluster)，尽量避免Redis挂掉这种情况发生。
 2. 事发中：万一Redis真的挂了，我们可以设置本地缓存(ehcache)+限流(hystrix)，尽量避免我们的数据库被干掉
 3. 事发后：redis持久化，重启后自动从磁盘上加载数据，快速恢复缓存数据
 
-- [Redis缓存击穿（失效）、缓存穿透、缓存雪崩怎么解决？](https://mp.weixin.qq.com/s/dig6ZcUzMvQZG0u-Bub2AQ)
-- [Redis缓存的常见异常及解决方案](https://mp.weixin.qq.com/s/pOUjLIgUSgbjoJ2KtfaQyw)
-- [常说的「缓存穿透」和「击穿」是什么](https://mp.weixin.qq.com/s/8cNZ2glJC6p3w0ogtgKQ-w)
-- [漫话：如何给女朋友解释什么是缓存穿透、缓存击穿、缓存雪崩](https://mp.weixin.qq.com/s/7h_IOg7RgR3bFscgbGnGFw)
-- [再也不怕，缓存雪崩、击穿、穿透！](https://mp.weixin.qq.com/s/rD6h874mPzUCRlE7l8CnUQ)
-- [一个Redis的雪崩和穿透问题](https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A)
-- [烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？](https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw)
+> [Redis缓存击穿（失效）、缓存穿透、缓存雪崩怎么解决？](https://mp.weixin.qq.com/s/dig6ZcUzMvQZG0u-Bub2AQ)
+> [Redis缓存的常见异常及解决方案](https://mp.weixin.qq.com/s/pOUjLIgUSgbjoJ2KtfaQyw)
+> [常说的「缓存穿透」和「击穿」是什么](https://mp.weixin.qq.com/s/8cNZ2glJC6p3w0ogtgKQ-w)
+> [漫话：如何给女朋友解释什么是缓存穿透、缓存击穿、缓存雪崩](https://mp.weixin.qq.com/s/7h_IOg7RgR3bFscgbGnGFw)
+> [再也不怕，缓存雪崩、击穿、穿透！](https://mp.weixin.qq.com/s/rD6h874mPzUCRlE7l8CnUQ)
+> [一个Redis的雪崩和穿透问题](https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A)
+> [烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？](https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw)
 
 ### 如何保证缓存和数据库数据的一致性？
 
 
-下面单独对**Cache Aside Pattern（旁路缓存模式）** 来聊聊。
-
-Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删除cache。
-
-如果更新数据库成功，而删除缓存这一步失败的情况的话，简单说两个解决方案：
+下面单独对**Cache Aside Pattern（旁路缓存模式）** 来聊聊。Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删除cache。如果更新数据库成功，而删除缓存这一步失败的情况的话，简单说两个解决方案：
 
 1. **缓存失效时间变短（不推荐，治标不治本）**：我们让缓存数据的过期时间变短，这样的话缓存就会从数据库中加载数据。另外，这种解决办法对于先操作缓存后操作数据库的场景不适用。
 2. **增加cache更新重试机制（常用）**：如果cache服务当前不可用导致缓存删除失败的话，我们就隔一段时间进行重试，重试次数可以自己定。如果多次重试还是失败的话，我们可以把当前更新失败的key存入队列中，等缓存服务可用之后，再将缓存中对应的key删除即可。
@@ -1225,18 +1133,14 @@ Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删�
 
 #### 总结
 
-读的时候先读缓存，缓存中没有数据的话就去数据库读取，然后再存入缓存中，同时返回响应。
-更新的时候，先更新数据库，然后再删除缓存。
+读的时候先读缓存，缓存中没有数据的话就去数据库读取，然后再存入缓存中，同时返回响应。更新的时候，先更新数据库，然后再删除缓存。
 
 **双写一致方案**
-先删除缓存，后更新数据库：
-解决了缓存删除失败导致库与缓存不一致的问题，适用于并发量不高的业务场景。
+先删除缓存，后更新数据库：解决了缓存删除失败导致库与缓存不一致的问题，适用于并发量不高的业务场景。
 
 **缓存延时双删策略**
-在写库前后都进行Redis的删除操作，并且第二次删除通过延迟的方式进行,第一步：先删除缓存,第二步：再写入数据库,第三步：休眠xxx毫秒（根据具体的业务时间来定）,第四步：再次删除缓存。
-这种方案解决了高并发情况下，同时有读请求与写请求时导致的不一致问题。读取速度快，如果二次删除失败了，还是会导致缓存脏数据存在的；二次删除前面涉及到休眠，可能导致系统性能降低，可以采用异步的方式，再起一个线程来进行异步删除。
+在写库前后都进行Redis的删除操作，并且第二次删除通过延迟的方式进行,第一步：先删除缓存,第二步：再写入数据库,第三步：休眠xxx毫秒（根据具体的业务时间来定）,第四步：再次删除缓存。这种方案解决了高并发情况下，同时有读请求与写请求时导致的不一致问题。读取速度快，如果二次删除失败了，还是会导致缓存脏数据存在的；二次删除前面涉及到休眠，可能导致系统性能降低，可以采用异步的方式，再起一个线程来进行异步删除。在分布式系统中，缓存和数据库同时存在时，如果有写操作的时候，先操作数据库，再操作缓存。如下：
 
-在分布式系统中，缓存和数据库同时存在时，如果有写操作的时候，先操作数据库，再操作缓存。如下：
 1. 读取缓存中是否有相关数据
 2. 如果缓存中有相关数据value，则返回
 3. 如果缓存中没有相关数据，则从数据库读取相关数据放入缓存中key->value，再返回
@@ -1244,6 +1148,8 @@ Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删�
 5. 为了保证第四步删除缓存成功，使用binlog异步删除
 6. 如果是主从数据库，binglog取自于从库
 7. 如果是一主多从，每个从库都要采集binlog，然后消费端收到最后一台binlog数据才删除缓存
+
+#### 相关文章
 
 - [如何保证缓存与数据库的双写一致性？](https://mp.weixin.qq.com/s/FldS8ynxoK8fD1QPVocnjA)
 - [如何保证数据库和缓存双写一致性？](https://mp.weixin.qq.com/s/1uJmVb_E980NWn_sCzM6mA)
@@ -1277,12 +1183,10 @@ Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删�
 ### 总结
 
 Redis中同时使用了惰性过期和定期过期两种过期策略。
-假设Redis当前存放30万个key，并且都设置了过期时间，如果你每隔100ms就去检查这全部的key，CPU负载会特别高，最后可能会挂掉。
-因此，redis采取的是定期过期，每隔100ms就随机抽取一定数量的key来检查和删除的。但是呢，最后可能会有很多已经过期的key没被删除。这时候，redis采用惰性删除。在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间并且已经过期了，此时就会删除。
-但是，如果定期删除漏掉了很多过期的key，然后也没走惰性删除。就会有很多过期key积在内存内存，直接会导致内存爆的。或者有些时候，业务量大起来了，redis的key被大量使用，内存直接不够了，运维也忘记加大内存了。难道redis直接这样挂掉？不会的！Redis用8种内存淘汰策略保护自己~
+假设Redis当前存放30万个key，并且都设置了过期时间，如果你每隔100ms就去检查这全部的key，CPU负载会特别高，最后可能会挂掉。因此，redis采取的是定期过期，每隔100ms就随机抽取一定数量的key来检查和删除的。但是呢，最后可能会有很多已经过期的key没被删除。这时候，redis采用惰性删除。在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间并且已经过期了，此时就会删除。但是，如果定期删除漏掉了很多过期的key，然后也没走惰性删除。就会有很多过期key积在内存内存，直接会导致内存爆的。或者有些时候，业务量大起来了，redis的key被大量使用，内存直接不够了，运维也忘记加大内存了。难道redis直接这样挂掉？不会的！Redis用8种内存淘汰策略保护自己~
 
-- [Redis过期key删除，那些不得不说的事情](https://mp.weixin.qq.com/s/iR8EgI9-p-BXjJEfTs3G7Q)
-- [Redis的过期数据会被立马删除么？](https://mp.weixin.qq.com/s/qJt0B9p0GeUkekK15xL-jw)
+> [Redis过期key删除，那些不得不说的事情](https://mp.weixin.qq.com/s/iR8EgI9-p-BXjJEfTs3G7Q)
+> [Redis的过期数据会被立马删除么？](https://mp.weixin.qq.com/s/qJt0B9p0GeUkekK15xL-jw)
 
 ## Redis内存淘汰策略
 
@@ -1298,8 +1202,8 @@ Redis中同时使用了惰性过期和定期过期两种过期策略。
 1. **volatile-lfu（least frequently used）**：从已设置过期时间的数据集（server.db[i].expires）中挑选最不经常使用的数据淘汰(当内存不足以容纳新写入数据时，在过期的key中，使用LFU（最少访问算法）进行删除key。)
 2. **allkeys-lfu（least frequently used）**：当内存不足以容纳新写入数据时，在键空间中，移除最不经常使用的key(当内存不足以容纳新写入数据时，从所有key中使用LFU算法进行淘汰)
 
-- [Redis内存满了怎么办？](https://mp.weixin.qq.com/s/-kKe_ss01CkLMRERyyjt1Q)
-- [内存耗尽后Redis会发生什么？](https://mp.weixin.qq.com/s/YqkVmIaDRV31-WrcW8K26g)
+> [Redis内存满了怎么办？](https://mp.weixin.qq.com/s/-kKe_ss01CkLMRERyyjt1Q)
+> [内存耗尽后Redis会发生什么？](https://mp.weixin.qq.com/s/YqkVmIaDRV31-WrcW8K26g)
 
 
 ## Redis持久化
@@ -1329,9 +1233,8 @@ AOF日志是由主线程会写的，而重写则不一样，重写过程是由�
 
 因为AOF持久化方式，如果操作日志非常多的话，Redis恢复就很慢。有没有在宕机快速恢复的方法呢，有的，RDB！**RDB**，就是把内存数据以快照的形式保存到磁盘上。和AOF相比，它记录的是某一时刻的数据，，并不是操作。什么是快照?可以这样理解，给当前时刻的数据，拍一张照片，然后保存下来。RDB持久化，是指在指定的时间间隔内，执行指定次数的写操作，将内存中的数据集快照写入磁盘中，它是Redis默认的持久化方式。执行完操作后，在指定目录下会生成一个dump.rdb文件，Redis重启的时候，通过加载dump.rdb文件来恢复数据。RDB触发机制主要有以下几种：
 
-1. 手动触发
-save(同步，会阻塞当前redis服务器)bgsave(异步，redis执行fork操作创建子进程)
-2. 自动触发(save m n)m秒内数据集存在n次修改时，自动触发bgsave
+1. 手动触发：save(同步，会阻塞当前redis服务器)bgsave(异步，redis执行fork操作创建子进程)
+2. 自动触发：(save m n)m秒内数据集存在n次修改时，自动触发bgsave
 
 RDB通过bgsave命令的执行全量快照，可以避免阻塞主线程。basave命令会fork一个子进程，然后该子进程会负责创建RDB文件，而服务器进程会继续处理命令。请求快照时，数据能修改嘛？Redis接入操作系统的写时复制技术（copy-on-write，COW）,在执行快照的同时，正常处理写操作。虽然bgsave执行不会阻塞主线程，但是频繁执行全量快照也会带来性能开销。比如bgsave子进程需要通过fork操作从主线程创建出来，创建后不会阻塞主线程，但是创建过程是会阻塞主线程的。可以做增量快照。
 
@@ -1342,13 +1245,10 @@ RDB通过bgsave命令的执行全量快照，可以避免阻塞主线程。basav
 Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频率执行，两次快照之间，再使用AOF记录这期间的所有命令操作。
 
 ### 如何选择RDB和AOF
-如果数据不能丢失，RDB和AOF混用
-如果只作为缓存使用，可以承受几分钟的数据丢失的话，可以只使用RDB。
-如果只使用AOF，优先使用everysec的写回策略。
+如果数据不能丢失，RDB和AOF混用。如果只作为缓存使用，可以承受几分钟的数据丢失的话，可以只使用RDB。如果只使用AOF，优先使用everysec的写回策略。
 
 #### 混合持久化
-既然RDB与AOF持久化都存在各自的缺点，那么有没有一种更好的持久化方式？
-接下来要介绍的是混合持久化。其实就是RDB与AOF的混合模式，这是Redis4之后新增的。
+既然RDB与AOF持久化都存在各自的缺点，那么有没有一种更好的持久化方式？接下来要介绍的是混合持久化。其实就是RDB与AOF的混合模式，这是Redis4之后新增的。
 1. 持久化方式
 混合持久化是通过aof-use-rdb-preamble参数来开启的。它的操作方式是这样的，在写入的时候先把数据以RDB的形式写入文件的开头，再将后续的写命令以AOF的格式追加到文件中。这样既能保证数据恢复时的速度，同时又能减少数据丢失的风险。
 2. 文件恢复
@@ -1369,21 +1269,16 @@ Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频
 
 ### 哨兵
 
-主从模式中，一旦主节点由于故障不能提供服务，需要人工将从节点晋升为主节点，同时还要通知应用方更新主节点地址。显然，多数业务场景都不能接受这种故障处理方式。Redis从2.8开始正式提供了Redis Sentinel（哨兵）架构来解决这个问题。
-**哨兵模式**，由一个或多个Sentinel实例组成的Sentinel系统，它可以监视所有的Redis主节点和从节点，并在被监视的主节点进入下线状态时，自动将下线主服务器属下的某个从节点升级为新的主节点。但是呢，一个哨兵进程对Redis节点进行监控，就可能会出现问题（单点问题），因此，可以使用多个哨兵来进行监控Redis节点，并且各个哨兵之间还会进行监控。
+主从模式中，一旦主节点由于故障不能提供服务，需要人工将从节点晋升为主节点，同时还要通知应用方更新主节点地址。显然，多数业务场景都不能接受这种故障处理方式。Redis从2.8开始正式提供了Redis Sentinel（哨兵）架构来解决这个问题。哨兵模式，由一个或多个Sentinel实例组成的Sentinel系统，它可以监视所有的Redis主节点和从节点，并在被监视的主节点进入下线状态时，自动将下线主服务器属下的某个从节点升级为新的主节点。但是呢，一个哨兵进程对Redis节点进行监控，就可能会出现问题（单点问题），因此，可以使用多个哨兵来进行监控Redis节点，并且各个哨兵之间还会进行监控。
 简单来说，哨兵模式就三个作用：
+
 - 发送命令，等待Redis服务器（包括主服务器和从服务器）返回监控其运行状态；
 - 哨兵监测到主节点宕机，会自动将从节点切换成主节点，然后通过发布订阅模式通知其他的从节点，修改配置文件，让它们切换主机；
 - 哨兵之间还会相互监控，从而达到高可用。
 
 #### 故障切换的过程是怎样的呢
 
-假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为主观下线。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为客观下线。这样对于客户端而言，一切都是透明的。
-
-哨兵的工作模式如下：
-每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他Sentinel实例发送一个PING命令。
-如果一个实例（instance）距离最后一次有效回复PING命令的时间超过down-after-milliseconds选项所指定的值，则这个实例会被Sentinel标记为主观下线。如果一个Master被标记为主观下线，则正在监视这个Master的所有Sentinel要以每秒一次的频率确认Master的确进入了主观下线状态。当有足够数量的Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态，则Master会被标记为客观下线。在一般情况下，每个Sentinel会以每10秒一次的频率向它已知的所有Master，Slave发送INFO命令。
-当Master被Sentinel标记为客观下线时，Sentinel向下线的Master的所有Slave发送INFO命令的频率会从10秒一次改为每秒一次，若没有足够数量的Sentinel同意Master已经下线，Master的客观下线状态就会被移除；若Master重新向Sentinel的PING命令返回有效回复，Master的主观下线状态就会被移除。
+假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为主观下线。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为客观下线。这样对于客户端而言，一切都是透明的。哨兵的工作模式如下：每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他Sentinel实例发送一个PING命令。如果一个实例（instance）距离最后一次有效回复PING命令的时间超过down-after-milliseconds选项所指定的值，则这个实例会被Sentinel标记为主观下线。如果一个Master被标记为主观下线，则正在监视这个Master的所有Sentinel要以每秒一次的频率确认Master的确进入了主观下线状态。当有足够数量的Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态，则Master会被标记为客观下线。在一般情况下，每个Sentinel会以每10秒一次的频率向它已知的所有Master，Slave发送INFO命令。当Master被Sentinel标记为客观下线时，Sentinel向下线的Master的所有Slave发送INFO命令的频率会从10秒一次改为每秒一次，若没有足够数量的Sentinel同意Master已经下线，Master的客观下线状态就会被移除；若Master重新向Sentinel的PING命令返回有效回复，Master的主观下线状态就会被移除。
 
 ### Cluster集群
 
@@ -1402,8 +1297,6 @@ Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频
 - [4种Redis集群方案介绍+优缺点对比](https://mp.weixin.qq.com/s/Po85M418zvos3pHev2q0Tg)
 - [详细剖析Redis三种集群策略](https://mp.weixin.qq.com/s/M1RymGVUqhQG0KnKupnDXQ)
 - [一文掌握，单机Redis、哨兵和Redis Cluster的搭建](https://mp.weixin.qq.com/s/m9K6acUUc41j44b8zPh28w)
-
-
 
 ## 阿里官方Redis开发规范
 

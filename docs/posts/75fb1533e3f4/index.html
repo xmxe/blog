@@ -541,14 +541,13 @@
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/concurrent/jmm2.png" alt="JMM(Java内存模型)强制在主存中进行读取"></p>
 <p>volatile关键字其实并非是Java语言特有的，在C语言里也有，它最原始的意义就是禁用CPU缓存。如果我们将一个变量使用volatile修饰，这就指示编译器，这个变量是共享且不稳定的，每次使用它都到主存中进行读取。</p>
 <p>volatile关键字能保证数据的可见性，但不能保证数据的原子性。synchronized关键字两者都能保证。</p>
-<h3 id="如何禁止指令重排序？"><a href="#如何禁止指令重排序？" class="headerlink" title="如何禁止指令重排序？"></a>如何禁止指令重排序？</h3><p><strong>在Java中，volatile关键字除了可以保证变量的可见性，还有一个重要的作用就是防止JVM的指令重排序</strong>。如果我们将变量声明为<strong>volatile</strong>，在对这个变量进行读写操作的时候，会通过插入特定的<strong>内存屏障</strong>的方式来禁止指令重排序。</p>
+<h3 id="如何禁止指令重排序？"><a href="#如何禁止指令重排序？" class="headerlink" title="如何禁止指令重排序？"></a>如何禁止指令重排序？</h3><p>在Java中，volatile关键字除了可以保证变量的可见性，还有一个重要的作用就是防止JVM的指令重排序。如果我们将变量声明为volatile，在对这个变量进行读写操作的时候，会通过插入特定的内存屏障的方式来禁止指令重排序。</p>
 <p>在Java中，Unsafe类提供了三个开箱即用的内存屏障相关的方法，屏蔽了操作系统底层的差异：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">loadFence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">storeFence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token keyword">native</span> <span class="token keyword">void</span> <span class="token function">fullFence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>理论上来说，你通过这个三个方法也可以实现和volatile禁止重排序一样的效果，只是会麻烦一些。</p>
-<p>面试中面试官经常会说：“单例模式了解吗？来给我手写一下！给我解释一下双重检验锁方式实现单例模式的原理呗！”</p>
+<p>理论上来说，你通过这个三个方法也可以实现和volatile禁止重排序一样的效果，只是会麻烦一些。面试中面试官经常会说：“单例模式了解吗？来给我手写一下！给我解释一下双重检验锁方式实现单例模式的原理呗！”</p>
 <p><strong>双重校验锁实现对象单例（线程安全）</strong>：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
 
@@ -578,7 +577,7 @@
 <li>将<code>uniqueInstance</code>指向分配的内存地址</li>
 </ol>
 <p>但是由于JVM具有指令重排的特性，执行顺序有可能变成1-&gt;3-&gt;2。指令重排在单线程环境下不会出现问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程T1执行了1和3，此时T2调用getUniqueInstance()后发现uniqueInstance不为空，因此返回uniqueInstance，但此时uniqueInstance还未被初始化。</p>
-<h3 id="volatile可以保证原子性么？"><a href="#volatile可以保证原子性么？" class="headerlink" title="volatile可以保证原子性么？"></a>volatile可以保证原子性么？</h3><p><strong>volatile关键字能保证变量的可见性，但不能保证对变量的操作是原子性的。</strong></p>
+<h3 id="volatile可以保证原子性么？"><a href="#volatile可以保证原子性么？" class="headerlink" title="volatile可以保证原子性么？"></a>volatile可以保证原子性么？</h3><p><strong>volatile关键字能保证变量的可见性，但不能保证对变量的操作是原子性的</strong>。</p>
 <p>我们通过下面的代码即可证明：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VolatoleAtomicityDemo</span> <span class="token punctuation">&#123;</span>
@@ -617,8 +616,7 @@
 <li>线程1对inc进行读取操作之后，还未对其进行修改。线程2又读取了inc的值并对其进行修改（+1），再将inc的值写回内存。</li>
 <li>线程2操作完毕后，线程1对inc的值进行修改（+1），再将inc的值写回内存。</li>
 </ol>
-<p>这也就导致两个线程分别对inc进行了一次自增操作后，inc实际上只增加了1。</p>
-<p>其实，如果想要保证上面的代码运行正确也非常简单，利用synchronized、Lock或者AtomicInteger都可以。</p>
+<p>这也就导致两个线程分别对inc进行了一次自增操作后，inc实际上只增加了1。其实，如果想要保证上面的代码运行正确也非常简单，利用synchronized、Lock或者AtomicInteger都可以。</p>
 <p>使用<strong>synchronized</strong>改进：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">increase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     inc<span class="token operator">++</span><span class="token punctuation">;</span>
@@ -641,8 +639,6 @@
         lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
 
 <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>并发编程中的三个概念:原子性问题，可见性问题，有序性问题<br><strong>原子性</strong>：即一个操作或者多个操作,要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。例如银行转账<br><strong>可见性</strong>：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值<br><strong>有序性</strong>：即程序执行的顺序按照代码的先后顺序执行<br>要想并发程序正确地执行，必须要保证原子性、可见性以及有序性。只要有一个没有被保证，就有可能会导致程序运行不正确。</p>
 <p>cpu很快,但是cpu从内存里读取数据和写入数据是很慢，为了提高读写内存速度，硬件工程师在cpu上加了一块高速缓存(工作内存),cpu从主内存中读取数据，在高速缓存(工作内存)中建立副本变量，在操作完副本变量后将变量更新到主内存，而volatile关键字则是告诉jvm，它所修饰的变量不保留拷贝，直接访问主内存中的数据，这样就保证了可见性，其实就是如果一个变量声明成是volatile的，那么当我读变量时，总是能读到它的最新值，这里最新值是指不管其它哪个线程对该变量做了写操作，都会立刻被更新到主存里，我也能从主存里读到这个刚写入的值。也就是说volatile关键字可以保证可见性以及有序性，但不保证原子性</p>

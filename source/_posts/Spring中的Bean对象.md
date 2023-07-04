@@ -15,33 +15,25 @@ top: true
 
 ### 谈谈自己对于Spring IoC的了解
 
-**IoC（InversionofControl:控制反转）** 是一种设计思想，而不是一个具体的技术实现。IoC的思想就是将原本在程序中手动创建对象的控制权，交由Spring框架来管理。不过，IoC并非Spring特有，在其他语言中也有应用。
-
-**为什么叫控制反转？**
+**IoC（InversionofControl:控制反转）**，是一种设计思想，而不是一个具体的技术实现。IoC的思想就是将原本在程序中手动创建对象的控制权，交由Spring框架来管理。不过，IoC并非Spring特有，在其他语言中也有应用。**为什么叫控制反转**?
 
 - **控制**：指的是对象创建（实例化、管理）的权力
 - **反转**：控制权交给外部环境（Spring框架、IoC容器）
 
 ![img](https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/java-guide-blog/frc-365faceb5697f04f31399937c059c162.png)
 
-将对象之间的相互依赖关系交给IoC容器来管理，并由IoC容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。
+将对象之间的相互依赖关系交给IoC容器来管理，并由IoC容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。在实际项目中一个Service类可能依赖了很多其他的类，假如我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IoC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。
 
-在实际项目中一个Service类可能依赖了很多其他的类，假如我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IoC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。
+在Spring中，IoC容器是Spring用来实现IoC的载体，IoC容器实际上就是个Map（key，value），Map中存放的是各种对象。Spring时代我们一般通过XML文件来配置Bean，后来开发人员觉得XML文件来配置不太好，于是SpringBoot注解配置就慢慢开始流行起来。
 
-在Spring中，IoC容器是Spring用来实现IoC的载体，IoC容器实际上就是个Map（key，value），Map中存放的是各种对象。
-
-Spring时代我们一般通过XML文件来配置Bean，后来开发人员觉得XML文件来配置不太好，于是SpringBoot注解配置就慢慢开始流行起来。
-
-相关阅读：
-
-- [IoC源码阅读](https://javadoop.com/post/spring-ioc)
-- [面试被问了几百遍的IoC和AOP，还在傻傻搞不清楚？](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247486938&idx=1&sn=c99ef0233f39a5ffc1b98c81e02dfcd4&chksm=cea24211f9d5cb07fa901183ba4d96187820713a72387788408040822ffb2ed575d28e953ce7&token=1736772241&lang=zh_CN#rd)
+> 相关阅读：
+>
+> - [IoC源码阅读](https://javadoop.com/post/spring-ioc)
+> -  [面试被问了几百遍的IoC和AOP，还在傻傻搞不清楚？](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247486938&idx=1&sn=c99ef0233f39a5ffc1b98c81e02dfcd4&chksm=cea24211f9d5cb07fa901183ba4d96187820713a72387788408040822ffb2ed575d28e953ce7&token=1736772241&lang=zh_CN#rd)
 
 ### 什么是Spring Bean？
 
-简单来说，Bean代指的就是那些被IoC容器所管理的对象。
-
-我们需要告诉IoC容器帮助我们管理哪些对象，这个是通过配置元数据来定义的。配置元数据可以是XML文件、注解或者Java配置类。
+简单来说，Bean代指的就是那些被IoC容器所管理的对象。我们需要告诉IoC容器帮助我们管理哪些对象，这个是通过配置元数据来定义的。配置元数据可以是XML文件、注解或者Java配置类。
 
 ```xml
 <!-- Constructor-arg with 'value' attribute -->
@@ -119,11 +111,7 @@ Spring内置的@Autowired以及JDK内置的@Resource和@Inject都可以用于注
 
 ### @Autowired和@Resource的区别是什么？
 
-Autowired属于Spring内置的注解，默认的注入方式为byType（根据类型进行匹配），也就是说会优先根据接口类型去匹配并注入Bean（接口的实现类）。
-
-**这会有什么问题呢**？当一个接口存在多个实现类的话，byType这种方式就无法正确注入对象了,因为这个时候Spring会同时找到多个满足条件的选择，默认情况下它自己不知道选择哪一个。
-
-这种情况下，注入方式会变为byName（根据名称进行匹配），这个名称通常就是类名（首字母小写）。就比如说下面代码中的smsService就是我这里所说的名称，这样应该比较好理解了吧。
+Autowired属于Spring内置的注解，默认的注入方式为byType（根据类型进行匹配），也就是说会优先根据接口类型去匹配并注入Bean（接口的实现类）。**这会有什么问题呢**？当一个接口存在多个实现类的话，byType这种方式就无法正确注入对象了,因为这个时候Spring会同时找到多个满足条件的选择，默认情况下它自己不知道选择哪一个。这种情况下，注入方式会变为byName（根据名称进行匹配），这个名称通常就是类名（首字母小写）。就比如说下面代码中的smsService就是我这里所说的名称，这样应该比较好理解了吧。
 
 
 ```java
@@ -153,9 +141,7 @@ private SmsService smsService;
 
 我们还是建议通过@Qualifier注解来显式指定名称而不是依赖变量的名称。
 
-@Resource属于JDK提供的注解，默认注入方式为byName。如果无法通过名称匹配到对应的Bean的话，注入方式会变为byType。
-
-@Resource有两个比较重要且日常开发常用的属性：name（名称）、type（类型）。
+@Resource属于JDK提供的注解，默认注入方式为byName。如果无法通过名称匹配到对应的Bean的话，注入方式会变为byType。@Resource有两个比较重要且日常开发常用的属性：name（名称）、type（类型）。
 
 ```java
 public @interface Resource {
@@ -183,7 +169,7 @@ private SmsService smsService;
 简单总结一下：
 
 - @Autowired是Spring提供的注解，@Resource是JDK提供的注解。
-- Autowired默认的注入方式为byType（根据类型进行匹配），@Resource默认注入方式为byName（根据名称进行匹配）。
+- @Autowired默认的注入方式为byType（根据类型进行匹配），@Resource默认注入方式为byName（根据名称进行匹配）。
 - 当一个接口存在多个实现类的情况下，@Autowired和@Resource都需要通过名称才能正确匹配到对应的Bean。Autowired可以通过@Qualifier注解来显式指定名称，@Resource可以通过name属性来显式指定名称。
 
 **@Autowired和@Resource区别**😊
@@ -200,10 +186,10 @@ private BaseDao baseDao;
 3. @Resource（这个注解属于J2EE的），默认按照名称进行装配，名称可以通过name属性进行指定，如果没有指定name属性，当注解写在字段上时，默认取字段名进行安装名称查找，如果注解写在setter方法上默认取属性名进行装配。当找不到与名称匹配的bean时才按照类型进行装配。但是需要注意的是，如果name属性一旦指定，就只会按照名称进行装配。
 4. @Autowired只按照byType注入,由Spring提供，@Resource默认按byName自动注入，也提供按照byType注入
 
-- [Spring探索｜既生@Resource，何生@Autowired？](https://mp.weixin.qq.com/s/MZX97YKKmjuj7FxrjBQ1hg)
-- [@Autowired注解是如何实现的？](https://mp.weixin.qq.com/s/gRqZwUV791RtCI1xCoV3Qw)
-- [你所不知道的Spring中@Autowired那些实现细节](https://mp.weixin.qq.com/s/n_syhEFrXykI7ySRtahEmg)
-- [@Autowired的这些骚操作，你都知道吗？](https://mp.weixin.qq.com/s/2X5xv8I0b6TcXWVH-SC8Ug)
+> [Spring探索｜既生@Resource，何生@Autowired？](https://mp.weixin.qq.com/s/MZX97YKKmjuj7FxrjBQ1hg)
+> [@Autowired注解是如何实现的？](https://mp.weixin.qq.com/s/gRqZwUV791RtCI1xCoV3Qw)
+> [你所不知道的Spring中@Autowired那些实现细节](https://mp.weixin.qq.com/s/n_syhEFrXykI7ySRtahEmg)
+> [@Autowired的这些骚操作，你都知道吗？](https://mp.weixin.qq.com/s/2X5xv8I0b6TcXWVH-SC8Ug)
 
 
 **@Inject**
@@ -220,25 +206,23 @@ public void setAbc(@Named("beanName") Abc abc){
 }
 ```
 
-[@Autowired,@Resource,@Inject三个注解的区别](https://mp.weixin.qq.com/s/YLIsRBSiIjz3dCtSA9onDQ)
+> [@Autowired,@Resource,@Inject三个注解的区别](https://mp.weixin.qq.com/s/YLIsRBSiIjz3dCtSA9onDQ)
 
 1. @Autowired是Spring自带的，@Inject和@Resource都是JDK提供的，其中@Inject是JSR330规范实现的，@Resource是JSR250规范实现的，而Spring通过BeanPostProcessor来提供对JDK规范的支持。
 2. @Autowired、@Inject用法基本一样，不同之处为@Autowired有一个required属性，表示该注入是否是必须的，即如果为必须的，则如果找不到对应的bean，就无法注入，无法创建当前bean。
 3. @Autowired、@Inject是默认按照类型匹配的，@Resource是按照名称匹配的。如在spring-boot-data项目中自动生成的redisTemplate的bean，是需要通过byName来注入的。如果需要注入该默认的，则需要使用@Resource来注入，而不是@Autowired。
 4. 对于@Autowire和@Inject，如果同一类型存在多个bean实例，则需要指定注入的beanName。@Autowired和@Qualifier一起使用，@Inject和@Named一起使用。
 
-
-
 ### Bean的作用域有哪些?
 
 Spring中Bean的作用域通常有下面几种：
 
-- **singleton**:IoC容器中只有唯一的bean实例。Spring中的bean默认都是单例的，是对单例设计模式的应用。
-- **prototype**:每次获取都会创建一个新的bean实例。也就是说，连续`getBean()`两次，得到的是不同的Bean实例。
-- **request**（仅Web应用可用）:每一次HTTP请求都会产生一个新的bean（请求bean），该bean仅在当前HTTPrequest内有效。
-- **session**（仅Web应用可用）:每一次来自新session的HTTP请求都会产生一个新的bean（会话bean），该bean仅在当前HTTPsession内有效。
-- **application/global-session**（仅Web应用可用）：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。
-- **websocket**（仅Web应用可用）：每一次WebSocket会话产生一个新的bean。
+- **singleton**：IoC容器中只有唯一的bean实例。Spring中的bean默认都是单例的，是对单例设计模式的应用。
+- **prototype**：每次获取都会创建一个新的bean实例。也就是说，连续`getBean()`两次，得到的是不同的Bean实例。
+- **request（仅Web应用可用）**:每一次HTTP请求都会产生一个新的bean（请求bean），该bean仅在当前HTTPrequest内有效。
+- **session（仅Web应用可用）**:每一次来自新session的HTTP请求都会产生一个新的bean（会话bean），该bean仅在当前HTTPsession内有效。
+- **application/global-session（仅Web应用可用）**：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。
+- **websocket（仅Web应用可用）**：每一次WebSocket会话产生一个新的bean。
 
 **如何配置bean的作用域呢？**
 
@@ -260,9 +244,7 @@ public Person personPrototype() {
 
 ### 单例Bean的线程安全问题了解吗？
 
-大部分时候我们并没有在项目中使用多线程，所以很少有人会关注这个问题。单例Bean存在线程问题，主要是因为当多个线程操作同一个对象的时候是存在资源竞争的。
-
-常见的有两种解决办法：
+大部分时候我们并没有在项目中使用多线程，所以很少有人会关注这个问题。单例Bean存在线程问题，主要是因为当多个线程操作同一个对象的时候是存在资源竞争的。常见的有两种解决办法：
 
 1. 在Bean中尽量避免定义可变的成员变量。
 2. 在类中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在ThreadLocal中（推荐的一种方式）。
@@ -752,7 +734,7 @@ IOC容器中如果有Bean实现了接口，那所有的Bean在初始化之后都
 
 **简单来说一个Bean的加载顺序：类构造方法 - postProcessBeforeInitialization前置方法 - @PostConstruct注解的方法 - InitializingBean的afterPropertiesSet()方法- XML中定义的bean init-method方法 - postProcessAfterInitialization后置方法**
 
-- [Spring Boot启动扩展点超详细总结，再也不怕面试官问了](https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA)
+> [Spring Boot启动扩展点超详细总结，再也不怕面试官问了](https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA)
 
 ### BeanFactoryPostProcessor、BeanPostProcessor区别
 
@@ -769,8 +751,6 @@ BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象�
 3. beanFactory主要是面对与spring框架的基础设施，面对spring自己。而Applicationcontex主要面对与spring使用的开发者。基本都会使用Applicationcontex并非beanFactory。
 [Spring系列之beanFactory与ApplicationContext](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493943&idx=1&sn=9eaa46ed730874fce003c66f76fe9c7f&source=41#wechat_redirect)
 
-
-
 ### BeanFactory和FactoryBean的区别
 
 BeanFactory是Spring容器的顶级接口，给具体的IOC容器的实现提供了规范。
@@ -779,15 +759,13 @@ FactoryBean也是接口，为IOC容器中Bean的实现提供了更加灵活的�
 
 #### BeanFactory
 
-BeanFactory，以Factory结尾，表示它是⼀个工厂类(接口)，它负责生产和管理bean的⼀个工厂。在Spring中，BeanFactory是IOC容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。
-BeanFactory只是个接口，并不是IOC容器的具体实现，但是Spring容器给出了很多种实现，如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等，其中XmlBeanFactory就是常用的⼀个，该实现将以XML方式描述组成应用的对象及对象间的依赖关系。XmlBeanFactory类将持有此XML配置元数据，并用它来构建⼀个完全可配置的系统或应用。都是附加了某种功能的实现。它为其他具体的IOC容器提供了最基本的规范，例如DefaultListableBeanFactory,XmlBeanFactory,ApplicationContext等具体的容器都是实现了BeanFactory，再在其基础之上附加了其他的功能。
-BeanFactory和ApplicationContext就是Spring框架的两个IOC容器，现在⼀般使用ApplicationnContext，其不但包含了BeanFactory的作用，同时还进行更多的扩展。
-BeanFacotry是Spring中比较原始的Factory。如XMLBeanFactory就是⼀种典型的BeanFactory。原始的BeanFactory无法⽀持Spring的许多插件，如AOP功能、Web应用等。ApplicationContext接口,它由BeanFactory接口派生而来，ApplicationContext包含BeanFactory的所有功能，通常建议比BeanFactory优先，ApplicationContext以⼀种更面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：
-MessageSource,提供国际化的消息访问
+BeanFactory，以Factory结尾，表示它是⼀个工厂类(接口)，它负责生产和管理bean的⼀个工厂。在Spring中，BeanFactory是IOC容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。BeanFactory只是个接口，并不是IOC容器的具体实现，但是Spring容器给出了很多种实现，如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等，其中XmlBeanFactory就是常用的⼀个，该实现将以XML方式描述组成应用的对象及对象间的依赖关系。XmlBeanFactory类将持有此XML配置元数据，并用它来构建⼀个完全可配置的系统或应用。都是附加了某种功能的实现。它为其他具体的IOC容器提供了最基本的规范，例如DefaultListableBeanFactory,XmlBeanFactory,ApplicationContext等具体的容器都是实现了BeanFactory，再在其基础之上附加了其他的功能。BeanFactory和ApplicationContext就是Spring框架的两个IOC容器，现在⼀般使用ApplicationnContext，其不但包含了BeanFactory的作用，同时还进行更多的扩展。BeanFacotry是Spring中比较原始的Factory。如XMLBeanFactory就是⼀种典型的BeanFactory。原始的BeanFactory无法⽀持Spring的许多插件，如AOP功能、Web应用等。ApplicationContext接口,它由BeanFactory接口派生而来，ApplicationContext包含BeanFactory的所有功能，通常建议比BeanFactory优先，ApplicationContext以⼀种更面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：MessageSource,提供国际化的消息访问
 资源访问，如URL和⽂件
+
 事件传播
 载入多个（有继承关系）上下文，使得每⼀个上下文都专注于⼀个特定的层次，比如应⽤的web层;
 BeanFactory提供的方法及其简单，仅提供了六种方法供客户调用：
+
 ```java
 // 判断⼯⼚中是否包含给定名称的bean定义，若有则返回true
 boolean containsBean(String beanName)
@@ -804,10 +782,9 @@ String[] getAliases(String name)
 ```
 #### FactoryBean
 
-⼀般情况下，Spring通过反射机制利用<bean\><bean\>的class属性指定实现类实例化Bean，在某些情况下，实例化Bean过程比较复杂，如果按照传统的方式，则需要在<bean\><bean\>中提供大量的配置信息。配置⽅式的灵活性是受限的，这时采用编码的方式可能会得到⼀个简单的方案。
-Spring为此提供了⼀个org.springframework.bean.factory.FactoryBean的工厂类接口，用户可以通过实现该接⼝定制实例化Bean的逻辑。FactoryBean接口对于Spring框架来说占重要的地位，Spring自身就提供了70多个FactoryBean的实现。它们隐藏了实例化⼀些复杂Bean的细节，给上层应用带来了便利。从Spring3.0开始，FactoryBean开始⽀持泛型，即接口声明改为FactoryBean<T\>的形式,以Bean结尾，表示它是⼀个Bean，不同于普通Bean的是：它是实现了FactoryBean<T\>接口的Bean，根据该Bean的ID从BeanFactory中获取的实际上是FactoryBean的getObject()返回的对象，而不是FactoryBean本身，如果要获取FactoryBean对象，请在id前面加⼀个&符号来获取。
-例如自己实现⼀个FactoryBean，功能：用来代理⼀个对象，对该对象的所有方法做⼀个拦截，在调用前后都输出⼀行LOG，模仿ProxyFactoryBean的功能。FactoryBean是⼀个接口，当在IOC容器中的Bean实现了FactoryBean后，通过getBean(StringBeanName)获取到的Bean对象并不是FactoryBean的实现类对象，而是这个实现类中的getObject()方法返回的对象。要想获取FactoryBean的实现类，就要getBean(&BeanName)，在BeanName之前加上&。
+⼀般情况下，Spring通过反射机制利用<bean\><bean\>的class属性指定实现类实例化Bean，在某些情况下，实例化Bean过程比较复杂，如果按照传统的方式，则需要在<bean\><bean\>中提供大量的配置信息。配置⽅式的灵活性是受限的，这时采用编码的方式可能会得到⼀个简单的方案。Spring为此提供了⼀个org.springframework.bean.factory.FactoryBean的工厂类接口，用户可以通过实现该接⼝定制实例化Bean的逻辑。FactoryBean接口对于Spring框架来说占重要的地位，Spring自身就提供了70多个FactoryBean的实现。它们隐藏了实例化⼀些复杂Bean的细节，给上层应用带来了便利。从Spring3.0开始，FactoryBean开始⽀持泛型，即接口声明改为FactoryBean<T\>的形式,以Bean结尾，表示它是⼀个Bean，不同于普通Bean的是：它是实现了FactoryBean<T\>接口的Bean，根据该Bean的ID从BeanFactory中获取的实际上是FactoryBean的getObject()返回的对象，而不是FactoryBean本身，如果要获取FactoryBean对象，请在id前面加⼀个&符号来获取。例如自己实现⼀个FactoryBean，功能：用来代理⼀个对象，对该对象的所有方法做⼀个拦截，在调用前后都输出⼀行LOG，模仿ProxyFactoryBean的功能。FactoryBean是⼀个接口，当在IOC容器中的Bean实现了FactoryBean后，通过getBean(StringBeanName)获取到的Bean对象并不是FactoryBean的实现类对象，而是这个实现类中的getObject()方法返回的对象。要想获取FactoryBean的实现类，就要getBean(&BeanName)，在BeanName之前加上&。
 在该接口中还定义了以下3个⽅法：
+
 ```java
 // 返回由FactoryBean创建的Bean实例，如果isSingleton()返回true，则该实例会放到Spring容器中单实例缓存池中；
 T getObject() throw Exception;
@@ -838,7 +815,7 @@ ApplicationContext actx = new FleSystemXmlApplicationContext("config.xml");
 HelloWorld hw = (HelloWorld) actx.getBean("HelloWorld");
 System.out.println(hw.getMsg());
 ```
-[Spring中获取Bean的八种方式](https://mp.weixin.qq.com/s/BW3khRkQwjBsXw7yJhCyXQ)
+> [Spring中获取Bean的八种方式](https://mp.weixin.qq.com/s/BW3khRkQwjBsXw7yJhCyXQ)
 
 
 ## 相关文章
@@ -848,6 +825,7 @@ System.out.println(hw.getMsg());
 - [你知道Spring lazy-init懒加载的原理吗？](https://mp.weixin.qq.com/s/_je69-0J72X5YMCrS-92MQ)
 - [如何自己实现一个简单的Spring Bean容器](https://mp.weixin.qq.com/s/brlEwyKhwhSkljHLL1zmBA)
 - [实力总结四类Bean注入Spring的方式](https://mp.weixin.qq.com/s/AuTnuxIQDPFbuslDz9ffVg)
+- [最全的Spring依赖注入方式，你都会了吗？](https://mp.weixin.qq.com/s/TIDKofzCPz6qg2vj16JRMA)
 - [关于Spring注入方式的几道面试题，你能答上么](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494432&amp;idx=1&amp;sn=3acc7e7bf31c6d1f56ad830d6eb1ec41&amp;source=41#wechat_redirect)
 - [最全的Spring依赖注入方式，你都会了吗？](https://mp.weixin.qq.com/s/u1DcCsRrrHYFOVykwW4Dcg)
 - [Spring官方为什么建议构造器注入？](https://mp.weixin.qq.com/s/fVV6dYh0DQOoDiXwLR5miw)

@@ -32,32 +32,32 @@ img: https://gimg2.baidu.com/image_search/src=http%3A%2F%2F29520719.s21i.faiusr.
 **CONNECT角色**：--是授予最终用户的典型权利，最基本的
 
 ```sql
-1. ALTER SESSION --修改会话
-2. CREATE CLUSTER --建立聚簇
-3. CREATE DATABASE LINK --建立数据库链接
-4. CREATE SEQUENCE --建立序列
-5. CREATE SESSION --建立会话
-6. CREATE SYNONYM --建立同义词
-7. CREATE VIEW --建立视图www_bitscn_com中国.网管联盟
+ALTER SESSION --修改会话
+CREATE CLUSTER --建立聚簇
+CREATE DATABASE LINK --建立数据库链接
+CREATE SEQUENCE --建立序列
+CREATE SESSION --建立会话
+CREATE SYNONYM --建立同义词
+CREATE VIEW --建立视图www_bitscn_com中国.网管联盟
 ```
 **RESOURCE角色**： --是授予开发人员的
 
 ```sql
-1. CREATE CLUSTER --建立聚簇
-2. CREATE PROCEDURE --建立过程
-3. CREATE SEQUENCE --建立序列
-4. CREATE TABLE --建表
-5. CREATE TRIGGER --建立触发器
-6. CREATE TYPE --建立类型
+CREATE CLUSTER --建立聚簇
+CREATE PROCEDURE --建立过程
+CREATE SEQUENCE --建立序列
+CREATE TABLE --建表
+CREATE TRIGGER --建立触发器
+CREATE TYPE --建立类型
 ```
 **DBA角色**：拥有系统所有系统级权限（系统管理员）
 
 **IMP_FULL_DATABASE角色、EXP_FULL_DATABASE角色**：
 
 ```sql
-1. BACKUP ANY TABLE --备份任何表
-2. EXECUTE ANY PROCEDURE --执行任何操作
-3. SELECT ANY TABLE --查询任何表
+BACKUP ANY TABLE --备份任何表
+EXECUTE ANY PROCEDURE --执行任何操作
+SELECT ANY TABLE --查询任何表
 ```
 
 **SELECT_CATALOG_ROLE角色**具有从数据字典查询的权利，
@@ -76,7 +76,6 @@ img: https://gimg2.baidu.com/image_search/src=http%3A%2F%2F29520719.s21i.faiusr.
 Select userenv(‘language’) from dual; -- 查看服务器端编码
 
 select * from V$NLS_PARAMETERS；-- 查看NLS_LANGUAGE的值与第一个的查询结果是否一致，假如不一致需要设置环境变量，变量名：NLS_LANG 变量值：第1个查到的值 重启PL/SQL(假如在乱码之前已经插入数据，那么配置环境变量后依然乱码，需要删除数据重新导入)
-
 ```
 ### Oracle的操作
 
@@ -157,7 +156,6 @@ wm_concat()函数是oracle中独有的,mysql中有一个group_concat()函数。�
 ```sql
 -- 根据年龄获取学生的分数
 select age,to_char(wm_concat(name)) as name,to_char(wm_concat(score)) as score from student t group by age;
-
 -- age  name     score
 -- 18  张三,李四  81,82
 -- 19  王五,赵六  67,90

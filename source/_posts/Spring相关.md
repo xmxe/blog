@@ -43,7 +43,8 @@ public class B {
 }
 ```
 
-**一级缓存**
+### 一级缓存
+
 1. 实例化A对象。
 2. 填充A的属性阶段时需要去填充B对象，而此时B对象还没有创建，所以这里为了完成A的填充就必须要先去创建B对象；
 3. 实例化B对象。
@@ -53,8 +54,10 @@ public class B {
 为什么不能在实例化A之后就放入Map？
 因为此时A尚未创建完整，所有属性都是默认值，并不是一个完整的对象，在执行业务时可能会抛出未知的异常。所以必须要在A创建完成之后才能放入Map。
 
-**二级缓存**
+### 二级缓存
+
 此时我们引入二级缓存用另外一个Map2 {k:name;v:earlybean}来存储尚未已经开始创建但是尚未完整创建的对象。
+
 1. 实例化A对象之后，将A对象放入Map2中。
 2. 在填充A的属性阶段需要去填充B对象，而此时B对象还没有创建，所以这里为了完成A的填充就必须要先去创建B对象。
 3. 创建B对象的过程中，实例化B对象之后，将B对象放入Map2中。
@@ -63,7 +66,7 @@ public class B {
 6. 这时候B创建完成，A继续执行b的属性填充可以拿到B对象，这样A也完成了创建。B.a也完整了
 7. 此时将A对象放入Map并从Map2中删除。
 
-**二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？**
+### 二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？
 
 从上面的流程中我们可以看到使用两级缓存可以完美解决循环依赖的问题，但是Spring中还有另外一个问题需要解决，这就是初始化过程中的AOP实现。AOP是Spring的重要功能，实现方式就是使用代理模式动态增强类的功能。动态单例目前有两种技术可以实现，一种是JDK自带的基于接口的动态Proxy技术，一种是CGlib基于字节码动态生成的Proxy技术，这两种技术都是需要原始对象创建完毕，之后基于原始对象生成代理对象的。那么我们发现，在二级缓存的设计下，我们需要在放入缓存Map之前将代理对象生成好。
 将流程改为：
@@ -82,7 +85,8 @@ public class B {
 面试官会问：为什么要使用三级缓存呢？二级缓存能解决循环依赖吗？
 答：如果要使用二级缓存解决循环依赖，意味着所有Bean在实例化后就要完成AOP代理，这样违背了Spring设计的原则，Spring在设计之初就是通过AnnotationAwareAspectJAutoProxyCreator这个后置处理器来在Bean生命周期的最后一步来完成AOP代理，而不是在实例化后就立马进行AOP代理
 
-**三级缓存**
+### 三级缓存
+
 Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFactory} ，这个缓存的value就不是Bean对象了，而是一个接口对象由一段lamda表达式实现。在这段lamda表达式中去完成一些BeanPostProcessor的执行。
 1. 实例化A对象之后，将A的ObjectFactory对象放入Map3中。
 2. 在填充A的属性阶段需要去填充B对象，而此时B对象还没有创建，所以这里为了完成A的填充就必须要先去创建B对象。
@@ -91,6 +95,8 @@ Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFact
 5. 此时将B放入Map并且从Map3中删除。
 6. 这时候B创建完成，A继续执行b的属性填充可以拿到B对象，这样A也完成了创建。
 7. 此时将A对象放入Map并从Map2中删除。
+
+### 相关文章
 
 - [Spring三级缓存解决循环依赖](https://mp.weixin.qq.com/s/ns9JEpvMt7U-nsMZzEUIUQ)
 - [终于有人把Spring循环依赖讲清楚了！](https://mp.weixin.qq.com/s/L1PJ-cikoS8sOORszEYnfw)
@@ -122,7 +128,7 @@ $.ajax({
 	success : function(data) {}
 });
 ```
-[@RequestBody接收数组、List参数、@Deprecated标记废弃方法](https://mp.weixin.qq.com/s/iyubfxmV_8KU8v4cg1A7tg)
+> [@RequestBody接收数组、List参数、@Deprecated标记废弃方法](https://mp.weixin.qq.com/s/iyubfxmV_8KU8v4cg1A7tg)
 
 ### @PostConstruct和@PreDestroy
 
@@ -134,37 +140,32 @@ $.ajax({
 ### @Configuration和@Component的区别
 一句话概括就是@Configuration中所有带@Bean注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。
 理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。
-[终于搞懂了@Configuration和@Component的区别](https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog)
+
+> [终于搞懂了@Configuration和@Component的区别](https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog)
 
 ### 条件注解
-[Spring Boot中条件注解底层如何实现的？](https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ)
+> [Spring Boot中条件注解底层如何实现的？](https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ)
 
 ## Spring设计模式
 
 
 ### 控制反转(IoC)和依赖注入(DI)
 
-**IoC(Inversion of Control,控制反转)** 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。
-
-**IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则。**
+**IoC(Inversion of Control,控制反转)** 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。**IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则**。
 
 ![ioc-patterns](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ioc-patterns.png)
 
-**Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的**。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。
-
-在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。
+**Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的**。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。
 
 > 关于Spring IOC的理解，推荐看一下这个[知乎回答](https://www.zhihu.com/question/23277575/answer/169698662)，非常不错。
 
-**控制反转怎么理解呢?** 举个例子："对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中"。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。
-
-**DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去。**
+**控制反转怎么理解呢**？举个例子："对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中"。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。**DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去**。
 
 ### 工厂设计模式
 
 Spring使用工厂模式可以通过BeanFactory或ApplicationContext创建bean对象。
 
-**两者对比：**
+**两者对比**：
 
 - BeanFactory：延迟注入(使用到某个bean的时候才会注入),相比于ApplicationContext来说会占用更少的内存，程序启动速度更快。
 - ApplicationContext：容器启动的时候，不管你用没用到，一次性创建所有bean。BeanFactory仅提供了最基本的依赖注入支持，ApplicationContext扩展了BeanFactory,除了有BeanFactory的功能还有额外更多功能，所以一般开发人员使用ApplicationContext会更多。
@@ -203,15 +204,13 @@ public class App {
 
 **Spring中bean的默认作用域就是singleton(单例)的**。除了singleton作用域，Spring中bean还有下面几种作用域：
 
-- **prototype**:每次获取都会创建一个新的bean实例。也就是说，连续getBean()两次，得到的是不同的Bean实例。
-- **request**（仅Web应用可用）:每一次HTTP请求都会产生一个新的bean（请求bean），该bean仅在当前HTTPrequest内有效。
-- **session**（仅Web应用可用）:每一次来自新session的HTTP请求都会产生一个新的bean（会话bean），该bean仅在当前HTTPsession内有效。
-- **application/global-session**（仅Web应用可用）：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。
-- **websocket**（仅Web应用可用）：每一次WebSocket会话产生一个新的bean。
+- **prototype**：每次获取都会创建一个新的bean实例。也就是说，连续getBean()两次，得到的是不同的Bean实例。
+- **request（仅Web应用可用）**:每一次HTTP请求都会产生一个新的bean（请求bean），该bean仅在当前HTTPrequest内有效。
+- **session（仅Web应用可用）**:每一次来自新session的HTTP请求都会产生一个新的bean（会话bean），该bean仅在当前HTTPsession内有效。
+- **application/global-session（仅Web应用可用）**：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。
+- **websocket（仅Web应用可用）**：每一次WebSocket会话产生一个新的bean。
 
-Spring通过ConcurrentHashMap实现单例注册表的特殊方式实现单例模式。
-
-Spring实现单例的核心代码如下：
+Spring通过ConcurrentHashMap实现单例注册表的特殊方式实现单例模式。Spring实现单例的核心代码如下：
 
 ```java
 // 通过ConcurrentHashMap（线程安全）实现单例注册表
@@ -246,9 +245,7 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 **单例Bean存在线程安全问题吗？**
 
-大部分时候我们并没有在项目中使用多线程，所以很少有人会关注这个问题。单例Bean存在线程问题，主要是因为当多个线程操作同一个对象的时候是存在资源竞争的。
-
-常见的有两种解决办法：
+大部分时候我们并没有在项目中使用多线程，所以很少有人会关注这个问题。单例Bean存在线程问题，主要是因为当多个线程操作同一个对象的时候是存在资源竞争的。常见的有两种解决办法：
 
 1. 在Bean中尽量避免定义可变的成员变量。
 2. 在类中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在ThreadLocal中（推荐的一种方式）。
@@ -259,23 +256,15 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 **代理模式在AOP中的应用**
 
-**AOP(Aspect-Oriented Programming，面向切面编程)** 能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
-
-**Spring AOP就是基于动态代理的**，如果要代理的对象，实现了某个接口，那么Spring AOP会使用**JDKProxy**去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用**Cglib**生成一个被代理对象的子类来作为代理，如下图所示：
+**AOP(Aspect-Oriented Programming，面向切面编程)** 能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。**Spring AOP就是基于动态代理的**，如果要代理的对象，实现了某个接口，那么Spring AOP会使用**JDKProxy**去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用**Cglib**生成一个被代理对象的子类来作为代理，如下图所示：
 
 ![SpringAOPProcess](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg)
 
-当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。
-
-使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。
+当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。
 
 ### Spring AOP和AspectJ AOP有什么区别?
 
-**Spring AOP属于运行时增强，而AspectJ是编译时增强**。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。
-
-Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，
-
-如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。
+**Spring AOP属于运行时增强，而AspectJ是编译时增强**。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。
 
 ### 模板方法
 
@@ -424,11 +413,7 @@ public class DemoPublisher {
 
 #### Spring AOP中的适配器模式
 
-我们知道Spring AOP的实现是基于代理模式，但是Spring AOP的增强或通知(Advice)使用到了适配器模式，与之相关的接口是AdvisorAdapter。
-
-Advice常用的类型有：BeforeAdvice（目标方法调用前,前置通知）、AfterAdvice（目标方法调用后,后置通知）、AfterReturningAdvice(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:MethodBeforeAdviceInterceptor、AfterReturningAdviceInterceptor、ThrowsAdviceInterceptor等等。
-
-Spring预定义的通知要通过对应的适配器，适配成MethodInterceptor接口(方法拦截器)类型的对象（如：MethodBeforeAdviceAdapter通过调用getInterceptor方法，将MethodBeforeAdvice适配成MethodBeforeAdviceInterceptor）。
+我们知道Spring AOP的实现是基于代理模式，但是Spring AOP的增强或通知(Advice)使用到了适配器模式，与之相关的接口是AdvisorAdapter。Advice常用的类型有：BeforeAdvice（目标方法调用前,前置通知）、AfterAdvice（目标方法调用后,后置通知）、AfterReturningAdvice(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:MethodBeforeAdviceInterceptor、AfterReturningAdviceInterceptor、ThrowsAdviceInterceptor等等。Spring预定义的通知要通过对应的适配器，适配成MethodInterceptor接口(方法拦截器)类型的对象（如：MethodBeforeAdviceAdapter通过调用getInterceptor方法，将MethodBeforeAdvice适配成MethodBeforeAdviceInterceptor）。
 
 #### Spring MVC中的适配器模式
 
@@ -497,13 +482,13 @@ Spring框架中用到了哪些设计模式？
 ### 组件
 
 **Handle**:Handler是一个Controller的对象和请求方式的组合的一个Object对象
-**HandleExcutionChains**是HandleMapping返回的一个处理执行链，它是对Handle的二次封装，将拦截器关联到一起。然后，在DispatcherServlert中完成了拦截器链对handler的过滤。**DispatcherServlet**要将一个请求交给哪个特定的Controller，它需要咨询一个Bean——这个Bean为“HandlerMapping”。HandlerMapping是把一个URL指定到一个Controller上，（就像应用系统的web.xml文件使用<servlet-mapping\>将URL映射到servlet）。
+**HandleExcutionChains**：是HandleMapping返回的一个处理执行链，它是对Handle的二次封装，将拦截器关联到一起。然后，在DispatcherServlert中完成了拦截器链对handler的过滤。**DispatcherServlet**要将一个请求交给哪个特定的Controller，它需要咨询一个Bean——这个Bean为“HandlerMapping”。HandlerMapping是把一个URL指定到一个Controller上，（就像应用系统的web.xml文件使用<servlet-mapping\>将URL映射到servlet）。
 **DispatcherServlet**：作为前端控制器，整个流程控制的中心，控制其它组件执行，统一调度，降低组件之间的耦合性，提高每个组件的扩展性。
 作用：接收请求，响应结果，相当于转发器，中央处理器。有了dispatcherServlet减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请,dispatcherServlet的存在降低了组件之间的耦合性
-**HandlerMapping**:通过扩展处理器映射器实现不同的映射方式，作用:根据请求的url查找Handler,HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等
-**HandlAdapter**:通过扩展处理器适配器，支持更多类型的处理器。
+**HandlerMapping**：通过扩展处理器映射器实现不同的映射方式，作用:根据请求的url查找Handler,HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等
+**HandlAdapter**：通过扩展处理器适配器，支持更多类型的处理器。
 作用：按照特定规则（HandlerAdapter要求的规则）去执行Handler，通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。
-**ViewResolver**:通过扩展视图解析器，支持更多类型的视图解析，例如：jsp、freemarker、pdf、excel等。作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）
+**ViewResolver**：通过扩展视图解析器，支持更多类型的视图解析，例如：jsp、freemarker、pdf、excel等。作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）
 作用：View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。springmvc框架提供了很多的View视图类型，包括：jstlView、freemarkerView、pdfView等。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由工程师根据业务需求开发具体的页面。
 
 ### DispatcherServlet的工作流程
@@ -562,43 +547,35 @@ View：视图，即展示给用户的界面，视图中通常需要标签语言�
 
 ## [Spring Boot](https://github.com/xmxe/springboot)
 
-**配置文件默认的查找路径如下：**
-
-1. file:./config/
-2. file:./
-3. classpath:/config/
-4. classpath:/
-配置⽂件名可以通过spring.config.name修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖
-
-spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:spring.config.location
+**配置文件默认的查找路径如下**：
+```
+file:./config/
+file:./
+classpath:/config/
+classpath:/
+```
+配置⽂件名可以通过`spring.config.name`修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:`spring.config.location`
 
 ```shell
 $ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/override.properties.
 ```
 这样不会去默认位置加载配置⽂件，⽽是加载类路径下default.properties和override.properties的⽂件，override.properties中的同名配置会覆盖default.properties,如果指定的路径是以/结尾则是⽬录配置，会去⽬录下找配置⽂件。
 
-[如何不重新编译让Spring Boot配置文件生效](https://mp.weixin.qq.com/s/pNAU_w6RQIjzxfaadjV_pA)
+> [如何不重新编译让Spring Boot配置文件生效](https://mp.weixin.qq.com/s/pNAU_w6RQIjzxfaadjV_pA)
 
 **特定配置**
 在开发、测试、发布过程中，这三个场景⽐较固定，通常会定义三份不同的配置application-{profile}.yml，在使⽤时通过profile参数来切换。applicaiton-dev.yml，applicaiton-test.yml，applicaiton-prd.yml启动时，通过指定spring.profiles.active参数来切换配置⽂件
 
-springboot项⽬启动的时候可以直接使⽤java jar xxxjar这样。下⾯说说参数的⼀些讲究
-1. -DpropName=propValue的形式携带，要放在-jar参数前⾯
-java -Dxxx=test -DprocessType=1 -jar xxx.jar
-取值:System.getProperty("propName")
-2. 参数直接跟在命令后⾯
-java -jar xxx jar processType=1 processType2=2
-取值:参数就是jar包⾥主启动类中main⽅法的args参数，按顺序来
-3. springboot的⽅式，--key=value⽅式
-java -jar xxx.jar --xxx=test
-取值:spring的@value("$(xxx)”)
+springboot项⽬启动的时候可以直接使⽤java -jar xxxjar这样。
+1. -DpropName=propValue的形式携带，要放在-jar参数前⾯,`java -Dxxx=test -DprocessType=1 -jar xxx.jar`,取值:System.getProperty("propName")
+2. 参数直接跟在命令后⾯,`java -jar xxx jar processType=1 processType2=2`,取值:参数就是jar包⾥主启动类中main⽅法的args参数，按顺序来
+3. springboot的⽅式，--key=value⽅式,`java -jar xxx.jar --xxx=test`,取值:spring的@value("$(xxx)”)
+
 区别：
-⼀、-D参数为jvm参数，项⽬启动完后可通过System.getProperty("nacos.standalone")进⾏读取
-也可以通过这个⽅式Integer.getInteger("nacos.http.timeout",5000);获取jvm参数
-⼆、--参数，是通过main的args传⼊进去的
-args参数最后会放⼊env环境变量⾥，所以配置bean（@ConfigurationProperties被注解修饰的）的配置值也被覆盖。
-spring boot修改配置参数时命令行优先级最高,其次环境变量,最后是配置文件
-使用命令行时--优先级最高,其次是-D(VM options)
+
+1. -D参数为jvm参数，项⽬启动完后可通过`System.getProperty("nacos.standalone")`进⾏读取,也可以通过这个⽅式`Integer.getInteger("nacos.http.timeout",5000);`获取jvm参数
+2. --参数，是通过main的args传⼊进去的，args参数最后会放⼊env环境变量⾥，所以配置bean（@ConfigurationProperties被注解修饰的）的配置值也被覆盖。
+3. spring boot修改配置参数时命令行优先级最高,其次环境变量,最后是配置文件，使用命令行时--优先级最高,其次是-D(VM options)
 
 **@Value失效的情况**
 1. 使用static或final修饰
@@ -618,8 +595,7 @@ environmen.getProperty("propName")
 Springboot中默认的静态资源路径有4个，分别是：
 ```
 classpath:/METAINF/resources/，classpath:/resources/，classpath:/static/，classpath:/public/
-优先级顺序为：META-INF/resources>resources>static>public
-
+优先级顺序为:META-INF/resources>resources>static>public
 ```
 
 
@@ -656,7 +632,7 @@ Spring 3.0.x中使用了<mvc:annotation-driven />后，默认会帮我们注册�
 在自动注入的时候更是经常使用，所以如果总是需要按照传统的方式一条一条配置显得有些繁琐和没有必要，于是spring给我们提供<context:annotation-config />的简化配置方式，自动帮你完成声明。
 
 ### <context:component-scan base-package=”XX.XX”/>
-该配置项其实也包含了自动注入上述processor的功能，因此**当使用<context:component-scan />后，就可以将<context:annotation-config />移除了。**
+该配置项其实也包含了自动注入上述processor的功能，因此**当使用<context:component-scan />后，就可以将<context:annotation-config />移除了**。
 <context:annotation-config />：仅能够在已经在已经注册过的bean上面起作用。对于没有在spring容器中注册的bean，它并不能执行任何操作。
 <context:component-scan base-package="XX.XX"/>除了具有上面的功能之外，还具有自动将带有@component,@service,@Repository等注解的对象注册到spring容器中的功能。
 如果同时使用这两个配置会不会出现重复注入的情况呢？
@@ -684,7 +660,6 @@ Spring 3.0.x中使用了<mvc:annotation-driven />后，默认会帮我们注册�
             <bean class="com.liyao.pre.UserIdArgumentResolver"/>
         </mvc:argument-resolvers>
   </mvc:annotation-driven>
-
 ```
 
 ### 属性文件读取
@@ -701,10 +676,7 @@ Spring 3.0.x中使用了<mvc:annotation-driven />后，默认会帮我们注册�
 </bean>
 ```
 ### 有关classpath和classpath\*
-Spring可以通过指定classpath\*:或classpath:前缀加路径的方式从classpath下加载文件。
-classpath\*:可以从多个jar文件中加载相同的文件。
-classpath:只能加载找到的第一个文件。
-而使用classpath加载一般的优先级为：当前classes > jar包中的classes
+Spring可以通过指定classpath\*:或classpath:前缀加路径的方式从classpath下加载文件。**classpath\*:可以从多个jar文件中加载相同的文件。classpath:只能加载找到的第一个文件。**而使用classpath加载一般的优先级为：当前classes > jar包中的classes
 
 ### 自定义消息转换器
 ```xml

@@ -20,9 +20,7 @@ Clojure（Lisp语言的一种方言）、Groovy、Scala等语言都是运行在J
 
 ### Class文件结构总结
 
-根据Java虚拟机规范，Class文件通过ClassFile定义，有点类似C语言的结构体。
-
-ClassFile的结构如下：
+根据Java虚拟机规范，Class文件通过ClassFile定义，有点类似C语言的结构体。ClassFile的结构如下：
 
 ```java
 ClassFile {
@@ -53,15 +51,13 @@ ClassFile {
 
 ![img](https://oss.javaguide.cn/java-guide-blog/image-20210401170711475.png)
 
-使用jclasslib不光可以直观地查看某个类对应的字节码文件，还可以查看类的基本信息、常量池、接口、属性、函数等信息。
-
-下面详细介绍一下Class文件结构涉及到的一些组件。
+使用jclasslib不光可以直观地查看某个类对应的字节码文件，还可以查看类的基本信息、常量池、接口、属性、函数等信息。下面详细介绍一下Class文件结构涉及到的一些组件。
 
 #### 魔数（MagicNumber）
 
 
 ```java
-    u4             magic; //Class文件的标志
+u4             magic; //Class文件的标志
 ```
 
 每个Class文件的头4个字节称为魔数（MagicNumber）,它的唯一作用是**确定这个文件是否为一个能被虚拟机接收的Class文件**。
@@ -72,24 +68,20 @@ ClassFile {
 
 
 ```java
-    u2             minor_version;//Class的小版本号
-    u2             major_version;//Class的大版本号
+u2             minor_version;//Class的小版本号
+u2             major_version;//Class的大版本号
 ```
 
-紧接着魔数的四个字节存储的是Class文件的版本号：第5和第6位是**次版本号**，第7和第8位是**主版本号**。
-
-每当Java发布大版本（比如Java8，Java9）的时候，主版本号都会加1。你可以使用`javap -v`命令来快速查看Class文件的版本号信息。
-
-高版本的Java虚拟机可以执行低版本编译器生成的Class文件，但是低版本的Java虚拟机不能执行高版本编译器生成的Class文件。所以，我们在实际开发的时候要确保开发的的JDK版本和生产环境的JDK版本保持一致。
+紧接着魔数的四个字节存储的是Class文件的版本号：第5和第6位是次版本号，第7和第8位是主版本号。每当Java发布大版本（比如Java8，Java9）的时候，主版本号都会加1。你可以使用`javap -v`命令来快速查看Class文件的版本号信息。高版本的Java虚拟机可以执行低版本编译器生成的Class文件，但是低版本的Java虚拟机不能执行高版本编译器生成的Class文件。所以，我们在实际开发的时候要确保开发的的JDK版本和生产环境的JDK版本保持一致。
 
 #### 常量池（Constant Pool）
 
 ```java
-    u2             constant_pool_count;//常量池的数量
-    cp_info        constant_pool[constant_pool_count-1];//常量池
+u2             constant_pool_count;//常量池的数量
+cp_info        constant_pool[constant_pool_count-1];//常量池
 ```
 
-紧接着主次版本号之后的是常量池，常量池的数量是`constant_pool_count-1`（**常量池计数器是从1开始计数的，将第0项常量空出来是有特殊考虑的，索引值为0代表“不引用任何一个常量池项”**）。
+紧接着主次版本号之后的是常量池，常量池的数量是`constant_pool_count-1`（常量池计数器是从1开始计数的，将第0项常量空出来是有特殊考虑的，索引值为0代表“不引用任何一个常量池项”）。
 
 常量池主要存放两大常量：字面量和符号引用。字面量比较接近于Java语言层面的的常量概念，如文本字符串、声明为final的常量值等。而符号引用则属于编译原理方面的概念。包括下面三类常量：
 
@@ -97,7 +89,7 @@ ClassFile {
 - 字段的名称和描述符
 - 方法的名称和描述符
 
-常量池中每一项常量都是一个表，这14种表有一个共同的特点：**开始的第一位是一个u1类型的标志位-tag来标识常量的类型，代表当前这个常量属于哪种常量类型．**
+常量池中每一项常量都是一个表，这14种表有一个共同的特点：开始的第一位是一个u1类型的标志位-tag来标识常量的类型，代表当前这个常量属于哪种常量类型。
 
 |               类型               | 标志（tag） |          描述          |
 | :------------------------------: | :---------: | :--------------------: |
@@ -122,7 +114,7 @@ ClassFile {
 
 
 ```java
-    u2             access_flags;//Class的访问标记
+u2             access_flags;//Class的访问标记
 ```
 
 在常量池结束之后，紧接着的两个字节代表访问标志，这个标志用于识别一些类或者接口层次的访问信息，包括：这个Class是类还是接口，是否为public或者abstract类型，如果是类的话是否声明为final等等。
@@ -147,23 +139,19 @@ public class Employee {
 #### 当前类（This Class）、父类（Super Class）、接口（Interfaces）索引集合
 
 ```java
-    u2             this_class;//当前类
-    u2             super_class;//父类
-    u2             interfaces_count;//接口
-    u2             interfaces[interfaces_count];//一个类可以实现多个接口
+u2             this_class;//当前类
+u2             super_class;//父类
+u2             interfaces_count;//接口
+u2             interfaces[interfaces_count];//一个类可以实现多个接口
 ```
 
-Java类的继承关系由类索引、父类索引和接口索引集合三项确定。类索引、父类索引和接口索引集合按照顺序排在访问标志之后，
-
-类索引用于确定这个类的全限定名，父类索引用于确定这个类的父类的全限定名，由于Java语言的单继承，所以父类索引只有一个，除了`java.lang.Object`之外，所有的Java类都有父类，因此除了`java.lang.Object`外，所有Java类的父类索引都不为0。
-
-接口索引集合用来描述这个类实现了那些接口，这些被实现的接口将按`implements`(如果这个类本身是接口的话则是`extends`)后的接口顺序从左到右排列在接口索引集合中。
+Java类的继承关系由类索引、父类索引和接口索引集合三项确定。类索引、父类索引和接口索引集合按照顺序排在访问标志之后，类索引用于确定这个类的全限定名，父类索引用于确定这个类的父类的全限定名，由于Java语言的单继承，所以父类索引只有一个，除了`java.lang.Object`之外，所有的Java类都有父类，因此除了`java.lang.Object`外，所有Java类的父类索引都不为0。接口索引集合用来描述这个类实现了那些接口，这些被实现的接口将按`implements`(如果这个类本身是接口的话则是`extends`)后的接口顺序从左到右排列在接口索引集合中。
 
 #### 字段表集合（Fields）
 
 ```java
-    u2             fields_count;//Class文件的字段的个数
-    field_info     fields[fields_count];//一个类会可以有个字段
+u2             fields_count;//Class文件的字段的个数
+field_info     fields[fields_count];//一个类会可以有个字段
 ```
 
 字段表（field info）用于描述接口或类中声明的变量。字段包括类级变量以及实例变量，但不包括在方法内部声明的局部变量。
@@ -187,8 +175,8 @@ Java类的继承关系由类索引、父类索引和接口索引集合三项确�
 #### 方法表集合（Methods）
 
 ```java
-    u2             methods_count;//Class文件的方法的数量
-    method_info    methods[methods_count];//一个类可以有个多个方法
+u2             methods_count;//Class文件的方法的数量
+method_info    methods[methods_count];//一个类可以有个多个方法
 ```
 
 methods_count表示方法的数量，而method_info表示方法表。
@@ -209,15 +197,13 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 
 
 ```java
-   u2             attributes_count;//此类的属性表中的属性数
-   attribute_info attributes[attributes_count];//属性表集合
+u2             attributes_count;//此类的属性表中的属性数
+attribute_info attributes[attributes_count];//属性表集合
 ```
 
 在Class文件，字段表，方法表中都可以携带自己的属性表集合，以用于描述某些场景专有的信息。与Class文件中其它的数据项目要求的顺序、长度和内容不同，属性表集合的限制稍微宽松一些，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写入自己定义的属性信息，Java虚拟机运行时会忽略掉它不认识的属性
 
 > [原文链接](https://javaguide.cn/java/jvm/class-file-structure.html)
-
-
 
 ## 类加载过程详解
 
@@ -232,13 +218,13 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 
 ### 类加载过程
 
-**Class文件需要加载到虚拟机中之后才能运行和使用，那么虚拟机是如何加载这些Class文件呢？**
+Class文件需要加载到虚拟机中之后才能运行和使用，那么虚拟机是如何加载这些Class文件呢？
 
 系统加载Class类型的文件主要三步：**加载->连接->初始化**。连接过程又可分为三步：**验证->准备->解析**。
 
 ![类加载过程](https://oss.javaguide.cn/github/javaguide/java/jvm/class-loading-procedure.png)
 
-详见[Java Virtual Machine Specification - 5.3. Creation and Loading](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.3)。
+> 详见[Java Virtual Machine Specification - 5.3. Creation and Loading](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.3)。
 
 #### 加载
 
@@ -254,21 +240,13 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 
 > 类加载器、双亲委派模型也是非常重要的知识点，这部分内容在[类加载器详解](https://javaguide.cn/java/jvm/classloader.html)这篇文章中有详细介绍到
 
-每个Java类都有一个引用指向加载它的ClassLoader。不过，数组类不是通过ClassLoader创建的，而是JVM在需要的时候自动创建的，数组类通过getClassLoader()方法获取ClassLoader的时候和该数组的元素类型的ClassLoader是一致的。
-
-一个非数组类的加载阶段（加载阶段获取类的二进制字节流的动作）是可控性最强的阶段，这一步我们可以去完成还可以自定义类加载器去控制字节流的获取方式（重写一个类加载器的loadClass()方法）。
-
-加载阶段与连接阶段的部分动作(如一部分字节码文件格式验证动作)是交叉进行的，加载阶段尚未结束，连接阶段可能就已经开始了。
+每个Java类都有一个引用指向加载它的ClassLoader。不过，数组类不是通过ClassLoader创建的，而是JVM在需要的时候自动创建的，数组类通过getClassLoader()方法获取ClassLoader的时候和该数组的元素类型的ClassLoader是一致的。一个非数组类的加载阶段（加载阶段获取类的二进制字节流的动作）是可控性最强的阶段，这一步我们可以去完成还可以自定义类加载器去控制字节流的获取方式（重写一个类加载器的loadClass()方法）。加载阶段与连接阶段的部分动作(如一部分字节码文件格式验证动作)是交叉进行的，加载阶段尚未结束，连接阶段可能就已经开始了。
 
 #### 验证
 
 **验证是连接阶段的第一步，这一阶段的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求，保证这些信息被当作代码运行后不会危害虚拟机自身的安全。**
 
-验证阶段这一步在整个类加载过程中耗费的资源还是相对较多的，但很有必要，可以有效防止恶意代码的执行。任何时候，程序安全都是第一位。
-
-不过，验证阶段也不是必须要执行的阶段。如果程序运行的全部代码(包括自己编写的、第三方包中的、从外部加载的、动态生成的等所有代码)都已经被反复使用和验证过，在生产环境的实施阶段就可以考虑使用`-Xverify:none`参数来关闭大部分的类验证措施，以缩短虚拟机类加载的时间。
-
-验证阶段主要由四个检验阶段组成：
+验证阶段这一步在整个类加载过程中耗费的资源还是相对较多的，但很有必要，可以有效防止恶意代码的执行。任何时候，程序安全都是第一位。不过，验证阶段也不是必须要执行的阶段。如果程序运行的全部代码(包括自己编写的、第三方包中的、从外部加载的、动态生成的等所有代码)都已经被反复使用和验证过，在生产环境的实施阶段就可以考虑使用`-Xverify:none`参数来关闭大部分的类验证措施，以缩短虚拟机类加载的时间。验证阶段主要由四个检验阶段组成：
 
 1. 文件格式验证（Class文件格式检查）
 2. 元数据验证（字节码语义检查）
@@ -283,9 +261,7 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 >
 > 关于方法区的详细介绍，推荐阅读[Java内存区域详解](https://javaguide.cn/java/jvm/memory-area.html)这篇文章。
 
-符号引用验证发生在类加载过程中的解析阶段，具体点说是JVM将符号引用转化为直接引用的时候（解析阶段会介绍符号引用和直接引用）。
-
-符号引用验证的主要目的是确保解析阶段能正常执行，如果无法通过符号引用验证，JVM会抛出异常，比如：
+符号引用验证发生在类加载过程中的解析阶段，具体点说是JVM将符号引用转化为直接引用的时候（解析阶段会介绍符号引用和直接引用）。符号引用验证的主要目的是确保解析阶段能正常执行，如果无法通过符号引用验证，JVM会抛出异常，比如：
 
 - java.lang.IllegalAccessError：当类试图访问或修改它没有权限访问的字段，或调用它没有权限访问的方法时，抛出该异常。
 - java.lang.NoSuchFieldError：当类试图访问或修改一个指定的对象字段，而该对象不再包含该字段时，抛出该异常。
@@ -297,7 +273,11 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 **准备阶段是正式为类变量分配内存并设置类变量初始值的阶段**，这些内存都将在方法区中分配。对于该阶段有以下几点需要注意：
 
 1. 这时候进行内存分配的仅包括类变量（ClassVariables，即静态变量，被static关键字修饰的变量，只与类相关，因此被称为类变量），而不包括实例变量。实例变量会在对象实例化时随着对象一块分配在Java堆中。
-2. 从概念上讲，类变量所使用的内存都应当在**方法区**中进行分配。不过有一点需要注意的是：JDK7之前，HotSpot使用永久代来实现方法区的时候，实现是完全符合这种逻辑概念的。而在JDK7及之后，HotSpot已经把原本放在永久代的字符串常量池、静态变量等移动到堆中，这个时候类变量则会随着Class对象一起存放在Java堆中。相关阅读：[《深入理解Java虚拟机（第3版）》勘误#75](https://github.com/fenixsoft/jvm_book/issues/75)
+
+2. 从概念上讲，类变量所使用的内存都应当在**方法区**中进行分配。不过有一点需要注意的是：JDK7之前，HotSpot使用永久代来实现方法区的时候，实现是完全符合这种逻辑概念的。而在JDK7及之后，HotSpot已经把原本放在永久代的字符串常量池、静态变量等移动到堆中，这个时候类变量则会随着Class对象一起存放在Java堆中。
+
+   > 相关阅读：[《深入理解Java虚拟机（第3版）》勘误#75](https://github.com/fenixsoft/jvm_book/issues/75)
+
 3. 这里所设置的初始值"通常情况"下是数据类型默认的零值（如0、0L、null、false等），比如我们定义了publicstaticintvalue=111，那么value变量在准备阶段的初始值就是0而不是111（初始化阶段才会赋值）。特殊情况：比如给value变量加上了final关键字`public static final int value=111`，那么准备阶段value的值就被赋值为111。
 
 **基本数据类型的零值**：(图片来自《深入理解Java虚拟机》第3版7.33)
@@ -318,7 +298,7 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 
 #### 初始化
 
-**初始化阶段是执行初始化方法<clinit\>()方法的过程，是类加载的最后一步，这一步JVM才开始真正执行类中定义的Java程序代码(字节码)。**
+**初始化阶段是执行初始化方法<clinit\>()方法的过程，是类加载的最后一步，这一步JVM才开始真正执行类中定义的Java程序代码(字节码)**。
 
 > 说明：<clinit\>()方法是编译之后自动生成的。
 
@@ -337,7 +317,7 @@ Class文件存储格式中对方法的描述与对字段的描述几乎采用了
 3. 初始化一个类，如果其父类还未初始化，则先触发该父类的初始化。
 4. 当虚拟机启动时，用户需要定义一个要执行的主类(包含main方法的那个类)，虚拟机会先初始化这个类。
 5. MethodHandle和VarHandle可以看作是轻量级的反射调用机制，而要想使用这2个调用，就必须先使用findStaticVarHandle来初始化要调用的类。
-6. **补充，来自[issue745](https://github.com/Snailclimb/JavaGuide/issues/745)** 当一个接口中定义了JDK8新加入的默认方法（被default关键字修饰的接口方法）时，如果有这个接口的实现类发生了初始化，那该接口要在其之前被初始化。
+6. 补充，来自[issue745](https://github.com/Snailclimb/JavaGuide/issues/745) 当一个接口中定义了JDK8新加入的默认方法（被default关键字修饰的接口方法）时，如果有这个接口的实现类发生了初始化，那该接口要在其之前被初始化。
 
 
 ##### 类的引用（主动引用，一定会初始化）
@@ -377,8 +357,6 @@ Java在new一个对象的时候，会先查看对象所属的类有没有被加�
 - [自己手写一个热加载～](https://mp.weixin.qq.com/s/dZA3UJqfqK76zwJdhMa14g)
 - [六种方法创建Java对象](https://mp.weixin.qq.com/s/2ZDNDvJeB-WG5t3uWXvn4Q)
 - [JVM是如何加载Java类的？](https://mp.weixin.qq.com/s/1AXWlNXz6OG3OCyZiFU2yA)
-- [我竟然被“双亲委派”给虐了](https://mp.weixin.qq.com/s/Q0MqcvbeI7gAcJH5ZaQWgA)
-- [谈谈你对双亲委派机制的理解？如何打破？为啥双亲委派？](https://mp.weixin.qq.com/s/B8agHIyGTU3pLjO7UtI-Tg)
 - [IDEA的debug调试为什么这么强？我挖出了背后的技术。](https://mp.weixin.qq.com/s/JIt5WCBtdHHORjeOmX5KaA)
 - [Class类文件的结构](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494349&amp;idx=1&amp;sn=3a297393ea4a38af4fd277f4fc83c284&amp;source=41#wechat_redirect)
 - [一把小刀，直插class文件的小心脏](https://mp.weixin.qq.com/s/mNDWN2P1mOBL8C5qLtXG8A)
@@ -400,8 +378,6 @@ Java在new一个对象的时候，会先查看对象所属的类有没有被加�
 只要想通一点就好了，JDK自带的BootstrapClassLoader,ExtClassLoader,AppClassLoader负责加载JDK提供的类，所以它们(类加载器的实例)肯定不会被回收。而我们自定义的类加载器的实例是可以被回收的，所以使用我们自定义加载器加载的类是可以被卸载掉的
 
 > [原文链接](https://javaguide.cn/java/jvm/class-loading-process.html)
-
-
 
 ## 类加载器详解
 
@@ -459,17 +435,11 @@ class Class<T> {
 }
 ```
 
-简单来说，**类加载器的主要作用就是加载Java类的字节码（.class文件）到JVM中（在内存中生成一个代表该类的Class对象）**。字节码可以是Java源程序（.java文件）经过javac编译得来，也可以是通过工具动态生成或者通过网络下载得来。
-
-其实除了加载类之外，类加载器还可以加载Java应用所需的资源如文本、图像、配置文件、视频等等文件资源。本文只讨论其核心功能：加载类。
+简单来说，**类加载器的主要作用就是加载Java类的字节码（.class文件）到JVM中（在内存中生成一个代表该类的Class对象）**。字节码可以是Java源程序（.java文件）经过javac编译得来，也可以是通过工具动态生成或者通过网络下载得来。其实除了加载类之外，类加载器还可以加载Java应用所需的资源如文本、图像、配置文件、视频等等文件资源。本文只讨论其核心功能：加载类。
 
 #### 类加载器加载规则
 
-JVM启动的时候，并不会一次性加载所有的类，而是根据需要去动态加载。也就是说，大部分类在具体用到的时候才会去加载，这样对内存更加友好。
-
-对于已经加载的类会被放在ClassLoader中。在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。也就是说，对于一个类加载器来说，相同二进制名称的类只会被加载一次。
-
-
+JVM启动的时候，并不会一次性加载所有的类，而是根据需要去动态加载。也就是说，大部分类在具体用到的时候才会去加载，这样对内存更加友好。对于已经加载的类会被放在ClassLoader中。在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。也就是说，对于一个类加载器来说，相同二进制名称的类只会被加载一次。
 
 ```java
 public abstract class ClassLoader {
@@ -502,9 +472,7 @@ JVM中内置了三个重要的ClassLoader：
 
 ![类加载器层次关系图](https://oss.javaguide.cn/github/javaguide/java/jvm/class-loader-parents-delegation-model.png)
 
-除了BootstrapClassLoader是JVM自身的一部分之外，其他所有的类加载器都是在JVM外部实现的，并且全都继承自ClassLoader抽象类。这样做的好处是用户可以自定义类加载器，以便让应用程序自己决定如何去获取所需的类。
-
-每个ClassLoader可以通过getParent()获取其父ClassLoader，如果获取到ClassLoader为null的话，那么该类是通过BootstrapClassLoader加载的。
+除了BootstrapClassLoader是JVM自身的一部分之外，其他所有的类加载器都是在JVM外部实现的，并且全都继承自ClassLoader抽象类。这样做的好处是用户可以自定义类加载器，以便让应用程序自己决定如何去获取所需的类。每个ClassLoader可以通过getParent()获取其父ClassLoader，如果获取到ClassLoader为null的话，那么该类是通过BootstrapClassLoader加载的。
 
 
 ```java
@@ -523,8 +491,6 @@ public abstract class ClassLoader {
 **为什么获取到ClassLoader为null就是BootstrapClassLoader加载的呢**？这是因为BootstrapClassLoader由C++实现，由于这个C++实现的类加载器在Java中是没有与之对应的类的，所以拿到的结果是null。
 
 下面我们来看一个获取ClassLoader的小案例：
-
-
 
 ```java
 public class PrintClassLoaderTree {
@@ -551,8 +517,6 @@ public class PrintClassLoaderTree {
 
 输出结果(JDK 8)：
 
-
-
 ```text
 |--sun.misc.Launcher$AppClassLoader@18b4aac2
     |--sun.misc.Launcher$ExtClassLoader@53bd815b
@@ -567,11 +531,9 @@ public class PrintClassLoaderTree {
 
 #### 自定义类加载器
 
-我们前面也说说了，除了BootstrapClassLoader其他类加载器均由Java实现且全部继承自java.lang.ClassLoader。如果我们要自定义自己的类加载器，很明显需要继承ClassLoader抽象类。
+我们前面也说说了，除了BootstrapClassLoader其他类加载器均由Java实现且全部继承自java.lang.ClassLoader。如果我们要自定义自己的类加载器，很明显需要继承ClassLoader抽象类。ClassLoader类有两个关键的方法：
 
-ClassLoader类有两个关键的方法：
-
-- protectedClassloadClass(Stringname,booleanresolve)：加载指定二进制名称的类，实现了双亲委派机制。name为类的二进制名称，resove如果为true，在加载时调用resolveClass(Class<?>c)方法解析该类。
+- protectedClassloadClass(Stringname,booleanresolve)：加载指定二进制名称的类，实现了双亲委派机制。name为类的二进制名称，resove如果为true，在加载时调用`resolveClass(Class<?>c)`方法解析该类。
 - protectedClassfindClass(Stringname)：根据类的二进制名称来查找类，默认实现是空方法。
 
 官方API文档中写到：
@@ -612,8 +574,6 @@ ClassLoader类有两个关键的方法：
 
 另外，类加载器之间的父子关系一般不是以继承的关系来实现的，而是通常使用组合关系来复用父加载器的代码。
 
-
-
 ```java
 public abstract class ClassLoader {
   ...
@@ -626,13 +586,11 @@ public abstract class ClassLoader {
 }
 ```
 
-在面向对象编程中，有一条非常经典的设计原则：**组合优于继承，多用组合少用继承。**
+在面向对象编程中，有一条非常经典的设计原则：**组合优于继承，多用组合少用继承**。
 
 #### 双亲委派模型的执行流程
 
 双亲委派模型的实现代码非常简单，逻辑非常清晰，都集中在java.lang.ClassLoader的loadClass()中，相关代码如下所示。
-
-
 
 ```java
 protected Class<?> loadClass(String name, boolean resolve)
@@ -677,9 +635,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 }
 ```
 
-每当一个类加载器接收到加载请求时，它会先将请求转发给父类加载器。在父类加载器没有找到所请求的类的情况下，该类加载器才会尝试去加载。
-
-结合上面的源码，简单总结一下双亲委派模型的执行流程：
+每当一个类加载器接收到加载请求时，它会先将请求转发给父类加载器。在父类加载器没有找到所请求的类的情况下，该类加载器才会尝试去加载。结合上面的源码，简单总结一下双亲委派模型的执行流程：
 
 - 在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载（每个父类加载器都会走一遍这个流程）。
 - 类加载器在进行类加载的时候，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成（调用父加载器loadClass()方法来加载类）。这样的话，所有的请求最终都会传送到顶层的启动类加载器BootstrapClassLoader中。
@@ -699,7 +655,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 为了避免双亲委托机制，我们可以自己定义一个类加载器，然后重写loadClass()即可。
 
-**🐛修正（参见：[issue871](https://github.com/Snailclimb/JavaGuide/issues/871)）**：自定义加载器的话，需要继承ClassLoader。如果我们不想打破双亲委派模型，就重写ClassLoader类中的findClass()方法即可，无法被父类加载器加载的类最终会通过这个方法被加载。但是，如果想打破双亲委派模型则需要重写loadClass()方法。
+> **🐛修正（参见：[issue871](https://github.com/Snailclimb/JavaGuide/issues/871)）**：自定义加载器的话，需要继承ClassLoader。如果我们不想打破双亲委派模型，就重写ClassLoader类中的findClass()方法即可，无法被父类加载器加载的类最终会通过这个方法被加载。但是，如果想打破双亲委派模型则需要重写loadClass()方法。
 
 为什么是重写loadClass()方法打破双亲委派模型呢？双亲委派模型的执行流程已经解释了：
 
@@ -714,3 +670,5 @@ Tomcat的类加载器的层次结构如下：
 感兴趣的小伙伴可以自行研究一下Tomcat类加载器的层次结构，这有助于我们搞懂Tomcat隔离Web应用的原理，推荐资料是[《深入拆解Tomcat&Jetty》](http://gk.link/a/10Egr)。
 
 > [原文链接](https://javaguide.cn/java/jvm/classloader.html)
+> [我竟然被“双亲委派”给虐了](https://mp.weixin.qq.com/s/Q0MqcvbeI7gAcJH5ZaQWgA)
+> [谈谈你对双亲委派机制的理解？如何打破？为啥双亲委派？](https://mp.weixin.qq.com/s/B8agHIyGTU3pLjO7UtI-Tg)

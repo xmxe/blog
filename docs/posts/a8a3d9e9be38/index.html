@@ -533,11 +533,11 @@
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 后台执行abc.jar即便关闭终端也继续运行 不输出任何日志</span>
 <span class="token function">nohup</span> <span class="token function">java</span> <span class="token parameter variable">-jar</span> abc.jar <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="关闭ssh情况下不退出进程"><a href="#关闭ssh情况下不退出进程" class="headerlink" title="关闭ssh情况下不退出进程"></a>关闭ssh情况下不退出进程</h4><p>nohup command &amp;<br>command参数：要执行的命令行<br>但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1</p>
+<h4 id="关闭ssh情况下不退出进程"><a href="#关闭ssh情况下不退出进程" class="headerlink" title="关闭ssh情况下不退出进程"></a>关闭ssh情况下不退出进程</h4><p><strong>nohup command &amp;</strong><br>command参数：要执行的命令行<br>但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1</p>
 <p>最终命令</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> <span class="token builtin class-name">command</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>0:表示键盘输入(stdin)<br>1:表示标准输出(stdout),系统默认是1<br>2:表示错误输出(stderr)</p>
-<p>command &gt;&#x2F;dev&#x2F;null 2&gt;&amp;1 &amp; &#x3D;&#x3D; command 1&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;<br>command:表示shell命令或者为一个可执行程序<br>&gt;:表示重定向到哪里<br>&#x2F;dev&#x2F;null:表示Linux的空设备文件<br>2:表示标准错误输出<br>&amp;1:&amp;表示等同于的意思,2&gt;&amp;1,表示2的输出重定向等于于1<br>&amp;:表示后台执行,即这条指令执行在后台运行<br>1&gt;&#x2F;dev&#x2F;null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。<br>2&gt;&amp;1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。<br>这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到&#x2F;dev&#x2F;null文件,也就是清空.<br>所以可以看出”&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;”常用来避免shell命令或者程序等运行中有内容输出</p>
+<p><code>command &gt;/dev/null 2&gt;&amp;1 &amp; == command 1&gt;/dev/null 2&gt;&amp;1 &amp;</code><br>command:表示shell命令或者为一个可执行程序<br>&gt;:表示重定向到哪里<br>&#x2F;dev&#x2F;null:表示Linux的空设备文件<br>2:表示标准错误输出<br>&amp;1:&amp;表示等同于的意思,2&gt;&amp;1,表示2的输出重定向等于于1<br>&amp;:表示后台执行,即这条指令执行在后台运行<br>1&gt;&#x2F;dev&#x2F;null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。<br>2&gt;&amp;1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。<br>这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到&#x2F;dev&#x2F;null文件,也就是清空.<br>所以可以看出”&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;”常用来避免shell命令或者程序等运行中有内容输出</p>
 <h4 id="安装ifconfig"><a href="#安装ifconfig" class="headerlink" title="安装ifconfig"></a>安装ifconfig</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># centos</span>
 yum <span class="token parameter variable">-y</span> <span class="token function">install</span> net-tools
 <span class="token comment"># ubuntu</span>
@@ -649,7 +649,9 @@ yum <span class="token function">install</span> crontabs
 <span class="token builtin class-name">cd</span> /var/log
 <span class="token function">ls</span> <span class="token function">cron</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c91XWEQvr9Axcf0hjvuKgg">Linux定时任务调度(crontab)，太实用了！</a></p>
+</blockquote>
 <h4 id="修改文件所属用户和用户组"><a href="#修改文件所属用户和用户组" class="headerlink" title="修改文件所属用户和用户组"></a>修改文件所属用户和用户组</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 修改a.txt文件所属用户为jay，所属用户组为fefjay</span>
 <span class="token function">chown</span> jay:fefjay a.txt
 <span class="token comment"># 递归修改文件夹my及包含的所有子文件（夹）的所属用户和用户组</span>
@@ -663,11 +665,9 @@ yum <span class="token function">install</span> crontabs
 <span class="token function">curl</span> <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token parameter variable">-X</span> POST <span class="token parameter variable">-d</span> <span class="token string">'&#123;"abc":123,"bcd":"nihao"&#125;'</span> URL
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/angle_chen123/article/details/120675472">Linux curl命令最全详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fan-gx/p/12321351.html">curl其他参数介绍</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ryhphDFvx0ml9NrDUks2NA">堪称神器的命令行工具系列——curl</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/angle_chen123/article/details/120675472">Linux curl命令最全详解</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fan-gx/p/12321351.html">curl其他参数介绍</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ryhphDFvx0ml9NrDUks2NA">堪称神器的命令行工具系列——curl</a></p>
+</blockquote>
 <h4 id="Linux系统服务"><a href="#Linux系统服务" class="headerlink" title="Linux系统服务"></a>Linux系统服务</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 添加自定义系统服务的目录：</span>
 /lib/systemd/system <span class="token comment"># lib/systemd/system真实地址是/usr/lib/system/system地址，</span>
 /usr/lib/systemd/system/ <span class="token comment"># 软件包安装的单元</span>
@@ -708,9 +708,13 @@ yum <span class="token function">install</span> crontabs
 <span class="token function">kill</span> <span class="token parameter variable">-9</span> <span class="token variable">$pid</span>
 <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$pid</span> killed"</span>
 <span class="token function">nohup</span> <span class="token builtin class-name">command</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell.html">shell菜鸟教程</a></p>
+</blockquote>
 <h4 id="设置静态ip后无法连接外网的问题"><a href="#设置静态ip后无法连接外网的问题" class="headerlink" title="设置静态ip后无法连接外网的问题"></a>设置静态ip后无法连接外网的问题</h4><p>因为动态ip会自动分配DNS 而静态ip需要手动配置DNS<br>centos7在&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 写入DNS1&#x3D;114.114.114.114<br>ubuntu在&#x2F;etc&#x2F;resolv.conf写入nameserver 114.114.114.114</p>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/adforce/p/3363681.html">Linux配置IP地址</a></p>
+</blockquote>
 <h4 id="命令行更改MAC地址"><a href="#命令行更改MAC地址" class="headerlink" title="命令行更改MAC地址"></a>命令行更改MAC地址</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/sbin/ifconfig eth0 down
 /sbin/ifconfig eth0 hw ether 00:50:56:94:16:a8
 /sbin/ifconfig eth0 up
@@ -754,7 +758,9 @@ yum <span class="token function">install</span> crontabs
 <span class="token function">reboot</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yixius/articles/6971054.html">解决Ubuntu的root账号无法登录SSH问题</a></p>
+</blockquote>
 <h4 id="查看指定目录大小"><a href="#查看指定目录大小" class="headerlink" title="查看指定目录大小"></a>查看指定目录大小</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token parameter variable">-h</span> --max-depth<span class="token operator">=</span><span class="token number">1</span> /usr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="查看磁盘空间"><a href="#查看磁盘空间" class="headerlink" title="查看磁盘空间"></a>查看磁盘空间</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">df</span> <span class="token parameter variable">-h</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="查看内存"><a href="#查看内存" class="headerlink" title="查看内存"></a>查看内存</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">free</span> <span class="token parameter variable">-h</span>
@@ -885,7 +891,9 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa
 ssh-add ~/.ssh/id_rsa 
 <span class="token comment"># ssh A和ssh B测试ssh本机和远程是否已经免密登录（第一次免密登录需要输入密码，以后不需要）</span>
 ssh登陆 <span class="token function">ssh</span> root@ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1e4aGp_cx0E_qCHVuS3GMg">科普：什么是SSH？</a></p>
+</blockquote>
 <h4 id="centos7-x2F-ubuntu通用"><a href="#centos7-x2F-ubuntu通用" class="headerlink" title="centos7&#x2F;ubuntu通用"></a>centos7&#x2F;ubuntu通用</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认命令行</span>
 systemctl set-default multi-user.target  （init <span class="token number">3</span>）
 
@@ -932,10 +940,9 @@ quit或exit 退出当前连接，完全退出使用stop(所有客户端连接都
 
 logger --name ROOT --level debug动态修改日志级别<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<ul>
-<li><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/quick-start.html">arthas官方文档</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7RMjfIYlmskMsifnhIzxgA">学会arthas，让你3年经验掌握5年功力</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/quick-start.html">arthas官方文档</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7RMjfIYlmskMsifnhIzxgA">学会arthas，让你3年经验掌握5年功力</a></p>
+</blockquote>
 <h4 id="Linux交换空间-swap-space"><a href="#Linux交换空间-swap-space" class="headerlink" title="Linux交换空间(swap space)"></a>Linux交换空间(swap space)</h4><p>交换空间是磁盘上的一块区域，可以是一个分区，也可以是一个文件，或者是他们的组合。简单点说，当系统物理内存吃紧时，Linux会将内存中不常访问的数据保存到swap上，这样系统就有更多的物理内存为各个进程服务，而当系统需要访问swap上存储的内容时，再将swap上的数据加载到内存中，这就是我们常说的swap out和swap in</p>
 <p><strong>设置交换空间</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 在Home目录创建一个大小为16G的swap文件，块大小为1MByte，总共1K个块，也就是总共1GB</span>
@@ -996,7 +1003,9 @@ swapoff ～/swapfile
 <li>在登录时用到的第三个文件是.profile文件,每个用户都可使用该文件输入专用于自己使用的shell信息,,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件。&#x2F;etc&#x2F;bashrc:为每一个运行bash shell的用户执行此文件。当bash shell被打开时,该文件被读取。</li>
 <li>&#x2F;etc&#x2F;environment是设置整个系统的环境，而&#x2F;etc&#x2F;profile是设置所有用户的环境，前者与登录用户无关，后者与登录用户有关。<br>先执行&#x2F;etc&#x2F;enviroment，后执行&#x2F;etc&#x2F;profile</li>
 </ol>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D32FE4CS2pT89czVUv0SOg">Linux环境变量配置的6种方法</a></p>
+</blockquote>
 <h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://javaguide.cn/cs-basics/operating-system/linux-intro.html">Linux基础知识总结</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wejhjmbtS16AdlDo0JiLMA">程序员必备的150个Linux命令！</a></li>

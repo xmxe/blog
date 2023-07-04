@@ -10,15 +10,13 @@ img: https://picx.zhimg.com/v2-bf0795e2b893bbc6bc2dce1e25a34bd4_1440w.jpg
 > - [Java魔法类：Unsafe应用解析-美团技术团队-2019](https://tech.meituan.com/2019/02/14/talk-about-java-magic-class-unsafe.html)
 > - [Java双刃剑之Unsafe类详解-码农参上-2021](https://xie.infoq.cn/article/8b6ed4195e475bfb32dacc5cb)
 
-阅读过JUC源码的同学，一定会发现很多并发工具类都调用了一个叫做Unsafe的类。
-
-那这个类主要是用来干什么的呢？有什么使用场景呢？这篇文章就带你搞清楚！
+阅读过JUC源码的同学，一定会发现很多并发工具类都调用了一个叫做Unsafe的类。那这个类主要是用来干什么的呢？有什么使用场景呢？
 
 ## Unsafe介绍
 
 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
 
-另外，Unsafe提供的这些功能的实现需要依赖本地方法（Native Method）。你可以将本地方法看作是Java中使用其他编程语言编写的方法。本地方法使用**native**关键字修饰，Java代码中只是声明方法头，具体的实现则交给**本地代码**。
+另外，Unsafe提供的这些功能的实现需要依赖本地方法（Native Method）。你可以将本地方法看作是Java中使用其他编程语言编写的方法。本地方法使用**native**关键字修饰，Java代码中只是声明方法头，具体的实现则交给本地代码。
 
 ![img](https://oss.javaguide.cn/github/javaguide/java/basis/unsafe/image-20220717115231125.png)
 
@@ -63,15 +61,15 @@ Exception in thread "main" java.lang.SecurityException: Unsafe
  at com.cn.test.GetUnsafeTest.main(GetUnsafeTest.java:12)
 ```
 
-**为什么public static方法无法被直接调用呢？**
+**为什么public static方法无法被直接调用呢**？
 
 这是因为在getUnsafe方法中，会对调用者的classLoader进行检查，判断当前类是否由Bootstrap classLoader加载，如果不是的话那么就会抛出一个SecurityException异常。也就是说，只有启动类加载器加载的类才能够调用Unsafe类中的方法，来防止这些方法在不可信的代码中被调用。
 
-**为什么要对Unsafe类进行这么谨慎的使用限制呢?**
+**为什么要对Unsafe类进行这么谨慎的使用限制呢**？
 
 Unsafe提供的功能过于底层（如直接访问系统内存资源、自主管理内存资源等），安全隐患也比较大，使用不当的话，很容易出现很严重的问题。
 
-**如若想使用Unsafe这个类的话，应该如何获取其实例呢？**
+**如若想使用Unsafe这个类的话，应该如何获取其实例呢**？
 
 这里介绍两个可行的方案。
 
@@ -185,7 +183,7 @@ addr3: 2433733894944
 
 DirectByteBuffer是Java用于实现堆外内存的一个重要类，通常用在通信过程中做缓冲池，如在Netty、MINA等NIO框架中应用广泛。DirectByteBuffer对于堆外内存的创建、使用、销毁等逻辑均由Unsafe提供的堆外内存API来实现。
 
-下图为DirectByteBuffer构造函数，创建DirectByteBuffer的时候，通过Unsafe.allocateMemory分配内存、Unsafe.setMemory进行内存初始化，而后构建Cleaner对象用于跟踪DirectByteBuffer对象的垃圾回收，以实现当DirectByteBuffer被垃圾回收时，分配的堆外内存一起被释放。
+下面为DirectByteBuffer构造函数，创建DirectByteBuffer的时候，通过Unsafe.allocateMemory分配内存、Unsafe.setMemory进行内存初始化，而后构建Cleaner对象用于跟踪DirectByteBuffer对象的垃圾回收，以实现当DirectByteBuffer被垃圾回收时，分配的堆外内存一起被释放。
 
 ```java
 DirectByteBuffer(int cap) {                   // package-private
@@ -224,9 +222,7 @@ DirectByteBuffer(int cap) {                   // package-private
 
 在介绍内存屏障前，需要知道编译器和CPU会在保证程序输出结果一致的情况下，会对代码进行重排序，从指令优化角度提升性能。而指令重排序可能会带来一个不好的结果，导致CPU的高速缓存和内存中数据的不一致，而内存屏障（Memory Barrier）就是通过阻止屏障两边的指令重排序从而避免编译器和硬件的不正确优化情况。
 
-在硬件层面上，内存屏障是CPU为了防止代码进行重排序而提供的指令，不同的硬件平台上实现内存屏障的方法可能并不相同。在Java8中，引入了3个内存屏障的函数，它屏蔽了操作系统底层的差异，允许在代码中定义、并统一由JVM来生成内存屏障指令，来实现内存屏障的功能。
-
-Unsafe中提供了下面三个内存屏障相关方法：
+在硬件层面上，内存屏障是CPU为了防止代码进行重排序而提供的指令，不同的硬件平台上实现内存屏障的方法可能并不相同。在Java8中，引入了3个内存屏障的函数，它屏蔽了操作系统底层的差异，允许在代码中定义、并统一由JVM来生成内存屏障指令，来实现内存屏障的功能。Unsafe中提供了下面三个内存屏障相关方法：
 
 
 ```java
@@ -293,7 +289,7 @@ main thread end
 
 #### 典型应用
 
-在Java8中引入了一种锁的新机制——StampedLock，它可以看成是读写锁的一个改进版本。StampedLock提供了一种乐观读锁的实现，这种乐观读锁类似于无锁的操作，完全不会阻塞写线程获取写锁，从而缓解读多写少时写线程“饥饿”现象。由于StampedLock提供的乐观读锁不阻塞写线程获取读锁，当线程共享变量从主内存load到线程工作内存时，会存在数据不一致问题。
+在Java8中引入了一种锁的新机制——**StampedLock**，它可以看成是读写锁的一个改进版本。StampedLock提供了一种乐观读锁的实现，这种乐观读锁类似于无锁的操作，完全不会阻塞写线程获取写锁，从而缓解读多写少时写线程“饥饿”现象。由于StampedLock提供的乐观读锁不阻塞写线程获取读锁，当线程共享变量从主内存load到线程工作内存时，会存在数据不一致问题。
 
 为了解决这个问题，StampedLock的validate方法会通过Unsafe的loadFence方法加入一个load内存屏障。
 
@@ -621,7 +617,7 @@ falseHydra
 truenull
 ```
 
-**使用defineClass方法允许程序在运行时动态地创建一个类**
+使用defineClass方法允许程序在运行时动态地创建一个类
 
 ```java
 public native Class<?> defineClass(String name, byte[] b, int off, int len, ClassLoader loader,ProtectionDomain protectionDomain);

@@ -544,35 +544,10 @@
                 
                 
                 
-                <a href="/blog/categories/CSS/" title="CSS: 1">
-                    <!--<span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">CSS
-                        <span class="tag-length">1</span>
-                    </span>-->
-
-                    <div class="moleskine-wrapper">
-                        <div class="moleskine-notebook">
-                            <div class="chip notebook-cover center-align waves-effect waves-light
-                               chip-default "
-                                style="background-color: #F9EBEA;">
-                                <div
-                                    class="notebook-skin
-                                       chip-default ">
-                                    CSS
-                                </div>
-                            </div>
-                            <div class="notebook-page dotted"></div>
-                        </div>
-                    </div>
-                </a>
-
-                
-                
                 <a href="/blog/categories/Java/" title="Java: 18">
                     <!--<span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">Java
+                            style="background-color: #F9EBEA;">Java
                         <span class="tag-length">18</span>
                     </span>-->
 
@@ -580,7 +555,7 @@
                         <div class="moleskine-notebook">
                             <div class="chip notebook-cover center-align waves-effect waves-light
                                chip-default "
-                                style="background-color: #F5EEF8;">
+                                style="background-color: #F9EBEA;">
                                 <div
                                     class="notebook-skin
                                        chip-default ">
@@ -597,7 +572,7 @@
                 <a href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" title="技术栈: 6">
                     <!--<span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">技术栈
+                            style="background-color: #F5EEF8;">技术栈
                         <span class="tag-length">6</span>
                     </span>-->
 
@@ -605,7 +580,7 @@
                         <div class="moleskine-notebook">
                             <div class="chip notebook-cover center-align waves-effect waves-light
                                chip-default "
-                                style="background-color: #D5F5E3;">
+                                style="background-color: #F5EEF8;">
                                 <div
                                     class="notebook-skin
                                        chip-default ">
@@ -619,22 +594,22 @@
 
                 
                 
-                <a href="/blog/categories/JS/" title="JS: 3">
+                <a href="/blog/categories/CSS/" title="CSS: 1">
                     <!--<span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #E8F8F5;">JS
-                        <span class="tag-length">3</span>
+                            style="background-color: #D5F5E3;">CSS
+                        <span class="tag-length">1</span>
                     </span>-->
 
                     <div class="moleskine-wrapper">
                         <div class="moleskine-notebook">
                             <div class="chip notebook-cover center-align waves-effect waves-light
                                chip-default "
-                                style="background-color: #E8F8F5;">
+                                style="background-color: #D5F5E3;">
                                 <div
                                     class="notebook-skin
                                        chip-default ">
-                                    JS
+                                    CSS
                                 </div>
                             </div>
                             <div class="notebook-page dotted"></div>
@@ -647,7 +622,7 @@
                 <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库: 8">
                     <!--<span class="chip center-align waves-effect waves-light
                              chip-active "
-                            style="background-color: #FEF9E7;">数据库
+                            style="background-color: #E8F8F5;">数据库
                         <span class="tag-length">8</span>
                     </span>-->
 
@@ -655,11 +630,36 @@
                         <div class="moleskine-notebook">
                             <div class="chip notebook-cover center-align waves-effect waves-light
                                chip-active "
-                                style="background-color: #FEF9E7;">
+                                style="background-color: #E8F8F5;">
                                 <div
                                     class="notebook-skin
                                        chip-active ">
                                     数据库
+                                </div>
+                            </div>
+                            <div class="notebook-page dotted"></div>
+                        </div>
+                    </div>
+                </a>
+
+                
+                
+                <a href="/blog/categories/JS/" title="JS: 3">
+                    <!--<span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #FEF9E7;">JS
+                        <span class="tag-length">3</span>
+                    </span>-->
+
+                    <div class="moleskine-wrapper">
+                        <div class="moleskine-notebook">
+                            <div class="chip notebook-cover center-align waves-effect waves-light
+                               chip-default "
+                                style="background-color: #FEF9E7;">
+                                <div
+                                    class="notebook-skin
+                                       chip-default ">
+                                    JS
                                 </div>
                             </div>
                             <div class="notebook-page dotted"></div>
@@ -718,8 +718,7 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                3种常用的缓存读写策略详解下面介绍到的三种模式各有优劣，不存在最佳模式，根据具体的业务场景选择适合自己的缓存读写模式。
-Cache Aside Pattern（旁路缓存模式）Cache Aside Pattern是我们平时使用比较多的一个缓
+                                3种常用的缓存读写策略详解Cache Aside Pattern（旁路缓存模式）Cache Aside Pattern是我们平时使用比较多的一个缓存读写模式，比较适合读请求比较多的场景。Cache Aside Pattern中服务端需要同时
                             
                         </div>
                         <div class="publish-info">
@@ -884,8 +883,7 @@ delim
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                什么是事务？事务是逻辑上的一组操作，要么都执行，要么都不执行。相信大家应该都能背上面这句话了，下面我结合我们日常的真实开发来谈一谈。
-我们系统的每个业务方法可能包括了多个原子性的数据库操作，比如下面的savePerson()方法中就有两个原
+                                什么是事务？事务是逻辑上的一组操作，要么都执行，要么都不执行。我们系统的每个业务方法可能包括了多个原子性的数据库操作，比如下面的savePerson()方法中就有两个原子性的数据库操作。这些原子性的数据库操作是有依赖的，它们要么都执行，要不
                             
                         </div>
                         <div class="publish-info">
@@ -1088,8 +1086,7 @@ System:拥有DBA、Sysdb
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                sql server行转列类似MySQL group_concat()使用stuff()
-stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
+                                sql server行转列类似MySQL group_concat()使用stuff()。stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
 selec
                             
                         </div>

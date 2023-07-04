@@ -564,7 +564,7 @@
 <span class="token selector">.centered</span> <span class="token punctuation">&#123;</span>
   <span class="token comment">/* 可以给要居中的元素设置一些样式 */</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5ZSMlbjcvaMksx4zakhgzA">42种前端常用布局方案总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5ZSMlbjcvaMksx4zakhgzA">42种前端常用布局方案总结※</a></p>
 <h2 id="n个元素等比例在一行展示"><a href="#n个元素等比例在一行展示" class="headerlink" title="n个元素等比例在一行展示"></a>n个元素等比例在一行展示</h2><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>image-container<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>image1.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Image 1<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>image2.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Image 2<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
@@ -633,14 +633,20 @@
 <span class="token selector">::-webkit-scrollbar</span><span class="token punctuation">&#123;</span><span class="token property">width</span><span class="token punctuation">:</span>0 <span class="token important">!important</span> <span class="token comment">/*display:none;*/</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">文字</span><span class="token punctuation">&#123;</span>
-    <span class="token comment">/**linear-gradient：创建一个表示两种或多种颜色线性渐变的图片**/</span>
+    <span class="token comment">/*
+    linear-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个沿着一条直线方向的颜色渐变效果。linear-gradient函数的基本语法如下：background: linear-gradient(direction, color stop1, color stop2, ...);其中的参数解释如下：	
+    - direction: 表示渐变的方向，可以是角度、关键字（top、bottom、left、right、to top left、to bottom right等）以及渐变轴线（由坐标(x1,y1)和(x2,y2)确定的一条直线，可使用两个坐标的百分比表示），也可以是任意组合;
+    - color stop: 表示渐变的颜色及其所在的位置，可以定义多个颜色值，用逗号分隔。例如，color stop1可以表示位于渐变的起始点的颜色停止点，而color stop2则对应着终点的颜色停止点。
+
+    CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的效果。为了添加透明度，我们使用rgba()函数来定义颜色节点。rgba()函数中的最后一个参数可以是从0到1的值，它定义了颜色的透明度：0表示完全透明，1表示完全不透明。
+    */</span>
 	<span class="token property">background-image</span><span class="token punctuation">:</span><span class="token function">-webkit-linear-gradient</span><span class="token punctuation">(</span>bottom<span class="token punctuation">,</span>#708a41<span class="token punctuation">,</span>#8585a5<span class="token punctuation">,</span>#4b8e9a<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>top<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 100%<span class="token punctuation">,</span> .2<span class="token punctuation">)</span> 1px<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 100%<span class="token punctuation">,</span> 0<span class="token punctuation">)</span> 1px<span class="token punctuation">,</span> <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .1<span class="token punctuation">)</span> 100%<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">/*
-     * background-clip属性指定背景绘制区域。
-     * border-box默认值。背景绘制在边框方框内（剪切成边框方框）。
-     * padding-box背景绘制在衬距方框内（剪切成衬距方框）。
-     * content-box背景绘制在内容方框内（剪切成内容方框）。
+     background-clip属性指定背景绘制区域。
+       - border-box默认值。背景绘制在边框方框内（剪切成边框方框）。
+       - padding-box背景绘制在衬距方框内（剪切成衬距方框）。
+       - content-box背景绘制在内容方框内（剪切成内容方框）。
      */</span>
     <span class="token property">-webkit-background-clip</span><span class="token punctuation">:</span>text<span class="token punctuation">;</span>
     
@@ -662,59 +668,73 @@
     radial-gradient函数的基本语法如下：background: radial-gradient(shape size at position, start-color, ..., last-color);其中的参数解释如下：
     shape: 表示渐变形状，可以是circle(默认)或ellipse；
     size: 表示渐变的大小
-        closest-side表示最近侧的边缘，
-        farthest-side表示最远侧的边缘，
-        closest-corner表示最近角落，
-        farthest-corner表示最远角落，
-        contain表示至少需要占满整个容器，
-        cover则表示覆盖整个容器；
+      - closest-side表示最近侧的边缘，
+      - farthest-side表示最远侧的边缘，
+      - closest-corner表示最近角落，
+      - farthest-corner表示最远角落，
+      - contain表示至少需要占满整个容器，
+      - cover则表示覆盖整个容器；
     at position: 表示渐变的中心位置，可以是长度(像素或百分比)或关键字(center、top、bottom、left、right等)
     start-color和last-color: 表示渐变的起始颜色和结束颜色。可以定义多个颜色值，用逗号分隔。
     */</span>
-    
-    <span class="token comment">/*
-    linear-gradient是CSS中的一个渐变函数，用于在元素的背景中创建一个沿着一条直线方向的颜色渐变效果。linear-gradient函数的基本语法如下：background: linear-gradient(direction, color stop1, color stop2, ...);其中的参数解释如下：	
-    direction: 表示渐变的方向，可以是角度、关键字（top、bottom、left、right、to top left、to bottom right等）以及渐变轴线（由坐标(x1,y1)和(x2,y2)确定的一条直线，可使用两个坐标的百分比表示），也可以是任意组合;
-    color stop: 表示渐变的颜色及其所在的位置，可以定义多个颜色值，用逗号分隔。例如，color stop1可以表示位于渐变的起始点的颜色停止点，而color stop2则对应着终点的颜色停止点。
-    */</span>
-    
-    <span class="token comment">/*
-    CSS3渐变也支持透明度（transparent），可用于创建减弱变淡的效果。为了添加透明度，我们使用rgba()函数来定义颜色节点。rgba() 函数中的最后一个参数可以是从0到1的值，它定义了颜色的透明度：0表示完全透明，1表示完全不透明。
-    */</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">page</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>-45deg<span class="token punctuation">,</span> #ac7399<span class="token punctuation">,</span> #a8a38e<span class="token punctuation">,</span> #b6c24a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token property">background-size</span><span class="token punctuation">:</span> 500% 500%<span class="token punctuation">;</span>
+    <span class="token property">animation</span><span class="token punctuation">:</span> moiveAnimation 7s infinite<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token atrule"><span class="token rule">@keyframes</span> moiveAnimation</span> <span class="token punctuation">&#123;</span>
+    <span class="token selector">0%</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">background-position</span><span class="token punctuation">:</span> 0% 50%
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token selector">50%</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">background-position</span><span class="token punctuation">:</span> 100% 50%
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token selector">100%</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">background-position</span><span class="token punctuation">:</span> 0% 50%
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/A757291228/article/details/124611342">超精美渐变色动态背景完整示例</a></p>
 <h2 id="文字自动换行"><a href="#文字自动换行" class="headerlink" title="文字自动换行"></a>文字自动换行</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token comment">/*文章内容自动换行*/</span>
 <span class="token selector">#articleContent</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/*break-word:在长单词或URL地址内部进行换行。
-    normal:只在允许的断字点换行（浏览器保持默认处理）。*/</span>
+    <span class="token comment">/*
+    - break-word:在长单词或URL地址内部进行换行。
+    - normal:只在允许的断字点换行（浏览器保持默认处理）
+    */</span>
     <span class="token property">word-wrap</span><span class="token punctuation">:</span> break-word<span class="token punctuation">;</span>
     
-    <span class="token comment">/*normal:使用浏览器默认的换行规则
-    break-all:允许在单词内换行允许在单词内换行。
-    keep-all:只能在半角空格或连字符处换行。*/</span>
+    <span class="token comment">/*
+    - normal:使用浏览器默认的换行规则
+    - break-all:允许在单词内换行允许在单词内换行。
+    - keep-all:只能在半角空格或连字符处换行
+    */</span>
     <span class="token property">word-break</span><span class="token punctuation">:</span> break-all<span class="token punctuation">;</span>
     
     <span class="token comment">/*
-     * normal:忽略多余的空白，只保留一个空白（默认）
-     * pre:保留空白(行为方式类似于html中的pre标签)
-     * nowrap:文本不会换行，会在在同一行上继续，直到遇到br标签为止
-     * pre-wrap:保留空白符序列，正常地进行换行
-     * pre-line:合并空白符序列，保留换行符
-     * inherit:从父元素继承white-space属性的值。
+     - normal:忽略多余的空白，只保留一个空白（默认）
+     - pre:保留空白(行为方式类似于html中的pre标签)
+     - nowrap:文本不会换行，会在在同一行上继续，直到遇到br标签为止
+     - pre-wrap:保留空白符序列，正常地进行换行
+     - pre-line:合并空白符序列，保留换行符
+     - inherit:从父元素继承white-space属性的值。
      */</span>
     <span class="token property">white-space</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7-NxE7K6QPSPLHEKW8ME8g">前端正确处理“文字溢出”的思路</a></p>
 <h2 id="动画-keyframes"><a href="#动画-keyframes" class="headerlink" title="动画@keyframes"></a>动画@keyframes</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token comment">/**上下浮动动画**/</span>
 <span class="token atrule"><span class="token rule">@keyframes</span> float</span> <span class="token punctuation">&#123;</span>
   <span class="token comment">/**0%是动画的开始时间，100%动画的结束时间。或者通过关键词"from"和"to"，等价于0%和100%。**/</span>	
   <span class="token selector">100%</span> <span class="token punctuation">&#123;</span>
    <span class="token comment">/*
-    * transform属性向元素应用2D或3D转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。应用多个属性使用空格如transform: rotate(45deg) scale(2) skew(10deg,5deg) translate(50px,90px);
-    * 1.rotate(xxdeg)(2D),rotateX()(3D),rotateY()(3D),rotateZ(180deg)：以中心为基点，deg表示旋转的角度，为负数时表示逆时针旋转
-    * 2.translate(x,y)，translateX(x)，translateY(y)：以中心为基点按照设定的x,y参数值,对元素进行进行平移。
-    * 3.scale(x,y)，scaleX(X)，scaleY(Y)：缩放基数为1，如果其值大于1元素就放大，反之其值小于1为缩小。缩放后不影响文档流,不改变原有布局,元素还是会占用,和relative定位一样,或者可以考虑zoom属性
-    * 4.skew(x,y)，skewX(x)，skewY(y)：以中心为基点，第一个参数是水平方向扭曲角度，第二个参数是垂直方向扭曲角度。
+    transform属性向元素应用2D或3D转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。应用多个属性使用空格如transform: rotate(45deg) scale(2) skew(10deg,5deg) translate(50px,90px);
+    - rotate(xxdeg)(2D),rotateX()(3D),rotateY()(3D),rotateZ(180deg)：以中心为基点，deg表示旋转的角度，为负数时表示逆时针旋转
+    - translate(x,y)，translateX(x)，translateY(y)：以中心为基点按照设定的x,y参数值,对元素进行进行平移。
+    - scale(x,y)，scaleX(X)，scaleY(Y)：缩放基数为1，如果其值大于1元素就放大，反之其值小于1为缩小。缩放后不影响文档流,不改变原有布局,元素还是会占用,和relative定位一样,或者可以考虑zoom属性
+    - skew(x,y)，skewX(x)，skewY(y)：以中心为基点，第一个参数是水平方向扭曲角度，第二个参数是垂直方向扭曲角度。
     */</span>
    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateY</span><span class="token punctuation">(</span>20px<span class="token punctuation">)</span><span class="token punctuation">;</span>
    
@@ -744,37 +764,37 @@
 <span class="token selector">div</span><span class="token punctuation">&#123;</span>
     <span class="token property">box-shadow</span><span class="token punctuation">:</span> 0 60px 12px -18px <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .1<span class="token punctuation">)</span><span class="token punctuation">,</span> 0 60px 20px -12px <span class="token function">hsla</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> 0%<span class="token punctuation">,</span> .1<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">/*
-     * animation: name duration timing-function delay iteration-count direction;
-     * animation-name:规定需要绑定到选择器的keyframe名称。
-     * animation-duration:规定完成动画所花费的时间，以秒或毫秒计
-     * animation-timing-function:规定动画的速度曲线。
-     *     linear:动画从头到尾的速度是相同的
-     *     ease:默认。动画以低速开始，然后加快,在结束前变慢
-     *     ease-in:动画以低速开始
-     *     ease-out:动画以低速结束
-     *     ease-in-out:动画以低速开始和结束
-     *     cubic-bezier(n,n,n,n):在cubic-bezier函数中自己的值
-     * animation-delay:规定在动画开始之前的延迟。
-     * animation-iteration-count:规定动画应该播放的次数。默认为1次，可以填写数字
-     * animation-direction:规定是否应该轮流反向播放动画。如果animation-direction值是“alternate”，则动画会在奇数次数（1、3、5等等）正常播放，而在偶数次数（2、4、6等等）向后播放。如果把动画设置为只播放一次，则该属性没有效果
-    **/</span>
+     animation: name duration timing-function delay iteration-count direction;
+     animation-name:规定需要绑定到选择器的keyframe名称。
+     animation-duration:规定完成动画所花费的时间，以秒或毫秒计
+     animation-timing-function:规定动画的速度曲线。
+       - linear:动画从头到尾的速度是相同的
+       - ease:默认。动画以低速开始，然后加快,在结束前变慢
+       - ease-in:动画以低速开始
+       - ease-out:动画以低速结束
+       - ease-in-out:动画以低速开始和结束
+       - cubic-bezier(n,n,n,n):在cubic-bezier函数中自己的值
+     animation-delay:规定在动画开始之前的延迟。
+     animation-iteration-count:规定动画应该播放的次数。默认为1次，可以填写数字
+     animation-direction:规定是否应该轮流反向播放动画。如果animation-direction值是“alternate”，则动画会在奇数次数（1、3、5等等）正常播放，而在偶数次数（2、4、6等等）向后播放。如果把动画设置为只播放一次，则该属性没有效果
+    */</span>
     <span class="token property">animation</span><span class="token punctuation">:</span> float 1s infinite ease-in-out alternate
     <span class="token comment">/**animation: move .4s linear 1 normal**/</span>
 <span class="token punctuation">&#125;</span>
 <span class="token selector">div:hover</span><span class="token punctuation">&#123;</span>
     <span class="token comment">/*
-     * animation-play-state属性规定动画正在运行还是暂停。只有两个属性可以设置：
-     * paused:规定动画已暂停
-     * running:规定动画正在播放
+     animation-play-state属性规定动画正在运行还是暂停。只有两个属性可以设置：
+       - paused:规定动画已暂停
+       - running:规定动画正在播放
      */</span>
 	<span class="token property">animation-play-state</span><span class="token punctuation">:</span> paused
      
     <span class="token comment">/*
-     * animation-fill-mode属性规定动画在播放之前或之后，其动画效果是否可见。(规定当动画不播放时（当动画完成时或当动画有一个延迟为开始播放时）要用到的元素样式)
-     * none表示等待期和完成期，元素样式都为初始状态样式，不受动画定义（@keyframes）的影响
-     * both表示等待期样式为第一帧样式，完成期保持最后一帧样式
-     * backwards表示等待期为第一帧样式，完成期跳转为初始样式
-     * forwards表示等待期保持初始样式，完成期间保持最后一帧样式
+     animation-fill-mode属性规定动画在播放之前或之后，其动画效果是否可见。(规定当动画不播放时（当动画完成时或当动画有一个延迟为开始播放时）要用到的元素样式)
+       - none表示等待期和完成期，元素样式都为初始状态样式，不受动画定义（@keyframes）的影响
+       - both表示等待期样式为第一帧样式，完成期保持最后一帧样式
+       - backwards表示等待期为第一帧样式，完成期跳转为初始样式
+       - forwards表示等待期保持初始样式，完成期间保持最后一帧样式
      */</span>
      <span class="token property">animation-fill-mode</span><span class="token punctuation">:</span>none<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
@@ -797,17 +817,17 @@
     <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span>360deg<span class="token punctuation">)</span> <span class="token important">!important</span><span class="token punctuation">;</span>
     
     <span class="token comment">/*
-     * transition属性是一个简写属性，用于设置四个过渡属性.
-     * transition-property:规定设置过渡效果的CSS属性的名称。none没有属性会获得过渡效果。all所有属性都将获得过渡效果。property定义应用过渡效果的CSS属性名称列表，列表以逗号分隔。
-     * transition-duration:规定完成过渡效果需要多少秒或毫秒。
-     * transition-timing-function:规定速度效果的速度曲线。
-     *     inear规定以相同速度开始至结束的过渡效果（等于cubic-bezier(0,0,1,1)）
-     *     ease规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）
-     *     ease-in规定以慢速开始的过渡效果（等于cubic-bezier(0.42,0,1,1)）
-     *     ease-out规定以慢速结束的过渡效果（等于cubic-bezier(0,0,0.58,1)）
-     *     ease-in-out规定以慢速开始和结束的过渡效果（等于cubic-bezier(0.42,0,0.58,1)）。
-     *     cubic-bezier(n,n,n,n)在cubic-bezier函数中定义自己的值。可能的值是0至1之间的数值。
-     * transition-delay:定义过渡效果何时开始。
+     transition属性是一个简写属性，用于设置四个过渡属性.
+       - transition-property:规定设置过渡效果的CSS属性的名称。none没有属性会获得过渡效果。all所有属性都将获得过渡效果。property定义应用过渡效果的CSS属性名称列表，列表以逗号分隔。
+       - transition-duration:规定完成过渡效果需要多少秒或毫秒。
+       - transition-timing-function:规定速度效果的速度曲线。
+         -- inear规定以相同速度开始至结束的过渡效果（等于cubic-bezier(0,0,1,1)）
+         -- ease规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）
+         -- ease-in规定以慢速开始的过渡效果（等于cubic-bezier(0.42,0,1,1)）
+         -- ease-out规定以慢速结束的过渡效果（等于cubic-bezier(0,0,0.58,1)）
+         -- ease-in-out规定以慢速开始和结束的过渡效果（等于cubic-bezier(0.42,0,0.58,1)）。
+         -- cubic-bezier(n,n,n,n)在cubic-bezier函数中定义自己的值。可能的值是0至1之间的数值。
+       - transition-delay:定义过渡效果何时开始。
      */</span>
     <span class="token property">-webkit-transition</span><span class="token punctuation">:</span> all .7s<span class="token punctuation">;</span>
     <span class="token property">-moz-transition</span><span class="token punctuation">:</span> all .7s<span class="token punctuation">;</span>
@@ -833,47 +853,47 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h2 id="css伪类"><a href="#css伪类" class="headerlink" title="css伪类"></a>css伪类</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token punctuation">:</span>link <span class="token property">应用于未被访问过的链接</span>
-<span class="token punctuation">:</span>hover <span class="token property">应用于鼠标悬停到的元素</span>
-<span class="token punctuation">:</span>active <span class="token property">应用于被激活的元素</span>
-<span class="token punctuation">:</span>visited <span class="token property">应用于被访问过的链接，与</span><span class="token punctuation">:</span><span class="token property">link互斥。</span>
-<span class="token punctuation">:</span>focus <span class="token property">应用于拥有键盘输入焦点的元素。</span>
+<h2 id="css伪类"><a href="#css伪类" class="headerlink" title="css伪类"></a>css伪类</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token punctuation">:</span>link <span class="token comment">/*应用于未被访问过的链接*/</span>
+<span class="token punctuation">:</span>hover <span class="token comment">/*应用于鼠标悬停到的元素*/</span>
+<span class="token punctuation">:</span>active <span class="token comment">/*应用于被激活的元素*/</span>
+<span class="token punctuation">:</span>visited <span class="token comment">/*应用于被访问过的链接，与:link互斥。*/</span>
+<span class="token punctuation">:</span>focus <span class="token comment">/*应用于拥有键盘输入焦点的元素。*/</span>
 
-<span class="token punctuation">:</span>first-child <span class="token property">选择某个元素的第一个子元素；</span>
-<span class="token punctuation">:</span>last-child <span class="token property">选择某个元素的最后一个子元素；</span>
-<span class="token punctuation">:</span><span class="token function">nth-child</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token property">匹配属于其父元素的第n个子元素，不论元素的类型；</span>
-<span class="token punctuation">:</span><span class="token function">nth-last-child</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 从这个元素的最后一个子元素开始算<span class="token punctuation">,</span><span class="token property">选匹配属于其父元素的第n个子元素，不论元素的类型；</span>
-<span class="token punctuation">:</span><span class="token function">nth-of-type</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token property">规定属于其父元素的第n个指定元素；</span>
-<span class="token punctuation">:</span><span class="token function">nth-last-of-type</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 从元素的最后一个开始计算<span class="token punctuation">,</span><span class="token property">规定属于其父元素的指定元素；</span>
-<span class="token punctuation">:</span>first-of-type <span class="token property">选择一个上级元素下的第一个同类子元素；</span>
-<span class="token punctuation">:</span>last-of-type <span class="token property">选择一个上级元素的最后一个同类子元素；</span>
-<span class="token punctuation">:</span>only-child <span class="token property">选择它的父元素的唯一一个子元素；</span>
-<span class="token punctuation">:</span>only-of-type <span class="token property">选择一个元素是它的上级元素的唯一一个相同类型的子元素；</span>
-<span class="token punctuation">:</span>checked <span class="token property">匹配被选中的input元素，这个input元素包括radio和checkbox。</span>
-<span class="token punctuation">:</span>empty <span class="token property">选择的元素里面没有任何内容。</span>
-<span class="token punctuation">:</span>disabled <span class="token property">匹配禁用的表单元素。</span>
-<span class="token punctuation">:</span>enabled <span class="token property">匹配没有设置disabled属性的表单元素。</span>
-<span class="token punctuation">:</span>valid <span class="token property">匹配条件验证正确的表单元素。</span>
-<span class="token punctuation">:</span>in-range 选择具有指定范围内的值的&lt;input><span class="token property">元素。</span>
-<span class="token punctuation">:</span>invalid <span class="token property">input</span><span class="token punctuation">:</span>invalid 选择所有具有无效值的&lt;input><span class="token property">元素。</span>
-<span class="token punctuation">:</span>optional <span class="token property">input</span><span class="token punctuation">:</span>optional 选择不带<span class="token string">"required"</span>属性的&lt;input><span class="token property">元素。</span>
-<span class="token punctuation">:</span><span class="token function">lang</span><span class="token punctuation">(</span>language<span class="token punctuation">)</span>	<span class="token property">p</span><span class="token punctuation">:</span><span class="token function">lang</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span> 选择每个lang属性值以<span class="token string">"it"</span>开头的&lt;p><span class="token property">元素。</span>
-<span class="token punctuation">:</span>focus选择获得焦点的 &lt;input> <span class="token property">元素。</span>
-<span class="token punctuation">:</span><span class="token function">not</span><span class="token punctuation">(</span>selector<span class="token punctuation">)</span> <span class="token punctuation">:</span><span class="token function">not</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> 选择每个非&lt;p><span class="token property">元素的元素。</span>
-<span class="token punctuation">:</span>out-of-range <span class="token property">input</span><span class="token punctuation">:</span>out-of-range 选择值在指定范围之外的&lt;input><span class="token property">元素。</span>
-<span class="token punctuation">:</span>read-only <span class="token property">input</span><span class="token punctuation">:</span>read-only	选择指定了<span class="token string">"readonly"</span>属性的&lt;input><span class="token property">元素。</span>
-<span class="token punctuation">:</span>read-write	<span class="token property">input</span><span class="token punctuation">:</span>read-write 选择不带<span class="token string">"readonly"</span>属性的&lt;input><span class="token property">元素。</span>
-<span class="token punctuation">:</span>required <span class="token property">input</span><span class="token punctuation">:</span>required 选择指定了<span class="token string">"required"</span>属性的&lt;input><span class="token property">元素。</span>
-<span class="token punctuation">:</span>root root <span class="token property">选择元素的根元素。</span>
-<span class="token punctuation">:</span>target	#<span class="token property">news</span><span class="token punctuation">:</span>target 选择当前活动的#news元素（单击包含该锚名称的URL）。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">:</span>first-child <span class="token comment">/*选择某个元素的第一个子元素*/</span>
+<span class="token punctuation">:</span>last-child <span class="token comment">/*选择某个元素的最后一个子元素*/</span>
+<span class="token punctuation">:</span><span class="token function">nth-child</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token comment">/*匹配属于其父元素的第n个子元素，不论元素的类型*/</span>
+<span class="token punctuation">:</span><span class="token function">nth-last-child</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">/*从这个元素的最后一个子元素开始算,选匹配属于其父元素的第n个子元素，不论元素的类型*/</span>
+<span class="token punctuation">:</span><span class="token function">nth-of-type</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">/*规定属于其父元素的第n个指定元素*/</span>
+<span class="token punctuation">:</span><span class="token function">nth-last-of-type</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">/*从元素的最后一个开始计算,规定属于其父元素的指定元素*/</span>
+<span class="token punctuation">:</span>first-of-type <span class="token comment">/*选择一个上级元素下的第一个同类子元素*/</span>
+<span class="token punctuation">:</span>last-of-type <span class="token comment">/*选择一个上级元素的最后一个同类子元素*/</span>
+<span class="token punctuation">:</span>only-child <span class="token comment">/*选择它的父元素的唯一一个子元素*/</span>
+<span class="token punctuation">:</span>only-of-type <span class="token comment">/*选择一个元素是它的上级元素的唯一一个相同类型的子元素*/</span>
+<span class="token punctuation">:</span>checked <span class="token comment">/*匹配被选中的input元素，这个input元素包括radio和checkbox。*/</span>
+<span class="token punctuation">:</span>empty <span class="token comment">/*选择的元素里面没有任何内容。*/</span>
+<span class="token punctuation">:</span>disabled <span class="token comment">/*匹配禁用的表单元素。*/</span>
+<span class="token punctuation">:</span>enabled <span class="token comment">/*匹配没有设置disabled属性的表单元素。*/</span>
+<span class="token punctuation">:</span>valid <span class="token comment">/*匹配条件验证正确的表单元素。*/</span>
+<span class="token punctuation">:</span>in-range <span class="token comment">/*选择具有指定范围内的值的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span>invalid <span class="token property">input</span><span class="token punctuation">:</span>invalid <span class="token comment">/*选择所有具有无效值的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span>optional <span class="token property">input</span><span class="token punctuation">:</span>optional <span class="token comment">/*选择不带"required"属性的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span><span class="token function">lang</span><span class="token punctuation">(</span>language<span class="token punctuation">)</span>	<span class="token property">p</span><span class="token punctuation">:</span><span class="token function">lang</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token comment">/*选择每个lang属性值以"it"开头的&lt;p>元素。*/</span>
+<span class="token punctuation">:</span>focus <span class="token comment">/*选择获得焦点的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span><span class="token function">not</span><span class="token punctuation">(</span>selector<span class="token punctuation">)</span> <span class="token punctuation">:</span><span class="token function">not</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token comment">/*选择每个非&lt;p>元素的元素。*/</span>
+<span class="token punctuation">:</span>out-of-range <span class="token property">input</span><span class="token punctuation">:</span>out-of-range <span class="token comment">/*选择值在指定范围之外的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span>read-only <span class="token property">input</span><span class="token punctuation">:</span>read-only <span class="token comment">/*选择指定了"readonly"属性的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span>read-write	<span class="token property">input</span><span class="token punctuation">:</span>read-write <span class="token comment">/*选择不带"readonly"属性的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span>required <span class="token property">input</span><span class="token punctuation">:</span>required <span class="token comment">/*选择指定了"required"属性的&lt;input>元素。*/</span>
+<span class="token punctuation">:</span>root root <span class="token comment">/*选择元素的根元素。*/</span>
+<span class="token punctuation">:</span>target	#<span class="token property">news</span><span class="token punctuation">:</span>target <span class="token comment">/*选择当前活动的#news元素（单击包含该锚名称的URL）*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="css伪元素"><a href="#css伪元素" class="headerlink" title="css伪元素"></a>css伪元素</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">::after 	例: p::after	在每个&lt;p>元素之后插入内容。
-::before	例: p::before 在每个&lt;p>元素之前插入内容。
-::first-letter	例: p::first-letter 选择每个&lt;p>元素的首字母。
-::first-line	例: p::first-line 选择每个&lt;p>元素的首行。
-::selection		例: p::selection 选择用户选择的元素部分。
-::marker		例: li::marker</span> <span class="token punctuation">&#123;</span><span class="token property">content</span><span class="token punctuation">:</span><span class="token string">'>'</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span> 把li前面的<span class="token string">'•'</span>变成<span class="token string">'>'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<h2 id="css伪元素"><a href="#css伪元素" class="headerlink" title="css伪元素"></a>css伪元素</h2><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token punctuation">:</span><span class="token punctuation">:</span>after <span class="token comment">/*例: p::after	在每个&lt;p>元素之后插入内容。*/</span>
+<span class="token punctuation">:</span><span class="token punctuation">:</span>before <span class="token comment">/*例: p::before 在每个&lt;p>元素之前插入内容。*/</span>
+<span class="token punctuation">:</span><span class="token punctuation">:</span>first-letter <span class="token comment">/*例: p::first-letter 选择每个&lt;p>元素的首字母。*/</span>
+<span class="token punctuation">:</span><span class="token punctuation">:</span>first-line <span class="token comment">/*例: p::first-line 选择每个&lt;p>元素的首行。*/</span>
+<span class="token punctuation">:</span><span class="token punctuation">:</span>selection <span class="token comment">/*例: p::selection 选择用户选择的元素部分。*/</span>
+<span class="token punctuation">:</span><span class="token punctuation">:</span>marker <span class="token comment">/*例: li::marker &#123;content:'>';&#125; 把li前面的'•'变成'>'*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/css/css_pseudo_elements.asp">CSS伪元素</a></p>
 <h2 id="21个超实用的CSS技巧"><a href="#21个超实用的CSS技巧" class="headerlink" title="21个超实用的CSS技巧"></a>21个超实用的CSS技巧</h2><h3 id="文档布局"><a href="#文档布局" class="headerlink" title="文档布局"></a>文档布局</h3><p>仅用两行CSS，就可以创建响应式文档样式布局。</p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.parent</span><span class="token punctuation">&#123;</span>
   <span class="token property">display</span><span class="token punctuation">:</span> grid<span class="token punctuation">;</span>
@@ -1705,7 +1725,6 @@ h1</span> <span class="token punctuation">&#123;</span>
 
 
 <h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/css/css_pseudo_elements.asp">CSS伪元素</a></li>
 <li><a target="_blank" rel="noopener" href="http://c.biancheng.net/css3/at-rule.html">CSS@规则</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xYUjsf4IKYORqOLNNnEHlA">64个超级有用的CSS资源</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.html5tricks.com/page/26">HTML、CSS demo</a></li>
@@ -2025,8 +2044,7 @@ const generateRandomHexColor = () => Math.floor(Math.random() * 0xffffff).toStri
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            分布式ID介绍什么是ID？日常开发中，我们需要对系统中的各种数据使用ID唯一表示，比如用户ID对应且仅对应一个人，商品ID对应且仅对应一件商品，订单ID对应且仅对应一个订单。
-我们现实生活中也有各种ID，比如身份证ID对应且仅对应一个人、地
+                            分布式ID介绍什么是ID？日常开发中，我们需要对系统中的各种数据使用ID唯一表示，比如用户ID对应且仅对应一个人，商品ID对应且仅对应一件商品，订单ID对应且仅对应一个订单。我们现实生活中也有各种ID，比如身份证ID对应且仅对应一个人、地址
                         
                         
                     </div>

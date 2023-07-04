@@ -422,10 +422,19 @@
             <div class="tag-chips">
                 
                 
+                <a href="/blog/tags/%E5%AE%89%E8%A3%85/" title="安装: 4">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="安装" style="background-color: #F9EBEA;">安装
+                        <span class="tag-length">4</span>
+                    </span>
+                </a>
+                
+                
                 <a href="/blog/tags/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98/" title="代码实战: 9">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="代码实战" style="background-color: #F9EBEA;">代码实战
+                            data-tagname="代码实战" style="background-color: #F5EEF8;">代码实战
                         <span class="tag-length">9</span>
                     </span>
                 </a>
@@ -434,17 +443,8 @@
                 <a href="/blog/tags/%E9%9A%8F%E7%AC%94/" title="随笔: 6">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
-                            data-tagname="随笔" style="background-color: #F5EEF8;">随笔
+                            data-tagname="随笔" style="background-color: #D5F5E3;">随笔
                         <span class="tag-length">6</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/blog/tags/%E5%AE%89%E8%A3%85/" title="安装: 4">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="安装" style="background-color: #D5F5E3;">安装
-                        <span class="tag-length">4</span>
                     </span>
                 </a>
                 
@@ -691,7 +691,9 @@ git remote add origin https://github.com/xmxe/project.
                             
                                 幂等性的几种方案
 唯一索引，防止新增脏数据
-token机制，防止页面重复提交前端限制:页面的提交按钮只能被点击提交一次后端解决方案：集群环境：采用token加redis（redis单线程的，处理需要排队）单JVM环境：采用token加red
+前端限制:页面的提交按钮只能被点击提交一次后端解决方案：
+集群环境：采用token加redis（redis单线程的，处理需要排队）
+单JVM环境：采用token加redis或token加jvm内存
                             
                         </div>
                         <div class="publish-info">

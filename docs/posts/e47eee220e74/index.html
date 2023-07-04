@@ -558,15 +558,14 @@
   <span class="token class-name">A</span> a<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>一级缓存</strong></p>
-<ol>
+<h3 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h3><ol>
 <li>实例化A对象。</li>
 <li>填充A的属性阶段时需要去填充B对象，而此时B对象还没有创建，所以这里为了完成A的填充就必须要先去创建B对象；</li>
 <li>实例化B对象。</li>
 <li>执行到B对象的填充属性阶段，又会需要去获取A对象，而此时Map中没有A，因为A还没有创建完成，导致又需要去创建A对象。<br>这样，就会循环往复，一直创建下去，只到堆栈溢出。</li>
 </ol>
 <p>为什么不能在实例化A之后就放入Map？<br>因为此时A尚未创建完整，所有属性都是默认值，并不是一个完整的对象，在执行业务时可能会抛出未知的异常。所以必须要在A创建完成之后才能放入Map。</p>
-<p><strong>二级缓存</strong><br>此时我们引入二级缓存用另外一个Map2 {k:name;v:earlybean}来存储尚未已经开始创建但是尚未完整创建的对象。</p>
+<h3 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h3><p>此时我们引入二级缓存用另外一个Map2 {k:name;v:earlybean}来存储尚未已经开始创建但是尚未完整创建的对象。</p>
 <ol>
 <li>实例化A对象之后，将A对象放入Map2中。</li>
 <li>在填充A的属性阶段需要去填充B对象，而此时B对象还没有创建，所以这里为了完成A的填充就必须要先去创建B对象。</li>
@@ -576,8 +575,7 @@
 <li>这时候B创建完成，A继续执行b的属性填充可以拿到B对象，这样A也完成了创建。B.a也完整了</li>
 <li>此时将A对象放入Map并从Map2中删除。</li>
 </ol>
-<p><strong>二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？</strong></p>
-<p>从上面的流程中我们可以看到使用两级缓存可以完美解决循环依赖的问题，但是Spring中还有另外一个问题需要解决，这就是初始化过程中的AOP实现。AOP是Spring的重要功能，实现方式就是使用代理模式动态增强类的功能。动态单例目前有两种技术可以实现，一种是JDK自带的基于接口的动态Proxy技术，一种是CGlib基于字节码动态生成的Proxy技术，这两种技术都是需要原始对象创建完毕，之后基于原始对象生成代理对象的。那么我们发现，在二级缓存的设计下，我们需要在放入缓存Map之前将代理对象生成好。<br>将流程改为：</p>
+<h3 id="二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？"><a href="#二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？" class="headerlink" title="二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？"></a>二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？</h3><p>从上面的流程中我们可以看到使用两级缓存可以完美解决循环依赖的问题，但是Spring中还有另外一个问题需要解决，这就是初始化过程中的AOP实现。AOP是Spring的重要功能，实现方式就是使用代理模式动态增强类的功能。动态单例目前有两种技术可以实现，一种是JDK自带的基于接口的动态Proxy技术，一种是CGlib基于字节码动态生成的Proxy技术，这两种技术都是需要原始对象创建完毕，之后基于原始对象生成代理对象的。那么我们发现，在二级缓存的设计下，我们需要在放入缓存Map之前将代理对象生成好。<br>将流程改为：</p>
 <ol>
 <li>实例化Bean对象，为Bean对象在内存中分配空间，各属性赋值为默认值</li>
 <li>如果有动态代理，生成Bean对象的代理Proxy对象</li>
@@ -590,7 +588,7 @@
 <li>BeanPostProcessor doAfter –AOP是在这个阶段实现的<br>所以要实现上面的方案，势必需要将BeanPostProcessor阶段提前或者侵入到填充属性的流程中，那么从程序设计上来说，这样做肯定是不美的</li>
 </ol>
 <p>面试官会问：为什么要使用三级缓存呢？二级缓存能解决循环依赖吗？<br>答：如果要使用二级缓存解决循环依赖，意味着所有Bean在实例化后就要完成AOP代理，这样违背了Spring设计的原则，Spring在设计之初就是通过AnnotationAwareAspectJAutoProxyCreator这个后置处理器来在Bean生命周期的最后一步来完成AOP代理，而不是在实例化后就立马进行AOP代理</p>
-<p><strong>三级缓存</strong><br>Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFactory} ，这个缓存的value就不是Bean对象了，而是一个接口对象由一段lamda表达式实现。在这段lamda表达式中去完成一些BeanPostProcessor的执行。</p>
+<h3 id="三级缓存"><a href="#三级缓存" class="headerlink" title="三级缓存"></a>三级缓存</h3><p>Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFactory} ，这个缓存的value就不是Bean对象了，而是一个接口对象由一段lamda表达式实现。在这段lamda表达式中去完成一些BeanPostProcessor的执行。</p>
 <ol>
 <li>实例化A对象之后，将A的ObjectFactory对象放入Map3中。</li>
 <li>在填充A的属性阶段需要去填充B对象，而此时B对象还没有创建，所以这里为了完成A的填充就必须要先去创建B对象。</li>
@@ -600,7 +598,7 @@
 <li>这时候B创建完成，A继续执行b的属性填充可以拿到B对象，这样A也完成了创建。</li>
 <li>此时将A对象放入Map并从Map2中删除。</li>
 </ol>
-<ul>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ns9JEpvMt7U-nsMZzEUIUQ">Spring三级缓存解决循环依赖</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/L1PJ-cikoS8sOORszEYnfw">终于有人把Spring循环依赖讲清楚了！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5VHU2qRQMPL0IOZuEOPmQA">烂大街的Spring循环依赖该如何回答？</a></li>
@@ -624,23 +622,27 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 	<span class="token literal-property property">data</span> <span class="token operator">:</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token function-variable function">success</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iyubfxmV_8KU8v4cg1A7tg">@RequestBody接收数组、List参数、@Deprecated标记废弃方法</a></p>
+</blockquote>
 <h3 id="PostConstruct和-PreDestroy"><a href="#PostConstruct和-PreDestroy" class="headerlink" title="@PostConstruct和@PreDestroy"></a>@PostConstruct和@PreDestroy</h3><p>@PostConstruct该注解被用来修饰一个非静态的void()方法,被@PostConstruct修饰的方法会当bean创建完成的时候，会后置执行@PostConstruct修饰的方法。PostConstruct在构造函数之后执行，bean的init()方法之前执行,相当于init-method,使用在方法上，当Bean初始化时执行,Constructor(构造方法) -&gt; @Autowired(依赖注入) -&gt; @PostConstruct(注释的方法)</p>
 <p>@PreDestroy类似于destory-method在servlet destory()方法之后执行</p>
-<h3 id="Configuration和-Component的区别"><a href="#Configuration和-Component的区别" class="headerlink" title="@Configuration和@Component的区别"></a>@Configuration和@Component的区别</h3><p>一句话概括就是@Configuration中所有带@Bean注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。<br>理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog">终于搞懂了@Configuration和@Component的区别</a></p>
-<h3 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ">Spring Boot中条件注解底层如何实现的？</a></p>
-<h2 id="Spring设计模式"><a href="#Spring设计模式" class="headerlink" title="Spring设计模式"></a>Spring设计模式</h2><h3 id="控制反转-IoC-和依赖注入-DI"><a href="#控制反转-IoC-和依赖注入-DI" class="headerlink" title="控制反转(IoC)和依赖注入(DI)"></a>控制反转(IoC)和依赖注入(DI)</h3><p><strong>IoC(Inversion of Control,控制反转)</strong> 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。</p>
-<p><strong>IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则。</strong></p>
+<h3 id="Configuration和-Component的区别"><a href="#Configuration和-Component的区别" class="headerlink" title="@Configuration和@Component的区别"></a>@Configuration和@Component的区别</h3><p>一句话概括就是@Configuration中所有带@Bean注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。<br>理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog">终于搞懂了@Configuration和@Component的区别</a></p>
+</blockquote>
+<h3 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ">Spring Boot中条件注解底层如何实现的？</a></p>
+</blockquote>
+<h2 id="Spring设计模式"><a href="#Spring设计模式" class="headerlink" title="Spring设计模式"></a>Spring设计模式</h2><h3 id="控制反转-IoC-和依赖注入-DI"><a href="#控制反转-IoC-和依赖注入-DI" class="headerlink" title="控制反转(IoC)和依赖注入(DI)"></a>控制反转(IoC)和依赖注入(DI)</h3><p><strong>IoC(Inversion of Control,控制反转)</strong> 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。<strong>IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则</strong>。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ioc-patterns.png" alt="ioc-patterns"></p>
-<p><strong>Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件&#x2F;注解即可，完全不用考虑对象是如何被创建出来的</strong>。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。</p>
-<p>在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
+<p><strong>Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件&#x2F;注解即可，完全不用考虑对象是如何被创建出来的</strong>。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
 <blockquote>
 <p>关于Spring IOC的理解，推荐看一下这个<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23277575/answer/169698662">知乎回答</a>，非常不错。</p>
 </blockquote>
-<p><strong>控制反转怎么理解呢?</strong> 举个例子：”对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中”。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。</p>
-<p><strong>DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去。</strong></p>
+<p><strong>控制反转怎么理解呢</strong>？举个例子：”对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中”。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。<strong>DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去</strong>。</p>
 <h3 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h3><p>Spring使用工厂模式可以通过BeanFactory或ApplicationContext创建bean对象。</p>
-<p><strong>两者对比：</strong></p>
+<p><strong>两者对比</strong>：</p>
 <ul>
 <li>BeanFactory：延迟注入(使用到某个bean的时候才会注入),相比于ApplicationContext来说会占用更少的内存，程序启动速度更快。</li>
 <li>ApplicationContext：容器启动的时候，不管你用没用到，一次性创建所有bean。BeanFactory仅提供了最基本的依赖注入支持，ApplicationContext扩展了BeanFactory,除了有BeanFactory的功能还有额外更多功能，所以一般开发人员使用ApplicationContext会更多。</li>
@@ -673,14 +675,13 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 </ul>
 <p><strong>Spring中bean的默认作用域就是singleton(单例)的</strong>。除了singleton作用域，Spring中bean还有下面几种作用域：</p>
 <ul>
-<li><strong>prototype</strong>:每次获取都会创建一个新的bean实例。也就是说，连续getBean()两次，得到的是不同的Bean实例。</li>
-<li><strong>request</strong>（仅Web应用可用）:每一次HTTP请求都会产生一个新的bean（请求bean），该bean仅在当前HTTPrequest内有效。</li>
-<li><strong>session</strong>（仅Web应用可用）:每一次来自新session的HTTP请求都会产生一个新的bean（会话bean），该bean仅在当前HTTPsession内有效。</li>
-<li><strong>application&#x2F;global-session</strong>（仅Web应用可用）：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。</li>
-<li><strong>websocket</strong>（仅Web应用可用）：每一次WebSocket会话产生一个新的bean。</li>
+<li><strong>prototype</strong>：每次获取都会创建一个新的bean实例。也就是说，连续getBean()两次，得到的是不同的Bean实例。</li>
+<li><strong>request（仅Web应用可用）</strong>:每一次HTTP请求都会产生一个新的bean（请求bean），该bean仅在当前HTTPrequest内有效。</li>
+<li><strong>session（仅Web应用可用）</strong>:每一次来自新session的HTTP请求都会产生一个新的bean（会话bean），该bean仅在当前HTTPsession内有效。</li>
+<li><strong>application&#x2F;global-session（仅Web应用可用）</strong>：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。</li>
+<li><strong>websocket（仅Web应用可用）</strong>：每一次WebSocket会话产生一个新的bean。</li>
 </ul>
-<p>Spring通过ConcurrentHashMap实现单例注册表的特殊方式实现单例模式。</p>
-<p>Spring实现单例的核心代码如下：</p>
+<p>Spring通过ConcurrentHashMap实现单例注册表的特殊方式实现单例模式。Spring实现单例的核心代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 通过ConcurrentHashMap（线程安全）实现单例注册表</span>
 <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> singletonObjects <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -711,22 +712,17 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>单例Bean存在线程安全问题吗？</strong></p>
-<p>大部分时候我们并没有在项目中使用多线程，所以很少有人会关注这个问题。单例Bean存在线程问题，主要是因为当多个线程操作同一个对象的时候是存在资源竞争的。</p>
-<p>常见的有两种解决办法：</p>
+<p>大部分时候我们并没有在项目中使用多线程，所以很少有人会关注这个问题。单例Bean存在线程问题，主要是因为当多个线程操作同一个对象的时候是存在资源竞争的。常见的有两种解决办法：</p>
 <ol>
 <li>在Bean中尽量避免定义可变的成员变量。</li>
 <li>在类中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在ThreadLocal中（推荐的一种方式）。</li>
 </ol>
 <p>不过，大部分Bean实际都是无状态（没有实例变量）的（比如Dao、Service），这种情况下，Bean是线程安全的。</p>
 <h3 id="代理设计模式"><a href="#代理设计模式" class="headerlink" title="代理设计模式"></a>代理设计模式</h3><p><strong>代理模式在AOP中的应用</strong></p>
-<p><strong>AOP(Aspect-Oriented Programming，面向切面编程)</strong> 能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。</p>
-<p><strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDKProxy</strong>去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong>生成一个被代理对象的子类来作为代理，如下图所示：</p>
+<p><strong>AOP(Aspect-Oriented Programming，面向切面编程)</strong> 能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。<strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDKProxy</strong>去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong>生成一个被代理对象的子类来作为代理，如下图所示：</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg" alt="SpringAOPProcess"></p>
-<p>当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。</p>
-<p>使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。</p>
-<h3 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别?"></a>Spring AOP和AspectJ AOP有什么区别?</h3><p><strong>Spring AOP属于运行时增强，而AspectJ是编译时增强</strong>。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。</p>
-<p>Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，</p>
-<p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。</p>
+<p>当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。</p>
+<h3 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别?"></a>Spring AOP和AspectJ AOP有什么区别?</h3><p><strong>Spring AOP属于运行时增强，而AspectJ是编译时增强</strong>。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。</p>
 <h3 id="模板方法"><a href="#模板方法" class="headerlink" title="模板方法"></a>模板方法</h3><p>模板方法模式是一种行为设计模式，它定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤的实现方式。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Template</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">//这是我们的模板方法</span>
@@ -837,9 +833,7 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 
 <p>当调用DemoPublisher的publish()方法的时候，比如demoPublisher.publish(“你好”)，控制台就会打印出:接收到的信息是：你好。</p>
 <h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><p>适配器模式(Adapter Pattern)将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作。</p>
-<h4 id="Spring-AOP中的适配器模式"><a href="#Spring-AOP中的适配器模式" class="headerlink" title="Spring AOP中的适配器模式"></a>Spring AOP中的适配器模式</h4><p>我们知道Spring AOP的实现是基于代理模式，但是Spring AOP的增强或通知(Advice)使用到了适配器模式，与之相关的接口是AdvisorAdapter。</p>
-<p>Advice常用的类型有：BeforeAdvice（目标方法调用前,前置通知）、AfterAdvice（目标方法调用后,后置通知）、AfterReturningAdvice(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:MethodBeforeAdviceInterceptor、AfterReturningAdviceInterceptor、ThrowsAdviceInterceptor等等。</p>
-<p>Spring预定义的通知要通过对应的适配器，适配成MethodInterceptor接口(方法拦截器)类型的对象（如：MethodBeforeAdviceAdapter通过调用getInterceptor方法，将MethodBeforeAdvice适配成MethodBeforeAdviceInterceptor）。</p>
+<h4 id="Spring-AOP中的适配器模式"><a href="#Spring-AOP中的适配器模式" class="headerlink" title="Spring AOP中的适配器模式"></a>Spring AOP中的适配器模式</h4><p>我们知道Spring AOP的实现是基于代理模式，但是Spring AOP的增强或通知(Advice)使用到了适配器模式，与之相关的接口是AdvisorAdapter。Advice常用的类型有：BeforeAdvice（目标方法调用前,前置通知）、AfterAdvice（目标方法调用后,后置通知）、AfterReturningAdvice(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:MethodBeforeAdviceInterceptor、AfterReturningAdviceInterceptor、ThrowsAdviceInterceptor等等。Spring预定义的通知要通过对应的适配器，适配成MethodInterceptor接口(方法拦截器)类型的对象（如：MethodBeforeAdviceAdapter通过调用getInterceptor方法，将MethodBeforeAdvice适配成MethodBeforeAdviceInterceptor）。</p>
 <h4 id="Spring-MVC中的适配器模式"><a href="#Spring-MVC中的适配器模式" class="headerlink" title="Spring MVC中的适配器模式"></a>Spring MVC中的适配器模式</h4><p>在SpringMVC中，DispatcherServlet根据请求信息调用HandlerMapping，解析请求对应的Handler。解析到对应的Handler（也就是我们平常说的Controller控制器）后，开始由HandlerAdapter适配器处理。HandlerAdapter作为期望接口，具体的适配器实现类用于对目标类进行适配，Controller作为需要适配的类。</p>
 <p><strong>为什么要在SpringMVC中使用适配器模式？</strong></p>
 <p>SpringMVC中的Controller种类众多，不同类型的Controller通过不同的方法来对请求进行处理。如果不利用适配器模式的话，DispatcherServlet直接获取对应类型的Controller，需要的自行来判断，像下面这段代码一样：</p>
@@ -883,7 +877,7 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ">聊聊Spring核心</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw">揭秘Spring依赖注入和SpEL表达式</a></li>
 </ul>
-<h2 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h2><h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p><strong>Handle</strong>:Handler是一个Controller的对象和请求方式的组合的一个Object对象<br><strong>HandleExcutionChains</strong>是HandleMapping返回的一个处理执行链，它是对Handle的二次封装，将拦截器关联到一起。然后，在DispatcherServlert中完成了拦截器链对handler的过滤。<strong>DispatcherServlet</strong>要将一个请求交给哪个特定的Controller，它需要咨询一个Bean——这个Bean为“HandlerMapping”。HandlerMapping是把一个URL指定到一个Controller上，（就像应用系统的web.xml文件使用&lt;servlet-mapping&gt;将URL映射到servlet）。<br><strong>DispatcherServlet</strong>：作为前端控制器，整个流程控制的中心，控制其它组件执行，统一调度，降低组件之间的耦合性，提高每个组件的扩展性。<br>作用：接收请求，响应结果，相当于转发器，中央处理器。有了dispatcherServlet减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请,dispatcherServlet的存在降低了组件之间的耦合性<br><strong>HandlerMapping</strong>:通过扩展处理器映射器实现不同的映射方式，作用:根据请求的url查找Handler,HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等<br><strong>HandlAdapter</strong>:通过扩展处理器适配器，支持更多类型的处理器。<br>作用：按照特定规则（HandlerAdapter要求的规则）去执行Handler，通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。<br><strong>ViewResolver</strong>:通过扩展视图解析器，支持更多类型的视图解析，例如：jsp、freemarker、pdf、excel等。作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）<br>作用：View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。springmvc框架提供了很多的View视图类型，包括：jstlView、freemarkerView、pdfView等。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由工程师根据业务需求开发具体的页面。</p>
+<h2 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h2><h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p><strong>Handle</strong>:Handler是一个Controller的对象和请求方式的组合的一个Object对象<br><strong>HandleExcutionChains</strong>：是HandleMapping返回的一个处理执行链，它是对Handle的二次封装，将拦截器关联到一起。然后，在DispatcherServlert中完成了拦截器链对handler的过滤。<strong>DispatcherServlet</strong>要将一个请求交给哪个特定的Controller，它需要咨询一个Bean——这个Bean为“HandlerMapping”。HandlerMapping是把一个URL指定到一个Controller上，（就像应用系统的web.xml文件使用&lt;servlet-mapping&gt;将URL映射到servlet）。<br><strong>DispatcherServlet</strong>：作为前端控制器，整个流程控制的中心，控制其它组件执行，统一调度，降低组件之间的耦合性，提高每个组件的扩展性。<br>作用：接收请求，响应结果，相当于转发器，中央处理器。有了dispatcherServlet减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请,dispatcherServlet的存在降低了组件之间的耦合性<br><strong>HandlerMapping</strong>：通过扩展处理器映射器实现不同的映射方式，作用:根据请求的url查找Handler,HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等<br><strong>HandlAdapter</strong>：通过扩展处理器适配器，支持更多类型的处理器。<br>作用：按照特定规则（HandlerAdapter要求的规则）去执行Handler，通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。<br><strong>ViewResolver</strong>：通过扩展视图解析器，支持更多类型的视图解析，例如：jsp、freemarker、pdf、excel等。作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）<br>作用：View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。springmvc框架提供了很多的View视图类型，包括：jstlView、freemarkerView、pdfView等。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由工程师根据业务需求开发具体的页面。</p>
 <h3 id="DispatcherServlet的工作流程"><a href="#DispatcherServlet的工作流程" class="headerlink" title="DispatcherServlet的工作流程"></a>DispatcherServlet的工作流程</h3><p><img src="/blog/images/DispatcherServlet%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"></p>
 <ol>
 <li>向服务器发送HTTP请求，请求被前端控制器DispatcherServlet捕获。</li>
@@ -931,23 +925,29 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DAWdH_0VWZp3oaws_leJhQ">使用Spring MVC的14个顶级技巧！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uzI-ilR-cv5iX3HWFUOmXA">Spring5里边的新玩法！这种URL请求让我涨见识了</a></li>
 </ul>
-<h2 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a><a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot">Spring Boot</a></h2><p><strong>配置文件默认的查找路径如下：</strong></p>
-<ol>
-<li>file:.&#x2F;config&#x2F;</li>
-<li>file:.&#x2F;</li>
-<li>classpath:&#x2F;config&#x2F;</li>
-<li>classpath:&#x2F;<br>配置⽂件名可以通过spring.config.name修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖</li>
-</ol>
-<p>spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:spring.config.location</p>
+<h2 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a><a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot">Spring Boot</a></h2><p><strong>配置文件默认的查找路径如下</strong>：</p>
+<pre class="line-numbers language-none"><code class="language-none">file:.&#x2F;config&#x2F;
+file:.&#x2F;
+classpath:&#x2F;config&#x2F;
+classpath:&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>配置⽂件名可以通过<code>spring.config.name</code>修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:<code>spring.config.location</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">java</span> <span class="token parameter variable">-jar</span> myproject.jar <span class="token parameter variable">--spring.config.location</span><span class="token operator">=</span>classpath:/default.properties,classpath:/override.properties.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这样不会去默认位置加载配置⽂件，⽽是加载类路径下default.properties和override.properties的⽂件，override.properties中的同名配置会覆盖default.properties,如果指定的路径是以&#x2F;结尾则是⽬录配置，会去⽬录下找配置⽂件。</p>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pNAU_w6RQIjzxfaadjV_pA">如何不重新编译让Spring Boot配置文件生效</a></p>
+</blockquote>
 <p><strong>特定配置</strong><br>在开发、测试、发布过程中，这三个场景⽐较固定，通常会定义三份不同的配置application-{profile}.yml，在使⽤时通过profile参数来切换。applicaiton-dev.yml，applicaiton-test.yml，applicaiton-prd.yml启动时，通过指定spring.profiles.active参数来切换配置⽂件</p>
-<p>springboot项⽬启动的时候可以直接使⽤java jar xxxjar这样。下⾯说说参数的⼀些讲究</p>
+<p>springboot项⽬启动的时候可以直接使⽤java -jar xxxjar这样。</p>
 <ol>
-<li>-DpropName&#x3D;propValue的形式携带，要放在-jar参数前⾯<br>java -Dxxx&#x3D;test -DprocessType&#x3D;1 -jar xxx.jar<br>取值:System.getProperty(“propName”)</li>
-<li>参数直接跟在命令后⾯<br>java -jar xxx jar processType&#x3D;1 processType2&#x3D;2<br>取值:参数就是jar包⾥主启动类中main⽅法的args参数，按顺序来</li>
-<li>springboot的⽅式，–key&#x3D;value⽅式<br>java -jar xxx.jar –xxx&#x3D;test<br>取值:spring的@value(“$(xxx)”)<br>区别：<br>⼀、-D参数为jvm参数，项⽬启动完后可通过System.getProperty(“nacos.standalone”)进⾏读取<br>也可以通过这个⽅式Integer.getInteger(“nacos.http.timeout”,5000);获取jvm参数<br>⼆、–参数，是通过main的args传⼊进去的<br>args参数最后会放⼊env环境变量⾥，所以配置bean（@ConfigurationProperties被注解修饰的）的配置值也被覆盖。<br>spring boot修改配置参数时命令行优先级最高,其次环境变量,最后是配置文件<br>使用命令行时–优先级最高,其次是-D(VM options)</li>
+<li>-DpropName&#x3D;propValue的形式携带，要放在-jar参数前⾯,<code>java -Dxxx=test -DprocessType=1 -jar xxx.jar</code>,取值:System.getProperty(“propName”)</li>
+<li>参数直接跟在命令后⾯,<code>java -jar xxx jar processType=1 processType2=2</code>,取值:参数就是jar包⾥主启动类中main⽅法的args参数，按顺序来</li>
+<li>springboot的⽅式，–key&#x3D;value⽅式,<code>java -jar xxx.jar --xxx=test</code>,取值:spring的@value(“$(xxx)”)</li>
+</ol>
+<p>区别：</p>
+<ol>
+<li>-D参数为jvm参数，项⽬启动完后可通过<code>System.getProperty(&quot;nacos.standalone&quot;)</code>进⾏读取,也可以通过这个⽅式<code>Integer.getInteger(&quot;nacos.http.timeout&quot;,5000);</code>获取jvm参数</li>
+<li>–参数，是通过main的args传⼊进去的，args参数最后会放⼊env环境变量⾥，所以配置bean（@ConfigurationProperties被注解修饰的）的配置值也被覆盖。</li>
+<li>spring boot修改配置参数时命令行优先级最高,其次环境变量,最后是配置文件，使用命令行时–优先级最高,其次是-D(VM options)</li>
 </ol>
 <p><strong>@Value失效的情况</strong></p>
 <ol>
@@ -965,8 +965,7 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 environmen<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"propName"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>Springboot中默认的静态资源路径有4个，分别是：</p>
 <pre class="line-numbers language-none"><code class="language-none">classpath:&#x2F;METAINF&#x2F;resources&#x2F;，classpath:&#x2F;resources&#x2F;，classpath:&#x2F;static&#x2F;，classpath:&#x2F;public&#x2F;
-优先级顺序为：META-INF&#x2F;resources&gt;resources&gt;static&gt;public
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+优先级顺序为:META-INF&#x2F;resources&gt;resources&gt;static&gt;public<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 <h2 id="XML配置"><a href="#XML配置" class="headerlink" title="XML配置"></a>XML配置</h2><h3 id="lt-mvc-annotation-driven-x2F-gt"><a href="#lt-mvc-annotation-driven-x2F-gt" class="headerlink" title="&lt;mvc:annotation-driven &#x2F;&gt;"></a>&lt;mvc:annotation-driven &#x2F;&gt;</h3><p>Spring 3.0.x中使用了&lt;mvc:annotation-driven &#x2F;&gt;后，默认会帮我们注册默认处理请求，参数和返回值的类，其中最主要的两个类：DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter，分别为HandlerMapping的实现类和HandlerAdapter的实现类。从3.1.x版本开始对应实现类改为了RequestMappingHandlerMapping和RequestMappingHandlerAdapter。</p>
@@ -982,7 +981,7 @@ environmen<span class="token punctuation">.</span><span class="token function">g
 <h3 id="lt-context-annotation-config-x2F-gt"><a href="#lt-context-annotation-config-x2F-gt" class="headerlink" title="&lt;context:annotation-config &#x2F;&gt;"></a>&lt;context:annotation-config &#x2F;&gt;</h3><p>&lt; context:annotation-config&gt;是用于激活那些已经在spring容器里注册过的bean上面的注解，也就是显示的向Spring注册AutowiredAnnotationBeanPostProcessor，CommonAnnotationBeanPostProcessor，PersistenceAnnotationBeanPostProcessor，RequiredAnnotationBeanPostProcessor这四个Processor，注册这4个BeanPostProcessor的作用，就是为了你的系统能够识别相应的注解。BeanPostProcessor就是处理注解的处理器。<br>一般来说，这些注解我们还是比较常用，尤其是@Autowired的注解，比如我们要使用@Autowired注解，那么就必须事先在Spring容器中声明AutowiredAnnotationBeanPostProcessor Bean。传统声明方式如下</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>在自动注入的时候更是经常使用，所以如果总是需要按照传统的方式一条一条配置显得有些繁琐和没有必要，于是spring给我们提供&lt;context:annotation-config &#x2F;&gt;的简化配置方式，自动帮你完成声明。</p>
-<h3 id="lt-context-component-scan-base-package-x3D-”XX-XX”-x2F-gt"><a href="#lt-context-component-scan-base-package-x3D-”XX-XX”-x2F-gt" class="headerlink" title="&lt;context:component-scan base-package&#x3D;”XX.XX”&#x2F;&gt;"></a>&lt;context:component-scan base-package&#x3D;”XX.XX”&#x2F;&gt;</h3><p>该配置项其实也包含了自动注入上述processor的功能，因此<strong>当使用&lt;context:component-scan &#x2F;&gt;后，就可以将&lt;context:annotation-config &#x2F;&gt;移除了。</strong><br>&lt;context:annotation-config &#x2F;&gt;：仅能够在已经在已经注册过的bean上面起作用。对于没有在spring容器中注册的bean，它并不能执行任何操作。<br>&lt;context:component-scan base-package&#x3D;”XX.XX”&#x2F;&gt;除了具有上面的功能之外，还具有自动将带有@component,@service,@Repository等注解的对象注册到spring容器中的功能。<br>如果同时使用这两个配置会不会出现重复注入的情况呢？<br>&lt;context:annotation-config &#x2F;&gt;和&lt;context:component-scan &#x2F;&gt;同时存在的时候，前者会被忽略。如@Autowire，@Resource等注解只会被注入一次！</p>
+<h3 id="lt-context-component-scan-base-package-x3D-”XX-XX”-x2F-gt"><a href="#lt-context-component-scan-base-package-x3D-”XX-XX”-x2F-gt" class="headerlink" title="&lt;context:component-scan base-package&#x3D;”XX.XX”&#x2F;&gt;"></a>&lt;context:component-scan base-package&#x3D;”XX.XX”&#x2F;&gt;</h3><p>该配置项其实也包含了自动注入上述processor的功能，因此<strong>当使用&lt;context:component-scan &#x2F;&gt;后，就可以将&lt;context:annotation-config &#x2F;&gt;移除了</strong>。<br>&lt;context:annotation-config &#x2F;&gt;：仅能够在已经在已经注册过的bean上面起作用。对于没有在spring容器中注册的bean，它并不能执行任何操作。<br>&lt;context:component-scan base-package&#x3D;”XX.XX”&#x2F;&gt;除了具有上面的功能之外，还具有自动将带有@component,@service,@Repository等注解的对象注册到spring容器中的功能。<br>如果同时使用这两个配置会不会出现重复注入的情况呢？<br>&lt;context:annotation-config &#x2F;&gt;和&lt;context:component-scan &#x2F;&gt;同时存在的时候，前者会被忽略。如@Autowire，@Resource等注解只会被注入一次！</p>
 <h3 id="lt-context-spring-configured-x2F-gt"><a href="#lt-context-spring-configured-x2F-gt" class="headerlink" title="&lt;context:spring-configured &#x2F;&gt;"></a>&lt;context:spring-configured &#x2F;&gt;</h3><p>在没有注入ioc容器的类里面进行依赖注入,例如当一个类没有被Spring注册为bean,却想要在这个类里面使用@Autowired注解需要在XML里配置此标签</p>
 <h3 id="注册拦截器"><a href="#注册拦截器" class="headerlink" title="注册拦截器"></a>注册拦截器</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 自定义拦截器，拦截所有请求，验证是否登录 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>interceptors</span><span class="token punctuation">></span></span>
@@ -997,8 +996,7 @@ environmen<span class="token punctuation">.</span><span class="token function">g
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>argument-resolvers</span><span class="token punctuation">></span></span>
             <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.liyao.pre.UserIdArgumentResolver<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>argument-resolvers</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>annotation-driven</span><span class="token punctuation">></span></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>annotation-driven</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="属性文件读取"><a href="#属性文件读取" class="headerlink" title="属性文件读取"></a>属性文件读取</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 属性文件读取--></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>property-placeholder</span> <span class="token attr-name">location</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>classpath:jdbc.properties<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
@@ -1010,7 +1008,7 @@ environmen<span class="token punctuation">.</span><span class="token function">g
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>list</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="有关classpath和classpath"><a href="#有关classpath和classpath" class="headerlink" title="有关classpath和classpath*"></a>有关classpath和classpath*</h3><p>Spring可以通过指定classpath*:或classpath:前缀加路径的方式从classpath下加载文件。<br>classpath*:可以从多个jar文件中加载相同的文件。<br>classpath:只能加载找到的第一个文件。<br>而使用classpath加载一般的优先级为：当前classes &gt; jar包中的classes</p>
+<h3 id="有关classpath和classpath"><a href="#有关classpath和classpath" class="headerlink" title="有关classpath和classpath*"></a>有关classpath和classpath*</h3><p>Spring可以通过指定classpath*:或classpath:前缀加路径的方式从classpath下加载文件。<strong>classpath*:可以从多个jar文件中加载相同的文件。classpath:只能加载找到的第一个文件。</strong>而使用classpath加载一般的优先级为：当前classes &gt; jar包中的classes</p>
 <h3 id="自定义消息转换器"><a href="#自定义消息转换器" class="headerlink" title="自定义消息转换器"></a>自定义消息转换器</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--自定义消息转换器--></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>annotation-driven</span> <span class="token punctuation">></span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>message-converters</span> <span class="token attr-name">register-defaults</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>

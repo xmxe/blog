@@ -8,8 +8,6 @@ img: https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg
 
 > [VolatileTest.java](https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/study_demo/thread/VolatileTest.java)
 
-
-
 ### 如何保证变量的可见性？
 
 在Java中，volatile关键字可以保证变量的可见性，如果我们将变量声明为**volatile**，这就指示JVM，这个变量是共享且不稳定的，每次使用它都到主存中进行读取。
@@ -24,7 +22,7 @@ volatile关键字能保证数据的可见性，但不能保证数据的原子性
 
 ### 如何禁止指令重排序？
 
-**在Java中，volatile关键字除了可以保证变量的可见性，还有一个重要的作用就是防止JVM的指令重排序**。如果我们将变量声明为**volatile**，在对这个变量进行读写操作的时候，会通过插入特定的**内存屏障**的方式来禁止指令重排序。
+在Java中，volatile关键字除了可以保证变量的可见性，还有一个重要的作用就是防止JVM的指令重排序。如果我们将变量声明为volatile，在对这个变量进行读写操作的时候，会通过插入特定的内存屏障的方式来禁止指令重排序。
 
 在Java中，Unsafe类提供了三个开箱即用的内存屏障相关的方法，屏蔽了操作系统底层的差异：
 
@@ -34,9 +32,7 @@ public native void storeFence();
 public native void fullFence();
 ```
 
-理论上来说，你通过这个三个方法也可以实现和volatile禁止重排序一样的效果，只是会麻烦一些。
-
-面试中面试官经常会说：“单例模式了解吗？来给我手写一下！给我解释一下双重检验锁方式实现单例模式的原理呗！”
+理论上来说，你通过这个三个方法也可以实现和volatile禁止重排序一样的效果，只是会麻烦一些。面试中面试官经常会说：“单例模式了解吗？来给我手写一下！给我解释一下双重检验锁方式实现单例模式的原理呗！”
 
 **双重校验锁实现对象单例（线程安全）**：
 
@@ -73,7 +69,7 @@ uniqueInstance采用volatile关键字修饰也是很有必要的，`uniqueInstan
 
 ### volatile可以保证原子性么？
 
-**volatile关键字能保证变量的可见性，但不能保证对变量的操作是原子性的。**
+**volatile关键字能保证变量的可见性，但不能保证对变量的操作是原子性的**。
 
 我们通过下面的代码即可证明：
 
@@ -117,9 +113,7 @@ volatile是无法保证这三个操作是具有原子性的，有可能导致下
 1. 线程1对inc进行读取操作之后，还未对其进行修改。线程2又读取了inc的值并对其进行修改（+1），再将inc的值写回内存。
 2. 线程2操作完毕后，线程1对inc的值进行修改（+1），再将inc的值写回内存。
 
-这也就导致两个线程分别对inc进行了一次自增操作后，inc实际上只增加了1。
-
-其实，如果想要保证上面的代码运行正确也非常简单，利用synchronized、Lock或者AtomicInteger都可以。
+这也就导致两个线程分别对inc进行了一次自增操作后，inc实际上只增加了1。其实，如果想要保证上面的代码运行正确也非常简单，利用synchronized、Lock或者AtomicInteger都可以。
 
 使用**synchronized**改进：
 
@@ -152,8 +146,6 @@ public void increase() {
     }
 }
 ```
-
-
 
 ### 原理
 

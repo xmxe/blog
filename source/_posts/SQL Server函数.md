@@ -8,9 +8,7 @@ img: https://picx.zhimg.com/v2-499cbcaf31cf035a9850972edb24939f_1440w.jpg
 
 ## sql server行转列
 
-类似MySQL group_concat()使用stuff()
-
-stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
+类似MySQL group_concat()使用stuff()。stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
 
 ```sql
 select stuff('ABCDEFG',2,3,''hijk) = AhijkEFG

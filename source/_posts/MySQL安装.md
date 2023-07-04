@@ -354,7 +354,7 @@ cat /var/log/mysqld.log | grep password
 6. 配置其他内容如编码则新建`/etc/my.cnf`
 
 
-## windows安装MySQL
+## Windows安装MySQL
 
 ### 卸载
 ```

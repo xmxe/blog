@@ -531,7 +531,7 @@
                 <h2 id="TCP与UDP"><a href="#TCP与UDP" class="headerlink" title="TCP与UDP"></a>TCP与UDP</h2><h3 id="TCP与UDP的区别"><a href="#TCP与UDP的区别" class="headerlink" title="TCP与UDP的区别"></a>TCP与UDP的区别</h3><ol>
 <li><strong>是否面向连接</strong>：UDP在传送数据之前不需要先建立连接。而TCP提供面向连接的服务，在传送数据之前必须先建立连接，数据传送结束后要释放连接。</li>
 <li><strong>是否是可靠传输</strong>：远地主机在收到UDP报文后，不需要给出任何确认，并且不保证数据不丢失，不保证是否顺序到达。TCP提供可靠的传输服务，TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制。通过TCP连接传输的数据，无差错、不丢失、不重复、并且按序到达。</li>
-<li><strong>是否有状态</strong>：这个和上面的“是否可靠传输”相对应。TCP传输是有状态的，这个有状态说的是TCP会去记录自己发送消息的状态比如消息是否发送了、是否被接收了等等。为此，TCP需要维持复杂的连接状态表。而UDP是无状态服务，简单来说就是不管发出去之后的事情了（<strong>这很渣男！</strong>）。</li>
+<li><strong>是否有状态</strong>：这个和上面的“是否可靠传输”相对应。TCP传输是有状态的，这个有状态说的是TCP会去记录自己发送消息的状态比如消息是否发送了、是否被接收了等等。为此，TCP需要维持复杂的连接状态表。而UDP是无状态服务，简单来说就是不管发出去之后的事情了</li>
 <li><strong>传输效率</strong>：由于使用TCP进行传输的时候多了连接、确认、重传等机制，所以TCP的传输效率要比UDP低很多。</li>
 <li><strong>传输形式</strong>：TCP是面向字节流的，UDP是面向报文的。</li>
 <li><strong>首部开销</strong>：TCP首部开销（20～60字节）比UDP首部开销（8字节）要大。</li>
@@ -541,7 +541,7 @@
 <table>
 <thead>
 <tr>
-<th></th>
+<th>区别</th>
 <th>TCP</th>
 <th>UDP</th>
 </tr>
@@ -587,7 +587,7 @@
 <li><strong>TCP用于对传输准确性要求特别高的场景</strong>，比如文件传输、发送和接收邮件、远程登录等等。</li>
 </ul>
 <h3 id="HTTP基于TCP还是UDP？"><a href="#HTTP基于TCP还是UDP？" class="headerlink" title="HTTP基于TCP还是UDP？"></a>HTTP基于TCP还是UDP？</h3><p><strong>HTTP协议是基于TCP协议的</strong>，所以发送HTTP请求之前首先要建立TCP连接也就是要经历3次握手。</p>
-<p>🐛修正（参见<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/1915">issue#1915</a>）：HTTP3.0之前是基于TCP协议的，而HTTP3.0将弃用TCP，改用<strong>基于UDP的QUIC协议</strong>。此变化主要为了解决HTTP&#x2F;2中存在的队头阻塞问题。由于HTTP&#x2F;2在单个TCP连接上使用了多路复用，受到TCP拥塞控制的影响，少量的丢包就可能导致整个TCP连接上的所有流被阻塞。</p>
+<p>🐛修正（参见<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/1915">issue#1915</a>）：HTTP3.0之前是基于TCP协议的，而HTTP3.0将弃用TCP，改用基于UDP的QUIC协议。此变化主要为了解决HTTP&#x2F;2中存在的队头阻塞问题。由于HTTP&#x2F;2在单个TCP连接上使用了多路复用，受到TCP拥塞控制的影响，少量的丢包就可能导致整个TCP连接上的所有流被阻塞。</p>
 <blockquote>
 <p>相关证明可以参考下面这两个链接：</p>
 <ul>
@@ -599,8 +599,8 @@
 <ol>
 <li><strong>HTTP协议</strong>：超文本传输协议(HTTP，HyperTextTransferProtocol)主要是为Web浏览器与Web服务器之间的通信而设计的。当我们使用浏览器浏览网页的时候，我们网页就是通过HTTP请求进行加载的。</li>
 <li><strong>HTTPS协议</strong>：更安全的超文本传输协议(HTTPS,HypertextTransferProtocolSecure)，身披SSL外衣的HTTP协议</li>
-<li><strong>FTP协议</strong>：文件传输协议FTP（FileTransferProtocol），提供文件传输服务，<strong>基于TCP</strong>实现可靠的传输。使用FTP传输文件的好处是可以屏蔽操作系统和文件存储方式。</li>
-<li><strong>SMTP协议</strong>：简单邮件传输协议（SMTP，SimpleMailTransferProtocol）的缩写，<strong>基于TCP协议</strong>，用来发送电子邮件。注意⚠️：接受邮件的协议不是SMTP而是POP3协议。</li>
+<li><strong>FTP协议</strong>：文件传输协议FTP（FileTransferProtocol），提供文件传输服务，基于TCP实现可靠的传输。使用FTP传输文件的好处是可以屏蔽操作系统和文件存储方式。</li>
+<li><strong>SMTP协议</strong>：简单邮件传输协议（SMTP，SimpleMailTransferProtocol）的缩写，基于TCP协议，用来发送电子邮件。注意⚠️：接受邮件的协议不是SMTP而是POP3协议。</li>
 <li><strong>POP3&#x2F;IMAP协议</strong>：POP3和IMAP两者都是负责邮件接收的协议。</li>
 <li><strong>Telnet协议</strong>：远程登陆协议，通过一个终端登陆到其他服务器。被一种称为SSH的非常安全的协议所取代。</li>
 <li><strong>SSH协议</strong>:SSH（SecureShell）是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用SSH协议可以有效防止远程管理过程中的信息泄露问题。SSH建立在可靠的传输协议TCP之上。</li>
@@ -609,7 +609,7 @@
 <p><strong>运行于UDP协议之上的协议</strong>：</p>
 <ol>
 <li><strong>DHCP协议</strong>：动态主机配置协议，动态配置IP地址</li>
-<li><strong>DNS</strong>：**域名系统（DNS，DomainNameSystem）将人类可读的域名(例如，<a target="_blank" rel="noopener" href="http://www.baidu.com)转换为机器可读的ip地址(例如,220.181.38.148)**.我们可以将其理解为专为互联网设计的电话薄.实际上dns同时支持udp和tcp协议./">www.baidu.com)转换为机器可读的IP地址(例如，220.181.38.148)**。我们可以将其理解为专为互联网设计的电话薄。实际上DNS同时支持UDP和TCP协议。</a></li>
+<li><strong>DNS</strong>：域名系统（DNS，DomainNameSystem）将人类可读的域名(例如，<a target="_blank" rel="noopener" href="http://www.baidu.com)转换为机器可读的ip地址(例如,220.181.38.148).我们可以将其理解为专为互联网设计的电话薄.实际上dns同时支持udp和tcp协议./">www.baidu.com)转换为机器可读的IP地址(例如，220.181.38.148)。我们可以将其理解为专为互联网设计的电话薄。实际上DNS同时支持UDP和TCP协议。</a></li>
 </ol>
 <h2 id="TCP三次握手与四次挥手"><a href="#TCP三次握手与四次挥手" class="headerlink" title="TCP三次握手与四次挥手"></a>TCP三次握手与四次挥手</h2><h3 id="建立连接-TCP三次握手"><a href="#建立连接-TCP三次握手" class="headerlink" title="建立连接-TCP三次握手"></a>建立连接-TCP三次握手</h3><p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png" alt="TCP三次握手图解"></p>
 <p>建立一个TCP连接需要“三次握手”，缺一不可：</p>
@@ -618,7 +618,7 @@
 <li><strong>二次握手</strong>:服务端发送带有SYN+ACK(SEQ&#x3D;y,ACK&#x3D;x+1)标志的数据包–&gt;客户端,然后服务端进入<strong>SYN_RECV</strong>状态</li>
 <li><strong>三次握手</strong>:客户端发送带有ACK(ACK&#x3D;y+1)标志的数据包–&gt;服务端，然后客户端和服务器端都进入<strong>ESTABLISHED</strong>状态，完成TCP三次握手。</li>
 </ul>
-<p><strong>当建立了3次握手之后，客户端和服务端就可以传输数据啦！</strong></p>
+<p>当建立了3次握手之后，客户端和服务端就可以传输数据啦！</p>
 <h4 id="为什么要三次握手"><a href="#为什么要三次握手" class="headerlink" title="为什么要三次握手?"></a>为什么要三次握手?</h4><p>三次握手的目的是建立可靠的通信信道，说到通讯，简单来说就是数据的发送与接收，而三次握手最主要的目的就是双方确认自己与对方的发送与接收是正常的。</p>
 <ol>
 <li><strong>第一次握手</strong>：Client什么都不能确认；Server确认了对方发送正常，自己接收正常</li>
@@ -626,7 +626,9 @@
 <li><strong>第三次握手</strong>：Client确认了：自己发送、接收正常，对方发送、接收正常；Server确认了：自己发送、接收正常，对方发送、接收正常</li>
 </ol>
 <p>三次握手就能确认双方收发功能都正常，缺一不可。</p>
+<blockquote>
 <p>更详细的解答可以看这个：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/24853633/answer/115173386">TCP为什么是三次握手，而不是两次或四次？-车小胖的回答-知乎</a>。</p>
+</blockquote>
 <h4 id="第2次握手传回了ACK，为什么还要传回SYN？"><a href="#第2次握手传回了ACK，为什么还要传回SYN？" class="headerlink" title="第2次握手传回了ACK，为什么还要传回SYN？"></a>第2次握手传回了ACK，为什么还要传回SYN？</h4><p>服务端传回发送端所发送的ACK是为了告诉客户端：“我接收到的信息确实就是你所发送的信号了”，这表明从客户端到服务端的通信是正常的。回传SYN则是为了建立并确认从服务端到客户端的通信。</p>
 <blockquote>
 <p>SYN同步序列编号(SynchronizeSequenceNumbers)是TCP&#x2F;IP建立连接时使用的握手信号。在客户机和服务器之间建立正常的TCP网络连接时，客户机首先发出一个SYN消息，服务器使用SYN-ACK应答表示接收到了这个消息，最后客户机再以ACK(Acknowledgement)消息响应。这样在客户机和服务器之间才能建立起可靠的TCP连接，数据才可以在客户机和服务器之间传递。</p>
@@ -637,9 +639,9 @@
 <li><strong>第一次挥手</strong>：客户端发送一个FIN（SEQ&#x3D;X）标志的数据包-&gt;服务端，用来关闭客户端到服务器的数据传送。然后，客户端进入<strong>FIN-WAIT-1</strong>状态。</li>
 <li><strong>第二次挥手</strong>：服务器收到这个FIN（SEQ&#x3D;X）标志的数据包，它发送一个ACK（SEQ&#x3D;X+1）标志的数据包-&gt;客户端。然后，此时服务端进入<strong>CLOSE-WAIT</strong>状态，客户端进入<strong>FIN-WAIT-2</strong>状态。</li>
 <li><strong>第三次挥手</strong>：服务端关闭与客户端的连接并发送一个FIN(SEQ&#x3D;y)标志的数据包-&gt;客户端请求关闭连接，然后，服务端进入<strong>LAST-ACK</strong>状态。</li>
-<li><strong>第四次挥手</strong>：客户端发送ACK(SEQ&#x3D;y+1)标志的数据包-&gt;服务端并且进入<strong>TIME-WAIT</strong>状态，服务端在收到ACK(SEQ&#x3D;y+1)标志的数据包后进入CLOSE状态。此时，如果客户端等待<strong>2MSL</strong>后依然没有收到回复，就证明服务端已正常关闭，随后，客户端也可以关闭连接了。</li>
+<li><strong>第四次挥手</strong>：客户端发送ACK(SEQ&#x3D;y+1)标志的数据包-&gt;服务端并且进入<strong>TIME-WAIT</strong>状态，服务端在收到ACK(SEQ&#x3D;y+1)标志的数据包后进入<strong>CLOSE</strong>状态。此时，如果客户端等待2MSL后依然没有收到回复，就证明服务端已正常关闭，随后，客户端也可以关闭连接了。</li>
 </ol>
-<p><strong>只要四次挥手没有结束，客户端和服务端就可以继续传输数据！</strong></p>
+<p>只要四次挥手没有结束，客户端和服务端就可以继续传输数据！</p>
 <h4 id="为什么要四次挥手？"><a href="#为什么要四次挥手？" class="headerlink" title="为什么要四次挥手？"></a>为什么要四次挥手？</h4><p>TCP是全双工通信，可以双向传输数据。任何一方都可以在数据传送结束后发出连接释放的通知，待对方确认后进入半关闭状态。当另一方也没有数据再发送的时候，则发出连接释放通知，对方确认后就完全关闭了TCP连接。</p>
 <p>举个例子：A和B打电话，通话即将结束后。</p>
 <ol>
@@ -682,8 +684,8 @@
 <li><strong>流量控制</strong>:TCP连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP使用的流量控制协议是可变大小的滑动窗口协议（TCP利用滑动窗口实现流量控制）。</li>
 <li><strong>拥塞控制</strong>:当网络拥塞时，减少数据的发送。</li>
 </ol>
-<h2 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h2><p><strong>TCP利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收</strong>。接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为0，则发送方不能发送数据。</p>
-<p><strong>为什么需要流量控制</strong>?这是因为双方在通信的时候，发送方的速率与接收方的速率是不一定相等，如果发送方的发送速率太快，会导致接收方处理不过来。如果接收方处理不过来的话，就只能把处理不过来的数据存在接收缓冲区(ReceivingBuffers)里（失序的数据包也会被存放在缓存区里）。如果缓存区满了发送方还在狂发数据的话，接收方只能把收到的数据包丢掉。出现丢包问题的同时又疯狂浪费着珍贵的网络资源。因此，我们需要控制发送方的发送速率，让接收方与发送方处于一种动态平衡才好。</p>
+<h2 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h2><p>TCP利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为0，则发送方不能发送数据。</p>
+<p>为什么需要流量控制?这是因为双方在通信的时候，发送方的速率与接收方的速率是不一定相等，如果发送方的发送速率太快，会导致接收方处理不过来。如果接收方处理不过来的话，就只能把处理不过来的数据存在接收缓冲区(ReceivingBuffers)里（失序的数据包也会被存放在缓存区里）。如果缓存区满了发送方还在狂发数据的话，接收方只能把收到的数据包丢掉。出现丢包问题的同时又疯狂浪费着珍贵的网络资源。因此，我们需要控制发送方的发送速率，让接收方与发送方处于一种动态平衡才好。</p>
 <p>这里需要注意的是（常见误区）：</p>
 <ul>
 <li>发送端不等同于客户端</li>
@@ -704,7 +706,7 @@
 <li><strong>SND.UNA</strong>：SendUnacknowledged指针，指向发送窗口的第一个字节。</li>
 <li><strong>SND.NXT</strong>：SendNext指针，指向可用窗口的第一个字节。</li>
 </ul>
-<p><strong>可用窗口大小</strong>&#x3D;<code>SND.UNA+SND.WND-SND.NXT</code>。</p>
+<p><strong>可用窗口大小&#x3D;SND.UNA+SND.WND-SND.NXT</strong>。</p>
 <p><strong>TCP接收窗口可以划分成三个部分</strong>：</p>
 <ol>
 <li>已经接收并且已经确认的TCP段（已经接收并确认）；</li>
@@ -713,12 +715,12 @@
 </ol>
 <p><strong>TCP接收窗口结构图示</strong>：</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-receive-window.png" alt="TCP接收窗口结构"></p>
-<p><strong>接收窗口的大小是根据接收端处理数据的速度动态调整的</strong>。如果接收端读取数据快，接收窗口可能会扩大。否则，它可能会缩小。</p>
+<p>接收窗口的大小是根据接收端处理数据的速度动态调整的。如果接收端读取数据快，接收窗口可能会扩大。否则，它可能会缩小。</p>
 <p>另外，这里的滑动窗口大小只是为了演示使用，实际窗口大小通常会远远大于这个值。</p>
 <h2 id="TCP的拥塞控制是怎么实现的？"><a href="#TCP的拥塞控制是怎么实现的？" class="headerlink" title="TCP的拥塞控制是怎么实现的？"></a>TCP的拥塞控制是怎么实现的？</h2><p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏。这种情况就叫拥塞。拥塞控制就是为了防止过多的数据注入到网络中，这样就可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机，所有的路由器，以及与降低网络传输性能有关的所有因素。相反，流量控制往往是点对点通信量的控制，是个端到端的问题。流量控制所要做到的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-congestion-control.png" alt="TCP的拥塞控制"></p>
-<p>为了进行拥塞控制，TCP发送方要维持一个<strong>拥塞窗口(cwnd)</strong> 的状态变量。拥塞控制窗口的大小取决于网络的拥塞程度，并且动态变化。发送方让自己的发送窗口取为拥塞窗口和接收方的接受窗口中较小的一个。</p>
-<p>TCP的拥塞控制采用了四种算法，即<strong>慢开始</strong>、<strong>拥塞避免</strong>、<strong>快重传</strong>和<strong>快恢复</strong>。在网络层也可以使路由器采用适当的分组丢弃策略（如主动队列管理AQM），以减少网络拥塞的发生。</p>
+<p>为了进行拥塞控制，TCP发送方要维持一个拥塞窗口(cwnd) 的状态变量。拥塞控制窗口的大小取决于网络的拥塞程度，并且动态变化。发送方让自己的发送窗口取为拥塞窗口和接收方的接受窗口中较小的一个。</p>
+<p>TCP的拥塞控制采用了四种算法，即慢开始、拥塞避免、快重传和快恢复。在网络层也可以使路由器采用适当的分组丢弃策略（如主动队列管理AQM），以减少网络拥塞的发生。</p>
 <ul>
 <li><strong>慢开始</strong>： 慢开始算法的思路是当主机开始发送数据时，如果立即把大量数据字节注入到网络，那么可能会引起网络阻塞，因为现在还不知道网络的符合情况。经验表明，较好的方法是先探测一下，即由小到大逐渐增大发送窗口，也就是由小到大逐渐增大拥塞窗口数值。cwnd初始值为1，每经过一个传播轮次，cwnd加倍。</li>
 <li><strong>拥塞避免</strong>： 拥塞避免算法的思路是让拥塞窗口cwnd缓慢增大，即每经过一个往返时间RTT就把发送方的cwnd加1.</li>
@@ -731,7 +733,7 @@
 <p><strong>1)无差错情况:</strong></p>
 <p>发送方发送分组,接收方在规定时间内收到,并且回复确认.发送方再次发送。</p>
 <p><strong>2)出现差错情况（超时重传）:</strong></p>
-<p>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为<strong>自动重传请求ARQ</strong>。另外在停止等待协议中若收到重复分组，就丢弃该分组，但同时还要发送确认。</p>
+<p>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为自动重传请求ARQ。另外在停止等待协议中若收到重复分组，就丢弃该分组，但同时还要发送确认。</p>
 <p><strong>3)确认丢失和确认迟到</strong></p>
 <ul>
 <li><strong>确认丢失</strong>：确认消息在传输过程丢失。当A发送M1消息，B收到后，B向A发送了一个M1确认消息，但却在传输过程中丢失。而A并不知道，在超时计时过后，A重传M1消息，B再次收到该消息后采取以下两点措施：1.丢弃这个重复的M1消息，不向上层交付。2.向A发送确认消息。（不会认为已经发送过了，就不再发送。A能重传，就证明B的确认消息丢失）。</li>
@@ -740,8 +742,7 @@
 <h3 id="连续ARQ协议"><a href="#连续ARQ协议" class="headerlink" title="连续ARQ协议"></a>连续ARQ协议</h3><p>连续ARQ协议可提高信道利用率。发送方维持一个发送窗口，凡位于发送窗口内的分组可以连续发送出去，而不需要等待对方确认。接收方一般采用累计确认，对按序到达的最后一个分组发送确认，表明到这个分组为止的所有分组都已经正确收到了。</p>
 <p><strong>优点</strong>：信道利用率高，容易实现，即使确认丢失，也不必重传。</p>
 <p><strong>缺点</strong>：不能向发送方反映出接收方已经正确收到的所有分组的信息。比如：发送方发送了5条消息，中间第三条丢失（3号），这时接收方只能对前两个发送确认。发送方无法知道后三个分组的下落，而只好把后三个全部重传一次。这也叫Go-Back-N（回退N），表示需要退回来重传已经发送过的N个消息</p>
-<h2 id="Http、Https"><a href="#Http、Https" class="headerlink" title="Http、Https"></a>Http、Https</h2><h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><h4 id="HTTP协议介绍"><a href="#HTTP协议介绍" class="headerlink" title="HTTP协议介绍"></a>HTTP协议介绍</h4><p>HTTP协议，全称超文本传输协议（HypertextTransferProtocol）。顾名思义，HTTP协议就是用来规范超文本的传输，超文本，也就是网络上的包括文本在内的各式各样的消息，具体来说，主要是来规范浏览器和服务器端的行为的。</p>
-<p>并且，HTTP是一个无状态（stateless）协议，也就是说服务器不维护任何有关客户端过去所发请求的消息。这其实是一种懒政，有状态协议会更加复杂，需要维护状态（历史信息），而且如果客户或服务器失效，会产生状态的不一致，解决这种不一致的代价更高。</p>
+<h2 id="Http、Https"><a href="#Http、Https" class="headerlink" title="Http、Https"></a>Http、Https</h2><h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><h4 id="HTTP协议介绍"><a href="#HTTP协议介绍" class="headerlink" title="HTTP协议介绍"></a>HTTP协议介绍</h4><p>HTTP协议，全称超文本传输协议（HypertextTransferProtocol）。顾名思义，HTTP协议就是用来规范超文本的传输，超文本，也就是网络上的包括文本在内的各式各样的消息，具体来说，主要是来规范浏览器和服务器端的行为的。并且，HTTP是一个无状态（stateless）协议，也就是说服务器不维护任何有关客户端过去所发请求的消息。这其实是一种懒政，有状态协议会更加复杂，需要维护状态（历史信息），而且如果客户或服务器失效，会产生状态的不一致，解决这种不一致的代价更高。</p>
 <h4 id="HTTP协议通信过程"><a href="#HTTP协议通信过程" class="headerlink" title="HTTP协议通信过程"></a>HTTP协议通信过程</h4><p>HTTP是应用层协议，它以TCP（传输层）作为底层协议，默认端口为80.通信过程主要如下：</p>
 <ol>
 <li>服务器在80端口等待客户的请求。</li>
@@ -755,11 +756,10 @@
 <p>HTTPS协议中，SSL通道通常使用基于密钥的加密算法，密钥长度通常是40比特或128比特。</p>
 <h4 id="HTTPS协议优点"><a href="#HTTPS协议优点" class="headerlink" title="HTTPS协议优点"></a>HTTPS协议优点</h4><p>保密性好、信任度高。</p>
 <h3 id="HTTPS的核心—SSL-x2F-TLS协议"><a href="#HTTPS的核心—SSL-x2F-TLS协议" class="headerlink" title="HTTPS的核心—SSL&#x2F;TLS协议"></a>HTTPS的核心—SSL&#x2F;TLS协议</h3><p>HTTPS之所以能达到较高的安全性要求，就是结合了SSL&#x2F;TLS和TCP协议，对通信数据进行加密，解决了HTTP数据透明的问题。接下来重点介绍一下SSL&#x2F;TLS的工作原理。</p>
-<h4 id="SSL和TLS的区别？"><a href="#SSL和TLS的区别？" class="headerlink" title="SSL和TLS的区别？"></a>SSL和TLS的区别？</h4><p><strong>SSL和TLS没有太大的区别</strong></p>
-<p>SSL指安全套接字协议（SecureSocketsLayer），首次发布与1996年。SSL的首次发布其实已经是他的3.0版本，SSL1.0从未面世，SSL2.0则具有较大的缺陷（DROWN缺陷——DecryptingRSAwithObsoleteandWeakenedeNcryption）。很快，在1999年，SSL3.0进一步升级，<strong>新版本被命名为TLS1.0</strong>。因此，TLS是基于SSL之上的，但由于习惯叫法，通常把HTTPS中的核心加密协议混称为SSL&#x2F;TLS。</p>
-<h4 id="SSL-x2F-TLS的工作原理"><a href="#SSL-x2F-TLS的工作原理" class="headerlink" title="SSL&#x2F;TLS的工作原理"></a>SSL&#x2F;TLS的工作原理</h4><h5 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h5><p>SSL&#x2F;TLS的核心要素是<strong>非对称加密</strong>。非对称加密采用两个密钥——一个公钥，一个私钥。在通信时，私钥仅由解密者保存，公钥由任何一个想与解密者通信的发送者（加密者）所知。可以设想一个场景，</p>
+<h4 id="SSL和TLS的区别？"><a href="#SSL和TLS的区别？" class="headerlink" title="SSL和TLS的区别？"></a>SSL和TLS的区别？</h4><p><strong>SSL和TLS没有太大的区别</strong>,SSL指安全套接字协议（SecureSocketsLayer），首次发布与1996年。SSL的首次发布其实已经是他的3.0版本，SSL1.0从未面世，SSL2.0则具有较大的缺陷（DROWN缺陷——DecryptingRSAwithObsoleteandWeakenedeNcryption）。很快，在1999年，SSL3.0进一步升级，新版本被命名为TLS1.0。因此，TLS是基于SSL之上的，但由于习惯叫法，通常把HTTPS中的核心加密协议混称为SSL&#x2F;TLS。</p>
+<h4 id="SSL-x2F-TLS的工作原理"><a href="#SSL-x2F-TLS的工作原理" class="headerlink" title="SSL&#x2F;TLS的工作原理"></a>SSL&#x2F;TLS的工作原理</h4><h5 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h5><p>SSL&#x2F;TLS的核心要素是非对称加密。非对称加密采用两个密钥——一个公钥，一个私钥。在通信时，私钥仅由解密者保存，公钥由任何一个想与解密者通信的发送者（加密者）所知。</p>
 <blockquote>
-<p>在某个自助邮局，每个通信信道都是一个邮箱，每一个邮箱所有者都在旁边立了一个牌子，上面挂着一把钥匙：这是我的公钥，发送者请将信件放入我的邮箱，并用公钥锁好。</p>
+<p>可以设想一个场景，在某个自助邮局，每个通信信道都是一个邮箱，每一个邮箱所有者都在旁边立了一个牌子，上面挂着一把钥匙：这是我的公钥，发送者请将信件放入我的邮箱，并用公钥锁好。</p>
 <p>但是公钥只能加锁，并不能解锁。解锁只能由邮箱的所有者——因为只有他保存着私钥。</p>
 <p>这样，通信信息就不会被其他人截获了，这依赖于私钥的保密性。</p>
 </blockquote>
@@ -770,8 +770,7 @@
 <p>单向陷门函数：一个较弱的单向函数。已知单向陷门函数f，陷门h，给定任意一个输入x，易计算出输出y&#x3D;f(x;h)；而给定一个输出y，假设存在f(x;h)&#x3D;y，很难根据f来计算出x，但可以根据f和h来推导出x。</p>
 </blockquote>
 <p><img src="https://javaguide.cn/assets/OWF.03d24071.png" alt="单向函数"></p>
-<p>上图就是一个单向函数（不是单项陷门函数），假设有一个绝世秘籍，任何知道了这个秘籍的人都可以把苹果汁榨成苹果，那么这个秘籍就是“陷门”了吧。</p>
-<p>在这里，函数f的计算方法相当于公钥，陷门h相当于私钥。公钥f是公开的，任何人对已有输入，都可以用f加密，而要想根据加密信息还原出原信息，必须要有私钥才行。</p>
+<p>上图就是一个单向函数（不是单项陷门函数），假设有一个绝世秘籍，任何知道了这个秘籍的人都可以把苹果汁榨成苹果，那么这个秘籍就是“陷门”了吧。在这里，函数f的计算方法相当于公钥，陷门h相当于私钥。公钥f是公开的，任何人对已有输入，都可以用f加密，而要想根据加密信息还原出原信息，必须要有私钥才行。</p>
 <h5 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h5><p>使用SSL&#x2F;TLS进行通信的双方需要使用非对称加密方案来通信，但是非对称加密设计了较为复杂的数学算法，在实际通信过程中，计算的代价较高，效率太低，因此，SSL&#x2F;TLS实际对消息的加密使用的是对称加密。</p>
 <blockquote>
 <p>对称加密：通信双方共享唯一密钥k，加解密算法已知，加密方利用密钥k加密，解密方利用密钥k解密，保密性依赖于密钥k的保密性。</p>
@@ -790,9 +789,9 @@
 <p>同样的，S公钥即使做加密，也难以避免这种信任性问题，C被AS拐跑了！</p>
 </blockquote>
 <p><img src="https://javaguide.cn/assets/attack1.48b62b2e.png" alt="img"></p>
-<p>为了公钥传输的信赖性问题，第三方机构应运而生——证书颁发机构（CA，CertificateAuthority）。CA默认是受信任的第三方。CA会给各个服务器颁发证书，证书存储在服务器上，并附有CA的<strong>电子签名</strong>（见下节）。</p>
+<p>为了公钥传输的信赖性问题，第三方机构应运而生——证书颁发机构（CA，CertificateAuthority）。CA默认是受信任的第三方。CA会给各个服务器颁发证书，证书存储在服务器上，并附有CA的电子签名（见下节）。</p>
 <p>当客户端（浏览器）向服务器发送HTTPS请求时，一定要先获取目标服务器的证书，并根据证书上的信息，检验证书的合法性。一旦客户端检测到证书非法，就会发生错误。客户端获取了服务器的证书后，由于证书的信任性是由第三方信赖机构认证的，而证书上又包含着服务器的公钥信息，客户端就可以放心的信任证书上的公钥就是目标服务器的公钥。</p>
-<h5 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h5><p>好，到这一小节，已经是SSL&#x2F;TLS的尾声了。上一小节提到了数字签名，数字签名要解决的问题，是防止证书被伪造。第三方信赖机构CA之所以能被信赖，就是<strong>靠数字签名技术</strong>。</p>
+<h5 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h5><p>好，到这一小节，已经是SSL&#x2F;TLS的尾声了。上一小节提到了数字签名，数字签名要解决的问题，是防止证书被伪造。第三方信赖机构CA之所以能被信赖，就是靠数字签名技术。</p>
 <p>数字签名，是CA在给服务器颁发证书时，使用散列+加密的组合技术，在证书上盖个章，以此来提供验伪的功能。具体行为如下：</p>
 <blockquote>
 <p>CA知道服务器的公钥，对证书采用散列技术生成一个摘要。CA使用CA私钥对该摘要进行加密，并附在证书下方，发送给服务器。</p>
@@ -812,7 +811,7 @@
 <p>对于数字签名，我这里讲的比较简单，如果你没有搞清楚的话，强烈推荐你看看<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18N411X7ty/">数字签名及数字证书原理</a>这个视频，这是我看过最清晰的讲解。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/image-20220321121814946.png" alt="img"></p>
 <h4 id="总结https"><a href="#总结https" class="headerlink" title="总结https"></a>总结https</h4><h5 id="https加密过程"><a href="#https加密过程" class="headerlink" title="https加密过程"></a>https加密过程</h5><p>服务器A、客户端B、授权机构CA<br>A向CA申请证书，A把网址、签名等摘要发给CA，CA用自己的私钥加密A的摘要信息（公钥）生成证书，返回证书给A。客户端B访问服务器A，A返回证书(包含A的公钥)，B使用CA的公钥验证CA的签名，判断证书合法性。之后B使用A的公钥加密B的（随机数&#x2F;密钥）发送给A，A使用自己的私钥解密得到B的（随机数&#x2F;密钥），通过密钥对称加密要传输的数据<br><strong>使用数字签名确保消息不可否认，使用数字证书对用户身份进行认证</strong></p>
-<p><strong>那为啥要用第三方权威机构（Certificate Authority，简称 CA）私钥对摘要加密呢？</strong></p>
+<p>那为啥要用第三方权威机构（Certificate Authority，简称 CA）私钥对摘要加密呢？</p>
 <p>因为摘要算法是公开的，中间人可以替换掉证书明文，再根据证书上的摘要算法计算出摘要后把证书上的摘要也给替换掉！这样client拿到证书后计算摘要发现一样，误以为此证书是合法就中招了。</p>
 <p><strong>为啥要先生成摘要再加密呢，不能直接加密？</strong></p>
 <p>因为使用非对称加密是非常耗时的。如果把整个证书内容都加密生成签名的话，客户端验验签也需要把签名解密，证书明文较长，客户端验签就需要很长的时间，而用摘要的话，会把内容很长的明文压缩成小得多的定长字符串，客户端验签的话就会快得多。</p>
@@ -823,7 +822,7 @@
 <li><strong>安全性和资源消耗</strong>：HTTP协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份。HTTPS是运行在SSL&#x2F;TLS之上的HTTP协议，SSL&#x2F;TLS运行在TCP之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。所以说，HTTP安全性没有HTTPS高，但是HTTPS比HTTP耗费更多服务器资源。</li>
 </ul>
 </blockquote>
-<h5 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h5><ul>
+<h5 id="https相关文章"><a href="#https相关文章" class="headerlink" title="https相关文章"></a>https相关文章</h5><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tOHSImjJKiSoGHxJ4pbNeQ">看完这篇HTTPS，和面试官扯皮就没问题了</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2_iPy3-qh_VuzBCLtOFGxQ">终于有人把HTTPS原理讲清楚了！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JNXsBvX32kBQN3UlzfAKHg">硬核！30张图解HTTP常见的面试题</a></li>
@@ -837,7 +836,7 @@
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32754315">摘要、数字签名、数字证书区别</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/e4s6TuMJYMbBAv5bpqR79A">https原理</a></li>
 </ul>
-<h2 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EDsDatrzmY_w09b5s-HrVw">面试官：TCP为什么要三次握手与四次分手？大部分人答不上来！</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/108822858?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline">一文搞定UDP和TCP高频面试题！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0VtugnDC5V30EZrctpGwKA">近两万字TCP硬核知识，教你吊打面试官！</a></li>

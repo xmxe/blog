@@ -51,7 +51,7 @@ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
 /usr/local/nginx/sbin/nginx -s quit  # 正常退出nginx，保存相关信息
 /usr/local/nginx/sbin/nginx -s reload # 重启
 ```
-[Linux安装Nginx详细图解教程](https://www.cnblogs.com/lovexinyi8/p/5845017.html)
+> [Linux安装Nginx详细图解教程](https://www.cnblogs.com/lovexinyi8/p/5845017.html)
 
 ##### 将nginx做成系统服务并且开机自启动
 

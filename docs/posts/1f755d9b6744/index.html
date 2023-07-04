@@ -554,33 +554,32 @@
 <li>SELECT_CATALOG_ROLE</li>
 </ol>
 <p><strong>CONNECT角色</strong>：–是授予最终用户的典型权利，最基本的</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token number">1.</span> <span class="token keyword">ALTER</span> <span class="token keyword">SESSION</span> <span class="token comment">--修改会话</span>
-<span class="token number">2.</span> <span class="token keyword">CREATE</span> CLUSTER <span class="token comment">--建立聚簇</span>
-<span class="token number">3.</span> <span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> LINK <span class="token comment">--建立数据库链接</span>
-<span class="token number">4.</span> <span class="token keyword">CREATE</span> SEQUENCE <span class="token comment">--建立序列</span>
-<span class="token number">5.</span> <span class="token keyword">CREATE</span> <span class="token keyword">SESSION</span> <span class="token comment">--建立会话</span>
-<span class="token number">6.</span> <span class="token keyword">CREATE</span> SYNONYM <span class="token comment">--建立同义词</span>
-<span class="token number">7.</span> <span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> <span class="token comment">--建立视图www_bitscn_com中国.网管联盟</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">SESSION</span> <span class="token comment">--修改会话</span>
+<span class="token keyword">CREATE</span> CLUSTER <span class="token comment">--建立聚簇</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> LINK <span class="token comment">--建立数据库链接</span>
+<span class="token keyword">CREATE</span> SEQUENCE <span class="token comment">--建立序列</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">SESSION</span> <span class="token comment">--建立会话</span>
+<span class="token keyword">CREATE</span> SYNONYM <span class="token comment">--建立同义词</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> <span class="token comment">--建立视图www_bitscn_com中国.网管联盟</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>RESOURCE角色</strong>： –是授予开发人员的</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token number">1.</span> <span class="token keyword">CREATE</span> CLUSTER <span class="token comment">--建立聚簇</span>
-<span class="token number">2.</span> <span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> <span class="token comment">--建立过程</span>
-<span class="token number">3.</span> <span class="token keyword">CREATE</span> SEQUENCE <span class="token comment">--建立序列</span>
-<span class="token number">4.</span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token comment">--建表</span>
-<span class="token number">5.</span> <span class="token keyword">CREATE</span> <span class="token keyword">TRIGGER</span> <span class="token comment">--建立触发器</span>
-<span class="token number">6.</span> <span class="token keyword">CREATE</span> <span class="token keyword">TYPE</span> <span class="token comment">--建立类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> CLUSTER <span class="token comment">--建立聚簇</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> <span class="token comment">--建立过程</span>
+<span class="token keyword">CREATE</span> SEQUENCE <span class="token comment">--建立序列</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token comment">--建表</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TRIGGER</span> <span class="token comment">--建立触发器</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TYPE</span> <span class="token comment">--建立类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>DBA角色</strong>：拥有系统所有系统级权限（系统管理员）</p>
 <p><strong>IMP_FULL_DATABASE角色、EXP_FULL_DATABASE角色</strong>：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token number">1.</span> <span class="token keyword">BACKUP</span> <span class="token keyword">ANY</span> <span class="token keyword">TABLE</span> <span class="token comment">--备份任何表</span>
-<span class="token number">2.</span> <span class="token keyword">EXECUTE</span> <span class="token keyword">ANY</span> <span class="token keyword">PROCEDURE</span> <span class="token comment">--执行任何操作</span>
-<span class="token number">3.</span> <span class="token keyword">SELECT</span> <span class="token keyword">ANY</span> <span class="token keyword">TABLE</span> <span class="token comment">--查询任何表</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">BACKUP</span> <span class="token keyword">ANY</span> <span class="token keyword">TABLE</span> <span class="token comment">--备份任何表</span>
+<span class="token keyword">EXECUTE</span> <span class="token keyword">ANY</span> <span class="token keyword">PROCEDURE</span> <span class="token comment">--执行任何操作</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">ANY</span> <span class="token keyword">TABLE</span> <span class="token comment">--查询任何表</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>SELECT_CATALOG_ROLE角色</strong>具有从数据字典查询的权利，<br>(尤其是此处数据字典：就是数据库运行时的各种信息参考：Oracle 11g体系结构–数据字典)</p>
 <p><strong>EXECUTE_CATALOG_ROLE</strong>角色具有从数据字典中执行部分过程和函数的权利。</p>
 <h3 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h3><p>当表中的数据量不断增大，查询数据的速度就会变慢，应用程序的性能就会下降，这时就应该考虑对表进行分区。表进行分区后，逻辑上表仍然是一张完整的表，只是将表中的数据在物理上存放到多个表空间(物理文件上)，这样查询数据时，不至于每次都扫描整张表。</p>
 <h3 id="PL-x2F-SQL-x2F-Oracle乱码问题解决方案"><a href="#PL-x2F-SQL-x2F-Oracle乱码问题解决方案" class="headerlink" title="PL&#x2F;SQL &#x2F;Oracle乱码问题解决方案"></a>PL&#x2F;SQL &#x2F;Oracle乱码问题解决方案</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">Select</span> userenv<span class="token punctuation">(</span>‘<span class="token keyword">language</span>’<span class="token punctuation">)</span> <span class="token keyword">from</span> dual<span class="token punctuation">;</span> <span class="token comment">-- 查看服务器端编码</span>
 
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> V$NLS_PARAMETERS；<span class="token comment">-- 查看NLS_LANGUAGE的值与第一个的查询结果是否一致，假如不一致需要设置环境变量，变量名：NLS_LANG 变量值：第1个查到的值 重启PL/SQL(假如在乱码之前已经插入数据，那么配置环境变量后依然乱码，需要删除数据重新导入)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> V$NLS_PARAMETERS；<span class="token comment">-- 查看NLS_LANGUAGE的值与第一个的查询结果是否一致，假如不一致需要设置环境变量，变量名：NLS_LANG 变量值：第1个查到的值 重启PL/SQL(假如在乱码之前已经插入数据，那么配置环境变量后依然乱码，需要删除数据重新导入)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h3 id="Oracle的操作"><a href="#Oracle的操作" class="headerlink" title="Oracle的操作"></a>Oracle的操作</h3><ol>
 <li>cmd进入oracle <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">sqlplus 账户名<span class="token operator">/</span>密码 <span class="token keyword">as</span> 角色名 <span class="token comment">--（sys用户必须带as sysdba）例:sqlplus sys/admin as sysdba</span>
 
@@ -645,10 +644,9 @@ extent management <span class="token keyword">local</span><span class="token pun
 <h3 id="Oracle相关函数"><a href="#Oracle相关函数" class="headerlink" title="Oracle相关函数"></a>Oracle相关函数</h3><h4 id="wm-concat-行转列"><a href="#wm-concat-行转列" class="headerlink" title="wm_concat()行转列"></a>wm_concat()行转列</h4><p>wm_concat()函数是oracle中独有的,mysql中有一个group_concat()函数。这两个函数的作用是相同的，它们的功能是：实现行转列功能，即将查询出的某一列值使用逗号进行隔开拼接，成为一条数据</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 根据年龄获取学生的分数</span>
 <span class="token keyword">select</span> age<span class="token punctuation">,</span>to_char<span class="token punctuation">(</span>wm_concat<span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">as</span> name<span class="token punctuation">,</span>to_char<span class="token punctuation">(</span>wm_concat<span class="token punctuation">(</span>score<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">as</span> score <span class="token keyword">from</span> student t <span class="token keyword">group</span> <span class="token keyword">by</span> age<span class="token punctuation">;</span>
-
 <span class="token comment">-- age  name     score</span>
 <span class="token comment">-- 18  张三,李四  81,82</span>
-<span class="token comment">-- 19  王五,赵六  67,90</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">-- 19  王五,赵六  67,90</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="decode"><a href="#decode" class="headerlink" title="decode"></a>decode</h4><p>decode(c1,c2,c3)&#x2F;decode(c1,c2,c3,c4)&#x2F;decode(c1,c2,c3,c4,c5)&#x2F;decode(c1,[c2,c3],[c4,c5],[c6,c7]….,[C2x,C2x+1] [,C2x+2])<br>从c1之后开始,每两个参数看做是一组数,拿每组数的第一个参数和c1比较,如果相同则返回第二个参数:比如 如果c2&#x3D;&#x3D;c1 return c3如果该组数的第一个参数和c1不相同,则比较下一组:比如 如果c2&lt;&gt;C1继续判断C4&#x3D;&#x3D;C1? 相同return c5<br>例  decode(type,’a’,’11’,’b’,’12’,’c’,’13’,’d’,’14’,’e’,’15’,type)</p>
 <h4 id="树形查询"><a href="#树形查询" class="headerlink" title="树形查询"></a>树形查询</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> area_code <span class="token keyword">from</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tableA <span class="token keyword">where</span> isvalid<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">start</span> <span class="token keyword">with</span> area_code <span class="token operator">=</span> <span class="token number">5002</span> <span class="token keyword">connect</span> <span class="token keyword">by</span>  prior parent_area_code <span class="token operator">=</span> area_code<span class="token punctuation">;</span>
@@ -1077,8 +1075,7 @@ minus
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            sql server行转列类似MySQL group_concat()使用stuff()
-stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
+                            sql server行转列类似MySQL group_concat()使用stuff()。stuff()将字符串插入到另一个字符串中。它从第一个字符串的开始位置删除指定长度的字符；然后将第二个字符串插入到第一个字符串的开始位置。
 selec
                         
                         

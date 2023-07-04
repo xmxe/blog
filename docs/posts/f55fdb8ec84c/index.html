@@ -541,7 +541,7 @@
 <blockquote>
 <p>图片来源于InfoQ的一篇文章<a target="_blank" rel="noopener" href="https://www.infoq.cn/article/Qg2tX8fyw5Vt-f3HH673">《分布式服务限流实战，已经为你排好坑了》</a>。</p>
 </blockquote>
-<h3 id="固定窗口计数器算法"><a href="#固定窗口计数器算法" class="headerlink" title="固定窗口计数器算法"></a>固定窗口计数器算法</h3><p>固定窗口其实就是时间窗口。<strong>固定窗口计数器算法</strong>规定了我们单位时间处理的请求数量。</p>
+<h3 id="固定窗口计数器算法"><a href="#固定窗口计数器算法" class="headerlink" title="固定窗口计数器算法"></a>固定窗口计数器算法</h3><p>固定窗口其实就是时间窗口。固定窗口计数器算法规定了我们单位时间处理的请求数量。</p>
 <p>假如我们规定系统中某个接口1分钟只能访问33次的话，使用固定窗口计数器算法的实现思路如下：</p>
 <ul>
 <li>给定一个变量counter来记录当前接口处理的请求数量，初始值为0（代表接口当前1分钟内还未处理请求）。</li>
@@ -552,7 +552,7 @@
 <p>就比如说我们限制某个接口1分钟只能访问1000次，该接口的QPS为500，前55s这个接口1个请求没有接收，后1s突然接收了1000个请求。然后，在当前场景下，这1000个请求在1s内是没办法被处理的，系统直接就被瞬时的大量请求给击垮了。</p>
 <p><img src="https://static001.infoq.cn/resource/image/8d/15/8ded7a2b90e1482093f92fff555b3615.png" alt="固定窗口计数器算法"></p>
 <h3 id="滑动窗口计数器算法"><a href="#滑动窗口计数器算法" class="headerlink" title="滑动窗口计数器算法"></a>滑动窗口计数器算法</h3><p><strong>滑动窗口计数器算法</strong>算的上是固定窗口计数器算法的升级版。</p>
-<p>滑动窗口计数器算法相比于固定窗口计数器算法的优化在于：<strong>它把时间以一定比例分片</strong>。</p>
+<p>滑动窗口计数器算法相比于固定窗口计数器算法的优化在于：它把时间以一定比例分片。</p>
 <p>例如我们的接口限流每分钟处理60个请求，我们可以把1分钟分为60个窗口。每隔1秒移动一次，每个窗口一秒只能处理不大于60(请求数)&#x2F;60（窗口数）的请求，如果当前窗口的请求计数总和超过了限制的数量的话就不再处理其他请求。</p>
 <p>很显然，<strong>当滑动窗口的格子划分的越多，滑动窗口的滚动就越平滑，限流的统计就会越精确</strong>。</p>
 <p><img src="https://static001.infoq.cn/resource/image/ae/15/ae4d3cd14efb8dc7046d691c90264715.png" alt="滑动窗口计数器算法"></p>
@@ -921,8 +921,7 @@ get <span class="token number">1</span> tokens: <span class="token number">0</sp
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            JWT基础概念详解什么是JWT?JWT（JSON Web Token）是目前最流行的跨域认证解决方案，是一种基于Token的认证授权机制。从JWT的全称可以看出，JWT本身也是Token，一种规范化之后的JSON结构的Token。
-JWT自
+                            JWT基础概念详解什么是JWT?JWT（JSON Web Token）是目前最流行的跨域认证解决方案，是一种基于Token的认证授权机制。从JWT的全称可以看出，JWT本身也是Token，一种规范化之后的JSON结构的Token。JWT自身
                         
 
                     </div>

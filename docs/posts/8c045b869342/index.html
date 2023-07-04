@@ -533,9 +533,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h3><blockquote>
-<p>fork from <a target="_blank" rel="noopener" href="https://github.com/lenve/oauth2-samples">oauth2-samples</a></p>
-</blockquote>
+                <blockquote>
+<p>demo<br>fork from <a target="_blank" rel="noopener" href="https://github.com/lenve/oauth2-samples">oauth2-samples</a></p>
+<blockquote>
 <table>
 <thead>
 <tr>
@@ -576,6 +576,8 @@
 <td align="left"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tq4Q306J3hJFEtGL1EpOBA">分分钟让自己的网站接入GitHub第三方登录功能</a></td>
 </tr>
 </tbody></table>
+</blockquote>
+</blockquote>
 <hr>
 <h3 id="OAuth2-0的四种模式"><a href="#OAuth2-0的四种模式" class="headerlink" title="OAuth2.0的四种模式"></a>OAuth2.0的四种模式</h3><h4 id="授权码模式"><a href="#授权码模式" class="headerlink" title="授权码模式"></a>授权码模式</h4><p>这种方式是最常用的流程，安全性也最高，它适用于那些有后端的Web应用。授权码通过前端传送，令牌则是储存在后端，而且所有与资源服务器的通信都在后端完成。这样的前后端分离，可以避免令牌泄漏。令牌获取的流程如下：</p>
 <p><img src="https://mmbiz.qpic.cn/mmbiz_png/19cc2hfD2rCpPJB83SvgzosiboTJxftAhibgOZffmU9RnmNUusomvBtoUKaxEXIU1df2icbUZOwSUeG4G0DxWgjtQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="授权码模式"><br>上图中涉及到两个角色，分别是客户端、认证中心，客户端负责拿令牌，认证中心负责发放令牌。但是不是所有客户端都有权限请求令牌的，需要事先在认证中心申请，比如微信并不是所有网站都能直接接入，而是要去微信后台开通这个权限。至少要提前向认证中心申请的几个参数如下：<br>client_id：客户端唯一id，认证中心颁发的唯一标识<br>client_secret：客户端的秘钥，相当于密码<br>scope：客户端的权限<br>redirect_uri：授权码模式使用的跳转uri，需要事先告知认证中心。</p>
@@ -930,8 +932,7 @@ client_secret&#x3D;<span aria-hidden="true" class="line-numbers-rows"><span></sp
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            3种常用的缓存读写策略详解下面介绍到的三种模式各有优劣，不存在最佳模式，根据具体的业务场景选择适合自己的缓存读写模式。
-Cache Aside Pattern（旁路缓存模式）Cache Aside Pattern是我们平时使用比较多的一个缓
+                            3种常用的缓存读写策略详解Cache Aside Pattern（旁路缓存模式）Cache Aside Pattern是我们平时使用比较多的一个缓存读写模式，比较适合读请求比较多的场景。Cache Aside Pattern中服务端需要同时
                         
 
                     </div>

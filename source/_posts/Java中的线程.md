@@ -14,10 +14,11 @@ top: true
 
 #### 创建线程三种方式
 
-1. 继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：**public class Thread implements Runnable**
+1. 继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：`public class Thread implements Runnable`
 2. 实现Runnable接口，重写run()方法。然后调用new Thread（runnable）的方式创建一个线程，再调用start()方法启动线程。
 3. 实现Callable接口，重写call()方法。Callable是类似于Runnable的接口，是属于Executor框架中的功能类。具有返回值，并且可以对异常进行声明和抛出
-- [【图解】透彻Java线程状态转换](https://mp.weixin.qq.com/s/G-X82-Fp7zShTTnkWg1N5A)
+
+> [【图解】透彻Java线程状态转换](https://mp.weixin.qq.com/s/G-X82-Fp7zShTTnkWg1N5A)
 
 #### 线程相关方法
 
@@ -31,8 +32,7 @@ top: true
 
 ##### setDaemon()
 
-设置是否为守护线程，线程分为用户线程和守护线程，当用户线程都退出时，无论当jvm里面的守护线程有没有执行完，jvm都会退出，使用setDaemon()必须在thread.start()之前，否则会抛出异常。守护线程服务于用户线程,当用户线程结束后守护线程也会结束,当所有线程都运行结束时，JVM退出，进程结束。
-例如有一种线程的目的就是无限循环
+设置是否为守护线程，线程分为用户线程和守护线程，当用户线程都退出时，无论当jvm里面的守护线程有没有执行完，jvm都会退出，使用setDaemon()必须在thread.start()之前，否则会抛出异常。守护线程服务于用户线程,当用户线程结束后守护线程也会结束,当所有线程都运行结束时，JVM退出，进程结束。例如有一种线程的目的就是无限循环
 
 ```java
 class TimerThread extends Thread {
@@ -60,12 +60,9 @@ class TimerThread extends Thread {
 
 - this.interrupt()
 
-中断调用该方法的线程,中断被阻塞的线程，会抛出一个InterruptedException，把线程从阻塞状态中解救出来，会清除中断标志位
+中断调用该方法的线程,中断被阻塞的线程，会抛出一个InterruptedException，把线程从阻塞状态中解救出来，会清除中断标志位。如果当前线程没有中断它自己（这在任何情况下都是允许的），则该线程的checkAccess方法就会被调用，这可能抛出Security Exception。如果线程在调用Object类的wait()、wait(long)或wait(long,int)方法，或者该类的join()、join(long)、join(long,int)、sleep(long)或sleep(long,int)方法过程中受阻，则其中断状态将被清除，它还将收到一个Interrupted Exception。如果该线程在可中断的通道上的I/O操作中受阻，则该通道将被关闭，该线程的中断状态将被设置并且该线程将收到ClosedByInterrupt Exception。如果该线程在一个Selector中受阻，则该线程的中断状态将被设置，它将立即从选择操作返回，并可能带有一个非零值，就好像调用了选择器的wakeup方法一样。如果以前的条件都没有保存，则该线程的中断状态将被设置。中断一个不处于活动状态的线程不需要任何作用。
 
-如果当前线程没有中断它自己（这在任何情况下都是允许的），则该线程的checkAccess方法就会被调用，这可能抛出Security Exception。如果线程在调用Object类的wait()、wait(long)或wait(long,int)方法，或者该类的join()、join(long)、join(long,int)、sleep(long)或sleep(long,int)方法过程中受阻，则其中断状态将被清除，它还将收到一个Interrupted Exception。如果该线程在可中断的通道上的I/O操作中受阻，则该通道将被关闭，该线程的中断状态将被设置并且该线程将收到ClosedByInterrupt Exception。如果该线程在一个Selector中受阻，则该线程的中断状态将被设置，它将立即从选择操作返回，并可能带有一个非零值，就好像调用了选择器的wakeup方法一样。如果以前的条件都没有保存，则该线程的中断状态将被设置。
-
-中断一个不处于活动状态的线程不需要任何作用。
-[如何停止一个正在运行的线程？](https://mp.weixin.qq.com/s/J8Acb1FBPhqb1Z7Vur0erQ)
+> [如何停止一个正在运行的线程？](https://mp.weixin.qq.com/s/J8Acb1FBPhqb1Z7Vur0erQ)
 
 ##### 捕获异常
 
@@ -123,7 +120,7 @@ class TimerThread extends Thread {
 
 当且仅当当前线程在指定的对象上保持监视器锁方法返回true
 
-[多线程基础知识、线程相关方法](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493938&idx=1&sn=125990919a15c7dd3c4ed4c36451d34b&source=41#wechat_redirect)
+> [多线程基础知识、线程相关方法](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493938&idx=1&sn=125990919a15c7dd3c4ed4c36451d34b&source=41#wechat_redirect)
 
 
 #### 线程同步
@@ -152,8 +149,6 @@ class TimerThread extends Thread {
 JDK除了使用锁的机制解决多线程情况下数据安全问题之外，还提供了cas机制。这种机制是使用CPU中比较和交换指令的原子性，JDK里面是通过Unsafe类实现的。cas需要四个值：旧数据、期望数据、新数据和地址，比较旧数据和期望的数据如果一样的话，就把旧数据改成新数据，当前线程不断自旋，一直到成功为止。不过可能会出现aba问题，需要使用AtomicStampedReference增加版本号解决。其实，实际工作中很少直接使用Unsafe类的，一般用atomic包下面的类即可。
 8. threadlocal
 除了上面几种解决思路之外，JDK还提供了另外一种用空间换时间的新思路：threadlocal。它的核心思想是：共享变量在每个线程都有一个副本，每个线程操作的都是自己的副本，对另外的线程没有影响。特别注意，使用threadlocal时，使用完之后，要记得调用remove方法，不然可能会出现内存泄露问题
-
-
 
 #### 线程通信（例如：A线程操作到某一步通知B线程）
 
@@ -227,7 +222,7 @@ Executors返回线程池对象的弊端如下：
 
 - **FixedThreadPool和SingleThreadExecutor**：使用的是无界的LinkedBlockingQueue，任务队列最大长度为Integer.MAX_VALUE,可能堆积大量的请求，从而导致OOM。
 - **CachedThreadPool**：使用的是同步队列SynchronousQueue,允许创建的线程数量为Integer.MAX_VALUE，可能会创建大量线程，从而导致OOM。
-- **ScheduledThreadPool和SingleThreadScheduledExecutor**:使用的无界的延迟阻塞队列DelayedWorkQueue，任务队列最大长度为Integer.MAX_VALUE,可能堆积大量的请求，从而导致OOM。
+- **ScheduledThreadPool和SingleThreadScheduledExecutor**：使用的无界的延迟阻塞队列DelayedWorkQueue，任务队列最大长度为Integer.MAX_VALUE,可能堆积大量的请求，从而导致OOM。
 
 ```java
 // 无界队列LinkedBlockingQueue
@@ -316,7 +311,7 @@ new ThreadPoolExecutor.CallerRunsPolicy());
 **ArrayBlockingQueue、LinkedBlockingQueue区别**
 ![](/images/ArrayBlockingQueueLinkedBlockingQueue区别.png)
 
-[ThreadPoolExecutor深入解析](https://mp.weixin.qq.com/s/QEur_4cwOSc_4AHWAPFhJQ)
+> [ThreadPoolExecutor深入解析](https://mp.weixin.qq.com/s/QEur_4cwOSc_4AHWAPFhJQ)
 
 #### submit与execute区别
 
@@ -354,7 +349,7 @@ FutureTask<String> futureTask = new FutureTask<String>(new Callable(){
 new Thread(futureTask).start();// executor.submit(futureTask);
 String result = futureTask.get(2000,TimeUnit.MILLISECONDS)// 如果在指定时间内，还没获取到结果，就直接返回null
 ```
-[线程池中的线程抛出了异常，该如何处理](https://mp.weixin.qq.com/s/LVAv7PKVvg7prW9ayD1eZA)
+> [线程池中的线程抛出了异常，该如何处理](https://mp.weixin.qq.com/s/LVAv7PKVvg7prW9ayD1eZA)
 
 
 ### 虚拟线程
@@ -363,7 +358,7 @@ String result = futureTask.get(2000,TimeUnit.MILLISECONDS)// 如果在指定时�
 虚拟线程是守护线程，所以有可能会没等他执行完虚拟机就会shutdown掉。
 
 #### 虚拟线程与平台线程的区别
-1. **虚拟线程总是守护线程**。setDaemon(false)方法不能将虚拟线程更改为非守护线程。所以，需要注意的是，**当所有启动的非守护进程线程都终止时，JVM将终止。这意味着JVM不会等待虚拟线程完成后才退出。**
+1. **虚拟线程总是守护线程**。setDaemon(false)方法不能将虚拟线程更改为非守护线程。所以，需要注意的是，**当所有启动的非守护进程线程都终止时，JVM将终止。这意味着JVM不会等待虚拟线程完成后才退出**。
 2. 即使使用setPriority()方法，**虚拟线程始终具有normal的优先级**，且不能更改优先级。在虚拟线程上调用此方法没有效果。
 3. 虚拟线程是不支持stop()、suspend()或resume()等方法。这些方法在虚拟线程上调用时会抛出UnsupportedOperationException异常。
 

@@ -537,12 +537,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h2><p>代理模式是一种比较好理解的设计模式。简单来说就是<strong>我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能。</strong></p>
+                <h2 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h2><p>代理模式是一种比较好理解的设计模式。简单来说就是我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能。</p>
 <p><strong>代理模式的主要作用是扩展目标对象的功能，比如说在目标对象的某个方法执行前后你可以增加一些自定义的操作。</strong></p>
-<p>举个例子：新娘找来了自己的姨妈来代替自己处理新郎的提问，新娘收到的提问都是经过姨妈处理过滤之后的。姨妈在这里就可以看作是代理你的代理对象，代理的行为（方法）是接收和回复新郎的提问。</p>
 <p>代理模式有静态代理和动态代理两种实现方式，我们先来看一下静态代理模式的实现。</p>
-<h3 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h3><p>**静态代理中，我们对目标对象的每个方法的增强都是手动完成的，非常不灵活（比如接口一旦新增加方法，目标对象和代理对象都要进行修改）且麻烦(需要对每个目标类都单独写一个代理类)**。实际应用场景非常非常少，日常开发几乎看不到使用静态代理的场景。</p>
-<p>上面我们是从实现和应用角度来说的静态代理，从JVM层面来说，<strong>静态代理在编译时就将接口、实现类、代理类这些都变成了一个个实际的class文件</strong>。</p>
+<h3 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h3><p>静态代理中，我们对目标对象的每个方法的增强都是手动完成的，非常不灵活（比如接口一旦新增加方法，目标对象和代理对象都要进行修改）且麻烦(需要对每个目标类都单独写一个代理类)。实际应用场景非常非常少，日常开发几乎看不到使用静态代理的场景。</p>
+<p>上面我们是从实现和应用角度来说的静态代理，从JVM层面来说，静态代理在编译时就将接口、实现类、代理类这些都变成了一个个实际的class文件。</p>
 <p>静态代理实现步骤:</p>
 <ol>
 <li>定义一个接口及其实现类；</li>
@@ -597,13 +596,8 @@ send message:java
 after method send<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>可以输出结果看出，我们已经增加了SmsServiceImpl的send()方法。</p>
-<h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><p>相比于静态代理来说，动态代理更加灵活。我们不需要针对每个目标类都单独创建一个代理类，并且也不需要我们必须实现接口，我们可以直接代理实现类(CGLIB动态代理机制)。</p>
-<p><strong>从JVM角度来说，动态代理是在运行时动态生成类字节码，并加载到JVM中的</strong>。</p>
-<p>说到动态代理，Spring AOP、RPC框架应该是两个不得不提的，它们的实现都依赖了动态代理。</p>
-<p><strong>动态代理在我们日常开发中使用的相对较少，但是在框架中的几乎是必用的一门技术。学会了动态代理之后，对于我们理解和学习各种框架的原理也非常有帮助</strong>。</p>
-<p>就Java来说，动态代理的实现方式有很多种，比如<strong>JDK动态代理</strong>、<strong>CGLIB动态代理</strong>等等。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>使用的是JDK动态代理，我们先来看看JDK动态代理的使用。</p>
-<p>另外，虽然<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>没有用到<strong>CGLIB动态代理</strong>，我们这里还是简单介绍一下其使用以及和<strong>JDK动态代理</strong>的对比。</p>
+<h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><p>相比于静态代理来说，动态代理更加灵活。我们不需要针对每个目标类都单独创建一个代理类，并且也不需要我们必须实现接口，我们可以直接代理实现类(CGLIB动态代理机制)。从JVM角度来说，动态代理是在运行时动态生成类字节码，并加载到JVM中的。说到动态代理，Spring AOP、RPC框架应该是两个不得不提的，它们的实现都依赖了动态代理。动态代理在我们日常开发中使用的相对较少，但是在框架中的几乎是必用的一门技术。学会了动态代理之后，对于我们理解和学习各种框架的原理也非常有帮助。就Java来说，动态代理的实现方式有很多种，比如<strong>JDK动态代理</strong>、<strong>CGLIB动态代理</strong>等等。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>使用的是JDK动态代理，我们先来看看JDK动态代理的使用。另外，虽然<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>没有用到<strong>CGLIB动态代理</strong>，我们这里还是简单介绍一下其使用以及和<strong>JDK动态代理</strong>的对比。</p>
 <h4 id="JDK动态代理机制"><a href="#JDK动态代理机制" class="headerlink" title="JDK动态代理机制"></a>JDK动态代理机制</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p><strong>在Java动态代理机制中InvocationHandler接口和Proxy类是核心</strong>。</p>
 <p>Proxy类中使用频率最高的方法是：newProxyInstance()，这个方法主要用来生成一个代理对象。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Object</span> <span class="token function">newProxyInstance</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span> loader<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> interfaces<span class="token punctuation">,</span> <span class="token class-name">InvocationHandler</span> h<span class="token punctuation">)</span>
@@ -622,9 +616,8 @@ after method send<span class="token punctuation">(</span><span class="token punc
     <span class="token comment">/**
      * 当你使用代理对象调用方法的时候实际会调用到这个方法
      */</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
-        <span class="token keyword">throws</span> <span class="token class-name">Throwable</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>invoke()方法有下面三个参数：</p>
 <ol>
@@ -636,7 +629,7 @@ after method send<span class="token punctuation">(</span><span class="token punc
 <h5 id="JDK动态代理类使用步骤"><a href="#JDK动态代理类使用步骤" class="headerlink" title="JDK动态代理类使用步骤"></a>JDK动态代理类使用步骤</h5><ol>
 <li>定义一个接口及其实现类；</li>
 <li>自定义InvocationHandler并重写invoke方法，在invoke方法中我们会调用原生方法（被代理类的方法）并自定义一些处理逻辑；</li>
-<li><code>通过Proxy.newProxyInstance(ClassLoaderloader,Class&lt;?&gt;[]interfaces,InvocationHandlerh)</code>方法创建代理对象；</li>
+<li>通过Proxy.newProxyInstance(ClassLoaderloader,Class&lt;?&gt;[]interfaces,InvocationHandlerh)方法创建代理对象；</li>
 </ol>
 <h5 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h5><p><strong>1. 定义发送短信的接口</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">SmsService</span> <span class="token punctuation">&#123;</span>
@@ -697,8 +690,7 @@ smsService<span class="token punctuation">.</span><span class="token function">s
 send message:java
 after method send<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="CGLIB动态代理机制"><a href="#CGLIB动态代理机制" class="headerlink" title="CGLIB动态代理机制"></a>CGLIB动态代理机制</h4><h5 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h5><p><strong>JDK动态代理有一个最致命的问题是其只能代理实现了接口的类。</strong></p>
-<p><strong>为了解决这个问题，我们可以用CGLIB动态代理机制来避免。</strong></p>
+<h4 id="CGLIB动态代理机制"><a href="#CGLIB动态代理机制" class="headerlink" title="CGLIB动态代理机制"></a>CGLIB动态代理机制</h4><h5 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h5><p><strong>JDK动态代理有一个最致命的问题是其只能代理实现了接口的类。为了解决这个问题，我们可以用CGLIB动态代理机制来避免。</strong></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(<em>Code Generation Library</em>)是一个基于<a target="_blank" rel="noopener" href="http://www.baeldung.com/java-asm">ASM</a>的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB通过继承方式实现代理。很多知名的开源框架都使用到了<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>，例如Spring中的AOP模块中：如果目标对象实现了接口，则默认采用JDK动态代理，否则采用CGLIB动态代理。</p>
 <p><strong>在CGLIB动态代理机制中MethodInterceptor接口和Enhancer类是核心</strong>。</p>
 <p>你需要自定义MethodInterceptor并重写intercept方法，intercept用于拦截增强被代理类的方法。</p>
@@ -792,7 +784,7 @@ send message:java
 after method send<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="JDK动态代理和CGLIB动态代理对比"><a href="#JDK动态代理和CGLIB动态代理对比" class="headerlink" title="JDK动态代理和CGLIB动态代理对比"></a>JDK动态代理和CGLIB动态代理对比</h4><ol>
-<li><strong>JDK动态代理只能代理实现了接口的类或者直接代理接口，而CGLIB可以代理未实现任何接口的类</strong>。另外，CGLIB动态代理是通过生成一个被代理类的子类来拦截被代理类的方法调用，因此不能代理声明为final类型的类和方法。</li>
+<li>JDK动态代理只能代理实现了接口的类或者直接代理接口，而CGLIB可以代理未实现任何接口的类。另外，CGLIB动态代理是通过生成一个被代理类的子类来拦截被代理类的方法调用，因此不能代理声明为final类型的类和方法。</li>
 <li>就二者的效率来说，大部分情况都是JDK动态代理更优秀，随着JDK版本的升级，这个优势更加明显。</li>
 </ol>
 <h3 id="静态代理和动态代理的对比"><a href="#静态代理和动态代理的对比" class="headerlink" title="静态代理和动态代理的对比"></a>静态代理和动态代理的对比</h3><ol>
@@ -807,7 +799,10 @@ after method send<span aria-hidden="true" class="line-numbers-rows"><span></span
 </ol>
 <h4 id="CGLIB动态代理"><a href="#CGLIB动态代理" class="headerlink" title="CGLIB动态代理"></a>CGLIB动态代理</h4><p>利用ASM框架，对代理对象类生成的class文件加载进来，通过修改其字节码生成子类来处理。举个例子，现在有一个类A，A没有接口，现在想给A生成一个代理对象，那么实际上是自动给A生成了一个子类，在这个子类中覆盖了A中的方法，所以要注意，A类以及它里边的方法不能是final类型的，否则无法生成代理。CGLib必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理；</p>
 <p>如果被代理的对象有接口，则可以使用JDK动态代理，没有接口就可以使用CGLIB动态代理。</p>
-<h4 id="为什么要用代理模式？"><a href="#为什么要用代理模式？" class="headerlink" title="为什么要用代理模式？"></a>为什么要用代理模式？</h4><p>中介隔离作用：<br>在某些情况下，一个客户类不想或者不能直接引用一个委托对象，而代理类对象可以在客户类和委托对象之间起到中介的作用，其特征是代理类和委托类实现相同的接口。<br>开闭原则，增加功能：<br>代理类除了是客户类和委托类的中介之外，我们还可以通过给代理类增加额外的功能来扩展委托类的功能，这样做我们只需要修改代理类而不需要再修改委托类，符合代码设计的开闭原则。代理类主要负责为委托类预处理消息、过滤消息、把消息转发给委托类，以及事后对返回结果的处理等。代理类本身并不真正实现服务，而是同过调用委托类的相关方法，来提供特定的服务。真正的业务功能还是由委托类来实现，但是可以在业务功能执行的前后加入一些公共的服务。例如我们想给项目加入缓存、日志这些功能，我们就可以使用代理类来完成，而没必要打开已经封装好的委托类。</p>
+<h4 id="为什么要用代理模式？"><a href="#为什么要用代理模式？" class="headerlink" title="为什么要用代理模式？"></a>为什么要用代理模式？</h4><ol>
+<li>中介隔离作用<br>在某些情况下，一个客户类不想或者不能直接引用一个委托对象，而代理类对象可以在客户类和委托对象之间起到中介的作用，其特征是代理类和委托类实现相同的接口。</li>
+<li>开闭原则，增加功能<br>代理类除了是客户类和委托类的中介之外，我们还可以通过给代理类增加额外的功能来扩展委托类的功能，这样做我们只需要修改代理类而不需要再修改委托类，符合代码设计的开闭原则。代理类主要负责为委托类预处理消息、过滤消息、把消息转发给委托类，以及事后对返回结果的处理等。代理类本身并不真正实现服务，而是同过调用委托类的相关方法，来提供特定的服务。真正的业务功能还是由委托类来实现，但是可以在业务功能执行的前后加入一些公共的服务。例如我们想给项目加入缓存、日志这些功能，我们就可以使用代理类来完成，而没必要打开已经封装好的委托类。</li>
+</ol>
 <h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/C9Vpfcgl3NB_0rBpLh2yCA">终于有人把java代理讲清楚了，万字详解！</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/daniels/p/8242592.html">设计模式—代理模式</a></li>
@@ -920,8 +915,7 @@ after method send<span aria-hidden="true" class="line-numbers-rows"><span></span
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>测试</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DynamicProxtTest</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token function">jdkDynamicProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1264,9 +1258,7 @@ Java双刃剑之Unsafe类详解-码农参上-2021
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            何为反射？如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。
-反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。
-通过反射你可以获取任意一个类的所有属性和方法，你还可以调
+                            何为反射如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些
                         
                         
                     </div>

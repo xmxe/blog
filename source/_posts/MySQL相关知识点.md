@@ -85,7 +85,7 @@ select * from treenodes where id in(1,2,3,4,5);
 ```sql
 select * from (select ... from t1 join t2 on ...)temp,(select getChildList('10001') as cids) where find_in_set(id,cids);
 ```
-[MySQL中FIND_IN_SET函数执行非常慢的某种写法](https://blog.csdn.net/wokelv/article/details/78915502)
+> [MySQL中FIND_IN_SET函数执行非常慢的某种写法](https://blog.csdn.net/wokelv/article/details/78915502)
 
 **MySQL8.0使用CTE完成递归查询**
 
@@ -97,9 +97,9 @@ cte c INNER JOIN tmp_zjs sou ON c.ID = sou.PID  )
 
 SELECT * FROM	cte
 ```
-[MySQL使用递归CTE遍历分层数据](https://www.begtut.com/mysql/mysql-recursive-cte.html)
-[MySQL CTE(公共表表达式)](https://www.yiibai.com/mysql/cte.html)
-[一种避免递归查询所有子部门的树数据表设计与实现](https://mp.weixin.qq.com/s/ymAjaaKKwgbpkHOZ9tgbJw)
+> [MySQL使用递归CTE遍历分层数据](https://www.begtut.com/mysql/mysql-recursive-cte.html)
+> [MySQL CTE(公共表表达式)](https://www.yiibai.com/mysql/cte.html)
+> [一种避免递归查询所有子部门的树数据表设计与实现](https://mp.weixin.qq.com/s/ymAjaaKKwgbpkHOZ9tgbJw)
 
 
 ### 触发器
@@ -217,7 +217,7 @@ select * from A where exists(select c from B where c=A.c) -- 效率高，用到�
 select * from B where c in (select c from A) -- 效率高，用到了B表上c列的索引
 select * from B where exists(select c from A where c=B.c) -- 效率低，用到了A表上c列的索引。
 ```
-[MySQL多表联合查询有何讲究？](https://mp.weixin.qq.com/s/O121Y0sywAtt4jk9vy4b0w)
+> [MySQL多表联合查询有何讲究？](https://mp.weixin.qq.com/s/O121Y0sywAtt4jk9vy4b0w)
 
 #### 逃离符escape
 
@@ -236,8 +236,8 @@ from student a left join student b on a.class=b.class and a.source<=b.source
 group by a.class,a.source
 order by a.class,a.source
 ```
-[阿里二面：group by怎么优化？](https://mp.weixin.qq.com/s/igGKepCsf-SUKChco4P6Lw)
-[MySQL中的distinct和group by哪个效率更高？](https://mp.weixin.qq.com/s/zc7_PZxwaQAwwqNsRG2_KQ)
+> [阿里二面：group by怎么优化？](https://mp.weixin.qq.com/s/igGKepCsf-SUKChco4P6Lw)
+> [MySQL中的distinct和group by哪个效率更高？](https://mp.weixin.qq.com/s/zc7_PZxwaQAwwqNsRG2_KQ)
 
 
 #### 有就更新,没有就插入
@@ -269,7 +269,7 @@ select * from tablename group by id having count(*)>1
 -- 不显示重复
 select * from tablename group by id having count(*)=1
 ```
-[避免MySQL插入重复数据的4种方式](https://mp.weixin.qq.com/s/_hgA89R6GWwJgxC9KBb63A)
+> [避免MySQL插入重复数据的4种方式](https://mp.weixin.qq.com/s/_hgA89R6GWwJgxC9KBb63A)
 
 #### 分页
 
@@ -485,7 +485,8 @@ bak_all_persist函数是持久备份，备份过程和bak_all函数一样，只�
 */15 * * * * /data/sqlbak/bak.sh chk
 ```
 上述定时任务是每10分钟备份一次所有数据库，每15分钟检查一次过期的备份，当然，具体的备份策略根据具体的场景不同，可以根据实际情况调整
-[一个自动备份MySQL的脚本](https://zhuanlan.zhihu.com/p/427491577)
+
+> [一个自动备份MySQL的脚本](https://zhuanlan.zhihu.com/p/427491577)
 
 #### 查看数据大小
 
@@ -514,20 +515,16 @@ select concat(round(sum(data_length/1024/1024),2),'MB') as '数据大小' , conc
 
 ### 表级锁和行级锁了解吗？有什么区别？
 
-MyISAM仅仅支持表级锁(table-level locking)，一锁就锁整张表，这在并发写的情况下性非常差。InnoDB不光支持表级锁(table-level locking)，还支持行级锁(row-level locking)，默认为行级锁。
-
-行级锁的粒度更小，仅对相关的记录上锁即可（对一行或者多行记录加锁），所以对于并发写入操作来说，InnoDB的性能更高。
+MyISAM仅仅支持表级锁(table-level locking)，一锁就锁整张表，这在并发写的情况下性非常差。InnoDB不光支持表级锁(table-level locking)，还支持行级锁(row-level locking)，默认为行级锁。行级锁的粒度更小，仅对相关的记录上锁即可（对一行或者多行记录加锁），所以对于并发写入操作来说，InnoDB的性能更高。
 
 **表级锁和行级锁对比**：
 
 - **表级锁**:MySQL中锁定粒度最大的一种锁（全局锁除外），是针对非索引字段加的锁，对当前操作的整张表加锁，实现简单，资源消耗也比较少，加锁快，不会出现死锁。不过，触发锁冲突的概率最高，高并发下效率极低。表级锁和存储引擎无关，MyISAM和InnoDB引擎都支持表级锁。
-- **行级锁**:MySQL中锁定粒度最小的一种锁，是**针对索引字段加的锁**，只针对当前操作的行记录进行加锁。行级锁能大大减少数据库操作的冲突。其加锁粒度最小，并发度高，但加锁的开销也最大，加锁慢，会出现死锁。行级锁和存储引擎有关，是在存储引擎层面实现的。
+- **行级锁**:MySQL中锁定粒度最小的一种锁，是针对索引字段加的锁，只针对当前操作的行记录进行加锁。行级锁能大大减少数据库操作的冲突。其加锁粒度最小，并发度高，但加锁的开销也最大，加锁慢，会出现死锁。行级锁和存储引擎有关，是在存储引擎层面实现的。
 
 ### 行级锁的使用有什么注意事项？
 
-InnoDB的行锁是针对索引字段加的锁，表级锁是针对非索引字段加的锁。当我们执行`UPDATE`、`DELETE`语句时，如果`WHERE`条件中字段没有命中唯一索引或者索引失效的话，就会导致扫描全表对表中的所有行记录进行加锁。这个在我们日常工作开发中经常会遇到，一定要多多注意！！！
-
-不过，很多时候即使用了索引也有可能会走全表扫描，这是因为MySQL优化器的原因。
+InnoDB的行锁是针对索引字段加的锁，表级锁是针对非索引字段加的锁。当我们执行`UPDATE`、`DELETE`语句时，如果`WHERE`条件中字段没有命中唯一索引或者索引失效的话，就会导致扫描全表对表中的所有行记录进行加锁。这个在我们日常工作开发中经常会遇到，一定要多多注意！不过，很多时候即使用了索引也有可能会走全表扫描，这是因为MySQL优化器的原因。
 
 ### InnoDB有哪几类行锁？
 
@@ -537,9 +534,9 @@ InnoDB行锁是通过对索引数据页上的记录加锁实现的，MySQLInnoDB
 - **间隙锁（GapLock）**：锁定一个范围，不包括记录本身。
 - **临键锁（Next-KeyLock）**：RecordLock+GapLock，锁定一个范围，包含记录本身，主要目的是为了解决幻读问题（MySQL事务部分提到过）。记录锁只能锁住已经存在的记录，为了避免插入新记录，需要依赖间隙锁。
 
-**在InnoDB默认的隔离级别REPEATABLE-READ下，行锁默认使用的是Next-KeyLock。但是，如果操作的索引是唯一索引或主键，InnoDB会对Next-KeyLock进行优化，将其降级为RecordLock，即仅锁住索引本身，而不是范围。**
+在InnoDB默认的隔离级别REPEATABLE-READ下，行锁默认使用的是Next-KeyLock。但是，如果操作的索引是唯一索引或主键，InnoDB会对Next-KeyLock进行优化，将其降级为RecordLock，即仅锁住索引本身，而不是范围。
 
-一些大厂面试中可能会问到Next-KeyLock的加锁范围，这里推荐一篇文章：[MySQLnext-keylock加锁范围是什么？-程序员小航-2021](https://segmentfault.com/a/1190000040129107)。
+> 一些大厂面试中可能会问到Next-KeyLock的加锁范围，这里推荐一篇文章：[MySQLnext-keylock加锁范围是什么？-程序员小航-2021](https://segmentfault.com/a/1190000040129107)。
 
 ### 共享锁和排他锁呢？
 
@@ -573,7 +570,7 @@ SELECT ... FOR UPDATE;
 - **意向共享锁（IntentionSharedLock，IS锁）**：事务有意向对表中的某些记录加共享锁（S锁），加共享锁前必须先取得该表的IS锁。
 - **意向排他锁（IntentionExclusiveLock，IX锁）**：事务有意向对表中的某些记录加排他锁（X锁），加排他锁之前必须先取得该表的IX锁。
 
-**意向锁是有数据引擎自己维护的，用户无法手动操作意向锁，在为数据行加共享/排他锁之前，InooDB会先获取该数据行所在在数据表的对应意向锁。**
+意向锁是有数据引擎自己维护的，用户无法手动操作意向锁，在为数据行加共享/排他锁之前，InooDB会先获取该数据行所在在数据表的对应意向锁。
 
 意向锁之间是互相兼容的。
 
@@ -602,20 +599,12 @@ SELECT...FORUPDATE
 SELECT...LOCKINSHAREMODE
 ```
 
-快照即记录的历史版本，每行记录可能存在多个历史版本（多版本技术）。
-
-快照读的情况下，如果读取的记录正在执行UPDATE/DELETE操作，读取操作不会因此去等待记录上X锁的释放，而是会去读取行的一个快照。
-
-只有在事务隔离级别RC(读取已提交)和RR（可重读）下，InnoDB才会使用一致性非锁定读：
+快照即记录的历史版本，每行记录可能存在多个历史版本（多版本技术）。快照读的情况下，如果读取的记录正在执行UPDATE/DELETE操作，读取操作不会因此去等待记录上X锁的释放，而是会去读取行的一个快照。只有在事务隔离级别RC(读取已提交)和RR（可重读）下，InnoDB才会使用一致性非锁定读：
 
 - 在RC级别下，对于快照数据，一致性非锁定读总是读取被锁定行的最新一份快照数据。
 - 在RR级别下，对于快照数据，一致性非锁定读总是读取本事务开始时的行数据版本。
 
-快照读比较适合对于数据一致性要求不是特别高且追求极致性能的业务场景。
-
-**当前读**（一致性锁定读）就是给行记录加X锁或S锁。
-
-当前读的一些常见SQL语句类型如下：
+快照读比较适合对于数据一致性要求不是特别高且追求极致性能的业务场景。**当前读**（一致性锁定读）就是给行记录加X锁或S锁。当前读的一些常见SQL语句类型如下：
 
 ```sql
 # 对读的记录加一个X锁
@@ -643,9 +632,7 @@ CREATE TABLE `sequence_id` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
-更准确点来说，不仅仅是自增主键，AUTO_INCREMENT的列都会涉及到自增锁，毕竟非主键也可以设置自增长。
-
-如果一个事务正在插入数据到有自增列的表时，会先获取自增锁，拿不到就可能会被阻塞住。这里的阻塞行为只是自增锁行为的其中一种，可以理解为自增锁就是一个接口，其具体的实现有多种。具体的配置项为innodb_autoinc_lock_mode（MySQL5.1.22引入），可以选择的值如下：
+更准确点来说，不仅仅是自增主键，AUTO_INCREMENT的列都会涉及到自增锁，毕竟非主键也可以设置自增长。如果一个事务正在插入数据到有自增列的表时，会先获取自增锁，拿不到就可能会被阻塞住。这里的阻塞行为只是自增锁行为的其中一种，可以理解为自增锁就是一个接口，其具体的实现有多种。具体的配置项为innodb_autoinc_lock_mode（MySQL5.1.22引入），可以选择的值如下：
 
 | innodb_autoinc_lock_mode | 介绍                           |
 | :----------------------- | :----------------------------- |
@@ -653,9 +640,7 @@ CREATE TABLE `sequence_id` (
 | 1                        | 连续模式（MySQL 8.0 之前默认） |
 | 2                        | 交错模式(MySQL 8.0 之后默认)   |
 
-交错模式下，所有的“INSERT-LIKE”语句（所有的插入语句，包括：`INSERT`、`REPLACE`、`INSERT…SELECT`、`REPLACE…SELECT`、`LOADDATA`等）都不使用表级锁，使用的是轻量级互斥锁实现，多条插入语句可以并发执行，速度更快，扩展性也更好。
-
-不过，如果你的MySQL数据库有主从同步需求并且bin log存储格式为Statement的话，不要将InnoDB自增锁模式设置为交叉模式，不然会有数据不一致性问题。这是因为并发情况下插入语句的执行顺序就无法得到保障。
+交错模式下，所有的“INSERT-LIKE”语句（所有的插入语句，包括：`INSERT`、`REPLACE`、`INSERT…SELECT`、`REPLACE…SELECT`、`LOADDATA`等）都不使用表级锁，使用的是轻量级互斥锁实现，多条插入语句可以并发执行，速度更快，扩展性也更好。不过，如果你的MySQL数据库有主从同步需求并且bin log存储格式为Statement的话，不要将InnoDB自增锁模式设置为交叉模式，不然会有数据不一致性问题。这是因为并发情况下插入语句的执行顺序就无法得到保障。
 
 > 如果MySQL采用的格式为Statement，那么MySQL的主从同步实际上同步的就是一条一条的SQL语句。
 
@@ -686,7 +671,7 @@ CREATE TABLE `sequence_id` (
 那么什么时候会使用行级锁呢？
 当增删改查匹配到索引时，Innodb会使用行级锁。
 
-[MySQL啥时候用表锁，啥时候用行锁？](https://mp.weixin.qq.com/s/v4GVad1wgW0H7tmjyQS0QA)
+> [MySQL啥时候用表锁，啥时候用行锁？](https://mp.weixin.qq.com/s/v4GVad1wgW0H7tmjyQS0QA)
 
 **如果查询条件用了索引/主键，那么`select ..... for update`就会进行行锁。**
 **如果是普通字段(没有索引/主键)，那么`select ..... for update`就会进行锁表。**
@@ -714,9 +699,7 @@ CREATE TABLE `sequence_id` (
 
 **索引是一种用于快速查询和检索数据的数据结构，其本质可以看成是一种排序好的数据结构。**
 
-索引的作用就相当于书的目录。打个比方:我们在查字典的时候，如果没有目录，那我们就只能一页一页的去找我们需要查的那个字，速度很慢。如果有目录了，我们只需要先去目录里查找字的位置，然后直接翻到那一页就行了。
-
-索引底层数据结构存在很多种类型，常见的索引结构有:B树，B+树和Hash、红黑树。在MySQL中，无论是Innodb还是MyIsam，都使用了B+树作为索引结构。
+索引的作用就相当于书的目录。打个比方:我们在查字典的时候，如果没有目录，那我们就只能一页一页的去找我们需要查的那个字，速度很慢。如果有目录了，我们只需要先去目录里查找字的位置，然后直接翻到那一页就行了。索引底层数据结构存在很多种类型，常见的索引结构有:B树，B+树和Hash、红黑树。在MySQL中，无论是Innodb还是MyIsam，都使用了B+树作为索引结构。
 
 ### 索引的优缺点
 
@@ -730,9 +713,7 @@ CREATE TABLE `sequence_id` (
 - 创建索引和维护索引需要耗费许多时间。当对表中的数据进行增删改的时候，如果数据有索引，那么索引也需要动态的修改，会降低SQL执行效率。
 - 索引需要使用物理文件存储，也会耗费一定空间。
 
-但是，**使用索引一定能提高查询性能吗?**
-
-大多数情况下，索引查询都是比全表扫描要快的。但是如果数据库的数据量不大，那么使用索引也不一定能够带来很大提升。
+但是，**使用索引一定能提高查询性能吗**?大多数情况下，索引查询都是比全表扫描要快的。但是如果数据库的数据量不大，那么使用索引也不一定能够带来很大提升。
 
 ### 索引的底层数据结构
 
@@ -740,7 +721,7 @@ CREATE TABLE `sequence_id` (
 
 哈希表是键值对的集合，通过键(key)即可快速取出对应的值(value)，因此哈希表可以快速检索数据（接近O（1））。
 
-**为何能够通过key快速取出value呢**？原因在于**哈希算法**（也叫散列算法）。通过哈希算法，我们可以快速找到key对应的index，找到了index也就找到了对应的value。
+**为何能够通过key快速取出value呢**？原因在于哈希算法（也叫散列算法）。通过哈希算法，我们可以快速找到key对应的index，找到了index也就找到了对应的value。
 
 
 ```java
@@ -750,7 +731,7 @@ index = hash % array_size
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/mysql20210513092328171.png)
 
-但是！哈希算法有个**Hash冲突**问题，也就是说多个不同的key最后得到的index相同。通常情况下，我们常用的解决办法是**链地址法**。链地址法就是将哈希冲突数据存放在链表中。就比如JDK1.8之前HashMap就是通过链地址法来解决哈希冲突的。不过，JDK1.8以后HashMap为了减少链表过长的时候搜索时间过长引入了红黑树。
+但是哈希算法有个**Hash冲突**问题，也就是说多个不同的key最后得到的index相同。通常情况下，我们常用的解决办法是**链地址法**。链地址法就是将哈希冲突数据存放在链表中。就比如JDK1.8之前HashMap就是通过链地址法来解决哈希冲突的。不过，JDK1.8以后HashMap为了减少链表过长的时候搜索时间过长引入了红黑树。
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/mysql20210513092224836.png)
 
@@ -769,9 +750,7 @@ SELECT * FROM tb1 WHERE id < 500;
 
 #### B树&B+树
 
-B树也称B-树,全称为**多路平衡查找树**，B+树是B树的一种变体。B树和B+树中的B是Balanced（平衡）的意思。
-
-目前大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构。
+B树也称B-树,全称为**多路平衡查找树**，B+树是B树的一种变体。B树和B+树中的B是Balanced（平衡）的意思。目前大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构。
 
 **B树&B+树两者有何异同呢？**
 
@@ -787,19 +766,19 @@ B树也称B-树,全称为**多路平衡查找树**，B+树是B树的一种变体
 
 ### 索引类型总结
 
-按照数据结构维度划分：
+**按照数据结构维度划分**：
 
 - BTree索引：MySQL里默认和最常用的索引类型。只有叶子节点存储value，非叶子节点只有指针和key。存储引擎MyISAM和InnoDB实现BTree索引都是使用B+Tree，但二者实现方式不一样（前面已经介绍了）。
 - 哈希索引：类似键值对的形式，一次即可定位。
 - RTree索引：一般不会使用，仅支持geometry数据类型，优势在于范围查找，效率较低，通常使用搜索引擎如ElasticSearch代替。
 - 全文索引：对文本的内容进行分词，进行搜索。目前只有`CHAR`、`VARCHAR`，`TEXT`列上可以创建全文索引。一般不会使用，效率较低，通常使用搜索引擎如ElasticSearch代替。
 
-按照底层存储方式角度划分：
+**按照底层存储方式角度划分**：
 
 - 聚簇索引（聚集索引）：索引结构和数据一起存放的索引，InnoDB中的主键索引就属于聚簇索引。
 - 非聚簇索引（非聚集索引）：索引结构和数据分开存放的索引，二级索引(辅助索引)就属于非聚簇索引。MySQL的MyISAM引擎，不管主键还是非主键，使用的都是非聚簇索引。
 
-按照应用维度划分：
+**按照应用维度划分**：
 
 - 主键索引：加速查询+列值唯一（不可以有NULL）+表中只有一个。
 - 普通索引：仅加速查询。
@@ -816,22 +795,18 @@ MySQL8.x中实现的索引新特性：
 
 ### 主键索引(Primary Key)
 
-数据表的主键列使用的就是主键索引。
-
-一张数据表有只能有一个主键，并且主键不能为null，不能重复。
-
-在MySQL的InnoDB的表中，当没有显示的指定表的主键时，InnoDB会自动先检查表中是否有唯一索引且不允许存在null值的字段，如果有，则选择该字段为默认的主键，否则InnoDB将会自动创建一个6Byte的自增主键。
+数据表的主键列使用的就是主键索引。一张数据表有只能有一个主键，并且主键不能为null，不能重复。在MySQL的InnoDB的表中，当没有显示的指定表的主键时，InnoDB会自动先检查表中是否有唯一索引且不允许存在null值的字段，如果有，则选择该字段为默认的主键，否则InnoDB将会自动创建一个6Byte的自增主键。
 
 ![img](https://oss.javaguide.cn/github/javaguide/open-source-project/cluster-index.png)
 
 ### 二级索引
 
-**二级索引（SecondaryIndex）又称为辅助索引，是因为二级索引的叶子节点存储的数据是主键。也就是说，通过二级索引，可以定位主键的位置。**
+**二级索引（SecondaryIndex）又称为辅助索引，是因为二级索引的叶子节点存储的数据是主键。也就是说，通过二级索引，可以定位主键的位置**。
 
 唯一索引，普通索引，前缀索引等索引属于二级索引。
 
-1. **唯一索引(UniqueKey)**：唯一索引也是一种约束。**唯一索引的属性列不能出现重复的数据，但是允许数据为NULL，一张表允许创建多个唯一索引**。建立唯一索引的目的大部分时候都是为了该属性列的数据的唯一性，而不是为了查询效率。
-2. **普通索引(Index)**：**普通索引的唯一作用就是为了快速查询数据，一张表允许创建多个普通索引，并允许数据重复和NULL。**
+1. **唯一索引(UniqueKey)**：唯一索引也是一种约束。唯一索引的属性列不能出现重复的数据，但是允许数据为NULL，一张表允许创建多个唯一索引。建立唯一索引的目的大部分时候都是为了该属性列的数据的唯一性，而不是为了查询效率。
+2. **普通索引(Index)**：普通索引的唯一作用就是为了快速查询数据，一张表允许创建多个普通索引，并允许数据重复和NULL。
 3. **前缀索引(Prefix)**：前缀索引只适用于字符串类型的数据。前缀索引是对文本的前几个字符创建索引，相比普通索引建立的数据更小，因为只取前几个字符。
 4. **全文索引(FullText)**：全文索引主要是为了检索大文本数据中的关键字的信息，是目前搜索引擎数据库使用的一种技术。Mysql5.6之前只有MYISAM引擎支持全文索引，5.6之后InnoDB也支持了全文索引。
 
@@ -845,7 +820,7 @@ MySQL8.x中实现的索引新特性：
 
 ##### 聚簇索引介绍
 
-**聚簇索引（ClusteredIndex）即索引结构和数据一起存放的索引，并不是一种单独的索引类型。InnoDB中的主键索引就属于聚簇索引。**
+**聚簇索引（ClusteredIndex）即索引结构和数据一起存放的索引，并不是一种单独的索引类型。InnoDB中的主键索引就属于聚簇索引**。
 
 在MySQL中，InnoDB引擎的表的`.ibd`文件就包含了该表的索引和数据，对于InnoDB引擎表来说，该表的索引(B+树)的每个非叶子节点存储索引，叶子节点存储索引和索引对应的数据。
 
@@ -865,7 +840,7 @@ MySQL8.x中实现的索引新特性：
 
 ##### 非聚簇索引介绍
 
-**非聚簇索引(Non-ClusteredIndex)即索引结构和数据分开存放的索引，并不是一种单独的索引类型。二级索引(辅助索引)就属于非聚簇索引。MySQL的MyISAM引擎，不管主键还是非主键，使用的都是非聚簇索引。**
+非聚簇索引(Non-ClusteredIndex)即索引结构和数据分开存放的索引，并不是一种单独的索引类型。二级索引(辅助索引)就属于非聚簇索引。MySQL的MyISAM引擎，不管主键还是非主键，使用的都是非聚簇索引。
 
 非聚簇索引的叶子节点并不一定存放数据的指针，因为二级索引的叶子节点就存放的是主键，根据主键再回表查数据。
 
@@ -890,18 +865,14 @@ MySQL8.x中实现的索引新特性：
 
 ##### 非聚簇索引一定回表查询吗(覆盖索引)?
 
-**非聚簇索引不一定回表查询。**
-
-试想一种情况，用户准备使用SQL查询用户名，而用户名字段正好建立了索引。
+**非聚簇索引不一定回表查询**。试想一种情况，用户准备使用SQL查询用户名，而用户名字段正好建立了索引。
 
 
 ```sql
 SELECT name FROM table WHERE name='guang19';
 ```
 
-那么这个索引的key本身就是name，查到对应的name直接返回就行了，无需回表查询。
-
-即使是MYISAM也是这样，虽然MYISAM的主键索引确实需要回表，因为它的主键索引的叶子节点存放的是指针。但是！**如果SQL查的就是主键呢?**
+那么这个索引的key本身就是name，查到对应的name直接返回就行了，无需回表查询。即使是MYISAM也是这样，虽然MYISAM的主键索引确实需要回表，因为它的主键索引的叶子节点存放的是指针。但是！**如果SQL查的就是主键呢**？
 
 
 ```sql
@@ -914,9 +885,7 @@ SELECT id FROM table WHERE id=1;
 
 #### 覆盖索引
 
-如果一个索引包含（或者说覆盖）所有需要查询的字段的值，我们就称之为**覆盖索引（CoveringIndex）**。我们知道在InnoDB存储引擎中，如果不是主键索引，叶子节点存储的是主键+列值。最终还是要“回表”，也就是要通过主键再查找一次。这样就会比较慢覆盖索引就是把要查询出的列和索引是对应的，不做回表操作！
-
-**覆盖索引即需要查询的字段正好是索引的字段，那么直接根据该索引，就可以查到数据了，而无需回表查询。**
+如果一个索引包含（或者说覆盖）所有需要查询的字段的值，我们就称之为**覆盖索引（CoveringIndex）**。我们知道在InnoDB存储引擎中，如果不是主键索引，叶子节点存储的是主键+列值。最终还是要“回表”，也就是要通过主键再查找一次。这样就会比较慢覆盖索引就是把要查询出的列和索引是对应的，不做回表操作！覆盖索引即需要查询的字段正好是索引的字段，那么直接根据该索引，就可以查到数据了，而无需回表查询。
 
 > 如主键索引，如果一条SQL需要查询主键，那么正好根据主键索引就可以查到主键。再如普通索引，如果一条SQL需要查询name，name字段正好有索引，那么直接根据这个索引就可以查到数据，也无需回表。
 
@@ -1003,13 +972,13 @@ ALTER TABLE `cus_order` ADD INDEX id_score_name(score, name);
 
 #### 最左前缀匹配原则
 
-最左前缀匹配原则指的是，在使用联合索引时，**MySQL**会根据联合索引中的字段顺序，从左到右依次到查询条件中去匹配，如果查询条件中存在与联合索引中最左侧字段相匹配的字段，则就会使用该字段过滤一批数据，直至联合索引中全部字段匹配完成，或者在执行过程中遇到范围查询（如">"、"<"）才会停止匹配。对于">="、"<="、"BETWEEN"、"like"前缀匹配的范围查询，并不会停止匹配。所以，我们在使用联合索引时，可以将区分度高的字段放在最左边，这也可以过滤更多数据。
+最左前缀匹配原则指的是，在使用联合索引时，MySQL会根据联合索引中的字段顺序，从左到右依次到查询条件中去匹配，如果查询条件中存在与联合索引中最左侧字段相匹配的字段，则就会使用该字段过滤一批数据，直至联合索引中全部字段匹配完成，或者在执行过程中遇到范围查询（如">"、"<"）才会停止匹配。对于">="、"<="、"BETWEEN"、"like"前缀匹配的范围查询，并不会停止匹配。所以，我们在使用联合索引时，可以将区分度高的字段放在最左边，这也可以过滤更多数据。
 
 > 相关阅读：[联合索引的最左匹配原则,全网都在说的一个错误结论](https://mp.weixin.qq.com/s/8qemhRg5MgXs1So5YCv0fQ)。
 
 ### 索引下推
 
-**索引下推（IndexConditionPushdown）**是**MySQL5.6**版本中提供的一项索引优化功能，可以在非聚簇索引遍历过程中，对索引中包含的字段先做判断，过滤掉不符合条件的记录，减少回表次数。
+索引下推（IndexConditionPushdown）是MySQL5.6版本中提供的一项索引优化功能，可以在非聚簇索引遍历过程中，对索引中包含的字段先做判断，过滤掉不符合条件的记录，减少回表次数。
 
 ### 正确使用索引的一些建议
 
@@ -1027,11 +996,7 @@ ALTER TABLE `cus_order` ADD INDEX id_score_name(score, name);
 
 #### 限制每张表上的索引数量
 
-索引并不是越多越好，建议单张表索引不超过5个！索引可以提高效率同样可以降低效率。
-
-索引可以增加查询效率，但同样也会降低插入和更新的效率，甚至有些情况下会降低查询效率。
-
-因为MySQL优化器在选择如何优化查询时，会根据统一信息，对每一个可以用到的索引来进行评估，以生成出一个最好的执行计划，如果同时有很多个索引都可以用于查询，就会增加MySQL优化器生成执行计划的时间，同样会降低查询性能。
+索引并不是越多越好，建议单张表索引不超过5个！索引可以提高效率同样可以降低效率。索引可以增加查询效率，但同样也会降低插入和更新的效率，甚至有些情况下会降低查询效率。因为MySQL优化器在选择如何优化查询时，会根据统一信息，对每一个可以用到的索引来进行评估，以生成出一个最好的执行计划，如果同时有很多个索引都可以用于查询，就会增加MySQL优化器生成执行计划的时间，同样会降低查询性能。
 
 #### 尽可能的考虑建立联合索引而不是单列索引
 
@@ -1059,17 +1024,11 @@ ALTER TABLE `cus_order` ADD INDEX id_score_name(score, name);
 
 #### 删除长期未使用的索引
 
-删除长期未使用的索引，不用的索引的存在会造成不必要的性能损耗。
-
-MySQL5.7可以通过查询sys库的schema_unused_indexes视图来查询哪些索引从未被使用。
+删除长期未使用的索引，不用的索引的存在会造成不必要的性能损耗。MySQL5.7可以通过查询sys库的schema_unused_indexes视图来查询哪些索引从未被使用。
 
 #### 知道如何分析语句是否走索引查询
 
-我们可以使用EXPLAIN命令来分析SQL的**执行计划**，这样就知道语句是否命中索引了。执行计划是指一条SQL语句在经过MySQL查询优化器的优化会后，具体的执行方式。
-
-EXPLAIN并不会真的去执行相关的语句，而是通过**查询优化器**对语句进行分析，找出最优的查询方案，并显示对应的信息。
-
-EXPLAIN的输出格式如下：
+我们可以使用EXPLAIN命令来分析SQL的执行计划，这样就知道语句是否命中索引了。执行计划是指一条SQL语句在经过MySQL查询优化器的优化会后，具体的执行方式。EXPLAIN并不会真的去执行相关的语句，而是通过查询优化器对语句进行分析，找出最优的查询方案，并显示对应的信息。EXPLAIN的输出格式如下：
 
 ```sql
 mysql> EXPLAIN SELECT `score`,`name` FROM `cus_order` ORDER BY `score` DESC;
@@ -1160,19 +1119,13 @@ MySQL日志主要包括错误日志、查询日志、慢查询日志、事务日
 
 ### redo log
 
-redo log（重做日志）是InnoDB存储引擎独有的，它让MySQL拥有了崩溃恢复能力。
-
-比如MySQL实例挂了或宕机了，重启时，InnoDB存储引擎会使用redo log恢复数据，保证数据的持久性与完整性。
+redo log（重做日志）是InnoDB存储引擎独有的，它让MySQL拥有了崩溃恢复能力。比如MySQL实例挂了或宕机了，重启时，InnoDB存储引擎会使用redo log恢复数据，保证数据的持久性与完整性。
 
 ![img](https://oss.javaguide.cn/github/javaguide/02.png)
 
 MySQL中数据是以页为单位，你查询一条记录，会从硬盘把一页的数据加载出来，加载出来的数据叫数据页，会放入到Buffer Pool中。
 
-后续的查询都是先从Buffer Pool中找，没有命中再去硬盘加载，减少硬盘IO开销，提升性能。
-
-更新表数据的时候，也是如此，发现Buffer Pool里存在要更新的数据，就直接在Buffer Pool里更新。
-
-然后会把“在某个数据页上做了什么修改”记录到重做日志缓存（redo log buffer）里，接着刷盘到redo log文件里。
+后续的查询都是先从Buffer Pool中找，没有命中再去硬盘加载，减少硬盘IO开销，提升性能。更新表数据的时候，也是如此，发现Buffer Pool里存在要更新的数据，就直接在Buffer Pool里更新。然后会把“在某个数据页上做了什么修改”记录到重做日志缓存（redo log buffer）里，接着刷盘到redo log文件里。
 
 ![img](https://oss.javaguide.cn/github/javaguide/03.png)
 
@@ -1190,9 +1143,7 @@ InnoDB存储引擎为redo log的刷盘策略提供了innodb_flush_log_at_trx_com
 - **1**：设置为1的时候，表示每次事务提交时都将进行刷盘操作（默认值）
 - **2**：设置为2的时候，表示每次事务提交时都只把redo log buffer内容写入page cache
 
-innodb_flush_log_at_trx_commit参数默认为1，也就是说当事务提交时会调用fsync对redo log进行刷盘
-
-另外，InnoDB存储引擎有一个后台线程，每隔1秒，就会把redo log buffer中的内容写到文件系统缓存（page cache），然后调用fsync刷盘。
+innodb_flush_log_at_trx_commit参数默认为1，也就是说当事务提交时会调用fsync对redo log进行刷盘。另外，InnoDB存储引擎有一个后台线程，每隔1秒，就会把redo log buffer中的内容写到文件系统缓存（page cache），然后调用fsync刷盘。
 
 ![img](https://oss.javaguide.cn/github/javaguide/04.png)
 
@@ -1204,9 +1155,7 @@ innodb_flush_log_at_trx_commit参数默认为1，也就是说当事务提交时�
 
 ![img](https://oss.javaguide.cn/github/javaguide/05.png)
 
-除了后台线程每秒1次的轮询操作，还有一种情况，当redo log buffer占用的空间即将达到innodb_log_buffer_size一半的时候，后台线程会主动刷盘。
-
-下面是不同刷盘策略的流程图。
+除了后台线程每秒1次的轮询操作，还有一种情况，当redo log buffer占用的空间即将达到innodb_log_buffer_size一半的时候，后台线程会主动刷盘。下面是不同刷盘策略的流程图。
 
 ##### innodb_flush_log_at_trx_commit=0
 
@@ -1218,25 +1167,17 @@ innodb_flush_log_at_trx_commit参数默认为1，也就是说当事务提交时�
 
 ![img](https://oss.javaguide.cn/github/javaguide/07.png)
 
-为1时，只要事务提交成功，redo log记录就一定在硬盘里，不会有任何数据丢失。
-
-如果事务执行期间MySQL挂了或宕机，这部分日志丢了，但是事务并没有提交，所以日志丢了也不会有损失。
+为1时，只要事务提交成功，redo log记录就一定在硬盘里，不会有任何数据丢失。如果事务执行期间MySQL挂了或宕机，这部分日志丢了，但是事务并没有提交，所以日志丢了也不会有损失。
 
 ##### innodb_flush_log_at_trx_commit=2
 
 ![img](https://oss.javaguide.cn/github/javaguide/09.png)
 
-为2时，只要事务提交成功，redo log buffer中的内容只写入文件系统缓存（page cache）。
-
-如果仅仅只是MySQL挂了不会有任何数据丢失，但是宕机可能会有1秒数据的丢失。
+为2时，只要事务提交成功，redo log buffer中的内容只写入文件系统缓存（page cache）。如果仅仅只是MySQL挂了不会有任何数据丢失，但是宕机可能会有1秒数据的丢失。
 
 #### 日志文件组
 
-硬盘上存储的redo log日志文件不只一个，而是以一个**日志文件组**的形式出现的，每个的redo日志文件大小都是一样的。
-
-比如可以配置为一组4个文件，每个文件的大小是1GB，整个redo log日志文件组可以记录4G的内容。
-
-它采用的是环形数组形式，从头开始写，写到末尾又回到头循环写，如下图所示。
+硬盘上存储的redo log日志文件不只一个，而是以一个**日志文件组**的形式出现的，每个的redo日志文件大小都是一样的。比如可以配置为一组4个文件，每个文件的大小是1GB，整个redo log日志文件组可以记录4G的内容。它采用的是环形数组形式，从头开始写，写到末尾又回到头循环写，如下图所示。
 
 ![img](https://oss.javaguide.cn/github/javaguide/10.png)
 
@@ -1245,11 +1186,7 @@ innodb_flush_log_at_trx_commit参数默认为1，也就是说当事务提交时�
 - **write pos**是当前记录的位置，一边写一边后移
 - **checkpoint**是当前要擦除的位置，也是往后推移
 
-每次刷盘redo log记录到**日志文件组**中，write pos位置就会后移更新。
-
-每次MySQL加载**日志文件组**恢复数据时，会清空加载过的redo log记录，并把checkpoint后移更新。
-
-write pos和checkpoint之间的还空着的部分可以用来写入新的redo log记录。
+每次刷盘redo log记录到**日志文件组**中，write pos位置就会后移更新。每次MySQL加载**日志文件组**恢复数据时，会清空加载过的redo log记录，并把checkpoint后移更新。write pos和checkpoint之间的还空着的部分可以用来写入新的redo log记录。
 
 ![img](https://oss.javaguide.cn/github/javaguide/11.png)
 
@@ -1259,11 +1196,7 @@ write pos和checkpoint之间的还空着的部分可以用来写入新的redo lo
 
 #### redo log小结
 
-相信大家都知道redo log的作用和它的刷盘时机、存储形式。
-
-现在我们来思考一个问题：**只要每次把修改后的数据页直接刷盘不就好了，还有redo log什么事？**
-
-它们不都是刷盘么？差别在哪里？
+相信大家都知道redo log的作用和它的刷盘时机、存储形式。现在我们来思考一个问题：**只要每次把修改后的数据页直接刷盘不就好了，还有redo log什么事**？它们不都是刷盘么？差别在哪里？
 
 
 ```java
@@ -1274,27 +1207,13 @@ write pos和checkpoint之间的还空着的部分可以用来写入新的redo lo
 1 TB = 1024 GB
 ```
 
-实际上，数据页大小是16KB，刷盘比较耗时，可能就修改了数据页里的几Byte数据，有必要把完整的数据页刷盘吗？
-
-而且数据页刷盘是随机写，因为一个数据页对应的位置可能在硬盘文件的随机位置，所以性能是很差。
-
-如果是写redo log，一行记录可能就占几十Byte，只包含表空间号、数据页号、磁盘文件偏移量、更新值，再加上是顺序写，所以刷盘速度很快。
-
-所以用redo log形式记录修改内容，性能会远远超过刷数据页的方式，这也让数据库的并发能力更强。
+实际上，数据页大小是16KB，刷盘比较耗时，可能就修改了数据页里的几Byte数据，有必要把完整的数据页刷盘吗？而且数据页刷盘是随机写，因为一个数据页对应的位置可能在硬盘文件的随机位置，所以性能是很差。如果是写redo log，一行记录可能就占几十Byte，只包含表空间号、数据页号、磁盘文件偏移量、更新值，再加上是顺序写，所以刷盘速度很快。所以用redo log形式记录修改内容，性能会远远超过刷数据页的方式，这也让数据库的并发能力更强。
 
 > 其实内存的数据页在一定时机也会刷盘，我们把这称为页合并，讲Buffer Pool的时候会对这块细说
 
 ### bin log
 
-redo log它是物理日志，记录内容是“在某个数据页上做了什么修改”，属于InnoDB存储引擎。
-
-而bin log是逻辑日志，记录内容是语句的原始逻辑，类似于“给ID=2这一行的c字段加1”，属于MySQL Server层。
-
-不管用什么存储引擎，只要发生了表数据更新，都会产生bin log日志。
-
-那bin log到底是用来干嘛的？
-
-可以说MySQL数据库的**数据备份、主备、主主、主从**都离不开bin log，需要依靠bin log来同步数据，保证数据一致性。
+redo log它是物理日志，记录内容是“在某个数据页上做了什么修改”，属于InnoDB存储引擎。而bin log是逻辑日志，记录内容是语句的原始逻辑，类似于“给ID=2这一行的c字段加1”，属于MySQL Server层。不管用什么存储引擎，只要发生了表数据更新，都会产生bin log日志。那bin log到底是用来干嘛的？可以说MySQL数据库的**数据备份、主备、主主、主从**都离不开bin log，需要依靠bin log来同步数据，保证数据一致性。
 
 ![img](https://oss.javaguide.cn/github/javaguide/01-20220305234724956.png)
 
@@ -1312,56 +1231,30 @@ bin log日志有三种格式，可以通过bin log_format参数指定。
 
 ![img](https://oss.javaguide.cn/github/javaguide/02-20220305234738688.png)
 
-同步数据时，会执行记录的SQL语句，但是有个问题，update_time=now()这里会获取当前系统时间，直接执行会导致与原库的数据不一致。
-
-为了解决这种问题，我们需要指定为row，记录的内容不再是简单的SQL语句了，还包含操作的具体数据，记录内容如下。
+同步数据时，会执行记录的SQL语句，但是有个问题，update_time=now()这里会获取当前系统时间，直接执行会导致与原库的数据不一致。为了解决这种问题，我们需要指定为row，记录的内容不再是简单的SQL语句了，还包含操作的具体数据，记录内容如下。
 
 ![img](https://oss.javaguide.cn/github/javaguide/03-20220305234742460.png)
 
-row格式记录的内容看不到详细信息，要通过mysql bin log工具解析出来。
-
-update_time=now()变成了具体的时间update_time=1627112756247，条件后面的@1、@2、@3都是该行数据第1个~3个字段的原始值（**假设这张表只有3个字段**）。
-
-这样就能保证同步数据的一致性，通常情况下都是指定为row，这样可以为数据库的恢复与同步带来更好的可靠性。
-
-但是这种格式，需要更大的容量来记录，比较占用空间，恢复与同步时会更消耗IO资源，影响执行速度。
-
-所以就有了一种折中的方案，指定为mixed，记录的内容是前两者的混合。
-
-MySQL会判断这条SQL语句是否可能引起数据不一致，如果是，就用row格式，否则就用statement格式。
+row格式记录的内容看不到详细信息，要通过mysql bin log工具解析出来。update_time=now()变成了具体的时间update_time=1627112756247，条件后面的@1、@2、@3都是该行数据第1个~3个字段的原始值（**假设这张表只有3个字段**）。这样就能保证同步数据的一致性，通常情况下都是指定为row，这样可以为数据库的恢复与同步带来更好的可靠性。但是这种格式，需要更大的容量来记录，比较占用空间，恢复与同步时会更消耗IO资源，影响执行速度。所以就有了一种折中的方案，指定为mixed，记录的内容是前两者的混合。MySQL会判断这条SQL语句是否可能引起数据不一致，如果是，就用row格式，否则就用statement格式。
 
 #### 写入机制
 
-bin log的写入时机也非常简单，事务执行过程中，先把日志写到bin log cache，事务提交的时候，再把bin log cache写到bin log文件中。
-
-因为一个事务的bin log不能被拆开，无论这个事务多大，也要确保一次性写入，所以系统会给每个线程分配一个块内存作为bin log cache。
-
-我们可以通过bin log_cache_size参数控制单个线程bin log cache大小，如果存储内容超过了这个参数，就要暂存到磁盘（Swap）。
-
-bin log日志刷盘流程如下
+bin log的写入时机也非常简单，事务执行过程中，先把日志写到bin log cache，事务提交的时候，再把bin log cache写到bin log文件中。因为一个事务的bin log不能被拆开，无论这个事务多大，也要确保一次性写入，所以系统会给每个线程分配一个块内存作为bin log cache。我们可以通过bin log_cache_size参数控制单个线程bin log cache大小，如果存储内容超过了这个参数，就要暂存到磁盘（Swap）。bin log日志刷盘流程如下
 
 ![img](https://oss.javaguide.cn/github/javaguide/04-20220305234747840.png)
 
 - **上图的write，是指把日志写入到文件系统的page cache，并没有把数据持久化到磁盘，所以速度比较快**
 - **上图的fsync，才是将数据持久化到磁盘的操作**
 
-write和fsync的时机，可以由参数sync_bin log控制，默认是0。
-
-为0的时候，表示每次提交事务都只write，由系统自行判断什么时候执行fsync。
+write和fsync的时机，可以由参数sync_bin log控制，默认是0。为0的时候，表示每次提交事务都只write，由系统自行判断什么时候执行fsync。
 
 ![img](https://oss.javaguide.cn/github/javaguide/05-20220305234754405.png)
 
-虽然性能得到提升，但是机器宕机，page cache里面的bin log会丢失。
-
-为了安全起见，可以设置为1，表示每次提交事务都会执行fsync，就如同**redo log日志刷盘流程**一样。
-
-最后还有一种折中方式，可以设置为N(N>1)，表示每次提交事务都write，但累积N个事务后才fsync。
+虽然性能得到提升，但是机器宕机，page cache里面的bin log会丢失。为了安全起见，可以设置为1，表示每次提交事务都会执行fsync，就如同**redo log日志刷盘流程**一样。最后还有一种折中方式，可以设置为N(N>1)，表示每次提交事务都write，但累积N个事务后才fsync。
 
 ![img](https://oss.javaguide.cn/github/javaguide/06-20220305234801592.png)
 
-在出现IO瓶颈的场景里，将sync_bin log设置成一个比较大的值，可以提升性能。
-
-同样的，如果机器宕机，会丢失最近N个事务的bin log日志。
+在出现IO瓶颈的场景里，将sync_bin log设置成一个比较大的值，可以提升性能。同样的，如果机器宕机，会丢失最近N个事务的bin log日志。
 
 ### 两阶段提交
 
@@ -1369,17 +1262,11 @@ redo log（重做日志）让InnoDB存储引擎拥有了崩溃恢复能力。
 
 bin log（归档日志）保证了MySQL集群架构的数据一致性。
 
-虽然它们都属于持久化的保证，但是侧重点不同。
-
-在执行更新语句过程，会记录redo log与bin log两块日志，以基本的事务为单位，redo log在事务执行过程中可以不断写入，而bin log只有在提交事务时才写入，所以redo log与bin log的写入时机不一样。
+虽然它们都属于持久化的保证，但是侧重点不同。在执行更新语句过程，会记录redo log与bin log两块日志，以基本的事务为单位，redo log在事务执行过程中可以不断写入，而bin log只有在提交事务时才写入，所以redo log与bin log的写入时机不一样。
 
 ![img](https://oss.javaguide.cn/github/javaguide/01-20220305234816065.png)
 
-回到正题，redo log与bin log两份日志之间的逻辑不一致，会出现什么问题？
-
-我们以update语句为例，假设id=2的记录，字段c值是0，把字段c值更新成1，SQL语句为`update T set c=1 where id=2`。
-
-假设执行过程中写完redo log日志后，bin log日志写期间发生了异常，会出现什么情况呢？
+回到正题，redo log与bin log两份日志之间的逻辑不一致，会出现什么问题？我们以update语句为例，假设id=2的记录，字段c值是0，把字段c值更新成1，SQL语句为`update T set c=1 where id=2`。假设执行过程中写完redo log日志后，bin log日志写期间发生了异常，会出现什么情况呢？
 
 ![img](https://oss.javaguide.cn/github/javaguide/02-20220305234828662.png)
 
@@ -1387,9 +1274,7 @@ bin log（归档日志）保证了MySQL集群架构的数据一致性。
 
 ![img](https://oss.javaguide.cn/github/javaguide/03-20220305235104445.png)
 
-为了解决两份日志之间的逻辑一致问题，InnoDB存储引擎使用**两阶段提交**方案。
-
-原理很简单，将redo log的写入拆成了两个步骤prepare和commit，这就是**两阶段提交**。
+为了解决两份日志之间的逻辑一致问题，InnoDB存储引擎使用**两阶段提交**方案。原理很简单，将redo log的写入拆成了两个步骤prepare和commit，这就是**两阶段提交**。
 
 ![img](https://oss.javaguide.cn/github/javaguide/04-20220305234956774.png)
 
@@ -1405,14 +1290,14 @@ bin log（归档日志）保证了MySQL集群架构的数据一致性。
 
 ### undo log
 
-> 我们知道如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行**回滚**，在MySQL中，恢复机制是通过**回滚日志（undo log）**实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。如果执行过程中遇到异常的话，我们直接利用**回滚日志**中的信息将数据回滚到修改之前的样子即可！并且，回滚日志会先于数据持久化到磁盘上。这样就保证了即使遇到数据库突然宕机等情况，当用户再次启动数据库的时候，数据库还能够通过查询回滚日志来回滚将之前未完成的事务。
+> 我们知道如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行回滚，在MySQL中，恢复机制是通过回滚日志（undo log）实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。如果执行过程中遇到异常的话，我们直接利用回滚日志中的信息将数据回滚到修改之前的样子即可！并且，回滚日志会先于数据持久化到磁盘上。这样就保证了即使遇到数据库突然宕机等情况，当用户再次启动数据库的时候，数据库还能够通过查询回滚日志来回滚将之前未完成的事务。
 
 另外，MVCC的实现依赖于：**隐藏字段、ReadView、undolog**。在内部实现中，InnoDB通过数据行的DB_TRX_ID和ReadView来判断数据的可见性，如不可见，则通过数据行的DB_ROLL_PTR找到undo log中的历史版本。每个事务读到的数据版本可能是不一样的，在同一个事务中，用户只能看到该事务创建ReadView之前已经提交的修改和该事务本身做的修改
 
 ### 总结
 
-> MySQLInnoDB引擎使用**redo log(重做日志)**保证事务的**持久性**，使用**undolog(回滚日志)**来保证事务的**原子性**。
-> MySQL数据库的**数据备份、主备、主主、主从**都离不开bin log，需要依靠bin log来同步数据，保证数据一致性。
+> MySQLInnoDB引擎使用redo log(重做日志)保证事务的持久性，使用undolog(回滚日志)来保证事务的原子性。
+> MySQL数据库的数据备份、主备、主主、主从都离不开bin log，需要依靠bin log来同步数据，保证数据一致性。
 > [原文链接](https://javaguide.cn/database/mysql/mysql-logs.html)
 
 #### 三大日志
@@ -1464,11 +1349,7 @@ bin log的作用是复制和恢复而生的。主从服务器需要保持数据�
 
 #### 一致性非锁定读
 
-对于[一致性非锁定读（Consistent Nonlocking Reads）](https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html)的实现，通常做法是加一个版本号或者时间戳字段，在更新数据的同时版本号+1或者更新时间戳。查询时，将当前可见的版本号与对应记录的版本号进行比对，如果记录的版本小于可见版本，则表示该记录可见
-
-在InnoDB存储引擎中，[多版本控制(multi versioning)](https://dev.mysql.com/doc/refman/5.7/en/innodb-multi-versioning.html)就是对非锁定读的实现。如果读取的行正在执行DELETE或UPDATE操作，这时读取操作不会去等待行上锁的释放。相反地，InnoDB存储引擎会去读取行的一个快照数据，对于这种读取历史数据的方式，我们叫它快照读(snapshot read)
-
-在`Repeatable Read`和`Read Committed`两个隔离级别下，如果是执行普通的select语句（不包括select...lock in share mode,select...for update）则会使用一致性非锁定读（MVCC）。并且在Repeatable Read下MVCC实现了可重复读和防止部分幻读
+对于[一致性非锁定读（Consistent Nonlocking Reads）](https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html)的实现，通常做法是加一个版本号或者时间戳字段，在更新数据的同时版本号+1或者更新时间戳。查询时，将当前可见的版本号与对应记录的版本号进行比对，如果记录的版本小于可见版本，则表示该记录可见。在InnoDB存储引擎中，[多版本控制(multi versioning)](https://dev.mysql.com/doc/refman/5.7/en/innodb-multi-versioning.html)就是对非锁定读的实现。如果读取的行正在执行DELETE或UPDATE操作，这时读取操作不会去等待行上锁的释放。相反地，InnoDB存储引擎会去读取行的一个快照数据，对于这种读取历史数据的方式，我们叫它快照读(snapshot read)。在`Repeatable Read`和`Read Committed`两个隔离级别下，如果是执行普通的select语句（不包括select...lock in share mode,select...for update）则会使用一致性非锁定读（MVCC）。并且在Repeatable Read下MVCC实现了可重复读和防止部分幻读
 
 #### 锁定读
 
@@ -1483,7 +1364,7 @@ bin log的作用是复制和恢复而生的。主从服务器需要保持数据�
 - select ... lock in share mode：对记录加S锁，其它事务也可以加S锁，如果加x锁则会被阻塞
 - select ... for update、insert、update、delete：对记录加X锁，且其它事务不能加任何锁
 
-在一致性非锁定读下，即使读取的记录已被其它事务加上X锁，这时记录也是可以被读取的，即读取的快照数据。上面说了，在Repeatable Read下MVCC防止了部分幻读，这边的“部分”是指在一致性非锁定读情况下，只能读取到第一次查询之前所插入的数据（根据Read View判断数据可见性，Read View在第一次查询时生成）。但是！如果是当前读，每次读取的都是最新数据，这时如果两次查询中间有其它事务插入数据，就会产生幻读。所以，**InnoDB在实现Repeatable Read时，如果执行的是当前读，则会对读取的记录使用Next-key Lock，来防止其它事务在间隙间插入数据**
+在一致性非锁定读下，即使读取的记录已被其它事务加上X锁，这时记录也是可以被读取的，即读取的快照数据。上面说了，在Repeatable Read下MVCC防止了部分幻读，这边的“部分”是指在一致性非锁定读情况下，只能读取到第一次查询之前所插入的数据（根据Read View判断数据可见性，Read View在第一次查询时生成）。但是！如果是当前读，每次读取的都是最新数据，这时如果两次查询中间有其它事务插入数据，就会产生幻读。所以，InnoDB在实现Repeatable Read时，如果执行的是当前读，则会对读取的记录使用Next-key Lock，来防止其它事务在间隙间插入数据
 
 ### InnoDB对MVCC的实现
 
@@ -1537,11 +1418,9 @@ undo log主要有两个作用：
 - 当事务回滚时用于将数据恢复到修改前的样子
 - 另一个作用是MVCC，当读取记录时，若该记录被其他事务占用或当前版本对该事务不可见，则可以通过undo log读取之前的版本数据，以此实现非锁定读
 
-**在InnoDB存储引擎中undo log分为两种：insert undo log和update undo log：**
+在InnoDB存储引擎中undo log分为两种：insert undo log和update undo log：
 
-1. **insert undo log**：指在insert操作中产生的undo log。因为insert操作的记录只对事务本身可见，对其他事务不可见，故该undo log可以在事务提交后直接删除。不需要进行purge操作
-
-**insert时的数据初始状态：**
+1. **insert undo log**：指在insert操作中产生的undo log。因为insert操作的记录只对事务本身可见，对其他事务不可见，故该undo log可以在事务提交后直接删除。不需要进行purge操作。insert时的数据初始状态：
 
 ![img](https://javaguide.cn/assets/317e91e1-1ee1-42ad-9412-9098d5c6a9ad.dc43aed3.png)
 
@@ -1559,9 +1438,7 @@ undo log主要有两个作用：
 
 #### 数据可见性算法
 
-在InnoDB存储引擎中，创建一个新事务后，执行每个select语句前，都会创建一个快照（ReadView），**快照中保存了当前数据库系统中正处于活跃（没有commit）的事务的ID号**。其实简单的说保存的是系统中当前不应该被本事务看到的其他事务ID列表（即m_ids）。当用户在这个事务中要读取某个记录行的时候，InnoDB会将该记录行的DB_TRX_ID与Read View中的一些变量及当前事务ID进行比较，判断是否满足可见性条件
-
-[具体的比较算法](https://github.com/facebook/mysql-8.0/blob/8.0/storage/innobase/include/read0types.h#L161)如下([图源](https://leviathan.vip/2019/03/20/InnoDB的事务分析-MVCC/#MVCC-1))：
+在InnoDB存储引擎中，创建一个新事务后，执行每个select语句前，都会创建一个快照（ReadView），**快照中保存了当前数据库系统中正处于活跃（没有commit）的事务的ID号**。其实简单的说保存的是系统中当前不应该被本事务看到的其他事务ID列表（即m_ids）。当用户在这个事务中要读取某个记录行的时候，InnoDB会将该记录行的DB_TRX_ID与Read View中的一些变量及当前事务ID进行比较，判断是否满足可见性条件。[具体的比较算法](https://github.com/facebook/mysql-8.0/blob/8.0/storage/innobase/include/read0types.h#L161)如下([图源](https://leviathan.vip/2019/03/20/InnoDB的事务分析-MVCC/#MVCC-1))：
 
 ![img](https://javaguide.cn/assets/8778836b-34a8-480b-b8c7-654fe207a8c2.3d84010e.png)
 
@@ -1577,20 +1454,18 @@ undo log主要有两个作用：
 
 在事务隔离级别RC和RR（InnoDB存储引擎的默认事务隔离级别）下，InnoDB存储引擎使用MVCC（非锁定一致性读），但它们生成Read View的时机却不同
 
-- 在RC隔离级别下的**每次select**查询前都生成一个Read View(m_ids列表)
-- 在RR隔离级别下只在事务开始后**第一次select**数据前生成一个Read View（m_ids列表）
+- 在RC隔离级别下的每次select查询前都生成一个Read View(m_ids列表)
+- 在RR隔离级别下只在事务开始后第一次select数据前生成一个Read View（m_ids列表）
 
 ### MVCC解决不可重复读问题
 
-虽然RC和RR都通过MVCC来读取快照数据，但由于**生成Read View时机不同**，从而在RR级别下实现可重复读
-
-举个例子：
+虽然RC和RR都通过MVCC来读取快照数据，但由于生成Read View时机不同，从而在RR级别下实现可重复读。举个例子：
 
 ![img](https://javaguide.cn/assets/6fb2b9a1-5f14-4dec-a797-e4cf388ed413.ea9e47d7.png)
 
 #### 在RC下Read View生成情况
 
-**1.假设时间线来到T4，那么此时数据行id=1的版本链为：**
+**1.假设时间线来到T4，那么此时数据行id=1的版本链为**：
 
 ![img](https://javaguide.cn/assets/a3fd1ec6-8f37-42fa-b090-7446d488fd04.bf41f07c.png)
 
@@ -1600,7 +1475,7 @@ undo log主要有两个作用：
 - 根据DB_ROLL_PTR找到undo log中的上一版本记录，上一条记录的DB_TRX_ID还是101，不可见
 - 继续找上一条DB_TRX_ID为1，满足1< m_up_limit_id，可见，所以事务103查询到数据为name=菜花
 
-**2.时间线来到T6，数据的版本链为：**
+**2.时间线来到T6，数据的版本链为**：
 
 ![img](https://javaguide.cn/assets/528559e9-dae8-4d14-b78d-a5b657c88391.2ff79120.png)
 
@@ -1609,11 +1484,11 @@ undo log主要有两个作用：
 - 此时最新记录的DB_TRX_ID为102，m_up_limit_id<=102< m_low_limit_id，所以要在m_ids列表中查找，发现DB_TRX_ID存在列表中，那么这个记录不可见
 - 根据DB_ROLL_PTR找到undo log中的上一版本记录，上一条记录的DB_TRX_ID为101，满足101< m_up_limit_id，记录可见，所以在T6时间点查询到数据为name=李四，与时间T4查询到的结果不一致，不可重复读！
 
-**3.时间线来到T9，数据的版本链为：**
+**3.时间线来到T9，数据的版本链为**：
 
 ![img](https://javaguide.cn/assets/6f82703c-36a1-4458-90fe-d7f4edbac71a.c8de5ed7.png)
 
-重新生成ReadView，这时事务101和102都已经提交，所以**m_ids**为空，则m_up_limit_id=m_low_limit_id=104，最新版本事务ID为102，满足102< m_low_limit_id，可见，查询结果为name=赵六
+重新生成ReadView，这时事务101和102都已经提交，所以m_ids为空，则m_up_limit_id=m_low_limit_id=104，最新版本事务ID为102，满足102< m_low_limit_id，可见，查询结果为name=赵六
 
 > 总结：在RC隔离级别下，事务在每次查询开始时都会生成并设置新的Read View，所以导致不可重复读
 
@@ -1621,11 +1496,11 @@ undo log主要有两个作用：
 
 在可重复读级别下，只会在事务开始后第一次读取数据时生成一个Read View（m_ids列表）
 
-**1.在T4情况下的版本链为：**
+**1.在T4情况下的版本链为**：
 
 ![img](https://javaguide.cn/assets/0e906b95-c916-4f30-beda-9cb3e49746bf.3a363d10.png)
 
-在当前执行select语句时生成一个Read View，此时**m_ids：[101,102]**，m_low_limit_id为：104，m_up_limit_id为：101，m_creator_trx_id为：103
+在当前执行select语句时生成一个Read View，此时m_ids：[101,102]，m_low_limit_id为：104，m_up_limit_id为：101，m_creator_trx_id为：103
 
 此时和RC级别下一样：
 
@@ -1633,18 +1508,18 @@ undo log主要有两个作用：
 - 根据DB_ROLL_PTR找到undolog中的上一版本记录，上一条记录的DB_TRX_ID还是101，不可见
 - 继续找上一条DB_TRX_ID为1，满足1< m_up_limit_id，可见，所以事务103查询到数据为name=菜花
 
-**2.时间点T6情况下：**
+**2.时间点T6情况下**：
 
 ![img](https://javaguide.cn/assets/79ed6142-7664-4e0b-9023-cf546586aa39.9c5cd303.png)
 
-在RR级别下只会生成一次Read View，所以此时依然沿用**m_ids：[101,102]**，m_low_limit_id为：104，m_up_limit_id为：101，m_creator_trx_id为：103
+在RR级别下只会生成一次Read View，所以此时依然沿用m_ids：[101,102]，m_low_limit_id为：104，m_up_limit_id为：101，m_creator_trx_id为：103
 
 - 最新记录的DB_TRX_ID为102，m_up_limit_id<=102< m_low_limit_id，所以要在m_ids列表中查找，发现DB_TRX_ID存在列表中，那么这个记录不可见
 - 根据DB_ROLL_PTR找到undo log中的上一版本记录，上一条记录的DB_TRX_ID为101，不可见
 - 继续根据DB_ROLL_PTR找到undo log中的上一版本记录，上一条记录的DB_TRX_ID还是101，不可见
 - 继续找上一条DB_TRX_ID为1，满足1< m_up_limit_id，可见，所以事务103查询到数据为name=菜花
 
-**3.时间点T9情况下：**
+**3.时间点T9情况下**：
 
 ![img](https://javaguide.cn/assets/cbbedbc5-0e3c-4711-aafd-7f3d68a4ed4e.7b4a86c0.png)
 
@@ -1685,7 +1560,7 @@ InnoDB存储引擎在RR级别下通过MVCC和Next-keyLock来解决幻读问题�
 简单来说MySQL主要分为Server层和存储引擎层：
 
 - **Server层**：主要包括连接器、查询缓存、分析器、优化器、执行器等，所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图，函数等，还有一个通用的日志模块bin log日志模块。
-- **存储引擎**：主要负责数据的存储和读取，采用可以替换的插件式架构，支持InnoDB、MyISAM、Memory等多个存储引擎，其中InnoDB引擎有自有的日志模块redo log模块。**现在最常用的存储引擎是InnoDB，它从MySQL5.5版本开始就被当做默认存储引擎了。**
+- **存储引擎**：主要负责数据的存储和读取，采用可以替换的插件式架构，支持InnoDB、MyISAM、Memory等多个存储引擎，其中InnoDB引擎有自有的日志模块redo log模块。现在最常用的存储引擎是InnoDB，它从MySQL5.5版本开始就被当做默认存储引擎了。
 
 #### Server层基本组件介绍
 
@@ -1770,7 +1645,7 @@ update tb_student A set A.age='19' where A.name='张三';
 - 执行器收到通知后记录bin log，然后调用引擎接口，提交redo log为提交状态。
 - 更新完成。
 
-**这里肯定有同学会问，为什么要用两个日志模块，用一个日志模块不行吗?**
+**这里肯定有同学会问，为什么要用两个日志模块，用一个日志模块不行吗**？
 
 这是因为最开始MySQL并没有InnoDB引擎（InnoDB引擎是其他公司以插件形式插入MySQL的），MySQL自带的引擎是MyISAM，但是我们知道redo log是InnoDB引擎特有的，其他存储引擎都没有，这就导致会没有crash-safe的能力(crash-safe的能力即使数据库发生异常重启，之前提交的记录都不会丢失)，bin log日志只能用来归档。
 
@@ -1808,13 +1683,7 @@ from、on、join、where、group by、(avg,sum)、having、select、distinct、u
 
 ## MySQL查询缓存详解
 
-缓存是一个有效且实用的系统性能优化的手段，不论是操作系统还是各种软件和网站或多或少都用到了缓存。
-
-然而，有经验的DBA都建议生产环境中把MySQL自带的QueryCache（查询缓存）给关掉。而且，从MySQL5.7.20开始，就已经默认弃用查询缓存了。在MySQL8.0及之后，更是直接删除了查询缓存的功能。
-
-这又是为什么呢？查询缓存真就这么鸡肋么?
-
-带着如下几个问题，我们正式进入本文。
+缓存是一个有效且实用的系统性能优化的手段，不论是操作系统还是各种软件和网站或多或少都用到了缓存。然而，有经验的DBA都建议生产环境中把MySQL自带的QueryCache（查询缓存）给关掉。而且，从MySQL5.7.20开始，就已经默认弃用查询缓存了。在MySQL8.0及之后，更是直接删除了查询缓存的功能。这又是为什么呢？查询缓存真就这么鸡肋么?带着如下几个问题，我们正式进入本文。
 
 - MySQL查询缓存是什么？适用范围？
 - MySQL缓存规则是什么？
@@ -1832,7 +1701,7 @@ MySQL体系架构如下图所示：
 - 如果匹配（命中），则将查询的结果集直接返回给客户端，不必再解析、执行查询。
 - 如果没有匹配（未命中），则将Hash值和结果集保存在查询缓存中，以便以后使用。
 
-也就是说，**一个查询语句（select）到了MySQLServer之后，会先到查询缓存看看，如果曾经执行过的话，就直接返回结果集给客户端。**
+也就是说，**一个查询语句（select）到了MySQLServer之后，会先到查询缓存看看，如果曾经执行过的话，就直接返回结果集给客户端**。
 
 ![img](https://oss.javaguide.cn/javaguide/13526879-3037b144ed09eb88.png)
 
@@ -1939,15 +1808,7 @@ SELECT SQL_NO_CACHE id, name FROM customer;
 
 #### 缓存机制中的内存管理
 
-查询缓存是完全存储在内存中的，所以在配置和使用它之前，我们需要先了解它是如何使用内存的。
-
-MySQL查询缓存使用内存池技术，自己管理内存释放和分配，而不是通过操作系统。内存池使用的基本单位是变长的block,用来存储类型、大小、数据等信息。一个结果集的缓存通过链表把这些block串起来。block最短长度为`query_cache_min_res_unit`。
-
-当服务器启动的时候，会初始化缓存需要的内存，是一个完整的空闲块。当查询结果需要缓存的时候，先从空闲块中申请一个数据块为参数`query_cache_min_res_unit`配置的空间，即使缓存数据很小，申请数据块也是这个，因为查询开始返回结果的时候就分配空间，此时无法预知结果多大。
-
-分配内存块需要先锁住空间块，所以操作很慢，MySQL会尽量避免这个操作，选择尽可能小的内存块，如果不够，继续申请，如果存储完时有空余则释放多余的。
-
-但是如果并发的操作，余下的需要回收的空间很小，小于`query_cache_min_res_unit`，不能再次被使用，就会产生碎片。
+查询缓存是完全存储在内存中的，所以在配置和使用它之前，我们需要先了解它是如何使用内存的。MySQL查询缓存使用内存池技术，自己管理内存释放和分配，而不是通过操作系统。内存池使用的基本单位是变长的block,用来存储类型、大小、数据等信息。一个结果集的缓存通过链表把这些block串起来。block最短长度为`query_cache_min_res_unit`。当服务器启动的时候，会初始化缓存需要的内存，是一个完整的空闲块。当查询结果需要缓存的时候，先从空闲块中申请一个数据块为参数`query_cache_min_res_unit`配置的空间，即使缓存数据很小，申请数据块也是这个，因为查询开始返回结果的时候就分配空间，此时无法预知结果多大。分配内存块需要先锁住空间块，所以操作很慢，MySQL会尽量避免这个操作，选择尽可能小的内存块，如果不够，继续申请，如果存储完时有空余则释放多余的。但是如果并发的操作，余下的需要回收的空间很小，小于`query_cache_min_res_unit`，不能再次被使用，就会产生碎片。
 
 ### MySQL查询缓存的优缺点
 
@@ -1974,19 +1835,13 @@ MySQL查询缓存使用内存池技术，自己管理内存释放和分配，而
 
 ### 总结
 
-MySQL中的查询缓存虽然能够提升数据库的查询性能，但是查询同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。
-
-查询缓存是一个适用较少情况的缓存机制。如果你的应用对数据库的更新很少，那么查询缓存将会作用显著。比较典型的如博客系统，一般博客更新相对较慢，数据表相对稳定不变，这时候查询缓存的作用会比较明显。
-
-简单总结一下查询缓存的适用场景：
+MySQL中的查询缓存虽然能够提升数据库的查询性能，但是查询同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。查询缓存是一个适用较少情况的缓存机制。如果你的应用对数据库的更新很少，那么查询缓存将会作用显著。比较典型的如博客系统，一般博客更新相对较慢，数据表相对稳定不变，这时候查询缓存的作用会比较明显。简单总结一下查询缓存的适用场景：
 
 - 表数据修改不频繁、数据较静态。
 - 查询（Select）重复度高。
 - 查询结果集小于1MB。
 
-对于一个更新频繁的系统来说，查询缓存缓存的作用是很微小的，在某些情况下开启查询缓存会带来性能的下降。
-
-简单总结一下查询缓存不适用的场景：
+对于一个更新频繁的系统来说，查询缓存缓存的作用是很微小的，在某些情况下开启查询缓存会带来性能的下降。简单总结一下查询缓存不适用的场景：
 
 - 表中的数据、表结构或者索引变动频繁
 - 重复的查询很少
@@ -1996,7 +1851,7 @@ MySQL中的查询缓存虽然能够提升数据库的查询性能，但是查询
 
 > 根据我们的经验，在高并发压力环境中查询缓存会导致系统性能的下降，甚至僵死。如果你一定要使用查询缓存，那么不要设置太大内存，而且只有在明确收益的时候才使用（数据库内容修改次数较少）。
 
-**确实是这样的！实际项目中，更建议使用本地缓存（比如Caffeine）或者分布式缓存（比如Redis），性能更好，更通用一些**
+确实是这样的！实际项目中，更建议使用本地缓存（比如Caffeine）或者分布式缓存（比如Redis），性能更好，更通用一些
 > [原文链接](https://javaguide.cn/database/mysql/mysql-query-cache.html)
 
 

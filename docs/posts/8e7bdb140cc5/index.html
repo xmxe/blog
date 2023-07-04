@@ -773,7 +773,7 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <li>CSRF需要用户先登录网站A,获取cookie;XSS不需要登录。</li>
 <li>CSRF是利用网站A本身的漏洞,去请求网站A的api;XSS是向网站A注入JS代码,然后执行JS里的代码,篡改网站A的内容。（XSS利用的是站点内的信任用户，而CSRF则是通过伪装来自受信任用户的请求来利用受信任的网站。你可以这么理解CSRF攻击：攻击者盗用了你的身份，以你的名义向第三方网站发送恶意请求。）</li>
 </ol>
-<h2 id="web-xml详解"><a href="#web-xml详解" class="headerlink" title="web.xml详解"></a>web.xml详解</h2><p><strong>&lt;context-param\&gt;</strong> 元素含有一对参数名和参数值，用作应用的Servlet上下文初始化参数，参数名在整个Web应用中必须是惟一的，在web应用的整个生命周期中上下文初始化参数都存在，任意的Servlet和jsp都可以随时随地访问它。在JSP网页中可以使用下列方法来取得：</p>
+<h2 id="web-xml详解"><a href="#web-xml详解" class="headerlink" title="web.xml详解"></a>web.xml详解</h2><p><strong>&lt;context-param&gt;</strong> 元素含有一对参数名和参数值，用作应用的Servlet上下文初始化参数，参数名在整个Web应用中必须是惟一的，在web应用的整个生命周期中上下文初始化参数都存在，任意的Servlet和jsp都可以随时随地访问它。在JSP网页中可以使用下列方法来取得：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">$<span class="token punctuation">&#123;</span>initParam<span class="token punctuation">.</span>param_name<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>若在Servlet可以使用下列方法来获得：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> param_name<span class="token operator">=</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInitParamter</span><span class="token punctuation">(</span><span class="token string">"param_name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -782,7 +782,7 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <p>也可以在Servlet中直接调用</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInitParameter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>，<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>两者是等价的。</p>
-<p><strong>&lt;listener\&gt;</strong> 为web应用程序定义监听器，监听器用来监听各种事件，比如：application和session事件，所有的监听器按照相同的方式定义，功能取决去它们各自实现的接口，常用的Web事件接口有如下几个：</p>
+<p><strong>&lt;listener&gt;</strong> 为web应用程序定义监听器，监听器用来监听各种事件，比如：application和session事件，所有的监听器按照相同的方式定义，功能取决去它们各自实现的接口，常用的Web事件接口有如下几个：</p>
 <ol>
 <li>ServletContextListener：用于监听Web应用的启动和关闭；</li>
 <li>ServletContextAttributeListener：用于监听ServletContext范围（application）内属性的改变；</li>
@@ -791,7 +791,7 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <li>HttpSessionListener：用于监听用户session的开始和结束；</li>
 <li>HttpSessionAttributeListener：用于监听HttpSession范围（session）内属性的改变</li>
 </ol>
-<p><strong>&lt;load-on-startup\&gt;1&lt;&#x2F;load-on-startup\&gt;</strong><br>load-on-startup元素标记容器是否应该在web应用程序启动的时候就加载这个servlet，(实例化并调用其init()方法)。它的值必须是一个整数，表示servlet被加载的先后顺序。如果该元素的值为负数或者没有设置，则容器会当Servlet被请求时再加载。如果值为正整数或者0时，表示容器在应用启动时就加载并初始化这个servlet，值越小，servlet的优先级越高，就越先被加载。值相同时，容器就会自己选择顺序来加载创建Servlet实例有两个时机较小的优先加载</p>
+<p><strong>&lt;load-on-startup&gt;1&lt;&#x2F;load-on-startup&#x2F;&gt;</strong><br>load-on-startup元素标记容器是否应该在web应用程序启动的时候就加载这个servlet，(实例化并调用其init()方法)。它的值必须是一个整数，表示servlet被加载的先后顺序。如果该元素的值为负数或者没有设置，则容器会当Servlet被请求时再加载。如果值为正整数或者0时，表示容器在应用启动时就加载并初始化这个servlet，值越小，servlet的优先级越高，就越先被加载。值相同时，容器就会自己选择顺序来加载创建Servlet实例有两个时机较小的优先加载</p>
 <h2 id="解决跨域的几种方案"><a href="#解决跨域的几种方案" class="headerlink" title="解决跨域的几种方案"></a>解决跨域的几种方案</h2><p>服务器没有同源策略，浏览器的同源策略是为了保证浏览器的安全性，实际上跨域请求会将请求发送到服务器，只不过在返回数据的时候浏览器发出跨域警告</p>
 <ol>
 <li>JSONP</li>

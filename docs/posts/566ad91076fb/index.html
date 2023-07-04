@@ -534,8 +534,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="Dubbo基础"><a href="#Dubbo基础" class="headerlink" title="Dubbo基础"></a>Dubbo基础</h2><h3 id="什么是Dubbo"><a href="#什么是Dubbo" class="headerlink" title="什么是Dubbo?"></a>什么是Dubbo?</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/427f2168-1930-4c14-8760-415fac8db1d0-20200802184737978.png" alt="img"></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/apache/dubbo">Apache Dubbo</a>|ˈdʌbəʊ|是一款高性能、轻量级的开源Java RPC框架。</p>
-<p>根据 <a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/">Dubbo官方文档</a>的介绍，Dubbo提供了六大核心能力</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/apache/dubbo">Apache Dubbo</a>|ˈdʌbəʊ|是一款高性能、轻量级的开源Java RPC框架。根据 <a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/">Dubbo官方文档</a>的介绍，Dubbo提供了六大核心能力</p>
 <ol>
 <li>面向接口代理的高性能RPC调用。</li>
 <li>智能容错和负载均衡。</li>
@@ -545,12 +544,10 @@
 <li>可视化的服务治理与运维。</li>
 </ol>
 <p><img src="https://oss.javaguide.cn/%E6%BA%90%E7%A0%81/dubbo/dubbo%E6%8F%90%E4%BE%9B%E7%9A%84%E5%85%AD%E5%A4%A7%E6%A0%B8%E5%BF%83%E8%83%BD%E5%8A%9B.png" alt="Dubbo提供的六大核心能力"></p>
-<p>简单来说就是：<strong>Dubbo不光可以帮助我们调用远程服务，还提供了一些其他开箱即用的功能比如智能负载均衡。</strong></p>
-<p>Dubbo目前已经有接近34.4k的Star。Dubbo是由阿里开源，后来加入了Apache。正是由于Dubbo的出现，才使得越来越多的公司开始使用以及接受分布式架构。</p>
-<h3 id="为什么要用Dubbo"><a href="#为什么要用Dubbo" class="headerlink" title="为什么要用Dubbo?"></a>为什么要用Dubbo?</h3><p>随着互联网的发展，网站的规模越来越大，用户数量越来越多。单一应用架构、垂直应用架构无法满足我们的需求，这个时候分布式服务架构就诞生了。</p>
-<p>分布式服务架构下，系统被拆分成不同的服务比如短信服务、安全服务，每个服务独立提供系统的某个核心服务。</p>
-<p>我们可以使用Java RMI（Java Remote Method Invocation）、Hessian这种支持远程调用的框架来简单地暴露和引用远程服务。但是！当服务越来越多之后，服务调用关系越来越复杂。当应用访问压力越来越大后，负载均衡以及服务监控的需求也迫在眉睫。我们可以用F5这类硬件来做负载均衡，但这样增加了成本，并且存在单点故障的风险。</p>
-<p>不过，Dubbo的出现让上述问题得到了解决。<strong>Dubbo帮助我们解决了什么问题呢？</strong></p>
+<p>简单来说就是：<strong>Dubbo不光可以帮助我们调用远程服务，还提供了一些其他开箱即用的功能比如智能负载均衡</strong>。Dubbo目前已经有接近34.4k的Star。Dubbo是由阿里开源，后来加入了Apache。正是由于Dubbo的出现，才使得越来越多的公司开始使用以及接受分布式架构。</p>
+<h3 id="为什么要用Dubbo"><a href="#为什么要用Dubbo" class="headerlink" title="为什么要用Dubbo?"></a>为什么要用Dubbo?</h3><p>随着互联网的发展，网站的规模越来越大，用户数量越来越多。单一应用架构、垂直应用架构无法满足我们的需求，这个时候分布式服务架构就诞生了。分布式服务架构下，系统被拆分成不同的服务比如短信服务、安全服务，每个服务独立提供系统的某个核心服务。</p>
+<p>我们可以使用Java RMI（Java Remote Method Invocation）、Hessian这种支持远程调用的框架来简单地暴露和引用远程服务。但是当服务越来越多之后，服务调用关系越来越复杂。当应用访问压力越来越大后，负载均衡以及服务监控的需求也迫在眉睫。我们可以用F5这类硬件来做负载均衡，但这样增加了成本，并且存在单点故障的风险。</p>
+<p>不过，Dubbo的出现让上述问题得到了解决。<strong>Dubbo帮助我们解决了什么问题呢</strong>？</p>
 <ol>
 <li><strong>负载均衡</strong>：同一个服务部署在不同的机器时该调用哪一台机器上的服务。</li>
 <li><strong>服务调用链路生成</strong>：随着系统的发展，服务越来越多，服务间依赖关系变得错踪复杂，甚至分不清哪个应用要在哪个应用之前启动，架构师都不能完整的描述应用的架构关系。Dubbo可以为我们解决服务之间互相是如何调用的。</li>
@@ -559,11 +556,9 @@
 </ol>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/43050183.jpg" alt="img"></p>
 <p>另外，Dubbo除了能够应用在分布式系统中，也可以应用在现在比较火的微服务系统中。不过，由于Spring Cloud在微服务中应用更加广泛，所以，我觉得一般我们提Dubbo的话，大部分是分布式系统的情况。</p>
-<p><strong>我们刚刚提到了分布式这个概念，下面再给大家介绍一下什么是分布式？为什么要分布式？</strong></p>
 <h2 id="分布式基础"><a href="#分布式基础" class="headerlink" title="分布式基础"></a>分布式基础</h2><h3 id="什么是分布式"><a href="#什么是分布式" class="headerlink" title="什么是分布式?"></a>什么是分布式?</h3><p>分布式或者说SOA分布式重要的就是面向服务，说简单的分布式就是我们把整个系统拆分成不同的服务然后将这些服务放在不同的服务器上减轻单体服务的压力提高并发量和性能。比如电商系统可以简单地拆分成订单系统、商品系统、登录系统等等，拆分之后的每个服务可以部署在不同的机器上，如果某一个服务的访问量比较大的话也可以将这个服务同时部署在多台机器上。</p>
 <p><img src="https://oss.javaguide.cn/java-guide-blog/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="分布式事务示意图"></p>
-<h3 id="为什么要分布式"><a href="#为什么要分布式" class="headerlink" title="为什么要分布式?"></a>为什么要分布式?</h3><p>从开发角度来讲单体应用的代码都集中在一起，而分布式系统的代码根据业务被拆分。所以，每个团队可以负责一个服务的开发，这样提升了开发效率。另外，代码根据业务拆分之后更加便于维护和扩展。</p>
-<p>另外，我觉得将系统拆分成分布式之后不光便于系统扩展和维护，更能提高整个系统的性能。你想一想嘛？把整个系统拆分成不同的服务&#x2F;系统，然后每个服务&#x2F;系统单独部署在一台服务器上，是不是很大程度上提高了系统性能呢？</p>
+<h3 id="为什么要分布式"><a href="#为什么要分布式" class="headerlink" title="为什么要分布式?"></a>为什么要分布式?</h3><p>从开发角度来讲单体应用的代码都集中在一起，而分布式系统的代码根据业务被拆分。所以，每个团队可以负责一个服务的开发，这样提升了开发效率。另外，代码根据业务拆分之后更加便于维护和扩展。另外，我觉得将系统拆分成分布式之后不光便于系统扩展和维护，更能提高整个系统的性能。你想一想嘛？把整个系统拆分成不同的服务&#x2F;系统，然后每个服务&#x2F;系统单独部署在一台服务器上，是不是很大程度上提高了系统性能呢？</p>
 <h2 id="Dubbo架构"><a href="#Dubbo架构" class="headerlink" title="Dubbo架构"></a>Dubbo架构</h2><h3 id="Dubbo架构中的核心角色有哪些？"><a href="#Dubbo架构中的核心角色有哪些？" class="headerlink" title="Dubbo架构中的核心角色有哪些？"></a>Dubbo架构中的核心角色有哪些？</h3><p><a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/dev/design/">官方文档中的框架设计章节</a>已经介绍的非常详细了，我这里把一些比较重要的点再提一下。</p>
 <p><img src="https://oss.javaguide.cn/%E6%BA%90%E7%A0%81/dubbo/dubbo-relation.jpg" alt="dubbo-relation"></p>
 <p>上述节点简单介绍以及他们之间的关系：</p>
@@ -574,8 +569,7 @@
 <li><strong>Registry</strong>：服务注册与发现的注册中心。注册中心会返回服务提供者地址列表给消费者。非必须。</li>
 <li><strong>Monitor</strong>：统计服务的调用次数和调用时间的监控中心。服务消费者和提供者会定时发送统计数据到监控中心。非必须。</li>
 </ul>
-<h3 id="Dubbo中的Invoker概念了解么？"><a href="#Dubbo中的Invoker概念了解么？" class="headerlink" title="Dubbo中的Invoker概念了解么？"></a>Dubbo中的Invoker概念了解么？</h3><p>Invoker是Dubbo领域模型中非常重要的一个概念，你如果阅读过Dubbo源码的话，你会无数次看到这玩意。就比如下面我要说的负载均衡这块的源码中就有大量Invoker的身影。</p>
-<p>简单来说，Invoker就是Dubbo对远程调用的抽象。</p>
+<h3 id="Dubbo中的Invoker概念了解么？"><a href="#Dubbo中的Invoker概念了解么？" class="headerlink" title="Dubbo中的Invoker概念了解么？"></a>Dubbo中的Invoker概念了解么？</h3><p>Invoker是Dubbo领域模型中非常重要的一个概念，你如果阅读过Dubbo源码的话，你会无数次看到这玩意。就比如下面我要说的负载均衡这块的源码中就有大量Invoker的身影。简单来说，Invoker就是Dubbo对远程调用的抽象。</p>
 <p><img src="https://oss.javaguide.cn/java-guide-blog/dubbo_rpc_invoke.jpg" alt="dubbo_rpc_invoke.jpg"></p>
 <p>按照Dubbo官方的话来说，Invoker分为</p>
 <ul>
@@ -599,10 +593,8 @@
 <li><strong>transport网络传输层</strong>：抽象mina和netty为统一接口，以Message为中心。</li>
 <li><strong>serialize数据序列化层</strong>：对需要在网络传输的数据进行序列化。</li>
 </ul>
-<h3 id="Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？"><a href="#Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？" class="headerlink" title="Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？"></a>Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？</h3><p>SPI（Service Provider Interface）机制被大量用在开源项目中，它可以帮助我们动态寻找服务&#x2F;功能（比如负载均衡策略）的实现。</p>
-<p>SPI的具体原理是这样的：我们将接口的实现类放在配置文件中，我们在程序运行过程中读取配置文件，通过反射加载实现类。这样，我们可以在运行的时候，动态替换接口的实现类。和IoC的解耦思想是类似的。</p>
-<p>Java本身就提供了SPI机制的实现。不过，Dubbo没有直接用，而是对Java原生的SPI机制进行了增强，以便更好满足自己的需求。</p>
-<p><strong>那我们如何扩展Dubbo中的默认实现呢？</strong></p>
+<h3 id="Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？"><a href="#Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？" class="headerlink" title="Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？"></a>Dubbo的SPI机制了解么？如何扩展Dubbo中的默认实现？</h3><p>SPI（Service Provider Interface）机制被大量用在开源项目中，它可以帮助我们动态寻找服务&#x2F;功能（比如负载均衡策略）的实现。SPI的具体原理是这样的：我们将接口的实现类放在配置文件中，我们在程序运行过程中读取配置文件，通过反射加载实现类。这样，我们可以在运行的时候，动态替换接口的实现类。和IoC的解耦思想是类似的。Java本身就提供了SPI机制的实现。不过，Dubbo没有直接用，而是对Java原生的SPI机制进行了增强，以便更好满足自己的需求。</p>
+<p><strong>那我们如何扩展Dubbo中的默认实现呢</strong>？</p>
 <p>比如说我们想要实现自己的负载均衡策略，我们创建对应的实现类XxxLoadBalance实现LoadBalance接口或者AbstractLoadBalance类。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>xxx</span><span class="token punctuation">;</span>
  
@@ -639,10 +631,7 @@
 </blockquote>
 <p>微内核架构包含两类组件：<strong>核心系统（coresystem）</strong>和<strong>插件模块（plug-inmodules）</strong>。</p>
 <p><img src="https://oss.javaguide.cn/source-code/dubbo/%E5%BE%AE%E5%86%85%E6%A0%B8%E6%9E%B6%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="img"></p>
-<p>核心系统提供系统所需核心能力，插件模块可以扩展系统的功能。因此，基于微内核架构的系统，非常易于扩展功能。</p>
-<p>我们常见的一些IDE，都可以看作是基于微内核架构设计的。绝大多数IDE比如IDEA、VSCode都提供了插件来丰富自己的功能。</p>
-<p>正是因为Dubbo基于微内核架构，才使得我们可以随心所欲替换Dubbo的功能点。比如你觉得Dubbo的序列化模块实现的不满足自己要求，没关系,你自己实现一个序列化模块就好了</p>
-<p>通常情况下，微核心都会采用Factory、IoC、OSGi等方式管理插件生命周期。Dubbo不想依赖Spring等IoC容器，也不想自己造一个小的IoC容器（过度设计），因此采用了一种最简单的Factory方式管理插件：<strong>JDK标准的SPI扩展机制</strong>（java.util.ServiceLoader）。</p>
+<p>核心系统提供系统所需核心能力，插件模块可以扩展系统的功能。因此，基于微内核架构的系统，非常易于扩展功能。我们常见的一些IDE，都可以看作是基于微内核架构设计的。绝大多数IDE比如IDEA、VSCode都提供了插件来丰富自己的功能。正是因为Dubbo基于微内核架构，才使得我们可以随心所欲替换Dubbo的功能点。比如你觉得Dubbo的序列化模块实现的不满足自己要求，没关系,你自己实现一个序列化模块就好了。通常情况下，微核心都会采用Factory、IoC、OSGi等方式管理插件生命周期。Dubbo不想依赖Spring等IoC容器，也不想自己造一个小的IoC容器（过度设计），因此采用了一种最简单的Factory方式管理插件：<strong>JDK标准的SPI扩展机制</strong>（java.util.ServiceLoader）。</p>
 <h3 id="关于Dubbo架构的一些自测小问题"><a href="#关于Dubbo架构的一些自测小问题" class="headerlink" title="关于Dubbo架构的一些自测小问题"></a>关于Dubbo架构的一些自测小问题</h3><h4 id="注册中心的作用了解么？"><a href="#注册中心的作用了解么？" class="headerlink" title="注册中心的作用了解么？"></a>注册中心的作用了解么？</h4><p>注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互。</p>
 <h4 id="服务提供者宕机后，注册中心会做什么？"><a href="#服务提供者宕机后，注册中心会做什么？" class="headerlink" title="服务提供者宕机后，注册中心会做什么？"></a>服务提供者宕机后，注册中心会做什么？</h4><p>注册中心会立即推送事件通知消费者。</p>
 <h4 id="监控中心的作用呢？"><a href="#监控中心的作用呢？" class="headerlink" title="监控中心的作用呢？"></a>监控中心的作用呢？</h4><p>监控中心负责统计各服务调用次数，调用时间等。</p>
@@ -651,7 +640,6 @@
 <blockquote>
 <p>负载均衡改善了跨多个计算资源（例如计算机，计算机集群，网络链接，中央处理单元或磁盘驱动）的工作负载分布。负载平衡旨在优化资源使用，最大化吞吐量，最小化响应时间，并避免任何单个资源的过载。使用具有负载平衡而不是单个组件的多个组件可以通过冗余提高可靠性和可用性。负载平衡通常涉及专用软件或硬件。</p>
 </blockquote>
-<p><strong>上面讲的大家可能不太好理解，再用通俗的话给大家说一下。</strong></p>
 <p>我们的系统中的某个服务的访问量特别大，我们将这个服务部署在了多台服务器上，当客户端发起请求的时候，多台服务器都可以处理这个请求。那么，如何正确选择处理该请求的服务器就很关键。假如，你就要一台服务器来处理该服务的请求，那该服务部署在多台服务器的意义就不复存在了。负载均衡就是为了避免单个服务器响应同一请求，容易造成服务器宕机、崩溃等问题，我们从负载均衡的这四个字就能明显感受到它的意义。</p>
 <h3 id="Dubbo提供的负载均衡策略有哪些？"><a href="#Dubbo提供的负载均衡策略有哪些？" class="headerlink" title="Dubbo提供的负载均衡策略有哪些？"></a>Dubbo提供的负载均衡策略有哪些？</h3><p>在集群负载均衡时，Dubbo提供了多种均衡策略，默认为random随机调用。我们还可以自行扩展负载均衡策略（参考DubboSPI机制）。</p>
 <p>在Dubbo中，所有负载均衡实现类均继承自AbstractLoadBalance，该类实现了LoadBalance接口，并封装了一些公共的逻辑。</p>
@@ -717,12 +705,8 @@
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="LeastActiveLoadBalance"><a href="#LeastActiveLoadBalance" class="headerlink" title="LeastActiveLoadBalance"></a>LeastActiveLoadBalance</h4><p>LeastActiveLoadBalance直译过来就是<strong>最小活跃数负载均衡</strong>。</p>
-<p>这个名字起得有点不直观，不仔细看官方对活跃数的定义，你压根不知道这玩意是干嘛的。</p>
-<p>我这么说吧！初始状态下所有服务提供者的活跃数均为0（每个服务提供者的中特定方法都对应一个活跃数，我在后面的源码中会提到），每收到一个请求后，对应的服务提供者的活跃数+1，当这个请求处理完之后，活跃数-1。</p>
-<p>因此，<strong>Dubbo就认为谁的活跃数越少，谁的处理速度就越快，性能也越好，这样的话，我就优先把请求给活跃数少的服务提供者处理。</strong></p>
-<p><strong>如果有多个服务提供者的活跃数相等怎么办？</strong></p>
-<p>很简单，那就再走一遍RandomLoadBalance。</p>
+<h4 id="LeastActiveLoadBalance"><a href="#LeastActiveLoadBalance" class="headerlink" title="LeastActiveLoadBalance"></a>LeastActiveLoadBalance</h4><p>LeastActiveLoadBalance直译过来就是<strong>最小活跃数负载均衡</strong>。这个名字起得有点不直观，不仔细看官方对活跃数的定义，你压根不知道这玩意是干嘛的。我这么说吧！初始状态下所有服务提供者的活跃数均为0（每个服务提供者的中特定方法都对应一个活跃数，我在后面的源码中会提到），每收到一个请求后，对应的服务提供者的活跃数+1，当这个请求处理完之后，活跃数-1。因此，<strong>Dubbo就认为谁的活跃数越少，谁的处理速度就越快，性能也越好，这样的话，我就优先把请求给活跃数少的服务提供者处理</strong>。</p>
+<p><strong>如果有多个服务提供者的活跃数相等怎么办</strong>？很简单，那就再走一遍RandomLoadBalance。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LeastActiveLoadBalance</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractLoadBalance</span> <span class="token punctuation">&#123;</span>
 
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">NAME</span> <span class="token operator">=</span> <span class="token string">"leastactive"</span><span class="token punctuation">;</span>
@@ -797,28 +781,26 @@
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="ConsistentHashLoadBalance"><a href="#ConsistentHashLoadBalance" class="headerlink" title="ConsistentHashLoadBalance"></a>ConsistentHashLoadBalance</h4><p>ConsistentHashLoadBalance小伙伴们应该也不会陌生，在分库分表、各种集群中就经常使用这个负载均衡策略。</p>
-<p>ConsistentHashLoadBalance即<strong>一致性Hash负载均衡策略</strong>。ConsistentHashLoadBalance中没有权重的概念，具体是哪个服务提供者处理请求是由你的请求的参数决定的，也就是说相同参数的请求总是发到同一个服务提供者。</p>
+<h4 id="ConsistentHashLoadBalance"><a href="#ConsistentHashLoadBalance" class="headerlink" title="ConsistentHashLoadBalance"></a>ConsistentHashLoadBalance</h4><p>ConsistentHashLoadBalance小伙伴们应该也不会陌生，在分库分表、各种集群中就经常使用这个负载均衡策略。ConsistentHashLoadBalance即<strong>一致性Hash负载均衡策略</strong>。ConsistentHashLoadBalance中没有权重的概念，具体是哪个服务提供者处理请求是由你的请求的参数决定的，也就是说相同参数的请求总是发到同一个服务提供者。</p>
 <p><img src="https://oss.javaguide.cn/java-guide-blog/consistent-hash-data-incline.jpg" alt="img"></p>
 <p>另外，Dubbo为了避免数据倾斜问题（节点不够分散，大量请求落到同一节点），还引入了虚拟节点的概念。通过虚拟节点可以让节点更加分散，有效均衡各个节点的请求量。</p>
 <p><img src="https://oss.javaguide.cn/java-guide-blog/consistent-hash-invoker.jpg" alt="img"></p>
+<blockquote>
 <p>官方有详细的<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/dev/source/loadbalance/#23-consistenthashloadbalance">源码分析</a>。这里还有一个相关的<a target="_blank" rel="noopener" href="https://github.com/apache/dubbo/pull/5440">PR#5440</a>来修复老版本中ConsistentHashLoadBalance存在的一些Bug。感兴趣的小伙伴，可以多花点时间研究一下。</p>
+</blockquote>
 <h4 id="RoundRobinLoadBalance"><a href="#RoundRobinLoadBalance" class="headerlink" title="RoundRobinLoadBalance"></a>RoundRobinLoadBalance</h4><p>加权轮询负载均衡。</p>
-<p>轮询就是把请求依次分配给每个服务提供者。加权轮询就是在轮询的基础上，让更多的请求落到权重更大的服务提供者上。比如假如有两个提供相同服务的服务器S1,S2，S1的权重为7，S2的权重为3。</p>
-<p>如果我们有10次请求，那么7次会被S1处理，3次被S2处理。</p>
-<p>但是，如果是RandomLoadBalance的话，很可能存在10次请求有9次都被S1处理的情况（概率性问题）。</p>
-<p>Dubbo中的RoundRobinLoadBalance的代码实现被修改重建了好几次，Dubbo-2.6.5版本的RoundRobinLoadBalance为平滑加权轮询算法。</p>
+<p>轮询就是把请求依次分配给每个服务提供者。加权轮询就是在轮询的基础上，让更多的请求落到权重更大的服务提供者上。比如假如有两个提供相同服务的服务器S1,S2，S1的权重为7，S2的权重为3。如果我们有10次请求，那么7次会被S1处理，3次被S2处理。但是，如果是RandomLoadBalance的话，很可能存在10次请求有9次都被S1处理的情况（概率性问题）。Dubbo中的RoundRobinLoadBalance的代码实现被修改重建了好几次，Dubbo-2.6.5版本的RoundRobinLoadBalance为平滑加权轮询算法。</p>
 <h2 id="Dubbo序列化协议"><a href="#Dubbo序列化协议" class="headerlink" title="Dubbo序列化协议"></a>Dubbo序列化协议</h2><h3 id="Dubbo支持哪些序列化方式呢？"><a href="#Dubbo支持哪些序列化方式呢？" class="headerlink" title="Dubbo支持哪些序列化方式呢？"></a>Dubbo支持哪些序列化方式呢？</h3><p><img src="https://oss.javaguide.cn/github/javaguide/csdn/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0MzM3Mjcy,size_16,color_FFFFFF,t_70-20230309234143460.png" alt="img"></p>
 <p>Dubbo支持多种序列化方式：JDK自带的序列化、hessian2、JSON、Kryo、FST、Protostuff，ProtoBuf等等。</p>
 <p>Dubbo默认使用的序列化方式是hessian2。</p>
 <h3 id="谈谈你对这些序列化协议了解？"><a href="#谈谈你对这些序列化协议了解？" class="headerlink" title="谈谈你对这些序列化协议了解？"></a>谈谈你对这些序列化协议了解？</h3><p>一般我们不会直接使用JDK自带的序列化方式。主要原因有两个：</p>
 <ol>
-<li><strong>不支持跨语言调用</strong>:如果调用的是其他语言开发的服务的时候就不支持了。</li>
+<li><strong>不支持跨语言调用</strong>：如果调用的是其他语言开发的服务的时候就不支持了。</li>
 <li><strong>性能差</strong>：相比于其他序列化框架性能更低，主要原因是序列化之后的字节数组体积较大，导致传输成本加大。</li>
 </ol>
 <p>JSON序列化由于性能问题，我们一般也不会考虑使用。</p>
 <p>像Protostuff，ProtoBuf、hessian2这些都是跨语言的序列化方式，如果有跨语言需求的话可以考虑使用。</p>
-<p>Kryo和FST这两种序列化方式是Dubbo后来才引入的，性能非常好。不过，这两者都是专门针对Java语言的。Dubbo官网的一篇文章中提到说推荐使用Kryo作为生产环境的序列化方式。(<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/">文章地址</a>)</p>
+<p>Kryo和FST这两种序列化方式是Dubbo后来才引入的，性能非常好。不过，这两者都是专门针对Java语言的。Dubbo官网的<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/">一篇文章</a>中提到说推荐使用Kryo作为生产环境的序列化方式。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/569e541a-22b2-4846-aa07-0ad479f07440.png" alt="img"></p>
 <p>Dubbo官方文档中还有一个关于这些<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/serialization/#m-zhdocsv27userserialization">序列化协议的性能对比图</a>可供参考。</p>
 <p><img src="https://oscimg.oschina.net/oscnet/up-00c3ce1e5d222e477ed84310239daa2f6b0.png" alt="img"></p>
@@ -1157,8 +1139,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            JWT基础概念详解什么是JWT?JWT（JSON Web Token）是目前最流行的跨域认证解决方案，是一种基于Token的认证授权机制。从JWT的全称可以看出，JWT本身也是Token，一种规范化之后的JSON结构的Token。
-JWT自
+                            JWT基础概念详解什么是JWT?JWT（JSON Web Token）是目前最流行的跨域认证解决方案，是一种基于Token的认证授权机制。从JWT的全称可以看出，JWT本身也是Token，一种规范化之后的JSON结构的Token。JWT自身
                         
                         
                     </div>

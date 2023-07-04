@@ -551,11 +551,10 @@
 <li>将对象存储到数据库（如Redis）之前需要用到序列化，将对象从缓存数据库中读取出来需要反序列化；</li>
 <li>将对象存储到内存之前需要进行序列化，从内存中读取出来之后需要进行反序列化。</li>
 </ul>
-<p>维基百科是如是介绍序列化的：</p>
 <blockquote>
-<p><strong>序列化</strong>（serialization）在计算机科学的数据处理中，是指将数据结构或对象状态转换成可取用格式（例如存成文件，存于缓冲，或经由网络中发送），以留待后续在相同或另一台计算机环境中，能恢复原先状态的过程。依照序列化格式重新获取字节的结果时，可以利用它来产生与原始对象相同语义的副本。对于许多对象，像是使用大量引用的复杂对象，这种序列化重建的过程并不容易。面向对象中的对象序列化，并不概括之前原始对象所关系的函数。这种过程也称为对象编组（marshalling）。从一系列字节提取数据结构的反向操作，是反序列化（也称为解编组、deserialization、unmarshalling）。</p>
+<p>维基百科是如是介绍序列化的：<br><strong>序列化</strong>（serialization）在计算机科学的数据处理中，是指将数据结构或对象状态转换成可取用格式（例如存成文件，存于缓冲，或经由网络中发送），以留待后续在相同或另一台计算机环境中，能恢复原先状态的过程。依照序列化格式重新获取字节的结果时，可以利用它来产生与原始对象相同语义的副本。对于许多对象，像是使用大量引用的复杂对象，这种序列化重建的过程并不容易。面向对象中的对象序列化，并不概括之前原始对象所关系的函数。这种过程也称为对象编组（marshalling）。从一系列字节提取数据结构的反向操作，是反序列化（也称为解编组、deserialization、unmarshalling）。</p>
 </blockquote>
-<p>综上：<strong>序列化的主要目的是通过网络传输对象或者说是将对象存储到文件系统、数据库、内存中。</strong></p>
+<p>综上：<strong>序列化的主要目的是通过网络传输对象或者说是将对象存储到文件系统、数据库、内存中</strong>。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/a478c74d-2c48-40ae-9374-87aacf05188c.png" alt="img"></p>
 <p><strong>序列化协议对应于TCP&#x2F;IP4层模型的哪一层？</strong></p>
 <p>我们知道网络通信的双方必须要采用和遵守相同的协议。TCP&#x2F;IP四层模型是下面这样的，序列化协议属于哪一层呢？</p>
@@ -568,16 +567,14 @@
 <p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-ip-4-model.png" alt="TCP/IP四层模型"></p>
 <p>如上图所示，OSI七层协议模型中，表示层做的事情主要就是对应用层的用户数据进行处理转换为二进制流。反过来的话，就是将二进制流转换成应用层的用户数据。这不就对应的是序列化和反序列化么？</p>
 <p>因为，OSI七层协议模型中的应用层、表示层和会话层对应的都是TCP&#x2F;IP四层模型中的应用层，所以序列化协议属于TCP&#x2F;IP协议应用层的一部分。</p>
-<h3 id="如果有些字段不想进行序列化怎么办？"><a href="#如果有些字段不想进行序列化怎么办？" class="headerlink" title="如果有些字段不想进行序列化怎么办？"></a>如果有些字段不想进行序列化怎么办？</h3><p>对于不想进行序列化的变量，使用transient关键字修饰。</p>
-<p>transient关键字的作用是：阻止实例中那些用此关键字修饰的的变量序列化；当对象被反序列化时，被transient修饰的变量值不会被持久化和恢复。</p>
-<p>关于transient还有几点注意：</p>
+<h3 id="如果有些字段不想进行序列化怎么办？-transient"><a href="#如果有些字段不想进行序列化怎么办？-transient" class="headerlink" title="如果有些字段不想进行序列化怎么办？(transient)"></a>如果有些字段不想进行序列化怎么办？(transient)</h3><p>对于不想进行序列化的变量，使用<strong>transient</strong>关键字修饰。</p>
+<p>transient关键字的作用是：阻止实例中那些用此关键字修饰的的变量序列化；当对象被反序列化时，被transient修饰的变量值不会被持久化和恢复。关于transient还有几点注意：</p>
 <ul>
 <li>transient只能修饰变量，不能修饰类和方法。</li>
 <li>transient修饰的变量，在反序列化后变量值将会被置成类型的默认值。例如，如果是修饰int类型，那么反序列后结果就是0。</li>
 <li>static变量因为不属于任何对象(Object)，所以无论有没有transient关键字修饰，均不会被序列化。</li>
 </ul>
-<h3 id="常见序列化协议有哪些？"><a href="#常见序列化协议有哪些？" class="headerlink" title="常见序列化协议有哪些？"></a>常见序列化协议有哪些？</h3><p>JDK自带的序列化方式一般不会用，因为序列化效率低并且存在安全问题。比较常用的序列化协议有Hessian、Kryo、Protobuf、ProtoStuff，这些都是基于二进制的序列化协议。</p>
-<p>像JSON和XML这种属于文本类序列化方式。虽然可读性比较好，但是性能较差，一般不会选择。</p>
+<h3 id="常见序列化协议有哪些？"><a href="#常见序列化协议有哪些？" class="headerlink" title="常见序列化协议有哪些？"></a>常见序列化协议有哪些？</h3><p>JDK自带的序列化方式一般不会用，因为序列化效率低并且存在安全问题。比较常用的序列化协议有Hessian、Kryo、Protobuf、ProtoStuff，这些都是基于二进制的序列化协议。像JSON和XML这种属于文本类序列化方式。虽然可读性比较好，但是性能较差，一般不会选择。</p>
 <h4 id="JDK自带的序列化方式"><a href="#JDK自带的序列化方式" class="headerlink" title="JDK自带的序列化方式"></a>JDK自带的序列化方式</h4><p>JDK自带的序列化，只需实现java.io.Serializable接口即可。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@AllArgsConstructor</span>
 <span class="token annotation punctuation">@NoArgsConstructor</span>
@@ -602,13 +599,17 @@
 <p><strong>为什么不推荐使用JDK自带的序列化？</strong></p>
 <p>我们很少或者说几乎不会直接使用JDK自带的序列化方式，主要原因有下面这些原因：</p>
 <ul>
-<li><strong>不支持跨语言调用</strong>:如果调用的是其他语言开发的服务的时候就不支持了。</li>
-<li><strong>性能差</strong>：相比于其他序列化框架性能更低，主要原因是序列化之后的字节数组体积较大，导致传输成本加大。</li>
-<li><strong>存在安全问题</strong>：序列化和反序列化本身并不存在问题。但当输入的反序列化的数据可被用户控制，那么攻击者即可通过构造恶意输入，让反序列化产生非预期的对象，在此过程中执行构造的任意代码。相关阅读：<a target="_blank" rel="noopener" href="https://cryin.github.io/blog/secure-development-java-deserialization-vulnerability/">应用安全:JAVA反序列化漏洞之殇-Cryin</a>、<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/37562657/answer/1916596031">Java反序列化安全漏洞怎么回事?-Monica</a>。</li>
+<li><p><strong>不支持跨语言调用</strong>：如果调用的是其他语言开发的服务的时候就不支持了。</p>
+</li>
+<li><p><strong>性能差</strong>：相比于其他序列化框架性能更低，主要原因是序列化之后的字节数组体积较大，导致传输成本加大。</p>
+</li>
+<li><p><strong>存在安全问题</strong>：序列化和反序列化本身并不存在问题。但当输入的反序列化的数据可被用户控制，那么攻击者即可通过构造恶意输入，让反序列化产生非预期的对象，在此过程中执行构造的任意代码。</p>
+<blockquote>
+<p>相关阅读：<a target="_blank" rel="noopener" href="https://cryin.github.io/blog/secure-development-java-deserialization-vulnerability/">应用安全:JAVA反序列化漏洞之殇-Cryin</a>、<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/37562657/answer/1916596031">Java反序列化安全漏洞怎么回事?-Monica</a>。</p>
+</blockquote>
+</li>
 </ul>
-<h4 id="Kryo"><a href="#Kryo" class="headerlink" title="Kryo"></a>Kryo</h4><p>Kryo是一个高性能的序列化&#x2F;反序列化工具，由于其变长存储特性并使用了字节码生成机制，拥有较高的运行速度和较小的字节码体积。</p>
-<p>另外，Kryo已经是一种非常成熟的序列化实现了，已经在Twitter、Groupon、Yahoo以及多个著名开源项目（如Hive、Storm）中广泛的使用。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>就是使用的kryo进行序列化，序列化和反序列化相关的代码如下：</p>
+<h4 id="Kryo"><a href="#Kryo" class="headerlink" title="Kryo"></a>Kryo</h4><p>Kryo是一个高性能的序列化&#x2F;反序列化工具，由于其变长存储特性并使用了字节码生成机制，拥有较高的运行速度和较小的字节码体积。另外，Kryo已经是一种非常成熟的序列化实现了，已经在Twitter、Groupon、Yahoo以及多个著名开源项目（如Hive、Storm）中广泛的使用。<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>就是使用的kryo进行序列化，序列化和反序列化相关的代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Kryo serialization class, Kryo serialization efficiency is very high, but only compatible with Java language
  *
@@ -687,7 +688,7 @@
 <h4 id="Hessian"><a href="#Hessian" class="headerlink" title="Hessian"></a>Hessian</h4><p>Hessian是一个轻量级的，自定义描述的二进制RPC协议。Hessian是一个比较老的序列化实现了，并且同样也是跨语言的。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/8613ec4c-bde5-47bf-897e-99e0f90b9fa3.png" alt="img"></p>
 <p>Dubbo2.x默认启用的序列化方式是Hessian2,但是，Dubbo对Hessian2进行了修改，不过大体结构还是差不多。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Kryo是专门针对Java语言序列化方式并且性能非常好，如果你的应用是专门针对Java语言的话可以考虑使用，并且Dubbo官网的一篇文章中提到说推荐使用Kryo作为生产环境的序列化方式。<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/">文章地址</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Kryo是专门针对Java语言序列化方式并且性能非常好，如果你的应用是专门针对Java语言的话可以考虑使用，并且Dubbo官网的<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/">一篇文章</a>中提到说推荐使用Kryo作为生产环境的序列化方式。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/569e541a-22b2-4846-aa07-0ad479f07440.png" alt="img"></p>
 <p>像Protobuf、ProtoStuff、hessian这类都是跨语言的序列化方式，如果有跨语言需求的话可以考虑使用。</p>
 <p>除了我上面介绍到的序列化方式的话，还有像Thrift，Avro这些。</p>
@@ -1064,9 +1065,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            何为反射？如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。
-反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。
-通过反射你可以获取任意一个类的所有属性和方法，你还可以调
+                            何为反射如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些
                         
 
                     </div>

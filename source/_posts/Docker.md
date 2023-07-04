@@ -29,15 +29,12 @@ systemctl start docker
 5. 测试容器
 ```shell
 docker run hello-world
-
-# PS:
-# centos7安装命令 yum -y install docker-ce
-# ubuntu安装命令 apt install docker-ce
+# PS: centos7安装命令 yum -y install docker-ce | ubuntu安装命令 apt install docker-ce
 ```
 
 ##### 离线安装
 
-1. 下载离线包 https://download.docker.com/linux/static/stable/x86_64/
+1. [下载离线包](https://download.docker.com/linux/static/stable/x86_64/)
 2. 解压
 ```shell
 tar -xvf docker-18.06.1-ce.tgz

@@ -530,12 +530,16 @@
             <div id="articleContent">
                 <h3 id="幂等性的几种方案"><a href="#幂等性的几种方案" class="headerlink" title="幂等性的几种方案"></a>幂等性的几种方案</h3><ol>
 <li>唯一索引，防止新增脏数据</li>
-<li>token机制，防止页面重复提交<br>前端限制:页面的提交按钮只能被点击提交一次<br>后端解决方案：<br>集群环境：采用token加redis（redis单线程的，处理需要排队）<br>单JVM环境：采用token加redis或token加jvm内存<br>处理流程：请求前先生成token，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码逻辑将生成的token与已生成且保存的token做对比，token一致的话代表已经生成了一次，本次不允许返回），将生成的token放到redis或jvm内存，并设置token的有效时间，返回给客户端<br><img src="/blog/images/mideng.jpg"><br>客户端携带token请求服务端，服务端查询redis，如果有的话处理请求并删除token，没有的话代表非法请求不做处理</li>
+<li>前端限制:页面的提交按钮只能被点击提交一次<br>后端解决方案：<ol>
+<li>集群环境：采用token加redis（redis单线程的，处理需要排队）</li>
+<li>单JVM环境：采用token加redis或token加jvm内存</li>
+<li>处理流程：请求前先生成token，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码逻辑将生成的token与已生成且保存的token做对比，token一致的话代表已经生成了一次，本次不允许返回），将生成的token放到redis或jvm内存，并设置token的有效时间，返回给客户端<br> <img src="/blog/images/mideng.jpg"><br>客户端携带token请求服务端，服务端查询redis，如果有的话处理请求并删除token，没有的话代表非法请求不做处理</li>
+</ol>
+</li>
 </ol>
 <blockquote>
-<p>现在很多系统处理请求已经不做是否登陆的校验，而是根据用户名密码申请token，将token保存到cookie或者Local Storage或者form隐藏域，请求时携带token，服务端校验处理请求</p>
+<p>现在很多系统处理请求已经不做是否登陆的校验，而是根据用户名密码申请token，将token保存到cookie或者Local Storage或者form隐藏域，请求时携带token，服务端校验处理请求<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X4J56Y2dLzkBVwCC2hlmaQ">Token多平台身份认证架构设计思路</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/GreenSky_Test/article/details/116056661">Token登录认证详解</a><br>3. 悲观锁获取数据的时候加锁获取</p>
 </blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X4J56Y2dLzkBVwCC2hlmaQ">Token多平台身份认证架构设计思路</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/GreenSky_Test/article/details/116056661">Token登录认证详解</a><br>3. 悲观锁获取数据的时候加锁获取</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> table_xxx <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token string">'xxx'</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>注意：id字段一定是主键或者唯一索引<br>悲观锁使用时一般伴随事务一起使用，数据锁定时间可能会很长，根据实际情况选用<br>4. 乐观锁:乐观锁只是在更新数据那一刻锁表，其他时间不锁表，所以相对于悲观锁，效率更高。乐观锁的实现方式多种多样可以通过version或者其他状态条件：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 通过版本号实现</span>

@@ -27,7 +27,7 @@ nohup java -jar abc.jar >/dev/null 2>&1 &
 
 #### 关闭ssh情况下不退出进程
 
-nohup command &
+**nohup command &**
 command参数：要执行的命令行
 但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用>/dev/null 2>&1
 
@@ -39,7 +39,7 @@ nohup command >/dev/null 2>&1 &
 1:表示标准输出(stdout),系统默认是1
 2:表示错误输出(stderr)
 
-command >/dev/null 2>&1 & == command 1>/dev/null 2>&1 &
+`command >/dev/null 2>&1 & == command 1>/dev/null 2>&1 &`
 command:表示shell命令或者为一个可执行程序
 \>:表示重定向到哪里
 /dev/null:表示Linux的空设备文件
@@ -198,7 +198,7 @@ cd /var/log
 ls cron
 
 ```
-[Linux定时任务调度(crontab)，太实用了！](https://mp.weixin.qq.com/s/c91XWEQvr9Axcf0hjvuKgg)
+> [Linux定时任务调度(crontab)，太实用了！](https://mp.weixin.qq.com/s/c91XWEQvr9Axcf0hjvuKgg)
 
 
 #### 修改文件所属用户和用户组
@@ -222,9 +222,9 @@ curl -H "Content-Type: application/json" -X POST -d '{"abc":123,"bcd":"nihao"}' 
 
 ```
 
-- [Linux curl命令最全详解](https://blog.csdn.net/angle_chen123/article/details/120675472)
-- [curl其他参数介绍](https://www.cnblogs.com/fan-gx/p/12321351.html)
-- [堪称神器的命令行工具系列——curl](https://mp.weixin.qq.com/s/ryhphDFvx0ml9NrDUks2NA)
+> [Linux curl命令最全详解](https://blog.csdn.net/angle_chen123/article/details/120675472)
+> [curl其他参数介绍](https://www.cnblogs.com/fan-gx/p/12321351.html)
+> [堪称神器的命令行工具系列——curl](https://mp.weixin.qq.com/s/ryhphDFvx0ml9NrDUks2NA)
 
 
 #### Linux系统服务
@@ -295,14 +295,14 @@ kill -9 $pid
 echo "$pid killed"
 nohup command >/dev/null 2>&1 &
 ```
-[shell菜鸟教程](https://www.runoob.com/linux/linux-shell.html)
+> [shell菜鸟教程](https://www.runoob.com/linux/linux-shell.html)
 
 #### 设置静态ip后无法连接外网的问题
 因为动态ip会自动分配DNS 而静态ip需要手动配置DNS
 centos7在/etc/sysconfig/network-scripts/ifcfg-ens33 写入DNS1=114.114.114.114
 ubuntu在/etc/resolv.conf写入nameserver 114.114.114.114
 
-[Linux配置IP地址](https://www.cnblogs.com/adforce/p/3363681.html)
+> [Linux配置IP地址](https://www.cnblogs.com/adforce/p/3363681.html)
 
 #### 命令行更改MAC地址
 
@@ -367,7 +367,7 @@ reboot
 
 ```
 
-[解决Ubuntu的root账号无法登录SSH问题](https://www.cnblogs.com/yixius/articles/6971054.html)
+> [解决Ubuntu的root账号无法登录SSH问题](https://www.cnblogs.com/yixius/articles/6971054.html)
 
 
 #### 查看指定目录大小
@@ -529,7 +529,7 @@ ssh-add ~/.ssh/id_rsa
 # ssh A和ssh B测试ssh本机和远程是否已经免密登录（第一次免密登录需要输入密码，以后不需要）
 ssh登陆 ssh root@ip
 ```
-[科普：什么是SSH？](https://mp.weixin.qq.com/s/1e4aGp_cx0E_qCHVuS3GMg)
+> [科普：什么是SSH？](https://mp.weixin.qq.com/s/1e4aGp_cx0E_qCHVuS3GMg)
 
 
 #### centos7/ubuntu通用
@@ -594,8 +594,8 @@ quit或exit 退出当前连接，完全退出使用stop(所有客户端连接都
 logger --name ROOT --level debug动态修改日志级别
 ```
 
-- [arthas官方文档](https://arthas.aliyun.com/doc/quick-start.html)
-- [学会arthas，让你3年经验掌握5年功力](https://mp.weixin.qq.com/s/7RMjfIYlmskMsifnhIzxgA)
+> [arthas官方文档](https://arthas.aliyun.com/doc/quick-start.html)
+> [学会arthas，让你3年经验掌握5年功力](https://mp.weixin.qq.com/s/7RMjfIYlmskMsifnhIzxgA)
 
 
 #### Linux交换空间(swap space)
@@ -672,7 +672,7 @@ reboot
 4. /etc/environment是设置整个系统的环境，而/etc/profile是设置所有用户的环境，前者与登录用户无关，后者与登录用户有关。
 先执行/etc/enviroment，后执行/etc/profile
 
-[Linux环境变量配置的6种方法](https://mp.weixin.qq.com/s/D32FE4CS2pT89czVUv0SOg)
+> [Linux环境变量配置的6种方法](https://mp.weixin.qq.com/s/D32FE4CS2pT89czVUv0SOg)
 
 ### 相关文章
 

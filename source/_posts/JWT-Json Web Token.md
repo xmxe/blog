@@ -10,16 +10,7 @@ img: https://pic1.zhimg.com/v2-58b976a41c44871cd549914566d602de_1440w.jpg
 
 ## 什么是JWT?
 
-JWT（JSON Web Token）是目前最流行的跨域认证解决方案，是一种基于Token的认证授权机制。从JWT的全称可以看出，JWT本身也是Token，一种规范化之后的JSON结构的Token。
-
-JWT自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储Session信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。
-
-可以看出，**JWT更符合设计RESTful API时的「Stateless（无状态）」原则**。
-
-并且，使用JWT认证可以有效避免CSRF攻击，因为JWT一般是存在在local Storage中，使用JWT进行身份验证的过程中是不会涉及到Cookie的。
-
-
-下面是[RFC7519](https://tools.ietf.org/html/rfc7519)对JWT做的较为正式的定义。
+JWT（JSON Web Token）是目前最流行的跨域认证解决方案，是一种基于Token的认证授权机制。从JWT的全称可以看出，JWT本身也是Token，一种规范化之后的JSON结构的Token。JWT自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储Session信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。可以看出，**JWT更符合设计RESTful API时的「Stateless（无状态）」原则**。并且，使用JWT认证可以有效避免CSRF攻击，因为JWT一般是存在在local Storage中，使用JWT进行身份验证的过程中是不会涉及到Cookie的。下面是[RFC7519](https://tools.ietf.org/html/rfc7519)对JWT做的较为正式的定义。
 
 > JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted. ——[JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519)
 
@@ -29,8 +20,8 @@ JWT自身包含了身份验证所需要的所有信息，因此，我们的服�
 
 JWT本质上就是一组字串，通过（`.`）切分成三个为Base64编码的部分：
 
-- **Header**:描述JWT的元数据，定义了生成签名的算法以及Token的类型。
-- **Payload**:用来存放实际需要传递的数据
+- **Header**：描述JWT的元数据，定义了生成签名的算法以及Token的类型。
+- **Payload**：用来存放实际需要传递的数据
 - **Signature（签名）**：服务器通过Payload、Header和一个密钥(Secret)使用Header里面指定的签名算法（默认是 HMAC SHA256）生成。
 
 JWT通常是这样的：`xxxxx.yyyyy.zzzzz`。
@@ -102,7 +93,7 @@ Claims分为三种类型：
 }
 ```
 
-Payload部分默认是不加密的，**一定不要将隐私信息存放在Payload当中！！！**
+Payload部分默认是不加密的，**一定不要将隐私信息存放在Payload当中**！！！
 
 JSON形式的Payload被转换成Base64编码，成为JWT的第二部分。
 
@@ -149,13 +140,9 @@ HMACSHA256(
 
 ## 如何防止JWT被篡改？
 
-有了签名之后，即使JWT被泄露或者截获，黑客也没办法同时篡改Signature、Header、Payload。
+有了签名之后，即使JWT被泄露或者截获，黑客也没办法同时篡改Signature、Header、Payload。这是为什么呢？因为服务端拿到JWT之后，会解析出其中包含的Header、Payload以及Signature。服务端会根据Header、Payload、密钥再次生成一个Signature。拿新生成的Signature和JWT中的Signature作对比，如果一样就说明Header和Payload没有被修改。不过，如果服务端的秘钥也被泄露的话，黑客就可以同时篡改Signature、Header、Payload了。黑客直接修改了Header和Payload之后，再重新生成一个Signature就可以了。
 
-这是为什么呢？因为服务端拿到JWT之后，会解析出其中包含的Header、Payload以及Signature。服务端会根据Header、Payload、密钥再次生成一个Signature。拿新生成的Signature和JWT中的Signature作对比，如果一样就说明Header和Payload没有被修改。
-
-不过，如果服务端的秘钥也被泄露的话，黑客就可以同时篡改Signature、Header、Payload了。黑客直接修改了Header和Payload之后，再重新生成一个Signature就可以了。
-
-**密钥一定保管好，一定不要泄露出去。JWT安全的核心在于签名，签名安全的核心在密钥。**
+**密钥一定保管好，一定不要泄露出去。JWT安全的核心在于签名，签名安全的核心在密钥**。
 
 ## 如何加强JWT的安全性？
 
@@ -169,8 +156,6 @@ HMACSHA256(
 
 > [原文链接](https://javaguide.cn/system-design/security/jwt-intro.html)
 
-
-
 # JWT身份认证优缺点分析
 
 ## JWT的优势
@@ -179,17 +164,13 @@ HMACSHA256(
 
 ### 无状态
 
-JWT自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储Session信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。
-
-不过，也正是由于JWT的无状态，也导致了它最大的缺点：**不可控！**
-
-就比如说，我们想要在JWT有效期内废弃一个JWT或者更改它的权限的话，并不会立即生效，通常需要等到有效期过后才可以。再比如说，当用户Log out的话，JWT也还有效。除非，我们在后端增加额外的处理逻辑比如将失效的JWT存储起来，后端先验证JWT是否有效再进行处理。具体的解决办法，我们会在后面的内容中详细介绍到，这里只是简单提一下。
+JWT自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储Session信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。不过，也正是由于JWT的无状态，也导致了它最大的缺点：不可控！就比如说，我们想要在JWT有效期内废弃一个JWT或者更改它的权限的话，并不会立即生效，通常需要等到有效期过后才可以。再比如说，当用户Log out的话，JWT也还有效。除非，我们在后端增加额外的处理逻辑比如将失效的JWT存储起来，后端先验证JWT是否有效再进行处理。具体的解决办法，我们会在后面的内容中详细介绍到，这里只是简单提一下。
 
 ### 有效避免了CSRF攻击
 
 **CSRF（CrossSiteRequestForgery）一般被翻译为跨站请求伪造**，属于网络攻击领域范围。相比于SQL脚本注入、XSS等安全攻击方式，CSRF的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆Google的产品Gmail也曾在2007年的时候爆出过CSRF漏洞，这给Gmail的用户造成了很大的损失。
 
-**那么究竟什么是跨站请求伪造呢**？简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。
+那么究竟什么是跨站请求伪造呢？简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。
 
 举个简单的例子：小壮登录了某网上银行，他来到了网上银行的帖子区，看到一个帖子下面有一个链接写着“科学理财，年盈利率过万”，小壮好奇的点开了这个链接，结果发现自己的账户少了10000元。这是这么回事呢？原来黑客在链接中藏了一个请求，这个请求直接利用小壮的身份给银行发送了一个转账请求，也就是通过你的Cookie向银行发出请求。
 
@@ -197,9 +178,7 @@ JWT自身包含了身份验证所需要的所有信息，因此，我们的服�
 <a src="http://www.mybank.com/Transfer?bankId=11&money=10000">科学理财，年盈利率过万</a>
 ```
 
-CSRF攻击需要依赖Cookie，Session认证中Cookie中的SessionID是由浏览器发送到服务端的，只要发出请求，Cookie就会被携带。借助这个特性，即使黑客无法获取你的SessionID，只要让你误点攻击链接，就可以达到攻击效果。
-
-另外，并不是必须点击链接才可以达到攻击效果，很多时候，只要你打开了某个页面，CSRF攻击就会发生。
+CSRF攻击需要依赖Cookie，Session认证中Cookie中的SessionID是由浏览器发送到服务端的，只要发出请求，Cookie就会被携带。借助这个特性，即使黑客无法获取你的SessionID，只要让你误点攻击链接，就可以达到攻击效果。另外，并不是必须点击链接才可以达到攻击效果，很多时候，只要你打开了某个页面，CSRF攻击就会发生。
 
 
 ```html
@@ -210,13 +189,7 @@ CSRF攻击需要依赖Cookie，Session认证中Cookie中的SessionID是由浏览
 
 一般情况下我们使用JWT的话，在我们登录成功获得JWT之后，一般会选择存放在localStorage中。前端的每一个请求后续都会附带上这个JWT，整个过程压根不会涉及到Cookie。因此，即使你点击了非法链接发送了请求到服务端，这个非法请求也是不会携带JWT的，所以这个请求将是非法的。
 
-总结来说就一句话：**使用JWT进行身份验证不需要依赖Cookie，因此可以避免CSRF攻击。**
-
-不过，这样也会存在XSS攻击的风险。为了避免XSS攻击，你可以选择将JWT存储在标记为httpOnly的Cookie中。但是，这样又导致了你必须自己提供CSRF保护，因此，实际项目中我们通常也不会这么做。
-
-常见的避免XSS攻击的方式是过滤掉请求中存在XSS攻击风险的可疑字符串。
-
-在Spring项目中，我们一般是通过创建XSS过滤器来实现的。
+总结来说就一句话：**使用JWT进行身份验证不需要依赖Cookie，因此可以避免CSRF攻击**。不过，这样也会存在XSS攻击的风险。为了避免XSS攻击，你可以选择将JWT存储在标记为httpOnly的Cookie中。但是，这样又导致了你必须自己提供CSRF保护，因此，实际项目中我们通常也不会这么做。常见的避免XSS攻击的方式是过滤掉请求中存在XSS攻击风险的可疑字符串。在Spring项目中，我们一般是通过创建XSS过滤器来实现的。
 
 
 ```java
@@ -238,9 +211,7 @@ public class XSSFilter implements Filter {
 
 ### 适合移动端应用
 
-使用Session进行身份认证的话，需要保存一份信息在服务器端，而且这种方式会依赖到Cookie（需要Cookie保存SessionId），所以不适合移动端。
-
-但是，使用JWT进行身份认证就不会存在这种问题，因为只要JWT可以被客户端存储就能够使用，而且JWT还可以跨语言使用。
+使用Session进行身份认证的话，需要保存一份信息在服务器端，而且这种方式会依赖到Cookie（需要Cookie保存SessionId），所以不适合移动端。但是，使用JWT进行身份认证就不会存在这种问题，因为只要JWT可以被客户端存储就能够使用，而且JWT还可以跨语言使用。
 
 ### 单点登录友好
 
@@ -270,7 +241,7 @@ public class XSSFilter implements Filter {
 
 **2、黑名单机制**
 
-和上面的方式类似，使用内存数据库比如Redis维护一个黑名单，如果想让某个JWT失效的话就直接将这个JWT加入到**黑名单**即可。然后，每次使用JWT进行请求的话都会先判断这个JWT是否存在于黑名单中。
+和上面的方式类似，使用内存数据库比如Redis维护一个黑名单，如果想让某个JWT失效的话就直接将这个JWT加入到黑名单即可。然后，每次使用JWT进行请求的话都会先判断这个JWT是否存在于黑名单中。
 
 前两种方案的核心在于将有效的JWT存储起来或者将指定的JWT拉入黑名单。
 
@@ -287,13 +258,13 @@ public class XSSFilter implements Filter {
 
 很简单的一种方式。但是，会导致用户登录状态不会被持久记录，而且需要用户经常登录。
 
-另外，对于修改密码后JWT还有效问题的解决还是比较容易的。说一种我觉得比较好的方式：**使用用户的密码的哈希值对JWT进行签名。因此，如果密码更改，则任何先前的令牌将自动无法验证。**
+另外，对于修改密码后JWT还有效问题的解决还是比较容易的。说一种我觉得比较好的方式：**使用用户的密码的哈希值对JWT进行签名。因此，如果密码更改，则任何先前的令牌将自动无法验证**。
 
 ### JWT的续签问题
 
 JWT有效期一般都建议设置的不太长，那么JWT过期后如何认证，如何实现动态刷新JWT，避免用户经常需要重新登录？
 
-我们先来看看在Session认证中一般的做法：**假如Session的有效期30分钟，如果30分钟内用户有访问，就把Session有效期延长30分钟。**
+我们先来看看在Session认证中一般的做法：假如Session的有效期30分钟，如果30分钟内用户有访问，就把Session有效期延长30分钟。
 
 JWT认证的话，我们应该如何解决续签问题呢？查阅了很多资料，我简单总结了下面4种方案：
 
@@ -322,11 +293,7 @@ JWT认证的话，我们应该如何解决续签问题呢？查阅了很多资�
 
 ## 总结
 
-JWT其中一个很重要的优势是无状态，但实际上，我们想要在实际项目中合理使用JWT的话，也还是需要保存JWT信息。
-
-JWT也不是银弹，也有很多缺陷，具体是选择JWT还是Session方案还是要看项目的具体需求。万万不可尬吹JWT，而看不起其他身份认证方案。
-
-另外，不用JWT直接使用普通的Token(随机生成，不包含具体的信息)结合Redis来做身份认证也是可以的。我在[「优质开源项目推荐」](https://javaguide.cn/open-source-project/)的第8期推荐过的[Sa-Token](https://github.com/dromara/sa-JWT)这个项目是一个比较完善的基于JWT的身份认证解决方案，支持自动续签、踢人下线、账号封禁、同端互斥登录等功能，感兴趣的朋友可以看看。
+JWT其中一个很重要的优势是无状态，但实际上，我们想要在实际项目中合理使用JWT的话，也还是需要保存JWT信息。JWT也不是银弹，也有很多缺陷，具体是选择JWT还是Session方案还是要看项目的具体需求。万万不可尬吹JWT，而看不起其他身份认证方案。另外，不用JWT直接使用普通的Token(随机生成，不包含具体的信息)结合Redis来做身份认证也是可以的。
 
 > [原文链接](https://javaguide.cn/system-design/security/advantages&disadvantages-of-jwt.html)
 

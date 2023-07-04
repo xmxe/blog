@@ -6,13 +6,13 @@ img: https://pic2.zhimg.com/v2-afbb5fb285f0775146b89fe018dbbc93_r.jpg
 
 ---
 
-## ArrayList简介
+## ArrayList
 
-**ArrayList**的底层实现是一个Object数组,**ArrayList**的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组**DEFAULTCAPACITY_EMPTY_ELEMENTDATA**。也就是说，使用无参构造函数初始化**ArrayList**后，它当时的数组容量为0,只有当我们真正对数据进行添加操作add时，才会给数组分配一个默认的初始容量**DEFAULT_CAPACITY = 10**,**ArrayList**的有参构造函数就是按照用户传入的大小开辟数组空间.
+ArrayList的底层实现是一个Object数组,ArrayList的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组DEFAULTCAPACITY_EMPTY_ELEMENTDATA。也就是说，使用无参构造函数初始化ArrayList后，它当时的数组容量为0,只有当我们真正对数据进行添加操作add时，才会给数组分配一个默认的初始容量DEFAULT_CAPACITY = 10,ArrayList的有参构造函数就是按照用户传入的大小开辟数组空间。
 
-**ArrayList**的底层是数组队列，相当于动态数组。与Java中的数组相比，它的容量能动态增长。在添加大量元素前，应用程序可以使用**ensureCapacity**操作来增加**ArrayList**实例的容量。这可以减少递增式再分配的数量。
+ArrayList的底层是数组队列，相当于动态数组。与Java中的数组相比，它的容量能动态增长。在添加大量元素前，应用程序可以使用ensureCapacity操作来增加ArrayList实例的容量。这可以减少递增式再分配的数量。
 
-**ArrayList**继承于**AbstractList**,实现了**List**,**RandomAccess**,**Cloneable**,**java.io.Serializable**这些接口。
+ArrayList继承于AbstractList,实现了**List**,**RandomAccess**,**Cloneable**,**java.io.Serializable**这些接口。
 
 ```java
 public class ArrayList<E> extends AbstractList<E>
@@ -20,14 +20,14 @@ public class ArrayList<E> extends AbstractList<E>
 }
 ```
 
-- **RandomAccess**是一个标志接口，表明实现这个接口的List集合是支持**快速随机访问**的。在**ArrayList**中，我们即可以通过元素的序号快速获取元素对象，这就是快速随机访问。
-- **ArrayList**实现了**Cloneable接口**，即覆盖了函数clone()，能被克隆。
-- **ArrayList**实现了**java.io.Serializable**接口，这意味着**ArrayList**支持序列化，能通过序列化去传输。
+- **RandomAccess**是一个标志接口，表明实现这个接口的List集合是支持快速随机访问的。在ArrayList中，我们即可以通过元素的序号快速获取元素对象，这就是快速随机访问。
+- ArrayList实现了**Cloneable接口**，即覆盖了函数clone()，能被克隆。
+- ArrayList实现了**java.io.Serializable**接口，这意味着ArrayList支持序列化，能通过序列化去传输。
 
 ### Arraylist和Vector的区别
 
-1. **ArrayList**是**List**的主要实现类，底层使用Object[]存储，适用于频繁的查找工作，线程不安全；
-2. **Vector**是**List**的古老实现类，底层使用Object[]存储，线程安全的。
+1. ArrayList是List的主要实现类，底层使用Object[]存储，适用于频繁的查找工作，线程不安全。
+2. Vector是List的古老实现类，底层使用Object[]存储，线程安全的。
 
 ### Arraylist与LinkedList区别
 
@@ -39,9 +39,16 @@ elementData[size] = e;
 size = size + 1;
 ```
 在单线程执行这两条代码时，那当然没有任何问题，但是当多线程环境下执行时，可能就会发生一个线程添加的值覆盖另一个线程添加的值。举个例子：假设size = 0，我们要往这个数组的末尾添加元素，线程A开始添加一个元素，值为A。此时它执行第一条操作，将A放在了数组elementData下标为0的位置上，接着线程B刚好也要开始添加一个值为B的元素，且走到了第一步操作。此时线程B获取到的size值依然为0，于是它将B也放在了elementData下标为0的位置上，线程A开始增加size的值，size = 1,线程B开始增加size的值，size = 2,这样，线程A、B 都执行完毕后，理想的情况应该是size = 2，elementData[0] = A，elementData[1] = B。而实际情况变成了size = 2，elementData[0] = B（线程B覆盖了线程A的操作），下标1的位置上什么都没有。并且后续除非我们使用set方法修改下标为1的值，否则这个位置上将一直为null，因为在末尾添加元素时将会从size = 2的位置上开始。
-2. **底层数据结构**：Arraylist底层使用的是**Object数组**；LinkedList底层使用的是**双向链表** 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别）
-3. **插入和删除是否受元素位置的影响**：①**ArrayList采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响**。比如：执行`add(E e)`方法的时候，`ArrayList`会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置i插入和删除元素的话（`add(int index, E element)`）时间复杂度就为O(n-i)。因为在进行上述操作的时候集合中第i和第i个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。②**LinkedList采用链表存储，所以对于`add(E e)`方法的插入，删除元素时间复杂度不受元素位置的影响，近似O(1)，如果是要在指定位置`i`插入和删除元素的话（`(add(int index, E element)`）时间复杂度近似为`o(n))`因为需要先移动到指定位置再插入**。
-4. **是否支持快速随机访问**：LinkedList不支持高效的随机元素访问，而ArrayList支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于`get(int index)`方法)。
+2. **底层数据结构**：Arraylist底层使用的是Object数组；LinkedList底层使用的是双向链表数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别）
+
+3. **插入和删除是否受元素位置的影响**：
+
+   ①ArrayList采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。比如：执行`add(E e)`方法的时候，ArrayList会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置i插入和删除元素的话（add(int index, E element)）时间复杂度就为O(n-i)。因为在进行上述操作的时候集合中第i和第i个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。
+
+   ②LinkedList采用链表存储，所以对于`add(E e)`方法的插入，删除元素时间复杂度不受元素位置的影响，近似O(1)，如果是要在指定位置i插入和删除元素的话（(add(int index, E element)）时间复杂度近似为o(n))因为需要先移动到指定位置再插入。
+
+4. **是否支持快速随机访问**：LinkedList不支持高效的随机元素访问，而ArrayList支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(int index)方法)。
+
 5. **内存空间占用**：ArrayList的空间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。
 
 ### ArrayList核心源码解读
@@ -52,7 +59,6 @@ package java.util;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
-
 
 public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable{
@@ -283,9 +289,9 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     *以正确的顺序（从第一个到最后一个元素）返回一个包含此列表中所有元素的数组。
-     *返回的数组将是“安全的”，因为该列表不保留对它的引用。（换句话说，这个方法必须分配一个新的数组）。
-     *因此，调用者可以自由地修改返回的数组。此方法充当基于阵列和基于集合的API之间的桥梁。
+     * 以正确的顺序（从第一个到最后一个元素）返回一个包含此列表中所有元素的数组。
+     * 返回的数组将是“安全的”，因为该列表不保留对它的引用。（换句话说，这个方法必须分配一个新的数组）。
+     * 因此，调用者可以自由地修改返回的数组。此方法充当基于阵列和基于集合的API之间的桥梁。
      */
     public Object[] toArray() {
         return Arrays.copyOf(elementData, size);
@@ -293,10 +299,10 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * 以正确的顺序返回一个包含此列表中所有元素的数组（从第一个到最后一个元素）;
-     *返回的数组的运行时类型是指定数组的运行时类型。如果列表适合指定的数组，则返回其中。
-     *否则，将为指定数组的运行时类型和此列表的大小分配一个新数组。
-     *如果列表适用于指定的数组，其余空间（即数组的列表数量多于此元素），则紧跟在集合结束后的数组中的元素设置为null。
-     *（这仅在调用者知道列表不包含任何空元素的情况下才能确定列表的长度。）
+     * 返回的数组的运行时类型是指定数组的运行时类型。如果列表适合指定的数组，则返回其中。
+     * 否则，将为指定数组的运行时类型和此列表的大小分配一个新数组。
+     * 如果列表适用于指定的数组，其余空间（即数组的列表数量多于此元素），则紧跟在集合结束后的数组中的元素设置为null。
+     * （这仅在调用者知道列表不包含任何空元素的情况下才能确定列表的长度。）
      */
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
@@ -351,8 +357,8 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * 在此列表中的指定位置插入指定的元素。
-     *先调用rangeCheckForAdd对index进行界限检查；然后调用ensureCapacityInternal方法保证capacity足够大；
-     *再将从index开始之后的所有成员后移一个位置；将element插入index位置；最后size加1。
+     * 先调用rangeCheckForAdd对index进行界限检查；然后调用ensureCapacityInternal方法保证capacity足够大；
+     * 再将从index开始之后的所有成员后移一个位置；将element插入index位置；最后size加1。
      */
     public void add(int index, E element) {
         rangeCheckForAdd(index);
@@ -385,7 +391,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * 从列表中删除指定元素的第一个出现（如果存在）。如果列表不包含该元素，则它不会更改。
-     *返回true，如果此列表包含指定的元素
+     * 返回true，如果此列表包含指定的元素
      */
     public boolean remove(Object o) {
         if (o == null) {
@@ -464,7 +470,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * 从此列表中删除所有索引为fromIndex（含）和toIndex之间的元素。
-     *将任何后续元素移动到左侧（减少其索引）。
+     * 将任何后续元素移动到左侧（减少其索引）。
      */
     protected void removeRange(int fromIndex, int toIndex) {
         modCount++;
@@ -523,8 +529,8 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * 从列表中的指定位置开始，返回列表中的元素（按正确顺序）的列表迭代器。
-     *指定的索引表示初始调用将返回的第一个元素为next。初始调用previous将返回指定索引减1的元素。
-     *返回的列表迭代器是fail-fast。
+     * 指定的索引表示初始调用将返回的第一个元素为next。初始调用previous将返回指定索引减1的元素。
+     * 返回的列表迭代器是fail-fast。
      */
     public ListIterator<E> listIterator(int index) {
         if (index < 0 || index > size)
@@ -533,79 +539,81 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     *返回列表中的列表迭代器（按适当的顺序）。
-     *返回的列表迭代器是fail-fast。
+     * 返回列表中的列表迭代器（按适当的顺序）。
+     * 返回的列表迭代器是fail-fast。
      */
     public ListIterator<E> listIterator() {
         return new ListItr(0);
     }
 
     /**
-     *以正确的顺序返回该列表中的元素的迭代器。
-     *返回的迭代器是fail-fast。
+     * 以正确的顺序返回该列表中的元素的迭代器。
+     * 返回的迭代器是fail-fast。
      */
     public Iterator<E> iterator() {
         return new Itr();
     }
+}
 ```
 
 ### ArrayList扩容机制分析
 
 扩容后的数组长度 = 当前数组长度 + 当前数组长度 / 2,即扩容成原来的1.5倍。最后使用Arrays.copyOf方法直接把原数组中的数组copy过来，需要注意的是，Arrays.copyOf方法会创建一个新数组然后再进行拷贝。
-[ArrayList的扩容机制](https://mp.weixin.qq.com/s/GY7RLE-yIF7jPAjqu5V9Cg)
+
+> [ArrayList的扩容机制](https://mp.weixin.qq.com/s/GY7RLE-yIF7jPAjqu5V9Cg)
 
 #### 先从ArrayList的构造函数说起
 
 **（JDK8）ArrayList有三种方式来初始化，构造方法源码如下**：
 
 ```java
-   /**
-     * 默认初始容量大小
-     */
-    private static final int DEFAULT_CAPACITY = 10;
+/**
+  * 默认初始容量大小
+  */
+private static final int DEFAULT_CAPACITY = 10;
 
-    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
+private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
 
-    /**
-     *默认构造函数，使用初始容量10构造一个空列表(无参数构造)
-     */
-    public ArrayList() {
-        this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
-    }
+/**
+  * 默认构造函数，使用初始容量10构造一个空列表(无参数构造)
+  */
+public ArrayList() {
+    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+}
 
-    /**
-     * 带初始容量参数的构造函数。（用户自己指定容量）
-     */
-    public ArrayList(int initialCapacity) {
-        if (initialCapacity > 0) {//初始容量大于0
-            //创建initialCapacity大小的数组
-            this.elementData = new Object[initialCapacity];
-        } else if (initialCapacity == 0) {//初始容量等于0
-            //创建空数组
-            this.elementData = EMPTY_ELEMENTDATA;
-        } else {//初始容量小于0，抛出异常
-            throw new IllegalArgumentException("Illegal Capacity: "+
-                                               initialCapacity);
-        }
+/**
+  * 带初始容量参数的构造函数。（用户自己指定容量）
+  */
+public ArrayList(int initialCapacity) {
+    if (initialCapacity > 0) {//初始容量大于0
+        //创建initialCapacity大小的数组
+        this.elementData = new Object[initialCapacity];
+    } else if (initialCapacity == 0) {//初始容量等于0
+        //创建空数组
+        this.elementData = EMPTY_ELEMENTDATA;
+    } else {//初始容量小于0，抛出异常
+        throw new IllegalArgumentException("Illegal Capacity: "+
+                                           initialCapacity);
     }
-   /**
-    *构造包含指定collection元素的列表，这些元素利用该集合的迭代器按顺序返回
-    *如果指定的集合为null，throws NullPointerException。
-    */
-     public ArrayList(Collection<? extends E> c) {
-        elementData = c.toArray();
-        if ((size = elementData.length) != 0) {
-            // c.toArray might (incorrectly) not return Object[] (see 6260652)
-            if (elementData.getClass() != Object[].class)
-                elementData = Arrays.copyOf(elementData, size, Object[].class);
-        } else {
-            // replace with empty array.
-            this.elementData = EMPTY_ELEMENTDATA;
-        }
+}
+/**
+  *构造包含指定collection元素的列表，这些元素利用该集合的迭代器按顺序返回
+  *如果指定的集合为null，throws NullPointerException。
+  */
+public ArrayList(Collection<? extends E> c) {
+    elementData = c.toArray();
+    if ((size = elementData.length) != 0) {
+        // c.toArray might (incorrectly) not return Object[] (see 6260652)
+        if (elementData.getClass() != Object[].class)
+            elementData = Arrays.copyOf(elementData, size, Object[].class);
+    } else {
+        // replace with empty array.
+        this.elementData = EMPTY_ELEMENTDATA;
     }
+}
 ```
 
-细心的同学一定会发现：**以无参数构造方法创建ArrayList时，实际上初始化赋值的是一个空数组。当真正对数组进行添加元素操作时，才真正分配容量。即向数组中添加第一个元素时，数组容量扩为10。**
+细心的同学一定会发现：以无参数构造方法创建ArrayList时，实际上初始化赋值的是一个空数组。当真正对数组进行添加元素操作时，才真正分配容量。即向数组中添加第一个元素时，数组容量扩为10。
 
 > 补充：JDK6 new无参构造的ArrayList对象时，直接创建了长度是10的Object[]数组elementData。
 
@@ -631,14 +639,14 @@ public boolean add(E e) {
 > **注意**：JDK11移除了ensureCapacityInternal()和ensureExplicitCapacity()方法
 
 添加数据前会先判断一下是否需要扩容,先讲下add(int index, E element) 这个方法的含义，就是在指定索引index处插入元素element。比如说ArrayList.add(0, 3)，意思就是在头部插入元素3。再来看看add方法的核心System.arraycopy，这个方法有5个参数：
+```java
+elementData //源数组
+index //从源数组中的哪个位置开始复制
+elementData //目标数组
+toIndex //复制到目标数组中的哪个位置
+length //要复制的源数组中数组元素的数量
 ```
-elementData：源数组
-index：从源数组中的哪个位置开始复制
-elementData：目标数组
-toIndex：复制到目标数组中的哪个位置
-length：要复制的源数组中数组元素的数量
-```
-举个例子，我们想要在index = 5的位置插入元素(数组大小为10)，首先，我们会复制一遍源数组elementData，然后把源数组中从index = 5的位置开始到数组末尾的元素，放到新数组的index + 1 = 6的位置上,于是，这就给我们要新增的元素腾出了位置，然后在新数组index = 5的位置放入元素element就完成了添加的操作,显然，不用多说，ArrayList的将数据插入到指定位置的操作性能非常低下，因为要开辟新数组复制元素，要是涉及到扩容那就更慢了。另外，ArrayList还内置了一个直接在末尾添加元素的add方法，不用复制数组，直接size++就好，这个方法应该是我们最常使用的，即直接add(element);
+举个例子，我们想要在index = 5的位置插入元素(数组大小为10)，首先，我们会复制一遍源数组elementData，然后把源数组中从index = 5的位置开始到数组末尾的元素，放到新数组的index + 1 = 6的位置上,于是，这就给我们要新增的元素腾出了位置，然后在新数组index = 5的位置放入元素element就完成了添加的操作,显然ArrayList的将数据插入到指定位置的操作性能非常低下，因为要开辟新数组复制元素，要是涉及到扩容那就更慢了。另外，ArrayList还内置了一个直接在末尾添加元素的add方法，不用复制数组，直接size++就好，这个方法应该是我们最常使用的，即直接add(element);
 
 ##### ensureCapacityInternal()方法
 
@@ -651,7 +659,6 @@ private void ensureCapacityInternal(int minCapacity) {
         // 获取默认的容量和传入参数的较大值
         minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
     }
-
     ensureExplicitCapacity(minCapacity);
 }
 ```
@@ -678,8 +685,8 @@ private void ensureExplicitCapacity(int minCapacity) {
 
 我们来仔细分析一下：
 
-- 当我们要add进第1个元素到ArrayList时，elementData.length为0（因为还是一个空的list），因为执行了ensureCapacityInternal()方法，所以minCapacity此时为10。此时，**minCapacity - elementData.length > 0**成立，所以会进入**grow(minCapacity)** 方法。
-- 当add第2个元素时，minCapacity为2，此时elementData.length(容量)在添加第一个元素后扩容成10了。此时，**minCapacity - elementData.length > 0**不成立，所以不会进入（执行）**grow(minCapacity)** 方法。
+- 当我们要add进第1个元素到ArrayList时，elementData.length为0（因为还是一个空的list），因为执行了ensureCapacityInternal()方法，所以minCapacity此时为10。此时minCapacity - elementData.length > 0成立，所以会进入grow(minCapacity)方法。
+- 当add第2个元素时，minCapacity为2，此时elementData.length(容量)在添加第一个元素后扩容成10了。此时，minCapacity - elementData.length > 0不成立，所以不会进入（执行）grow(minCapacity)方法。
 - 添加第3、4···到第10个元素时，依然不会执行grow方法，数组容量都为10。
 
 直到添加第11个元素，minCapacity(为11)比elementData.length（为10）要大。进入grow方法进行扩容。
@@ -725,9 +732,9 @@ private void grow(int minCapacity) {
 
 **这里补充一点比较重要，但是容易被忽视掉的知识点**：
 
-- java中的length属性是针对数组说的,比如说你声明了一个数组,想知道这个数组的长度则用到了length这个属性.
-- java中的length()方法是针对字符串说的,如果想看这个字符串的长度则用到length()这个方法.
-- java中的size()方法是针对泛型集合说的,如果想看这个泛型有多少个元素,就调用此方法来查看.
+- java中的length属性是针对数组说的,比如说你声明了一个数组,想知道这个数组的长度则用到了length这个属性。
+- java中的length()方法是针对字符串说的,如果想看这个字符串的长度则用到length()这个方法。
+- java中的size()方法是针对泛型集合说的,如果想看这个泛型有多少个元素,就调用此方法来查看。
 
 ##### hugeCapacity()方法。
 
@@ -749,7 +756,7 @@ private static int hugeCapacity(int minCapacity) {
 
 #### System.arraycopy()和Arrays.copyOf()方法
 
-阅读源码的话，我们就会发现ArrayList中大量调用了这两个方法。比如：我们上面讲的扩容操作以及`add(int index, E element)`、`toArray()`等方法中都用到了该方法
+阅读源码的话，我们就会发现ArrayList中大量调用了这两个方法。比如：我们上面讲的扩容操作以及add(int index, E element)、toArray()等方法中都用到了该方法
 
 ##### System.arraycopy()方法
 
@@ -758,7 +765,7 @@ private static int hugeCapacity(int minCapacity) {
 ```java
 // 我们发现arraycopy是一个native方法,接下来我们解释一下各个参数的具体意义
 /**
-  *   复制数组
+  * 复制数组
   * @param src 源数组
   * @param srcPos 源数组中的起始位置
   * @param dest 目标数组
@@ -775,8 +782,8 @@ public static native void arraycopy(Object src,  int  srcPos,
 ```java
 /**
    * 在此列表中的指定位置插入指定的元素。
-   *先调用rangeCheckForAdd对index进行界限检查；然后调用ensureCapacityInternal方法保证capacity足够大；
-   *再将从index开始之后的所有成员后移一个位置；将element插入index位置；最后size加1。
+   * 先调用rangeCheckForAdd对index进行界限检查；然后调用ensureCapacityInternal方法保证capacity足够大；
+   * 再将从index开始之后的所有成员后移一个位置；将element插入index位置；最后size加1。
    */
 public void add(int index, E element) {
     rangeCheckForAdd(index);
@@ -807,7 +814,6 @@ public class ArraycopyTest {
 			System.out.print(a[i] + " ");
 		}
 	}
-
 }
 ```
 
@@ -944,8 +950,6 @@ public class EnsureCapacityTest {
 
 > [原文链接](https://javaguide.cn/java/collection/arraylist-source-code.html)
 
-
-
 ## CopyOnWriteArrayList
 
 ### CopyOnWriteArrayList简介
@@ -958,14 +962,12 @@ CopyOnWriteArrayList在写入数据的时候，将旧数组内容复制一份出
 
 
 ```java
-public class CopyOnWriteArrayList<E>
-extends Object
-implements List<E>, RandomAccess, Cloneable, Serializable
+public class CopyOnWriteArrayList<E> extends Object implements List<E>, RandomAccess, Cloneable, Serializable
 ```
 
 在很多应用场景中，读操作可能会远远大于写操作。由于读操作根本不会修改原有的数据，因此对于每次读取都进行加锁其实是一种资源浪费。我们应该允许多个线程同时访问List的内部数据，毕竟读取操作是安全的。
 
-这和我们之前提到过的ReentrantReadWriteLock读写锁的思想非常类似，也就是读读共享、写写互斥、读写互斥、写读互斥。JDK中提供了CopyOnWriteArrayList类比相比于在读写锁的思想又更进一步。为了将读取的性能发挥到极致，CopyOnWriteArrayList读取是完全不用加锁的，并且更厉害的是：写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。这样一来，读操作的性能就会大幅度提升。**那它是怎么做的呢？**
+这和我们之前提到过的ReentrantReadWriteLock读写锁的思想非常类似，也就是读读共享、写写互斥、读写互斥、写读互斥。JDK中提供了CopyOnWriteArrayList类比相比于在读写锁的思想又更进一步。为了将读取的性能发挥到极致，CopyOnWriteArrayList读取是完全不用加锁的，并且更厉害的是：写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。这样一来，读操作的性能就会大幅度提升。
 
 ### CopyOnWriteArrayList是如何做到的？
 
@@ -981,18 +983,18 @@ CopyOnWriteArrayList类的所有可变操作（add，set等等）都是通过创
 
 
 ```java
-    /** The array, accessed only via getArray/setArray. */
-    private transient volatile Object[] array;
-    public E get(int index) {
-        return get(getArray(), index);
-    }
-    @SuppressWarnings("unchecked")
-    private E get(Object[] a, int index) {
-        return (E) a[index];
-    }
-    final Object[] getArray() {
-        return array;
-    }
+/** The array, accessed only via getArray/setArray. */
+private transient volatile Object[] array;
+public E get(int index) {
+    return get(getArray(), index);
+}
+@SuppressWarnings("unchecked")
+private E get(Object[] a, int index) {
+    return (E) a[index];
+}
+final Object[] getArray() {
+    return array;
+}
 ```
 
 #### CopyOnWriteArrayList写入操作的实现
@@ -1001,29 +1003,26 @@ CopyOnWriteArrayList写入操作add()方法在添加集合的时候加了锁，�
 
 
 ```java
-    /**
-     * Appends the specified element to the end of this list.
-     *
-     * @param e element to be appended to this list
-     * @return {@code true} (as specified by {@link Collection#add})
-     */
-    public boolean add(E e) {
-        final ReentrantLock lock = this.lock;
-        lock.lock();//加锁
-        try {
-            Object[] elements = getArray();
-            int len = elements.length;
-            Object[] newElements = Arrays.copyOf(elements, len + 1);//拷贝新数组
-            newElements[len] = e;
-            setArray(newElements);
-            return true;
-        } finally {
-            lock.unlock();//释放锁
-        }
+/**
+  * Appends the specified element to the end of this list.
+  * @param e element to be appended to this list
+  * @return {@code true} (as specified by {@link Collection#add})
+  */
+public boolean add(E e) {
+    final ReentrantLock lock = this.lock;
+    lock.lock();//加锁
+    try {
+        Object[] elements = getArray();
+        int len = elements.length;
+        Object[] newElements = Arrays.copyOf(elements, len + 1);//拷贝新数组
+        newElements[len] = e;
+        setArray(newElements);
+        return true;
+    } finally {
+        lock.unlock();//释放锁
     }
+}
 ```
-
-
 
 ### 常用方法
 

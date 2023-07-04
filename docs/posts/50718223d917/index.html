@@ -534,16 +534,16 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><h4 id="创建线程三种方式"><a href="#创建线程三种方式" class="headerlink" title="创建线程三种方式"></a>创建线程三种方式</h4><ol>
-<li>继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：<strong>public class Thread implements Runnable</strong></li>
+<li>继承Thread类，重写run()方法。然后直接new这个对象的实例，再调用start()方法启动线程。其实本质上Thread是实现了Runnable接口的一个实例：<code>public class Thread implements Runnable</code></li>
 <li>实现Runnable接口，重写run()方法。然后调用new Thread（runnable）的方式创建一个线程，再调用start()方法启动线程。</li>
 <li>实现Callable接口，重写call()方法。Callable是类似于Runnable的接口，是属于Executor框架中的功能类。具有返回值，并且可以对异常进行声明和抛出</li>
 </ol>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/G-X82-Fp7zShTTnkWg1N5A">【图解】透彻Java线程状态转换</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/G-X82-Fp7zShTTnkWg1N5A">【图解】透彻Java线程状态转换</a></p>
+</blockquote>
 <h4 id="线程相关方法"><a href="#线程相关方法" class="headerlink" title="线程相关方法"></a>线程相关方法</h4><h5 id="yield"><a href="#yield" class="headerlink" title="yield()"></a>yield()</h5><p>它让掉当前线程CPU的时间片，使正在运行中的线程重新变成就绪状态，并重新竞争CPU的调度权。它可能会获取到，也有可能被其他线程获取到。使当前线程从执行状态（运行状态）变为可执行态（就绪状态）。cpu会从众多的可执行态里选择。也就是说，当前也就是刚刚的那个线程还是有可能会被再次执行到的</p>
 <h5 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h5><p>并行变串行，当前线程等待另一个调用join()方法的线程执行结束后再往下执行,哪个线程调用join()哪个线程优先执行（前提必须调用start()方法启动线程）</p>
-<h5 id="setDaemon"><a href="#setDaemon" class="headerlink" title="setDaemon()"></a>setDaemon()</h5><p>设置是否为守护线程，线程分为用户线程和守护线程，当用户线程都退出时，无论当jvm里面的守护线程有没有执行完，jvm都会退出，使用setDaemon()必须在thread.start()之前，否则会抛出异常。守护线程服务于用户线程,当用户线程结束后守护线程也会结束,当所有线程都运行结束时，JVM退出，进程结束。<br>例如有一种线程的目的就是无限循环</p>
+<h5 id="setDaemon"><a href="#setDaemon" class="headerlink" title="setDaemon()"></a>setDaemon()</h5><p>设置是否为守护线程，线程分为用户线程和守护线程，当用户线程都退出时，无论当jvm里面的守护线程有没有执行完，jvm都会退出，使用setDaemon()必须在thread.start()之前，否则会抛出异常。守护线程服务于用户线程,当用户线程结束后守护线程也会结束,当所有线程都运行结束时，JVM退出，进程结束。例如有一种线程的目的就是无限循环</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">TimerThread</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">&#123;</span>
   <span class="token annotation punctuation">@Override</span>
   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -565,9 +565,10 @@
 <li><p>this.interrupt()</p>
 </li>
 </ul>
-<p>中断调用该方法的线程,中断被阻塞的线程，会抛出一个InterruptedException，把线程从阻塞状态中解救出来，会清除中断标志位</p>
-<p>如果当前线程没有中断它自己（这在任何情况下都是允许的），则该线程的checkAccess方法就会被调用，这可能抛出Security Exception。如果线程在调用Object类的wait()、wait(long)或wait(long,int)方法，或者该类的join()、join(long)、join(long,int)、sleep(long)或sleep(long,int)方法过程中受阻，则其中断状态将被清除，它还将收到一个Interrupted Exception。如果该线程在可中断的通道上的I&#x2F;O操作中受阻，则该通道将被关闭，该线程的中断状态将被设置并且该线程将收到ClosedByInterrupt Exception。如果该线程在一个Selector中受阻，则该线程的中断状态将被设置，它将立即从选择操作返回，并可能带有一个非零值，就好像调用了选择器的wakeup方法一样。如果以前的条件都没有保存，则该线程的中断状态将被设置。</p>
-<p>中断一个不处于活动状态的线程不需要任何作用。<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J8Acb1FBPhqb1Z7Vur0erQ">如何停止一个正在运行的线程？</a></p>
+<p>中断调用该方法的线程,中断被阻塞的线程，会抛出一个InterruptedException，把线程从阻塞状态中解救出来，会清除中断标志位。如果当前线程没有中断它自己（这在任何情况下都是允许的），则该线程的checkAccess方法就会被调用，这可能抛出Security Exception。如果线程在调用Object类的wait()、wait(long)或wait(long,int)方法，或者该类的join()、join(long)、join(long,int)、sleep(long)或sleep(long,int)方法过程中受阻，则其中断状态将被清除，它还将收到一个Interrupted Exception。如果该线程在可中断的通道上的I&#x2F;O操作中受阻，则该通道将被关闭，该线程的中断状态将被设置并且该线程将收到ClosedByInterrupt Exception。如果该线程在一个Selector中受阻，则该线程的中断状态将被设置，它将立即从选择操作返回，并可能带有一个非零值，就好像调用了选择器的wakeup方法一样。如果以前的条件都没有保存，则该线程的中断状态将被设置。中断一个不处于活动状态的线程不需要任何作用。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J8Acb1FBPhqb1Z7Vur0erQ">如何停止一个正在运行的线程？</a></p>
+</blockquote>
 <h5 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h5><ul>
 <li><p>Thread.setDefaultUncaughtExceptionHandler()<br>相当于一个全局的捕获异常。用于记录当程序发生你未捕获的异常的时候,调用一个你默认的handler来进行某些操作</p>
 </li>
@@ -594,7 +595,9 @@
 <h5 id="Thread-enumerate-Thread-tarray"><a href="#Thread-enumerate-Thread-tarray" class="headerlink" title="Thread.enumerate(Thread[] tarray)"></a>Thread.enumerate(Thread[] tarray)</h5><p>用于将每个活动线程的线程组及其子组复制到指定的数组中。此方法使用tarray参数调用enumerate方法。此方法使用activeCount方法来估计数组应该有多大。如果数组的长度太短而无法容纳所有线程，则会以静默方式忽略额外的线程。tarray：此方法是要复制到的Thread对象数组。返回此方法返回放入数组的线程数。</p>
 <h5 id="Thread-getAllStackTraces"><a href="#Thread-getAllStackTraces" class="headerlink" title="Thread.getAllStackTraces()"></a>Thread.getAllStackTraces()</h5><p>返回所有活动线程的堆栈跟踪的一个映射</p>
 <h5 id="Thread-holdsLock"><a href="#Thread-holdsLock" class="headerlink" title="Thread.holdsLock()"></a>Thread.holdsLock()</h5><p>当且仅当当前线程在指定的对象上保持监视器锁方法返回true</p>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493938&idx=1&sn=125990919a15c7dd3c4ed4c36451d34b&source=41#wechat_redirect">多线程基础知识、线程相关方法</a></p>
+</blockquote>
 <h4 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h4><ol>
 <li>synchronized</li>
 <li>使用特殊域变量(volatile)实现线程同步</li>
@@ -656,7 +659,7 @@
 <ul>
 <li><strong>FixedThreadPool和SingleThreadExecutor</strong>：使用的是无界的LinkedBlockingQueue，任务队列最大长度为Integer.MAX_VALUE,可能堆积大量的请求，从而导致OOM。</li>
 <li><strong>CachedThreadPool</strong>：使用的是同步队列SynchronousQueue,允许创建的线程数量为Integer.MAX_VALUE，可能会创建大量线程，从而导致OOM。</li>
-<li><strong>ScheduledThreadPool和SingleThreadScheduledExecutor</strong>:使用的无界的延迟阻塞队列DelayedWorkQueue，任务队列最大长度为Integer.MAX_VALUE,可能堆积大量的请求，从而导致OOM。</li>
+<li><strong>ScheduledThreadPool和SingleThreadScheduledExecutor</strong>：使用的无界的延迟阻塞队列DelayedWorkQueue，任务队列最大长度为Integer.MAX_VALUE,可能堆积大量的请求，从而导致OOM。</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 无界队列LinkedBlockingQueue</span>
 <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">ExecutorService</span> <span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token keyword">int</span> nThreads<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -738,7 +741,9 @@
 <span class="token comment">// 核心线程数10，最大线程数30，keepAliveTime是3秒,随着任务数量不断上升，线程池会不断的创建线程，直到到达核心线程数10，就不创建线程了，这时多余的任务通过加入阻塞队列来运行，当超出阻塞队列长度+核心线程数时，这时不得不扩大线程个数来满足当前任务的运行，这时就需要创建新的线程了（最大线程数起作用），上限是最大线程数30那么超出核心线程数10并小于最大线程数30的可能新创建的这20个线程相当于是“借”的，如果这20个线程空闲时间超过keepAliveTime，就会被退出</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>ArrayBlockingQueue、LinkedBlockingQueue区别</strong><br><img src="/blog/images/ArrayBlockingQueueLinkedBlockingQueue%E5%8C%BA%E5%88%AB.png"></p>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QEur_4cwOSc_4AHWAPFhJQ">ThreadPoolExecutor深入解析</a></p>
+</blockquote>
 <h4 id="submit与execute区别"><a href="#submit与execute区别" class="headerlink" title="submit与execute区别"></a>submit与execute区别</h4><ol>
 <li>submit在执行过程中与execute不一样，submit不会抛出异常而是把异常保存在成员变量中，在FutureTask.get阻塞获取的时候再把异常抛出来。</li>
 <li>submit有返回值Future，execute无返回值</li>
@@ -771,13 +776,16 @@ threadPool<span class="token punctuation">.</span><span class="token function">e
 
 <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>futureTask<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// executor.submit(futureTask);</span>
 <span class="token class-name">String</span> result <span class="token operator">=</span> futureTask<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">,</span><span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">MILLISECONDS</span><span class="token punctuation">)</span><span class="token comment">// 如果在指定时间内，还没获取到结果，就直接返回null</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LVAv7PKVvg7prW9ayD1eZA">线程池中的线程抛出了异常，该如何处理</a></li>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LVAv7PKVvg7prW9ayD1eZA">线程池中的线程抛出了异常，该如何处理</a></p>
+</blockquote>
+</li>
 </ol>
 <h3 id="虚拟线程"><a href="#虚拟线程" class="headerlink" title="虚拟线程"></a>虚拟线程</h3><blockquote>
 <p>JDK 19新推出的虚拟线程，或者叫协程，主要是为了解决在读书操作系统中线程需要依赖内核线程的实现，导致有很多额外开销的问题。通过在Java语言层面引入虚拟线程，通过JVM进行调度管理，从而减少上下文切换的成本。<br>虚拟线程是守护线程，所以有可能会没等他执行完虚拟机就会shutdown掉。</p>
 </blockquote>
 <h4 id="虚拟线程与平台线程的区别"><a href="#虚拟线程与平台线程的区别" class="headerlink" title="虚拟线程与平台线程的区别"></a>虚拟线程与平台线程的区别</h4><ol>
-<li><strong>虚拟线程总是守护线程</strong>。setDaemon(false)方法不能将虚拟线程更改为非守护线程。所以，需要注意的是，<strong>当所有启动的非守护进程线程都终止时，JVM将终止。这意味着JVM不会等待虚拟线程完成后才退出。</strong></li>
+<li><strong>虚拟线程总是守护线程</strong>。setDaemon(false)方法不能将虚拟线程更改为非守护线程。所以，需要注意的是，<strong>当所有启动的非守护进程线程都终止时，JVM将终止。这意味着JVM不会等待虚拟线程完成后才退出</strong>。</li>
 <li>即使使用setPriority()方法，<strong>虚拟线程始终具有normal的优先级</strong>，且不能更改优先级。在虚拟线程上调用此方法没有效果。</li>
 <li>虚拟线程是不支持stop()、suspend()或resume()等方法。这些方法在虚拟线程上调用时会抛出UnsupportedOperationException异常。</li>
 </ol>
@@ -1110,7 +1118,7 @@ ThreadLocal有什么用？通常情况下，我们创建的变量是可以被任
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ArrayList简介ArrayList的底层实现是一个Object数组,ArrayList的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组DEFAULTCAPACITY_EMPTY_ELEMENTD
+                            ArrayListArrayList的底层实现是一个Object数组,ArrayList的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组DEFAULTCAPACITY_EMPTY_ELEMENTDAT
                         
                         
                     </div>

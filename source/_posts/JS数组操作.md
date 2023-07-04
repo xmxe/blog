@@ -6,6 +6,7 @@ img: https://picx.zhimg.com/v2-271693316513b5a0410ca80a2c160b5e_1440w.jpg
 
 ---
 
+## 常用操作
 
 ### 声明数组
 
@@ -547,6 +548,8 @@ console.log(entries.length);// 0
 console.log(entries);// []
 ```
 
+## 常用方法
+
 ### 栈方法
 
 后进先出
@@ -910,6 +913,7 @@ let result = arr.reduce((val1, val2) => {
 });
 console.log(result); // 10
 ```
+> [10个超级实用的reduce使用技巧](https://mp.weixin.qq.com/s/6Ks2Y1gkR50xrI9odDHVGg)
 
 #### entries()，keys()和values()
 

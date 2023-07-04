@@ -10,23 +10,13 @@ categories: Java
 
 ### 什么是ID？
 
-日常开发中，我们需要对系统中的各种数据使用ID唯一表示，比如用户ID对应且仅对应一个人，商品ID对应且仅对应一件商品，订单ID对应且仅对应一个订单。
-
-我们现实生活中也有各种ID，比如身份证ID对应且仅对应一个人、地址ID对应且仅对应
-
-简单来说，**ID就是数据的唯一标识**。
+日常开发中，我们需要对系统中的各种数据使用ID唯一表示，比如用户ID对应且仅对应一个人，商品ID对应且仅对应一件商品，订单ID对应且仅对应一个订单。我们现实生活中也有各种ID，比如身份证ID对应且仅对应一个人、地址ID对应且仅对应一个地址。简单来说，ID就是数据的唯一标识。
 
 ### 什么是分布式ID？
 
-分布式ID是分布式系统下的ID。分布式ID不存在与现实生活中，属于计算机系统中的一个概念。
+分布式ID是分布式系统下的ID。分布式ID不存在与现实生活中，属于计算机系统中的一个概念。简单举一个分库分表的例子。
 
-我简单举一个分库分表的例子。
-
-我司的一个项目，使用的是单机MySQL。但是，没想到的是，项目上线一个月之后，随着使用人数越来越多，整个系统的数据量将越来越大。单机MySQL已经没办法支撑了，需要进行分库分表（推荐Sharding-JDBC）。
-
-在分库之后，数据遍布在不同服务器上的数据库，数据库的自增主键已经没办法满足生成的主键唯一了。**我们如何为不同的数据节点生成全局唯一主键呢？**
-
-这个时候就需要生成**分布式ID**了。
+我司的一个项目，使用的是单机MySQL。但是，没想到的是，项目上线一个月之后，随着使用人数越来越多，整个系统的数据量将越来越大。单机MySQL已经没办法支撑了，需要进行分库分表（推荐Sharding-JDBC）。在分库之后，数据遍布在不同服务器上的数据库，数据库的自增主键已经没办法满足生成的主键唯一了。我们如何为不同的数据节点生成全局唯一主键呢？这个时候就需要生成分布式ID了。
 
 ![img](https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/id-after-the-sub-table-not-conflict.png)
 
@@ -34,9 +24,7 @@ categories: Java
 
 ![img](https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/distributed-id-requirements.png)
 
-分布式ID作为分布式系统中必不可少的一环，很多地方都要用到分布式ID。
-
-一个最基本的分布式ID需要满足下面这些要求：
+分布式ID作为分布式系统中必不可少的一环，很多地方都要用到分布式ID。一个最基本的分布式ID需要满足下面这些要求：
 
 - **全局唯一**：ID的全局唯一性肯定是首先要满足的！
 - **高性能**：分布式ID的生成速度要快，对本地资源消耗要小。
@@ -97,13 +85,7 @@ COMMIT;
 
 #### 数据库号段模式
 
-数据库主键自增这种模式，每次获取ID都要访问一次数据库，ID需求比较大的时候，肯定是不行的。
-
-如果我们可以批量获取，然后存在在内存里面，需要用到的时候，直接从内存里面拿就舒服了！这也就是我们说的**基于数据库的号段模式来生成分布式ID**。
-
-数据库的号段模式也是目前比较主流的一种分布式ID生成方式。像滴滴开源的[Tinyid](https://github.com/didi/tinyid/wiki/tinyid原理介绍)就是基于这种方式来做的。不过，TinyId使用了双号段缓存、增加多db支持等方式来进一步优化。
-
-以MySQL举例，我们通过下面的方式即可。
+数据库主键自增这种模式，每次获取ID都要访问一次数据库，ID需求比较大的时候，肯定是不行的。如果我们可以批量获取，然后存在在内存里面，需要用到的时候，直接从内存里面拿就舒服了！这也就是我们说的基于数据库的号段模式来生成分布式ID。数据库的号段模式也是目前比较主流的一种分布式ID生成方式。像滴滴开源的[Tinyid](https://github.com/didi/tinyid/wiki/tinyid原理介绍)就是基于这种方式来做的。不过，TinyId使用了双号段缓存、增加多db支持等方式来进一步优化。以MySQL举例，我们通过下面的方式即可。
 
 **1.创建一个数据库表。**
 
@@ -158,9 +140,7 @@ id	current_max_id	step	version	biz_type
 1	100	100	1	101
 ```
 
-相比于数据库主键自增的方式，**数据库的号段模式对于数据库的访问次数更少，数据库压力更小。**
-
-另外，为了避免单点问题，你可以从使用主从模式来提高可用性。
+相比于数据库主键自增的方式，数据库的号段模式对于数据库的访问次数更少，数据库压力更小。另外，为了避免单点问题，你可以从使用主从模式来提高可用性。
 
 **数据库号段模式的优缺点:**
 
@@ -182,9 +162,7 @@ OK
 "2"
 ```
 
-为了提高可用性和并发，我们可以使用Redis Cluster。Redis Cluster是Redis官方提供的Redis集群解决方案（3.0+版本）。
-
-除了Redis Cluster之外，你也可以使用开源的Redis集群方案[Codis](https://github.com/CodisLabs/codis)（大规模集群比如上百个节点的时候比较推荐）。
+为了提高可用性和并发，我们可以使用Redis Cluster。Redis Cluster是Redis官方提供的Redis集群解决方案（3.0+版本）。除了Redis Cluster之外，你也可以使用开源的Redis集群方案[Codis](https://github.com/CodisLabs/codis)（大规模集群比如上百个节点的时候比较推荐）。
 
 除了高可用和并发之外，我们知道Redis基于内存，我们需要持久化数据，避免重启机器或者机器故障后数据丢失。Redis支持两种不同的持久化方式：**快照（snapshotting，RDB）**、**只追加文件（append-onlyfile,AOF）**。并且，Redis4.0开始支持**RDB和AOF的混合持久化**（默认关闭，可以通过配置项aof-use-rdb-preamble开启）。
 
@@ -194,11 +172,11 @@ OK
 - **优点**：性能不错并且生成的ID是有序递增的
 - **缺点**：和数据库主键自增方案的缺点类似
 
-除了Redis之外，MongoDB ObjectId经常也会被拿来当做分布式ID的解决方案。
+除了Redis之外，**MongoDB ObjectId**经常也会被拿来当做分布式ID的解决方案。
 
 ![img](https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/mongodb9-objectId-distributed-id.png)
 
-MongoDB ObjectId一共需要12个字节存储：
+**MongoDB ObjectId**一共需要12个字节存储：
 
 - 0~3：时间戳
 - 3~6：代表机器ID
@@ -214,9 +192,7 @@ MongoDB ObjectId一共需要12个字节存储：
 
 #### UUID
 
-UUID是Universally Unique Identifier（通用唯一标识符）的缩写。UUID包含32个16进制数字（8-4-4-4-12）。
-
-JDK就提供了现成的生成UUID的方法，一行代码就行了。
+UUID是Universally Unique Identifier（通用唯一标识符）的缩写。UUID包含32个16进制数字（8-4-4-4-12）。JDK就提供了现成的生成UUID的方法，一行代码就行了。
 
 ```java
 //输出示例：cb4a9ede-fa5e-4585-b9bb-d60bce986eaa
@@ -227,9 +203,7 @@ UUID.randomUUID()
 
 ![img](https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/rfc-4122-uuid.png)
 
-我们这里重点关注一下这个Version(版本)，不同的版本对应的UUID的生成规则是不同的。
-
-5种不同的Version(版本)值分别对应的含义（参考[维基百科对于UUID的介绍](https://zh.wikipedia.org/wiki/通用唯一识别码)）：
+我们这里重点关注一下这个Version(版本)，不同的版本对应的UUID的生成规则是不同的。5种不同的Version(版本)值分别对应的含义（参考[维基百科对于UUID的介绍](https://zh.wikipedia.org/wiki/通用唯一识别码)）：
 
 - **版本1**:UUID是根据时间和节点ID（通常是MAC地址）生成；
 - **版本2**:UUID是根据标识符（通常是组或用户ID）、时间和节点ID生成；
@@ -247,20 +221,13 @@ UUID uuid = UUID.randomUUID();
 int version = uuid.version();//4
 ```
 
-另外，Variant(变体)也有4种不同的值，这种值分别对应不同的含义。这里就不介绍了，貌似平时也不怎么需要关注。
+另外，Variant(变体)也有4种不同的值，这种值分别对应不同的含义。需要用到的时候，去看看维基百科对于UUID的Variant(变体)相关的介绍即可。
 
-需要用到的时候，去看看维基百科对于UUID的Variant(变体)相关的介绍即可。
+从上面的介绍中可以看出，UUID可以保证唯一性，因为其生成规则包括MAC地址、时间戳、名字空间（Namespace）、随机或伪随机数、时序等元素，计算机基于这些规则生成的UUID是肯定不会重复的。虽然，UUID可以做到全局唯一性，但是，我们一般很少会使用它。比如使用UUID作为MySQL数据库主键的时候就非常不合适：
+1. **数据库主键要尽量越短越好，而UUID的消耗的存储空间比较大（32个字符串，128位）。**
+2. **UUID是无顺序的，InnoDB引擎下，数据库主键的无序性会严重影响数据库性能。**
 
-从上面的介绍中可以看出，UUID可以保证唯一性，因为其生成规则包括MAC地址、时间戳、名字空间（Namespace）、随机或伪随机数、时序等元素，计算机基于这些规则生成的UUID是肯定不会重复的。
-
-虽然，UUID可以做到全局唯一性，但是，我们一般很少会使用它。
-
-比如使用UUID作为MySQL数据库主键的时候就非常不合适：
-
-- 数据库主键要尽量越短越好，而UUID的消耗的存储空间比较大（32个字符串，128位）。
-- UUID是无顺序的，InnoDB引擎下，数据库主键的无序性会严重影响数据库性能。
-
-最后，我们再简单分析一下**UUID的优缺点**（面试的时候可能会被问到的哦！）:
+最后，我们再简单分析一下UUID的优缺点:
 
 - **优点**：生成速度比较快、简单易用
 - **缺点**：存储消耗空间大（32个字符串，128位）、不安全(基于MAC地址生成UUID的算法会造成MAC地址泄露)、无序（非自增）、没有具体业务含义、需要解决重复ID问题（当机器时间不对的情况下，可能导致会产生重复ID）
@@ -276,9 +243,7 @@ Snowflake是Twitter开源的分布式ID生成算法。Snowflake由64bit的二进
 
 ![Snowflake示意图](https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/snowflake-distributed-id-schematic-diagram.png)
 
-如果你想要使用Snowflake算法的话，一般不需要你自己再造轮子。有很多基于Snowflake算法的开源实现比如美团的Leaf、百度的UidGenerator，并且这些开源实现对原有的Snowflake算法进行了优化。
-
-另外，在实际项目中，我们一般也会对Snowflake算法进行改造，最常见的就是在Snowflake算法生成的ID中加入业务类型信息。
+如果你想要使用Snowflake算法的话，一般不需要你自己再造轮子。有很多基于Snowflake算法的开源实现比如美团的Leaf、百度的UidGenerator，并且这些开源实现对原有的Snowflake算法进行了优化。另外，在实际项目中，我们一般也会对Snowflake算法进行改造，最常见的就是在Snowflake算法生成的ID中加入业务类型信息。
 
 我们再来看看Snowflake算法的优缺点：
 
@@ -492,9 +457,7 @@ class SnowFlakeSingleL {
 
 #### UidGenerator(百度)
 
-[UidGenerator](https://github.com/baidu/uid-generator)是百度开源的一款基于Snowflake(雪花算法)的唯一ID生成器。
-
-不过，UidGenerator对Snowflake(雪花算法)进行了改进，生成的唯一ID组成如下。
+[UidGenerator](https://github.com/baidu/uid-generator)是百度开源的一款基于Snowflake(雪花算法)的唯一ID生成器。不过，UidGenerator对Snowflake(雪花算法)进行了改进，生成的唯一ID组成如下。
 
 ![img](https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/uidgenerator-distributed-id-schematic-diagram.png)
 
@@ -508,13 +471,9 @@ UidGenerator官方文档中的介绍如下：
 
 #### Leaf(美团)
 
-**[Leaf](https://github.com/Meituan-Dianping/Leaf)**:是美团开源的一个分布式ID解决方案。这个项目的名字Leaf（树叶）起源于德国哲学家、数学家莱布尼茨的一句话：“There are no two identical leaves in the world”（世界上没有两片相同的树叶）。这名字起得真心挺不错的，有点文艺青年那味了！
+[Leaf](https://github.com/Meituan-Dianping/Leaf)是美团开源的一个分布式ID解决方案。这个项目的名字Leaf（树叶）起源于德国哲学家、数学家莱布尼茨的一句话：“There are no two identical leaves in the world”（世界上没有两片相同的树叶）。这名字起得真心挺不错的，有点文艺青年那味了！
 
-Leaf提供了**号段模式**和**Snowflake(雪花算法)**。这两种模式来生成分布式ID。并且，它支持双号段，还解决了雪花ID系统时钟回拨问题。不过，时钟问题的解决需要弱依赖于Zookeeper。
-
-Leaf的诞生主要是为了解决美团各个业务线生成分布式ID的方法多种多样以及不可靠的问题。
-
-Leaf对原有的号段模式进行改进，比如它这里增加了双号段避免获取DB在获取号段的时候阻塞请求获取ID的线程。简单来说，就是我一个号段还没用完之前，我自己就主动提前去获取下一个号段（图片来自于美团官方文章：[《Leaf—美团点评分布式ID生成系统》openinnewwindow](https://tech.meituan.com/2017/04/21/mt-leaf.html)）。
+Leaf提供了**号段模式**和**Snowflake**(雪花算法)这两种模式来生成分布式ID。并且它支持双号段，还解决了雪花ID系统时钟回拨问题。不过，时钟问题的解决需要弱依赖于Zookeeper。Leaf的诞生主要是为了解决美团各个业务线生成分布式ID的方法多种多样以及不可靠的问题。Leaf对原有的号段模式进行改进，比如它这里增加了双号段避免获取DB在获取号段的时候阻塞请求获取ID的线程。简单来说，就是我一个号段还没用完之前，我自己就主动提前去获取下一个号段（图片来自于美团官方文章：[《Leaf—美团点评分布式ID生成系统》openinnewwindow](https://tech.meituan.com/2017/04/21/mt-leaf.html)）。
 
 ![img](https://oscimg.oschina.net/oscnet/up-5c152efed042a8fe7e13692e0339d577f5c.png)
 
@@ -522,11 +481,7 @@ Leaf对原有的号段模式进行改进，比如它这里增加了双号段避�
 
 #### Tinyid(滴滴)
 
-[Tinyid](https://github.com/didi/tinyid)是滴滴开源的一款基于数据库号段模式的唯一ID生成器。
-
-数据库号段模式的原理我们在上面已经介绍过了。**Tinyid有哪些亮点呢？**
-
-为了搞清楚这个问题，我们先来看看基于数据库号段模式的简单架构方案。（图片来自于Tinyid的官方wiki:[《Tinyid原理介绍》](https://github.com/didi/tinyid/wiki/tinyid原理介绍)）
+[Tinyid](https://github.com/didi/tinyid)是滴滴开源的一款基于数据库号段模式的唯一ID生成器。数据库号段模式的原理我们在上面已经介绍过了。Tinyid有哪些亮点呢？为了搞清楚这个问题，我们先来看看基于数据库号段模式的简单架构方案。（图片来自于Tinyid的官方wiki:[《Tinyid原理介绍》](https://github.com/didi/tinyid/wiki/tinyid原理介绍)）
 
 ![img](https://oscimg.oschina.net/oscnet/up-4afc0e45c0c86ba5ad645d023dce11e53c2.png)
 
@@ -555,14 +510,12 @@ Tinyid的优缺点这里就不分析了，结合数据库号段模式的优缺�
 
 通过这篇文章，我基本上已经把最常见的分布式ID生成方案都总结了一波。
 
-除了上面介绍的方式之外，像ZooKeeper这类中间件也可以帮助我们生成唯一ID。**没有银弹，一定要结合实际项目来选择最适合自己的方案。**
+除了上面介绍的方式之外，像ZooKeeper这类中间件也可以帮助我们生成唯一ID。需要结合实际项目来选择最适合自己的方案。
 
 > [原文链接](https://javaguide.cn/distributed-system/distributed-id.html)
-
-
-#### 相关文章
-
-[深度介绍分布式系统原理与设计](https://mp.weixin.qq.com/s/-30WmwoYHg0oWZSWedE5MQ)
-[一口气说出9种分布式ID生成方式](https://mp.weixin.qq.com/s/zXchd2SEjLkHftCe9-2_-Q)
-[七种分布式全局ID生成策略，你更爱哪种](https://mp.weixin.qq.com/s/jGq7SvVggZ7gNqM2SZ320Q)
-[一起学习下一线大厂的分布式唯一ID生成方案](https://mp.weixin.qq.com/s/dEkkSCbQzfhH3NuXsbbY0w)
+> 
+>
+> [深度介绍分布式系统原理与设计](https://mp.weixin.qq.com/s/-30WmwoYHg0oWZSWedE5MQ)
+> [一口气说出9种分布式ID生成方式](https://mp.weixin.qq.com/s/zXchd2SEjLkHftCe9-2_-Q)
+> [七种分布式全局ID生成策略，你更爱哪种](https://mp.weixin.qq.com/s/jGq7SvVggZ7gNqM2SZ320Q)
+> [一起学习下一线大厂的分布式唯一ID生成方案](https://mp.weixin.qq.com/s/dEkkSCbQzfhH3NuXsbbY0w)

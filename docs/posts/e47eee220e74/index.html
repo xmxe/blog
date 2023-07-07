@@ -681,6 +681,9 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li><strong>application&#x2F;global-session（仅Web应用可用）</strong>：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。</li>
 <li><strong>websocket（仅Web应用可用）</strong>：每一次WebSocket会话产生一个新的bean。</li>
 </ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FB-eiiYIaGUY1Y20qBxanw">详解Spring的6种内置作用域及其应用场景</a></p>
+</blockquote>
 <p>Spring通过ConcurrentHashMap实现单例注册表的特殊方式实现单例模式。Spring实现单例的核心代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 通过ConcurrentHashMap（线程安全）实现单例注册表</span>
 <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> singletonObjects <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">;</span>

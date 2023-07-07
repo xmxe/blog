@@ -528,7 +528,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h4><h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载nginx:</span>
+                <h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载nginx:</span>
 <span class="token function">wget</span> http://nginx.org/download/nginx-1.8.1.tar.gz
 <span class="token comment"># 下载openssl:</span>
 <span class="token function">wget</span> https://www.openssl.org/source/openssl-fips-2.0.16.tar.gz
@@ -538,7 +538,7 @@
 <span class="token function">wget</span> ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
 <span class="token comment"># 如果没有安装c++编译环境，还得安装，通过```yum install gcc-c++```完成安装</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># openssl：</span>
+<h3 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># openssl：</span>
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> <span class="token function">tar</span> zxvf openssl-fips-2.0.16.tar.gz
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> <span class="token builtin class-name">cd</span> openssl-fips-2.0.16
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> ./config <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span>
@@ -557,14 +557,15 @@
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span>tar zxvf nginx-1.8.1.tar.gz
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> <span class="token builtin class-name">cd</span> nginx-1.8.1
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span>  ./configure <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx
+
+<h3 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> stop <span class="token comment"># 立即停止nginx，不保存相关信息</span>
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> quit  <span class="token comment"># 正常退出nginx，保存相关信息</span>
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> reload <span class="token comment"># 重启</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lovexinyi8/p/5845017.html">Linux安装Nginx详细图解教程</a></p>
 </blockquote>
-<h5 id="将nginx做成系统服务并且开机自启动"><a href="#将nginx做成系统服务并且开机自启动" class="headerlink" title="将nginx做成系统服务并且开机自启动"></a>将nginx做成系统服务并且开机自启动</h5><p>由于是源码安装，需要手动创建nginx.service服务</p>
+<h3 id="将nginx做成系统服务并且开机自启动"><a href="#将nginx做成系统服务并且开机自启动" class="headerlink" title="将nginx做成系统服务并且开机自启动"></a>将nginx做成系统服务并且开机自启动</h3><p>由于是源码安装，需要手动创建nginx.service服务</p>
 <blockquote>
 <p>不止nginx，其他源码安装的想要实现开机自启动就在&#x2F;lib&#x2F;systemd&#x2F;system目录下自定义服务即可</p>
 </blockquote>
@@ -611,67 +612,79 @@ systemctl restart nginx.service　
 <span class="token comment"># 查看所有已启动的服务</span>
 systemctl list-units <span class="token parameter variable">--type</span><span class="token operator">=</span>service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="Nginx知识点"><a href="#Nginx知识点" class="headerlink" title="Nginx知识点"></a>Nginx知识点</h4><h5 id="nginx判断"><a href="#nginx判断" class="headerlink" title="nginx判断"></a>nginx判断</h5><p>1、正则表达式匹配：</p>
-<p>&#x3D;&#x3D;:等值比较;<br>~：与指定正则表达式模式匹配时返回“真”，判断匹配与否时区分字符大小写；<br>~*：与指定正则表达式模式匹配时返回“真”，判断匹配与否时不区分字符大小写；<br>!~：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时区分字符大小写；<br>!~*：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时不区分字符大小写；</p>
+<h2 id="Nginx知识点"><a href="#Nginx知识点" class="headerlink" title="Nginx知识点"></a>Nginx知识点</h2><h3 id="nginx判断"><a href="#nginx判断" class="headerlink" title="nginx判断"></a>nginx判断</h3><p>1、正则表达式匹配：</p>
+<p>&#x3D;&#x3D;：等值比较;<br>~：与指定正则表达式模式匹配时返回“真”，判断匹配与否时区分字符大小写；<br>~*：与指定正则表达式模式匹配时返回“真”，判断匹配与否时不区分字符大小写；<br>!~：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时区分字符大小写；<br>!~*：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时不区分字符大小写；</p>
 <p>2、文件及目录匹配判断：</p>
 <p>-f, !-f：判断指定的路径是否为存在且为文件；<br>-d, !-d：判断指定的路径是否为存在且为目录；<br>-e, !-e：判断指定的路径是否存在，文件或目录均可；<br>-x, !-x：判断指定路径的文件是否存在且可执行；</p>
-<h5 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h5><p>location [&#x3D;|<del>|</del>*|^~] &#x2F;uri&#x2F; { … }</p>
-<p>&#x3D; 表示精确匹配,这个优先级也是最高的<br>^~ 表示uri以某个常规字符串开头，理解为匹配url路径即可。nginx不对url做编码，因此请求为&#x2F;static&#x2F;20%&#x2F;aa，可以被规则^~ &#x2F;static&#x2F; &#x2F;aa匹配到（注意是空格）。<br>~ 表示区分大小写的正则匹配<br>~* 表示不区分大小写的正则匹配(和上面的唯一区别就是大小写)<br>!~和!~*分别为区分大小写不匹配及不区分大小写不匹配的正则<br>&#x2F; 通用匹配，任何请求都会匹配到，默认匹配.</p>
-<p>下面讲讲这些语法的一些规则和优先级</p>
-<p>多个location配置的情况下匹配顺序为（参考资料而来，还未实际验证，试试就知道了，不必拘泥，仅供参考）：<br>优先级 &#x3D; ^~ &#x2F;<br>首先匹配&#x3D;，其次匹配^~,其次是按文件中顺序的正则匹配，最后是交给&#x2F;通用匹配。当有匹配成功时候，停止匹配，按当前匹配规则处理请求。例子，有如下匹配规则：</p>
-<h5 id="ngx-http-core-module模块的变量"><a href="#ngx-http-core-module模块的变量" class="headerlink" title="ngx_http_core_module模块的变量"></a>ngx_http_core_module模块的变量</h5><p>$arg_PARAMETER HTTP请求中某个参数的值，如&#x2F;index.php?site&#x3D;<a target="_blank" rel="noopener" href="http://www.domain.com,可以用$arg_site取得www.domain.com这个值./">www.domain.com，可以用$arg_site取得www.domain.com这个值。</a></p>
-<p>$args HTTP请求中的完整参数。例如，在请求&#x2F;index.php?width&#x3D;400&amp;height&#x3D;200中，$args表示字符串width&#x3D;400&amp;height&#x3D;200.</p>
-<p>$binary_remote_addr 二进制格式的客户端地址。例如：\x0A\xE0B\x0E</p>
-<p>$body_bytes_sent 表示在向客户端发送的http响应中，包体部分的字节数</p>
-<p>$content_length 表示客户端请求头部中的Content-Length字段</p>
-<p>$content_type 表示客户端请求头部中的Content-Type字段</p>
-<p>$cookie_COOKIE 表示在客户端请求头部中的cookie字段</p>
-<p>$document_root 表示当前请求所使用的root配置项的值</p>
-<p>$uri 表示当前请求的URI，不带任何参数</p>
-<p>$document_uri与$uri含义相同</p>
-<p>$request_uri表示客户端发来的原始请求URI，带完整的参数。$uri和$document_uri未必是用户的原始请求，在内部重定向后可能是重定向后的URI，而$request_uri永远不会改变，始终是客户端的原始URI.</p>
-<p>$host 表示客户端请求头部中的Host字段。如果Host字段不存在，则以实际处理的server（虚拟主机）名称代替。如果Host字段中带有端口，如IP:PORT，那么$host是去掉端口的，它的值为IP。$host是全小写的。这些特性与http_HEADER中的http_host不同，http_host只取出Host头部对应的值。</p>
-<p>$hostname 表示Nginx所在机器的名称，与gethostbyname调用返回的值相同</p>
-<p>$http_HEADER 表示当前HTTP请求中相应头部的值。HEADER名称全小写。例如，示请求中Host头部对应的值用$http_host表</p>
-<p>$sent_http_HEADER 表示返回客户端的HTTP响应中相应头部的值。HEADER名称全小写。例如，用$sent_http_content_type表示响应中Content-Type头部对应的值</p>
-<p>$is_args 表示请求中的URI是否带参数，如果带参数，$is_args值为?，如果不带参数，则是空字符串</p>
-<p>$limit_rate 表示当前连接的限速是多少，0表示无限速</p>
-<p>$nginx_version 表示当前Nginx的版本号</p>
-<p>$query_string 请求URI中的参数，与$args相同，然而$query_string是只读的不会改变</p>
-<p>$remote_addr 表示客户端的地址</p>
-<p>$remote_port 表示客户端连接使用的端口</p>
-<p>$remote_user 表示使用Auth Basic Module时定义的用户名</p>
-<p>$request_filename 表示用户请求中的URI经过root或alias转换后的文件路径</p>
-<p>$request_body 表示HTTP请求中的包体，该参数只在proxy_pass或fastcgi_pass中有意义</p>
-<p>$request_body_file 表示HTTP请求中的包体存储的临时文件名</p>
-<p>$request_completion 当请求已经全部完成时，其值为“ok”。若没有完成，就要返回客户端，则其值为空字符串；或者在断点续传等情况下使用HTTP range访问的并不是文件的最后一块，那么其值也是空字符串。</p>
-<p>$request_method 表示HTTP请求的方法名，如GET、PUT、POST等</p>
-<p>$scheme 表示HTTP scheme，如在请求<a target="_blank" rel="noopener" href="https://nginx.com/%E4%B8%AD%E8%A1%A8%E7%A4%BAhttps">https://nginx.com/中表示https</a></p>
-<p>$server_addr 表示服务器地址</p>
-<p>$server_name 表示服务器名称</p>
-<p>$server_port 表示服务器端口</p>
-<p>$server_protocol 表示服务器向客户端发送响应的协议，如HTTP&#x2F;1.1或HTTP&#x2F;1.0</p>
-<h5 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h5><p>$remote_addr,$http_x_forwarded_for记录客户端IP地址</p>
-<p>$remote_user 记录客户端用户名称</p>
-<p>$request 记录请求的URL和HTTP协议</p>
-<p>$status 记录请求状态</p>
-<p>$body_bytes_sent 发送给客户端的字节数，不包括响应头的大小；该变量与Apache模块mod_log_config里的“%B”参数兼容。</p>
-<p>$bytes_sent 发送给客户端的总字节数。</p>
-<p>$connection 连接的序列号。</p>
-<p>$connection_requests 当前通过一个连接获得的请求数量。</p>
-<p>$msec 日志写入时间。单位为秒，精度是毫秒。</p>
-<p>$pipe 如果请求是通过HTTP流水线(pipelined)发送，pipe值为“p”，否则为“.”。</p>
-<p>$http_referer 记录从哪个页面链接访问过来的</p>
-<p>$http_user_agent 记录客户端浏览器相关信息</p>
-<p>$request_length 请求的长度（包括请求行，请求头和请求正文）。</p>
-<p>$request_time 请求处理时间，单位为秒，精度毫秒；从读入客户端的第一个字节开始，直到把最后一个字符发送给客户端后进行日志写入为止。</p>
-<p>$time_iso8601 ISO8601标准格式下的本地时间。</p>
-<p>$time_local 通用日志格式下的本地时间。</p>
-<h5 id="if"><a href="#if" class="headerlink" title="if"></a>if</h5><p>语法：if (condition) { … }</p>
-<p>默认值：none</p>
-<p>使用字段：server, location</p>
-<p>注意：尽量考虑使用trp_files代替。</p>
-<p>判断的条件可以有以下值：</p>
+<h3 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h3><p>location [&#x3D;|<del>|</del>*|^~] &#x2F;uri&#x2F; { … }</p>
+<ul>
+<li>&#x3D;：表示精确匹配,这个优先级也是最高的</li>
+<li>^~：表示uri以某个常规字符串开头，理解为匹配url路径即可。nginx不对url做编码，因此请求为&#x2F;static&#x2F;20%&#x2F;aa，可以被规则^~ &#x2F;static&#x2F; &#x2F;aa匹配到（注意是空格）。</li>
+<li>~：表示区分大小写的正则匹配</li>
+<li>~*：表示不区分大小写的正则匹配(和上面的唯一区别就是大小写)</li>
+<li>!~和!~*：分别为区分大小写不匹配及不区分大小写不匹配的正则</li>
+<li>&#x2F;：通用匹配，任何请求都会匹配到，默认匹配.</li>
+</ul>
+<p><strong>语法的一些规则和优先级</strong><br>多个location配置的情况下匹配顺序为：首先匹配&#x3D;，其次匹配^~,其次是按文件中顺序的正则匹配，最后是交给&#x2F;通用匹配。当有匹配成功时候，停止匹配，按当前匹配规则处理请求。</p>
+<h3 id="ngx-http-core-module模块的变量"><a href="#ngx-http-core-module模块的变量" class="headerlink" title="ngx_http_core_module模块的变量"></a>ngx_http_core_module模块的变量</h3><ul>
+<li><strong>$arg_PARAMETER</strong>：HTTP请求中某个参数的值，如&#x2F;index.php?site&#x3D;<a target="_blank" rel="noopener" href="http://www.domain.com/">www.domain.com</a> 可以用$arg_site取得<a target="_blank" rel="noopener" href="http://www.domain.com/">www.domain.com</a> 这个值。</li>
+<li><strong>$args HTTP</strong>：请求中的完整参数。例如，在请求&#x2F;index.php?width&#x3D;400&amp;height&#x3D;200中，$args表示字符串width&#x3D;400&amp;height&#x3D;200.</li>
+<li><strong>$binary_remote_addr</strong>：二进制格式的客户端地址。例如：\x0A\xE0B\x0E</li>
+<li><strong>$body_bytes_sent</strong>：表示在向客户端发送的http响应中，包体部分的字节数</li>
+<li><strong>$content_length</strong>：表示客户端请求头部中的Content-Length字段</li>
+<li><strong>$content_type</strong>：表示客户端请求头部中的Content-Type字段</li>
+<li><strong>$cookie_COOKIE</strong>：表示在客户端请求头部中的cookie字段</li>
+<li><strong>$document_root</strong>：表示当前请求所使用的root配置项的值</li>
+<li><strong>$uri</strong>：表示当前请求的URI，不带任何参数</li>
+<li><strong>$document_uri与$uri含义相同</strong></li>
+<li><strong>$request_uri</strong>：表示客户端发来的原始请求URI，带完整的参数。$uri和$document_uri未必是用户的原始请求，在内部重定向后可能是重定向后的URI，而$request_uri永远不会改变，始终是客户端的原始URI</li>
+<li><strong>$host</strong>：表示客户端请求头部中的Host字段。如果Host字段不存在，则以实际处理的server（虚拟主机）名称代替。如果Host字段中带有端口，如IP:PORT，那么$host是去掉端口的，它的值为IP。$host是全小写的。这些特性与http_HEADER中的http_host不同，http_host只取出Host头部对应的值。</li>
+<li><strong>$hostname</strong>：表示Nginx所在机器的名称，与gethostbyname调用返回的值相同</li>
+<li><strong>$http_HEADER</strong>：表示当前HTTP请求中相应头部的值。HEADER名称全小写。例如，示请求中Host头部对应的值用$http_host表</li>
+<li><strong>$sent_http_HEADER</strong>：表示返回客户端的HTTP响应中相应头部的值。HEADER名称全小写。例如，用$sent_http_content_type表示响应中Content-Type头部对应的值</li>
+<li><strong>$is_args</strong>：表示请求中的URI是否带参数，如果带参数，$is_args值为?，如果不带参数，则是空字符串</li>
+<li><strong>$limit_rate</strong>：表示当前连接的限速是多少，0表示无限速</li>
+<li><strong>$nginx_version</strong>：表示当前Nginx的版本号</li>
+<li><strong>$query_string</strong>：请求URI中的参数，与$args相同，然而$query_string是只读的不会改变</li>
+<li><strong>$remote_addr</strong>：表示客户端的地址</li>
+<li><strong>$remote_port</strong>：表示客户端连接使用的端口</li>
+<li><strong>$remote_user</strong>：表示使用Auth Basic Module时定义的用户名</li>
+<li><strong>$request_filename</strong>：表示用户请求中的URI经过root或alias转换后的文件路径</li>
+<li><strong>$request_body</strong>：表示HTTP请求中的包体，该参数只在proxy_pass或fastcgi_pass中有意义</li>
+<li><strong>$request_body_file</strong>：表示HTTP请求中的包体存储的临时文件名</li>
+<li><strong>$request_completion</strong>：当请求已经全部完成时，其值为“ok”。若没有完成，就要返回客户端，则其值为空字符串；或者在断点续传等情况下使用HTTP range访问的并不是文件的最后一块，那么其值也是空字符串。</li>
+<li><strong>$request_method</strong>：表示HTTP请求的方法名，如GET、PUT、POST等</li>
+<li><strong>$scheme</strong>：表示HTTP scheme，如在请求<a target="_blank" rel="noopener" href="https://nginx.com/%E4%B8%AD%E8%A1%A8%E7%A4%BAhttps">https://nginx.com/中表示https</a></li>
+<li>**$server_addr **：表示服务器地址</li>
+<li><strong>$server_name</strong>：表示服务器名称</li>
+<li><strong>$server_port</strong>：表示服务器端口</li>
+<li><strong>$server_protocol</strong>：表示服务器向客户端发送响应的协议，如HTTP&#x2F;1.1或HTTP&#x2F;1.0</li>
+</ul>
+<h3 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h3><ul>
+<li>**$remote_addr,$http_x_forwarded_for- **：记录客户端IP地址</li>
+<li><strong>$remote_user</strong>：记录客户端用户名称</li>
+<li><strong>$request</strong>：记录请求的URL和HTTP协议</li>
+<li><strong>$status</strong>：记录请求状态</li>
+<li><strong>$body_bytes_sent</strong>：发送给客户端的字节数，不包括响应头的大小；该变量与Apache模块mod_log_config里的“%B”参数兼容。</li>
+<li><strong>$bytes_sent</strong>：发送给客户端的总字节数。</li>
+<li><strong>$connection</strong>：连接的序列号。</li>
+<li><strong>$connection_requests</strong>：当前通过一个连接获得的请求数量。</li>
+<li><strong>$msec</strong>：日志写入时间。单位为秒，精度是毫秒。</li>
+<li><strong>$pipe</strong>：如果请求是通过HTTP流水线(pipelined)发送，pipe值为“p”，否则为“.”。</li>
+<li><strong>$http_referer</strong>：记录从哪个页面链接访问过来的</li>
+<li><strong>$http_user_agent</strong>：记录客户端浏览器相关信息</li>
+<li><strong>$request_length</strong>：请求的长度（包括请求行，请求头和请求正文）。</li>
+<li><strong>$request_time</strong>：请求处理时间，单位为秒，精度毫秒；从读入客户端的第一个字节开始，直到把最后一个字符发送给客户端后进行日志写入为止。</li>
+<li><strong>$time_iso8601</strong>：ISO8601标准格式下的本地时间。</li>
+<li><strong>$time_local</strong>：通用日志格式下的本地时间。</li>
+</ul>
+<h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><ul>
+<li>语法：if (condition) { … }</li>
+<li>默认值：none</li>
+<li>使用字段：server, location</li>
+<li>注意：尽量考虑使用trp_files代替。</li>
+<li>判断的条件可以有以下值：</li>
+</ul>
 <ol>
 <li>一个变量的名称：空字符传”“或者一些“0”开始的字符串为false。</li>
 <li>字符串比较：使用&#x3D;或!&#x3D;运算符</li>
@@ -681,38 +694,42 @@ systemctl list-units <span class="token parameter variable">--type</span><span c
 <li>文件、目录、符号链接是否存在：使用-e和!-e操作符</li>
 <li>文件是否可执行：使用-x和!-x操作符</li>
 </ol>
-<h5 id="return"><a href="#return" class="headerlink" title="return"></a>return</h5><p>语法：return code</p>
-<p>默认值：none</p>
-<p>使用字段：server,location,if</p>
-<p>nginx隐藏版本号</p>
-<p>nginx.conf中修改http zone中的变量值： server_tokens off;</p>
-<p>php-fpm fastcgi.conf中的变量值： fastcgi_param SERVER_SOFTWARE nginx;</p>
-<h5 id="nginx正向代理"><a href="#nginx正向代理" class="headerlink" title="nginx正向代理"></a>nginx正向代理</h5><pre class="line-numbers language-none"><code class="language-none">
-server &#123;
+<h3 id="return"><a href="#return" class="headerlink" title="return"></a>return</h3><ul>
+<li>语法：return code</li>
+<li>默认值：none</li>
+<li>使用字段：server,location,if</li>
+<li>nginx隐藏版本号</li>
+<li>nginx.conf中修改http zone中的变量值： server_tokens off;</li>
+<li>php-fpm fastcgi.conf中的变量值： fastcgi_param SERVER_SOFTWARE nginx;</li>
+</ul>
+<h3 id="nginx正向代理"><a href="#nginx正向代理" class="headerlink" title="nginx正向代理"></a>nginx正向代理</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
 
-listen 8090;
+<span class="token directive"><span class="token keyword">listen</span> <span class="token number">8090</span></span><span class="token punctuation">;</span>
 
-location &#x2F; &#123;
+<span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
 
-resolver 218.85.157.99 218.85.152.99;
+<span class="token directive"><span class="token keyword">resolver</span> 218.85.157.99 218.85.152.99</span><span class="token punctuation">;</span>
 
-resolver_timeout 30s;
+<span class="token directive"><span class="token keyword">resolver_timeout</span> <span class="token number">30s</span></span><span class="token punctuation">;</span>
 
-proxy_pass http:&#x2F;&#x2F;$host$request_uri;
+<span class="token directive"><span class="token keyword">proxy_pass</span> http://<span class="token variable">$host</span><span class="token variable">$request_uri</span></span><span class="token punctuation">;</span>
 
-&#125;
+<span class="token punctuation">&#125;</span>
 
-access_log &#x2F;data&#x2F;httplogs&#x2F;proxy-$host-aceess.log;
+<span class="token directive"><span class="token keyword">access_log</span> /data/httplogs/proxy-<span class="token variable">$host</span>-aceess.log</span><span class="token punctuation">;</span>
 
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>resolver指令</p>
-<p>语法: resolver address … [valid&#x3D;time];</p>
-<p>默认值: —</p>
-<p>配置段: http, server, location</p>
-<p>配置DNS服务器IP地址。可以指定多个，以轮询方式请求。</p>
-<p>nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响应中的TTL字段的值，可以通过valid参数更改。</p>
-<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><ul>
+<ul>
+<li>语法: resolver address … [valid&#x3D;time];</li>
+<li>默认值: —</li>
+<li>配置段: http, server, location</li>
+<li>配置DNS服务器IP地址。可以指定多个，以轮询方式请求。</li>
+<li>nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响应中的TTL字段的值，可以通过valid参数更改。</li>
+</ul>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/dunwu/nginx-tutorial">这是一个Nginx极简教程，目的在于帮助新手快速入门Nginx。</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5Q_VQoQY6kJiMwMHHDIijA">就是要让你搞懂Nginx，这篇就够了！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/e7r2Jt1DlF_4HpZU_IKZkQ">Nginx为什么快到根本停不下来？</a></li>
@@ -1037,7 +1054,7 @@ access_log &#x2F;data&#x2F;httplogs&#x2F;proxy-$host-aceess.log;
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            相关命令&gt;&#x2F;dev&#x2F;null这条命令的作用是将标准输出1重定向到&#x2F;dev&#x2F;null中。&#x2F;dev&#x2F;null代表linux的空设备文件，所有往这个文件里面写入的内容都会丢失，俗称
+                            相关命令关闭ssh情况下不退出进程nohup command &amp;command参数表示要执行的命令行。但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用&gt;&#x2F;dev&#
                         
                         
                     </div>

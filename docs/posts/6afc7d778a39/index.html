@@ -537,8 +537,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h2><h3 id="什么是序列化-什么是反序列化"><a href="#什么是序列化-什么是反序列化" class="headerlink" title="什么是序列化?什么是反序列化?"></a>什么是序列化?什么是反序列化?</h3><p>如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。</p>
-<p>简单来说：</p>
+                <h2 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h2><h3 id="什么是序列化-什么是反序列化"><a href="#什么是序列化-什么是反序列化" class="headerlink" title="什么是序列化?什么是反序列化?"></a>什么是序列化?什么是反序列化?</h3><p>如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：</p>
 <ul>
 <li><strong>序列化</strong>：将数据结构或对象转换成二进制字节流的过程</li>
 <li><strong>反序列化</strong>：将在序列化过程中所生成的二进制字节流转换成数据结构或者对象的过程</li>
@@ -565,8 +564,7 @@
 <li>网络接口层</li>
 </ol>
 <p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-ip-4-model.png" alt="TCP/IP四层模型"></p>
-<p>如上图所示，OSI七层协议模型中，表示层做的事情主要就是对应用层的用户数据进行处理转换为二进制流。反过来的话，就是将二进制流转换成应用层的用户数据。这不就对应的是序列化和反序列化么？</p>
-<p>因为，OSI七层协议模型中的应用层、表示层和会话层对应的都是TCP&#x2F;IP四层模型中的应用层，所以序列化协议属于TCP&#x2F;IP协议应用层的一部分。</p>
+<p>如上图所示，OSI七层协议模型中，表示层做的事情主要就是对应用层的用户数据进行处理转换为二进制流。反过来的话，就是将二进制流转换成应用层的用户数据。这不就对应的是序列化和反序列化么？OSI七层协议模型中的应用层、表示层和会话层对应的都是TCP&#x2F;IP四层模型中的应用层，所以序列化协议属于TCP&#x2F;IP协议应用层的一部分。</p>
 <h3 id="如果有些字段不想进行序列化怎么办？-transient"><a href="#如果有些字段不想进行序列化怎么办？-transient" class="headerlink" title="如果有些字段不想进行序列化怎么办？(transient)"></a>如果有些字段不想进行序列化怎么办？(transient)</h3><p>对于不想进行序列化的变量，使用<strong>transient</strong>关键字修饰。</p>
 <p>transient关键字的作用是：阻止实例中那些用此关键字修饰的的变量序列化；当对象被反序列化时，被transient修饰的变量值不会被持久化和恢复。关于transient还有几点注意：</p>
 <ul>
@@ -680,8 +678,7 @@
 <blockquote>
 <p> <a target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf">Github地址</a></p>
 </blockquote>
-<h4 id="ProtoStuff"><a href="#ProtoStuff" class="headerlink" title="ProtoStuff"></a>ProtoStuff</h4><p>由于Protobuf的易用性，它的哥哥Protostuff诞生了。</p>
-<p>protostuff基于Google protobuf，但是提供了更多的功能和更简易的用法。虽然更加易用，但是不代表ProtoStuff性能更差。</p>
+<h4 id="ProtoStuff"><a href="#ProtoStuff" class="headerlink" title="ProtoStuff"></a>ProtoStuff</h4><p>由于Protobuf的易用性，它的哥哥Protostuff诞生了。protostuff基于Google protobuf，但是提供了更多的功能和更简易的用法。虽然更加易用，但是不代表ProtoStuff性能更差。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/protostuff/protostuff">Github地址</a>。</p>
 </blockquote>
@@ -690,8 +687,7 @@
 <p>Dubbo2.x默认启用的序列化方式是Hessian2,但是，Dubbo对Hessian2进行了修改，不过大体结构还是差不多。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Kryo是专门针对Java语言序列化方式并且性能非常好，如果你的应用是专门针对Java语言的话可以考虑使用，并且Dubbo官网的<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/">一篇文章</a>中提到说推荐使用Kryo作为生产环境的序列化方式。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/569e541a-22b2-4846-aa07-0ad479f07440.png" alt="img"></p>
-<p>像Protobuf、ProtoStuff、hessian这类都是跨语言的序列化方式，如果有跨语言需求的话可以考虑使用。</p>
-<p>除了我上面介绍到的序列化方式的话，还有像Thrift，Avro这些。</p>
+<p>像Protobuf、ProtoStuff、hessian这类都是跨语言的序列化方式，如果有跨语言需求的话可以考虑使用。除了我上面介绍到的序列化方式的话，还有像Thrift，Avro这些。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/serialization.html">原文链接</a></p>
 </blockquote>

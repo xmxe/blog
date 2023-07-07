@@ -186,8 +186,6 @@ ThreadLocal对象可以提供线程局部变量，每个线程Thread拥有一份
 
 #### ThreadLocal的数据结构
 
-![img](https://javaguide.cn/assets/2.84686f10.png)
-
 Thread类有一个类型为ThreadLocal.ThreadLocalMap的实例变量threadLocals，也就是说每个线程有一个自己的ThreadLocalMap。ThreadLocalMap有自己的独立实现，可以简单地将它的key视作ThreadLocal，value为代码中放入的值（实际上key并不是ThreadLocal本身，而是它的一个**弱引用**）。每个线程在往ThreadLocal里放值的时候，都会往自己的ThreadLocalMap里存，读也是以ThreadLocal作为引用，在自己的map里找对应的key，从而实现了**线程隔离**。ThreadLocalMap有点类似HashMap的结构，只是HashMap是由**数组+链表**实现的，而ThreadLocalMap中并没有链表结构。我们还要注意Entry，它的key是ThreadLocal\<?>k，继承自WeakReference，也就是我们常说的弱引用类型。
 
 #### GC之后key是否为null？
@@ -256,29 +254,17 @@ public class ThreadLocalDemo {
 弱引用key:null,值:def
 ```
 
-![img](https://javaguide.cn/assets/3.a63c3de1.png)
-
-如图所示，因为这里创建的ThreadLocal并没有指向任何值，也就是没有任何引用：
+因为这里创建的ThreadLocal并没有指向任何值，也就是没有任何引用：
 
 ```java
 new ThreadLocal<>().set(s);
 ```
 
-所以这里在GC之后，key就会被回收，我们看到上面debug中的referent=null,如果改动一下代码：
-
-![img](https://javaguide.cn/assets/4.c4285c13.png)
-
-这个问题刚开始看，如果没有过多思考，弱引用，还有垃圾回收，那么肯定会觉得是null。其实是不对的，因为题目说的是在做ThreadLocal.get()操作，证明其实还是有强引用存在的，所以key并不为null，如下图所示，ThreadLocal的强引用仍然是存在的。
-
-![img](https://javaguide.cn/assets/5.deed12c8.png)
-
-如果我们的强引用不存在的话，那么key就会被回收，也就是会出现我们value没被回收，key被回收，导致value永远存在，出现内存泄漏。
+所以这里在GC之后，key就会被回收，我们看到上面debug中的referent=null。这个问题刚开始看，如果没有过多思考，弱引用，还有垃圾回收，那么肯定会觉得是null。其实是不对的，因为题目说的是在做ThreadLocal.get()操作，证明其实还是有强引用存在的，所以key并不为null。如果我们的强引用不存在的话，那么key就会被回收，也就是会出现我们value没被回收，key被回收，导致value永远存在，出现内存泄漏。
 
 #### ThreadLocal.set()方法源码详解
 
-![img](https://javaguide.cn/assets/6.1b89e085.png)
-
-ThreadLocal中的set方法原理如上图所示，很简单，主要是判断ThreadLocalMap是否存在，然后使用ThreadLocal中的set方法进行数据处理。代码如下：
+ThreadLocal中的set方法原理很简单，主要是判断ThreadLocalMap是否存在，然后使用ThreadLocal中的set方法进行数据处理。代码如下：
 
 
 ```java
@@ -336,69 +322,27 @@ public class ThreadLocal<T> {
 }
 ```
 
-每当创建一个ThreadLocal对象，这个ThreadLocal.nextHashCode这个值就会增长0x61c88647。这个值很特殊，它是斐波那契数也叫黄金分割数。hash增量为这个数字，带来的好处就是hash分布非常均匀。我们自己可以尝试下：
-
-![img](https://javaguide.cn/assets/8.ee90e2f2.png)
-
-可以看到产生的哈希码分布很均匀，这里不去细纠斐波那契具体算法，感兴趣的可以自行查阅相关资料。
+每当创建一个ThreadLocal对象，这个ThreadLocal.nextHashCode这个值就会增长0x61c88647。这个值很特殊，它是斐波那契数也叫黄金分割数。hash增量为这个数字，带来的好处就是hash分布非常均匀。
 
 ##### ThreadLocalMapHash冲突
 
-> **注明：**下面所有示例图中，绿色块Entry代表正常数据，灰色块代表Entry的key值为null，已被垃圾回收。白色块表示Entry为null。
+> **注明**：下面所有示例图中，绿色块Entry代表正常数据，灰色块代表Entry的key值为null，已被垃圾回收。白色块表示Entry为null。
 
-虽然ThreadLocalMap中使用了黄金分割数来作为hash计算因子，大大减少了Hash冲突的概率，但是仍然会存在冲突。HashMap中解决冲突的方法是在数组上构造一个链表结构，冲突的数据挂载到链表上，如果链表长度超过一定数量则会转化成红黑树。而ThreadLocalMap中并没有链表结构，所以这里不能使用HashMap解决冲突的方式了。
+虽然ThreadLocalMap中使用了黄金分割数来作为hash计算因子，大大减少了Hash冲突的概率，但是仍然会存在冲突。HashMap中解决冲突的方法是在数组上构造一个链表结构，冲突的数据挂载到链表上，如果链表长度超过一定数量则会转化成红黑树。而ThreadLocalMap中并没有链表结构，所以这里不能使用HashMap解决冲突的方式了。如果我们插入一个value=27的数据，通过hash计算后应该落入槽位4中，而槽位4已经有了Entry数据。此时就会线性向后查找，一直找到Entry为null的槽位才会停止查找，将当前元素放入此槽位中。当然迭代过程中还有其他的情况，比如遇到了Entry不为null且key值相等的情况，还有Entry中的key值为null的情况等等都会有不同的处理，后面会一一详细讲解。这里还画了一个Entry中的key为null的数据（Entry=2的灰色块数据），因为key值是弱引用类型，所以会有这种数据存在。在set过程中，如果遇到了key过期的Entry数据，实际上是会进行一轮探测式清理操作的，具体操作方式后面会讲到。
 
-![img](https://javaguide.cn/assets/7.5b9136ff.png)
+##### ThreadLocalMap.set()原理
 
-如上图所示，如果我们插入一个value=27的数据，通过hash计算后应该落入槽位4中，而槽位4已经有了Entry数据。此时就会线性向后查找，一直找到Entry为null的槽位才会停止查找，将当前元素放入此槽位中。当然迭代过程中还有其他的情况，比如遇到了Entry不为null且key值相等的情况，还有Entry中的key值为null的情况等等都会有不同的处理，后面会一一详细讲解。
+看完了ThreadLocalhash算法后，我们再来看set是如何实现的。往ThreadLocalMap中set数据（新增或者更新数据）分为好几种情况。
 
-这里还画了一个Entry中的key为null的数据（Entry=2的灰色块数据），因为key值是弱引用类型，所以会有这种数据存在。在set过程中，如果遇到了key过期的Entry数据，实际上是会进行一轮探测式清理操作的，具体操作方式后面会讲到。
+**第一种情况**：通过hash计算后的槽位对应的Entry数据为空：这里直接将数据放到该槽位即可。
 
-##### ThreadLocalMap.set()原理图解
+**第二种情况**：槽位数据不为空，key值与当前ThreadLocal通过hash计算获取的key值一致：这里直接更新该槽位的数据。
 
-看完了ThreadLocalhash算法后，我们再来看set是如何实现的。往ThreadLocalMap中set数据（新增或者更新数据）分为好几种情况，针对不同的情况我们画图来说明。
+**第三种情况**：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，没有遇到key过期的Entry，遍历散列数组，线性往后查找，如果找到Entry为null的槽位，则将数据放入该槽位中，或者往后遍历过程中，遇到了key值相等的数据，直接更新即可。
 
-**第一种情况**：通过hash计算后的槽位对应的Entry数据为空：
+**第四种情况**：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，遇到key过期的Entry，如下图，往后遍历过程中，遇到了index=7的槽位数据Entry的key=null，散列数组下标为7位置对应的Entry数据key为null，表明此数据key值已经被垃圾回收掉了，此时就会执行replaceStaleEntry()方法，该方法含义是替换过期数据的逻辑，以index=7位起点开始遍历，进行探测式数据清理工作。初始化探测式清理过期数据扫描的开始位置：slotToExpunge=staleSlot=7。以当前staleSlot开始向前迭代查找，找其他过期的数据，然后更新过期数据起始扫描下标slotToExpunge。for循环迭代，直到碰到Entry为null结束。如果找到了过期的数据，继续向前迭代，直到遇到Entry=null的槽位才停止迭代，如下图所示，slotToExpunge被更新为0，以当前节点(index=7)向前迭代，检测是否有过期的Entry数据，如果有则更新slotToExpunge值。碰到null则结束探测。以上图为例slotToExpunge被更新为0。上面向前迭代的操作是为了更新探测清理过期数据的起始下标slotToExpunge的值，这个值在后面会讲解，它是用来判断当前过期槽位staleSlot之前是否还有过期元素。接着开始以staleSlot位置(index=7)向后迭代，如果找到了相同key值的Entry数据：从当前节点staleSlot向后查找key值相等的Entry元素，找到后更新Entry的值并交换staleSlot元素的位置(staleSlot位置为过期元素)，更新Entry数据，然后开始进行过期Entry的清理工作，如下图所示：
 
-![img](https://javaguide.cn/assets/9.3269651c.png)
-
-这里直接将数据放到该槽位即可。
-
-**第二种情况**：槽位数据不为空，key值与当前ThreadLocal通过hash计算获取的key值一致：
-
-![img](https://javaguide.cn/assets/10.706954d1.png)
-
-这里直接更新该槽位的数据。
-
-**第三种情况**：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，没有遇到key过期的Entry：
-
-![img](https://javaguide.cn/assets/11.bb4e1504.png)
-
-遍历散列数组，线性往后查找，如果找到Entry为null的槽位，则将数据放入该槽位中，或者往后遍历过程中，遇到了key值相等的数据，直接更新即可。
-
-**第四种情况**：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，遇到key过期的Entry，如下图，往后遍历过程中，遇到了index=7的槽位数据Entry的key=null：
-
-![img](https://javaguide.cn/assets/12.7f276023.png)
-
-散列数组下标为7位置对应的Entry数据key为null，表明此数据key值已经被垃圾回收掉了，此时就会执行replaceStaleEntry()方法，该方法含义是替换过期数据的逻辑，以index=7位起点开始遍历，进行探测式数据清理工作。初始化探测式清理过期数据扫描的开始位置：slotToExpunge=staleSlot=7。以当前staleSlot开始向前迭代查找，找其他过期的数据，然后更新过期数据起始扫描下标slotToExpunge。for循环迭代，直到碰到Entry为null结束。如果找到了过期的数据，继续向前迭代，直到遇到Entry=null的槽位才停止迭代，如下图所示，slotToExpunge被更新为0：
-
-![img](https://javaguide.cn/assets/13.130fe75c.png)
-
-以当前节点(index=7)向前迭代，检测是否有过期的Entry数据，如果有则更新slotToExpunge值。碰到null则结束探测。以上图为例slotToExpunge被更新为0。上面向前迭代的操作是为了更新探测清理过期数据的起始下标slotToExpunge的值，这个值在后面会讲解，它是用来判断当前过期槽位staleSlot之前是否还有过期元素。接着开始以staleSlot位置(index=7)向后迭代，如果找到了相同key值的Entry数据：
-
-![img](https://javaguide.cn/assets/14.28205930.png)
-
-从当前节点staleSlot向后查找key值相等的Entry元素，找到后更新Entry的值并交换staleSlot元素的位置(staleSlot位置为过期元素)，更新Entry数据，然后开始进行过期Entry的清理工作，如下图所示：
-
-![img](https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/java-guide-blog/view.png)向后遍历过程中，如果没有找到相同key值的Entry数据：
-
-![img](https://javaguide.cn/assets/15.e6795086.png)
-
-从当前节点staleSlot向后查找key值相等的Entry元素，直到Entry为null则停止寻找。通过上图可知，此时table中没有key值相同的Entry。创建新的Entry，替换table[stableSlot]位置：
-
-![img](https://javaguide.cn/assets/16.480ba6bd.png)
-
-替换完成后也是进行过期元素清理工作，清理工作主要是有两个方法：expungeStaleEntry()和cleanSomeSlots()，具体细节后面会讲到，请继续往后看。
+![img](https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/java-guide-blog/view.png)向后遍历过程中，如果没有找到相同key值的Entry数据，从当前节点staleSlot向后查找key值相等的Entry元素，直到Entry为null则停止寻找。通过上图可知，此时table中没有key值相同的Entry。创建新的Entry，替换table[stableSlot]位置：替换完成后也是进行过期元素清理工作，清理工作主要是有两个方法：expungeStaleEntry()和cleanSomeSlots()，具体细节后面会讲到，请继续往后看。
 
 ##### ThreadLocalMap.set()源码详解
 
@@ -451,8 +395,6 @@ int i = key.threadLocalHashCode & (len-1);
 
 接着就是执行for循环遍历，向后查找，我们先看下nextIndex()、prevIndex()方法实现：
 
-![img](https://javaguide.cn/assets/17.ce02241d.png)
-
 ```java
 private static int nextIndex(int i, int len) {
     return ((i + 1 < len) ? i + 1 : 0);
@@ -476,9 +418,7 @@ private static int prevIndex(int i, int len) {
     4.1 如果清理工作完成后，未清理到任何数据，且size超过了阈值(数组长度的 2/3)，进行rehash()操作
     4.2 rehash()中会先进行一轮探测式清理，清理过期key，清理完成后如果**size >= threshold - threshold / 4**，就会执行真正的扩容逻辑(扩容逻辑往后看)
 
-接着重点看下replaceStaleEntry()方法，replaceStaleEntry()方法提供替换过期数据的功能，我们可以对应上面第四种情况的原理图来再回顾下，具体代码如下：
-
-java.lang.ThreadLocal.ThreadLocalMap.replaceStaleEntry():
+接着重点看下replaceStaleEntry()方法，replaceStaleEntry()方法提供替换过期数据的功能，我们可以对应上面第四种情况的原理图来再回顾下，具体代码如下：`java.lang.ThreadLocal.ThreadLocalMap.replaceStaleEntry()`:
 
 ```java
 private void replaceStaleEntry(ThreadLocal<?> key, Object value,
@@ -579,31 +519,7 @@ if (slotToExpunge != staleSlot)
 
 上面我们有提及ThreadLocalMap的两种过期key数据清理方式：探测式清理和启发式清理。
 
-我们先讲下探测式清理，也就是expungeStaleEntry方法，遍历散列数组，从开始位置向后探测清理过期数据，将过期数据的Entry设置为null，沿途中碰到未过期的数据则将此数据rehash后重新在table数组中定位，如果定位的位置已经有了数据，则会将未过期的数据放到最靠近此位置的Entry=null的桶中，使rehash后的Entry数据距离正确的桶的位置更近一些。操作逻辑如下：
-
-![img](https://javaguide.cn/assets/18.4ae47cc3.png)
-
-如上图，set(27)经过hash计算后应该落到index=4的桶中，由于index=4桶已经有了数据，所以往后迭代最终数据放入到index=7的桶中，放入后一段时间后index=5中的Entry数据key变为了null
-
-![img](https://javaguide.cn/assets/19.a9cb9d21.png)
-
-如果再有其他数据set到map中，就会触发探测式清理操作。如上图，执行探测式清理后，index=5的数据被清理掉，继续往后迭代，到index=7的元素时，经过rehash后发现该元素正确的index=4，而此位置已经有了数据，往后查找离index=4最近的Entry=null的节点(刚被探测式清理掉的数据：index=5)，找到后移动index=7的数据到index=5中，此时桶的位置离正确的位置index=4更近了。经过一轮探测式清理后，key过期的数据会被清理掉，没过期的数据经过rehash重定位后所处的桶位置理论上更接近i=key.hashCode & (tab.len - 1)的位置。这种优化会提高整个散列表查询性能。接着看下expungeStaleEntry()具体流程，我们还是以先原理图后源码讲解的方式来一步步梳理：
-
-![img](https://javaguide.cn/assets/20.3496015a.png)
-
-我们假设expungeStaleEntry(3)来调用此方法，如上图所示，我们可以看到ThreadLocalMap中table的数据情况，接着执行清理操作：
-
-![img](https://javaguide.cn/assets/21.92541b1a.png)
-
-第一步是清空当前staleSlot位置的数据，index=3位置的Entry变成了null。然后接着往后探测：
-
-![img](https://javaguide.cn/assets/22.d1509b91.png)
-
-执行完第二步后，index=4的元素挪到index=3的槽位中。继续往后迭代检查，碰到正常数据，计算该数据位置是否偏移，如果被偏移，则重新计算slot位置，目的是让正常数据尽可能存放在正确位置或离正确位置更近的位置
-
-![img](https://javaguide.cn/assets/23.8099628e.png)
-
-在往后迭代的过程中碰到空的槽位，终止探测，这样一轮探测式清理工作就完成了，接着我们继续看看具体实现源代码：
+我们先讲下探测式清理，也就是expungeStaleEntry方法，遍历散列数组，从开始位置向后探测清理过期数据，将过期数据的Entry设置为null，沿途中碰到未过期的数据则将此数据rehash后重新在table数组中定位，如果定位的位置已经有了数据，则会将未过期的数据放到最靠近此位置的Entry=null的桶中，使rehash后的Entry数据距离正确的桶的位置更近一些。如果再有其他数据set到map中，就会触发探测式清理操作。如上图，执行探测式清理后，index=5的数据被清理掉，继续往后迭代，到index=7的元素时，经过rehash后发现该元素正确的index=4，而此位置已经有了数据，往后查找离index=4最近的Entry=null的节点(刚被探测式清理掉的数据：index=5)，找到后移动index=7的数据到index=5中，此时桶的位置离正确的位置index=4更近了。经过一轮探测式清理后，key过期的数据会被清理掉，没过期的数据经过rehash重定位后所处的桶位置理论上更接近i=key.hashCode & (tab.len - 1)的位置。这种优化会提高整个散列表查询性能。接着看下expungeStaleEntry()具体流程，我们假设expungeStaleEntry(3)来调用此方法，我们可以看到ThreadLocalMap中table的数据情况，接着执行清理操作：第一步是清空当前staleSlot位置的数据，index=3位置的Entry变成了null。然后接着往后探测，执行完第二步后，index=4的元素挪到index=3的槽位中。继续往后迭代检查，碰到正常数据，计算该数据位置是否偏移，如果被偏移，则重新计算slot位置，目的是让正常数据尽可能存放在正确位置或离正确位置更近的位置，在往后迭代的过程中碰到空的槽位，终止探测，这样一轮探测式清理工作就完成了，接着我们继续看看具体实现源代码：
 
 
 ```java
@@ -698,15 +614,7 @@ private void expungeStaleEntries() {
 }
 ```
 
-这里首先是会进行探测式清理工作，从table的起始位置往后清理，上面有分析清理的详细流程。清理完成之后，table中可能有一些key为null的Entry数据被清理掉，所以此时通过判断size>=threshold-threshold/4也就是size>=threshold*3/4来决定是否扩容。我们还记得上面进行rehash()的阈值是size>=threshold，所以当面试官套路我们ThreadLocalMap扩容机制的时候我们一定要说清楚这两个步骤：
-
-![img](https://javaguide.cn/assets/24.ec7f7610.png)
-
-接着看看具体的resize()方法，为了方便演示，我们以oldTab.len=8来举例：
-
-![img](https://javaguide.cn/assets/25.5e3dc525.png)
-
-扩容后的tab的大小为oldLen*2，然后遍历老的散列表，重新计算hash位置，然后放到新的tab数组中，如果出现hash冲突则往后寻找最近的entry为null的槽位，遍历完成之后，oldTab中所有的entry数据都已经放入到新的tab中了。重新计算tab下次扩容的阈值，具体代码如下：
+这里首先是会进行探测式清理工作，从table的起始位置往后清理，上面有分析清理的详细流程。清理完成之后，table中可能有一些key为null的Entry数据被清理掉，所以此时通过判断size>=threshold-threshold/4也就是size>=threshold\*3/4来决定是否扩容。我们还记得上面进行rehash()的阈值是size>=threshold，所以当面试官套路我们ThreadLocalMap扩容机制的时候我们一定要说清楚这两个步骤。接着看看具体的resize()方法，为了方便演示，我们以oldTab.len=8来举例：扩容后的tab的大小为oldLen\*2，然后遍历老的散列表，重新计算hash位置，然后放到新的tab数组中，如果出现hash冲突则往后寻找最近的entry为null的槽位，遍历完成之后，oldTab中所有的entry数据都已经放入到新的tab中了。重新计算tab下次扩容的阈值，具体代码如下：
 
 ```java
 private void resize() {
@@ -744,17 +652,9 @@ private void resize() {
 
 ###### ThreadLocalMap.get()图解
 
-**第一种情况**:通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回：
+**第一种情况**:通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回。
 
-![img](https://javaguide.cn/assets/26.ff0553de.png)
-
-**第二种情况**:slot位置中的Entry.key和要查找的key不一致：
-
-![img](https://javaguide.cn/assets/27.9c78c2a2.png)
-
-我们以get(ThreadLocal1)为例，通过hash计算后，正确的slot位置应该是4，而index=4的槽位已经有了数据，且key值不等于ThreadLocal1，所以需要继续往后迭代查找。迭代到index=5的数据时，此时Entry.key=null，触发一次探测式数据回收操作，执行expungeStaleEntry()方法，执行完后，index 5,8的数据都会被回收，而index 6,7的数据都会前移。index 6,7前移之后，继续从index=5往后迭代，于是就在index=5找到了key值相等的Entry数据，如下图所示：
-
-![img](https://javaguide.cn/assets/28.ea7d5196.png)
+**第二种情况**:slot位置中的Entry.key和要查找的key不一致，我们以get(ThreadLocal1)为例，通过hash计算后，正确的slot位置应该是4，而index=4的槽位已经有了数据，且key值不等于ThreadLocal1，所以需要继续往后迭代查找。迭代到index=5的数据时，此时Entry.key=null，触发一次探测式数据回收操作，执行expungeStaleEntry()方法，执行完后，index 5,8的数据都会被回收，而index 6,7的数据都会前移。index 6,7前移之后，继续从index=5往后迭代，于是就在index=5找到了key值相等的Entry数据。
 
 ###### ThreadLocalMap.get()源码详解
 
@@ -791,8 +691,6 @@ private Entry getEntryAfterMiss(ThreadLocal<?> key, int i, Entry e) {
 ##### ThreadLocalMap过期key的启发式清理流程
 
 上面多次提及到ThreadLocalMap过期key的两种清理方式：探测式清理(expungeStaleEntry())、启发式清理(cleanSomeSlots())。探测式清理是以当前Entry往后清理，遇到值为null则结束清理，属于线性探测清理。而启发式清理被作者定义为：Heuristically scan some cells looking for stale entries.
-
-![img](https://javaguide.cn/assets/29.c87cfab8.png)
 
 具体代码如下：
 
@@ -870,14 +768,6 @@ private void init(ThreadGroup g, Runnable target, String name,
 ###### ThreadLocal使用场景
 
 我们现在项目中日志记录用的是ELK+Logstash，最后在Kibana中进行展示和检索。现在都是分布式系统统一对外提供服务，项目间调用的关系可以通过traceId来关联，但是不同项目之间如何传递traceId呢？这里我们使用org.slf4j.MDC来实现此功能，内部就是通过ThreadLocal来实现的，具体实现如下：当前端发送请求到服务A时，服务A会生成一个类似UUID的traceId字符串，将此字符串放入当前线程的ThreadLocal中，在调用服务B的时候，将traceId写入到请求的Header中，服务B在接收请求时会先判断请求的Header中是否有traceId，如果存在则写入自己线程的ThreadLocal中。
-
-![img](https://javaguide.cn/assets/30.8167dc64.png)
-
-图中的requestId即为我们各个系统链路关联的traceId，系统间互相调用，通过这个requestId即可找到对应链路，这里还有会有一些其他场景：
-
-![img](https://javaguide.cn/assets/31.742c0f94.png)
-
-针对于这些场景，我们都可以有相应的解决方案，如下所示
 
 ###### Feign远程调用解决方案
 
@@ -982,15 +872,14 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 
 因为ThreadLocal是基于ThreadLocalMap实现的，其中ThreadLocalMap的Entry继承了WeakReference，而Entry对象中的key使用了WeakReference封装，也就是说，Entry中的key是一个弱引用类型，对于弱引用来说，它只能存活到下次GC之前，如果此时一个线程调用了ThreadLocalMap的set设置变量，当前的ThreadLocalMap就会新增一条记录，但由于发生了一次垃圾回收，这样就会造成一个结果:key值被回收掉了，但是value值还在内存中，而且如果线程一直存在的话，那么它的value值就会一直存在,这样被垃圾回收掉的key就会一直存在一条引用链:Thread->ThreadLocalMap->Entry->Value:就是因为这条引用链的存在，就会导致如果Thread还在运行，那么Entry不会被回收，进而value也不会被回收掉，但是Entry里面的key值已经被回收掉了,这只是一个线程，如果再来一个线程，又来一个线程…多了之后就会造成内存泄漏
 
-- [详细解读ThreadLocal的内存泄露](https://mp.weixin.qq.com/s/gasR16pjlN3WfuFj9mQxdQ)
-- [ThreadLocal你怎么动不动就内存泄漏？](https://mp.weixin.qq.com/s/S0IwbXadRgZ86fFLSFObVQ)
-- [细数ThreadLocal三大坑，内存泄露仅是小儿科](https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg)
-- [内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal](https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g)
-- [线上系统因为一个ThreadLocal直接内存飙升](https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig)
-- [ThreadLocal搭配线程池时为什么会造成内存泄漏](https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA)
+> [详细解读ThreadLocal的内存泄露](https://mp.weixin.qq.com/s/gasR16pjlN3WfuFj9mQxdQ)
+> [ThreadLocal你怎么动不动就内存泄漏？](https://mp.weixin.qq.com/s/S0IwbXadRgZ86fFLSFObVQ)
+> [细数ThreadLocal三大坑，内存泄露仅是小儿科](https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg)
+> [内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal](https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g)
+> [线上系统因为一个ThreadLocal直接内存飙升](https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig)
+> [ThreadLocal搭配线程池时为什么会造成内存泄漏](https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA)
 
 ### ThreadLocalMap为什么使用弱引用而不是强引用？
-
 
 #### 强引用
 

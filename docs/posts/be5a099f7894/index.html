@@ -572,8 +572,7 @@
 <li>老生代(Old Generation)</li>
 <li>永久代(Permanent Generation)</li>
 </ol>
-<p>下图所示的Eden区、两个Survivor区S0和S1都属于新生代，中间一层属于老年代，最下面一层属于永久代。</p>
-<p><img src="https://javaguide.cn/assets/hotspot-heap-structure.41533631.png" alt="hotspot-heap-structure"></p>
+<p>Eden区、两个Survivor区S0和S1都属于新生代，中间一层属于老年代，最下面一层属于永久代。</p>
 <p><strong>JDK8版本之后PermGen(永久)已被Metaspace(元空间)取代，元空间使用的是本地内存</strong>。</p>
 <p>大部分情况，对象都会首先在Eden区域分配，在一次新生代垃圾回收后，如果对象还存活，则会进入S0或者S1，并且对象的年龄还会加1(Eden区-&gt;Survivor区后对象的初始年龄变为1)，当它的年龄增加到一定程度（默认为15岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数-XX:MaxTenuringThreshold来设置。</p>
 <blockquote>
@@ -615,10 +614,7 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <li><strong>StackOverFlowError</strong>：若栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前Java虚拟机栈的最大深度的时候，就抛出StackOverFlowError错误。</li>
 <li><strong>OutOfMemoryError</strong>：如果栈的内存大小可以动态扩展，如果虚拟机在动态扩展栈时无法申请到足够的内存空间，则抛出OutOfMemoryError异常。</li>
 </ul>
-<p><img src="https://javaguide.cn/assets/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E7%AC%AC%E4%B8%89%E7%89%88%E7%9A%84%E7%AC%AC2%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88.f4f863a2.png" alt="img"></p>
-<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>线程私有FILO(先进后出)<br>和虚拟机栈所发挥的作用非常相似，区别是：<strong>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的Native方法服务</strong>。在HotSpot虚拟机中和Java虚拟机栈合二为一。</p>
-<p>本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。</p>
-<p>方法执行完毕后相应的栈帧也会出栈并释放内存空间，也会出现StackOverFlowError和OutOfMemoryError两种错误。</p>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>线程私有FILO(先进后出)<br>和虚拟机栈所发挥的作用非常相似，区别是：<strong>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的Native方法服务</strong>。在HotSpot虚拟机中和Java虚拟机栈合二为一。本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。方法执行完毕后相应的栈帧也会出栈并释放内存空间，也会出现StackOverFlowError和OutOfMemoryError两种错误。</p>
 <h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>jdk1.7及以前方法区也被称为永久代，1.8之后移除，取而代之的为metaspace元空间,注意：元空间，永久代都是方法区的一种实现,永久代主要存放类定义、字节码和常量等很少会变更的信息。永久带是方法区的一种实现，可以理解为就是方法区，类似于java的接口和实现类</p>
 <p>方法区是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、静态变量、final类型的常量、属性和方法信息，即时编译器编译后的代码等数据,也称”永久代”，它用于存储虚拟机加载的类信息、常量、静态变量、是各个线程共享的内存区域。可以通过-XX:PermSize和-XX:MaxPermSize参数限制方法区的大小。</p>
 <p>运行时常量池：是方法区的一部分，其中的主要内容来自于JVM对Class的加载。<br>Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分内容将在类加载后放到方法区的运行时常量池中。</p>
@@ -634,9 +630,7 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <blockquote>
 <p>jdk1.8<br><img src="/blog/images/jvm1.8.png"></p>
 </blockquote>
-<p>方法区属于是JVM运行时数据区域的一块逻辑区域，是各个线程共享的内存区域。</p>
-<p>《Java虚拟机规范》只是规定了有方法区这么个概念和它的作用，方法区到底要如何实现那就是虚拟机自己要考虑的事情了。也就是说，在不同的虚拟机实现上，方法区的实现是不同的。</p>
-<p>当虚拟机要使用一个类时，它需要读取并解析Class文件获取相关信息，再将信息存入到方法区。方法区会存储已被虚拟机加载的<strong>类信息、字段信息、方法信息、常量、静态变量、即时编译器编译后的代码缓存等数据</strong>。</p>
+<p>方法区属于是JVM运行时数据区域的一块逻辑区域，是各个线程共享的内存区域。《Java虚拟机规范》只是规定了有方法区这么个概念和它的作用，方法区到底要如何实现那就是虚拟机自己要考虑的事情了。也就是说，在不同的虚拟机实现上，方法区的实现是不同的。当虚拟机要使用一个类时，它需要读取并解析Class文件获取相关信息，再将信息存入到方法区。方法区会存储已被虚拟机加载的<strong>类信息、字段信息、方法信息、常量、静态变量、即时编译器编译后的代码缓存等数据</strong>。</p>
 <p><strong>方法区和永久代以及元空间是什么关系呢</strong>？方法区和永久代以及元空间的关系很像Java中接口和类的关系，类实现了接口，这里的类就可以看作是永久代和元空间，接口可以看作是方法区，也就是说永久代以及元空间是HotSpot虚拟机对虚拟机规范中方法区的两种实现方式。并且，永久代是JDK1.8之前的方法区实现，JDK1.8及以后方法区的实现变成了元空间。</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/jvm/method-area-implementation.png" alt="HotSpot虚拟机方法区的两种实现"></p>
 <p><strong>为什么要将永久代(PermGen)替换为元空间(MetaSpace)呢?</strong></p>
@@ -664,9 +658,7 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <p>字面量是源代码中的固定值的表示法，即通过字面我们就能知道其值的含义。字面量包括整数、浮点数和字符串字面量。常见的符号引用包括类符号引用、字段符号引用、方法符号引用、接口方法符号。</p>
 <p>《深入理解Java虚拟机》7.34节第三版对符号引用和直接引用的解释如下：</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/jvm/symbol-reference-and-direct-reference.png" alt="符号引用和直接引用"></p>
-<p>常量池表会在类加载后存放到方法区的运行时常量池中。</p>
-<p>运行时常量池的功能类似于传统编程语言的符号表，尽管它包含了比典型符号表更广泛的数据。</p>
-<p>既然运行时常量池是方法区的一部分，自然受到方法区内存的限制，当常量池无法再申请到内存时会抛出<code>OutOfMemoryError</code>错误。</p>
+<p>常量池表会在类加载后存放到方法区的运行时常量池中。运行时常量池的功能类似于传统编程语言的符号表，尽管它包含了比典型符号表更广泛的数据。既然运行时常量池是方法区的一部分，自然受到方法区内存的限制，当常量池无法再申请到内存时会抛出<code>OutOfMemoryError</code>错误。</p>
 <h4 id="字符串常量池"><a href="#字符串常量池" class="headerlink" title="字符串常量池"></a>字符串常量池</h4><p><strong>字符串常量池</strong>是JVM为了提升性能和减少内存消耗针对字符串（String类）专门开辟的一块区域，主要目的是为了避免字符串的重复创建。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 在堆中创建字符串对象”ab“</span>
 <span class="token comment">// 将字符串对象”ab“的引用保存在字符串常量池中</span>
@@ -685,8 +677,7 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <blockquote>
 <p>相关问题：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/57109429/answer/151717241">JVM常量池中存储的是对象还是引用呢？</a><br>最后再来分享一段周志明老师在<a target="_blank" rel="noopener" href="https://github.com/fenixsoft/jvm_book">《深入理解Java虚拟机（第3版）》样例代码&amp;勘误</a>Github仓库的<a target="_blank" rel="noopener" href="https://github.com/fenixsoft/jvm_book/issues/112">issue#112</a>中说过的话：<br><strong>运行时常量池、方法区、字符串常量池这些都是不随虚拟机实现而改变的逻辑概念，是公共且抽象的，Metaspace、Heap是与具体某种虚拟机实现相关的物理概念，是私有且具体的。</strong></p>
 </blockquote>
-<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>存放下一条指令所在单元地址的地方<br>程序计数器是一块较小的内存空间，可以看作当前线程所执行的字节码的行号指示器。在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成</p>
-<p>另外，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。</p>
+<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>存放下一条指令所在单元地址的地方<br>程序计数器是一块较小的内存空间，可以看作当前线程所执行的字节码的行号指示器。在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成。另外，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。</p>
 <p>从上面的介绍中我们知道了程序计数器主要有两个作用：</p>
 <ul>
 <li>字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制，如：顺序执行、选择、循环、异常处理。</li>
@@ -745,8 +736,7 @@ foo<span class="token punctuation">.</span><span class="token function">f</span>
 <li>老生代(Old Generation)</li>
 <li>永久代(Permanent Generation)</li>
 </ol>
-<p>下图所示的Eden区、两个Survivor区S0和S1都属于新生代，中间一层属于老年代，最下面一层属于永久代。</p>
-<p><img src="https://javaguide.cn/assets/hotspot-heap-structure.41533631.png" alt="hotspot-heap-structure"></p>
+<p>Eden区、两个Survivor区S0和S1都属于新生代，中间一层属于老年代，最下面一层属于永久代。</p>
 <p><strong>JDK8版本之后PermGen(永久)已被Metaspace(元空间)取代，元空间使用的是直接内存</strong>。</p>
 <blockquote>
 <p>关于堆空间结构更详细的介绍，可以回过头看看<a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/memory-area.html">Java内存区域详解</a>这篇文章。</p>
@@ -811,10 +801,8 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 </blockquote>
 <h4 id="主要进行gc的区域"><a href="#主要进行gc的区域" class="headerlink" title="主要进行gc的区域"></a>主要进行gc的区域</h4><p>周志明先生在《深入理解Java虚拟机》第二版中P92如是写道：</p>
 <blockquote>
-<p><del><em>“老年代GC（Major GC&#x2F;Full GC），指发生在老年代的GC……”</em></del></p>
+<p><del><em>“老年代GC（Major GC&#x2F;Full GC），指发生在老年代的GC……”</em></del><br>上面的说法已经在《深入理解Java虚拟机》第三版中被改正过来了。</p>
 </blockquote>
-<p>上面的说法已经在《深入理解Java虚拟机》第三版中被改正过来了。感谢R大的回答：</p>
-<p><img src="https://javaguide.cn/assets/rf-hotspot-vm-gc.69291e6e.png" alt="img"></p>
 <p><strong>总结：</strong></p>
 <p>针对HotSpot VM的实现，它里面的GC其实准确分类只有两大种：</p>
 <p>部分收集(Partial GC)：</p>
@@ -851,7 +839,6 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h4><p>这个算法的基本思想就是通过一系列的称为GC Roots的对象作为起点，从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到GC Roots没有任何引用链相连的话，则证明此对象是不可用的，需要被回收。下图中的Object 6~Object 10之间虽有引用关系，但它们到GC Roots不可达，因此为需要被回收的对象。</p>
-<p><img src="https://javaguide.cn/assets/jvm-gc-roots.d187e957.png" alt="可达性分析算法"></p>
 <p><strong>哪些对象可以作为GC Roots呢？</strong></p>
 <ul>
 <li>虚拟机栈(栈帧中的本地变量表)中引用的对象</li>
@@ -909,11 +896,8 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <li><strong>效率问题</strong></li>
 <li><strong>空间问题（标记清除后会产生大量不连续的碎片）</strong></li>
 </ol>
-<p><img src="https://javaguide.cn/assets/%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95.c1fbd0fe.jpeg" alt="img"></p>
 <h4 id="标记-复制算法"><a href="#标记-复制算法" class="headerlink" title="标记-复制算法"></a>标记-复制算法</h4><p>为了解决效率问题，“标记-复制”收集算法出现了。它可以将内存分为大小相同的两块，每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉。这样就使每次的内存回收都是对内存区间的一半进行回收。</p>
-<p><img src="https://javaguide.cn/assets/90984624.e8c186ae.png" alt="复制算法"></p>
 <h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>根据老年代的特点提出的一种标记算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存。</p>
-<p><img src="https://javaguide.cn/assets/94057049.22c58294.png" alt="标记-整理算法"></p>
 <h4 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h4><p>当前虚拟机的垃圾收集都采用分代收集算法，这种算法没有什么新的思想，只是根据对象存活周期的不同将内存分为几块。一般将java堆分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
 <p>比如在新生代中，每次收集都会有大量对象死去，所以可以选择”标记-复制“算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。</p>
 <blockquote>
@@ -923,12 +907,10 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <p>虽然我们对各个收集器进行比较，但并非要挑选出一个最好的收集器。因为直到现在为止还没有最好的垃圾收集器出现，更加没有万能的垃圾收集器，我们能做的就是根据具体应用场景选择适合自己的垃圾收集器。试想一下：如果有一种四海之内、任何场景下都适用的完美收集器存在，那么我们的HotSpot虚拟机就不会实现那么多不同的垃圾收集器了。</p>
 <h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>Serial（串行）收集器是最基本、历史最悠久的垃圾收集器了。大家看名字就知道这个收集器是一个单线程收集器了。它的单线程的意义不仅仅意味着它只会使用一条垃圾收集线程去完成垃圾收集工作，更重要的是它在进行垃圾收集工作的时候必须暂停其他所有的工作线程（Stop The World），直到它收集结束。</p>
 <p><strong>新生代采用标记-复制算法，老年代采用标记-整理算法</strong>。</p>
-<p><img src="https://javaguide.cn/assets/46873026.3a9311ec.png" alt="Serial收集器"></p>
 <p>虚拟机的设计者们当然知道Stop The World带来的不良用户体验，所以在后续的垃圾收集器设计中停顿时间在不断缩短（仍然还有停顿，寻找最优秀的垃圾收集器的过程仍然在继续）。</p>
 <p>但是Serial收集器有没有优于其他垃圾收集器的地方呢？当然有，它简单而高效（与其他收集器的单线程相比）。Serial收集器由于没有线程交互的开销，自然可以获得很高的单线程收集效率。Serial收集器对于运行在Client模式下的虚拟机来说是个不错的选择。</p>
 <h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>ParNew收集器其实就是Serial收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法、回收策略等等）和Serial收集器完全一样。</p>
 <p>新生代采用标记-复制算法，老年代采用标记-整理算法。</p>
-<p><img src="https://javaguide.cn/assets/22018368.df835851.png" alt="ParNew收集器"></p>
 <p>它是许多运行在Server模式下的虚拟机的首要选择，除了Serial收集器外，只有它能与CMS收集器（真正意义上的并发收集器，后面会介绍到）配合工作。</p>
 <p>并行和并发概念补充：</p>
 <ul>
@@ -957,7 +939,6 @@ Java HotSpot<span class="token punctuation">(</span>TM<span class="token punctua
 <li><strong>重新标记</strong>:重新标记阶段就是为了修正并发标记期间因为用户程序继续运行而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段的时间稍长，远远比并发标记阶段时间短</li>
 <li><strong>并发清除</strong>:开启用户线程，同时GC线程开始对未标记的区域做清扫。</li>
 </ul>
-<p><img src="https://javaguide.cn/assets/CMS%E6%94%B6%E9%9B%86%E5%99%A8.8a4d0487.png" alt="CMS垃圾收集器"></p>
 <p>从它的名字就可以看出它是一款优秀的垃圾收集器，主要优点：<strong>并发收集、低停顿</strong>。但是它有下面三个明显的缺点：</p>
 <ul>
 <li><strong>对CPU资源敏感；</strong></li>
@@ -1000,8 +981,7 @@ Java HotSpot<span class="token punctuation">(</span>TM<span class="token punctua
 </ul>
 <h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><p>根据刚刚涉及的jvm的知识点，我们可以尝试对JVM进行调优，主要就是堆内存那块。</p>
 <p>所有线程共享数据区大小&#x3D;新生代大小+年老代大小+持久代大小。持久代一般固定大小为64m。所以java堆中增大年轻代后，将会减小年老代大小（因为老年代的清理是使用fullgc，所以老年代过小的话反而是会增多fullgc的）。此值对系统性能影响较大，Sun官方推荐配置为java堆的3&#x2F;8。</p>
-<h3 id="调整最大堆内存和最小堆内存"><a href="#调整最大堆内存和最小堆内存" class="headerlink" title="调整最大堆内存和最小堆内存"></a>调整最大堆内存和最小堆内存</h3><p>-Xmx –Xms：指定java堆最大值（默认值是物理内存的1&#x2F;4(&lt;1GB)）和初始java堆最小值（默认值是物理内存的1&#x2F;64(&lt;1GB)</p>
-<p>默认(MinHeapFreeRatio参数可以调整)空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制.默认(MaxHeapFreeRatio参数可以调整)空余堆内存大于70%时，JVM会减少堆直到-Xms的最小限制。简单点来说，你不停地往堆内存里面丢数据，等它剩余大小小于40%了，JVM就会动态申请内存空间不过会小于-Xmx，如果剩余大小大于70%，又会动态缩小不过不会小于–Xms。就这么简单</p>
+<h3 id="调整最大堆内存和最小堆内存"><a href="#调整最大堆内存和最小堆内存" class="headerlink" title="调整最大堆内存和最小堆内存"></a>调整最大堆内存和最小堆内存</h3><p>-Xmx –Xms：指定java堆最大值（默认值是物理内存的1&#x2F;4(&lt;1GB)）和初始java堆最小值（默认值是物理内存的1&#x2F;64(&lt;1GB)。默认(MinHeapFreeRatio参数可以调整)空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制.默认(MaxHeapFreeRatio参数可以调整)空余堆内存大于70%时，JVM会减少堆直到-Xms的最小限制。简单点来说，你不停地往堆内存里面丢数据，等它剩余大小小于40%了，JVM就会动态申请内存空间不过会小于-Xmx，如果剩余大小大于70%，又会动态缩小不过不会小于–Xms。就这么简单</p>
 <p>开发过程中，通常会将-Xms与-Xmx两个参数配置成相同的值，其目的是为了能够在java垃圾回收机制清理完堆区后不需要重新分隔计算堆区的大小而浪费资源。我们执行下面的代码</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Xmx="</span> <span class="token operator">+</span> <span class="token class-name">Runtime</span><span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">maxMemory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1024.0</span> <span class="token operator">/</span> <span class="token number">1024</span> <span class="token operator">+</span> <span class="token string">"M"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//系统的最大空间</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"free mem="</span> <span class="token operator">+</span> <span class="token class-name">Runtime</span><span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">freeMemory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1024.0</span> <span class="token operator">/</span> <span class="token number">1024</span> <span class="token operator">+</span> <span class="token string">"M"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//系统的空闲空间</span>
@@ -1300,8 +1280,7 @@ Found 1 deadlock<span class="token punctuation">.</span><span aria-hidden="true"
 
 <p>可以看到jstack命令已经帮我们找到发生死锁的线程的具体信息。</p>
 <h3 id="JDK可视化分析工具"><a href="#JDK可视化分析工具" class="headerlink" title="JDK可视化分析工具"></a>JDK可视化分析工具</h3><h3 id="JConsole-Java监视与管理控制台"><a href="#JConsole-Java监视与管理控制台" class="headerlink" title="JConsole:Java监视与管理控制台"></a>JConsole:Java监视与管理控制台</h3><p>JConsole是基于JMX的可视化监视、管理工具。可以很方便的监视本地及远程服务器的java进程的内存使用情况。你可以在控制台输出<code>console</code>命令启动或者在JDK目录下的bin目录找到<code>jconsole.exe</code>然后双击启动。</p>
-<h4 id="连接Jconsole"><a href="#连接Jconsole" class="headerlink" title="连接Jconsole"></a>连接Jconsole</h4><p><img src="https://javaguide.cn/assets/1JConsole%E8%BF%9E%E6%8E%A5.7490f097.png" alt="连接Jconsole"></p>
-<p>如果需要使用JConsole连接远程进程，可以在远程Java程序启动时加上下面这些参数:</p>
+<h4 id="连接Jconsole"><a href="#连接Jconsole" class="headerlink" title="连接Jconsole"></a>连接Jconsole</h4><p>如果需要使用JConsole连接远程进程，可以在远程Java程序启动时加上下面这些参数:</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">-Djava.rmi.server.hostname</span><span class="token punctuation">=</span><span class="token value attr-value">外网访问ip地址</span>
 <span class="token key attr-name">-Dcom.sun.management.jmxremote.port</span><span class="token punctuation">=</span><span class="token value attr-value">60001 //监控的端口号</span>
 <span class="token key attr-name">-Dcom.sun.management.jmxremote.authenticate</span><span class="token punctuation">=</span><span class="token value attr-value">false //关闭认证</span>
@@ -1310,7 +1289,6 @@ Found 1 deadlock<span class="token punctuation">.</span><span aria-hidden="true"
 <p>在使用JConsole连接时，远程进程地址如下：</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">外网访问ip地址:60001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="查看Java程序概况"><a href="#查看Java程序概况" class="headerlink" title="查看Java程序概况"></a>查看Java程序概况</h4><p><img src="https://javaguide.cn/assets/2%E6%9F%A5%E7%9C%8BJava%E7%A8%8B%E5%BA%8F%E6%A6%82%E5%86%B5.9c949b67.png" alt="查看Java程序概况"></p>
 <h4 id="内存监控"><a href="#内存监控" class="headerlink" title="内存监控"></a>内存监控</h4><p>JConsole可以显示当前内存的详细信息。不仅包括堆内存&#x2F;非堆内存的整体信息，还可以细化到eden区、survivor区等的使用情况，如下图所示。点击右边的“执行GC(G)”按钮可以强制应用程序执行一个FullGC。</p>
 <blockquote>
 <ul>
@@ -1318,9 +1296,7 @@ Found 1 deadlock<span class="token punctuation">.</span><span aria-hidden="true"
 <li><strong>老年代 GC（Major GC&#x2F;Full GC）</strong>:指发生在老年代的GC，出现了Major GC经常会伴随至少一次的Minor GC（并非绝对），Major GC的速度一般会比Minor GC的慢10倍以上。</li>
 </ul>
 </blockquote>
-<p><img src="https://javaguide.cn/assets/3%E5%86%85%E5%AD%98%E7%9B%91%E6%8E%A7.4f4b8a7f.png" alt="内存监控"></p>
 <h4 id="线程监控"><a href="#线程监控" class="headerlink" title="线程监控"></a>线程监控</h4><p>类似我们前面讲的<code>jstack</code>命令，不过这个是可视化的。最下面有一个”检测死锁(D)”按钮，点击这个按钮可以自动为你找到发生死锁的线程以及它们的详细信息。</p>
-<p><img src="https://javaguide.cn/assets/4%E7%BA%BF%E7%A8%8B%E7%9B%91%E6%8E%A7.4364833a.png" alt="线程监控"></p>
 <h3 id="Visual-VM-多合一故障处理工具"><a href="#Visual-VM-多合一故障处理工具" class="headerlink" title="Visual VM:多合一故障处理工具"></a>Visual VM:多合一故障处理工具</h3><p>VisualVM提供在Java虚拟机(Java Virutal Machine,JVM)上运行的Java应用程序的详细信息。在VisualVM的图形用户界面中，您可以方便、快捷地查看多个Java应用程序的相关信息。<a target="_blank" rel="noopener" href="https://visualvm.github.io/">VisualVM官网</a>、<a target="_blank" rel="noopener" href="https://visualvm.github.io/documentation.html">VisualVM中文文档</a>。</p>
 <p>下面这段话摘自《深入理解Java虚拟机》。</p>
 <blockquote>
@@ -1335,12 +1311,12 @@ Found 1 deadlock<span class="token punctuation">.</span><span aria-hidden="true"
 <li>离线程序快照：收集程序的运行时配置、线程dump、内存dump等信息建立一个快照，可以将快照发送开发者处进行Bug反馈。</li>
 <li>其他plugins的无限的可能性……</li>
 </ul>
+<blockquote>
 <p>这里就不具体介绍VisualVM的使用，如果想了解的话可以看:</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://visualvm.github.io/documentation.html">https://visualvm.github.io/documentation.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/index.html">https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/index.html</a></li>
 </ul>
-<blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/jdk-monitoring-and-troubleshooting-tools.html">原文链接</a></p>
 </blockquote>
 <h3 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h3><p>主要用于生成指定进程当前时刻的线程快照，线程快照是当前java虚拟机每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是用于定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致长时间等待。</p>
@@ -1426,7 +1402,6 @@ JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.
 <h3 id="堆内存相关"><a href="#堆内存相关" class="headerlink" title="堆内存相关"></a>堆内存相关</h3><blockquote>
 <p>Java虚拟机所管理的内存中最大的一块，Java堆是所有线程共享的一块内存区域，在虚拟机启动时创建。<strong>此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存</strong>。</p>
 </blockquote>
-<p><img src="https://javaguide.cn/assets/%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0.53ddeca6.png" alt="内存区域常见配置参数"></p>
 <h4 id="显式指定堆内存–Xms和-Xmx"><a href="#显式指定堆内存–Xms和-Xmx" class="headerlink" title="显式指定堆内存–Xms和-Xmx"></a>显式指定堆内存–Xms和-Xmx</h4><p>与性能有关的最常见实践之一是根据应用程序要求初始化堆内存。如果我们需要指定最小和最大堆大小（推荐显示指定大小），以下参数可以帮助你实现：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">-Xms<span class="token operator">&lt;</span>heap size<span class="token operator">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span>
 -Xmx<span class="token operator">&lt;</span>heap size<span class="token operator">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>

@@ -31,7 +31,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 ### Arraylist与LinkedList区别
 
-1. **是否保证线程安全**：ArrayList和LinkedList都是不同步的，也就是ArrayList和LinkedList都不是线程安全的，以add为例,源码如下
+(1) **是否保证线程安全**：ArrayList和LinkedList都是不同步的，也就是ArrayList和LinkedList都不是线程安全的，以add为例,源码如下
 ```java
 elementData[size++] = e;
 // 它由两步操作构成
@@ -39,17 +39,18 @@ elementData[size] = e;
 size = size + 1;
 ```
 在单线程执行这两条代码时，那当然没有任何问题，但是当多线程环境下执行时，可能就会发生一个线程添加的值覆盖另一个线程添加的值。举个例子：假设size = 0，我们要往这个数组的末尾添加元素，线程A开始添加一个元素，值为A。此时它执行第一条操作，将A放在了数组elementData下标为0的位置上，接着线程B刚好也要开始添加一个值为B的元素，且走到了第一步操作。此时线程B获取到的size值依然为0，于是它将B也放在了elementData下标为0的位置上，线程A开始增加size的值，size = 1,线程B开始增加size的值，size = 2,这样，线程A、B 都执行完毕后，理想的情况应该是size = 2，elementData[0] = A，elementData[1] = B。而实际情况变成了size = 2，elementData[0] = B（线程B覆盖了线程A的操作），下标1的位置上什么都没有。并且后续除非我们使用set方法修改下标为1的值，否则这个位置上将一直为null，因为在末尾添加元素时将会从size = 2的位置上开始。
-2. **底层数据结构**：Arraylist底层使用的是Object数组；LinkedList底层使用的是双向链表数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别）
 
-3. **插入和删除是否受元素位置的影响**：
+(2) **底层数据结构**：Arraylist底层使用的是Object数组；LinkedList底层使用的是双向链表数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别）
+
+(3) **插入和删除是否受元素位置的影响**：
 
    ①ArrayList采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。比如：执行`add(E e)`方法的时候，ArrayList会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置i插入和删除元素的话（add(int index, E element)）时间复杂度就为O(n-i)。因为在进行上述操作的时候集合中第i和第i个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。
 
    ②LinkedList采用链表存储，所以对于`add(E e)`方法的插入，删除元素时间复杂度不受元素位置的影响，近似O(1)，如果是要在指定位置i插入和删除元素的话（(add(int index, E element)）时间复杂度近似为o(n))因为需要先移动到指定位置再插入。
 
-4. **是否支持快速随机访问**：LinkedList不支持高效的随机元素访问，而ArrayList支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(int index)方法)。
+(4) **是否支持快速随机访问**：LinkedList不支持高效的随机元素访问，而ArrayList支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(int index)方法)。
 
-5. **内存空间占用**：ArrayList的空间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。
+(5) **内存空间占用**：ArrayList的空间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。
 
 ### ArrayList核心源码解读
 
@@ -898,9 +899,7 @@ public void ensureCapacity(int minCapacity) {
     }
 }
 ```
-理论上来说，最好在向ArrayList添加大量元素之前用ensureCapacity方法，以减少增量重新分配的次数
-
-我们通过下面的代码实际测试以下这个方法的效果：
+理论上来说，最好在向ArrayList添加大量元素之前用ensureCapacity方法，以减少增量重新分配的次数。我们通过下面的代码实际测试以下这个方法的效果：
 
 ```java
 public class EnsureCapacityTest {
@@ -954,26 +953,18 @@ public class EnsureCapacityTest {
 
 ### CopyOnWriteArrayList简介
 
-CopyOnWriteArrayList实际上是ArrayList一个线程安全的操作类,是一个典型的读写分离的动态数组操作类.从它的名字可以看出，CopyOnWrite是在写入的时候，不修改原内容，而是将原来的内容复制一份到新的数组，然后向新数组写完数据之后，再移动内存指针，将目标指向最新的位置。
-CopyOnWriteArraySet主要针对集，CopyOnWriteArraySet可以理解为HashSet线程安全的操作类，我们都知道HashSet基于散列表HashMap实现，但是CopyOnWriteArraySet并不是基于散列表实现，而是基于CopyOnWriteArrayList动态数组实现
-两者最大的不同点是，CopyOnWriteArrayList可以允许元素重复，而CopyOnWriteArraySet不允许有重复的元素
-
-CopyOnWriteArrayList在写入数据的时候，将旧数组内容复制一份出来，然后向新的数组写入数据，最后将新的数组内存地址返回给数组变量；移除操作也类似，只是方式是移除元素而不是添加元素；而查询方法，因为不涉及线程操作，所以并没有加锁出来！因为CopyOnWriteArrayList读取内容没有加锁，在写入数据的时候同时也可以进行读取数据操作，因此性能得到很大的提升，但是也有缺陷，**对于边读边写的情况，不一定能实时的读到最新的数据,因此CopyOnWriteArrayList很适合读多写少的应用场景**
+CopyOnWriteArrayList实际上是ArrayList一个线程安全的操作类,是一个典型的读写分离的动态数组操作类.从它的名字可以看出，CopyOnWrite是在写入的时候，不修改原内容，而是将原来的内容复制一份到新的数组，然后向新数组写完数据之后，再移动内存指针，将目标指向最新的位置。CopyOnWriteArraySet主要针对集，CopyOnWriteArraySet可以理解为HashSet线程安全的操作类，我们都知道HashSet基于散列表HashMap实现，但是CopyOnWriteArraySet并不是基于散列表实现，而是基于CopyOnWriteArrayList动态数组实现。两者最大的不同点是，CopyOnWriteArrayList可以允许元素重复，而CopyOnWriteArraySet不允许有重复的元素。CopyOnWriteArrayList在写入数据的时候，将旧数组内容复制一份出来，然后向新的数组写入数据，最后将新的数组内存地址返回给数组变量；移除操作也类似，只是方式是移除元素而不是添加元素；而查询方法，因为不涉及线程操作，所以并没有加锁出来！因为CopyOnWriteArrayList读取内容没有加锁，在写入数据的时候同时也可以进行读取数据操作，因此性能得到很大的提升，但是也有缺陷，**对于边读边写的情况，不一定能实时的读到最新的数据,因此CopyOnWriteArrayList很适合读多写少的应用场景**
 
 
 ```java
 public class CopyOnWriteArrayList<E> extends Object implements List<E>, RandomAccess, Cloneable, Serializable
 ```
 
-在很多应用场景中，读操作可能会远远大于写操作。由于读操作根本不会修改原有的数据，因此对于每次读取都进行加锁其实是一种资源浪费。我们应该允许多个线程同时访问List的内部数据，毕竟读取操作是安全的。
-
-这和我们之前提到过的ReentrantReadWriteLock读写锁的思想非常类似，也就是读读共享、写写互斥、读写互斥、写读互斥。JDK中提供了CopyOnWriteArrayList类比相比于在读写锁的思想又更进一步。为了将读取的性能发挥到极致，CopyOnWriteArrayList读取是完全不用加锁的，并且更厉害的是：写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。这样一来，读操作的性能就会大幅度提升。
+在很多应用场景中，读操作可能会远远大于写操作。由于读操作根本不会修改原有的数据，因此对于每次读取都进行加锁其实是一种资源浪费。我们应该允许多个线程同时访问List的内部数据，毕竟读取操作是安全的。这和我们之前提到过的ReentrantReadWriteLock读写锁的思想非常类似，也就是读读共享、写写互斥、读写互斥、写读互斥。JDK中提供了CopyOnWriteArrayList类比相比于在读写锁的思想又更进一步。为了将读取的性能发挥到极致，CopyOnWriteArrayList读取是完全不用加锁的，并且更厉害的是：写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。这样一来，读操作的性能就会大幅度提升。
 
 ### CopyOnWriteArrayList是如何做到的？
 
-CopyOnWriteArrayList类的所有可变操作（add，set等等）都是通过创建底层数组的新副本来实现的。当List需要被修改的时候，我并不修改原有内容，而是对原有数据进行一次复制，将修改的内容写入副本。写完之后，再将修改完的副本替换原来的数据，这样就可以保证写操作不会影响读操作了。
-
-从CopyOnWriteArrayList的名字就能看出CopyOnWriteArrayList是满足CopyOnWrite的。所谓CopyOnWrite也就是说：在计算机，如果你想要对一块内存进行修改时，我们不在原有内存块中进行写操作，而是将内存拷贝一份，在新的内存中进行写操作，写完之后呢，就将指向原来内存指针指向新的内存，原来的内存就可以被回收掉了。
+CopyOnWriteArrayList类的所有可变操作（add，set等等）都是通过创建底层数组的新副本来实现的。当List需要被修改的时候，我并不修改原有内容，而是对原有数据进行一次复制，将修改的内容写入副本。写完之后，再将修改完的副本替换原来的数据，这样就可以保证写操作不会影响读操作了。从CopyOnWriteArrayList的名字就能看出CopyOnWriteArrayList是满足CopyOnWrite的。所谓CopyOnWrite也就是说：在计算机，如果你想要对一块内存进行修改时，我们不在原有内存块中进行写操作，而是将内存拷贝一份，在新的内存中进行写操作，写完之后呢，就将指向原来内存指针指向新的内存，原来的内存就可以被回收掉了。
 
 ### CopyOnWriteArrayList读取和写入源码简单分析
 

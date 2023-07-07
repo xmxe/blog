@@ -216,7 +216,7 @@ git pull和git pull --rebase区别：git pull做了两个操作分别是‘获�
 git merge和git merge --no-ff的区别
 自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge --no-ff命令,如果不加--no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。
 
-- [合并代码还在用git merge？我们都用git rebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
+> [合并代码还在用git merge？我们都用git rebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
 
 #### git tag
 

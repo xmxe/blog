@@ -536,8 +536,7 @@
                 <h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><h3 id="HashMap简介"><a href="#HashMap简介" class="headerlink" title="HashMap简介"></a>HashMap简介</h3><p>HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一，是非线程安全的。HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多个。</p>
 <p>JDK1.8之前HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8以后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。</p>
 <p>HashMap默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。并且，HashMap总是使用2的幂作为哈希表的大小。</p>
-<h3 id="HashMap的底层实现"><a href="#HashMap的底层实现" class="headerlink" title="HashMap的底层实现"></a>HashMap的底层实现</h3><h4 id="JDK1-8之前"><a href="#JDK1-8之前" class="headerlink" title="JDK1.8之前"></a>JDK1.8之前</h4><p>JDK1.8之前HashMap底层是<strong>数组和链表</strong>结合在一起使用也就是<strong>链表散列</strong>。HashMap通过key的hashcode经过扰动函数处理过后得到hash值，然后通过(n-1)&amp;hash判断当前元素存放的位置（这里的n指的是数组的长度），如果当前位置存在元素的话，就判断该元素与要存入的元素的hash值以及key是否相同，如果相同的话，直接覆盖，不相同就通过拉链法解决冲突。</p>
-<p>所谓扰动函数指的就是HashMap的hash方法。使用hash方法也就是扰动函数是为了防止一些实现比较差的hashCode()方法,换句话说使用扰动函数之后可以减少碰撞。</p>
+<h3 id="HashMap的底层实现"><a href="#HashMap的底层实现" class="headerlink" title="HashMap的底层实现"></a>HashMap的底层实现</h3><h4 id="JDK1-8之前"><a href="#JDK1-8之前" class="headerlink" title="JDK1.8之前"></a>JDK1.8之前</h4><p>JDK1.8之前HashMap底层是<strong>数组和链表</strong>结合在一起使用也就是<strong>链表散列</strong>。HashMap通过key的hashcode经过扰动函数处理过后得到hash值，然后通过(n-1)&amp;hash判断当前元素存放的位置（这里的n指的是数组的长度），如果当前位置存在元素的话，就判断该元素与要存入的元素的hash值以及key是否相同，如果相同的话，直接覆盖，不相同就通过拉链法解决冲突。所谓扰动函数指的就是HashMap的hash方法。使用hash方法也就是扰动函数是为了防止一些实现比较差的hashCode()方法,换句话说使用扰动函数之后可以减少碰撞。</p>
 <p><strong>JDK1.8HashMap的hash方法源码</strong>：</p>
 <p>JDK1.8的hash方法相比于JDK1.7hash方法更加简化，但是原理不变。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">hash</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -611,8 +610,7 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树。</p>
-<p>当链表长度大于阈值（默认为8）时，会首先调用treeifyBin()方法。这个方法会根据HashMap数组来决定是否转换为红黑树。只有当数组长度大于或者等于64的情况下，才会执行转换红黑树操作，以减少搜索时间。否则，就是只是执行resize()方法对数组扩容。相关源码这里就不贴了，重点关注treeifyBin()方法即可！</p>
+<p>将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树。当链表长度大于阈值（默认为8）时，会首先调用treeifyBin()方法。这个方法会根据HashMap数组来决定是否转换为红黑树。只有当数组长度大于或者等于64的情况下，才会执行转换红黑树操作，以减少搜索时间。否则，就是只是执行resize()方法对数组扩容。相关源码这里就不贴了，重点关注treeifyBin()方法即可！</p>
 <p><img src="https://oscimg.oschina.net/oscnet/up-bba283228693dae74e78da1ef7a9a04c684.png" alt="img"></p>
 <p><strong>类的属性</strong>：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span> <span class="token keyword">extends</span> <span class="token class-name">AbstractMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span> <span class="token keyword">implements</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span><span class="token punctuation">,</span> <span class="token class-name">Cloneable</span><span class="token punctuation">,</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>
@@ -1059,7 +1057,7 @@
 
 <h3 id="HashMap常见问题"><a href="#HashMap常见问题" class="headerlink" title="HashMap常见问题"></a>HashMap常见问题</h3><h4 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h4><p>答：HashMap的默认长度为16和规定数组长度为2的幂,是为了降低hash碰撞的几率</p>
 <p>为了能让HashMap存取高效，尽量较少碰撞，也就是要尽量把数据分配均匀。我们上面也讲到了过了，Hash值的范围值-2147483648到2147483647，前后加起来大概40亿的映射空间，只要哈希函数映射得比较均匀松散，一般应用是很难出现碰撞的。但问题是一个40亿长度的数组，内存是放不下的。所以这个散列值是不能直接拿来用的。用之前还要先做对数组的长度取模运算，得到的余数才能用来要存放的位置也就是对应的数组下标。这个数组下标的计算方法是(n - 1) &amp; hash。（n代表数组长度）。这也就解释了HashMap的长度为什么是2的幂次方。</p>
-<p><strong>这个算法应该如何设计呢</strong>？</p>
+<p><strong>这个算法应该如何设计呢？</strong></p>
 <p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：</p>
 <blockquote>
 <p>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说hash%length&#x3D;&#x3D;hash&amp;(length-1)的前提是length是2的n次方；）”。并且采用二进制位操作&amp;，相对于%能够提高运算效率，这就解释了HashMap的长度为什么是2的幂次方。</p>
@@ -1073,13 +1071,14 @@
 <blockquote>
 <p>&#x2F;&#x2F;添加元素方法-&gt;添加新节点方法-&gt;扩容方法-&gt;把原数组元素重新分配到新数组中<br>put()–&gt;addEntry()–&gt;resize()–&gt;transfer()</p>
 </blockquote>
-<p>现在，有两个线程都执行transfer方法。每个线程都会在它们自己的工作内存生成一个newTable的数组，用于存储变化后的链表，它们互不影响（这里互不影响，指的是两个新数组本身互不影响）。但是，需要注意的是，它们操作的数据却是同一份。一番扩容操作后出现环形链表，这时，有的同学可能就会问了，就算他们成环了，又怎样，跟死循环有什么关系？我们看下get()方法（最终调用getEntry方法），可以看到查找元素时，只要e不为空，就会一直循环查找下去。若有某个元素C的hash值也落在了和A，B元素同一个桶中，则会由于，A，B互相指向，e.next永远不为空，就会形成死循环。</p>
-<p>主要原因在于并发下的Rehash会造成元素之间会形成一个循环链表。不过，jdk1.8后解决了这个问题，但是还是不建议在多线程下使用HashMap,因为多线程下使用HashMap还是会存在其他问题比如数据丢失。并发环境下推荐使用ConcurrentHashMap。</p>
+<p>现在，有两个线程都执行transfer方法。每个线程都会在它们自己的工作内存生成一个newTable的数组，用于存储变化后的链表，它们互不影响（这里互不影响，指的是两个新数组本身互不影响）。但是，需要注意的是，它们操作的数据却是同一份。一番扩容操作后出现环形链表，这时，有的同学可能就会问了，就算他们成环了，又怎样，跟死循环有什么关系？我们看下get()方法（最终调用getEntry方法），可以看到查找元素时，只要e不为空，就会一直循环查找下去。若有某个元素C的hash值也落在了和A，B元素同一个桶中，则会由于，A，B互相指向，e.next永远不为空，就会形成死循环。主要原因在于并发下的Rehash会造成元素之间会形成一个循环链表。不过，jdk1.8后解决了这个问题，但是还是不建议在多线程下使用HashMap,因为多线程下使用HashMap还是会存在其他问题比如数据丢失。并发环境下推荐使用ConcurrentHashMap。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/9606.html">JAVA HASHMAP的死循环</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ">美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg">多线程环境下，HashMap为什么会出现死循环？</a></p>
 </blockquote>
-<h4 id="HashMap有哪几种常见的遍历方式"><a href="#HashMap有哪几种常见的遍历方式" class="headerlink" title="HashMap有哪几种常见的遍历方式?"></a>HashMap有哪几种常见的遍历方式?</h4><blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zQBN3UvJDhRTKP6SzcZFKw">HashMap的7种遍历方式与性能分析</a></p>
+<h4 id="HashMap有哪几种常见的遍历方式"><a href="#HashMap有哪几种常见的遍历方式" class="headerlink" title="HashMap有哪几种常见的遍历方式?"></a>HashMap有哪几种常见的遍历方式?</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zQBN3UvJDhRTKP6SzcZFKw">HashMap的7种遍历方式与性能分析</a></li>
+</ul>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/collection/java-collection-questions-02.html">原文链接</a></p>
 </blockquote>
 <h3 id="HashMap相关文章"><a href="#HashMap相关文章" class="headerlink" title="HashMap相关文章"></a>HashMap相关文章</h3><ul>
@@ -1089,7 +1088,7 @@
 </ul>
 <h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>jdk1.7 ConcurrentHashMap类所采用的是分段锁的思想，将HashMap进行切割，把HashMap中的哈希数组切分成小数组，这个小数组名叫Segment,每个Segment有n个HashEntry组成，其中Segment继承自ReentrantLock（可重入锁）,在操作的时候给Segment赋予了一个对象锁，从而保证多线程环境下并发操作安全。</p>
 <p>JDK1.8对HashMap做了改造，当冲突链表长度大于8时，会将链表转变成红黑树结构,JDK1.8中ConcurrentHashMap类取消了Segment分段锁，采用CAS+synchronized来保证并发安全，数据结构跟jdk1.8中HashMap结构类似，都是数组+链表（当链表长度大于8时，链表结构转为红黑二叉树）结构。ConcurrentHashMap中synchronized只锁定当前链表或红黑二叉树的首节点，只要节点hash不冲突，就不会产生并发，相比JDK1.7的ConcurrentHashMap效率又提升了N倍！</p>
-<h3 id="ConcurrentHashMap源码-amp-底层数据结构分析"><a href="#ConcurrentHashMap源码-amp-底层数据结构分析" class="headerlink" title="ConcurrentHashMap源码&amp;底层数据结构分析"></a>ConcurrentHashMap源码&amp;底层数据结构分析</h3><h4 id="1-ConcurrentHashMap-1-7"><a href="#1-ConcurrentHashMap-1-7" class="headerlink" title="1.ConcurrentHashMap 1.7"></a>1.ConcurrentHashMap 1.7</h4><h5 id="1-存储结构"><a href="#1-存储结构" class="headerlink" title="1.存储结构"></a>1.存储结构</h5><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java7_concurrenthashmap.png" alt="Java7 ConcurrentHashMap存储结构"></p>
+<h3 id="ConcurrentHashMap源码-amp-底层数据结构分析"><a href="#ConcurrentHashMap源码-amp-底层数据结构分析" class="headerlink" title="ConcurrentHashMap源码&amp;底层数据结构分析"></a>ConcurrentHashMap源码&amp;底层数据结构分析</h3><h4 id="ConcurrentHashMap-1-7"><a href="#ConcurrentHashMap-1-7" class="headerlink" title="ConcurrentHashMap 1.7"></a>ConcurrentHashMap 1.7</h4><h5 id="1-存储结构"><a href="#1-存储结构" class="headerlink" title="1.存储结构"></a>1.存储结构</h5><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java7_concurrenthashmap.png" alt="Java7 ConcurrentHashMap存储结构"></p>
 <p>Java7中ConcurrentHashMap的存储结构如上图，ConcurrnetHashMap由很多个Segment组合，而每一个Segment是一个类似于HashMap的结构，所以每一个HashMap的内部可以进行扩容。但是Segment的个数一旦<strong>初始化就不能改变</strong>，默认Segment的个数是16个，你也可以认为ConcurrentHashMap默认支持最多16个线程并发。</p>
 <h5 id="2-初始化"><a href="#2-初始化" class="headerlink" title="2.初始化"></a>2.初始化</h5><p>通过ConcurrentHashMap的无参构造探寻ConcurrentHashMap的初始化流程。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
@@ -1442,7 +1441,7 @@
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="2-ConcurrentHashMap-1-8"><a href="#2-ConcurrentHashMap-1-8" class="headerlink" title="2.ConcurrentHashMap 1.8"></a>2.ConcurrentHashMap 1.8</h4><h5 id="1-存储结构-1"><a href="#1-存储结构-1" class="headerlink" title="1.存储结构"></a>1.存储结构</h5><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java8_concurrenthashmap.png" alt="Java8 ConcurrentHashMap存储结构（图片来自javadoop）"></p>
+<h4 id="ConcurrentHashMap-1-8"><a href="#ConcurrentHashMap-1-8" class="headerlink" title="ConcurrentHashMap 1.8"></a>ConcurrentHashMap 1.8</h4><h5 id="1-存储结构-1"><a href="#1-存储结构-1" class="headerlink" title="1.存储结构"></a>1.存储结构</h5><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java8_concurrenthashmap.png" alt="Java8 ConcurrentHashMap存储结构（图片来自javadoop）"></p>
 <p>可以发现Java8的ConcurrentHashMap相对于Java7来说变化比较大，不再是之前的<strong>Segment数组+HashEntry数组+链表</strong>，而是<strong>Node数组+链表&#x2F;红黑树</strong>。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
 <h5 id="2-初始化initTable"><a href="#2-初始化initTable" class="headerlink" title="2.初始化initTable"></a>2.初始化initTable</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Initializes table, using the size recorded in sizeCtl.
@@ -1598,7 +1597,7 @@
 <li>如果是链表，遍历查找之。</li>
 </ol>
 <p>总的来说ConcurrentHashMap在Java8中相对于Java7来说变化还是挺大的。</p>
-<h4 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h4><p>Java7中ConcurrentHashMap使用的分段锁，也就是每一个Segment上同时只有一个线程可以操作，每一个Segment都是一个类似HashMap数组的结构，它可以扩容，它的冲突会转化为链表。但是Segment的个数一但初始化就不能改变。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Java7中ConcurrentHashMap使用的分段锁，也就是每一个Segment上同时只有一个线程可以操作，每一个Segment都是一个类似HashMap数组的结构，它可以扩容，它的冲突会转化为链表。但是Segment的个数一但初始化就不能改变。</p>
 <p>Java8中的ConcurrentHashMap使用的Synchronized锁加CAS的机制。结构也由Java7中的<strong>Segment数组+HashEntry数组+链表</strong>进化成了<strong>Node数组+链表&#x2F;红黑树</strong>，Node是类似于一个HashEntry的结构。它的冲突再达到一定大小时会转化成红黑树，在冲突小于一定数量时又退回链表。</p>
 <p>有些同学可能对Synchronized的性能存在疑问，其实Synchronized锁自从引入锁升级策略后，性能不再是问题，有兴趣的同学可以自己了解下Synchronized的锁升级。</p>
 <h3 id="ConcurrentHashMap和Hashtable的区别"><a href="#ConcurrentHashMap和Hashtable的区别" class="headerlink" title="ConcurrentHashMap和Hashtable的区别"></a>ConcurrentHashMap和Hashtable的区别</h3><p>ConcurrentHashMap和Hashtable的区别主要体现在实现线程安全的方式上不同。</p>

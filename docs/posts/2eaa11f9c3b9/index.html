@@ -537,24 +537,32 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><h5 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h5><ol>
-<li>安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">SELINUX</span><span class="token operator">=</span>disabled
+                <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h3><p>(1) 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">SELINUX</span><span class="token operator">=</span>disabled
 
-<span class="token assign-left variable">SELINUXTYPE</span><span class="token operator">=</span>targeted<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-<li>关闭防火墙</li>
-<li>安装容器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> docker-ce<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>启动服务<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>测试容器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run hello-world
-<span class="token comment"># PS: centos7安装命令 yum -y install docker-ce | ubuntu安装命令 apt install docker-ce</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-</ol>
-<h5 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h5><ol>
-<li><p><a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/">下载离线包</a></p>
-</li>
-<li><p>解压</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-xvf</span> docker-18.06.1-ce.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li><p>将解压出来的docker文件内容移动到&#x2F;usr&#x2F;bin&#x2F;目录下</p>
+<span class="token assign-left variable">SELINUXTYPE</span><span class="token operator">=</span>targeted<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>(2) 关闭防火墙</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl stop firewalld<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(3) 安装容器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> docker-ce<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(4) 启动服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(5) 测试容器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run hello-world
+<span class="token comment"># PS: centos7安装命令 yum -y install docker-ce | ubuntu安装命令 apt install docker-ce</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><p>(1) <a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/">下载离线包</a></p>
+<p>(2) 解压</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-xvf</span> docker-18.06.1-ce.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(3) 将解压出来的docker文件内容移动到&#x2F;usr&#x2F;bin&#x2F;目录下</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> docker/* /usr/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>4.将docker注册为service：</p>
+
+<p>(4) 将docker注册为service</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># vim /etc/systemd/system/docker.service</span>
 
 <span class="token comment"># lib/systemd/system、/usr/lib/systemd/system、/etc/systemd/system都可以，lib/systemd/system真实地址是/usr/lib/system/system地址，</span>
@@ -615,282 +623,283 @@
 <span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
 
 <span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>添加文件权限并启动docker</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x /etc/systemd/system/docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li><p>重载unit配置文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl daemon-reload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li><p>启动Docker</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li><p>设置开机自启</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li><p>查看Docker状态</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li><p>查看Docker版本</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token parameter variable">-v</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><h5 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h5><ul>
+
+<p>(5) 添加文件权限并启动docker</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x /etc/systemd/system/docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(6) 重载unit配置文件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl daemon-reload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(7) 启动Docker</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(8) 设置开机自启</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(9) 查看Docker状态</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(10) 查看Docker版本</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token parameter variable">-v</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h3><ul>
 <li><p>查看镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker images
--a :列出本地所有的镜像（含中间映像层，默认情况下，过滤掉中间映像层）；
---digests :显示镜像的摘要信息；
--f :显示满足条件的镜像；
---format :指定返回值的模板文件；
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> images
+<span class="token parameter variable">-a</span> :列出本地所有的镜像（含中间映像层，默认情况下，过滤掉中间映像层）；
+<span class="token parameter variable">--digests</span> :显示镜像的摘要信息；
+<span class="token parameter variable">-f</span> :显示满足条件的镜像；
+<span class="token parameter variable">--format</span> :指定返回值的模板文件；
 --no-trunc :显示完整的镜像信息；
--q :只显示镜像ID。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">-q</span> :只显示镜像ID。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>拉取镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker pull name:tag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull name:tag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>推送镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker push myapache:v1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> push myapache:v1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>导出镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker save -o &lt;保存路径&gt; &lt;镜像名称:标签&gt;
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> save <span class="token parameter variable">-o</span> <span class="token operator">&lt;</span>保存路径<span class="token operator">></span> <span class="token operator">&lt;</span>镜像名称:标签<span class="token operator">></span>
 
-docker save -o .&#x2F;ubuntu18.tar ubuntu:18.04<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token function">docker</span> save <span class="token parameter variable">-o</span> ./ubuntu18.tar ubuntu:18.04<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>导入镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker load -i 文件名 或者docker load --input 文件名
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> load <span class="token parameter variable">-i</span> 文件名 或者docker load <span class="token parameter variable">--input</span> 文件名
 
-docker load --input .&#x2F;ubuntu18.tar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token function">docker</span> load <span class="token parameter variable">--input</span> ./ubuntu18.tar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>删除镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker rmi images_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> rmi images_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>删除所有镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker rmi &#96;docker images -q&#96;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> rmi <span class="token variable"><span class="token variable">`</span><span class="token function">docker</span> images <span class="token parameter variable">-q</span><span class="token variable">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>搜索镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker search *<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> search *<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>查看指定镜像的创建历史</p>
-<pre class="line-numbers language-none"><code class="language-none">docker history [OPTIONS] IMAGE
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">history</span> <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> IMAGE
 
 OPTIONS说明：
--H :以可读的格式打印镜像大小和日期，默认为true；
+<span class="token parameter variable">-H</span> :以可读的格式打印镜像大小和日期，默认为true；
 --no-trunc :显示完整的提交记录；
--q :仅列出提交记录ID。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<span class="token parameter variable">-q</span> :仅列出提交记录ID。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h5 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h5><ul>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><ul>
 <li><p>查看正在运行的容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker ps 或者docker container ls<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> 或者docker container <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>查看所有容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker ps -a 或者 docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span> 或者 <span class="token function">docker</span> container <span class="token function">ls</span> <span class="token parameter variable">-a</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>导出容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker export &lt;容器名&gt; &gt; &lt;保存路径&gt;
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">export</span> <span class="token operator">&lt;</span>容器名<span class="token operator">></span> <span class="token operator">></span> <span class="token operator">&lt;</span>保存路径<span class="token operator">></span>
 
-或者docker export -o &lt;容器名&gt; &lt;保存路径&gt; -o :将输入内容写到文件。
-docker export ubuntu18 &gt; .&#x2F;ubuntu18.tar
+或者docker <span class="token builtin class-name">export</span> <span class="token parameter variable">-o</span> <span class="token operator">&lt;</span>容器名<span class="token operator">></span> <span class="token operator">&lt;</span>保存路径<span class="token operator">></span> <span class="token parameter variable">-o</span> :将输入内容写到文件。
+<span class="token function">docker</span> <span class="token builtin class-name">export</span> ubuntu18 <span class="token operator">></span> ./ubuntu18.tar
 将id为a404c6c174a2的容器按日期保存为tar文件
-docker export -o mysql-&#96;date +%Y%m%d&#96;.tar a404c6c174a2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">docker</span> <span class="token builtin class-name">export</span> <span class="token parameter variable">-o</span> mysql-<span class="token variable"><span class="token variable">`</span><span class="token function">date</span> +%Y%m%d<span class="token variable">`</span></span>.tar a404c6c174a2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>导入容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker import &lt;文件路径&gt; &lt;容器名&gt;
-docker import .&#x2F;ubuntu18.tar ubuntu18<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">import</span> <span class="token operator">&lt;</span>文件路径<span class="token operator">></span> <span class="token operator">&lt;</span>容器名<span class="token operator">></span>
+<span class="token function">docker</span> <span class="token function">import</span> ./ubuntu18.tar ubuntu18<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>删除容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker rm [OPTIONS] container_id
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">rm</span> <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> container_id
 
 OPTIONS说明：
--f :通过 SIGKILL 信号强制删除一个运行中的容器。
--l :移除容器间的网络连接，而非容器本身。
--v :删除与容器关联的卷。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">-f</span> :通过 SIGKILL 信号强制删除一个运行中的容器。
+<span class="token parameter variable">-l</span> :移除容器间的网络连接，而非容器本身。
+<span class="token parameter variable">-v</span> :删除与容器关联的卷。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>删除所有容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker rm $(docker ps -a -q) 
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">rm</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span> <span class="token parameter variable">-q</span><span class="token variable">)</span></span> 
 或者
-docker rm &#96;docker ps -a -q&#96;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token function">docker</span> <span class="token function">rm</span> <span class="token variable"><span class="token variable">`</span><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span> <span class="token parameter variable">-q</span><span class="token variable">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>启动容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker container start container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> container start container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>停止所有容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker stop $(docker ps -a -q)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> stop <span class="token variable"><span class="token variable">$(</span><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span> <span class="token parameter variable">-q</span><span class="token variable">)</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>杀掉运行中的容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker kill -s(可忽略) CONTAINER
--s :向容器发送一个信号 
-例：docker kill -s KILL mynginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">kill</span> -s<span class="token punctuation">(</span>可忽略<span class="token punctuation">)</span> CONTAINER
+<span class="token parameter variable">-s</span> :向容器发送一个信号 
+例：docker <span class="token function">kill</span> <span class="token parameter variable">-s</span> KILL mynginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>在运行的容器中执行命令</p>
-<pre class="line-numbers language-none"><code class="language-none">docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
-例如：进入容器 docker exec -itd 容器id &#x2F;bin&#x2F;bash
-（-d :分离模式: 在后台运行 -i :即使没有附加也保持STDIN 打开-t :分配一个伪终端）
-&#x2F;bin&#x2F;bash：在container中启动一个bash shell
-exit 退出bash shell<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> CONTAINER COMMAND <span class="token punctuation">[</span>ARG<span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+例如：进入容器 <span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-itd</span> 容器id /bin/bash
+（-d :分离模式: 在后台运行 <span class="token parameter variable">-i</span> :即使没有附加也保持STDIN 打开-t :分配一个伪终端）
+/bin/bash：在container中启动一个bash shell
+<span class="token builtin class-name">exit</span> 退出bash shell<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>暂停容器中所有的进程</p>
-<pre class="line-numbers language-none"><code class="language-none">docker pause container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pause container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>恢复容器中所有的进程</p>
-<pre class="line-numbers language-none"><code class="language-none">docker unpause container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> unpause container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>创建一个新的容器不运行</p>
-<pre class="line-numbers language-none"><code class="language-none">docker create 参数同docker run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> create 参数同docker run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>创建一个新的容器并运行</p>
-<pre class="line-numbers language-none"><code class="language-none">docker run
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run
 -i: 以交互模式运行容器，通常与-t同时使用
 -t: 为容器重新分配一个伪输入终端，通常与-i同时使用
--it 以交互模式运行
+<span class="token parameter variable">-it</span> 以交互模式运行
 -P: 随机端口映射，容器内部端口随机映射到主机的端口
--p: 指定端口映射，格式为：主机(宿主)端口:容器端口
--d 后台运行 并返回容器ID
+-p: 指定端口映射，格式为：主机<span class="token punctuation">(</span>宿主<span class="token punctuation">)</span>端口:容器端口
+<span class="token parameter variable">-d</span> 后台运行 并返回容器ID
 -v,--volume 挂载 主机目录:容器目录,绑定一个卷
--u,--user&#x3D;&quot;&quot;， 指定容器的用户
--a,--attach&#x3D;[]， 登录容器（必须是以docker run -d启动的容器）
--w,--workdir&#x3D;&quot;&quot;， 指定容器的工作目录
--c,--cpu-shares&#x3D;0， 设置容器CPU权重，在CPU共享场景使用
--e username&#x3D;&quot;ritchie&quot;,--env&#x3D;[] 设置环境变量容器中可以使用该环境变量
--m,--memory&#x3D;&quot;&quot;， 指定容器的内存上限
--P,--publish-all&#x3D;false，指定容器暴露的端口
--h,--hostname&#x3D;&quot;&quot;， 指定容器的主机名
---name&#x3D;”” 容器命名
---cap-add&#x3D;[]添加权限，权限清单详见：	http:&#x2F;&#x2F;linux.die.net&#x2F;man&#x2F;7&#x2F;capabilities
---cap-drop&#x3D;[]删除权限，权限清单详见：	http:&#x2F;&#x2F;linux.die.net&#x2F;man&#x2F;7&#x2F;capabilities
---cidfile&#x3D;&quot;&quot; 运行容器后,在指定文件中写入容器PID值，一种典型的监控系	统用法
---cpuset&#x3D;&quot;&quot;， 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU
---device&#x3D;[]， 添加主机设备给容器，相当于设备直通
---dns&#x3D;[]， 指定容器的dns服务器
---dns-search&#x3D;[]指定容器的dns搜索域名,写入到容器的&#x2F;etc&#x2F;resolv.conf文	件
---entrypoint&#x3D;&quot;&quot;， 覆盖image的入口点
---env-file&#x3D;[]， 从指定文件读入环境变量
---expose&#x3D;[]， 指定容器暴露的端口，即修改镜像的暴露端口
---link&#x3D;[]， 添加链接到另一个容器，使用其他容器的IP、env等信息
---lxc-conf&#x3D;[]， 指定容器的配置文件，只有在指定--exec-driver&#x3D;lxc时	使用
---net&#x3D;&quot;bridge&quot;， 容器网络设置:
+-u,--user<span class="token operator">=</span><span class="token string">""</span>， 指定容器的用户
+-a,--attach<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>， 登录容器（必须是以docker run -d启动的容器）
+-w,--workdir<span class="token operator">=</span><span class="token string">""</span>， 指定容器的工作目录
+-c,--cpu-shares<span class="token operator">=</span><span class="token number">0</span>， 设置容器CPU权重，在CPU共享场景使用
+<span class="token parameter variable">-e</span> <span class="token assign-left variable">username</span><span class="token operator">=</span><span class="token string">"ritchie"</span>,--env<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span> 设置环境变量容器中可以使用该环境变量
+-m,--memory<span class="token operator">=</span><span class="token string">""</span>， 指定容器的内存上限
+-P,--publish-all<span class="token operator">=</span>false，指定容器暴露的端口
+-h,--hostname<span class="token operator">=</span><span class="token string">""</span>， 指定容器的主机名
+<span class="token parameter variable">--name</span><span class="token operator">=</span>”” 容器命名
+--cap-add<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>添加权限，权限清单详见：	http://linux.die.net/man/7/capabilities
+--cap-drop<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>删除权限，权限清单详见：	http://linux.die.net/man/7/capabilities
+<span class="token parameter variable">--cidfile</span><span class="token operator">=</span><span class="token string">""</span> 运行容器后,在指定文件中写入容器PID值，一种典型的监控系	统用法
+<span class="token parameter variable">--cpuset</span><span class="token operator">=</span><span class="token string">""</span>， 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU
+<span class="token parameter variable">--device</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>， 添加主机设备给容器，相当于设备直通
+<span class="token parameter variable">--dns</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>， 指定容器的dns服务器
+--dns-search<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>指定容器的dns搜索域名,写入到容器的/etc/resolv.conf文	件
+<span class="token parameter variable">--entrypoint</span><span class="token operator">=</span><span class="token string">""</span>， 覆盖image的入口点
+--env-file<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>， 从指定文件读入环境变量
+<span class="token parameter variable">--expose</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>， 指定容器暴露的端口，即修改镜像的暴露端口
+<span class="token parameter variable">--link</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>， 添加链接到另一个容器，使用其他容器的IP、env等信息
+--lxc-conf<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>， 指定容器的配置文件，只有在指定--exec-driver<span class="token operator">=</span>lxc时	使用
+<span class="token parameter variable">--net</span><span class="token operator">=</span><span class="token string">"bridge"</span>， 容器网络设置:
 bridge 使用docker daemon指定的网桥
-host 容器使用主机的网络
-container:NAME_or_ID &gt; 使用其他容器的网路，共享IP和PORT等网络资源
-none 容器使用自己的网络（类似--net&#x3D;bridge），但是不进行配置
---privileged&#x3D;false指定容器是否为特权容器,特权容器拥有所有的capabilities
---restart&#x3D;&quot;no&quot;，指定容器停止后的重启策略:
+<span class="token function">host</span> 容器使用主机的网络
+container:NAME_or_ID <span class="token operator">></span> 使用其他容器的网路，共享IP和PORT等网络资源
+none 容器使用自己的网络（类似--net<span class="token operator">=</span>bridge），但是不进行配置
+<span class="token parameter variable">--privileged</span><span class="token operator">=</span>false指定容器是否为特权容器,特权容器拥有所有的capabilities
+<span class="token parameter variable">--restart</span><span class="token operator">=</span><span class="token string">"no"</span>，指定容器停止后的重启策略:
 no - 容器退出时不重启
 on-failure - 只在容器以非0状态码退出时重启。可选的，可以退出docker daemon尝试重启容器的次数
 always – 不管退出状态码是什么始终重启容器。当指定always时，docker daemon将无限次数地重启容器。容器也会在daemon启动时尝试重启，不管容器当时的状态如何。
 unless-stopped – 不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
---rm&#x3D;false指定容器停止后自动删除容器(不支持以docker run -d启动的容器)
---sig-proxy&#x3D;true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和	SIGKILL不能被代理<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">--rm</span><span class="token operator">=</span>false指定容器停止后自动删除容器<span class="token punctuation">(</span>不支持以docker run -d启动的容器<span class="token punctuation">)</span>
+--sig-proxy<span class="token operator">=</span>true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和	SIGKILL不能被代理<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>获取容器&#x2F;镜像的元数据</p>
-<pre class="line-numbers language-none"><code class="language-none">docker inspect [OPTIONS] NAME|ID [NAME|ID...]
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> inspect <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> NAME<span class="token operator">|</span>ID <span class="token punctuation">[</span>NAME<span class="token operator">|</span>ID<span class="token punctuation">..</span>.<span class="token punctuation">]</span>
 OPTIONS说明：
--f :指定返回值的模板文件。
--s :显示总的文件大小。
---type :为指定类型返回JSON。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">-f</span> :指定返回值的模板文件。
+<span class="token parameter variable">-s</span> :显示总的文件大小。
+<span class="token parameter variable">--type</span> :为指定类型返回JSON。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>查看容器中运行的进程信息</p>
-<pre class="line-numbers language-none"><code class="language-none">docker top container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">top</span> container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>连接到正在运行中的容器</p>
-<pre class="line-numbers language-none"><code class="language-none">docker attach container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> attach container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>阻塞运行直到容器停止，然后打印出它的退出代码</p>
-<pre class="line-numbers language-none"><code class="language-none">docker wait containser_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">wait</span> containser_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
-<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
 <li><p>从服务器获取实时事件</p>
-<pre class="line-numbers language-none"><code class="language-none">docker events OPTIONS
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> events OPTIONS
 
 OPTIONS说明：
--f ：根据条件过滤事件；
---since ：从指定的时间戳后显示所有事件;
---until ：流水时间显示到指定的时间为止；
-docker events --since&#x3D;&quot;1467302400&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">-f</span> ：根据条件过滤事件；
+<span class="token parameter variable">--since</span> ：从指定的时间戳后显示所有事件<span class="token punctuation">;</span>
+<span class="token parameter variable">--until</span> ：流水时间显示到指定的时间为止；
+<span class="token function">docker</span> events <span class="token parameter variable">--since</span><span class="token operator">=</span><span class="token string">"1467302400"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>查看日志</p>
-<pre class="line-numbers language-none"><code class="language-none">docker logs [OPTIONS] CONTAINER
---details 显示更多的信息
--f, --follow 跟踪实时日志
---since string 显示自某个timestamp之后的日志，或相对时间，如42m（即42分钟）
---tail string 从日志末尾显示多少行日志，默认是all
--t, --timestamps 显示时间戳
---until string 显示自某个timestamp之前的日志，或相对时间，如42m（即42分钟）
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> logs <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> CONTAINER
+<span class="token parameter variable">--details</span> 显示更多的信息
+-f, <span class="token parameter variable">--follow</span> 跟踪实时日志
+<span class="token parameter variable">--since</span> string 显示自某个timestamp之后的日志，或相对时间，如42m（即42分钟）
+<span class="token parameter variable">--tail</span> string 从日志末尾显示多少行日志，默认是all
+-t, <span class="token parameter variable">--timestamps</span> 显示时间戳
+<span class="token parameter variable">--until</span> string 显示自某个timestamp之前的日志，或相对时间，如42m（即42分钟）
 
 查看指定时间后的日志，只显示最后100行：
-docker logs -f -t --since&#x3D;&quot;2018-02-08&quot; --tail&#x3D;100 CONTAINER_ID
+<span class="token function">docker</span> logs <span class="token parameter variable">-f</span> <span class="token parameter variable">-t</span> <span class="token parameter variable">--since</span><span class="token operator">=</span><span class="token string">"2018-02-08"</span> <span class="token parameter variable">--tail</span><span class="token operator">=</span><span class="token number">100</span> CONTAINER_ID
 查看最近30分钟的日志:
-docker logs --since 30m CONTAINER_ID
+<span class="token function">docker</span> logs <span class="token parameter variable">--since</span> 30m CONTAINER_ID
 查看某时间之后的日志：
-docker logs -t --since&#x3D;&quot;2018-02-08T13:23:37&quot; CONTAINER_ID
+<span class="token function">docker</span> logs <span class="token parameter variable">-t</span> <span class="token parameter variable">--since</span><span class="token operator">=</span><span class="token string">"2018-02-08T13:23:37"</span> CONTAINER_ID
 查看某时间段日志：
-docker logs -t --since&#x3D;&quot;2018-02-08T13:23:37&quot; --until &quot;2018-02-09T12:23:37&quot; CONTAINER_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">docker</span> logs <span class="token parameter variable">-t</span> <span class="token parameter variable">--since</span><span class="token operator">=</span><span class="token string">"2018-02-08T13:23:37"</span> <span class="token parameter variable">--until</span> <span class="token string">"2018-02-09T12:23:37"</span> CONTAINER_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>列出指定的容器的端口映射</p>
-<pre class="line-numbers language-none"><code class="language-none">docker port container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> port container_id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>提交</p>
-<pre class="line-numbers language-none"><code class="language-none">docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> commit <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> CONTAINER <span class="token punctuation">[</span>REPOSITORY<span class="token punctuation">[</span>:TAG<span class="token punctuation">]</span><span class="token punctuation">]</span>
 
 OPTIONS说明：
--a :提交的镜像作者；
--c :使用Dockerfile指令来创建镜像；
--m :提交时的说明文字；
--p :在commit时，将容器暂停。
+<span class="token parameter variable">-a</span> :提交的镜像作者；
+<span class="token parameter variable">-c</span> :使用Dockerfile指令来创建镜像；
+<span class="token parameter variable">-m</span> :提交时的说明文字；
+<span class="token parameter variable">-p</span> :在commit时，将容器暂停。
 
 将容器a404c6c174a2 保存为新的镜像,并添加提交人信息和说明信息。
-docker commit -a &quot;runoob.com&quot; -m &quot;my apache&quot; a404c6c174a2 mymysql:v1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">docker</span> commit <span class="token parameter variable">-a</span> <span class="token string">"runoob.com"</span> <span class="token parameter variable">-m</span> <span class="token string">"my apache"</span> a404c6c174a2 mymysql:v1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>容器与主机之间的数据拷贝</p>
-<pre class="line-numbers language-none"><code class="language-none">将主机&#x2F;www&#x2F;runoob目录拷贝到容器96f7f14e99ab的&#x2F;www目录下。
-docker cp &#x2F;www&#x2F;runoob 96f7f14e99ab:&#x2F;www&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。
+<span class="token function">docker</span> <span class="token function">cp</span> /www/runoob 96f7f14e99ab:/www/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>查看容器文件结构更改</p>
-<pre class="line-numbers language-none"><code class="language-none">docker diff mymysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">diff</span> mymysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>使用 Dockerfile 创建镜像</p>
-<pre class="line-numbers language-none"><code class="language-none">docker build
---build-arg&#x3D;[] :设置镜像创建时的变量；
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build
+--build-arg<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span> :设置镜像创建时的变量；
 --cpu-shares :设置 cpu 使用权重；
 --cpu-period :限制 CPU CFS周期；
 --cpu-quota :限制 CPU CFS配额；
 --cpuset-cpus :指定使用的CPU id；
 --cpuset-mems :指定使用的内存 id；
 --disable-content-trust :忽略校验，默认开启；
--f :指定要使用的Dockerfile路径；
+<span class="token parameter variable">-f</span> :指定要使用的Dockerfile路径；
 --force-rm :设置镜像过程中删除中间容器；
---isolation :使用容器隔离技术；
---label&#x3D;[] :设置镜像使用的元数据；
--m :设置内存最大值；
---memory-swap :设置Swap的最大值为内存+swap，&quot;-1&quot;表示不限swap；
+<span class="token parameter variable">--isolation</span> :使用容器隔离技术；
+<span class="token parameter variable">--label</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span> :设置镜像使用的元数据；
+<span class="token parameter variable">-m</span> :设置内存最大值；
+--memory-swap :设置Swap的最大值为内存+swap，<span class="token string">"-1"</span>表示不限swap；
 --no-cache :创建镜像的过程不使用缓存；
---pull :尝试去更新镜像的新版本；
---quiet, -q :安静模式，成功后只输出镜像 ID；
---rm :设置镜像成功后删除中间容器；
---shm-size :设置&#x2F;dev&#x2F;shm的大小，默认值是64M；
---ulimit :Ulimit配置。
---squash :将Dockerfile中所有的操作压缩为一层。
+<span class="token parameter variable">--pull</span> :尝试去更新镜像的新版本；
+--quiet, <span class="token parameter variable">-q</span> :安静模式，成功后只输出镜像 ID；
+<span class="token parameter variable">--rm</span> :设置镜像成功后删除中间容器；
+--shm-size :设置/dev/shm的大小，默认值是64M；
+<span class="token parameter variable">--ulimit</span> :Ulimit配置。
+<span class="token parameter variable">--squash</span> :将Dockerfile中所有的操作压缩为一层。
 --tag, -t: 镜像的名字及标签，通常name:tag或者name格式；可以在一次构建中为一个镜像设置多个标签。
 --network: 默认default。在构建期间设置RUN指令的网络模式<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>登陆到一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库 Docker Hub</p>
-<pre class="line-numbers language-none"><code class="language-none">docker login -u -p
--u 登陆的用户名 -p :登陆的密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> login <span class="token parameter variable">-u</span> <span class="token parameter variable">-p</span>
+<span class="token parameter variable">-u</span> 登陆的用户名 <span class="token parameter variable">-p</span> :登陆的密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>登出一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库Docker Hub</p>
-<pre class="line-numbers language-none"><code class="language-none">docker logout<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">logout</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>标记本地镜像，将其归入某一仓库</p>
-<pre class="line-numbers language-none"><code class="language-none">docker tag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> tag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
-<h4 id="docker加速命令"><a href="#docker加速命令" class="headerlink" title="docker加速命令"></a>docker加速命令</h4><pre class="line-numbers language-none"><code class="language-none">curl -sSL https:&#x2F;&#x2F;get.daocloud.io&#x2F;daotools&#x2F;set_mirror.sh | sh -s http:&#x2F;&#x2F;f1361db2.m.daocloud.io
+<h2 id="docker加速命令"><a href="#docker加速命令" class="headerlink" title="docker加速命令"></a>docker加速命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-sSL</span> https://get.daocloud.io/daotools/set_mirror.sh <span class="token operator">|</span> <span class="token function">sh</span> <span class="token parameter variable">-s</span> http://f1361db2.m.daocloud.io
 或
-vim &#x2F;etc&#x2F;docker&#x2F;daemon.json
-&#123;
-  &quot;registry-mirrors&quot;: [&quot;https:&#x2F;&#x2F;registry.docker-cn.com&quot;]
-&#125;
-
-其他站点
-http:&#x2F;&#x2F;hub-mirror.c.163.com
-https:&#x2F;&#x2F;3laho3y3.mirror.aliyuncs.com
-http:&#x2F;&#x2F;f1361db2.m.daocloud.io
-https:&#x2F;&#x2F;mirror.ccs.tencentyun.com
-https:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="与Spring-Boot"><a href="#与Spring-Boot" class="headerlink" title="与Spring Boot"></a>与Spring Boot</h4><ul>
+<span class="token function">vim</span> /etc/docker/daemon.json
+<span class="token punctuation">&#123;</span>
+  <span class="token string">"registry-mirrors"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span><span class="token string">"https://registry.docker-cn.com"</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>其他站点<br><a target="_blank" rel="noopener" href="http://hub-mirror.c.163.com/">http://hub-mirror.c.163.com</a><br><a target="_blank" rel="noopener" href="https://3laho3y3.mirror.aliyuncs.com/">https://3laho3y3.mirror.aliyuncs.com</a><br><a target="_blank" rel="noopener" href="http://f1361db2.m.daocloud.io/">http://f1361db2.m.daocloud.io</a><br><a target="_blank" rel="noopener" href="https://mirror.ccs.tencentyun.com/">https://mirror.ccs.tencentyun.com</a><br><a target="_blank" rel="noopener" href="https://docker.mirrors.ustc.edu.cn/">https://docker.mirrors.ustc.edu.cn</a></p>
+</blockquote>
+<h2 id="与Spring-Boot"><a href="#与Spring-Boot" class="headerlink" title="与Spring Boot"></a>与Spring Boot</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/15ZAVUg5DfcF53QpEetT7Q">一键部署Spring Boot到远程Docker容器</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dP-c3twzR0PMUvPWZA-U0Q">Jenkins+Docker一键自动化部署SpringBoot项目</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CXUwpTbAVoXEeB7EcrCjAw">搭建SpringBoot项目并将其Docker化</a></li>
@@ -900,7 +909,7 @@ https:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn<span aria-hidden="true" class="line
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/01SZo3NNf5zuAC8wAI6C-g">还在手动部署springboot项目？不妨试试它，让你部署项目飞起来！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HSRIYQVKR9TGtwetd3LU5w">Docker+Spring Boot+FastDFS搭建一套分布式文件服务器，太强了！</a></li>
 </ul>
-<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><ul>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ELZo2z4fHonoBGXQI0M9CA">图解Docker架构，傻瓜都能看懂！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gmZDBuYDXnNdykEx66Y0Cw">构建Java镜像的10个最佳实践</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LOmqsoBJd7h1HPwf0i1uwQ">10个冷门但又非常实用的Docker使用技巧！！</a></li>
@@ -1178,7 +1187,13 @@ https:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn<span aria-hidden="true" class="line
                         
                             SQL查询慢的原因
 sql没加索引
-sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，可能导致索引失效,like通配符可能导致索引失效,查询条件不满足联合索引的最左匹配原则,在索引列上使用mysql的内置函数,对索引进行列运算（
+sql索引不生效:
+隐式的类型转换，索引失效,
+查询条件包含or，可能导致索引失效,
+like通配符可能导致索引失效,
+查询条件不满足联合索引的最左匹配原则,
+在索引列上使用mysql的内置函数,
+对索引
                         
 
                     </div>

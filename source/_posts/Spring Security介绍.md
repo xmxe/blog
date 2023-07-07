@@ -40,15 +40,15 @@ img: https://picd.zhimg.com/v2-f9c4c6b8a4b0f096032990926e1f0a1a_1440w.jpg
 
 1. Spring Security支持多种用户认证的方式，最常用的是基于用户名和密码的用户认证方式，其认证流程如下图所示：
 
-![](images/rzlc.png)
+    ![](images/rzlc.png)
 
 2. “记住我”功能的认证流程如下图所示：
 
-![](images/rememberme.png)
+    ![](images/rememberme.png)
 
 3. Spring Security的用户认证流程是由一系列的过滤器链来实现的，默认的关于用户认证的过滤器链大致如下图所示：
 
-![](images/filterchain.png)
+    ![](images/filterchain.png)
 
 
 | SpringSecurity采用的是责任链的设计模式， | 它有一条很长的过滤器链。                                     |
@@ -69,8 +69,8 @@ img: https://picd.zhimg.com/v2-f9c4c6b8a4b0f096032990926e1f0a1a_1440w.jpg
 | FilterSecurityInterceptor                 | 可以看做过滤器链的出口                                       |
 | RememberMeAuthenticationFilter            | 当用户没有登录而直接访问资源时,从cookie里找出用户的信息,如果Spring Security能够识别出用户提供的remember me cookie,用户将不必填写用户名和密码,而是直接登录进入系统，该过滤器默认不开启。|
 
-- [spring security的认证和授权流程](https://blog.csdn.net/u011066470/article/details/119086893)
-- [一文带你搞懂Spring Security认证授权流程](https://zhuanlan.zhihu.com/p/502290821)
+> [spring security的认证和授权流程](https://blog.csdn.net/u011066470/article/details/119086893)
+> [一文带你搞懂Spring Security认证授权流程](https://zhuanlan.zhihu.com/p/502290821)
 
 ---
 

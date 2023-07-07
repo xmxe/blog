@@ -805,10 +805,10 @@ MySQL8.x中实现的索引新特性：
 
 唯一索引，普通索引，前缀索引等索引属于二级索引。
 
-1. **唯一索引(UniqueKey)**：唯一索引也是一种约束。唯一索引的属性列不能出现重复的数据，但是允许数据为NULL，一张表允许创建多个唯一索引。建立唯一索引的目的大部分时候都是为了该属性列的数据的唯一性，而不是为了查询效率。
-2. **普通索引(Index)**：普通索引的唯一作用就是为了快速查询数据，一张表允许创建多个普通索引，并允许数据重复和NULL。
-3. **前缀索引(Prefix)**：前缀索引只适用于字符串类型的数据。前缀索引是对文本的前几个字符创建索引，相比普通索引建立的数据更小，因为只取前几个字符。
-4. **全文索引(FullText)**：全文索引主要是为了检索大文本数据中的关键字的信息，是目前搜索引擎数据库使用的一种技术。Mysql5.6之前只有MYISAM引擎支持全文索引，5.6之后InnoDB也支持了全文索引。
+1. **唯一索引（UniqueKey）**：唯一索引也是一种约束。唯一索引的属性列不能出现重复的数据，但是允许数据为NULL，一张表允许创建多个唯一索引。建立唯一索引的目的大部分时候都是为了该属性列的数据的唯一性，而不是为了查询效率。
+2. **普通索引（Index）**：普通索引的唯一作用就是为了快速查询数据，一张表允许创建多个普通索引，并允许数据重复和NULL。
+3. **前缀索引（Prefix）**：前缀索引只适用于字符串类型的数据。前缀索引是对文本的前几个字符创建索引，相比普通索引建立的数据更小，因为只取前几个字符。
+4. **全文索引（FullText）**：全文索引主要是为了检索大文本数据中的关键字的信息，是目前搜索引擎数据库使用的一种技术。Mysql5.6之前只有MYISAM引擎支持全文索引，5.6之后InnoDB也支持了全文索引。
 
 二级索引:
 
@@ -853,7 +853,7 @@ MySQL8.x中实现的索引新特性：
 **缺点**：
 
 - **依赖于有序的数据**：跟聚簇索引一样，非聚簇索引也依赖于有序的数据
-- **可能会二次查询(回表)**：这应该是非聚簇索引最大的缺点了。当查到索引对应的指针或主键后，可能还需要根据指针或主键再到数据文件或表中查询。
+- **可能会二次查询（回表）**：这应该是非聚簇索引最大的缺点了。当查到索引对应的指针或主键后，可能还需要根据指针或主键再到数据文件或表中查询。
 
 这是MySQL的表的文件截图:
 
@@ -958,7 +958,7 @@ ALTER TABLE cus_order ADD INDEX id_score_name(score, name);
 
 通过Extra这一列的Using index，说明这条SQL语句成功使用了覆盖索引。
 
-关于EXPLAIN命令的详细介绍请看：[MySQL执行计划分析](https://javaguide.cn/database/mysql/mysql-query-execution-plan.html)这篇文章。
+> 关于EXPLAIN命令的详细介绍请看：[MySQL执行计划分析](https://javaguide.cn/database/mysql/mysql-query-execution-plan.html)这篇文章。
 
 #### 联合索引
 
@@ -1123,9 +1123,7 @@ redo log（重做日志）是InnoDB存储引擎独有的，它让MySQL拥有了�
 
 ![img](https://oss.javaguide.cn/github/javaguide/02.png)
 
-MySQL中数据是以页为单位，你查询一条记录，会从硬盘把一页的数据加载出来，加载出来的数据叫数据页，会放入到Buffer Pool中。
-
-后续的查询都是先从Buffer Pool中找，没有命中再去硬盘加载，减少硬盘IO开销，提升性能。更新表数据的时候，也是如此，发现Buffer Pool里存在要更新的数据，就直接在Buffer Pool里更新。然后会把“在某个数据页上做了什么修改”记录到重做日志缓存（redo log buffer）里，接着刷盘到redo log文件里。
+MySQL中数据是以页为单位，你查询一条记录，会从硬盘把一页的数据加载出来，加载出来的数据叫数据页，会放入到Buffer Pool中。后续的查询都是先从Buffer Pool中找，没有命中再去硬盘加载，减少硬盘IO开销，提升性能。更新表数据的时候，也是如此，发现Buffer Pool里存在要更新的数据，就直接在Buffer Pool里更新。然后会把“在某个数据页上做了什么修改”记录到重做日志缓存（redo log buffer）里，接着刷盘到redo log文件里。
 
 ![img](https://oss.javaguide.cn/github/javaguide/03.png)
 
@@ -1407,10 +1405,6 @@ private:
 - m_ids：Read View创建时其他未提交的活跃事务ID列表。创建Read View时，将当前未提交事务ID记录下来，后续即使它们修改了记录行的值，对于当前事务也是不可见的。m_ids不包括当前事务自己和已提交的事务（正在内存中）
 - m_creator_trx_id：创建该Read View的事务ID
 
-**事务可见性示意图**（[图源](https://leviathan.vip/2019/03/20/InnoDB的事务分析-MVCC/#MVCC-1)）：
-
-![trans_visible](https://javaguide.cn/assets/trans_visible.048192c5.png)
-
 #### undo-log
 
 undo log主要有两个作用：
@@ -1422,32 +1416,20 @@ undo log主要有两个作用：
 
 1. **insert undo log**：指在insert操作中产生的undo log。因为insert操作的记录只对事务本身可见，对其他事务不可见，故该undo log可以在事务提交后直接删除。不需要进行purge操作。insert时的数据初始状态：
 
-![img](https://javaguide.cn/assets/317e91e1-1ee1-42ad-9412-9098d5c6a9ad.dc43aed3.png)
-
 2. **update undo log**：update或delete操作中产生的undo log。该undo log可能需要提供MVCC机制，因此不能在事务提交时就进行删除。提交时放入undo log链表，等待purge线程进行最后的删除
-
-**数据第一次被修改时：**
-
-![img](https://javaguide.cn/assets/c52ff79f-10e6-46cb-b5d4-3c9cbcc1934a.b60a6e78.png)
-
-**数据第二次被修改时：**
-
-![img](https://javaguide.cn/assets/6a276e7a-b0da-4c7b-bdf7-c0c7b7b3b31c.2e496ea1.png)
 
 不同事务或者相同事务的对同一记录行的修改，会使该记录行的undo log成为一条链表，链首就是最新的记录，链尾就是最早的旧记录。
 
 #### 数据可见性算法
 
-在InnoDB存储引擎中，创建一个新事务后，执行每个select语句前，都会创建一个快照（ReadView），**快照中保存了当前数据库系统中正处于活跃（没有commit）的事务的ID号**。其实简单的说保存的是系统中当前不应该被本事务看到的其他事务ID列表（即m_ids）。当用户在这个事务中要读取某个记录行的时候，InnoDB会将该记录行的DB_TRX_ID与Read View中的一些变量及当前事务ID进行比较，判断是否满足可见性条件。[具体的比较算法](https://github.com/facebook/mysql-8.0/blob/8.0/storage/innobase/include/read0types.h#L161)如下([图源](https://leviathan.vip/2019/03/20/InnoDB的事务分析-MVCC/#MVCC-1))：
-
-![img](https://javaguide.cn/assets/8778836b-34a8-480b-b8c7-654fe207a8c2.3d84010e.png)
+在InnoDB存储引擎中，创建一个新事务后，执行每个select语句前，都会创建一个快照（ReadView），**快照中保存了当前数据库系统中正处于活跃（没有commit）的事务的ID号**。其实简单的说保存的是系统中当前不应该被本事务看到的其他事务ID列表（即m_ids）。当用户在这个事务中要读取某个记录行的时候，InnoDB会将该记录行的DB_TRX_ID与Read View中的一些变量及当前事务ID进行比较，判断是否满足可见性条件。
 
 1. 如果记录DB_TRX_ID< m_up_limit_id，那么表明最新修改该行的事务（DB_TRX_ID）在当前事务创建快照之前就提交了，所以该记录行的值对当前事务是可见的
 2. 如果DB_TRX_ID>=m_low_limit_id，那么表明最新修改该行的事务（DB_TRX_ID）在当前事务创建快照之后才修改该行，所以该记录行的值对当前事务不可见。跳到步骤5
 3. m_ids为空，则表明在当前事务创建快照之前，修改该行的事务就已经提交了，所以该记录行的值对当前事务是可见的
 4. 如果m_up_limit_id<=DB_TRX_ID< m_low_limit_id，表明最新修改该行的事务（DB_TRX_ID）在当前事务创建快照的时候可能处于“活动状态”或者“已提交状态”；所以就要对活跃事务列表m_ids进行查找（源码中是用的二分查找，因为是有序的）
-- 如果在活跃事务列表m_ids中能找到DB_TRX_ID，表明：①在当前事务创建快照前，该记录行的值被事务ID为DB_TRX_ID的事务修改了，但没有提交；或者②在当前事务创建快照后，该记录行的值被事务ID为DB_TRX_ID的事务修改了。这些情况下，这个记录行的值对当前事务都是不可见的。跳到步骤5
-- 在活跃事务列表中找不到，则表明“id为trx_id的事务”在修改“该记录行的值”后，在“当前事务”创建快照前就已经提交了，所以记录行对当前事务可见
+    - 如果在活跃事务列表m_ids中能找到DB_TRX_ID，表明：①在当前事务创建快照前，该记录行的值被事务ID为DB_TRX_ID的事务修改了，但没有提交；或者②在当前事务创建快照后，该记录行的值被事务ID为DB_TRX_ID的事务修改了。这些情况下，这个记录行的值对当前事务都是不可见的。跳到步骤5
+    - 在活跃事务列表中找不到，则表明“id为trx_id的事务”在修改“该记录行的值”后，在“当前事务”创建快照前就已经提交了，所以记录行对当前事务可见
 5. 在该记录行的DB_ROLL_PTR指针所指向的undolog取出快照记录，用快照记录的DB_TRX_ID跳到步骤1重新开始判断，直到找到满足的快照版本或返回空
 
 ### RC和RR隔离级别下MVCC的差异
@@ -1459,9 +1441,7 @@ undo log主要有两个作用：
 
 ### MVCC解决不可重复读问题
 
-虽然RC和RR都通过MVCC来读取快照数据，但由于生成Read View时机不同，从而在RR级别下实现可重复读。举个例子：
-
-![img](https://javaguide.cn/assets/6fb2b9a1-5f14-4dec-a797-e4cf388ed413.ea9e47d7.png)
+虽然RC和RR都通过MVCC来读取快照数据，但由于生成Read View时机不同，从而在RR级别下实现可重复读。
 
 #### 在RC下Read View生成情况
 
@@ -1469,7 +1449,7 @@ undo log主要有两个作用：
 
 ![img](https://javaguide.cn/assets/a3fd1ec6-8f37-42fa-b090-7446d488fd04.bf41f07c.png)
 
-由于RC级别下每次查询都会生成Read View，并且事务101、102并未提交，此时103事务生成的Read View中活跃的事务**m_ids为：[101,102]**，m_low_limit_id为：104，m_up_limit_id为：101，m_creator_trx_id为：103
+由于RC级别下每次查询都会生成Read View，并且事务101、102并未提交，此时103事务生成的Read View中活跃的事务m_ids为：[101,102]，m_low_limit_id为：104，m_up_limit_id为：101，m_creator_trx_id为：103
 
 - 此时最新记录的DB_TRX_ID为101，m_up_limit_id<=101< m_low_limit_id，所以要在m_ids列表中查找，发现DB_TRX_ID存在列表中，那么这个记录不可见
 - 根据DB_ROLL_PTR找到undo log中的上一版本记录，上一条记录的DB_TRX_ID还是101，不可见
@@ -1479,7 +1459,7 @@ undo log主要有两个作用：
 
 ![img](https://javaguide.cn/assets/528559e9-dae8-4d14-b78d-a5b657c88391.2ff79120.png)
 
-因为在RC级别下，重新生成Read View，这时事务101已经提交，102并未提交，所以此时Read View中活跃的事务**m_ids：[102]**，m_low_limit_id为：104，m_up_limit_id为：102，m_creator_trx_id为：103
+因为在RC级别下，重新生成Read View，这时事务101已经提交，102并未提交，所以此时Read View中活跃的事务m_ids：[102]，m_low_limit_id为：104，m_up_limit_id为：102，m_creator_trx_id为：103
 
 - 此时最新记录的DB_TRX_ID为102，m_up_limit_id<=102< m_low_limit_id，所以要在m_ids列表中查找，发现DB_TRX_ID存在列表中，那么这个记录不可见
 - 根据DB_ROLL_PTR找到undo log中的上一版本记录，上一条记录的DB_TRX_ID为101，满足101< m_up_limit_id，记录可见，所以在T6时间点查询到数据为name=李四，与时间T4查询到的结果不一致，不可重复读！
@@ -1523,7 +1503,7 @@ undo log主要有两个作用：
 
 ![img](https://javaguide.cn/assets/cbbedbc5-0e3c-4711-aafd-7f3d68a4ed4e.7b4a86c0.png)
 
-此时情况跟T6完全一样，由于已经生成了Read View，此时依然沿用**m_ids：[101,102]**，所以查询结果依然是name=菜花
+此时情况跟T6完全一样，由于已经生成了Read View，此时依然沿用m_ids：[101,102]，所以查询结果依然是name=菜花
 
 ### MVCC➕Next-key-Lock防止幻读
 
@@ -1859,17 +1839,11 @@ MySQL中的查询缓存虽然能够提升数据库的查询性能，但是查询
 
 ### 什么是执行计划？
 
-**执行计划**是指一条SQL语句在经过**MySQL查询优化器**的优化会后，具体的执行方式。
-
-执行计划通常用于SQL性能分析、优化等场景。通过EXPLAIN的结果，可以了解到如数据表的查询顺序、数据查询操作的操作类型、哪些索引可以被命中、哪些索引实际会命中、每个数据表有多少行记录被查询等信息。
+**执行计划**是指一条SQL语句在经过**MySQL查询优化器**的优化会后，具体的执行方式。执行计划通常用于SQL性能分析、优化等场景。通过EXPLAIN的结果，可以了解到如数据表的查询顺序、数据查询操作的操作类型、哪些索引可以被命中、哪些索引实际会命中、每个数据表有多少行记录被查询等信息。
 
 ### 如何获取执行计划？
 
-MySQL为我们提供了EXPLAIN命令，来获取执行计划的相关信息。
-
-需要注意的是，EXPLAIN语句并不会真的去执行相关的语句，而是通过查询优化器对语句进行分析，找出最优的查询方案，并显示对应的信息。
-
-EXPLAIN执行计划支持SELECT、DELETE、INSERT、REPLACE以及UPDATE语句。我们一般多用于分析SELECT查询语句，使用起来非常简单，语法如下：
+MySQL为我们提供了EXPLAIN命令，来获取执行计划的相关信息。需要注意的是，EXPLAIN语句并不会真的去执行相关的语句，而是通过查询优化器对语句进行分析，找出最优的查询方案，并显示对应的信息。EXPLAIN执行计划支持SELECT、DELETE、INSERT、REPLACE以及UPDATE语句。我们一般多用于分析SELECT查询语句，使用起来非常简单，语法如下：
 
 
 ```sql
@@ -1975,7 +1949,7 @@ rows列表示根据表统计信息及选用情况，大致估算出找到所需�
 - **Using index**：表明查询使用了覆盖索引，不用回表，查询效率非常高。
 - **Using index condition**：表示查询优化器选择使用了索引条件下推这个特性。
 - **Using where**：表明查询使用了WHERE子句进行条件过滤。一般在没有使用到索引的时候会出现。
-- **Using join buffer(Block Nested Loop)**：连表查询的方式，表示当被驱动表的没有使用索引的时候，MySQL会先将驱动表读出来放到joinbuffer中，再遍历被驱动表与驱动表进行查询。
+- **Using join buffer（Block Nested Loop）**：连表查询的方式，表示当被驱动表的没有使用索引的时候，MySQL会先将驱动表读出来放到joinbuffer中，再遍历被驱动表与驱动表进行查询。
 
 这里提醒下，当Extra列包含Using file sort或Using temporary时，MySQL的性能可能会存在问题，需要尽可能避免
 

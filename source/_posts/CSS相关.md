@@ -40,7 +40,8 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
   /* 可以给要居中的元素设置一些样式 */
 }
 ```
-[42种前端常用布局方案总结※](https://mp.weixin.qq.com/s/5ZSMlbjcvaMksx4zakhgzA)
+> [42种前端常用布局方案总结※](https://mp.weixin.qq.com/s/5ZSMlbjcvaMksx4zakhgzA)
+> [如何用一行CSS实现10种现代布局？](https://mp.weixin.qq.com/s/3yToJq5N8-8SXb0nPDL47g)
 
 ## n个元素等比例在一行展示
 
@@ -190,7 +191,7 @@ page {
     }
 }
 ```
-[超精美渐变色动态背景完整示例](https://blog.csdn.net/A757291228/article/details/124611342)
+> [超精美渐变色动态背景完整示例](https://blog.csdn.net/A757291228/article/details/124611342)
 
 ## 文字自动换行
 
@@ -221,7 +222,7 @@ page {
     white-space: normal;
 }
 ```
-[前端正确处理“文字溢出”的思路](https://mp.weixin.qq.com/s/7-NxE7K6QPSPLHEKW8ME8g)
+> [前端正确处理“文字溢出”的思路](https://mp.weixin.qq.com/s/7-NxE7K6QPSPLHEKW8ME8g)
 
 ## 动画@keyframes
 
@@ -410,7 +411,7 @@ a{
 ::selection /*例: p::selection 选择用户选择的元素部分。*/
 ::marker /*例: li::marker {content:'>';} 把li前面的'•'变成'>'*/
 ```
-[CSS伪元素](https://www.w3school.com.cn/css/css_pseudo_elements.asp)
+> [CSS伪元素](https://www.w3school.com.cn/css/css_pseudo_elements.asp)
 
 ## 21个超实用的CSS技巧
 

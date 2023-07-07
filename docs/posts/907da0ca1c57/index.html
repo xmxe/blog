@@ -595,6 +595,7 @@ collation-server<span class="token operator">=</span>utf8mb4_unicode_ci
 <p>进入安装mysql软件目录<code>cd mysql/</code>,修改目录拥有者为mysql用户<code>chown -R mysql:mysql ./</code></p>
 <h5 id="5-6版本"><a href="#5-6版本" class="headerlink" title="5.6版本"></a>5.6版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># --defaults-file指定配置文件 --basedir指定Mysql安装目录 --datadir指定数据目录 --user所属用户</span>
 ./scripts/mysql_install_db <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>此处可能出现错误</p>
 <p><strong>错误1</strong>：命令报错<code>-bash: ./scripts/mysql_install_db: /usr/bin/perl: bad interpreter: No such file or directory.</code>貌似提示注释器错误，没有&#x2F;usr&#x2F;bin&#x2F;perl文件或者档案<br><strong>解决办法</strong>:（安装perl跟perl-devel即可）：执行<strong>yum -y install perl perl-devel</strong>后在初始化数据库即可。</p>
@@ -668,15 +669,18 @@ GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'myuser'</span>@<span 
 日志文件：&#x2F;var&#x2F;log&#x2F;var&#x2F;log&#x2F;mysqld.log
 服务启动脚本：&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;mysqld.service
 socket文件：&#x2F;var&#x2F;run&#x2F;mysqld&#x2F;mysqld.pid<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h3><h4 id="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"><a href="#一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包" class="headerlink" title="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"></a>一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包</h4><ol>
-<li>把上面的rpm文件下载下来放到服务器上,或者在linux系统中通过wget命令下载</li>
-</ol>
+<h3 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h3><h4 id="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"><a href="#一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包" class="headerlink" title="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"></a>一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包</h4><p>(1) 把上面的rpm文件下载下来放到服务器上,或者在linux系统中通过wget命令下载</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ol start="2">
-<li>下载完成后使用yum命令本地安装yum源<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum localinstall mysql80-community-release-el7-1.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>执行完毕后使用下面的命令检查是否安装成功<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum repolist enabled <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">"mysql.*-community.*"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>安装服务器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token parameter variable">-y</span> mysql-community-server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
+
+<p>(2) 下载完成后使用yum命令本地安装yum源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum localinstall mysql80-community-release-el7-1.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(3) 执行完毕后使用下面的命令检查是否安装成功</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum repolist enabled <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">"mysql.*-community.*"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(4) 安装服务器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token parameter variable">-y</span> mysql-community-server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h4 id="二、配置MySQL"><a href="#二、配置MySQL" class="headerlink" title="二、配置MySQL"></a>二、配置MySQL</h4><p>服务命令</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动MySQL服务</span>
 systemctl start mysqld
@@ -721,14 +725,16 @@ ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DI
 <span class="token comment"># 重启服务</span>
 systemctl restart mysqld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="rpm安装"><a href="#rpm安装" class="headerlink" title="rpm安装"></a>rpm安装</h3><ol>
-<li>需要通过rpm相关指令，来查询当前系统中是否存在已安装的mysql软件包<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查询当前系统中安装的所有软件</span>
+<h3 id="rpm安装"><a href="#rpm安装" class="headerlink" title="rpm安装"></a>rpm安装</h3><p>(1) 需要通过rpm相关指令，来查询当前系统中是否存在已安装的mysql软件包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查询当前系统中安装的所有软件</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-qa</span>
 <span class="token comment"># 查询当前系统中安装的名称带mysql的软件</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> mysql
 <span class="token comment"># 查询当前系统中安装的名称带mariadb的软件</span>
-<span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> mariadb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>卸载<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">-ev</span> <span class="token parameter variable">--nodeps</span> 软件名称
+<span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> mariadb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(2) 卸载</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">-ev</span> <span class="token parameter variable">--nodeps</span> 软件名称
 <span class="token comment"># 卸载之前请先关闭mysql服务，命令如下</span>
 systemctl stop mysqld
 <span class="token comment"># 依次卸载相关服务</span>
@@ -743,22 +749,26 @@ systemctl stop mysqld
 <span class="token comment"># 删除数据库数据文件</span>
 <span class="token function">rm</span> <span class="token parameter variable">-rf</span> /var/lib/mysql
 <span class="token comment"># 删除日志临时文件</span>
-<span class="token function">rm</span> <span class="token parameter variable">-rf</span> /var/log/mysqld.log<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>下载rpm<br><img src="https://img-blog.csdnimg.cn/img_convert/7ec61ebdc9103cd70f3dd52efbd4ea19.png" alt="下载"><br>或者使用wget<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载server包</span>
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> /var/log/mysqld.log<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(3) 下载rpm</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/7ec61ebdc9103cd70f3dd52efbd4ea19.png" alt="下载"><br>或者使用wget</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载server包</span>
 <span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-server-5.7.38-1.el7.x86_64.rpm
 <span class="token comment"># 下载client包</span>
 <span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-client-5.7.38-1.el7.x86_64.rpm
 <span class="token comment"># 下载common包</span>
 <span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-common-5.7.38-1.el7.x86_64.rpm
 <span class="token comment"># 下载libs包</span>
-<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-libs-5.7.38-1.el7.x86_64.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>安装<blockquote>
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-libs-5.7.38-1.el7.x86_64.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(4) 安装</p>
+<blockquote>
 <p>包之间相互依赖，所以必须注意安装顺序</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 相关依赖</span>
 yum <span class="token function">install</span> libaio <span class="token parameter variable">-y</span>
-yum <span class="token function">install</span> net-tools <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></blockquote>
-</li>
-</ol>
+yum <span class="token function">install</span> net-tools <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
 <p>先装common,再装libs（确保mariadb已卸载，centos7默认支持mariadb，不支持mysql，不卸载会出现冲突）,再装client,最后装server</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># i表示install安装；v表示verbose进度条；h表示hash哈希校验。</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mysql-community-common-8.0.11-1.el7.x86_64.rpm
@@ -767,22 +777,18 @@ yum <span class="token function">install</span> net-tools <span class="token par
 <span class="token comment"># rpm -ivh mysql-community-libs-compat-5.7.25-1.el7.x86_64.rpm</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mysql-community-client-8.0.11-1.el7.x86_64.rpm
 <span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mysql-community-server-8.0.11-1.el7.x86_64.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol start="5">
-<li>查看密码</li>
-</ol>
+
+<p>(5) 查看密码</p>
 <p>对于rpm安装的mysql，在mysql第一次启动时，会自动帮我们生成root用户的访问密码，并且输出在mysql的日志文件&#x2F;var&#x2F;log&#x2F;mysqld.log中，我们可以查看这份日志文件，从而获取到访问密码</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">grep</span> <span class="token string">'temporary password'</span> /var/log/mysqld.log
 <span class="token comment"># 或者</span>
 <span class="token function">cat</span> /var/log/mysqld.log <span class="token operator">|</span> <span class="token function">grep</span> password<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<ol start="6">
-<li>配置其他内容如编码则新建<code>/etc/my.cnf</code></li>
-</ol>
+
+<p>(6) 配置其他内容如编码则新建<code>/etc/my.cnf</code></p>
 <h2 id="Windows安装MySQL"><a href="#Windows安装MySQL" class="headerlink" title="Windows安装MySQL"></a>Windows安装MySQL</h2><h3 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h3><pre class="line-numbers language-none"><code class="language-none">关闭mysql服务:net stop mysql
 删除mysql服务:mysqld -remove
 删除mysql相关文件夹，如想保留数据可保留data文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
-<li>解压mysql压缩包后进入mysql目录，新建my.ini文件并编辑</li>
-</ol>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>(1) 解压mysql压缩包后进入mysql目录，新建my.ini文件并编辑</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
 <span class="token comment"># 设置3306端口</span>
 port <span class="token operator">=</span> <span class="token number">3306</span>
@@ -794,17 +800,15 @@ port <span class="token operator">=</span> <span class="token number">3306</span
 <span class="token assign-left variable">max_connections</span><span class="token operator">=</span><span class="token number">200</span>
 <span class="token comment"># 创建新表时将使用的默认存储引擎</span>
 default-storage-engine<span class="token operator">=</span>INNODB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol start="2">
-<li><p>将mysql加入环境变量</p>
-</li>
-<li><p>管理员打开cmd切换到mysql bin目录下(一定要切换),执行<strong>mysqld install</strong>安装mysql服务，成功打印<strong>service successfully installed</strong>后执行<strong>mysqld –initialize –console</strong>会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务</p>
-</li>
-<li><p>修改密码（5.7版本以前）</p>
+
+<p>(2) 将mysql加入环境变量</p>
+<p>(3) 管理员打开cmd切换到mysql bin目录下(一定要切换),执行<strong>mysqld install</strong>安装mysql服务，成功打印<strong>service successfully installed</strong>后执行<strong>mysqld –initialize –console</strong>会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务</p>
+<p>(4) 修改密码（5.7版本以前）</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># mysql -uroot -p输入密码后</span>
 <span class="token builtin class-name">set</span> password <span class="token keyword">for</span> root@localhost <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'123456'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment"># 8.0修改密码</span>
-<span class="token builtin class-name">set</span> password <span class="token operator">=</span> <span class="token string">'123456'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
+<span class="token builtin class-name">set</span> password <span class="token operator">=</span> <span class="token string">'123456'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="8-0连接navicat"><a href="#8-0连接navicat" class="headerlink" title="8.0连接navicat"></a>8.0连接navicat</h3><p>navicat连接8.0需要把mysql用户登录密码加密规则还原成mysql_native_password</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'root'</span> PASSWORD EXPIRE NEVER<span class="token punctuation">;</span> <span class="token comment">#修改加密规则</span>
 ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'root'</span><span class="token punctuation">;</span> <span class="token comment">#更新一下用户的密码</span>
@@ -1071,8 +1075,7 @@ FLUSH PRIVILEGES<span class="token punctuation">;</span><span aria-hidden="true"
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            安装在线安装
-安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。
+                            安装在线安装(1) 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键
                         
 
                     </div>

@@ -7,43 +7,61 @@ img: https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg
 
 ---
 
-#### 安装
+## 安装
 
-##### 在线安装
+### 在线安装
 
-1. 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑/etc/selinux/config，设置两个关键变量。
+(1) 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑/etc/selinux/config，设置两个关键变量。
+
 ```shell
 SELINUX=disabled
 
 SELINUXTYPE=targeted
 ```
-2. 关闭防火墙
-3. 安装容器
+
+(2) 关闭防火墙
+
+```shell
+systemctl stop firewalld
+```
+
+(3) 安装容器
+
 ```shell
 yum -y install docker-ce
 ```
-4. 启动服务
+
+(4) 启动服务
+
 ```shell
 systemctl start docker
 ```
-5. 测试容器
+
+(5) 测试容器
+
 ```shell
 docker run hello-world
 # PS: centos7安装命令 yum -y install docker-ce | ubuntu安装命令 apt install docker-ce
 ```
 
-##### 离线安装
+### 离线安装
 
-1. [下载离线包](https://download.docker.com/linux/static/stable/x86_64/)
-2. 解压
+(1) [下载离线包](https://download.docker.com/linux/static/stable/x86_64/)
+
+(2) 解压
+
 ```shell
 tar -xvf docker-18.06.1-ce.tgz
 ```
-3. 将解压出来的docker文件内容移动到/usr/bin/目录下
+
+(3) 将解压出来的docker文件内容移动到/usr/bin/目录下
+
 ```shell
 cp docker/* /usr/bin/
 ```
-4.将docker注册为service：
+
+(4) 将docker注册为service
+
 ```shell
 # vim /etc/systemd/system/docker.service
 
@@ -107,36 +125,48 @@ StartLimitInterval=60s
 WantedBy=multi-user.target
 ```
 
-5. 添加文件权限并启动docker
+(5) 添加文件权限并启动docker
+
 ```shell
 chmod +x /etc/systemd/system/docker.service
 ```
-6. 重载unit配置文件
+
+(6) 重载unit配置文件
+
 ```shell
 systemctl daemon-reload
 ```
-7. 启动Docker
+
+(7) 启动Docker
+
 ```shell
 systemctl start docker
 ```
-8. 设置开机自启
+
+(8) 设置开机自启
+
 ```shell
 systemctl enable docker.service
 ```
-9. 查看Docker状态
+
+(9) 查看Docker状态
+
 ```shell
 systemctl status docker
 ```
-10. 查看Docker版本
+
+(10) 查看Docker版本
+
 ```shell
 docker -v
 ```
 
-#### 常用命令
+## 常用命令
 
-##### 镜像
+### 镜像
+
 - 查看镜像
-```
+```shell
 docker images
 -a :列出本地所有的镜像（含中间映像层，默认情况下，过滤掉中间映像层）；
 --digests :显示镜像的摘要信息；
@@ -147,46 +177,46 @@ docker images
 ```
 
 - 拉取镜像
-```
+```shell
 docker pull name:tag
 ```
 
 - 推送镜像
-```
+```shell
 docker push myapache:v1
 ```
 
 - 导出镜像
-```
+```shell
 docker save -o <保存路径> <镜像名称:标签>
 
 docker save -o ./ubuntu18.tar ubuntu:18.04
 ```
 
 - 导入镜像
-```
+```shell
 docker load -i 文件名 或者docker load --input 文件名
 
 docker load --input ./ubuntu18.tar
 ```
 
 - 删除镜像
-```
+```shell
 docker rmi images_id
 ```
 
 - 删除所有镜像
-```
+```shell
 docker rmi `docker images -q`
 ```
 
 - 搜索镜像
-```
+```shell
 docker search *
 ```
 
 - 查看指定镜像的创建历史
-```
+```shell
 docker history [OPTIONS] IMAGE
 
 OPTIONS说明：
@@ -195,20 +225,20 @@ OPTIONS说明：
 -q :仅列出提交记录ID。
 ```
 
-##### 容器
+### 容器
 
 - 查看正在运行的容器
-```
+```shell
 docker ps 或者docker container ls
 ```
 
 - 查看所有容器
-```
+```shell
 docker ps -a 或者 docker container ls -a
 ```
 
 - 导出容器
-```
+```shell
 docker export <容器名> > <保存路径>
 
 或者docker export -o <容器名> <保存路径> -o :将输入内容写到文件。
@@ -218,13 +248,13 @@ docker export -o mysql-`date +%Y%m%d`.tar a404c6c174a2
 ```
 
 - 导入容器
-```
+```shell
 docker import <文件路径> <容器名>
 docker import ./ubuntu18.tar ubuntu18
 ```
 
 - 删除容器
-```
+```shell
 docker rm [OPTIONS] container_id
 
 OPTIONS说明：
@@ -234,31 +264,31 @@ OPTIONS说明：
 ```
 
 - 删除所有容器
-```
+```shell
 docker rm $(docker ps -a -q) 
 或者
 docker rm `docker ps -a -q`
 ```
 
 - 启动容器
-```
+```shell
 docker container start container_id
 ```
 
 - 停止所有容器
-```
+```shell
 docker stop $(docker ps -a -q)
 ```
 
 - 杀掉运行中的容器
-```
+```shell
 docker kill -s(可忽略) CONTAINER
 -s :向容器发送一个信号 
 例：docker kill -s KILL mynginx
 ```
 
 - 在运行的容器中执行命令
-```
+```shell
 docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
 例如：进入容器 docker exec -itd 容器id /bin/bash
 （-d :分离模式: 在后台运行 -i :即使没有附加也保持STDIN 打开-t :分配一个伪终端）
@@ -267,22 +297,22 @@ exit 退出bash shell
 ```
 
 - 暂停容器中所有的进程
-```
+```shell
 docker pause container_id
 ```
 
 - 恢复容器中所有的进程
-```
+```shell
 docker unpause container_id
 ```
 
 - 创建一个新的容器不运行
-```
+```shell
 docker create 参数同docker run
 ```
 
 - 创建一个新的容器并运行
-```
+```shell
 docker run
 -i: 以交互模式运行容器，通常与-t同时使用
 -t: 为容器重新分配一个伪输入终端，通常与-i同时使用
@@ -328,7 +358,7 @@ unless-stopped – 不管退出状态码是什么始终重启容器，不过当d
 ```
 
 - 获取容器/镜像的元数据
-```
+```shell
 docker inspect [OPTIONS] NAME|ID [NAME|ID...]
 OPTIONS说明：
 -f :指定返回值的模板文件。
@@ -337,24 +367,24 @@ OPTIONS说明：
 ```
 
 - 查看容器中运行的进程信息
-```
+```shell
 docker top container_id
 ```
 
 - 连接到正在运行中的容器
-```
+```shell
 docker attach container_id
 ```
 
 - 阻塞运行直到容器停止，然后打印出它的退出代码
-```
+```shell
 docker wait containser_id
 ```
 
-##### 其他
+### 其他
 
 - 从服务器获取实时事件
-```
+```shell
 docker events OPTIONS
 
 OPTIONS说明：
@@ -365,7 +395,7 @@ docker events --since="1467302400"
 ```
 
 - 查看日志
-```
+```shell
 docker logs [OPTIONS] CONTAINER
 --details 显示更多的信息
 -f, --follow 跟踪实时日志
@@ -385,12 +415,12 @@ docker logs -t --since="2018-02-08T13:23:37" --until "2018-02-09T12:23:37" CONTA
 ```
 
 - 列出指定的容器的端口映射
-```
+```shell
 docker port container_id
 ```
 
 - 提交
-```
+```shell
 docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 
 OPTIONS说明：
@@ -404,18 +434,18 @@ docker commit -a "runoob.com" -m "my apache" a404c6c174a2 mymysql:v1
 ```
 
 - 容器与主机之间的数据拷贝
-```
+```shell
 将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。
 docker cp /www/runoob 96f7f14e99ab:/www/
 ```
 
 - 查看容器文件结构更改
-```
+```shell
 docker diff mymysql
 ```
 
 - 使用 Dockerfile 创建镜像
-```
+```shell
 docker build
 --build-arg=[] :设置镜像创建时的变量；
 --cpu-shares :设置 cpu 使用权重；
@@ -442,24 +472,24 @@ docker build
 ```
 
 - 登陆到一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库 Docker Hub
-```
+```shell
 docker login -u -p
 -u 登陆的用户名 -p :登陆的密码
 ```
 
 - 登出一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库Docker Hub
-```
+```shell
 docker logout
 ```
 
 - 标记本地镜像，将其归入某一仓库
-```
+```shell
 docker tag
 ```
 
-#### docker加速命令
+## docker加速命令
 
-```
+```shell
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
 或
 vim /etc/docker/daemon.json
@@ -467,15 +497,15 @@ vim /etc/docker/daemon.json
   "registry-mirrors": ["https://registry.docker-cn.com"]
 }
 
-其他站点
-http://hub-mirror.c.163.com
-https://3laho3y3.mirror.aliyuncs.com
-http://f1361db2.m.daocloud.io
-https://mirror.ccs.tencentyun.com
-https://docker.mirrors.ustc.edu.cn
 ```
+> 其他站点
+> http://hub-mirror.c.163.com
+> https://3laho3y3.mirror.aliyuncs.com
+> http://f1361db2.m.daocloud.io
+> https://mirror.ccs.tencentyun.com
+> https://docker.mirrors.ustc.edu.cn
 
-#### 与Spring Boot
+## 与Spring Boot
 
 - [一键部署Spring Boot到远程Docker容器](https://mp.weixin.qq.com/s/15ZAVUg5DfcF53QpEetT7Q)
 - [Jenkins+Docker一键自动化部署SpringBoot项目](https://mp.weixin.qq.com/s/dP-c3twzR0PMUvPWZA-U0Q)
@@ -487,7 +517,7 @@ https://docker.mirrors.ustc.edu.cn
 - [Docker+Spring Boot+FastDFS搭建一套分布式文件服务器，太强了！](https://mp.weixin.qq.com/s/HSRIYQVKR9TGtwetd3LU5w)
 
 
-#### 相关文章
+## 相关文章
 
 - [图解Docker架构，傻瓜都能看懂！](https://mp.weixin.qq.com/s/ELZo2z4fHonoBGXQI0M9CA)
 - [构建Java镜像的10个最佳实践](https://mp.weixin.qq.com/s/gmZDBuYDXnNdykEx66Y0Cw)

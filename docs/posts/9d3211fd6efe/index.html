@@ -528,29 +528,36 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="幂等性的几种方案"><a href="#幂等性的几种方案" class="headerlink" title="幂等性的几种方案"></a>幂等性的几种方案</h3><ol>
+                <h3 id="幂等性的几种方案"><a href="#幂等性的几种方案" class="headerlink" title="幂等性的几种方案"></a>幂等性的几种方案</h3><ul>
 <li>唯一索引，防止新增脏数据</li>
 <li>前端限制:页面的提交按钮只能被点击提交一次<br>后端解决方案：<ol>
 <li>集群环境：采用token加redis（redis单线程的，处理需要排队）</li>
 <li>单JVM环境：采用token加redis或token加jvm内存</li>
-<li>处理流程：请求前先生成token，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码逻辑将生成的token与已生成且保存的token做对比，token一致的话代表已经生成了一次，本次不允许返回），将生成的token放到redis或jvm内存，并设置token的有效时间，返回给客户端<br> <img src="/blog/images/mideng.jpg"><br>客户端携带token请求服务端，服务端查询redis，如果有的话处理请求并删除token，没有的话代表非法请求不做处理</li>
+<li>处理流程：请求前先生成token，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码逻辑将生成的token与已生成且保存的token做对比，token一致的话代表已经生成了一次，本次不允许返回），将生成的token放到redis或jvm内存，并设置token的有效时间，返回给客户端<br>  <img src="/blog/images/mideng.jpg"><br>客户端携带token请求服务端，服务端查询redis，如果有的话处理请求并删除token，没有的话代表非法请求不做处理</li>
 </ol>
 </li>
-</ol>
+</ul>
 <blockquote>
-<p>现在很多系统处理请求已经不做是否登陆的校验，而是根据用户名密码申请token，将token保存到cookie或者Local Storage或者form隐藏域，请求时携带token，服务端校验处理请求<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X4J56Y2dLzkBVwCC2hlmaQ">Token多平台身份认证架构设计思路</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/GreenSky_Test/article/details/116056661">Token登录认证详解</a><br>3. 悲观锁获取数据的时候加锁获取</p>
+<p>现在很多系统处理请求已经不做是否登陆的校验，而是根据用户名密码申请token，将token保存到cookie或者Local Storage或者form隐藏域，请求时携带token，服务端校验处理请求<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X4J56Y2dLzkBVwCC2hlmaQ">Token多平台身份认证架构设计思路</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/GreenSky_Test/article/details/116056661">Token登录认证详解</a></p>
 </blockquote>
+<ul>
+<li><p>悲观锁获取数据的时候加锁获取</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> table_xxx <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token string">'xxx'</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>注意：id字段一定是主键或者唯一索引<br>悲观锁使用时一般伴随事务一起使用，数据锁定时间可能会很长，根据实际情况选用<br>4. 乐观锁:乐观锁只是在更新数据那一刻锁表，其他时间不锁表，所以相对于悲观锁，效率更高。乐观锁的实现方式多种多样可以通过version或者其他状态条件：</p>
+<p>注意：id字段一定是主键或者唯一索引<br>悲观锁使用时一般伴随事务一起使用，数据锁定时间可能会很长，根据实际情况选用</p>
+</li>
+<li><p>乐观锁:乐观锁只是在更新数据那一刻锁表，其他时间不锁表，所以相对于悲观锁，效率更高。乐观锁的实现方式多种多样可以通过version或者其他状态条件：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 通过版本号实现</span>
 <span class="token keyword">update</span> table_xxx <span class="token keyword">set</span> name<span class="token operator">=</span><span class="token comment">#name#,version=version+1 where version=#version#</span>
 <span class="token comment">-- 通过条件限制</span>
 <span class="token keyword">update</span> tablexxx <span class="token keyword">set</span> avaiamount<span class="token operator">=</span>avaiamount<span class="token operator">-</span><span class="token comment">#subAmount# where avaiamount-#subAmount# >= 0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<ol start="5">
-<li>分布式锁</li>
-<li>状态机幂等<br>在设计单据相关的业务，或者是任务相关的业务，肯定会涉及到状态机(状态变更图)，就是业务单据上面有个状态，状态在不同的情况下会发生变更，一般情况下存在有限状态机,如果状态机已经处于下一个状态，这时候来了一个上一个状态的变更，理论上是不能够变更的，这样的话，保证了有限状态机的幂等。注意：订单等单据类业务，存在很长的状态流转，一定要深刻理解状态机，对业务系统设计能力提高有很大帮助</li>
-<li>利用唯一请求编号去重，借用Redis做这个去重——只要这个唯一请求编号在redis存在，证明处理过，那么就认为是重复的</li>
-</ol>
+</li>
+<li><p>分布式锁</p>
+</li>
+<li><p>状态机幂等<br>在设计单据相关的业务，或者是任务相关的业务，肯定会涉及到状态机(状态变更图)，就是业务单据上面有个状态，状态在不同的情况下会发生变更，一般情况下存在有限状态机,如果状态机已经处于下一个状态，这时候来了一个上一个状态的变更，理论上是不能够变更的，这样的话，保证了有限状态机的幂等。注意：订单等单据类业务，存在很长的状态流转，一定要深刻理解状态机，对业务系统设计能力提高有很大帮助</p>
+</li>
+<li><p>利用唯一请求编号去重，借用Redis做这个去重——只要这个唯一请求编号在redis存在，证明处理过，那么就认为是重复的</p>
+</li>
+</ul>
 <h4 id="幂等性相关文章"><a href="#幂等性相关文章" class="headerlink" title="幂等性相关文章"></a>幂等性相关文章</h4><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eVHScVN2kcuZaokzs6-QxA">拒绝接口裸奔！开放API接口签名验证！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BENMPLwH8WG60UVL5vXj0A">面试问：你的项目是如何处理重复请求&#x2F;并发请求的？</a></li>

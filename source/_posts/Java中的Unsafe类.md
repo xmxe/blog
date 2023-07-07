@@ -289,9 +289,7 @@ main thread end
 
 #### 典型应用
 
-在Java8中引入了一种锁的新机制——**StampedLock**，它可以看成是读写锁的一个改进版本。StampedLock提供了一种乐观读锁的实现，这种乐观读锁类似于无锁的操作，完全不会阻塞写线程获取写锁，从而缓解读多写少时写线程“饥饿”现象。由于StampedLock提供的乐观读锁不阻塞写线程获取读锁，当线程共享变量从主内存load到线程工作内存时，会存在数据不一致问题。
-
-为了解决这个问题，StampedLock的validate方法会通过Unsafe的loadFence方法加入一个load内存屏障。
+在Java8中引入了一种锁的新机制——**StampedLock**，它可以看成是读写锁的一个改进版本。StampedLock提供了一种乐观读锁的实现，这种乐观读锁类似于无锁的操作，完全不会阻塞写线程获取写锁，从而缓解读多写少时写线程“饥饿”现象。由于StampedLock提供的乐观读锁不阻塞写线程获取读锁，当线程共享变量从主内存load到线程工作内存时，会存在数据不一致问题。为了解决这个问题，StampedLock的validate方法会通过Unsafe的loadFence方法加入一个load内存屏障。
 
 ```java
 public boolean validate(long stamp) {
@@ -324,9 +322,7 @@ public native int getIntVolatile(Object o, long offset);
 public native void putIntVolatile(Object o, long offset, int x);
 ```
 
-相对于普通读写来说，volatile读写具有更高的成本，因为它需要保证可见性和有序性。在执行get操作时，会强制从主存中获取属性值，在使用put方法设置属性值时，会强制将值更新到主存中，从而保证这些变更对其他线程是可见的。
-
-有序写入的方法有以下三个：
+相对于普通读写来说，volatile读写具有更高的成本，因为它需要保证可见性和有序性。在执行get操作时，会强制从主存中获取属性值，在使用put方法设置属性值时，会强制将值更新到主存中，从而保证这些变更对其他线程是可见的。有序写入的方法有以下三个：
 
 ```java
 public native void putOrderedObject(Object o, long offset, Object x);
@@ -422,7 +418,9 @@ public final native boolean compareAndSwapInt(Object o, long offset, int expecte
 public final native boolean compareAndSwapLong(Object o, long offset, long expected, long update);
 ```
 
-**什么是CAS**?CAS即比较并替换(CompareAndSwap)，是实现并发算法时常用到的一种技术。CAS操作包含三个操作数——内存位置、预期原值及新值。执行CAS操作的时候，将内存位置的值与预期原值比较，如果相匹配，那么处理器会自动将该位置值更新为新值，否则，处理器不做任何操作。我们都知道，CAS是一条CPU的原子指令（cmpxchg指令），不会造成所谓的数据不一致问题，Unsafe提供的CAS方法（如compareAndSwapXXX）底层实现即为CPU指令cmpxchg。
+**什么是CAS**
+
+CAS即比较并替换(CompareAndSwap)，是实现并发算法时常用到的一种技术。CAS操作包含三个操作数——内存位置、预期原值及新值。执行CAS操作的时候，将内存位置的值与预期原值比较，如果相匹配，那么处理器会自动将该位置值更新为新值，否则，处理器不做任何操作。我们都知道，CAS是一条CPU的原子指令（cmpxchg指令），不会造成所谓的数据不一致问题，Unsafe提供的CAS方法（如compareAndSwapXXX）底层实现即为CPU指令cmpxchg。
 
 #### 典型应用
 

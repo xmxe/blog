@@ -539,22 +539,28 @@
 <li><strong>InputStream&#x2F;Reader</strong>：所有的输入流的基类，前者是字节输入流，后者是字符输入流。</li>
 <li><strong>OutputStream&#x2F;Writer</strong>：所有输出流的基类，前者是字节输出流，后者是字符输出流。</li>
 </ul>
-<h4 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h4><h5 id="InputStream（字节输入流）"><a href="#InputStream（字节输入流）" class="headerlink" title="InputStream（字节输入流）"></a>InputStream（字节输入流）</h5><p>InputStream用于从源头（通常是文件）读取数据（字节信息）到内存中，java.io.InputStream抽象类是所有字节输入流的父类。</p>
-<p>InputStream常用方法：</p>
-<ul>
-<li>read()：返回输入流中下一个字节的数据。返回的值介于0到255之间。如果未读取任何字节，则代码返回-1，表示文件结束。</li>
-<li>read(byte b[]):从输入流中读取一些字节存储到数组b中。如果数组b的长度为零，则不读取。如果没有可用字节读取，返回-1。如果有可用字节读取，则最多读取的字节数最多等于b.length，返回读取的字节数。这个方法等价于read(b,0,b.length)。</li>
-<li>read(byte b[], int off,int len)：在read(byte b[])方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字节数）。</li>
-<li>skip(long n)：忽略输入流中的n个字节,返回实际忽略的字节数。</li>
-<li>available()：返回输入流中可以读取的字节数。</li>
-<li>close()：关闭输入流释放相关的系统资源。</li>
-</ul>
-<p>从Java9开始，InputStream新增加了多个实用的方法：</p>
-<ul>
-<li>readAllBytes()：读取输入流中的所有字节，返回字节数组。</li>
-<li>readNBytes(byte[]b,intoff,intlen)：阻塞直到读取len个字节。</li>
-<li>transferTo(OutputStreamout)：将所有字节从一个输入流传递到一个输出流。</li>
-</ul>
+<h4 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h4><h5 id="InputStream（字节输入流）"><a href="#InputStream（字节输入流）" class="headerlink" title="InputStream（字节输入流）"></a>InputStream（字节输入流）</h5><p>InputStream用于从源头（通常是文件）读取数据（字节信息）到内存中，java.io.InputStream抽象类是所有字节输入流的父类。InputStream常用方法：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 返回输入流中下一个字节的数据。返回的值介于0到255之间。如果未读取任何字节，则代码返回-1，表示文件结束。</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// 从输入流中读取一些字节存储到数组b中。如果数组b的长度为零，则不读取。如果没有可用字节读取，返回-1。如果有可用字节读取，则最多读取的字节数最多等于b.length，返回读取的字节数。这个方法等价于read(b,0,b.length)。</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment">// 在read(byte b[])方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字节数）</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span><span class="token keyword">int</span> len<span class="token punctuation">)</span>
+<span class="token comment">// 忽略输入流中的n个字节,返回实际忽略的字节数。</span>
+<span class="token function">skip</span><span class="token punctuation">(</span><span class="token keyword">long</span> n<span class="token punctuation">)</span>
+<span class="token comment">// 返回输入流中可以读取的字节数。</span>
+<span class="token function">available</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// 关闭输入流释放相关的系统资源。</span>
+<span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 从Java9开始，InputStream新增加了多个实用的方法：</span>
+<span class="token comment">// 读取输入流中的所有字节，返回字节数组。</span>
+<span class="token function">readAllBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// 阻塞直到读取len个字节。</span>
+<span class="token function">readNBytes</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span>b<span class="token punctuation">,</span>intoff<span class="token punctuation">,</span>intlen<span class="token punctuation">)</span>
+<span class="token comment">// 将所有字节从一个输入流传递到一个输出流。</span>
+<span class="token function">transferTo</span><span class="token punctuation">(</span><span class="token class-name">OutputStreamout</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>FileInputStream</strong>是一个比较常用的字节输入流对象，可直接指定文件路径，可以直接读取单字节数据，也可以读取至字节数组中。</p>
 <p>FileInputStream代码示例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token class-name">InputStream</span> fis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span><span class="token string">"input.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -578,8 +584,7 @@
 The actual number of bytes skipped:2
 The content read from file:JavaGuide<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>不过，一般我们是不会直接单独使用FileInputStream，通常会配合BufferedInputStream（字节缓冲输入流，后文会讲到）来使用。</p>
-<p>像下面这段代码在我们的项目中就比较常见，我们通过readAllBytes()读取输入流所有字节并将其直接赋值给一个String对象。</p>
+<p>不过，一般我们是不会直接单独使用FileInputStream，通常会配合BufferedInputStream（字节缓冲输入流，后文会讲到）来使用。像下面这段代码在我们的项目中就比较常见，我们通过readAllBytes()读取输入流所有字节并将其直接赋值给一个String对象。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 新建一个BufferedInputStream对象</span>
 <span class="token class-name">BufferedInputStream</span> bufferedInputStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BufferedInputStream</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span><span class="token string">"input.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 读取文件的内容并复制到String对象中</span>
@@ -600,17 +605,19 @@ dataInputStream<span class="token punctuation">.</span><span class="token functi
 input<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>另外，用于序列化和反序列化的类必须实现Serializable接口，对象中如果有属性不想被序列化，使用transient修饰。</p>
-<h5 id="OutputStream（字节输出流）"><a href="#OutputStream（字节输出流）" class="headerlink" title="OutputStream（字节输出流）"></a>OutputStream（字节输出流）</h5><p>OutputStream用于将数据（字节信息）写入到目的地（通常是文件），java.io.OutputStream抽象类是所有字节输出流的父类。</p>
-<p>OutputStream常用方法：</p>
-<ul>
-<li>write(int b)：将特定字节写入输出流。</li>
-<li>write(byte b[ ]):将数组b写入到输出流，等价于write(b, 0, b.length)。</li>
-<li>write(byte[] b, int off, int len): 在write(byte b[ ])方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字节数）。</li>
-<li>flush()：刷新此输出流并强制写出所有缓冲的输出字节。</li>
-<li>close()：关闭输出流释放相关的系统资源。</li>
-</ul>
-<p><strong>FileOutputStream</strong>是最常用的字节输出流对象，可直接指定文件路径，可以直接输出单字节数据，也可以输出指定的字节数组。</p>
-<p>FileOutputStream代码示例：</p>
+<h5 id="OutputStream（字节输出流）"><a href="#OutputStream（字节输出流）" class="headerlink" title="OutputStream（字节输出流）"></a>OutputStream（字节输出流）</h5><p>OutputStream用于将数据（字节信息）写入到目的地（通常是文件），java.io.OutputStream抽象类是所有字节输出流的父类。OutputStream常用方法：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 将特定字节写入输出流。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">int</span> b<span class="token punctuation">)</span>
+<span class="token comment">// 将数组b写入到输出流，等价于write(b, 0, b.length)。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">[</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment">// 在write(byte b[ ])方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字节数）。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span>
+<span class="token comment">// 刷新此输出流并强制写出所有缓冲的输出字节。</span>
+<span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// 关闭输出流释放相关的系统资源。</span>
+<span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>FileOutputStream</strong>是最常用的字节输出流对象，可直接指定文件路径，可以直接输出单字节数据，也可以输出指定的字节数组。FileOutputStream代码示例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token class-name">FileOutputStream</span> output <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileOutputStream</span><span class="token punctuation">(</span><span class="token string">"output.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array <span class="token operator">=</span> <span class="token string">"JavaGuide"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     output<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -637,32 +644,32 @@ dataOutputStream<span class="token punctuation">.</span><span class="token funct
 <span class="token class-name">Person</span> person <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"Guide哥"</span><span class="token punctuation">,</span><span class="token string">"JavaGuide作者"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 output<span class="token punctuation">.</span><span class="token function">writeObject</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a>字符流</h4><p>不管是文件读写还是网络发送接收，信息的最小存储单元都是字节。<strong>那为什么I&#x2F;O流操作要分为字节流操作和字符流操作呢</strong>？</p>
-<p>个人认为主要有两点原因：</p>
+<h4 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a>字符流</h4><p>不管是文件读写还是网络发送接收，信息的最小存储单元都是字节。<strong>那为什么I&#x2F;O流操作要分为字节流操作和字符流操作呢</strong>？个人认为主要有两点原因：</p>
 <ul>
 <li>字符流是由Java虚拟机将字节转换得到的，这个过程还算是比较耗时。</li>
 <li>如果我们不知道编码类型就很容易出现乱码问题。</li>
 </ul>
-<p>乱码问题这个很容易就可以复现，我们只需要将上面提到的<code>FileInputStream</code>代码示例中的input.txt文件内容改为中文即可，原代码不需要改动。</p>
+<p>乱码问题这个很容易就可以复现，我们只需要将上面提到的FileInputStream代码示例中的input.txt文件内容改为中文即可，原代码不需要改动。</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/image-20220419154632551.png" alt="img"></p>
 <p>输出：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Number</span> of remaining bytes<span class="token operator">:</span><span class="token number">9</span>
 <span class="token class-name">The</span> actual number of bytes skipped<span class="token operator">:</span><span class="token number">2</span>
 <span class="token class-name">The</span> content read from file<span class="token operator">:</span>§å®¶å¥½<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>可以很明显地看到读取出来的内容已经变成了乱码。</p>
-<p>因此，I&#x2F;O流就干脆提供了一个直接操作字符的接口，方便我们平时对字符进行流操作。如果音频文件、图片等媒体文件用字节流比较好，如果涉及到字符的话使用字符流比较好。</p>
-<p>字符流默认采用的是Unicode编码，我们可以通过构造方法自定义编码。顺便分享一下之前遇到的笔试题：常用字符编码所占字节数？utf8:英文占1字节，中文占3字节，unicode：任何字符都占2个字节，gbk：英文占1字节，中文占2字节。</p>
+<p>可以很明显地看到读取出来的内容已经变成了乱码。因此，I&#x2F;O流就干脆提供了一个直接操作字符的接口，方便我们平时对字符进行流操作。如果音频文件、图片等媒体文件用字节流比较好，如果涉及到字符的话使用字符流比较好。字符流默认采用的是Unicode编码，我们可以通过构造方法自定义编码。顺便分享一下之前遇到的笔试题：常用字符编码所占字节数？utf8:英文占1字节，中文占3字节，unicode：任何字符都占2个字节，gbk：英文占1字节，中文占2字节。</p>
 <h5 id="Reader（字符输入流）"><a href="#Reader（字符输入流）" class="headerlink" title="Reader（字符输入流）"></a>Reader（字符输入流）</h5><p>Reader用于从源头（通常是文件）读取数据（字符信息）到内存中，java.io.Reader抽象类是所有字符输入流的父类。</p>
-<p>Reader用于读取文本，InputStream用于读取原始字节。</p>
-<p>Reader常用方法：</p>
-<ul>
-<li>read():从输入流读取一个字符。</li>
-<li>read(char[] cbuf):从输入流中读取一些字符，并将它们存储到字符数组cbuf中，等价于read(cbuf, 0, cbuf.length)。</li>
-<li>read(char[] cbuf, int off, int len)：在read(char[] cbuf)方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字符数）。</li>
-<li>skip(long n)：忽略输入流中的n个字符,返回实际忽略的字符数。</li>
-<li>close():关闭输入流并释放相关的系统资源。</li>
-</ul>
+<p>Reader用于读取文本，InputStream用于读取原始字节。Reader常用方法：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 从输入流读取一个字符。</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// 从输入流中读取一些字符，并将它们存储到字符数组cbuf中，等价于read(cbuf, 0, cbuf.length)。</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cbuf<span class="token punctuation">)</span>
+<span class="token comment">// 在read(char[] cbuf)方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字符数）</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cbuf<span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span>
+<span class="token comment">// 忽略输入流中的n个字符,返回实际忽略的字符数。</span>
+<span class="token function">skip</span><span class="token punctuation">(</span><span class="token keyword">long</span> n<span class="token punctuation">)</span>
+<span class="token comment">// 关闭输入流并释放相关的系统资源。</span>
+<span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>InputStreamReader</strong>是字节流转换为字符流的桥梁，其子类FileReader是基于该基础上的封装，可以直接操作字符文件。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 字节流转换为字符流的桥梁</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">InputStreamReader</span> <span class="token keyword">extends</span> <span class="token class-name">Reader</span> <span class="token punctuation">&#123;</span>
@@ -690,19 +697,25 @@ output<span class="token punctuation">.</span><span class="token function">write
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">The actual number of bytes skipped:3
 The content read from file:我是Guide。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h5 id="Writer（字符输出流）"><a href="#Writer（字符输出流）" class="headerlink" title="Writer（字符输出流）"></a>Writer（字符输出流）</h5><p>Writer用于将数据（字符信息）写入到目的地（通常是文件），java.io.Writer抽象类是所有字符输出流的父类。</p>
-<p>Writer常用方法：</p>
-<ul>
-<li>write(int c):写入单个字符。</li>
-<li>write(char[] cbuf)：写入字符数组cbuf，等价于write(cbuf, 0, cbuf.length)。</li>
-<li>write(char[] cbuf, int off, int len)：在write(char[] cbuf)方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字符数）。</li>
-<li>write(String str)：写入字符串，等价于write(str, 0, str.length())。</li>
-<li>write(String str, int off, int len)：在write(String str)方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字符数）。</li>
-<li>append(CharSequence csq)：将指定的字符序列附加到指定的Writer对象并返回该Writer对象。</li>
-<li>append(char c)：将指定的字符附加到指定的Writer对象并返回该Writer对象。</li>
-<li>flush()：刷新此输出流并强制写出所有缓冲的输出字符。</li>
-<li>close():关闭输出流释放相关的系统资源。</li>
-</ul>
+<h5 id="Writer（字符输出流）"><a href="#Writer（字符输出流）" class="headerlink" title="Writer（字符输出流）"></a>Writer（字符输出流）</h5><p>Writer用于将数据（字符信息）写入到目的地（通常是文件），java.io.Writer抽象类是所有字符输出流的父类。Writer常用方法：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写入单个字符。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">int</span> c<span class="token punctuation">)</span>
+<span class="token comment">// 写入字符数组cbuf，等价于write(cbuf, 0, cbuf.length)。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cbuf<span class="token punctuation">)</span>
+<span class="token comment">// 在write(char[] cbuf)方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字符数）。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cbuf<span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span>
+<span class="token comment">// 写入字符串，等价于write(str, 0, str.length())。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token class-name">String</span> str<span class="token punctuation">)</span>
+<span class="token comment">// 在write(String str)方法的基础上增加了off参数（偏移量）和len参数（要读取的最大字符数）。</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token class-name">String</span> str<span class="token punctuation">,</span> <span class="token keyword">int</span> off<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span>
+<span class="token comment">// 将指定的字符序列附加到指定的Writer对象并返回该Writer对象。</span>
+<span class="token function">append</span><span class="token punctuation">(</span><span class="token class-name">CharSequence</span> csq<span class="token punctuation">)</span>
+<span class="token comment">// 将指定的字符附加到指定的Writer对象并返回该Writer对象。</span>
+<span class="token function">append</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">)</span>
+<span class="token comment">// 刷新此输出流并强制写出所有缓冲的输出字符。</span>
+<span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// 关闭输出流释放相关的系统资源。</span>
+<span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>OutputStreamWriter</strong>是字符流转换为字节流的桥梁，其子类FileWriter是基于该基础上的封装，可以直接将字符写入到文件。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 字符流转换为字节流的桥梁</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OutputStreamWriter</span> <span class="token keyword">extends</span> <span class="token class-name">Writer</span> <span class="token punctuation">&#123;</span>
@@ -720,9 +733,7 @@ The content read from file:我是Guide。<span aria-hidden="true" class="line-nu
 
 <p>输出结果：</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/image-20220419155802288.png" alt="img"></p>
-<h4 id="字节缓冲流"><a href="#字节缓冲流" class="headerlink" title="字节缓冲流"></a>字节缓冲流</h4><p>IO操作是很消耗性能的，缓冲流将数据加载至缓冲区，一次性读取&#x2F;写入多个字节，从而避免频繁的IO操作，提高流的传输效率。</p>
-<p>字节缓冲流这里采用了装饰器模式来增强InputStream和OutputStream子类对象的功能。</p>
-<p>举个例子，我们可以通过BufferedInputStream（字节缓冲输入流）来增强FileInputStream的功能。</p>
+<h4 id="字节缓冲流"><a href="#字节缓冲流" class="headerlink" title="字节缓冲流"></a>字节缓冲流</h4><p>IO操作是很消耗性能的，缓冲流将数据加载至缓冲区，一次性读取&#x2F;写入多个字节，从而避免频繁的IO操作，提高流的传输效率。字节缓冲流这里采用了装饰器模式来增强InputStream和OutputStream子类对象的功能。举个例子，我们可以通过BufferedInputStream（字节缓冲输入流）来增强FileInputStream的功能。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 新建一个BufferedInputStream对象</span>
 <span class="token class-name">BufferedInputStream</span> bufferedInputStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BufferedInputStream</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span><span class="token string">"input.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -731,8 +742,7 @@ The content read from file:我是Guide。<span aria-hidden="true" class="line-nu
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">使用缓冲流复制PDF文件总耗时:15428毫秒
 使用普通字节流复制PDF文件总耗时:2555062毫秒<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>两者耗时差别非常大，缓冲流耗费的时间是字节流的1&#x2F;165。</p>
-<p>测试代码如下:</p>
+<p>两者耗时差别非常大，缓冲流耗费的时间是字节流的1&#x2F;165。测试代码如下:</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
 <span class="token keyword">void</span> <span class="token function">copy_pdf_to_another_pdf_buffer_stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 记录开始时间</span>
@@ -773,8 +783,7 @@ The content read from file:我是Guide。<span aria-hidden="true" class="line-nu
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">使用缓冲流复制PDF文件总耗时:695毫秒
 使用普通字节流复制PDF文件总耗时:989毫秒<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>两者耗时差别不是很大，缓冲流的性能要略微好一点点。</p>
-<p>测试代码如下：</p>
+<p>两者耗时差别不是很大，缓冲流的性能要略微好一点点。测试代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
 <span class="token keyword">void</span> <span class="token function">copy_pdf_to_another_pdf_with_byte_array_buffer_stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 记录开始时间</span>
@@ -813,8 +822,7 @@ The content read from file:我是Guide。<span aria-hidden="true" class="line-nu
     <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"使用普通流复制PDF文件总耗时:"</span> <span class="token operator">+</span> <span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"毫秒"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="BufferedInputStream（字节缓冲输入流）"><a href="#BufferedInputStream（字节缓冲输入流）" class="headerlink" title="BufferedInputStream（字节缓冲输入流）"></a>BufferedInputStream（字节缓冲输入流）</h5><p>BufferedInputStream从源头（通常是文件）读取数据（字节信息）到内存的过程中不会一个字节一个字节的读取，而是会先将读取到的字节存放在缓存区，并从内部缓冲区中单独读取字节。这样大幅减少了IO次数，提高了读取效率。</p>
-<p>BufferedInputStream内部维护了一个缓冲区，这个缓冲区实际就是一个字节数组，通过阅读BufferedInputStream源码即可得到这个结论。</p>
+<h5 id="BufferedInputStream（字节缓冲输入流）"><a href="#BufferedInputStream（字节缓冲输入流）" class="headerlink" title="BufferedInputStream（字节缓冲输入流）"></a>BufferedInputStream（字节缓冲输入流）</h5><p>BufferedInputStream从源头（通常是文件）读取数据（字节信息）到内存的过程中不会一个字节一个字节的读取，而是会先将读取到的字节存放在缓存区，并从内部缓冲区中单独读取字节。这样大幅减少了IO次数，提高了读取效率。BufferedInputStream内部维护了一个缓冲区，这个缓冲区实际就是一个字节数组，通过阅读BufferedInputStream源码即可得到这个结论。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BufferedInputStream</span> <span class="token keyword">extends</span> <span class="token class-name">FilterInputStream</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 内部缓冲区数组</span>
     <span class="token keyword">protected</span> <span class="token keyword">volatile</span> <span class="token keyword">byte</span> buf<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -849,16 +857,15 @@ The content read from file:我是Guide。<span aria-hidden="true" class="line-nu
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Hello！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><code>System.out</code>实际是用于获取一个<code>PrintStream</code>对象，<code>print</code>方法实际调用的是<code>PrintStream</code>对象的<code>write</code>方法。</p>
-<p><code>PrintStream</code>属于字节打印流，与之对应的是<code>PrintWriter</code>（字符打印流）。<code>PrintStream</code>是<code>OutputStream</code>的子类，<code>PrintWriter</code>是<code>Writer</code>的子类。</p>
+<p>System.out实际是用于获取一个PrintStream对象，print方法实际调用的是PrintStream对象的write方法。PrintStream属于字节打印流，与之对应的是PrintWriter（字符打印流）。PrintStream是OutputStream的子类，PrintWriter是Writer的子类。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PrintStream</span> <span class="token keyword">extends</span> <span class="token class-name">FilterOutputStream</span>
     <span class="token keyword">implements</span> <span class="token class-name">Appendable</span><span class="token punctuation">,</span> <span class="token class-name">Closeable</span> <span class="token punctuation">&#123;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PrintWriter</span> <span class="token keyword">extends</span> <span class="token class-name">Writer</span> <span class="token punctuation">&#123;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="随机访问流"><a href="#随机访问流" class="headerlink" title="随机访问流"></a>随机访问流</h4><p>这里要介绍的随机访问流指的是支持随意跳转到文件的任意位置进行读写的<code>RandomAccessFile</code>。</p>
-<p><code>RandomAccessFile</code>的构造方法如下，我们可以指定<code>mode</code>（读写模式）。</p>
+<h4 id="随机访问流"><a href="#随机访问流" class="headerlink" title="随机访问流"></a>随机访问流</h4><p>这里要介绍的随机访问流指的是支持随意跳转到文件的任意位置进行读写的RandomAccessFile。</p>
+<p>RandomAccessFile的构造方法如下，我们可以指定mode（读写模式）。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// openAndDelete参数默认为false表示打开文件并且这个文件不会被删除</span>
 <span class="token keyword">public</span> <span class="token class-name">RandomAccessFile</span><span class="token punctuation">(</span><span class="token class-name">File</span> file<span class="token punctuation">,</span> <span class="token class-name">String</span> mode<span class="token punctuation">)</span>
     <span class="token keyword">throws</span> <span class="token class-name">FileNotFoundException</span> <span class="token punctuation">&#123;</span>
@@ -876,8 +883,7 @@ The content read from file:我是Guide。<span aria-hidden="true" class="line-nu
 <li>rws:相对于rw，rws同步更新对“文件的内容”或“元数据”的修改到外部存储设备。</li>
 <li>rwd:相对于rw，rwd同步更新对“文件的内容”的修改到外部存储设备。</li>
 </ul>
-<p>文件内容指的是文件中实际保存的数据，元数据则是用来描述文件属性比如文件的大小信息、创建和修改时间。</p>
-<p>RandomAccessFile中有一个文件指针用来表示下一个将要被写入或者读取的字节所处的位置。我们可以通过RandomAccessFile的seek(long pos)方法来设置文件指针的偏移量（距文件开头pos个字节处）。如果想要获取文件指针当前的位置的话，可以使用getFilePointer()方法。</p>
+<p>文件内容指的是文件中实际保存的数据，元数据则是用来描述文件属性比如文件的大小信息、创建和修改时间。RandomAccessFile中有一个文件指针用来表示下一个将要被写入或者读取的字节所处的位置。我们可以通过RandomAccessFile的seek(long pos)方法来设置文件指针的偏移量（距文件开头pos个字节处）。如果想要获取文件指针当前的位置的话，可以使用getFilePointer()方法。</p>
 <p>RandomAccessFile代码示例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">RandomAccessFile</span> randomAccessFile <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RandomAccessFile</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"input.txt"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"rw"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"读取之前的偏移量："</span> <span class="token operator">+</span> randomAccessFile<span class="token punctuation">.</span><span class="token function">getFilePointer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">",当前读取到的字符"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> randomAccessFile<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"，读取之后的偏移量："</span> <span class="token operator">+</span> randomAccessFile<span class="token punctuation">.</span><span class="token function">getFilePointer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -903,8 +909,7 @@ randomAccessFile<span class="token punctuation">.</span><span class="token funct
 randomAccessFile<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span><span class="token char">'H'</span><span class="token punctuation">,</span> <span class="token char">'I'</span><span class="token punctuation">,</span> <span class="token char">'J'</span><span class="token punctuation">,</span> <span class="token char">'K'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>假设运行上面这段程序之前input.txt文件内容变为ABCD，运行之后则变为HIJK。</p>
-<p>RandomAccessFile比较常见的一个应用就是实现大文件的<strong>断点续传</strong>。何谓断点续传？简单来说就是上传文件中途暂停或失败（比如遇到网络问题）之后，不需要重新上传，只需要上传那些未成功上传的文件分片即可。分片（先将文件切分成多个文件分片）上传是断点续传的基础。</p>
-<p>RandomAccessFile可以帮助我们合并文件分片，示例代码如下：</p>
+<p>RandomAccessFile比较常见的一个应用就是实现大文件的<strong>断点续传</strong>。何谓断点续传？简单来说就是上传文件中途暂停或失败（比如遇到网络问题）之后，不需要重新上传，只需要上传那些未成功上传的文件分片即可。分片（先将文件切分成多个文件分片）上传是断点续传的基础。RandomAccessFile可以帮助我们合并文件分片，示例代码如下：</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/io/20210609164749122.png" alt="img"></p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/io/io-basis.html">原文链接</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CYXVyNsNm36SCu_jrAp5qQ">高效快捷读写文件之RandomAccessFile类解说</a></p>
@@ -960,10 +965,10 @@ randomAccessFile<span class="token punctuation">.</span><span class="token funct
 
 <p>IO流中的装饰器模式应用的例子实在是太多了，不需要特意记忆，完全没必要哈！搞清了装饰器模式的核心之后，你在使用的时候自然就会知道哪些地方运用到了装饰器模式。</p>
 <h4 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h4><p><strong>适配器（Adapter Pattern）模式</strong>主要用于接口互不兼容的类的协调工作，你可以将其联想到我们日常经常使用的电源适配器。</p>
-<p>适配器模式中存在被适配的对象或者类称为**适配者(Adaptee)**，作用于适配者的对象或者类称为适配器(Adapter)。适配器分为对象适配器和类适配器。类适配器使用继承关系来实现，对象适配器使用组合关系来实现。</p>
+<p>适配器模式中存在被适配的对象或者类称为<strong>适配者（Adaptee）</strong>，作用于适配者的对象或者类称为适配器(Adapter)。适配器分为对象适配器和类适配器。类适配器使用继承关系来实现，对象适配器使用组合关系来实现。</p>
 <p>IO流中的字符流和字节流的接口不同，它们之间可以协调工作就是基于适配器模式来做的，更准确点来说是对象适配器。通过适配器，我们可以将字节流对象适配成一个字符流对象，这样我们可以直接通过字节流对象来读取或者写入字符数据。</p>
-<p><code>InputStreamReader</code>和<code>OutputStreamWriter</code>就是两个适配器(Adapter)，同时，它们两个也是字节流和字符流之间的桥梁。<code>InputStreamReader</code>使用<code>StreamDecoder</code>（流解码器）对字节进行解码，实现字节流到字符流的转换，<code>OutputStreamWriter</code>使用<code>StreamEncoder</code>（流编码器）对字符进行编码，实现字符流到字节流的转换。</p>
-<p><code>InputStream</code>和<code>OutputStream</code>的子类是被适配者，<code>InputStreamReader</code>和<code>OutputStreamWriter</code>是适配器。</p>
+<p>InputStreamReader和OutputStreamWriter就是两个适配器(Adapter)，同时，它们两个也是字节流和字符流之间的桥梁。InputStreamReader使用StreamDecoder（流解码器）对字节进行解码，实现字节流到字符流的转换，OutputStreamWriter使用StreamEncoder（流编码器）对字符进行编码，实现字符流到字节流的转换。</p>
+<p>InputStream和OutputStream的子类是被适配者，InputStreamReader和OutputStreamWriter是适配器。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// InputStreamReader是适配器，FileInputStream是被适配的类</span>
 <span class="token class-name">InputStreamReader</span> isr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">InputStreamReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span>fileName<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// BufferedReader增强InputStreamReader的功能（装饰器模式）</span>
@@ -1016,9 +1021,7 @@ randomAccessFile<span class="token punctuation">.</span><span class="token funct
     ch <span class="token operator">=</span> <span class="token function">getChannel</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">FileInputStream</span><span class="token punctuation">)</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>适配器和适配者两者不需要继承相同的抽象类或者实现相同的接口。</p>
-<p>另外，FutureTask类使用了适配器模式，Executors的内部类RunnableAdapter实现属于适配器，用于将Runnable适配成Callable。</p>
-<p>FutureTask参数包含Runnable的一个构造方法：</p>
+<p>适配器和适配者两者不需要继承相同的抽象类或者实现相同的接口。另外，FutureTask类使用了适配器模式，Executors的内部类RunnableAdapter实现属于适配器，用于将Runnable适配成Callable。FutureTask参数包含Runnable的一个构造方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">FutureTask</span><span class="token punctuation">(</span><span class="token class-name">Runnable</span> runnable<span class="token punctuation">,</span> <span class="token class-name">V</span> result<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 调用Executors类的callable方法</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span>callable <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">callable</span><span class="token punctuation">(</span>runnable<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1049,9 +1052,7 @@ randomAccessFile<span class="token punctuation">.</span><span class="token funct
 <h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p>工厂模式用于创建对象，NIO中大量用到了工厂模式，比如Files类的newInputStream方法用于创建InputStream对象（静态工厂）、Paths类的get方法创建Path对象（静态工厂）、ZipFileSystem类（sun.nio包下的类，属于java.nio相关的一些内部实现）的getPath的方法创建Path对象（简单工厂）。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InputStream</span> is <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">newInputStream</span><span class="token punctuation">(</span><span class="token class-name">Paths</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>generatorLogoPath<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><p>NIO中的文件目录监听服务使用到了观察者模式。</p>
-<p>NIO中的文件目录监听服务基于WatchService接口和Watchable接口。WatchService属于观察者，Watchable属于被观察者。</p>
-<p>Watchable接口定义了一个用于将对象注册到WatchService（监控服务）并绑定监听事件的方法register。</p>
+<h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><p>NIO中的文件目录监听服务使用到了观察者模式。NIO中的文件目录监听服务基于WatchService接口和Watchable接口。WatchService属于观察者，Watchable属于被观察者。Watchable接口定义了一个用于将对象注册到WatchService（监控服务）并绑定监听事件的方法register。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Path</span>
     <span class="token keyword">extends</span> <span class="token class-name">Comparable</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Path</span><span class="token punctuation">></span></span><span class="token punctuation">,</span> <span class="token class-name">Iterable</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Path</span><span class="token punctuation">></span></span><span class="token punctuation">,</span> <span class="token class-name">Watchable</span><span class="token punctuation">&#123;</span>
 <span class="token punctuation">&#125;</span>
@@ -1130,29 +1131,23 @@ watchService<span class="token punctuation">,</span> <span class="token class-na
 <p>同步阻塞IO模型中，应用程序发起read调用后，会一直阻塞，直到内核把数据拷贝到用户空间。</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6a9e704af49b4380bb686f0c96d33b81~tplv-k3u1fbpfcp-watermark.image" alt="图源：《深入拆解Tomcat&amp;Jetty》"></p>
 <p>在客户端连接数量不高的情况下，是没问题的。但是，当面对十万甚至百万级连接的时候，传统的BIO模型是无能为力的。因此，我们需要一种更高效的I&#x2F;O处理模型来应对更高的并发量。</p>
-<h4 id="NIO-Non-blocking-x2F-New-I-x2F-O"><a href="#NIO-Non-blocking-x2F-New-I-x2F-O" class="headerlink" title="NIO(Non-blocking&#x2F;New I&#x2F;O)"></a>NIO(Non-blocking&#x2F;New I&#x2F;O)</h4><p>Java中的NIO于Java1.4中引入，对应<code>java.nio</code>包，提供了<code>Channel</code>,<code>Selector</code>，<code>Buffer</code>等抽象。NIO中的N可以理解为Non-blocking，不单纯是New。它是支持面向缓冲的，基于通道的I&#x2F;O操作方法。对于高负载、高并发的（网络）应用，应使用NIO。</p>
-<p>Java中的NIO可以看作是<strong>I&#x2F;O多路复用模型</strong>。也有很多人认为，Java中的NIO属于同步非阻塞IO模型。</p>
+<h4 id="NIO-Non-blocking-x2F-New-I-x2F-O"><a href="#NIO-Non-blocking-x2F-New-I-x2F-O" class="headerlink" title="NIO(Non-blocking&#x2F;New I&#x2F;O)"></a>NIO(Non-blocking&#x2F;New I&#x2F;O)</h4><p>Java中的NIO于Java1.4中引入，对应<code>java.nio</code>包，提供了<code>Channel</code>,<code>Selector</code>，<code>Buffer</code>等抽象。NIO中的N可以理解为Non-blocking，不单纯是New。它是支持面向缓冲的，基于通道的I&#x2F;O操作方法。对于高负载、高并发的（网络）应用，应使用NIO。Java中的NIO可以看作是<strong>I&#x2F;O多路复用模型</strong>。也有很多人认为，Java中的NIO属于同步非阻塞IO模型。</p>
 <p>我们先来看看<strong>同步非阻塞IO模型</strong>。</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bb174e22dbe04bb79fe3fc126aed0c61~tplv-k3u1fbpfcp-watermark.image" alt="图源：《深入拆解Tomcat&amp;Jetty》"></p>
-<p>同步非阻塞IO模型中，应用程序会一直发起read调用，等待数据从内核空间拷贝到用户空间的这段时间里，线程依然是阻塞的，直到在内核把数据拷贝到用户空间。相比于同步阻塞IO模型，同步非阻塞IO模型确实有了很大改进。通过轮询操作，避免了一直阻塞。但是，这种IO模型同样存在问题：应用程序不断进行I&#x2F;O系统调用轮询数据是否已经准备好的过程是十分消耗CPU资源的。</p>
-<p>这个时候，<strong>I&#x2F;O多路复用模型</strong>就上场了。</p>
+<p>同步非阻塞IO模型中，应用程序会一直发起read调用，等待数据从内核空间拷贝到用户空间的这段时间里，线程依然是阻塞的，直到在内核把数据拷贝到用户空间。相比于同步阻塞IO模型，同步非阻塞IO模型确实有了很大改进。通过轮询操作，避免了一直阻塞。但是，这种IO模型同样存在问题：应用程序不断进行I&#x2F;O系统调用轮询数据是否已经准备好的过程是十分消耗CPU资源的。这个时候，<strong>I&#x2F;O多路复用模型</strong>就上场了。</p>
 <p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/88ff862764024c3b8567367df11df6ab~tplv-k3u1fbpfcp-watermark.image" alt="img"></p>
-<p>IO多路复用模型中，线程首先发起select调用，询问内核数据是否准备就绪，等内核把数据准备好了，用户线程再发起read调用。read调用的过程（数据从内核空间-&gt;用户空间）还是阻塞的。</p>
-<blockquote>
-<p>目前支持IO多路复用的系统调用，有select，epoll等等。select系统调用，目前几乎在所有的操作系统上都有支持。</p>
+<p>IO多路复用模型中，线程首先发起select调用，询问内核数据是否准备就绪，等内核把数据准备好了，用户线程再发起read调用。read调用的过程（数据从内核空间-&gt;用户空间）还是阻塞的。目前支持IO多路复用的系统调用，有select，epoll等等。select系统调用，目前几乎在所有的操作系统上都有支持。</p>
 <ul>
 <li><strong>select调用</strong>：内核提供的系统调用，它支持一次查询多个系统调用的可用状态。几乎所有的操作系统都支持。</li>
 <li><strong>epoll调用</strong>：linux2.6内核，属于select调用的增强版本，优化了IO的执行效率。</li>
 </ul>
-</blockquote>
 <p><strong>IO多路复用模型，通过减少无效的系统调用，减少了对CPU资源的消耗。</strong></p>
 <p>Java中的NIO，有一个非常重要的<strong>选择器(Selector)<strong>的概念，也可以被称为</strong>多路复用器</strong>。通过它，只需要一个线程便可以管理多个客户端连接。当客户端数据到了之后，才会为其服务。</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0f483f2437ce4ecdb180134270a00144~tplv-k3u1fbpfcp-watermark.image" alt="img"></p>
 <h4 id="AIO-Asynchronous-I-x2F-O"><a href="#AIO-Asynchronous-I-x2F-O" class="headerlink" title="AIO(Asynchronous I&#x2F;O)"></a>AIO(Asynchronous I&#x2F;O)</h4><p>AIO也就是NIO2。Java7中引入了NIO的改进版NIO2,它是异步IO模型。</p>
 <p>异步IO是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。</p>
 <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3077e72a1af049559e81d18205b56fd7~tplv-k3u1fbpfcp-watermark.image" alt="img"></p>
-<p>目前来说AIO的应用还不是很广泛。Netty之前也尝试使用过AIO，不过又放弃了。这是因为，Netty使用了AIO之后，在Linux系统上的性能并没有多少提升。</p>
-<p>最后，来一张图，简单总结一下Java中的BIO、NIO、AIO。</p>
+<p>目前来说AIO的应用还不是很广泛。Netty之前也尝试使用过AIO，不过又放弃了。这是因为，Netty使用了AIO之后，在Linux系统上的性能并没有多少提升。最后，来一张图，简单总结一下Java中的BIO、NIO、AIO。</p>
 <p><img src="https://images.xiaozhuanlan.com/photo/2020/33b193457c928ae02217480f994814b6.png" alt="img"></p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/io/io-model.html">原文链接</a></p>
@@ -1171,6 +1166,7 @@ watchService<span class="token punctuation">,</span> <span class="token class-na
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6PsSQXamf6w0w-B-ZgGNsg">JAVA语言异步非阻塞设计模式</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pS2SXhmF7O3Gk8WRkCFZaw">一篇带你彻底读懂IO流技术！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LJS6joxDCt71M9tEJ6GxFA">文件读写操作与常用技巧分享</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/emjHDexsHoIFmZGhwwrKfA">IO流为什么必须手动关闭，不能像其他的对象坐等GC回收?</a></li>
 </ul>
 <h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/study_demo/nio">NIO demo</a></p>
@@ -1739,7 +1735,9 @@ key<span class="token punctuation">.</span><span class="token function">readyOps
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/snailclimb/p/9086334.html">NIO之Selector选择器</a></p>
+</blockquote>
 <h3 id="Netty"><a href="#Netty" class="headerlink" title="Netty"></a>Netty</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/study_demo/nio/netty">Netty demo</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uMak8HmIyl78hcEUtovAvg">让Netty“榨干”你的CPU</a><br><a target="_blank" rel="noopener" href="//https://mp.weixin.qq.com/s/W-KZFn40FnwIksP1zQP4RQ">Netty简易实战，傻瓜都能看懂！</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/forezp/article/details/88414741">Java NIO？看这一篇就够了！</a><br><a target="_blank" rel="noopener" href="https://ifeve.com/overview/">NIO系列教程</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jpWIhws9b2ASD5k6A1pBvg">Netty底层的IO模型是什么？</a></p>
 </blockquote>

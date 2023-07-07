@@ -210,6 +210,8 @@ public class App {
 - **application/global-session（仅Web应用可用）**：每个Web应用在启动时创建一个Bean（应用Bean），该bean仅在当前应用启动时间内有效。
 - **websocket（仅Web应用可用）**：每一次WebSocket会话产生一个新的bean。
 
+> [详解Spring的6种内置作用域及其应用场景](https://mp.weixin.qq.com/s/FB-eiiYIaGUY1Y20qBxanw)
+
 Spring通过ConcurrentHashMap实现单例注册表的特殊方式实现单例模式。Spring实现单例的核心代码如下：
 
 ```java

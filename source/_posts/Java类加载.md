@@ -83,7 +83,7 @@ cp_info        constant_pool[constant_pool_count-1];//常量池
 
 紧接着主次版本号之后的是常量池，常量池的数量是`constant_pool_count-1`（常量池计数器是从1开始计数的，将第0项常量空出来是有特殊考虑的，索引值为0代表“不引用任何一个常量池项”）。
 
-常量池主要存放两大常量：字面量和符号引用。字面量比较接近于Java语言层面的的常量概念，如文本字符串、声明为final的常量值等。而符号引用则属于编译原理方面的概念。包括下面三类常量：
+常量池主要存放两大常量：字面量和符号引用。字面量比较接近于Java语言层面的的常量概念，如文本字符串、声明为final的常量值等。而符号引用则属于编译原理方面的概念，包括下面三类常量：
 
 - 类和接口的全限定名
 - 字段的名称和描述符
@@ -160,7 +160,7 @@ field_info     fields[fields_count];//一个类会可以有个字段
 
 ![字段表的结构](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/字段表的结构.png)
 
-- **access_flags**:字段的作用域（`public`,`private`,`protected`修饰符），是实例变量还是类变量（`static`修饰符）,可否被序列化（transient修饰符）,可变性（final）,可见性（volatile修饰符，是否强制从主内存读写）。
+- **access_flags**:字段的作用域（public,private,protected修饰符），是实例变量还是类变量（static修饰符）,可否被序列化（transient修饰符）,可变性（final）,可见性（volatile修饰符，是否强制从主内存读写）。
 - **name_index**:对常量池的引用，表示的字段的名称；
 - **descriptor_index**:对常量池的引用，表示字段和方法的描述符；
 - **attributes_count**:一个字段还会拥有一些额外的属性，attributes_count存放属性的个数；
@@ -210,9 +210,7 @@ attribute_info attributes[attributes_count];//属性表集合
 
 ### 类的生命周期
 
-类从被加载到虚拟机内存中开始到卸载出内存为止，它的整个生命周期可以简单概括为7个阶段：加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）。其中，前三个阶段可以统称为连接（Linking）。
-
-这7个阶段的顺序如下图所示：
+类从被加载到虚拟机内存中开始到卸载出内存为止，它的整个生命周期可以简单概括为7个阶段：加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）。其中，前三个阶段可以统称为连接（Linking）。这7个阶段的顺序如下图所示：
 
 ![一个类的完整生命周期](https://oss.javaguide.cn/github/javaguide/java/jvm/lifecycle-of-a-class.png)
 
@@ -234,9 +232,7 @@ Class文件需要加载到虚拟机中之后才能运行和使用，那么虚拟
 2. 将字节流所代表的静态存储结构转换为方法区的运行时数据结构。
 3. 在内存中生成一个代表该类的Class对象，作为方法区这些数据的访问入口。
 
-虚拟机规范上面这3点并不具体，因此是非常灵活的。比如："通过全类名获取定义此类的二进制字节流"并没有指明具体从哪里获取（ZIP、JAR、EAR、WAR、网络、动态代理技术运行时动态生成、其他文件生成比如JSP...）、怎样获取。
-
-加载这一步主要是通过我们后面要讲到的**类加载器**完成的。类加载器有很多种，当我们想要加载一个类的时候，具体是哪个类加载器加载由**双亲委派模型**决定（不过，我们也能打破由双亲委派模型）。
+虚拟机规范上面这3点并不具体，因此是非常灵活的。比如："通过全类名获取定义此类的二进制字节流"并没有指明具体从哪里获取（ZIP、JAR、EAR、WAR、网络、动态代理技术运行时动态生成、其他文件生成比如JSP...）、怎样获取。加载这一步主要是通过我们后面要讲到的**类加载器**完成的。类加载器有很多种，当我们想要加载一个类的时候，具体是哪个类加载器加载由**双亲委派模型**决定（不过，我们也能打破由双亲委派模型）。
 
 > 类加载器、双亲委派模型也是非常重要的知识点，这部分内容在[类加载器详解](https://javaguide.cn/java/jvm/classloader.html)这篇文章中有详细介绍到
 
@@ -298,7 +294,7 @@ Class文件需要加载到虚拟机中之后才能运行和使用，那么虚拟
 
 #### 初始化
 
-**初始化阶段是执行初始化方法<clinit\>()方法的过程，是类加载的最后一步，这一步JVM才开始真正执行类中定义的Java程序代码(字节码)**。
+初始化阶段是执行初始化方法<clinit\>()方法的过程，是类加载的最后一步，这一步JVM才开始真正执行类中定义的Java程序代码(字节码)。
 
 > 说明：<clinit\>()方法是编译之后自动生成的。
 
@@ -342,8 +338,7 @@ Class文件需要加载到虚拟机中之后才能运行和使用，那么虚拟
 
 Java在new一个对象的时候，会先查看对象所属的类有没有被加载到内存，如果没有的话，就会先通过类的全限定名（包名+类名）来加载。加载并初始化类完成后，再进行对象的创建工作。
 类加载的生命周期：加载(loading)-连接(Linking)-初始化(initialization)
-1. loading:使用类加载器对类进行加载（双亲委派机制）
-**使用双亲委托机制的好处是**：能够有效确保一个类的全局唯一性，当程序中出现多个限定名相同的类时，类加载器在执行加载时，始终只会加载其中的某一个类。通过委派的方式，可以避免类的重复加载，当父加载器已经加载过某一个类时，子加载器就不会再重新加载这个类
+1. loading:使用类加载器对类进行加载（双亲委派机制）。使用双亲委托机制的好处是：能够有效确保一个类的全局唯一性，当程序中出现多个限定名相同的类时，类加载器在执行加载时，始终只会加载其中的某一个类。通过委派的方式，可以避免类的重复加载，当父加载器已经加载过某一个类时，子加载器就不会再重新加载这个类
 2. linking:连接分为验证-准备-解析三个阶段，验证的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求。准备阶段是正式为类中定义的变量（即静态变量，被static修饰的变量）分配内存并设置类变量初始值的阶段，当类变量被final修饰时，在准备阶段就直接会被复制，不是使用初始值。解析阶段是Java虚拟机将常量池内的符号引用替换为直接引用的过程
 3. initialization:初始化，真正开始执行Java代码的阶段(比如给类属性赋真实的值)执行<clinit\>方法的过程
 
@@ -459,13 +454,13 @@ public abstract class ClassLoader {
 
 JVM中内置了三个重要的ClassLoader：
 
-1. **BootstrapClassLoader(启动类加载器)**：最顶层的加载类，由C++实现，通常表示为null，并且没有父级，主要用来加载JDK内部的核心类库（%JAVA_HOME%/lib目录下的rt.jar、resources.jar、charsets.jar等jar包和类）以及被-Xbootclasspath参数指定的路径下的所有类。
-2. **ExtensionClassLoader(扩展类加载器)**：主要负责加载%JRE_HOME%/lib/ext目录下的jar包和类以及被java.ext.dirs系统变量所指定的路径下的所有类。
-3. **AppClassLoader(应用程序类加载器)**：面向我们用户的加载器，负责加载当前应用classpath下的所有jar包和类。
+1. **BootstrapClassLoader（启动类加载器）**：最顶层的加载类，由C++实现，通常表示为null，并且没有父级，主要用来加载JDK内部的核心类库（%JAVA_HOME%/lib目录下的rt.jar、resources.jar、charsets.jar等jar包和类）以及被-Xbootclasspath参数指定的路径下的所有类。
+2. **ExtensionClassLoader（扩展类加载器）**：主要负责加载%JRE_HOME%/lib/ext目录下的jar包和类以及被java.ext.dirs系统变量所指定的路径下的所有类。
+3. **AppClassLoader（应用程序类加载器）**：面向我们用户的加载器，负责加载当前应用classpath下的所有jar包和类。
 
 > 🌈拓展一下：
 >
-> - **rt.jar**：rt代表“RunTime”，rt.jar是Java基础类库，包含Javadoc里面看到的所有的类的类文件。也就是说，我们常用内置库java.xxx.\*都在里面，比如java.util.\*、java.io.\*、java.nio.\*、java.lang.\*、java.sql.\*、java.math.\*。
+> - rt.jar：rt代表“RunTime”，rt.jar是Java基础类库，包含Javadoc里面看到的所有的类的类文件。也就是说，我们常用内置库java.xxx.\*都在里面，比如java.util.\*、java.io.\*、java.nio.\*、java.lang.\*、java.sql.\*、java.math.\*。
 > - Java9引入了模块系统，并且略微更改了上述的类加载器。扩展类加载器被改名为平台类加载器（platformclassloader）。JavaSE中除了少数几个关键模块，比如说java.base是由启动类加载器加载之外，其他的模块均由平台类加载器所加载。
 
 除了这三种类加载器之外，用户还可以加入自定义的类加载器来进行拓展，以满足自己的特殊需求。就比如说，我们可以对Java类的字节码（.class文件）进行加密，加载时再利用自定义的类加载器对其解密。
@@ -564,7 +559,7 @@ public class PrintClassLoaderTree {
 - 双亲委派模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器。
 - ClassLoader实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。
 
-下图展示的各种类加载器之间的层次关系被称为类加载器的**双亲委派模型(ParentsDelegationModel)**。
+下图展示的各种类加载器之间的层次关系被称为类加载器的**双亲委派模型（ParentsDelegationModel）**。
 
 ![类加载器层次关系图](https://oss.javaguide.cn/github/javaguide/java/jvm/class-loader-parents-delegation-model.png)
 
@@ -647,9 +642,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 #### 双亲委派模型的好处
 
-双亲委派模型保证了Java程序的稳定运行，可以避免类的重复加载（JVM区分不同类的方式不仅仅根据类名，相同的类文件被不同的类加载器加载产生的是两个不同的类），也保证了Java的核心API不被篡改。
-
-如果没有使用双亲委派模型，而是每个类加载器加载自己的话就会出现一些问题，比如我们编写一个称为java.lang.Object类的话，那么程序运行的时候，系统就会出现两个不同的Object类。双亲委派模型可以保证加载的是JRE里的那个Object类，而不是你写的Object类。这是因为AppClassLoader在加载你的Object类时，会委托给ExtClassLoader去加载，而ExtClassLoader又会委托给BootstrapClassLoader，BootstrapClassLoader发现自己已经加载过了Object类，会直接返回，不会去加载你写的Object类。
+双亲委派模型保证了Java程序的稳定运行，可以避免类的重复加载（JVM区分不同类的方式不仅仅根据类名，相同的类文件被不同的类加载器加载产生的是两个不同的类），也保证了Java的核心API不被篡改。如果没有使用双亲委派模型，而是每个类加载器加载自己的话就会出现一些问题，比如我们编写一个称为java.lang.Object类的话，那么程序运行的时候，系统就会出现两个不同的Object类。双亲委派模型可以保证加载的是JRE里的那个Object类，而不是你写的Object类。这是因为AppClassLoader在加载你的Object类时，会委托给ExtClassLoader去加载，而ExtClassLoader又会委托给BootstrapClassLoader，BootstrapClassLoader发现自己已经加载过了Object类，会直接返回，不会去加载你写的Object类。
 
 #### 打破双亲委派模型方法
 
@@ -661,9 +654,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 > 类加载器在进行类加载的时候，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成（调用父加载器loadClass()方法来加载类）。
 
-我们比较熟悉的Tomcat服务器为了能够优先加载Web应用目录下的类，然后再加载其他目录下的类，就自定义了类加载器WebAppClassLoader来打破双亲委托机制。这也是Tomcat下Web应用之间的类实现隔离的具体原理。
-
-Tomcat的类加载器的层次结构如下：
+我们比较熟悉的Tomcat服务器为了能够优先加载Web应用目录下的类，然后再加载其他目录下的类，就自定义了类加载器WebAppClassLoader来打破双亲委托机制。这也是Tomcat下Web应用之间的类实现隔离的具体原理。Tomcat的类加载器的层次结构如下：
 
 ![Tomcat的类加载器的层次结构](https://oss.javaguide.cn/github/javaguide/java/jvm/tomcat-class-loader-parents-delegation-model.png)
 

@@ -90,6 +90,7 @@ interactive_timeout=31536000
 # --defaults-file指定配置文件 --basedir指定Mysql安装目录 --datadir指定数据目录 --user所属用户
 ./scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
 ```
+
 > 此处可能出现错误
 >
 > **错误1**：命令报错`-bash: ./scripts/mysql_install_db: /usr/bin/perl: bad interpreter: No such file or directory.`貌似提示注释器错误，没有/usr/bin/perl文件或者档案
@@ -148,6 +149,7 @@ service mysql start
 ```
 
 #### 6. 修改密码
+
 ```shell
 # 测试进入mysql
 mysql -uroot -proot
@@ -183,6 +185,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'192.168.1.3' IDENTIFIED BY 'mypassword'
 ```
 
 #### 8. 其他
+
 添加服务自启动
 ```shell
 chkconfig --add mysql
@@ -207,6 +210,7 @@ ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock
 ```
 
 默认配置文件路径如下
+
 ```
 配置文件：/etc/my.cnf
 日志文件：/var/log/var/log/mysqld.log
@@ -217,23 +221,30 @@ socket文件：/var/run/mysqld/mysqld.pid
 
 #### 一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包
 
-1. 把上面的rpm文件下载下来放到服务器上,或者在linux系统中通过wget命令下载
+(1) 把上面的rpm文件下载下来放到服务器上,或者在linux系统中通过wget命令下载
 
 ```shell
 wget http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
 ```
-2. 下载完成后使用yum命令本地安装yum源
+
+(2) 下载完成后使用yum命令本地安装yum源
+
 ```shell
 yum localinstall mysql80-community-release-el7-1.noarch.rpm
 ```
-3. 执行完毕后使用下面的命令检查是否安装成功
+
+(3) 执行完毕后使用下面的命令检查是否安装成功
+
 ```shell
 yum repolist enabled | grep "mysql.*-community.*"
 ```
-4. 安装服务器
+
+(4) 安装服务器
+
 ```shell
 yum install -y mysql-community-server
 ```
+
 #### 二、配置MySQL
 
 服务命令
@@ -284,7 +295,8 @@ systemctl restart mysqld
 
 ### rpm安装
 
-1. 需要通过rpm相关指令，来查询当前系统中是否存在已安装的mysql软件包
+(1) 需要通过rpm相关指令，来查询当前系统中是否存在已安装的mysql软件包
+
 ```shell
 # 查询当前系统中安装的所有软件
 rpm -qa
@@ -293,7 +305,9 @@ rpm -qa | grep mysql
 # 查询当前系统中安装的名称带mariadb的软件
 rpm -qa | grep mariadb
 ```
-2. 卸载
+
+(2) 卸载
+
 ```shell
 rpm -ev --nodeps 软件名称
 # 卸载之前请先关闭mysql服务，命令如下
@@ -312,9 +326,12 @@ rm -rf /var/lib/mysql
 # 删除日志临时文件
 rm -rf /var/log/mysqld.log
 ```
-3. 下载rpm
+
+(3) 下载rpm
+
 ![下载](https://img-blog.csdnimg.cn/img_convert/7ec61ebdc9103cd70f3dd52efbd4ea19.png)
 或者使用wget
+
 ```shell
 # 下载server包
 wget https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-server-5.7.38-1.el7.x86_64.rpm
@@ -325,7 +342,9 @@ wget https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-common-5.7.38-1.
 # 下载libs包
 wget https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-libs-5.7.38-1.el7.x86_64.rpm
 ```
-4. 安装
+
+(4) 安装
+
 > 包之间相互依赖，所以必须注意安装顺序
 > ```shell
 > # 相关依赖
@@ -343,7 +362,8 @@ rpm -ivh mysql-community-libs-8.0.11-1.el7.x86_64.rpm
 rpm -ivh mysql-community-client-8.0.11-1.el7.x86_64.rpm
 rpm -ivh mysql-community-server-8.0.11-1.el7.x86_64.rpm
 ```
-5. 查看密码
+
+(5) 查看密码
 
 对于rpm安装的mysql，在mysql第一次启动时，会自动帮我们生成root用户的访问密码，并且输出在mysql的日志文件/var/log/mysqld.log中，我们可以查看这份日志文件，从而获取到访问密码
 ```shell
@@ -351,7 +371,8 @@ grep 'temporary password' /var/log/mysqld.log
 # 或者
 cat /var/log/mysqld.log | grep password
 ```
-6. 配置其他内容如编码则新建`/etc/my.cnf`
+
+(6) 配置其他内容如编码则新建`/etc/my.cnf`
 
 
 ## Windows安装MySQL
@@ -364,7 +385,7 @@ cat /var/log/mysqld.log | grep password
 ```
 ### 安装
 
-1. 解压mysql压缩包后进入mysql目录，新建my.ini文件并编辑
+(1) 解压mysql压缩包后进入mysql目录，新建my.ini文件并编辑
 
 ```shell
 [mysqld]
@@ -379,11 +400,13 @@ max_connections=200
 # 创建新表时将使用的默认存储引擎
 default-storage-engine=INNODB
 ```
-2. 将mysql加入环境变量
 
-3. 管理员打开cmd切换到mysql bin目录下(一定要切换),执行**mysqld install**安装mysql服务，成功打印**service successfully installed**后执行**mysqld --initialize --console**会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务
+(2) 将mysql加入环境变量
 
-4. 修改密码（5.7版本以前）
+(3) 管理员打开cmd切换到mysql bin目录下(一定要切换),执行**mysqld install**安装mysql服务，成功打印**service successfully installed**后执行**mysqld --initialize --console**会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务
+
+(4) 修改密码（5.7版本以前）
+
 ```shell
 # mysql -uroot -p输入密码后
 set password for root@localhost = password('123456');
@@ -394,6 +417,7 @@ set password = '123456';
 ### 8.0连接navicat
 
 navicat连接8.0需要把mysql用户登录密码加密规则还原成mysql_native_password
+
 ```shell
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root' PASSWORD EXPIRE NEVER; #修改加密规则
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; #更新一下用户的密码

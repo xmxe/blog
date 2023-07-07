@@ -86,7 +86,7 @@ ClassLoader.getSystemClassLoader().loadClass("cn.javaguide.TargetObject");
 
 ### 反射的一些基本操作
 
-1. 创建一个我们要使用反射操作的类TargetObject。
+**创建一个我们要使用反射操作的类TargetObject**
 
 ```java
 package cn.javaguide;
@@ -108,7 +108,7 @@ public class TargetObject {
 }
 ```
 
-2. 使用反射操作这个类的方法以及参数
+**使用反射操作这个类的方法以及参数**
 
 ```java
 package cn.javaguide;
@@ -154,7 +154,7 @@ public class Main {
 }
 ```
 
-输出内容：
+**输出内容**：
 
 ```text
 publicMethod
@@ -163,11 +163,6 @@ I love JavaGuide
 value is JavaGuide
 ```
 
-**注意**:有读者提到上面代码运行会抛出ClassNotFoundException异常,具体原因是你没有下面把这段代码的包名替换成自己创建的TargetObject所在的包。
-
-```java
-Class<?> targetClass = Class.forName("cn.javaguide.TargetObject");
-```
 > [原文链接](https://javaguide.cn/java/basis/reflection.html)
 
 ### 其他

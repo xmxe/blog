@@ -11,10 +11,15 @@ img: https://picx1.zhimg.com/v2-ff627d205bd26ab15e4bdefd5daf1dda_1440w.jpg
 
 ### JQuery、JS常用方法
 
-json字符串  var str1 = '{"name":"cxh","sex":"man"}';
-json对象  var str2 = {name:"cxh",sex:"man"};
+```js
+// json字符串
+var str1 = '{"name":"cxh","sex":"man"}';
+// json对象
+var str2 = {name:"cxh",sex:"man"};
+```
+**obj.toJSONString()** :将JSON对象转化为JSON字符。
 
-**obj.toJSONString()** :将JSON对象转化为JSON字符。要引入https://github.com/douglascrockford/JSON-js/blob/master/json.js
+> 要引入https://github.com/douglascrockford/JSON-js/blob/master/json.js
 
 **JSON.stringify()** :将一个JavaScript值(对象或者数组)转换为一个JSON字符串,用于从一个对象解析出字符串
 
@@ -23,7 +28,8 @@ var a = {a:1,b:2}
 JSON.stringify(a)  // 结果：{"a":1,"b":2}
 ```
 当使用ajax作为参数提交的时候需要将contentType设置为"application/json",将提交请求格式设置为post后台使用@RequestBody接收
-[差点因为JSON.stringify丢了奖金..](https://mp.weixin.qq.com/s/JDah47ariZY3aerQ97RFKw)
+
+> [差点因为JSON.stringify丢了奖金..](https://mp.weixin.qq.com/s/JDah47ariZY3aerQ97RFKw)
 
 **JSON.parse()** :用来解析JSON字符串,转换成json对象.相似于$.parseJSON()/jQuery.parseJSON()
 
@@ -35,7 +41,7 @@ JSON.parse(str)
 ```
 注意：单引号写在{}外，每个属性名都必须用双引号，否则会抛出异常。
 
-**Object.assign(target1,target2,...,targetn)**：合并对象，对象合并到第一个对象中，注意目标对象target1也会改变
+**Object.assign(target1,target2,...,targetn)** ：合并对象，对象合并到第一个对象中，注意目标对象target1也会改变
 
 **join(separator)** :用于把数组中的所有元素放入一个字符串。separator可选，指定要使用的分隔符。如果省略该参数，则使用逗号作为分隔符。
 
@@ -204,7 +210,7 @@ alert((new Function("x","y","return x*y;"))(2,3));// "6"
 
 ### JQuery选择器
 
-[jQuery选择器](https://tool.oschina.net/uploads/apidocs/jquery/)
+> [jQuery选择器](https://tool.oschina.net/uploads/apidocs/jquery/)
 
 ```js
 // >: 选择某元素后面的第一代子元素div>p选择其父元素是<div>元素的所有<p>元素。
@@ -250,7 +256,6 @@ position:absolute
 position:fixed
 float
 ```
-[如何用一行CSS实现10种现代布局？](https://mp.weixin.qq.com/s/3yToJq5N8-8SXb0nPDL47g)
 
 ### Map转json
 
@@ -274,9 +279,7 @@ var jsons=JSON.parse(MapToJson(map));
 
 ### if(obj)判断
 
-if(jsObj){}过滤
-**undefined不能过,null不能过 ,''不能过 ,0不能过,{}能过,[]能过**
-即jsObj!=undefined && jsObj!=null && jsObj!='' && jsObj!=0
+if(jsObj){}过滤**undefined不能过,null不能过 ,''不能过 ,0不能过,{}能过,[]能过**。即`jsObj!=undefined && jsObj!=null && jsObj!='' && jsObj!=0`
 
 **if(!!jsObj)与上面等价 可以隐式转换类型**
 
@@ -341,27 +344,26 @@ $(document).ready(function) = $().ready(function) = $(function)
 
 ### 引用
 
-数字、字符串、布尔类型的为原始类型，是值引用
-数组、对象类型为地址引用
-值引用可以深拷贝
-地址引用循环到原始类型方可进行深拷贝
+- 数字、字符串、布尔类型的为原始类型，是值引用
+- 数组、对象类型为地址引用
+- 值引用可以深拷贝
+- 地址引用循环到原始类型方可进行深拷贝
 
 ### http状态码
 
-301永久重定向
-302临时重定向
-400 bad request：错误请求，一般是前端提交数据的字段名称或者是字段类型和后台的实体类不一致(后台接收的数据类型不一致)，导致无法封装。或前端提交的到后台的数据应该是json字符串类型，而前端没有将对象转化为字符串类型；
-403服务器理解请求但拒绝执行，一般是资源权限问题导致,无权限访问
-405 get post等请求类型错误
-406 服务器返回的数据前端无法解析,一般是返回json格式数据前端的Content-Type是text:html
-502 bad gateway:错误的网关,上游服务器出现问题
-连接超时 我们向服务器发送请求,由于服务器当前链接太多，导致服务器方面无法给于正常的响应，产生此类报错
-503过载
-504 gateway time-out
+- 301永久重定向
+- 302临时重定向
+- 400 bad request：错误请求，一般是前端提交数据的字段名称或者是字段类型和后台的实体类不一致(后台接收的数据类型不一致)，导致无法封装。或前端提交的到后台的数据应该是json字符串类型，而前端没有将对象转化为字符串类型；
+- 403服务器理解请求但拒绝执行，一般是资源权限问题导致,无权限访问
+- 405 get post等请求类型错误
+- 406 服务器返回的数据前端无法解析,一般是返回json格式数据前端的Content-Type是text:html
+- 502 bad gateway:错误的网关,上游服务器出现问题。连接超时 我们向服务器发送请求,由于服务器当前链接太多，导致服务器方面无法给于正常的响应，产生此类报错
+- 503过载
+- 504 gateway time-out
 程序执行时间过长导致响应超时，例如程序需要执行20秒，而nginx最大响应等待时间为10秒，这样就会出现超时
 
-[http状态码详解](http://tool.oschina.net/commons?type=5)
-[请求头响应头等参数详解](https://mp.weixin.qq.com/s/w_FgN5tVGr1DlbqyF5g4gw)
+> [http状态码详解](http://tool.oschina.net/commons?type=5)
+> [请求头响应头等参数详解](https://mp.weixin.qq.com/s/w_FgN5tVGr1DlbqyF5g4gw)
 
 ### GET与POST区别
 
@@ -375,7 +377,7 @@ $(document).ready(function) = $().ready(function) = $(function)
 8. GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。
 9. GET参数通过URL传递，POST放在Request body中。
 
-[听我讲完GET、POST原理，面试官给我倒了杯卡布奇诺](https://mp.weixin.qq.com/s/W68JzNIoUpm9hyXinOzkMw)
+> [听我讲完GET、POST原理，面试官给我倒了杯卡布奇诺](https://mp.weixin.qq.com/s/W68JzNIoUpm9hyXinOzkMw)
 
 ### ||和&&
 只要"||"前面为false,不管"||"后面是true还是false，都返回"||"后面的值
@@ -457,9 +459,7 @@ console.log(book3.constructor);//function Book(name){this.name = name;}
 console.log(book3.constructor === Book.prototype.constructor);//true
 console.log(book3.hasOwnProperty(constructor));//false
 ```
-还是刚刚的book，book3.constructor就是function Book本身。它也等于Book.prototype.constructor。
-
-constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。constructor属性的作用，是分辨原型对象到底属于哪个构造函数。因为prototype是一个对象，所以对象可以被赋值，也就是说prototype可以被改变：
+还是刚刚的book，book3.constructor就是function Book本身。它也等于Book.prototype.constructor。constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。constructor属性的作用，是分辨原型对象到底属于哪个构造函数。因为prototype是一个对象，所以对象可以被赋值，也就是说prototype可以被改变：
 
 ```js
 function A(){}
@@ -591,10 +591,10 @@ test('1234').catch(function(err) {
 })
 //promise.then(onFulfilled, onRejected)等价于promise.then(onFulfilled).catch(onRejected)
 ```
-[前端基础进阶（十五）：透彻掌握Promise的使用，读这篇就够了](https://www.jianshu.com/p/fe5f173276bd)
-[JavaScript Promise对象](https://www.runoob.com/w3cnote/javascript-promise-object.html)
-[mozilla promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-[写给Java程序员的前端Promise教程](https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ)
+> [前端基础进阶（十五）：透彻掌握Promise的使用，读这篇就够了](https://www.jianshu.com/p/fe5f173276bd)
+> [JavaScript Promise对象](https://www.runoob.com/w3cnote/javascript-promise-object.html)
+> [mozilla promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+> [写给Java程序员的前端Promise教程](https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ)
 
 
 ### await、async
@@ -728,7 +728,7 @@ console.log(foo);
 var foo = new Foo('mm')
 console.log(foo)
 ```
-[JavaScript：对象都是这样生成的!※(很重要的一篇文章)！](https://mp.weixin.qq.com/s/QJj9TnUKeXGj1HIX039etg)
+> [JavaScript：对象都是这样生成的!※(很重要的一篇文章)！](https://mp.weixin.qq.com/s/QJj9TnUKeXGj1HIX039etg)
 
 
 ### JS this
@@ -900,7 +900,8 @@ var newAdd = add.bind(addObj,2);
 console.log(newAdd(3));//25
 ```
 上面的例子中，bind将两个参数的add方法，替换成了1个参数的add方法。注意：bind每次调用都会返回一个新的函数，从而导致无法取消之前的绑定。
-[理解js中this的指向](https://www.cnblogs.com/pssp/p/5216085.html)
+
+> [理解js中this的指向](https://www.cnblogs.com/pssp/p/5216085.html)
 
 
 ### class
@@ -992,10 +993,7 @@ class Boy extends Person{
     }
 }
 ```
-在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错。这是因为子类实例的构建，是基于对父类实例加工，只有super方法才能返回父类实例。
-super作为函数调用时，代表父类的构造函数。ES6要求，子类的构造函数必须执行一次super函数。super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类。
-上面的例子，我们在子类Boy中的toString普通方法中，调用了super.toString()，之前我们也讲了，类的所有方法都定义在类的prototype属性上面。所以super.toString就是Person中定义的toString方法。由于super指向父类的原型对象，所以定义在父类实例上的方法或属性，是无法通过super调用的。定义在父类实例上的方法或属性就是指在constructor中定义的方法或者属性。
-Person 类，在constructor中定义了name属性。我们看一下在Boy中的普通方法中访问会有什么问题：
+在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错。这是因为子类实例的构建，是基于对父类实例加工，只有super方法才能返回父类实例。super作为函数调用时，代表父类的构造函数。ES6要求，子类的构造函数必须执行一次super函数。super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类。上面的例子，我们在子类Boy中的toString普通方法中，调用了super.toString()，之前我们也讲了，类的所有方法都定义在类的prototype属性上面。所以super.toString就是Person中定义的toString方法。由于super指向父类的原型对象，所以定义在父类实例上的方法或属性，是无法通过super调用的。定义在父类实例上的方法或属性就是指在constructor中定义的方法或者属性。Person 类，在constructor中定义了name属性。我们看一下在Boy中的普通方法中访问会有什么问题：
 ```js
 class Boy extends Person{
     constructor(name,sex,address) {

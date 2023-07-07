@@ -630,17 +630,16 @@
 </tbody></table>
 <hr>
 <h3 id="Spring-Security认证流程"><a href="#Spring-Security认证流程" class="headerlink" title="Spring Security认证流程"></a>Spring Security认证流程</h3><ol>
-<li>Spring Security支持多种用户认证的方式，最常用的是基于用户名和密码的用户认证方式，其认证流程如下图所示：</li>
+<li><p>Spring Security支持多种用户认证的方式，最常用的是基于用户名和密码的用户认证方式，其认证流程如下图所示：</p>
+<p> <img src="/blog/images/rzlc.png"></p>
+</li>
+<li><p>“记住我”功能的认证流程如下图所示：</p>
+<p> <img src="/blog/images/rememberme.png"></p>
+</li>
+<li><p>Spring Security的用户认证流程是由一系列的过滤器链来实现的，默认的关于用户认证的过滤器链大致如下图所示：</p>
+<p> <img src="/blog/images/filterchain.png"></p>
+</li>
 </ol>
-<p><img src="/blog/images/rzlc.png"></p>
-<ol start="2">
-<li>“记住我”功能的认证流程如下图所示：</li>
-</ol>
-<p><img src="/blog/images/rememberme.png"></p>
-<ol start="3">
-<li>Spring Security的用户认证流程是由一系列的过滤器链来实现的，默认的关于用户认证的过滤器链大致如下图所示：</li>
-</ol>
-<p><img src="/blog/images/filterchain.png"></p>
 <table>
 <thead>
 <tr>
@@ -709,10 +708,9 @@
 <td>当用户没有登录而直接访问资源时,从cookie里找出用户的信息,如果Spring Security能够识别出用户提供的remember me cookie,用户将不必填写用户名和密码,而是直接登录进入系统，该过滤器默认不开启。</td>
 </tr>
 </tbody></table>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u011066470/article/details/119086893">spring security的认证和授权流程</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/502290821">一文带你搞懂Spring Security认证授权流程</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u011066470/article/details/119086893">spring security的认证和授权流程</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/502290821">一文带你搞懂Spring Security认证授权流程</a></p>
+</blockquote>
 <hr>
 <h3 id="Spring-Security登录流程"><a href="#Spring-Security登录流程" class="headerlink" title="Spring Security登录流程"></a>Spring Security登录流程</h3><ol>
 <li>用户在页面输入账户密码并提交。</li>

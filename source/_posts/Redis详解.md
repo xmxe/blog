@@ -42,7 +42,7 @@ Cache Aside Pattern是我们平时使用比较多的一个缓存读写模式，�
 
 > 请求1从db读数据A->请求2更新db中的数据A（此时缓存中无数据A，故不用执行删除缓存操作）->请求1将数据A写入cache
 
-现在我们再来分析一下**Cache Aside Pattern的缺陷**。
+现在我们再来分析一下Cache Aside Pattern的缺陷。
 
 **缺陷1：首次请求数据一定不在cache的问题**
 
@@ -68,7 +68,7 @@ Read/Write Through Pattern中服务端把cache视为主要数据存储，从中�
 
 ![img](https://oss.javaguide.cn/github/javaguide/database/redis/write-through.png)
 
-**读(Read Through)**：
+**读（Read Through）**：
 
 - 从cache中读取数据，读取到就直接返回。
 - 读取不到的话，先从db加载，写入到cache后返回响应。
@@ -122,7 +122,7 @@ String是Redis中最简单同时也是最常用的一个数据结构。String是
 | DEL key（通用）                | 删除指定的key                   |
 | EXPIRE key seconds（通用）     | 给指定key设置过期时间          |
 
-> 更多Redis String命令以及详细使用指南，请查看Redis官网对应的介绍：https://redis.io/commands/?group=string。
+> 更多Redis String命令以及详细使用指南，请查看Redis官网对应的[介绍](https://redis.io/commands/?group=string)。
 
 **基本操作**：
 
@@ -219,7 +219,7 @@ Redis中的List其实就是链表数据结构的实现。
 | LLEN key                    | 获取列表元素数量                           |
 | LRANGE key start end        | 获取列表start和end之间的元素          |
 
-> 更多Redis List命令以及详细使用指南，请查看Redis官网对应的介绍：https://redis.io/commands/?group=list。
+> 更多Redis List命令以及详细使用指南，请查看Redis官网对应的[介绍](https://redis.io/commands/?group=list)。
 
 **通过RPUSH/LPOP或者LPUSH/RPOP实现队列**：
 
@@ -312,7 +312,7 @@ Redis中的Hash是一个String类型的field-value（键值对）的映射表，
 | HLEN key                                  | 获取指定哈希表中字段的数量                               |
 | HINCRBY key field increment               | 对指定哈希中的指定字段做运算操作（正数为加，负数为减）   |
 
-> 更多Redis Hash命令以及详细使用指南，请查看Redis官网对应的介绍：https://redis.io/commands/?group=hash。
+> 更多Redis Hash命令以及详细使用指南，请查看Redis官网对应的[介绍](https://redis.io/commands/?group=hash)。
 
 **模拟对象数据存储**：
 
@@ -371,7 +371,7 @@ Redis中的Set类型是一种无序集合，集合中的元素没有先后顺序
 | SPOP key count                        | 随机移除并获取指定集合中一个或多个元素    |
 | SRANDMEMBER key count                 | 随机获取指定集合中指定数量的元素          |
 
-> 更多Redis Set命令以及详细使用指南，请查看Redis官网对应的介绍：https://redis.io/commands/?group=set。
+> 更多Redis Set命令以及详细使用指南，请查看Redis官网对应的[介绍](https://redis.io/commands/?group=set)。
 
 **基本操作**：
 
@@ -462,7 +462,7 @@ Sorted Set类似于Set，但和Set相比，Sorted Set增加了一个权重参数
 | ZREVRANGE key start end                       | 获取指定有序集合start和end之间的元素（score从高到底）   |
 | ZREVRANK key member                           | 获取指定有序集合中指定元素的排名(score从大到小排序)         |
 
-> 更多Redis Sorted Set命令以及详细使用指南，请查看Redis官网对应的介绍：https://redis.io/commands/?group=sorted-set。
+> 更多Redis Sorted Set命令以及详细使用指南，请查看Redis官网对应的[介绍](https://redis.io/commands/?group=sorted-set)。
 
 **基本操作**：
 
@@ -582,7 +582,7 @@ Bitmap存储的是连续的二进制数字（0和1），通过Bitmap,只需要�
 **需要保存状态信息（0/1即可表示）的场景**
 
 - 举例：用户签到情况、活跃用户情况、用户行为统计（比如是否点赞过某个视频）。
-- 相关命令：`SETBIT`、`GETBIT`、`BITCOUNT`、`BITOP`。
+- 相关命令：SETBIT、GETBIT、BITCOUNT、BITOP。
 
 ### HyperLogLog
 
@@ -761,7 +761,7 @@ QUEUED
 OK
 ```
 
-你可以通过[WATCH](https://redis.io/commands/watch)命令监听指定的Key，当调用EXEC命令执行事务时，如果一个被WATCH命令监视的Key被**其他客户端/Session**修改的话，整个事务都不会被执行。
+你可以通过[WATCH](https://redis.io/commands/watch)命令监听指定的Key，当调用EXEC命令执行事务时，如果一个被WATCH命令监视的Key被其他客户端/Session修改的话，整个事务都不会被执行。
 
 ```bash
 # 客户端1
@@ -786,7 +786,9 @@ QUEUED
 "GoGuide"
 ```
 
-不过，如果WATCH与事务在同一个Session里，并且被**WATCH**监视的Key被修改的操作发生在事务内部，这个事务是可以被执行成功的（相关issue：[WATCH命令碰到MULTI命令时的不同效果](https://github.com/Snailclimb/JavaGuide/issues/1714)）。
+不过，如果WATCH与事务在同一个Session里，并且被**WATCH**监视的Key被修改的操作发生在事务内部，这个事务是可以被执行成功的
+
+>（相关issue：[WATCH命令碰到MULTI命令时的不同效果](https://github.com/Snailclimb/JavaGuide/issues/1714)）。
 
 事务内部修改WATCH监视的Key：
 
@@ -848,10 +850,9 @@ Redis官网也解释了自己为啥不支持回滚。简单来说就是Redis开�
 
 你可以将Redis中的事务就理解为：**Redis事务提供了一种将多个命令请求打包的功能。然后，再按顺序执行打包的所有命令，并且不会被中途打断**。除了不满足原子性之外，事务中的每条命令都会与Redis服务器进行网络交互，这是比较浪费资源的行为。明明一次批量执行多个命令就可以了，这种操作实在是看不懂。因此，Redis事务是不建议在日常开发中使用的。
 
-**相关issue**:
-
-- [issue452:关于Redis事务不满足原子性的问题](https://github.com/Snailclimb/JavaGuide/issues/452)。
-- [Issue491:关于redis没有事务回滚？](https://github.com/Snailclimb/JavaGuide/issues/491)
+> 相关issue:
+> - [issue452:关于Redis事务不满足原子性的问题](https://github.com/Snailclimb/JavaGuide/issues/452)。
+> - [Issue491:关于redis没有事务回滚？](https://github.com/Snailclimb/JavaGuide/issues/491)
 
 #### 如何解决Redis事务的缺陷？
 
@@ -868,7 +869,7 @@ Redis从2.6版本开始支持执行Lua脚本，它的功能和事务非常类似
 3. 命令执行
 4. 返回结果
 
-其中，第1步和第4步耗费时间之和称为**Round Trip Time(RTT,往返时间)**，也就是数据在网络上传输的时间。使用批量操作可以减少网络传输次数，进而有效减小网络开销，大幅减少RTT。
+其中，第1步和第4步耗费时间之和称为**Round Trip Time（RTT,往返时间）**，也就是数据在网络上传输的时间。使用批量操作可以减少网络传输次数，进而有效减小网络开销，大幅减少RTT。
 
 #### 原生批量操作命令
 
@@ -891,7 +892,7 @@ Redis中有一些原生支持批量操作的命令，比如：
 
 #### pipeline
 
-对于不支持批量操作的命令，我们可以利用**pipeline(流水线)**将一批Redis命令封装成一组，这些Redis命令会被一次性提交到Redis服务器，只需要一次网络传输。不过，需要注意控制一次批量操作的**元素个数**(例如500以内，实际也和元素字节数有关)，避免网络传输的数据量过大。与mget、mset等原生批量操作命令一样，pipeline同样在Redis Cluster上使用会存在一些小问题。原因类似，无法保证所有的key都在同一个**hash slot**（哈希槽）上。如果想要使用的话，客户端需要自己维护key与slot的关系。原生批量操作命令和pipeline的是有区别的，使用的时候需要注意：
+对于不支持批量操作的命令，我们可以利用pipeline(流水线)将一批Redis命令封装成一组，这些Redis命令会被一次性提交到Redis服务器，只需要一次网络传输。不过，需要注意控制一次批量操作的元素个数(例如500以内，实际也和元素字节数有关)，避免网络传输的数据量过大。与mget、mset等原生批量操作命令一样，pipeline同样在Redis Cluster上使用会存在一些小问题。原因类似，无法保证所有的key都在同一个hash slot（哈希槽）上。如果想要使用的话，客户端需要自己维护key与slot的关系。原生批量操作命令和pipeline的是有区别的，使用的时候需要注意：
 
 - 原生批量操作命令是原子操作，pipeline是非原子操作；
 - pipeline可以打包不同的命令，原生批量操作命令不可以；
@@ -901,7 +902,7 @@ Redis中有一些原生支持批量操作的命令，比如：
 
 #### Lua脚本
 
-Lua脚本同样支持批量操作多条命令。一段Lua脚本可以视作一条命令执行，可以看作是原子操作。一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰，这是pipeline所不具备的。并且，Lua脚本中支持一些简单的逻辑处理比如使用命令读取值并在Lua脚本中进行处理，这同样是pipeline所不具备的。不过，Redis Cluster下Lua脚本的原子操作也无法保证了，原因同样是无法保证所有的key都在同一个**hashslot**（哈希槽）上。
+Lua脚本同样支持批量操作多条命令。一段Lua脚本可以视作一条命令执行，可以看作是原子操作。一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰，这是pipeline所不具备的。并且，Lua脚本中支持一些简单的逻辑处理比如使用命令读取值并在Lua脚本中进行处理，这同样是pipeline所不具备的。不过，Redis Cluster下Lua脚本的原子操作也无法保证了，原因同样是无法保证所有的key都在同一个hashslot（哈希槽）上。
 
 ### 大量key集中过期问题
 
@@ -1032,7 +1033,7 @@ public Object getObjectInclNullById(Integer id) {
 1. 使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。
 2. 根据得到的哈希值，在位数组中把对应下标的值置为1。
 
-我们再来看一下，**当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行哪些操作**：
+我们再来看一下，当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行哪些操作：
 
 1. 对给定元素再次进行相同的哈希计算；
 2. 得到值之后判断位数组中的每个元素是否都为1，如果值都为1，那么说明这个值在布隆过滤器中，如果存在一个值不为1，说明该元素不在布隆过滤器中。
@@ -1182,8 +1183,7 @@ public Object getObjectInclNullById(Integer id) {
 
 ### 总结
 
-Redis中同时使用了惰性过期和定期过期两种过期策略。
-假设Redis当前存放30万个key，并且都设置了过期时间，如果你每隔100ms就去检查这全部的key，CPU负载会特别高，最后可能会挂掉。因此，redis采取的是定期过期，每隔100ms就随机抽取一定数量的key来检查和删除的。但是呢，最后可能会有很多已经过期的key没被删除。这时候，redis采用惰性删除。在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间并且已经过期了，此时就会删除。但是，如果定期删除漏掉了很多过期的key，然后也没走惰性删除。就会有很多过期key积在内存内存，直接会导致内存爆的。或者有些时候，业务量大起来了，redis的key被大量使用，内存直接不够了，运维也忘记加大内存了。难道redis直接这样挂掉？不会的！Redis用8种内存淘汰策略保护自己~
+Redis中同时使用了惰性过期和定期过期两种过期策略。假设Redis当前存放30万个key，并且都设置了过期时间，如果你每隔100ms就去检查这全部的key，CPU负载会特别高，最后可能会挂掉。因此，redis采取的是定期过期，每隔100ms就随机抽取一定数量的key来检查和删除的。但是呢，最后可能会有很多已经过期的key没被删除。这时候，redis采用惰性删除。在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间并且已经过期了，此时就会删除。但是，如果定期删除漏掉了很多过期的key，然后也没走惰性删除。就会有很多过期key积在内存内存，直接会导致内存爆的。或者有些时候，业务量大起来了，redis的key被大量使用，内存直接不够了，运维也忘记加大内存了。难道redis直接这样挂掉？不会的！Redis用8种内存淘汰策略保护自己~
 
 > [Redis过期key删除，那些不得不说的事情](https://mp.weixin.qq.com/s/iR8EgI9-p-BXjJEfTs3G7Q)
 > [Redis的过期数据会被立马删除么？](https://mp.weixin.qq.com/s/qJt0B9p0GeUkekK15xL-jw)
@@ -1231,7 +1231,7 @@ AOF日志是由主线程会写的，而重写则不一样，重写过程是由�
 
 ### RDB
 
-因为AOF持久化方式，如果操作日志非常多的话，Redis恢复就很慢。有没有在宕机快速恢复的方法呢，有的，RDB！**RDB**，就是把内存数据以快照的形式保存到磁盘上。和AOF相比，它记录的是某一时刻的数据，，并不是操作。什么是快照?可以这样理解，给当前时刻的数据，拍一张照片，然后保存下来。RDB持久化，是指在指定的时间间隔内，执行指定次数的写操作，将内存中的数据集快照写入磁盘中，它是Redis默认的持久化方式。执行完操作后，在指定目录下会生成一个dump.rdb文件，Redis重启的时候，通过加载dump.rdb文件来恢复数据。RDB触发机制主要有以下几种：
+因为AOF持久化方式，如果操作日志非常多的话，Redis恢复就很慢。有没有在宕机快速恢复的方法呢，有的，RDB！RDB，就是把内存数据以快照的形式保存到磁盘上。和AOF相比，它记录的是某一时刻的数据，，并不是操作。什么是快照?可以这样理解，给当前时刻的数据，拍一张照片，然后保存下来。RDB持久化，是指在指定的时间间隔内，执行指定次数的写操作，将内存中的数据集快照写入磁盘中，它是Redis默认的持久化方式。执行完操作后，在指定目录下会生成一个dump.rdb文件，Redis重启的时候，通过加载dump.rdb文件来恢复数据。RDB触发机制主要有以下几种：
 
 1. 手动触发：save(同步，会阻塞当前redis服务器)bgsave(异步，redis执行fork操作创建子进程)
 2. 自动触发：(save m n)m秒内数据集存在n次修改时，自动触发bgsave
@@ -1242,6 +1242,7 @@ RDB通过bgsave命令的执行全量快照，可以避免阻塞主线程。basav
 
 - RDB的优点：与AOF相比，恢复大数据集的时候会更快，它适合大规模的数据恢复场景，如备份，全量复制等
 - RDB的缺点：没办法做到实时持久化/秒级持久化。
+
 Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频率执行，两次快照之间，再使用AOF记录这期间的所有命令操作。
 
 ### 如何选择RDB和AOF
@@ -1269,8 +1270,7 @@ Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频
 
 ### 哨兵
 
-主从模式中，一旦主节点由于故障不能提供服务，需要人工将从节点晋升为主节点，同时还要通知应用方更新主节点地址。显然，多数业务场景都不能接受这种故障处理方式。Redis从2.8开始正式提供了Redis Sentinel（哨兵）架构来解决这个问题。哨兵模式，由一个或多个Sentinel实例组成的Sentinel系统，它可以监视所有的Redis主节点和从节点，并在被监视的主节点进入下线状态时，自动将下线主服务器属下的某个从节点升级为新的主节点。但是呢，一个哨兵进程对Redis节点进行监控，就可能会出现问题（单点问题），因此，可以使用多个哨兵来进行监控Redis节点，并且各个哨兵之间还会进行监控。
-简单来说，哨兵模式就三个作用：
+主从模式中，一旦主节点由于故障不能提供服务，需要人工将从节点晋升为主节点，同时还要通知应用方更新主节点地址。显然，多数业务场景都不能接受这种故障处理方式。Redis从2.8开始正式提供了Redis Sentinel（哨兵）架构来解决这个问题。哨兵模式，由一个或多个Sentinel实例组成的Sentinel系统，它可以监视所有的Redis主节点和从节点，并在被监视的主节点进入下线状态时，自动将下线主服务器属下的某个从节点升级为新的主节点。但是呢，一个哨兵进程对Redis节点进行监控，就可能会出现问题（单点问题），因此，可以使用多个哨兵来进行监控Redis节点，并且各个哨兵之间还会进行监控。简单来说，哨兵模式就三个作用：
 
 - 发送命令，等待Redis服务器（包括主服务器和从服务器）返回监控其运行状态；
 - 哨兵监测到主节点宕机，会自动将从节点切换成主节点，然后通过发布订阅模式通知其他的从节点，修改配置文件，让它们切换主机；

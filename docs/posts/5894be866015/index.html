@@ -586,7 +586,7 @@
 <p>⚠️再提醒一次：你的程序是否支持事务首先取决于数据库，比如使用MySQL的话，如果你选择的是innodb引擎，那么恭喜你，是可以支持事务的。但是，如果你的MySQL数据库使用的是myisam引擎的话，那不好意思，从根上就是不支持事务的。</p>
 </blockquote>
 <p>这里再提一下一个非常重要的知识点：<strong>MySQL怎么保证原子性的？</strong></p>
-<p>我们知道如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行回滚，在MySQL中，恢复机制是通过<strong>回滚日志（undo log）</strong>实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。如果执行过程中遇到异常的话，我们直接利用回滚日志中的信息将数据回滚到修改之前的样子即可！并且，回滚日志会先于数据持久化到磁盘上。这样就保证了即使遇到数据库突然宕机等情况，当用户再次启动数据库的时候，数据库还能够通过查询回滚日志来回滚之前未完成的事务。</p>
+<p>我们知道如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行回滚，在MySQL中，恢复机制是通过<strong>回滚日志（undo log）</strong> 实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。如果执行过程中遇到异常的话，我们直接利用回滚日志中的信息将数据回滚到修改之前的样子即可！并且，回滚日志会先于数据持久化到磁盘上。这样就保证了即使遇到数据库突然宕机等情况，当用户再次启动数据库的时候，数据库还能够通过查询回滚日志来回滚之前未完成的事务。</p>
 <h3 id="Spring支持两种方式的事务管理"><a href="#Spring支持两种方式的事务管理" class="headerlink" title="Spring支持两种方式的事务管理"></a>Spring支持两种方式的事务管理</h3><h4 id="编程式事务管理"><a href="#编程式事务管理" class="headerlink" title="编程式事务管理"></a>编程式事务管理</h4><p>通过TransactionTemplate或者TransactionManager手动管理事务，实际应用中很少使用，但是对于你理解Spring事务管理原理有帮助。</p>
 <p>使用TransactionTemplate进行编程式事务管理的示例代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
@@ -640,7 +640,6 @@
 <h4 id="PlatformTransactionManager-事务管理接口"><a href="#PlatformTransactionManager-事务管理接口" class="headerlink" title="PlatformTransactionManager:事务管理接口"></a>PlatformTransactionManager:事务管理接口</h4><p><strong>Spring并不直接管理事务，而是提供了多种事务管理器。Spring事务管理器的接口是：PlatformTransactionManager</strong>。</p>
 <p>通过这个接口，Spring为各个平台如：JDBC(DataSourceTransactionManager)、Hibernate(HibernateTransactionManager)、JPA(JpaTransactionManager)等都提供了对应的事务管理器，但是具体的实现就是各个平台自己的事情了。</p>
 <p><strong>PlatformTransactionManager接口的具体实现如下:</strong></p>
-<p><img src="https://javaguide.cn/assets/PlatformTransactionManager.bfc04603.png" alt="img"></p>
 <p>PlatformTransactionManager接口中定义了三个方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>transaction</span><span class="token punctuation">;</span>
 
@@ -695,8 +694,7 @@
     <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="TransactionStatus-事务状态"><a href="#TransactionStatus-事务状态" class="headerlink" title="TransactionStatus:事务状态"></a>TransactionStatus:事务状态</h4><p>TransactionStatus接口用来记录事务的状态该接口定义了一组方法,用来获取或判断事务的相应状态信息。</p>
-<p>PlatformTransactionManager.getTransaction(…)方法返回一个TransactionStatus对象。</p>
+<h4 id="TransactionStatus-事务状态"><a href="#TransactionStatus-事务状态" class="headerlink" title="TransactionStatus:事务状态"></a>TransactionStatus:事务状态</h4><p>TransactionStatus接口用来记录事务的状态该接口定义了一组方法,用来获取或判断事务的相应状态信息。PlatformTransactionManager.getTransaction(…)方法返回一个TransactionStatus对象。</p>
 <p><strong>TransactionStatus接口内容如下：</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TransactionStatus</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">boolean</span> <span class="token function">isNewTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 是否是新的事务</span>
@@ -874,7 +872,9 @@
 <ul>
 <li>NESTED:嵌套事务.如果当前存在事务,则嵌套执行,如果当前不存在事务,则开启新事务</li>
 </ul>
+<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/S8RXcISJA0TdJuBsOXWPcQ">Spring事务传播行为详解</a></p>
+</blockquote>
 <h4 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><p>TransactionDefinition接口中定义了五个表示隔离级别的常量：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TransactionDefinition</span> <span class="token punctuation">&#123;</span>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
@@ -934,13 +934,9 @@
 <li><p>SERLALIZABLE	<br>串行化：事务最高的隔离级别，在该级别下，所有事务都是进行串行化顺序执行的。可以避免脏读、不可重复读与幻读所有并发问题。但是这种事务隔离级别下，事务执行很耗性能。</p>
 </li>
 </ol>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/l1394049664/article/details/81814090">MySQL事务隔离级别</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eTbWDz8NiM8L8BbIrNiLHQ">四个案例看懂MySQL事务隔离级别</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6tRPXwXnWUW4mVfCdBlkog">长文捋明白Spring事务！隔离性？传播性？一网打尽！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/H1VuZxC1JRUh2gAM-KZn6w">一文详解幻读、脏读和不可重复读</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UcQdZYUP3Eb_V3XNk2dk6A">关于幻读，该捋清楚了！</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/l1394049664/article/details/81814090">MySQL事务隔离级别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eTbWDz8NiM8L8BbIrNiLHQ">四个案例看懂MySQL事务隔离级别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6tRPXwXnWUW4mVfCdBlkog">长文捋明白Spring事务！隔离性？传播性？一网打尽！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/H1VuZxC1JRUh2gAM-KZn6w">一文详解幻读、脏读和不可重复读</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UcQdZYUP3Eb_V3XNk2dk6A">关于幻读，该捋清楚了！</a></p>
+</blockquote>
 <h4 id="事务超时属性"><a href="#事务超时属性" class="headerlink" title="事务超时属性"></a>事务超时属性</h4><p>所谓事务超时，就是指一个事务所允许执行的最长时间，如果超过该时间限制但事务还没有完成，则自动回滚事务。在TransactionDefinition中以int的值来表示超时时间，其单位是秒，默认值为-1，这表示事务的超时时间取决于底层事务系统或者没有超时时间。</p>
 <h4 id="事务只读属性"><a href="#事务只读属性" class="headerlink" title="事务只读属性"></a>事务只读属性</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>transaction</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span><span class="token class-name">Nullable</span></span><span class="token punctuation">;</span>
@@ -960,9 +956,7 @@
 <li>如果你一次执行单条查询语句，则没有必要启用事务支持，数据库默认支持SQL执行期间的读一致性；</li>
 <li>如果你一次执行多条查询语句，例如统计查询，报表查询，在这种场景下，多条查询SQL必须保证整体的读一致性，否则，在前条SQL查询之后，后条SQL查询之前，数据被其他用户改变，则该次整体的统计查询将会出现读数据不一致的状态，此时，应该启用事务支持</li>
 </ul>
-<h4 id="事务回滚规则"><a href="#事务回滚规则" class="headerlink" title="事务回滚规则"></a>事务回滚规则</h4><p>这些规则定义了哪些异常会导致事务回滚而哪些不会。默认情况下，事务只有遇到运行期异常（RuntimeException的子类）时才会回滚，Error也会导致事务回滚，但是，在遇到检查型（Checked）异常时不会回滚。</p>
-<p><img src="https://javaguide.cn/assets/roollbackFor.14ef1320.png" alt="img"></p>
-<p>如果你想要回滚你定义的特定的异常类型的话，可以这样：</p>
+<h4 id="事务回滚规则"><a href="#事务回滚规则" class="headerlink" title="事务回滚规则"></a>事务回滚规则</h4><p>这些规则定义了哪些异常会导致事务回滚而哪些不会。默认情况下，事务只有遇到运行期异常（RuntimeException的子类）时才会回滚，Error也会导致事务回滚，但是，在遇到检查型（Checked）异常时不会回滚。如果你想要回滚你定义的特定的异常类型的话，可以这样：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor<span class="token operator">=</span> <span class="token class-name">MyException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="Transactional注解使用详解"><a href="#Transactional注解使用详解" class="headerlink" title="@Transactional注解使用详解"></a>@Transactional注解使用详解</h3><h4 id="Transactional的作用范围"><a href="#Transactional的作用范围" class="headerlink" title="@Transactional的作用范围"></a>@Transactional的作用范围</h4><ol>
@@ -1163,16 +1157,12 @@
 <h2 id="MySQL事务"><a href="#MySQL事务" class="headerlink" title="MySQL事务"></a>MySQL事务</h2><h3 id="并发事务带来了哪些问题"><a href="#并发事务带来了哪些问题" class="headerlink" title="并发事务带来了哪些问题?"></a>并发事务带来了哪些问题?</h3><p>在典型的应用程序中，多个事务并发运行，经常会操作相同的数据来完成各自的任务（多个用户对同一数据进行操作）。并发虽然是必须的，但可能会导致以下的问题。</p>
 <h4 id="脏读（Dirtyread）"><a href="#脏读（Dirtyread）" class="headerlink" title="脏读（Dirtyread）"></a>脏读（Dirtyread）</h4><p>一个事务读取数据并且对数据进行了修改，这个修改对其他事务来说是可见的，即使当前事务没有提交。这时另外一个事务读取了这个还未提交的数据，但第一个事务突然回滚，导致数据并没有被提交到数据库，那第二个事务读取到的就是脏数据，这也就是脏读的由来。</p>
 <p>例如：事务1读取某表中的数据A&#x3D;20，事务1修改A&#x3D;A-1，事务2读取到A&#x3D;19,事务1回滚导致对A的修改并为提交到数据库，A的值还是20。</p>
-<p><img src="https://javaguide.cn/assets/concurrency-consistency-issues-dirty-reading.ee15b0b9.png" alt="脏读"></p>
 <h4 id="丢失修改（Losttomodify）"><a href="#丢失修改（Losttomodify）" class="headerlink" title="丢失修改（Losttomodify）"></a>丢失修改（Losttomodify）</h4><p>在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。</p>
 <p>例如：事务1读取某表中的数据A&#x3D;20，事务2也读取A&#x3D;20，事务1先修改A&#x3D;A-1，事务2后来也修改A&#x3D;A-1，最终结果A&#x3D;19，事务1的修改被丢失。</p>
-<p><img src="https://javaguide.cn/assets/concurrency-consistency-issues-missing-modifications.5b2e2bd8.png" alt="丢失修改"></p>
 <h4 id="不可重复读（Unrepeatableread）"><a href="#不可重复读（Unrepeatableread）" class="headerlink" title="不可重复读（Unrepeatableread）"></a>不可重复读（Unrepeatableread）</h4><p>指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</p>
 <p>例如：事务1读取某表中的数据A&#x3D;20，事务2也读取A&#x3D;20，事务1修改A&#x3D;A-1，事务2再次读取A&#x3D;19，此时读取的结果和第一次读取的结果不同。</p>
-<p><img src="https://javaguide.cn/assets/concurrency-consistency-issues-unrepeatable-read.ff9186e1.png" alt="不可重复读"></p>
 <h4 id="幻读（Phantomread）"><a href="#幻读（Phantomread）" class="headerlink" title="幻读（Phantomread）"></a>幻读（Phantomread）</h4><p>幻读与不可重复读类似。它发生在一个事务读取了几行数据，接着另一个并发事务插入了一些数据时。在随后的查询中，第一个事务就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</p>
 <p>例如：事务2读取某个范围的数据，事务1在这个范围插入了新的数据，事务2再次读取这个范围的数据发现相比于第一次读取的结果多了新的数据。</p>
-<p><img src="https://javaguide.cn/assets/concurrency-consistency-issues-phantom-read.7cba7a85.png" alt="幻读"></p>
 <h3 id="不可重复读和幻读有什么区别？"><a href="#不可重复读和幻读有什么区别？" class="headerlink" title="不可重复读和幻读有什么区别？"></a>不可重复读和幻读有什么区别？</h3><ul>
 <li>不可重复读的重点是内容修改或者记录减少比如多次读取一条记录发现其中某些记录的值被修改；</li>
 <li>幻读的重点在于记录新增比如多次执行同一条查询语句（DQL）时，发现查到的记录增加了。</li>
@@ -1197,10 +1187,10 @@
 </blockquote>
 <h3 id="SQL标准定义了哪些事务隔离级别"><a href="#SQL标准定义了哪些事务隔离级别" class="headerlink" title="SQL标准定义了哪些事务隔离级别?"></a>SQL标准定义了哪些事务隔离级别?</h3><p>SQL标准定义了四个隔离级别：</p>
 <ul>
-<li>**READ-UNCOMMITTED(读取未提交)**：最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。</li>
-<li>**READ-COMMITTED(读取已提交)**：允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生。</li>
-<li>**REPEATABLE-READ(可重复读)**：对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。</li>
-<li>**SERIALIZABLE(可串行化)**：最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。</li>
+<li><strong>READ-UNCOMMITTED（读取未提交）</strong>：最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。</li>
+<li><strong>READ-COMMITTED（读取已提交）</strong>：允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生。</li>
+<li><strong>REPEATABLE-READ（可重复读）</strong>：对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。</li>
+<li><strong>SERIALIZABLE（可串行化）</strong>：最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。</li>
 </ul>
 <hr>
 <table>
@@ -1237,8 +1227,7 @@
 <td align="center">×</td>
 </tr>
 </tbody></table>
-<h3 id="MySQL的隔离级别是基于锁实现的吗？"><a href="#MySQL的隔离级别是基于锁实现的吗？" class="headerlink" title="MySQL的隔离级别是基于锁实现的吗？"></a>MySQL的隔离级别是基于锁实现的吗？</h3><p>MySQL的隔离级别基于锁和MVCC机制共同实现的。</p>
-<p>SERIALIZABLE隔离级别是通过锁来实现的，READ-COMMITTED和REPEATABLE-READ隔离级别是基于MVCC实现的。不过，SERIALIZABLE之外的其他隔离级别可能也需要用到锁机制，就比如REPEATABLE-READ在当前读情况下需要使用加锁读来保证不会出现幻读。</p>
+<h3 id="MySQL的隔离级别是基于锁实现的吗？"><a href="#MySQL的隔离级别是基于锁实现的吗？" class="headerlink" title="MySQL的隔离级别是基于锁实现的吗？"></a>MySQL的隔离级别是基于锁实现的吗？</h3><p>MySQL的隔离级别基于锁和MVCC机制共同实现的。SERIALIZABLE隔离级别是通过锁来实现的，READ-COMMITTED和REPEATABLE-READ隔离级别是基于MVCC实现的。不过，SERIALIZABLE之外的其他隔离级别可能也需要用到锁机制，就比如REPEATABLE-READ在当前读情况下需要使用加锁读来保证不会出现幻读。</p>
 <h3 id="MySQL的默认隔离级别是什么"><a href="#MySQL的默认隔离级别是什么" class="headerlink" title="MySQL的默认隔离级别是什么?"></a>MySQL的默认隔离级别是什么?</h3><p>MySQLInnoDB存储引擎的默认支持的隔离级别是<strong>REPEATABLE-READ（可重读）</strong>。我们可以通过<code>SELECT@@tx_isolation;</code>命令来查看，MySQL8.0该命令改为<code>SELECT@@transaction_isolation;</code></p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> @<span class="token variable">@tx_isolation</span><span class="token punctuation">;</span>
 <span class="token operator">+</span><span class="token comment">-----------------+</span>
@@ -1555,7 +1544,13 @@
                         
                             SQL查询慢的原因
 sql没加索引
-sql索引不生效:隐式的类型转换，索引失效,查询条件包含or，可能导致索引失效,like通配符可能导致索引失效,查询条件不满足联合索引的最左匹配原则,在索引列上使用mysql的内置函数,对索引进行列运算（
+sql索引不生效:
+隐式的类型转换，索引失效,
+查询条件包含or，可能导致索引失效,
+like通配符可能导致索引失效,
+查询条件不满足联合索引的最左匹配原则,
+在索引列上使用mysql的内置函数,
+对索引
                         
                         
                     </div>

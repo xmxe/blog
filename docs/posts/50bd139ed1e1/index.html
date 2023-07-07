@@ -896,8 +896,7 @@ OK
 
 <h3 id="开源框架"><a href="#开源框架" class="headerlink" title="开源框架"></a>开源框架</h3><h4 id="UidGenerator-百度"><a href="#UidGenerator-百度" class="headerlink" title="UidGenerator(百度)"></a>UidGenerator(百度)</h4><p><a target="_blank" rel="noopener" href="https://github.com/baidu/uid-generator">UidGenerator</a>是百度开源的一款基于Snowflake(雪花算法)的唯一ID生成器。不过，UidGenerator对Snowflake(雪花算法)进行了改进，生成的唯一ID组成如下。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/uidgenerator-distributed-id-schematic-diagram.png" alt="img"></p>
-<p>可以看出，和原始Snowflake(雪花算法)生成的唯一ID的组成不太一样。并且，上面这些参数我们都可以自定义。</p>
-<p>UidGenerator官方文档中的介绍如下：</p>
+<p>可以看出，和原始Snowflake(雪花算法)生成的唯一ID的组成不太一样。并且，上面这些参数我们都可以自定义。UidGenerator官方文档中的介绍如下：</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/uidgenerator-introduction-official-documents.png" alt="img"></p>
 <p>自18年后，UidGenerator就基本没有再维护了，我这里也不过多介绍。想要进一步了解的朋友，可以看看<a target="_blank" rel="noopener" href="https://github.com/baidu/uid-generator/blob/master/README.zh_cn.md">UidGenerator的官方介绍</a>。</p>
 <h4 id="Leaf-美团"><a href="#Leaf-美团" class="headerlink" title="Leaf(美团)"></a>Leaf(美团)</h4><p><a target="_blank" rel="noopener" href="https://github.com/Meituan-Dianping/Leaf">Leaf</a>是美团开源的一个分布式ID解决方案。这个项目的名字Leaf（树叶）起源于德国哲学家、数学家莱布尼茨的一句话：“There are no two identical leaves in the world”（世界上没有两片相同的树叶）。这名字起得真心挺不错的，有点文艺青年那味了！</p>
@@ -906,8 +905,7 @@ OK
 <p>根据项目README介绍，在4C8GVM基础上，通过公司RPC方式调用，QPS压测结果近5w&#x2F;s，TP9991ms。</p>
 <h4 id="Tinyid-滴滴"><a href="#Tinyid-滴滴" class="headerlink" title="Tinyid(滴滴)"></a>Tinyid(滴滴)</h4><p><a target="_blank" rel="noopener" href="https://github.com/didi/tinyid">Tinyid</a>是滴滴开源的一款基于数据库号段模式的唯一ID生成器。数据库号段模式的原理我们在上面已经介绍过了。Tinyid有哪些亮点呢？为了搞清楚这个问题，我们先来看看基于数据库号段模式的简单架构方案。（图片来自于Tinyid的官方wiki:<a target="_blank" rel="noopener" href="https://github.com/didi/tinyid/wiki/tinyid%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D">《Tinyid原理介绍》</a>）</p>
 <p><img src="https://oscimg.oschina.net/oscnet/up-4afc0e45c0c86ba5ad645d023dce11e53c2.png" alt="img"></p>
-<p>在这种架构模式下，我们通过HTTP请求向发号器服务申请唯一ID。负载均衡router会把我们的请求送往其中的一台tinyid-server。</p>
-<p>这种方案有什么问题呢？在我看来（Tinyid官方wiki也有介绍到），主要由下面这2个问题：</p>
+<p>在这种架构模式下，我们通过HTTP请求向发号器服务申请唯一ID。负载均衡router会把我们的请求送往其中的一台tinyid-server。这种方案有什么问题呢？在我看来（Tinyid官方wiki也有介绍到），主要由下面这2个问题：</p>
 <ul>
 <li>获取新号段的情况下，程序获取唯一ID的速度比较慢。</li>
 <li>需要保证DB高可用，这个是比较麻烦且耗费资源的。</li>
@@ -922,8 +920,7 @@ OK
 <li><strong>增加tinyid-client</strong>：纯本地操作，无HTTP请求消耗，性能和可用性都有很大提升。</li>
 </ul>
 <p>Tinyid的优缺点这里就不分析了，结合数据库号段模式的优缺点和Tinyid的原理就能知道。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这篇文章，我基本上已经把最常见的分布式ID生成方案都总结了一波。</p>
-<p>除了上面介绍的方式之外，像ZooKeeper这类中间件也可以帮助我们生成唯一ID。需要结合实际项目来选择最适合自己的方案。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这篇文章，我基本上已经把最常见的分布式ID生成方案都总结了一波。除了上面介绍的方式之外，像ZooKeeper这类中间件也可以帮助我们生成唯一ID。需要结合实际项目来选择最适合自己的方案。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/distributed-system/distributed-id.html">原文链接</a></p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-30WmwoYHg0oWZSWedE5MQ">深度介绍分布式系统原理与设计</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zXchd2SEjLkHftCe9-2_-Q">一口气说出9种分布式ID生成方式</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jGq7SvVggZ7gNqM2SZ320Q">七种分布式全局ID生成策略，你更爱哪种</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEkkSCbQzfhH3NuXsbbY0w">一起学习下一线大厂的分布式唯一ID生成方案</a></p>

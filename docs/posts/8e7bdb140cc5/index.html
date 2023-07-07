@@ -564,11 +564,9 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 	<span class="token punctuation">&#125;</span>
  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="使用内部类的优势"><a href="#使用内部类的优势" class="headerlink" title="使用内部类的优势"></a>使用内部类的优势</h3><p>封装性、实现多继承※、用匿名内部类实现回调功能、解决继承及实现接口出现同名方法的问题</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chenssy/p/3388487.html">详解内部类</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Is2Ka2R_PWZP3XZsUroLIg">深入理解Java：内部类</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/u8rgIwoxnXLe8GPMrFbXpQ">Java内部类有坑,100%内存泄露！</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chenssy/p/3388487.html">详解内部类</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Is2Ka2R_PWZP3XZsUroLIg">深入理解Java：内部类</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/u8rgIwoxnXLe8GPMrFbXpQ">Java内部类有坑,100%内存泄露！</a></p>
+</blockquote>
 <h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p><strong>@Retention</strong>作用：表示需要在什么级别保存该注释信息，用于描述注解的生命周期（即：被描述的注解在什么范围内有效）<br>取值（RetentionPoicy）有：</p>
 <ol>
 <li>SOURCE:在源文件中有效（即源文件保留）</li>
@@ -589,12 +587,9 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 <li>TYPE_USE:表示注解可以在任何用到该类的地方使用</li>
 </ol>
 <p><strong>@Inherited</strong>:标记这个注解是继承于哪个注解类(默认注解并没有继承于任何子类)<br><strong>@Documented</strong>:标记这些注解是否包含在用户文档中。<br><strong>@Repeatable</strong>:重复注解,在java8中新增了一个方法getAnnotationsByType，用于获取可重复的注解,返回类型是数组</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kx_111lekaIzkYYYAwjwxg">你知道Java中的注解是如何工作的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247493932&amp;idx=1&amp;sn=c8e75d1f75467f240ad749853eae4668&amp;source=41#wechat_redirect">深入理解Java：注解</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494076&amp;idx=2&amp;sn=ba12e71724444dfd8ce10297778682aa&amp;source=41#wechat_redirect">JDK中注解的底层原来是这样实现的</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ggw-uPBmxZ0VDyACreMNOw">原来注解是这么实现的啊</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kx_111lekaIzkYYYAwjwxg">你知道Java中的注解是如何工作的？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247493932&amp;idx=1&amp;sn=c8e75d1f75467f240ad749853eae4668&amp;source=41#wechat_redirect">深入理解Java：注解</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494076&amp;idx=2&amp;sn=ba12e71724444dfd8ce10297778682aa&amp;source=41#wechat_redirect">JDK中注解的底层原来是这样实现的</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ggw-uPBmxZ0VDyACreMNOw">原来注解是这么实现的啊</a></p>
+</blockquote>
 <h2 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a>构建工具</h2><h3 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h3><p><strong>常用命令</strong></p>
 <ul>
 <li><p>mvn package、install、deploy区别<br><strong>package</strong>命令完成了项目编译、单元测试、打包功能，但没有把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库<br><strong>install</strong>命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库，但没有布署到远程maven私服仓库<br><strong>deploy</strong>命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库</p>
@@ -626,12 +621,13 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 </li>
 </ul>
 <p><strong>Maven打包跳过测试的5种方法</strong></p>
-<ol>
-<li>命令行方式<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># -DskipTests=true,不执行测试用例,但编译测试用例类生成相应的class文件至target/test-classes下。</span>
+<p>(1) 命令行方式</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># -DskipTests=true,不执行测试用例,但编译测试用例类生成相应的class文件至target/test-classes下。</span>
 mvn package <span class="token parameter variable">-DskipTests</span><span class="token operator">=</span>true
 <span class="token comment"># -Dmaven.test.skip=true,不执行测试用例,也不编译测试用例类。</span>
-mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>pom.xml<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>(2) pom.xml</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">></span></span>
         <span class="token comment">&lt;!-- maven打包时跳过测试 --></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
@@ -642,18 +638,11 @@ mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span
             <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>IDEA图标Skip Tests。点击选中，再用LifeCycle中的打包就会跳过测试</li>
-<li>打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在VM option中添加-Dmaven.test.skip&#x3D;true或者-DskipTests&#x3D;true，就能在打包时跳过测试。</li>
-<li>打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在Properties中勾选Skip Test选项。</li>
-</ol>
-<p><strong>相关文章</strong></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JD2wfLGXdujoc9DOJEZFpA">说一个大家都知道的Spring Boot小细节</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vq6Id8g0IBRVM3xdPRYFbA">如何利用Maven将代码打包成第三方公共jar包？</a></li>
-</ul>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>(3) IDEA图标Skip Tests。点击选中，再用LifeCycle中的打包就会跳过测试<br>(4) 打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在VM option中添加-Dmaven.test.skip&#x3D;true或者-DskipTests&#x3D;true，就能在打包时跳过测试。<br>(5) 打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在Properties中勾选Skip Test选项。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JD2wfLGXdujoc9DOJEZFpA">说一个大家都知道的Spring Boot小细节</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vq6Id8g0IBRVM3xdPRYFbA">如何利用Maven将代码打包成第三方公共jar包？</a></p>
+</blockquote>
 <h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><ul>
 <li><p>implementation，默认的scope,取代compile（已弃用）。implementation的作用域会让依赖在编译和运行时均包含在内，但是不会暴露在类库使用者的编译时。举例，如果我们的类库包含了gson，那么其他人使用我们的类库时，编译时不会出现gson的依赖。</p>
 </li>
@@ -670,12 +659,12 @@ mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span
 <li><p>annotationProcessor编译期间使用的注释处理器。</p>
 </li>
 </ul>
-<h2 id="String相关"><a href="#String相关" class="headerlink" title="String相关"></a>String相关</h2><ol>
+<h2 id="String相关"><a href="#String相关" class="headerlink" title="String相关"></a>String相关</h2><ul>
 <li><p>String.intern()是一个Native方法，底层调用C++的StringTable::intern方法实现。当通过语句str.intern()调用intern()方法后，JVM就会在当前类的常量池中查找是否存在与str等值的String，若存在则直接返回常量池中相应Strnig的引用；若不存在，则会在常量池中创建一个等值的String，然后返回这个String在常量池中的引用,通俗的讲，是将字符串放入常量池中。是一种手动将字符串加入常量池中的方法</p>
 </li>
 <li><p>String.toUpperCase()会在内存中新建一个字符串并不会修改原来的字符串</p>
 </li>
-<li><p>String对象new出来的字符串是放在堆中，直接赋值的字符串是放在常量池中的。<br>对字符串做拼接操作，即做“+”运算，分两种情况1.表达式右边是纯字符串常量，则存放在常量池中2.表达式右边存在字符串引用，则存放在堆中</p>
+<li><p>String对象new出来的字符串是放在堆中，直接赋值的字符串是放在常量池中的。<br>对字符串做拼接操作，即做“+”运算，分两种情况：<br>①表达式右边是纯字符串常量，则存放在常量池中<br>②表达式右边存在字符串引用，则存放在堆中</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> a <span class="token operator">=</span> <span class="token string">"s"</span><span class="token punctuation">;</span> <span class="token class-name">String</span> b <span class="token operator">=</span> <span class="token string">"b"</span><span class="token punctuation">;</span>
 <span class="token class-name">String</span> c <span class="token operator">=</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span><span class="token comment">//变量形式相加底层new String()不放常量池</span>
 <span class="token class-name">String</span> d <span class="token operator">=</span> <span class="token string">"s"</span><span class="token operator">+</span><span class="token string">"b"</span><span class="token punctuation">;</span><span class="token comment">//非变量形式相加放到常量池</span>
@@ -714,21 +703,10 @@ mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span
 <li><p>common-lang3包StringUtils</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">isEmpty<span class="token comment">// 如果是null或者“”则返回true。</span>
 isBlank<span class="token comment">// 如果是null或者“”或者空格或者制表符则返回true。isBlank判空更加准确。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-</ol>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ic5K1X6DQnBN37uv9cr-mg">java.lang.String的+号操作，这个谜终于要解开了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493885&idx=1&sn=024118e8044ce958c0602db7aba2f916&source=41#wechat_redirect">基础面试，为什么面试官总喜欢问String？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YvHt9uKKOdYZDdipGJXQYA">深入Java源码剖析之字符串常量</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491285&idx=1&sn=c9373feb23075bbada302740ec1a1434&source=41#wechat_redirect">浅谈Java中字符串的初始化及字符串操作类</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xJnQq8voJvAyyyaBkrvc8A">5个刁钻的String面试题！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P-ijDf5IqtAwnFzDErQOyQ">为什么String是不可变的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fwRcDog9_EU3nCEmDF_jcw">90%的同学都没搞清楚的Java字符串常量池问题（图文并茂）</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494306&idx=1&sn=9184273c5833a9a363b4ebb85163c1a5&source=41#wechat_redirect">Java中你以为的String其实并不完全正确</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TuGw1tDVj53hIurRfA360g">再议String-字符串常量池与String.intern()</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/AWVJIvOAMERmw7lU1th4iQ">Java 9为何要将String的底层实现由char改成了byte?</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iYO16IddRqAqn3D5VhURQQ">关于Java字符串的全部，都在这份手册里了</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wR-HmIn8nO2UICVmJeqgGw">面试被问到了String相关的几道题，你能答上来吗？</a></li>
 </ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ic5K1X6DQnBN37uv9cr-mg">java.lang.String的+号操作，这个谜终于要解开了！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493885&idx=1&sn=024118e8044ce958c0602db7aba2f916&source=41#wechat_redirect">基础面试，为什么面试官总喜欢问String？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YvHt9uKKOdYZDdipGJXQYA">深入Java源码剖析之字符串常量</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491285&idx=1&sn=c9373feb23075bbada302740ec1a1434&source=41#wechat_redirect">浅谈Java中字符串的初始化及字符串操作类</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xJnQq8voJvAyyyaBkrvc8A">5个刁钻的String面试题！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P-ijDf5IqtAwnFzDErQOyQ">为什么String是不可变的？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fwRcDog9_EU3nCEmDF_jcw">90%的同学都没搞清楚的Java字符串常量池问题（图文并茂）</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494306&idx=1&sn=9184273c5833a9a363b4ebb85163c1a5&source=41#wechat_redirect">Java中你以为的String其实并不完全正确</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TuGw1tDVj53hIurRfA360g">再议String-字符串常量池与String.intern()</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/AWVJIvOAMERmw7lU1th4iQ">Java 9为何要将String的底层实现由char改成了byte?</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iYO16IddRqAqn3D5VhURQQ">关于Java字符串的全部，都在这份手册里了</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wR-HmIn8nO2UICVmJeqgGw">面试被问到了String相关的几道题，你能答上来吗？</a></p>
+</blockquote>
 <h2 id="try、catch、finally"><a href="#try、catch、finally" class="headerlink" title="try、catch、finally"></a>try、catch、finally</h2><ol>
 <li>try中的return语句先执行了但并没有立即返回，等到finally执行结束后再return</li>
 <li>finally块中的return语句会覆盖try块中的return返回</li>
@@ -737,10 +715,9 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <li>当发生异常后，catch中的return执行情况与未发生异常时try中return的执行情况完全一样</li>
 <li>finally块的语句在try或catch中的return语句执行之后返回之前执行且finally里的修改语句可能影响也可能不影响try或catch中return已经确定的返回值，若finally里也有return语句则覆盖try或catch中的return语句直接返回。</li>
 </ol>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0fdehvtTYz8Off52YOT8Qg">finally是在return之前还是之后执行</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qYvMpbOXcJ77XQbK_MC8MA">面试官太难伺候？一个try-catch问出这么多花样</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0fdehvtTYz8Off52YOT8Qg">finally是在return之前还是之后执行</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qYvMpbOXcJ77XQbK_MC8MA">面试官太难伺候？一个try-catch问出这么多花样</a></p>
+</blockquote>
 <h2 id="几个经典问题"><a href="#几个经典问题" class="headerlink" title="几个经典问题"></a>几个经典问题</h2><h3 id="equals和hashcode的关系"><a href="#equals和hashcode的关系" class="headerlink" title="equals和hashcode的关系"></a>equals和hashcode的关系</h3><ol>
 <li>如果两个对象相同（即用equals比较返回true），那么它们的hashCode值一定要相同；</li>
 <li>如果两个对象的hashCode相同，它们并不一定相同(即用equals比较返回false)</li>
@@ -748,7 +725,11 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <h3 id="重写equals为什么需要重写hashcode"><a href="#重写equals为什么需要重写hashcode" class="headerlink" title="重写equals为什么需要重写hashcode"></a>重写equals为什么需要重写hashcode</h3><p>比较对象先比较hashcode，hashcode相同在比较equals。如果equals为true而hashcode不同的话就会造成hashmap的key可能会重复，因为jdk判断hashmap的key是否为重复首先判断hashcode是否一致，不一致的话直接判定不是同一个对象，而equals则判定对象为一个对象违背了hashmap的设计原则，重写hashCode方法，是为了在一些算法中避免我们不想要的冲突和碰撞</p>
 <h3 id="Java为什么不支持多重继承"><a href="#Java为什么不支持多重继承" class="headerlink" title="Java为什么不支持多重继承"></a>Java为什么不支持多重继承</h3><p>有两个类B和C继承自A；假设B和C都继承了A的方法并且进行了覆盖，编写了自己的实现；假设D通过多重继承继承了B和C，那么D应该继承B和C的重载方法，那么它应该继承的是B的还是C的？这就陷入了矛盾，所以Java不允许多重继承。</p>
 <h3 id="Java8中的接口和抽象类到底还有啥区别？"><a href="#Java8中的接口和抽象类到底还有啥区别？" class="headerlink" title="Java8中的接口和抽象类到底还有啥区别？"></a>Java8中的接口和抽象类到底还有啥区别？</h3><p>既然接口都能写默认方法了，那么还要抽象类干嘛呢？<br>区别1：首先抽象类是一个“类”，而接口只是一个“接口”，两者的概念和应用场景不一样，这也是抽象类和接口的主要区别。<br>区别2：即使在Java8中接口也能写实现方法了，但却不能写构造方法，而在抽象类是可以写构造方法的，意味着抽象类是参与类的实例化过程的，而接口则不是。抽象类不可以new<br>区别3：抽象类可以有自己的各种成员变量，并且可以通过自己的非抽象方法进行改变，而接口中的变量默认全是public static final修饰的，意味着都是常量，并且不能被自己和外部修改。<br>区别4：接口可以实现多继承，而抽象类只能单继承</p>
-<h3 id="Comparable和Comparator区别"><a href="#Comparable和Comparator区别" class="headerlink" title="Comparable和Comparator区别"></a>Comparable和Comparator区别</h3><p>一个类实现了Comparable接口，意味着该类的对象可以直接进行比较（排序），但比较（排序）的方式只有一种，很单一。<br>一个类如果想要保持原样，又需要进行不同方式的比较（排序），就可以定制比较器（实现Comparator接口）。<br>Comparable接口在java.lang包下，而Comparator接口在java.util包下<br>如果对象的排序需要基于自然顺序，请选择Comparable，如果需要按照对象的不同属性进行排序，请选择Comparator</p>
+<h3 id="Comparable和Comparator区别"><a href="#Comparable和Comparator区别" class="headerlink" title="Comparable和Comparator区别"></a>Comparable和Comparator区别</h3><ul>
+<li>一个类实现了Comparable接口，意味着该类的对象可以直接进行比较（排序），但比较（排序）的方式只有一种，很单一。一个类如果想要保持原样，又需要进行不同方式的比较（排序），就可以定制比较器（实现Comparator接口）。</li>
+<li>Comparable接口在java.lang包下，而Comparator接口在java.util包下。</li>
+<li>如果对象的排序需要基于自然顺序，请选择Comparable，如果需要按照对象的不同属性进行排序，请选择Comparator</li>
+</ul>
 <h3 id="过滤器和拦截器的区别"><a href="#过滤器和拦截器的区别" class="headerlink" title="过滤器和拦截器的区别"></a>过滤器和拦截器的区别</h3><ol>
 <li>Filter需要在web.xml中配置，依赖于Servlet；Interceptor需要在SpringMVC中配置，依赖于框架；</li>
 <li>Filter的执行顺序在Interceptor之前</li>
@@ -758,16 +739,20 @@ isBlank<span class="token comment">// 如果是null或者“”或者空格或�
 <li>拦截的请求范围不同,过滤器几乎可以对所有进入容器的请求起作用，而拦截器只会对Controller中请求或访问static目录下的资源请求起作用。</li>
 <li>触发时机不同，过滤器Filter是在请求进入容器后，但在进入servlet之前进行预处理，请求结束是在servlet处理完以后。拦截器Interceptor是在请求进入servlet后，在进入Controller之前进行预处理的，Controller中渲染了对应的视图之后请求结束。</li>
 </ol>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69060111?utm_source=wechat_timeline&amp;utm_medium=social&amp;utm_oi=1040923520439672832&amp;from=timeline">过滤器、监听器、拦截器的区别</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PzQlCjLLM1fjPc0y4poQOw">一口气说出过滤器和拦截器6个区别</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kZx10tnBJ8a6xtDgQsN1vQ">SpringBoot过滤器、拦截器、监听器对比及使用场景</a></li>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69060111?utm_source=wechat_timeline&amp;utm_medium=social&amp;utm_oi=1040923520439672832&amp;from=timeline">过滤器、监听器、拦截器的区别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PzQlCjLLM1fjPc0y4poQOw">一口气说出过滤器和拦截器6个区别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kZx10tnBJ8a6xtDgQsN1vQ">SpringBoot过滤器、拦截器、监听器对比及使用场景</a></p>
+</blockquote>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><ul>
+<li><p><code>List&lt;? extends Object &gt;</code>相当于<code>List&lt;?&gt;</code><br>在Java集合框架中，对于参数值是未知类型的容器类，只能读取其中元素，不能向其中添加元素,因为，其类型是未知，所以编译器无法识别添加元素的类型和容器的类型是否兼容，唯一的例外是NULL</p>
+</li>
+<li><p><code>List&lt;? extends T&gt;</code>可以添加元素添加的元素为T或T的子类</p>
+</li>
+<li><p><code>List&lt;? super T&gt;</code>可以添加元素添加的元素为T或T的父类</p>
+</li>
 </ul>
-<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><p>List&lt;? extends Object&gt;相当于List&lt;?&gt;<br>在Java集合框架中，对于参数值是未知类型的容器类，只能读取其中元素，不能向其中添加元素,因为，其类型是未知，所以编译器无法识别添加元素的类型和容器的类型是否兼容，唯一的例外是NULL<br>List&lt;? extends T&gt;可以添加元素添加的元素为T或T的子类<br>List&lt;? super T&gt;可以添加元素添加的元素为T或T的父类</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ilqFpf5kE0XzJnOv9SsX7Q">为了让你理解Java泛型，费了好大心思</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5dWCpdyXNP5PeCZM8AQVAg">泛型中的T、E、K、V，还记得嘛？</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ilqFpf5kE0XzJnOv9SsX7Q">为了让你理解Java泛型，费了好大心思</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5dWCpdyXNP5PeCZM8AQVAg">泛型中的T、E、K、V，还记得嘛？</a></p>
+</blockquote>
 <h2 id="CSRF和XSS的区别"><a href="#CSRF和XSS的区别" class="headerlink" title="CSRF和XSS的区别"></a>CSRF和XSS的区别</h2><ol>
 <li>CSRF是跨站请求伪造;XSS是跨域脚本攻击。</li>
 <li>CSRF需要用户先登录网站A,获取cookie;XSS不需要登录。</li>
@@ -1202,8 +1187,10 @@ chain<span class="token punctuation">.</span><span class="token function">doFilt
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            NoteJQuery、JS常用方法json字符串  var str1 &#x3D; ‘{“name”:”cxh”,”sex”:”man”}’;json对象  var str2 &#x3D; {name:”cxh”,sex:”man”};
-o
+                            NoteJQuery、JS常用方法// json字符串
+var str1 = '&#123;"name":"cxh","sex":"man"&#125;';
+// json对象
+var str2 = &#123;name:"cxh",sex
                         
 
                     </div>

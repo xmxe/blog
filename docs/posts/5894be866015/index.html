@@ -587,8 +587,7 @@
 </blockquote>
 <p>这里再提一下一个非常重要的知识点：<strong>MySQL怎么保证原子性的？</strong></p>
 <p>我们知道如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行回滚，在MySQL中，恢复机制是通过<strong>回滚日志（undo log）</strong> 实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。如果执行过程中遇到异常的话，我们直接利用回滚日志中的信息将数据回滚到修改之前的样子即可！并且，回滚日志会先于数据持久化到磁盘上。这样就保证了即使遇到数据库突然宕机等情况，当用户再次启动数据库的时候，数据库还能够通过查询回滚日志来回滚之前未完成的事务。</p>
-<h3 id="Spring支持两种方式的事务管理"><a href="#Spring支持两种方式的事务管理" class="headerlink" title="Spring支持两种方式的事务管理"></a>Spring支持两种方式的事务管理</h3><h4 id="编程式事务管理"><a href="#编程式事务管理" class="headerlink" title="编程式事务管理"></a>编程式事务管理</h4><p>通过TransactionTemplate或者TransactionManager手动管理事务，实际应用中很少使用，但是对于你理解Spring事务管理原理有帮助。</p>
-<p>使用TransactionTemplate进行编程式事务管理的示例代码如下：</p>
+<h3 id="Spring支持两种方式的事务管理"><a href="#Spring支持两种方式的事务管理" class="headerlink" title="Spring支持两种方式的事务管理"></a>Spring支持两种方式的事务管理</h3><h4 id="编程式事务管理"><a href="#编程式事务管理" class="headerlink" title="编程式事务管理"></a>编程式事务管理</h4><p>通过TransactionTemplate或者TransactionManager手动管理事务，实际应用中很少使用，但是对于你理解Spring事务管理原理有帮助。使用TransactionTemplate进行编程式事务管理的示例代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
 <span class="token keyword">private</span> <span class="token class-name">TransactionTemplate</span> transactionTemplate<span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -619,8 +618,7 @@
           <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="声明式事务管理"><a href="#声明式事务管理" class="headerlink" title="声明式事务管理"></a>声明式事务管理</h4><p>推荐使用（代码侵入性最小），实际是通过AOP实现（基于@Transactional的全注解方式使用最多）。</p>
-<p>使用@Transactional注解进行事务管理的示例代码如下：</p>
+<h4 id="声明式事务管理"><a href="#声明式事务管理" class="headerlink" title="声明式事务管理"></a>声明式事务管理</h4><p>推荐使用（代码侵入性最小），实际是通过AOP实现（基于@Transactional的全注解方式使用最多）。使用@Transactional注解进行事务管理的示例代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>propagation <span class="token operator">=</span> <span class="token class-name">Propagation</span><span class="token punctuation">.</span><span class="token constant">REQUIRED</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> aMethod <span class="token punctuation">&#123;</span>
     <span class="token comment">//do something</span>
@@ -637,10 +635,7 @@
 <li><strong>TransactionStatus</strong>：事务运行状态。</li>
 </ul>
 <p>我们可以把PlatformTransactionManager接口可以被看作是事务上层的管理者，而TransactionDefinition和TransactionStatus这两个接口可以看作是事务的描述。PlatformTransactionManager会根据TransactionDefinition的定义比如事务超时时间、隔离级别、传播行为等来进行事务管理，而TransactionStatus接口则提供了一些方法来获取事务相应的状态比如是否新事务、是否可以回滚等等。</p>
-<h4 id="PlatformTransactionManager-事务管理接口"><a href="#PlatformTransactionManager-事务管理接口" class="headerlink" title="PlatformTransactionManager:事务管理接口"></a>PlatformTransactionManager:事务管理接口</h4><p><strong>Spring并不直接管理事务，而是提供了多种事务管理器。Spring事务管理器的接口是：PlatformTransactionManager</strong>。</p>
-<p>通过这个接口，Spring为各个平台如：JDBC(DataSourceTransactionManager)、Hibernate(HibernateTransactionManager)、JPA(JpaTransactionManager)等都提供了对应的事务管理器，但是具体的实现就是各个平台自己的事情了。</p>
-<p><strong>PlatformTransactionManager接口的具体实现如下:</strong></p>
-<p>PlatformTransactionManager接口中定义了三个方法：</p>
+<h4 id="PlatformTransactionManager-事务管理接口"><a href="#PlatformTransactionManager-事务管理接口" class="headerlink" title="PlatformTransactionManager:事务管理接口"></a>PlatformTransactionManager:事务管理接口</h4><p><strong>Spring并不直接管理事务，而是提供了多种事务管理器。Spring事务管理器的接口是：PlatformTransactionManager</strong>。通过这个接口，Spring为各个平台如：JDBC(DataSourceTransactionManager)、Hibernate(HibernateTransactionManager)、JPA(JpaTransactionManager)等都提供了对应的事务管理器，但是具体的实现就是各个平台自己的事情了。<strong>PlatformTransactionManager接口的具体实现如下</strong>：PlatformTransactionManager接口中定义了三个方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>transaction</span><span class="token punctuation">;</span>
 
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span><span class="token class-name">Nullable</span></span><span class="token punctuation">;</span>
@@ -654,8 +649,7 @@
     <span class="token keyword">void</span> <span class="token function">rollback</span><span class="token punctuation">(</span><span class="token class-name">TransactionStatus</span> var1<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">TransactionException</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>为什么要定义或者说抽象出来PlatformTransactionManager这个接口呢？</strong></p>
-<p>主要是因为要将事务管理行为抽象出来，然后不同的平台去实现它，这样我们可以保证提供给外部的行为不变，方便我们扩展。</p>
+<p><strong>为什么要定义或者说抽象出来PlatformTransactionManager这个接口呢</strong>？主要是因为要将事务管理行为抽象出来，然后不同的平台去实现它，这样我们可以保证提供给外部的行为不变，方便我们扩展。</p>
 <h4 id="TransactionDefinition-事务属性"><a href="#TransactionDefinition-事务属性" class="headerlink" title="TransactionDefinition:事务属性"></a>TransactionDefinition:事务属性</h4><p>事务管理器接口PlatformTransactionManager通过getTransaction(TransactionDefinition definition)方法来得到一个事务，这个方法里面的参数是TransactionDefinition类，这个类就定义了一些基本的事务属性。什么是事务属性呢？事务属性可以理解成事务的一些基本配置，描述了事务策略如何应用到方法上。事务属性包含了5个方面：</p>
 <ul>
 <li>隔离级别</li>
@@ -1024,8 +1018,7 @@
 <td align="left">用于指定能够触发事务回滚的异常类型，并且可以指定多个异常类型。</td>
 </tr>
 </tbody></table>
-<h4 id="Transactional事务注解原理"><a href="#Transactional事务注解原理" class="headerlink" title="@Transactional事务注解原理"></a>@Transactional事务注解原理</h4><p>我们知道，**@Transactional的工作机制是基于AOP实现的，AOP又是使用动态代理实现的。如果目标对象实现了接口，默认情况下会采用JDK的动态代理，如果目标对象没有实现了接口,会使用CGLIB动态代理。**</p>
-<p><code>createAopProxy()</code>方法决定了是使用JDK还是Cglib来做动态代理，源码如下：</p>
+<h4 id="Transactional事务注解原理"><a href="#Transactional事务注解原理" class="headerlink" title="@Transactional事务注解原理"></a>@Transactional事务注解原理</h4><p>我们知道，**@Transactional的工作机制是基于AOP实现的，AOP又是使用动态代理实现的。如果目标对象实现了接口，默认情况下会采用JDK的动态代理，如果目标对象没有实现了接口,会使用CGLIB动态代理**。<code>createAopProxy()</code>方法决定了是使用JDK还是Cglib来做动态代理，源码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultAopProxyFactory</span> <span class="token keyword">implements</span> <span class="token class-name">AopProxyFactory</span><span class="token punctuation">,</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>
 
 	<span class="token annotation punctuation">@Override</span>
@@ -1531,26 +1524,18 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/posts/3fac38152a0e/">
+                <a href="/blog/posts/2eaa11f9c3b9/">
                     <div class="card-image">
                         
-                        <img src="https://img1.baidu.com/it/u=3919466326,3051780283&fm=253&fmt=auto&app=138&f=PNG?w=751&h=sq" class="responsive-img" alt="数据库相关知识点">
+                        <img src="https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg" class="responsive-img" alt="Docker">
                         
-                        <span class="card-title">数据库相关知识点</span>
+                        <span class="card-title">Docker</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            SQL查询慢的原因
-sql没加索引
-sql索引不生效:
-隐式的类型转换，索引失效,
-查询条件包含or，可能导致索引失效,
-like通配符可能导致索引失效,
-查询条件不满足联合索引的最左匹配原则,
-在索引列上使用mysql的内置函数,
-对索引
+                            安装在线安装(1) 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键
                         
                         
                     </div>
@@ -1570,10 +1555,17 @@ like通配符可能导致索引失效,
                             
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                    <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                        数据库
+                                    <a href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                        技术栈
                                     </a>
                                 
+                            
+                                
+                                <a href="/blog/tags/%E5%AE%89%E8%A3%85/">
+                                    <span class="chip bg-color">安装</span>
+                                </a>
+                                
+                            
                             
                         </span>
                     </div>

@@ -580,8 +580,7 @@
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> DEL lockKey
 <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>为了防止误删到其他的锁，这里我们建议使用Lua脚本通过key对应的value（唯一值）来判断。</p>
-<p>选用Lua脚本是为了保证解锁操作的原子性。因为Redis在执行Lua脚本时，可以以原子性的方式执行，从而保证了锁释放操作的原子性。</p>
+<p>为了防止误删到其他的锁，这里我们建议使用Lua脚本通过key对应的value（唯一值）来判断。选用Lua脚本是为了保证解锁操作的原子性。因为Redis在执行Lua脚本时，可以以原子性的方式执行，从而保证了锁释放操作的原子性。</p>
 <pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token operator">//</span> 释放锁时，先比较锁对应的value值是否相等，避免锁的误释放
 <span class="token keyword">if</span> redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span>KEYS<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> ARGV<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">then</span>
     <span class="token keyword">return</span> redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"del"</span><span class="token punctuation">,</span>KEYS<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
@@ -678,11 +677,9 @@ lock<span class="token punctuation">.</span><span class="token function">lock</s
 <h4 id="如何实现可重入锁？"><a href="#如何实现可重入锁？" class="headerlink" title="如何实现可重入锁？"></a>如何实现可重入锁？</h4><p>所谓可重入锁指的是在一个线程中可以多次获取同一把锁，比如一个线程在执行一个带锁的方法，该方法中又调用了另一个需要相同锁的方法，则该线程可以直接执行调用的方法即可重入，而无需重新获得锁。像Java中的synchronized和ReentrantLock都属于可重入锁。</p>
 <p><strong>不可重入的分布式锁基本可以满足绝大部分业务场景了，一些特殊的场景可能会需要使用可重入的分布式锁。</strong></p>
 <p>可重入分布式锁的实现核心思路是线程在获取锁的时候判断是否为自己的锁，如果是的话，就不用再重新获取了。为此，我们可以为每个锁关联一个可重入计数器和一个占有它的线程。当可重入计数器大于0时，则锁被占有，需要判断占有该锁的线程和请求获取锁的线程是否为同一个。实际项目中，我们不需要自己手动实现，推荐使用我们上面提到的<strong>Redisson</strong>，其内置了多种类型的锁比如可重入锁（ReentrantLock）、自旋锁（SpinLock）、公平锁（FairLock）、多重锁（MultiLock）、红锁（RedLock）、读写锁（ReadWriteLock）。</p>
-<h4 id="Redis如何解决集群情况下分布式锁的可靠性？"><a href="#Redis如何解决集群情况下分布式锁的可靠性？" class="headerlink" title="Redis如何解决集群情况下分布式锁的可靠性？"></a>Redis如何解决集群情况下分布式锁的可靠性？</h4><p>为了避免单点故障，生产环境下的Redis服务通常是集群化部署的。Redis集群下，上面介绍到的分布式锁的实现会存在一些问题。由于Redis集群数据同步到各个节点时是异步的，如果在Redis主节点获取到锁后，在没有同步到其他节点时，Redis主节点宕机了，此时新的Redis主节点依然可以获取锁，所以多个应用服务就可以同时获取到锁。针对这个问题，Redis之父antirez设计了<a target="_blank" rel="noopener" href="https://redis.io/topics/distlock">Redlock算法</a>来解决。</p>
-<p>Redlock算法的思想是让客户端向Redis集群中的多个独立的Redis实例依次请求申请加锁，如果客户端能够和半数以上的实例成功地完成加锁操作，那么我们就认为，客户端成功地获得分布式锁，否则加锁失败。即使部分Redis节点出现问题，只要保证Redis集群中有半数以上的Redis节点可用，分布式锁服务就是正常的。Redlock是直接操作Redis节点的，并不是通过Redis集群操作的，这样才可以避免Redis集群主从切换导致的锁丢失问题。Redlock实现比较复杂，性能比较差，发生时钟变迁的情况下还存在安全性隐患。《数据密集型应用系统设计》一书的作者MartinKleppmann曾经专门发文（<a target="_blank" rel="noopener" href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html">Howtododistributedlocking-MartinKleppmann-2016</a>）怼过Redlock，他认为这是一个很差的分布式锁实现。感兴趣的朋友可以看看<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjU3NTkwMQ==&mid=2247505097&idx=1&sn=5c03cb769c4458350f4d4a321ad51f5a&source=41#wechat_redirect">Redis锁从面试连环炮聊到神仙打架</a>这篇文章，有详细介绍到antirez和MartinKleppmann关于Redlock的激烈辩论。实际项目中不建议使用Redlock算法，成本和收益不成正比。如果不是非要实现绝对可靠的分布式锁的话，其实单机版Redis就完全够了，实现简单，性能也非常高。如果你必须要实现一个绝对可靠的分布式锁的话，可以基于ZooKeeper来做，只是性能会差一些。</p>
+<h4 id="Redis如何解决集群情况下分布式锁的可靠性？"><a href="#Redis如何解决集群情况下分布式锁的可靠性？" class="headerlink" title="Redis如何解决集群情况下分布式锁的可靠性？"></a>Redis如何解决集群情况下分布式锁的可靠性？</h4><p>为了避免单点故障，生产环境下的Redis服务通常是集群化部署的。Redis集群下，上面介绍到的分布式锁的实现会存在一些问题。由于Redis集群数据同步到各个节点时是异步的，如果在Redis主节点获取到锁后，在没有同步到其他节点时，Redis主节点宕机了，此时新的Redis主节点依然可以获取锁，所以多个应用服务就可以同时获取到锁。针对这个问题，Redis之父antirez设计了<a target="_blank" rel="noopener" href="https://redis.io/topics/distlock">Redlock算法</a>来解决。Redlock算法的思想是让客户端向Redis集群中的多个独立的Redis实例依次请求申请加锁，如果客户端能够和半数以上的实例成功地完成加锁操作，那么我们就认为，客户端成功地获得分布式锁，否则加锁失败。即使部分Redis节点出现问题，只要保证Redis集群中有半数以上的Redis节点可用，分布式锁服务就是正常的。Redlock是直接操作Redis节点的，并不是通过Redis集群操作的，这样才可以避免Redis集群主从切换导致的锁丢失问题。Redlock实现比较复杂，性能比较差，发生时钟变迁的情况下还存在安全性隐患。《数据密集型应用系统设计》一书的作者MartinKleppmann曾经专门发文（<a target="_blank" rel="noopener" href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html">Howtododistributedlocking-MartinKleppmann-2016</a>）怼过Redlock，他认为这是一个很差的分布式锁实现。感兴趣的朋友可以看看<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjU3NTkwMQ==&mid=2247505097&idx=1&sn=5c03cb769c4458350f4d4a321ad51f5a&source=41#wechat_redirect">Redis锁从面试连环炮聊到神仙打架</a>这篇文章，有详细介绍到antirez和MartinKleppmann关于Redlock的激烈辩论。实际项目中不建议使用Redlock算法，成本和收益不成正比。如果不是非要实现绝对可靠的分布式锁的话，其实单机版Redis就完全够了，实现简单，性能也非常高。如果你必须要实现一个绝对可靠的分布式锁的话，可以基于ZooKeeper来做，只是性能会差一些。</p>
 <h3 id="基于ZooKeeper实现分布式锁"><a href="#基于ZooKeeper实现分布式锁" class="headerlink" title="基于ZooKeeper实现分布式锁"></a>基于ZooKeeper实现分布式锁</h3><p>Redis实现分布式锁性能较高，ZooKeeper实现分布式锁可靠性更高。实际项目中，我们应该根据业务的具体需求来选择。</p>
-<h4 id="如何基于ZooKeeper实现分布式锁？"><a href="#如何基于ZooKeeper实现分布式锁？" class="headerlink" title="如何基于ZooKeeper实现分布式锁？"></a>如何基于ZooKeeper实现分布式锁？</h4><p>客户端连接zookeeper，并在&#x2F;lock下创建临时的且有序的子节点，第一个客户端对应的子节点为&#x2F;lock&#x2F;lock-0000000000，第二个为&#x2F;lock&#x2F;lock-0000000001，以此类推；客户端获取&#x2F;lock下的子节点列表，判断自己创建的子节点是否为当前子节点列表中序号最小的子节点，如果是则认为获得锁，否则监听刚好在自己之前一位的子节点删除消息，获得子节点变更通知后重复此步骤直至获得锁；执行业务代码；完成业务流程后，删除对应的子节点释放锁。</p>
-<p>ZooKeeper分布式锁是基于<strong>临时顺序节点和Watcher（事件监听器）</strong> 实现的。</p>
+<h4 id="如何基于ZooKeeper实现分布式锁？"><a href="#如何基于ZooKeeper实现分布式锁？" class="headerlink" title="如何基于ZooKeeper实现分布式锁？"></a>如何基于ZooKeeper实现分布式锁？</h4><p>客户端连接zookeeper，并在&#x2F;lock下创建临时的且有序的子节点，第一个客户端对应的子节点为&#x2F;lock&#x2F;lock-0000000000，第二个为&#x2F;lock&#x2F;lock-0000000001，以此类推；客户端获取&#x2F;lock下的子节点列表，判断自己创建的子节点是否为当前子节点列表中序号最小的子节点，如果是则认为获得锁，否则监听刚好在自己之前一位的子节点删除消息，获得子节点变更通知后重复此步骤直至获得锁；执行业务代码；完成业务流程后，删除对应的子节点释放锁。ZooKeeper分布式锁是基于<strong>临时顺序节点和Watcher（事件监听器）</strong> 实现的。</p>
 <p>获取锁：</p>
 <ol>
 <li>首先我们要有一个持久节点&#x2F;locks，客户端获取锁就是在locks下创建临时顺序节点。</li>
@@ -696,8 +693,7 @@ lock<span class="token punctuation">.</span><span class="token function">lock</s
 <li>成功获取锁的客户端在出现故障之后，对应的子节点由于是临时顺序节点，也会被自动删除，避免了锁无法被释放。</li>
 <li>我们前面说的事件监听器其实监听的就是这个子节点删除事件，子节点删除就意味着锁被释放。</li>
 </ol>
-<p>实际项目中，推荐使用<strong>Curator</strong>来实现ZooKeeper分布式锁。<strong>Curator</strong>是Netflix公司开源的一套ZooKeeper Java客户端框架，相比于ZooKeeper自带的客户端zookeeper来说，Curator的封装更加完善，各种API都可以比较方便地使用。</p>
-<p>Curator主要实现了下面四种锁：</p>
+<p>实际项目中，推荐使用<strong>Curator</strong>来实现ZooKeeper分布式锁。<strong>Curator</strong>是Netflix公司开源的一套ZooKeeper Java客户端框架，相比于ZooKeeper自带的客户端zookeeper来说，Curator的封装更加完善，各种API都可以比较方便地使用。Curator主要实现了下面四种锁：</p>
 <ul>
 <li><strong>InterProcessMutex</strong>：分布式可重入排它锁</li>
 <li><strong>InterProcessSemaphoreMutex</strong>：分布式不可重入排它锁</li>
@@ -973,8 +969,7 @@ client<span class="token punctuation">.</span><span class="token function">close
 <li>一般锁进行并发控制的规则：读读互斥、读写互斥、写写互斥。</li>
 <li>读写锁进行并发控制的规则：读读不互斥、读写互斥、写写互斥（只有读读不互斥）。</li>
 </ul>
-<p>ReentrantReadWriteLock其实是两把锁，一把是WriteLock(写锁)，一把是ReadLock&#96;（读锁）。读锁是共享锁，写锁是独占锁。读锁可以被同时读，可以同时被多个线程持有，而写锁最多只能同时被一个线程持有。</p>
-<p>和ReentrantLock一样，ReentrantReadWriteLock底层也是基于AQS实现的。</p>
+<p>ReentrantReadWriteLock其实是两把锁，一把是WriteLock(写锁)，一把是ReadLock&#96;（读锁）。读锁是共享锁，写锁是独占锁。读锁可以被同时读，可以同时被多个线程持有，而写锁最多只能同时被一个线程持有。和ReentrantLock一样，ReentrantReadWriteLock底层也是基于AQS实现的。</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/concurrent/reentrantreadwritelock-class-diagram.png" alt="img"></p>
 <p>ReentrantReadWriteLock也支持公平锁和非公平锁，默认使用非公平锁，可以通过构造器来显示的指定。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 传入一个boolean值，true时为公平锁，false时为非公平锁</span>
@@ -998,8 +993,7 @@ client<span class="token punctuation">.</span><span class="token function">close
 </blockquote>
 <h4 id="读锁为什么不能升级为写锁？"><a href="#读锁为什么不能升级为写锁？" class="headerlink" title="读锁为什么不能升级为写锁？"></a>读锁为什么不能升级为写锁？</h4><p>写锁可以降级为读锁，但是读锁却不能升级为写锁。这是因为读锁升级为写锁会引起线程的争夺，毕竟写锁属于是独占锁，这样的话，会影响性能。另外，还可能会有死锁问题发生。举个例子：假设两个线程的读锁都想升级写锁，则需要对方都释放自己锁，而双方都不释放，就会产生死锁。</p>
 <h3 id="StampedLock"><a href="#StampedLock" class="headerlink" title="StampedLock"></a>StampedLock</h3><p>StampedLock面试中问的比较少，不是很重要，简单了解即可。</p>
-<h4 id="StampedLock是什么？"><a href="#StampedLock是什么？" class="headerlink" title="StampedLock是什么？"></a>StampedLock是什么？</h4><p>StampedLock是JDK1.8引入的性能更好的读写锁，不可重入且不支持条件变量Conditon。</p>
-<p>不同于一般的Lock类，StampedLock并不是直接实现Lock或ReadWriteLock接口，而是基于CLH锁独立实现的（AQS也是基于这玩意）。</p>
+<h4 id="StampedLock是什么？"><a href="#StampedLock是什么？" class="headerlink" title="StampedLock是什么？"></a>StampedLock是什么？</h4><p>StampedLock是JDK1.8引入的性能更好的读写锁，不可重入且不支持条件变量Conditon。不同于一般的Lock类，StampedLock并不是直接实现Lock或ReadWriteLock接口，而是基于CLH锁独立实现的（AQS也是基于这玩意）。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StampedLock</span> <span class="token keyword">implements</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>Serializable</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>StampedLock提供了三种模式的读写控制模式：读锁、写锁和乐观读。</p>
@@ -1035,8 +1029,7 @@ client<span class="token punctuation">.</span><span class="token function">close
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="StampedLock的性能为什么更好？"><a href="#StampedLock的性能为什么更好？" class="headerlink" title="StampedLock的性能为什么更好？"></a>StampedLock的性能为什么更好？</h4><p>相比于传统读写锁多出来的乐观读是StampedLock比ReadWriteLock性能更好的关键原因。StampedLock的乐观读允许一个写线程获取写锁，所以不会导致所有写线程阻塞，也就是当读多写少的时候，写线程有机会获取写锁，减少了线程饥饿的问题，吞吐量大大提高。</p>
-<h4 id="StampedLock适合什么场景？"><a href="#StampedLock适合什么场景？" class="headerlink" title="StampedLock适合什么场景？"></a>StampedLock适合什么场景？</h4><p>和ReentrantReadWriteLock一样，StampedLock同样适合读多写少的业务场景，可以作为ReentrantReadWriteLock的替代品，性能更好。不过，需要注意的是StampedLock不可重入，不支持条件变量Conditon，对中断操作支持也不友好（使用不当容易导致CPU飙升）。如果你需要用到ReentrantLock的一些高级性能，就不太建议使用StampedLock了。</p>
-<p>另外，StampedLock性能虽好，但使用起来相对比较麻烦，一旦使用不当，就会出现生产问题。强烈建议你在使用StampedLock之前，看看<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/StampedLock.html">StampedLock官方文档中的案例</a>。</p>
+<h4 id="StampedLock适合什么场景？"><a href="#StampedLock适合什么场景？" class="headerlink" title="StampedLock适合什么场景？"></a>StampedLock适合什么场景？</h4><p>和ReentrantReadWriteLock一样，StampedLock同样适合读多写少的业务场景，可以作为ReentrantReadWriteLock的替代品，性能更好。不过，需要注意的是StampedLock不可重入，不支持条件变量Conditon，对中断操作支持也不友好（使用不当容易导致CPU飙升）。如果你需要用到ReentrantLock的一些高级性能，就不太建议使用StampedLock了。另外，StampedLock性能虽好，但使用起来相对比较麻烦，一旦使用不当，就会出现生产问题。强烈建议你在使用StampedLock之前，看看<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/StampedLock.html">StampedLock官方文档中的案例</a>。</p>
 <h4 id="StampedLock的底层原理了解吗？"><a href="#StampedLock的底层原理了解吗？" class="headerlink" title="StampedLock的底层原理了解吗？"></a>StampedLock的底层原理了解吗？</h4><p>StampedLock不是直接实现Lock或ReadWriteLock接口，而是基于CLH锁实现的（AQS也是基于这玩意），CLH锁是对自旋锁的一种改良，是一种隐式的链表队列。StampedLock通过CLH队列进行线程的管理，通过同步状态值state来表示锁的状态和类型。</p>
 <p>StampedLock的原理和AQS原理比较类似，这里就不详细介绍了，感兴趣的可以看看下面这两篇文章：</p>
 <blockquote>

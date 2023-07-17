@@ -556,12 +556,6 @@
 <p><img src="https://static001.infoq.cn/resource/image/75/03/75938d1010138ce66e38c6ed0392f103.png" alt="漏桶算法"></p>
 <h3 id="令牌桶算法"><a href="#令牌桶算法" class="headerlink" title="令牌桶算法"></a>令牌桶算法</h3><p>令牌桶算法也比较简单。和漏桶算法算法一样，我们的主角还是桶（这限流算法和桶过不去啊）。不过现在桶里装的是令牌了，请求在被处理之前需要拿到一个令牌，请求处理完毕之后将这个令牌丢弃（删除）。我们根据限流大小，按照一定的速率往桶里添加令牌。如果桶装满了，就不能继续往里面继续添加令牌了。</p>
 <p><img src="https://static001.infoq.cn/resource/image/ec/93/eca0e5eaa35dac938c673fecf2ec9a93.png" alt="令牌桶算法"></p>
-<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w">5种限流算法，7种限流方式，挡住突发流量？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw">常用的限流算法有哪些？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg">新来个技术总监，把限流实现的那叫一个优雅，佩服</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i93_jSf43FcN0aQ9hY8WnQ">十分钟搞懂Java限流及常见方案</a></li>
-</ul>
 <h2 id="单机限流怎么做？"><a href="#单机限流怎么做？" class="headerlink" title="单机限流怎么做？"></a>单机限流怎么做？</h2><p>单机限流针对的是单体架构应用。单机限流可以直接使用Google Guava自带的限流工具类RateLimiter。RateLimiter基于令牌桶算法，可以应对突发流量。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/google/guava">Guava地址</a></p>
@@ -651,7 +645,14 @@ get <span class="token number">1</span> tokens: <span class="token number">0</sp
 <p><a target="_blank" rel="noopener" href="https://github.com/apache/incubator-shenyu">ShenYu地址</a></p>
 </blockquote>
 <p><img src="https://oss.javaguide.cn/github/javaguide/csdn/e1e2a75f489e4854990dabe3b6cec522.jpg" alt="ShenYu限流脚本"></p>
-<h2 id="具体实现代码"><a href="#具体实现代码" class="headerlink" title="具体实现代码"></a>具体实现代码</h2><blockquote>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w">5种限流算法，7种限流方式，挡住突发流量？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw">常用的限流算法有哪些？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg">新来个技术总监，把限流实现的那叫一个优雅，佩服</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i93_jSf43FcN0aQ9hY8WnQ">十分钟搞懂Java限流及常见方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BRQfsbhFjSpl_MH7E-eZYQ">四种分布式限流算法实现！</a></li>
+</ul>
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><blockquote>
 <p>相关代码已上传到<a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/study_demo/algorithm/limit">GitHub</a></p>
 </blockquote>
 

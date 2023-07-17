@@ -17,8 +17,9 @@ top: true
 
 1. 如果是原型bean的循环依赖，Spring无法解决
 2. 如果是构造参数注入的循环依赖，Spring无法解决
+
 容器为了缓存这些单例的Bean需要一个数据结构来存储，比如Map {k:name; v:bean}。
-而我们创建一个Bean就可以往Map中存入一个Bean。这时候我们仅需要一个Map就可以满足创建+缓存的需求.
+而我们创建一个Bean就可以往Map中存入一个Bean。这时候我们仅需要一个Map就可以满足创建+缓存的需求。
 但是创建Bean过程中可能会遇到循环依赖问题，比如A对象依赖了一个B对象，而B对象内部又依赖了一个A:
 
 ```java
@@ -43,6 +44,8 @@ public class B {
 }
 ```
 
+> 一般来说，如果我们的代码中出现了循环依赖，则说明我们的代码在设计的过程中可能存在问题，我们应该尽量避免循环依赖的发生。不过一旦发生了循环依赖，Spring默认也帮我们处理好了，当然这并不能说明循环依赖这种代码就没问题。实际上在目前最新版的Spring中，循环依赖是要额外开启的，如果不额外配置，发生了循环依赖就直接报错了
+
 ### 一级缓存
 
 1. 实例化A对象。
@@ -51,8 +54,7 @@ public class B {
 4. 执行到B对象的填充属性阶段，又会需要去获取A对象，而此时Map中没有A，因为A还没有创建完成，导致又需要去创建A对象。
 这样，就会循环往复，一直创建下去，只到堆栈溢出。
 
-为什么不能在实例化A之后就放入Map？
-因为此时A尚未创建完整，所有属性都是默认值，并不是一个完整的对象，在执行业务时可能会抛出未知的异常。所以必须要在A创建完成之后才能放入Map。
+**为什么不能在实例化A之后就放入Map**？因为此时A尚未创建完整，所有属性都是默认值，并不是一个完整的对象，在执行业务时可能会抛出未知的异常。所以必须要在A创建完成之后才能放入Map。
 
 ### 二级缓存
 
@@ -66,10 +68,11 @@ public class B {
 6. 这时候B创建完成，A继续执行b的属性填充可以拿到B对象，这样A也完成了创建。B.a也完整了
 7. 此时将A对象放入Map并从Map2中删除。
 
-### 二级缓存已然解决了循环依赖问题，为什么还需要三级缓存？
+**二级缓存已然解决了循环依赖问题，为什么还需要三级缓存**？
 
 从上面的流程中我们可以看到使用两级缓存可以完美解决循环依赖的问题，但是Spring中还有另外一个问题需要解决，这就是初始化过程中的AOP实现。AOP是Spring的重要功能，实现方式就是使用代理模式动态增强类的功能。动态单例目前有两种技术可以实现，一种是JDK自带的基于接口的动态Proxy技术，一种是CGlib基于字节码动态生成的Proxy技术，这两种技术都是需要原始对象创建完毕，之后基于原始对象生成代理对象的。那么我们发现，在二级缓存的设计下，我们需要在放入缓存Map之前将代理对象生成好。
 将流程改为：
+
 1. 实例化Bean对象，为Bean对象在内存中分配空间，各属性赋值为默认值
 2. 如果有动态代理，生成Bean对象的代理Proxy对象
 3. 初始化Proxy对象，为Bean对象填充属性
@@ -82,12 +85,12 @@ public class B {
 5. BeanPostProcessor doAfter --AOP是在这个阶段实现的
 所以要实现上面的方案，势必需要将BeanPostProcessor阶段提前或者侵入到填充属性的流程中，那么从程序设计上来说，这样做肯定是不美的
 
-面试官会问：为什么要使用三级缓存呢？二级缓存能解决循环依赖吗？
-答：如果要使用二级缓存解决循环依赖，意味着所有Bean在实例化后就要完成AOP代理，这样违背了Spring设计的原则，Spring在设计之初就是通过AnnotationAwareAspectJAutoProxyCreator这个后置处理器来在Bean生命周期的最后一步来完成AOP代理，而不是在实例化后就立马进行AOP代理
+> 面试官会问：为什么要使用三级缓存呢？二级缓存能解决循环依赖吗？
+> 答：如果要使用二级缓存解决循环依赖，意味着所有Bean在实例化后就要完成AOP代理，这样违背了Spring设计的原则，Spring在设计之初就是通过AnnotationAwareAspectJAutoProxyCreator这个后置处理器来在Bean生命周期的最后一步来完成AOP代理，而不是在实例化后就立马进行AOP代理
 
 ### 三级缓存
 
-Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFactory} ，这个缓存的value就不是Bean对象了，而是一个接口对象由一段lamda表达式实现。在这段lamda表达式中去完成一些BeanPostProcessor的执行。
+Spring引入了第三级缓存来解决这个问题，Map3 {k:name v:ObjectFactory}，这个缓存的value就不是Bean对象了，而是一个接口对象由一段lamda表达式实现。在这段lamda表达式中去完成一些BeanPostProcessor的执行。
 1. 实例化A对象之后，将A的ObjectFactory对象放入Map3中。
 2. 在填充A的属性阶段需要去填充B对象，而此时B对象还没有创建，所以这里为了完成A的填充就必须要先去创建B对象。
 3. 创建B对象的过程中，实例化B的ObjectFactory对象之后，将B对象放入Map2中。
@@ -95,6 +98,52 @@ Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFact
 5. 此时将B放入Map并且从Map3中删除。
 6. 这时候B创建完成，A继续执行b的属性填充可以拿到B对象，这样A也完成了创建。
 7. 此时将A对象放入Map并从Map2中删除。
+
+### 带图解析
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/GvtDGKK4uYl7Vdb6FD5gpKdIVy6ibibEbgSFMjDAgsG3lvnhB8NBlP5fts8ZiaT2fKk4pOmVGhDk5Hjwh0T38xvDg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+我们在这里引入了一个缓存池。当我们需要创建AService的实例的时候，会首先通过Java反射创建出来一个原始的AService，这个原始AService可以简单理解为刚刚new出来（实际是刚刚通过反射创建出来）还没设置任何属性的AService，此时，我们把这个AService先存入到一个缓存池中。
+
+接下来我们就需要给AService的属性设置值了，同时还要处理AService的依赖，这时我们发现AService依赖BService，那么就去创建BService对象，结果创建BService的时候，发现BService依赖AService，那么此时就先从缓存池中取出来AService先用着，然后继续BService创建的后续流程，直到BService创建完成后，将之赋值给AService，此时AService和BService就都创建完成了。
+
+可能有小伙伴会说，BService从缓存池中拿到的AService是一个半成品，并不是真正的最终的AService，但是小伙伴们要知道，Java是引用传递（也可以认为是值传递，只不过这个值是内存地址），BService当时拿到的是AService的引用，说白了就是一块内存地址而已，根据这个地址找到的就是AService，所以，后续如果AService创建完成后，BService所拿到的AService就是完整的AService了。
+
+那么上面提到的这个缓存池，在Spring容器中有一个专门的名字，就叫做**earlySingletonObjects**，这是Spring三级缓存中的**二级缓存**，这里保存的是刚刚通过反射创建出来的Bean，这些Bean还没有经历过完整生命周期，Bean的属性可能都还没有设置，Bean需要的依赖都还没有注入进来。另外两级缓存分别是：
+
+**singletonObjects**：这是**一级缓存**，一级缓存中保存的是所有经历了完整生命周期的Bean，即一个Bean从创建、到属性赋值、到各种处理器的执行等等，都经历过了，就存到singletonObjects中，当我们需要获取一个Bean的时候，首先会去一级缓存中查找，当一级缓存中没有的时候，才会考虑去二级缓存。
+**singletonFactories**：这是**三级缓存**。在一级缓存和二级缓存中，缓存的key是beanName，缓存的value则是一个Bean对象，但是在三级缓存中，缓存的value是一个Lambda表达式，通过这个Lambda表达式可以创建出来目标对象的一个代理对象。
+有的小伙伴可能会觉得奇怪，按照上文的介绍，一级缓存和二级缓存就足以解决循环依赖了，为什么还冒出来一个三级缓存？那就得考虑AOP的情况了！
+
+**AOP的创建流程**
+
+正常来说是我们首先通过反射获取到一个Bean的实例，然后就是给这个Bean填充属性，属性填充完毕之后，接下来就是执行各种BeanPostProcessor了，如果这个Bean中有需要代理的方法，那么系统就会自动配置对应的后置处理器，举一个简单例子，假设我有如下一个Service：
+```java
+@Service
+public class UserService {
+    @Async
+    public void hello() {
+        System.out.println("hello>>>"+Thread.currentThread().getName());
+    }
+}
+```
+那么系统就会自动提供一个名为AsyncAnnotationBeanPostProcessor的处理器，在这个处理器中，系统会生成一个代理的UserService对象，并用这个对象代替原本的UserService。那么小伙伴们要搞清楚的是，原本的UserService和新生成的代理的UserService是两个不同的对象，占两块不同的内存地址！！！
+
+我们再来回顾下面这张图：
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/GvtDGKK4uYl7Vdb6FD5gpKdIVy6ibibEbgSFMjDAgsG3lvnhB8NBlP5fts8ZiaT2fKk4pOmVGhDk5Hjwh0T38xvDg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+如果AService最终是要生成一个代理对象的话，那么AService存到缓存池的其实还是原本的AService，因为此时还没到处理AOP那一步（要先给各个属性赋值，然后才是AOP处理），这就导致BService从缓存池里拿到的AService是原本的AService，等到BService创建完毕之后，AService的属性赋值才完成，接下来在AService后续的创建流程中，AService会变成了一个代理对象了，不是缓存池里的AService了，最终就导致BService所依赖的AService和最终创建出来的AService不是同一个。
+
+为了解决这个问题，Spring引入了三级缓存`singletonFactories`。`singletonFactories`的工作机制是这样的（假设AService最终是一个代理对象）：当我们创建一个AService的时候，通过反射刚把原始的AService创建出来之后，先去判断当前一级缓存中是否存在当前Bean，如果不存在，则首先向三级缓存中添加一条记录，记录的key就是当前Bean的beanName，value则是一个Lambda表达式ObjectFactory，通过执行这个Lambda可以给当前AService生成代理对象。然后如果二级缓存中存在当前AService Bean，则移除掉。现在继续去给AService各个属性赋值，结果发现AService需要BService，然后就去创建BService，创建BService的时候，发现BService又需要用到AService，于是就先去一级缓存中查找是否有AService，如果有，就使用，如果没有，则去二级缓存中查找是否有AService，如果有，就使用，如果没有，则去三级缓存中找出来那个ObjectFactory，然后执行这里的getObject方法，这个方法在执行的过程中，会去判断是否需要生成一个代理对象，如果需要就生成代理对象返回，如果不需要生成代理对象，则将原始对象返回即可。最后，把拿到手的对象存入到二级缓存中以备下次使用，同时删除掉三级缓存中对应的数据。这样AService所依赖的BService就创建好了。接下来继续去完善AService，去执行各种后置的处理器，此时，有的后置处理器想给AService生成代理对象，发现AService已经是代理对象了，就不用生成了，直接用已有的代理对象去代替AService即可。至此，AService和BService都搞定。本质上，singletonFactories是把AOP的过程提前了。
+
+总的来说，Spring解决循环依赖把握住两个关键点：
+
+- 提前暴露：刚刚创建好的对象还没有进行任何赋值的时候，将之暴露出来放到缓存中，供其他Bean提前引用（二级缓存）。
+- 提前AOP：A依赖B的时候，去检查是否发生了循环依赖（检查的方式就是将正在创建的A标记出来，然后B需要A，B去创建A的时候，发现A正在创建，就说明发生了循环依赖），如果发生了循环依赖，就提前进行AOP处理，处理完成后再使用（三级缓存）。
+
+原本AOP这个过程是属性赋完值之后，再由各种后置处理器去处理AOP的（AbstractAutoProxyCreator），但是如果发生了循环依赖，就先AOP，然后属性赋值，最后等到后置处理器执行的时候，就不再做AOP的处理了。不过需要注意，三级缓存并不能解决所有的循环依赖
+
+> [如何通过三级缓存解决Spring循环依赖※](https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA)
 
 ### 相关文章
 
@@ -108,7 +157,6 @@ Spring引入了第三级缓存来解决这个问题， Map3 {k:name v:ObjectFact
 - [Spring面试题之循环依赖的理解](https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw)
 - [Spring的循环依赖，到底是什么样的](https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA)
 - [面试官:SpringBoot循环依赖，如何解决？](https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw)
-
 
 ## Spring相关注解
 

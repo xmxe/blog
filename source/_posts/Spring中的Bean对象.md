@@ -188,6 +188,7 @@ private BaseDao baseDao;
 
 > [Spring探索｜既生@Resource，何生@Autowired？](https://mp.weixin.qq.com/s/MZX97YKKmjuj7FxrjBQ1hg)
 > [@Autowired注解是如何实现的？](https://mp.weixin.qq.com/s/gRqZwUV791RtCI1xCoV3Qw)
+> [@Autowired到底是怎么把变量注入进来的？](https://mp.weixin.qq.com/s/Ecs4MTjFpCa6Rz75buTSNw)
 > [你所不知道的Spring中@Autowired那些实现细节](https://mp.weixin.qq.com/s/n_syhEFrXykI7ySRtahEmg)
 > [@Autowired的这些骚操作，你都知道吗？](https://mp.weixin.qq.com/s/2X5xv8I0b6TcXWVH-SC8Ug)
 
@@ -837,3 +838,4 @@ System.out.println(hw.getMsg());
 - [Spring注解@Bean和@Component的区别,你知道吗？](https://mp.weixin.qq.com/s/6CwABJAePAT6hzTmfk7Jjg)
 - [@Bean与@Component用在同一个类上，会怎么样？](https://mp.weixin.qq.com/s/lyH72PRAGcR2-aQvMZ1jPA)
 - [Bean异步初始化，让你的应用启动飞起来](https://mp.weixin.qq.com/s/aZCgJS3Uaj28UiKTtUFcmw)
+- [Spring中的父子容器是咋回事？](https://mp.weixin.qq.com/s/06Mmgnhhu98lQtQ8X13QBA)

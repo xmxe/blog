@@ -909,6 +909,7 @@ AIO也就是NIO2。Java7中引入了NIO的改进版NIO2,它是异步IO模型。
 - [一篇带你彻底读懂IO流技术！](https://mp.weixin.qq.com/s/pS2SXhmF7O3Gk8WRkCFZaw)
 - [文件读写操作与常用技巧分享](https://mp.weixin.qq.com/s/LJS6joxDCt71M9tEJ6GxFA)
 - [IO流为什么必须手动关闭，不能像其他的对象坐等GC回收?](https://mp.weixin.qq.com/s/emjHDexsHoIFmZGhwwrKfA)
+- [面试官：BIO、NIO、AIO之间有什么区别？](https://mp.weixin.qq.com/s/GAQxxEmYbE8Sy3oS9ePvhA)
 
 
 ## NIO

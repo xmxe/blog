@@ -144,6 +144,7 @@ public class UserService {
 原本AOP这个过程是属性赋完值之后，再由各种后置处理器去处理AOP的（AbstractAutoProxyCreator），但是如果发生了循环依赖，就先AOP，然后属性赋值，最后等到后置处理器执行的时候，就不再做AOP的处理了。不过需要注意，三级缓存并不能解决所有的循环依赖
 
 > [如何通过三级缓存解决Spring循环依赖※](https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA)
+> [Spring能解决所有循环依赖吗？](https://mp.weixin.qq.com/s/Un8pyET2XDXpDY4FnRbwXw)
 
 ### 相关文章
 
@@ -306,7 +307,7 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 **代理模式在AOP中的应用**
 
-**AOP(Aspect-Oriented Programming，面向切面编程)** 能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。**Spring AOP就是基于动态代理的**，如果要代理的对象，实现了某个接口，那么Spring AOP会使用**JDKProxy**去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用**Cglib**生成一个被代理对象的子类来作为代理，如下图所示：
+**AOP(Aspect-Oriented Programming，面向切面编程)**,能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。**Spring AOP就是基于动态代理的**，如果要代理的对象，实现了某个接口，那么Spring AOP会使用**JDKProxy**去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用**Cglib**生成一个被代理对象的子类来作为代理，如下图所示：
 
 ![SpringAOPProcess](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg)
 
@@ -548,10 +549,10 @@ Spring框架中用到了哪些设计模式？
 1. 向服务器发送HTTP请求，请求被前端控制器DispatcherServlet捕获。
 2. DispatcherServlet根据-servlet.xml中的配置对请求的URL进行解析，得到请求资源标识符（URI）。然后根据该URI，调用HandlerMapping获得该Handler配置的所有相关的对象（包括Handler对象以及Handler对象对应的拦截器），最后以HandlerExecutionChain对象的形式返回。
 3. DispatcherServlet根据获得的Handler，选择一个合适的HandlerAdapter。（附注：如果成功获得HandlerAdapter后，此时将开始执行拦截器的preHandler(…)方法）。
-4. 提取Request中的模型数据，填充Handler入参，开始执行Handler（Controller)。在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：HttpMessageConveter：将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息。
+4. 提取Request中的模型数据，填充Handler入参，开始执行Handler(Controller)。在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：HttpMessageConveter：将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息。
 数据转换：对请求消息进行数据转换。如String转换成Integer、Double等。数据根式化：对请求消息进行数据格式化。如将字符串转换成格式化数字或格式化日期等。数据验证：验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中。
 5. Handler(Controller)执行完成后，向DispatcherServlet返回一个ModelAndView对象；
-6. 根据返回的ModelAndView，选择一个适合的ViewResolver（必须是已经注册到Spring容器中的ViewResolver)返回给DispatcherServlet。
+6. 根据返回的ModelAndView，选择一个适合的ViewResolver(必须是已经注册到Spring容器中的ViewResolver)返回给DispatcherServlet。
 7. ViewResolver结合Model和View，来渲染视图。
 8. 视图负责将渲染结果返回给客户端。
 

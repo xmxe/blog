@@ -631,7 +631,7 @@
 </ul>
 <p>原本AOP这个过程是属性赋完值之后，再由各种后置处理器去处理AOP的（AbstractAutoProxyCreator），但是如果发生了循环依赖，就先AOP，然后属性赋值，最后等到后置处理器执行的时候，就不再做AOP的处理了。不过需要注意，三级缓存并不能解决所有的循环依赖</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA">如何通过三级缓存解决Spring循环依赖※</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA">如何通过三级缓存解决Spring循环依赖※</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Un8pyET2XDXpDY4FnRbwXw">Spring能解决所有循环依赖吗？</a></p>
 </blockquote>
 <h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ns9JEpvMt7U-nsMZzEUIUQ">Spring三级缓存解决循环依赖</a></li>
@@ -757,7 +757,7 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 </ol>
 <p>不过，大部分Bean实际都是无状态（没有实例变量）的（比如Dao、Service），这种情况下，Bean是线程安全的。</p>
 <h3 id="代理设计模式"><a href="#代理设计模式" class="headerlink" title="代理设计模式"></a>代理设计模式</h3><p><strong>代理模式在AOP中的应用</strong></p>
-<p><strong>AOP(Aspect-Oriented Programming，面向切面编程)</strong> 能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。<strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDKProxy</strong>去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong>生成一个被代理对象的子类来作为代理，如下图所示：</p>
+<p><strong>AOP(Aspect-Oriented Programming，面向切面编程)</strong>,能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。<strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDKProxy</strong>去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong>生成一个被代理对象的子类来作为代理，如下图所示：</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg" alt="SpringAOPProcess"></p>
 <p>当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。</p>
 <h3 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别?"></a>Spring AOP和AspectJ AOP有什么区别?</h3><p><strong>Spring AOP属于运行时增强，而AspectJ是编译时增强</strong>。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。</p>
@@ -921,9 +921,9 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li>向服务器发送HTTP请求，请求被前端控制器DispatcherServlet捕获。</li>
 <li>DispatcherServlet根据-servlet.xml中的配置对请求的URL进行解析，得到请求资源标识符（URI）。然后根据该URI，调用HandlerMapping获得该Handler配置的所有相关的对象（包括Handler对象以及Handler对象对应的拦截器），最后以HandlerExecutionChain对象的形式返回。</li>
 <li>DispatcherServlet根据获得的Handler，选择一个合适的HandlerAdapter。（附注：如果成功获得HandlerAdapter后，此时将开始执行拦截器的preHandler(…)方法）。</li>
-<li>提取Request中的模型数据，填充Handler入参，开始执行Handler（Controller)。在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：HttpMessageConveter：将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息。<br>数据转换：对请求消息进行数据转换。如String转换成Integer、Double等。数据根式化：对请求消息进行数据格式化。如将字符串转换成格式化数字或格式化日期等。数据验证：验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中。</li>
+<li>提取Request中的模型数据，填充Handler入参，开始执行Handler(Controller)。在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：HttpMessageConveter：将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息。<br>数据转换：对请求消息进行数据转换。如String转换成Integer、Double等。数据根式化：对请求消息进行数据格式化。如将字符串转换成格式化数字或格式化日期等。数据验证：验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中。</li>
 <li>Handler(Controller)执行完成后，向DispatcherServlet返回一个ModelAndView对象；</li>
-<li>根据返回的ModelAndView，选择一个适合的ViewResolver（必须是已经注册到Spring容器中的ViewResolver)返回给DispatcherServlet。</li>
+<li>根据返回的ModelAndView，选择一个适合的ViewResolver(必须是已经注册到Spring容器中的ViewResolver)返回给DispatcherServlet。</li>
 <li>ViewResolver结合Model和View，来渲染视图。</li>
 <li>视图负责将渲染结果返回给客户端。</li>
 </ol>

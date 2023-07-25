@@ -28,47 +28,30 @@
     <!-- dock栏 -->
     <div id="container">
       <div id="dock">
-        <ul>
-          <li>
-            <span>李跳跳</span>
-            <!-- <a href="https://wwe.lanzouw.com/b01v0g3wj?password=1233"><img src="./assert/ltt.jpg"/></a> -->
-            <a href="https://www.123pan.com/s/ZYAZVv-TBYjd.html"><img src="assert/ltt.jpg"/></a>
-          </li>
-          <li>
-            <span>GitHub</span>
-            <a href="https://apkpure.com/cn/github/com.github.android"><img src="assert/github.jpg"/></a>
-          </li>
-          <li>
-            <span>AH视频</span>
-            <a href="https://ahsp.app/"><img src="assert/ah.png"/></a>
-          </li>
-          <li>
-            <span>企业微信</span>
-            <a href="https://www.wandoujia.com/apps/6860656/history_v16713"><img src="assert/qywx.jpg"/></a>
-          </li>
-          <li>
-            <span>v</span>
-            <a href="https://github.com/2dust/"><img src="assert/v.jpg"/></a>
-          </li>
-          <li>
-            <span>FakeLocation</span>
-            <a href="https://github.com/Lerist/FakeLocation/releases"><img src="assert/fakelocation.jpg"/></a>
-          </li>
-          <li>
-            <span>Everything</span>
-            <a href="https://www.voidtools.com/zh-cn/"><img src="assert/everything.jpg"/></a>
-          </li>
-          <li>
-            <span>Listary</span>
-            <a href="https://www.listary.com/"><img src="assert/listary.png"/></a>
-          </li>
-          <li>
-            <span>PS CC2019直装版</span>
-            <a href="https://n459.com/file/5210373-315857187"><img src="assert/ps.jpg"/></a>
-          </li>
-        </ul>
+        <ul></ul>
       </div>
     </div>
-
+    <script type="text/javascript">
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            // 在这里处理加载的JSON数据
+            var str = '';
+            for (var i = 0; i < data.length; i++) {
+              var obj = data[i];
+              if(obj.appId.indexOf('http') != -1)
+                str += '<li><span>' + obj.text + '</span><a href="' + obj.appId + '"><img src="' + obj.src + '"></a></li>';
+            }
+            document.querySelector("#dock ul").innerHTML = str;
+          } else {
+            console.log("Failed to load JSON file.");
+          }
+        }
+      };
+      xhr.open("GET", "assert/friends.json");
+      xhr.send();
+    </script>
   </body>
 </html>

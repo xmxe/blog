@@ -20,6 +20,7 @@
   list-style-type: none;
   display: inline-block;
   position: relative;
+  padding-right: 3px;
 }
 
 #container li img {

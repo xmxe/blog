@@ -538,7 +538,9 @@
 <span class="token function">nohup</span> <span class="token function">java</span> <span class="token parameter variable">-jar</span> abc.jar <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span>
 
 <span class="token comment"># command >/dev/null 2>&amp;1 &amp; == command 1>/dev/null 2>&amp;1 &amp;</span>
-<span class="token comment"># 1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。2>&amp;1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.所以可以看出">/dev/null 2>&amp;1 &amp;"常用来避免shell命令或者程序等运行中有内容输出</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># 1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。2>&amp;1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.所以可以看出">/dev/null 2>&amp;1 &amp;"常用来避免shell命令或者程序等运行中有内容输出</span>
+<span class="token comment"># 将错误日志输出到文件</span>
+<span class="token function">nohup</span> <span class="token builtin class-name">command</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>error.log <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="安装ifconfig"><a href="#安装ifconfig" class="headerlink" title="安装ifconfig"></a>安装ifconfig</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># centos</span>
 yum <span class="token parameter variable">-y</span> <span class="token function">install</span> net-tools
@@ -1033,6 +1035,8 @@ swapoff ～/swapfile
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kxvc95RJoSKqcXwwmyrPKg">在Linux上保护SSH服务器连接的8种方法</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zmfCC083VBrA8P6uWHL2DQ">发现谁用kill -9关闭程序就开除！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hXDAZD0LUJ9g85t6fkBR-Q">万字详解Linux常用指令</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KN9OPZMhmuA6rhx5YTjwDA">最强Linux命令总结（特别推荐版）</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jaywcjlove/linux-command">Linux命令大全搜索工具，内容包含Linux命令手册、详解、学习、搜集</a></li>
 </ul>
 
                 

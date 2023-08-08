@@ -6,7 +6,7 @@ tags: 安装
 
 ---
 
-> [zookeeper demo](https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/study_demo/zookeeper)
+> [zookeeper demo](https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/zookeeper)
 
 ## Zookeeper基本原理
 

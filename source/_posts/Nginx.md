@@ -263,3 +263,4 @@ resolver指令
 - [Nginx如何限流？](https://mp.weixin.qq.com/s/R6GajrvNphXfgKWDsFWzFw)
 - [nginxconfig.io](https://nginxconfig.io)
 - [为什么Nginx比Apache更牛叉？](https://mp.weixin.qq.com/s/pPV5s3uO1sjPTAhz_BDcJg)
+- [如何用Nginx代理MySQL连接，并限制可访问IP？](https://mp.weixin.qq.com/s/6lvKIQb4yk7uTmufr9pJ8w)

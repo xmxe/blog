@@ -200,6 +200,12 @@ int availableProcessors = Runtime.getRuntime().availableProcessors()
 
 ### 线程池
 
+> ```java
+> ThreadPoolExecutor extends AbstractExecutorService,
+> AbstractExecutorService implements ExecutorService,
+> ExecutorService extends Executor
+> ```
+
 #### Executors
 
 ```java

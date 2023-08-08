@@ -572,8 +572,8 @@
 <li>transient修饰的变量，在反序列化后变量值将会被置成类型的默认值。例如，如果是修饰int类型，那么反序列后结果就是0。</li>
 <li>static变量因为不属于任何对象(Object)，所以无论有没有transient关键字修饰，均不会被序列化。</li>
 </ul>
-<h3 id="常见序列化协议"><a href="#常见序列化协议" class="headerlink" title="常见序列化协议"></a>常见序列化协议</h3><p>JDK自带的序列化方式一般不会用，因为序列化效率低并且存在安全问题。比较常用的序列化协议有Hessian、Kryo、Protobuf、ProtoStuff，这些都是基于二进制的序列化协议。像JSON和XML这种属于文本类序列化方式。虽然可读性比较好，但是性能较差，一般不会选择。</p>
-<h4 id="JDK自带的序列化方式"><a href="#JDK自带的序列化方式" class="headerlink" title="JDK自带的序列化方式"></a>JDK自带的序列化方式</h4><p>JDK自带的序列化，只需实现java.io.Serializable接口即可。</p>
+<h2 id="常见序列化协议"><a href="#常见序列化协议" class="headerlink" title="常见序列化协议"></a>常见序列化协议</h2><p>JDK自带的序列化方式一般不会用，因为序列化效率低并且存在安全问题。比较常用的序列化协议有Hessian、Kryo、Protobuf、ProtoStuff，这些都是基于二进制的序列化协议。像JSON和XML这种属于文本类序列化方式。虽然可读性比较好，但是性能较差，一般不会选择。</p>
+<h3 id="JDK自带的序列化方式"><a href="#JDK自带的序列化方式" class="headerlink" title="JDK自带的序列化方式"></a>JDK自带的序列化方式</h3><p>JDK自带的序列化，只需实现java.io.Serializable接口即可。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@AllArgsConstructor</span>
 <span class="token annotation punctuation">@NoArgsConstructor</span>
 <span class="token annotation punctuation">@Getter</span>
@@ -607,7 +607,7 @@
 </blockquote>
 </li>
 </ul>
-<h4 id="Kryo"><a href="#Kryo" class="headerlink" title="Kryo"></a>Kryo</h4><p>Kryo是一个高性能的序列化&#x2F;反序列化工具，由于其变长存储特性并使用了字节码生成机制，拥有较高的运行速度和较小的字节码体积。另外，Kryo已经是一种非常成熟的序列化实现了，已经在Twitter、Groupon、Yahoo以及多个著名开源项目（如Hive、Storm）中广泛的使用。<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>就是使用的kryo进行序列化，序列化和反序列化相关的代码如下：</p>
+<h3 id="Kryo"><a href="#Kryo" class="headerlink" title="Kryo"></a>Kryo</h3><p>Kryo是一个高性能的序列化&#x2F;反序列化工具，由于其变长存储特性并使用了字节码生成机制，拥有较高的运行速度和较小的字节码体积。另外，Kryo已经是一种非常成熟的序列化实现了，已经在Twitter、Groupon、Yahoo以及多个著名开源项目（如Hive、Storm）中广泛的使用。<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>就是使用的kryo进行序列化，序列化和反序列化相关的代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Kryo serialization class, Kryo serialization efficiency is very high, but only compatible with Java language
  *
@@ -660,7 +660,7 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/EsotericSoftware/kryo">Github地址</a>。</p>
 </blockquote>
-<h4 id="Protobuf"><a href="#Protobuf" class="headerlink" title="Protobuf"></a>Protobuf</h4><p>Protobuf出自于Google，性能还比较优秀，也支持多种语言，同时还是跨平台的。就是在使用中过于繁琐，因为你需要自己定义IDL文件和生成对应的序列化代码。这样虽然不灵活，但是，另一方面导致protobuf没有序列化漏洞的风险。</p>
+<h3 id="Protobuf"><a href="#Protobuf" class="headerlink" title="Protobuf"></a>Protobuf</h3><p>Protobuf出自于Google，性能还比较优秀，也支持多种语言，同时还是跨平台的。就是在使用中过于繁琐，因为你需要自己定义IDL文件和生成对应的序列化代码。这样虽然不灵活，但是，另一方面导致protobuf没有序列化漏洞的风险。</p>
 <blockquote>
 <p>Protobuf包含序列化格式的定义、各种语言的库以及一个IDL编译器。正常情况下你需要定义proto文件，然后使用IDL编译器编译成你需要的语言</p>
 </blockquote>
@@ -678,14 +678,107 @@
 <blockquote>
 <p> <a target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf">Github地址</a></p>
 </blockquote>
-<h4 id="ProtoStuff"><a href="#ProtoStuff" class="headerlink" title="ProtoStuff"></a>ProtoStuff</h4><p>由于Protobuf的易用性，它的哥哥Protostuff诞生了。protostuff基于Google protobuf，但是提供了更多的功能和更简易的用法。虽然更加易用，但是不代表ProtoStuff性能更差。</p>
+<h3 id="ProtoStuff"><a href="#ProtoStuff" class="headerlink" title="ProtoStuff"></a>ProtoStuff</h3><p>由于Protobuf的易用性，它的哥哥Protostuff诞生了。protostuff基于Google protobuf，但是提供了更多的功能和更简易的用法。虽然更加易用，但是不代表ProtoStuff性能更差。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/protostuff/protostuff">Github地址</a>。</p>
 </blockquote>
-<h4 id="Hessian"><a href="#Hessian" class="headerlink" title="Hessian"></a>Hessian</h4><p>Hessian是一个轻量级的，自定义描述的二进制RPC协议。Hessian是一个比较老的序列化实现了，并且同样也是跨语言的。</p>
+<h3 id="Hessian"><a href="#Hessian" class="headerlink" title="Hessian"></a>Hessian</h3><p>Hessian是一个轻量级的，自定义描述的二进制RPC协议。Hessian是一个比较老的序列化实现了，并且同样也是跨语言的。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/8613ec4c-bde5-47bf-897e-99e0f90b9fa3.png" alt="img"></p>
 <p>Dubbo2.x默认启用的序列化方式是Hessian2,但是，Dubbo对Hessian2进行了修改，不过大体结构还是差不多。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Kryo是专门针对Java语言序列化方式并且性能非常好，如果你的应用是专门针对Java语言的话可以考虑使用，并且Dubbo官网的<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/">一篇文章</a>中提到说推荐使用Kryo作为生产环境的序列化方式。</p>
+<h3 id="Fury"><a href="#Fury" class="headerlink" title="Fury"></a>Fury</h3><p>Fury是一个基于JIT动态编译和零拷贝的多语言序列化框架，支持Java&#x2F;Python&#x2F;Golang&#x2F;JavaScript&#x2F;C++等语言，提供全自动的对象多语言&#x2F;跨语言序列化能力，和相比 JDK最高170倍的性能。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/alipay/fury">GitHub地址</a><br><a target="_blank" rel="noopener" href="https://furyio.org/">官方网站</a></p>
+</blockquote>
+<p>测试用例:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">io<span class="token punctuation">.</span>fury<span class="token punctuation">.</span></span><span class="token class-name">Fury</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">io<span class="token punctuation">.</span>fury<span class="token punctuation">.</span></span><span class="token class-name">Language</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">io<span class="token punctuation">.</span>fury<span class="token punctuation">.</span></span><span class="token class-name">ThreadSafeFury</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentDTO</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+    <span class="token comment">// ... 省略 getter setter</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">StudentDTO</span> studentDTO <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StudentDTO</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        studentDTO<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        studentDTO<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"Java极客技术"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        studentDTO<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">Fury</span> fury <span class="token operator">=</span> <span class="token class-name">Fury</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withLanguage</span><span class="token punctuation">(</span><span class="token class-name">Language</span><span class="token punctuation">.</span><span class="token constant">JAVA</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fury<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token class-name">StudentDTO</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> fury<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>studentDTO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>fury<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token class-name">ThreadSafeFury</span> fury2 <span class="token operator">=</span> <span class="token class-name">Fury</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withLanguage</span><span class="token punctuation">(</span><span class="token class-name">Language</span><span class="token punctuation">.</span><span class="token constant">JAVA</span><span class="token punctuation">)</span>
+                <span class="token comment">// Allow to deserialize objects unknown types,</span>
+                <span class="token comment">// more flexible but less secure.</span>
+<span class="token comment">//                 .withSecureMode(false)</span>
+                <span class="token punctuation">.</span><span class="token function">buildThreadSafeFury</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fury2<span class="token punctuation">.</span><span class="token function">getCurrentFury</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token class-name">StudentDTO</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes2 <span class="token operator">=</span> fury2<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>studentDTO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>fury2<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bytes2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>构造Fury的时候我们可以构造单线程Fury或者线程安全的Fuyr:</p>
+<p>创建单线程Fury</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Fury</span> fury <span class="token operator">=</span> <span class="token class-name">Fury</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">withLanguage</span><span class="token punctuation">(</span><span class="token class-name">Language</span><span class="token punctuation">.</span><span class="token constant">JAVA</span><span class="token punctuation">)</span>
+  <span class="token comment">// 是否开启循环引用，如果并不需要的话可以关闭，提升性能</span>
+  <span class="token punctuation">.</span><span class="token function">withRefTracking</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token comment">// 是否压缩 Integer 或者 Long 类型的数字</span>
+  <span class="token comment">// .withNumberCompressed(true)</span>
+  <span class="token comment">// 类型前后一致性兼容</span>
+  <span class="token punctuation">.</span><span class="token function">withCompatibleMode</span><span class="token punctuation">(</span><span class="token class-name">CompatibleMode</span><span class="token punctuation">.</span><span class="token constant">SCHEMA_CONSISTENT</span><span class="token punctuation">)</span>
+  <span class="token comment">// .withCompatibleMode(CompatibleMode.COMPATIBLE)</span>
+  <span class="token comment">// 是否开启多线程编译</span>
+  <span class="token punctuation">.</span><span class="token function">withAsyncCompilationEnabled</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> fury<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>fury<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>创建线程安全的Fury</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ThreadSafeFury</span> fury <span class="token operator">=</span> <span class="token class-name">Fury</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">withLanguage</span><span class="token punctuation">(</span><span class="token class-name">Language</span><span class="token punctuation">.</span><span class="token constant">JAVA</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">withRefTracking</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">withCompatibleMode</span><span class="token punctuation">(</span><span class="token class-name">CompatibleMode</span><span class="token punctuation">.</span><span class="token constant">SCHEMA_CONSISTENT</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">withAsyncCompilationEnabled</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">buildThreadSafeFury</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> fury<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>fury<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>零拷贝用例</p>
+<blockquote>
+<p>零拷贝（Zero Copy）是一种优化技术，旨在减少数据在内存中的复制操作，提高数据传输和处理的效率。<br>在传统的拷贝操作中，当数据从一个位置（例如磁盘、网络等）传输到另一个位置（例如应用程序的内存），通常需要将数据从源位置复制到中间缓冲区，然后再从中间缓冲区复制到目标位置。这种复制操作会占用时间、CPU和内存资源。而零拷贝技术通过避免这些不必要的数据复制，从而提高数据传输和处理的效率。具体而言，它允许数据在不进行额外复制的情况下直接从源位置传输到目标位置。<br>在实现零拷贝时，通常会使用一些特定的技术和API，如操作系统提供的零拷贝接口、内核缓冲区、DMA（直接内存访问）等。这些技术可以减少或消除不必要的数据复制，从而提高系统的性能和吞吐量。<br>零拷贝技术在处理大量数据的场景中特别有用，例如高性能网络传输、文件 I&#x2F;O、数据库操作等。它可以减少不必要的CPU负担和内存消耗，并提高数据的传输速度和处理效率。</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentDTO</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 在main方法中创建一个Fury实例，该实例用于进行序列化和反序列化操作</span>
+        <span class="token class-name">Fury</span> fury <span class="token operator">=</span> <span class="token class-name">Fury</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">withLanguage</span><span class="token punctuation">(</span><span class="token class-name">Language</span><span class="token punctuation">.</span><span class="token constant">JAVA</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 创建一个包含不同类型对象的列表list</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">></span></span> list <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"str"</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token number">1000</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token keyword">double</span><span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 创建一个存储BufferObject的集合bufferObjects，用于在序列化过程中收集需要单独处理的对象（即非基本类型对象）</span>
+        <span class="token class-name">Collection</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">BufferObject</span><span class="token punctuation">></span></span> bufferObjects <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 使用Fury的serialize方法对列表进行序列化，并传入一个lambda表达式来判断对象是否需要单独处理（即加入bufferObjects集合）</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> fury<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>list<span class="token punctuation">,</span> e <span class="token operator">-></span> <span class="token operator">!</span>bufferObjects<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 使用Java8的流操作将bufferObjects集合转换为MemoryBuffer类型集合buffers</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MemoryBuffer</span><span class="token punctuation">></span></span> buffers <span class="token operator">=</span> bufferObjects<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">BufferObject</span><span class="token operator">::</span><span class="token function">toBuffer</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 使用Fury的deserialize方法对序列化的字节数组bytes进行反序列化，并传入buffers集合用于零拷贝操作</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>fury<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bytes<span class="token punctuation">,</span> buffers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这段代码的主要目的是将一个包含不同类型对象的列表进行序列化和反序列化操作，其中序列化操作通过Fury库实现零拷贝。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Kryo是专门针对Java语言序列化方式并且性能非常好，如果你的应用是专门针对Java语言的话可以考虑使用，并且Dubbo官网的<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/v2.7/user/references/protocol/rest/">一篇文章</a>中提到说推荐使用Kryo作为生产环境的序列化方式。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/569e541a-22b2-4846-aa07-0ad479f07440.png" alt="img"></p>
 <p>像Protobuf、ProtoStuff、hessian这类都是跨语言的序列化方式，如果有跨语言需求的话可以考虑使用。除了我上面介绍到的序列化方式的话，还有像Thrift，Avro这些。</p>
 <blockquote>
@@ -1050,18 +1143,18 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/posts/5970fdb6f161/">
+                <a href="/blog/posts/5c9c6aec0510/">
                     <div class="card-image">
                         
-                        <img src="https://pica.zhimg.com/v2-710586d41488c451dd9dd70bc33eb121_1440w.jpg" class="responsive-img" alt="Java反射">
+                        <img src="https://picx.zhimg.com/v2-cbe2b915fe3b3f67b76224043807f576_1440w.jpg" class="responsive-img" alt="代理">
                         
-                        <span class="card-title">Java反射</span>
+                        <span class="card-title">代理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            何为反射如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些
+                            代理模式代理模式是一种比较好理解的设计模式。简单来说就是我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能。代理模式的主要作用是扩展目标对象的功能，
                         
 
                     </div>

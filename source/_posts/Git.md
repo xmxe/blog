@@ -126,19 +126,18 @@ git branch -d <name>
 # 设置分支上游
 git branch --set-upstream-to origin/master
 
-# 远程分支重命名
-# 方案1
-# 远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
+# 远程分支重命名,远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
+# 方案1:先重命名本地分支，然后推送到远程分支
 # 1.先重命名本地分支
 git branch -m 旧分支名称 新分支名称
-# 2.删除远程分支
+# 2.删除远程分支(如果删除的是默认分支的话会失败，需要先更改默认分支)
 git push --delete origin 旧分支名称
 # 3.上传新修改名称的本地分支
 git push origin 新分支名称
 # 4.修改后的本地分支关联远程分支
 git branch --set-upstream-to origin/新分支名称
 
-# 方案2:远程仓库修改分支后与本地仓库同步
+# 方案2(未测试):先修改远程仓库分支，然后与本地仓库同步
 git branch -m master 2021.x
 # 获取源分支
 git fetch origin
@@ -146,10 +145,16 @@ git fetch origin
 git branch -u origin/2021.x 2021.x
 # 设置远程分支
 git remote set-head origin -a
+# 方案2另一种实现(未测试):先修改远程仓库分支，然后与本地仓库同步
+# 首先，在本地仓库中切换到需要同步的分支上：这里<branch-name>是需要同步的分支名称
+git checkout <branch-name>
+# 接下来，从远程仓库中获取最新的分支列表和分支状态信息：这会更新本地仓库中的远程分支信息。
+git fetch
+# 然后，使用以下命令来重置本地分支到远程分支的最新状态：这将强制将本地分支指向远程分支的最新状态。
+git reset --hard origin/<branch-name>
 
 # 下载所有分支
-# git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用git checkout 分支名来下载其他分支
-# 如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。
+# git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用'git checkout 分支名'来下载其他分支。如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。
 git clone --bare https://github.com/xx/project.git .git
 # 或者git config --unset core.bare
 git config --bool core.bare false
@@ -217,6 +222,7 @@ git merge和git merge --no-ff的区别
 自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge --no-ff命令,如果不加--no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。
 
 > [合并代码还在用git merge？我们都用git rebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
+> [新来个技术总监，禁止我们用Git的rebase](https://mp.weixin.qq.com/s/CBz0ea6m623GtuTX5UkeQQ)
 
 #### git tag
 
@@ -237,6 +243,8 @@ git tag -d <tagName>
 git push origin <tagname>
 # 一次性推送全部尚未推送到远程的本地标签
 git push origin --tags
+# 这会将空引用推送到远程仓库，从而删除名为<tag-name>的远程标签。
+git push origin :refs/tags/<tag-name>
 
 ```
 #### git stash
@@ -330,9 +338,10 @@ git push origin dev:master
 #### git restore
 
 ```shell
-# 恢复第一次add的文件，同git rm --cached
+# git restore命令在工作区是不会起作用的
+# 此命令将暂存区中的文件恢复到最后一次提交的状态，并将其从暂存区中移除，但保留工作目录中的修改。这意味着该文件的修改将不会包含在下一次的提交
 git restore --staged file
-# 移除staging区的文件，同git checkout
+# 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。
 git restore file
 ```
 #### git删除github文件夹但不删除本地的 以.idea为例

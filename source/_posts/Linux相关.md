@@ -30,6 +30,8 @@ nohup java -jar abc.jar >/dev/null 2>&1 &
 
 # command >/dev/null 2>&1 & == command 1>/dev/null 2>&1 &
 # 1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。2>&1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.所以可以看出">/dev/null 2>&1 &"常用来避免shell命令或者程序等运行中有内容输出
+# 将错误日志输出到文件
+nohup command 2>error.log &
 ```
 
 ### 安装ifconfig
@@ -677,3 +679,5 @@ reboot
 - [在Linux上保护SSH服务器连接的8种方法](https://mp.weixin.qq.com/s/kxvc95RJoSKqcXwwmyrPKg)
 - [发现谁用kill -9关闭程序就开除！](https://mp.weixin.qq.com/s/zmfCC083VBrA8P6uWHL2DQ)
 - [万字详解Linux常用指令](https://mp.weixin.qq.com/s/hXDAZD0LUJ9g85t6fkBR-Q)
+- [最强Linux命令总结（特别推荐版）](https://mp.weixin.qq.com/s/KN9OPZMhmuA6rhx5YTjwDA)
+- [Linux命令大全搜索工具，内容包含Linux命令手册、详解、学习、搜集](https://github.com/jaywcjlove/linux-command)

@@ -6,7 +6,7 @@ img: https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg
 
 ---
 
-> [ThreadLocalTest.java](https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/study_demo/thread/ThreadLocalTest.java)
+> [ThreadLocalTest.java](https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/jdkfeature/thread/ThreadLocalTest.java)
 
 ### ThreadLocal有什么用？
 

@@ -6,7 +6,7 @@ img: https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg
 
 ---
 
-> [VolatileTest.java](https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/study_demo/thread/VolatileTest.java)
+> [VolatileTest.java](https://github.com/xmxe/demo/blob/master/study-demo/src/main/java/com/xmxe/jdkfeature/thread/VolatileTest.java)
 
 ### 如何保证变量的可见性？
 

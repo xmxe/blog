@@ -620,19 +620,18 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 设置分支上游</span>
 <span class="token function">git</span> branch --set-upstream-to origin/master
 
-<span class="token comment"># 远程分支重命名</span>
-<span class="token comment"># 方案1</span>
-<span class="token comment"># 远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</span>
+<span class="token comment"># 远程分支重命名,远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</span>
+<span class="token comment"># 方案1:先重命名本地分支，然后推送到远程分支</span>
 <span class="token comment"># 1.先重命名本地分支</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-m</span> 旧分支名称 新分支名称
-<span class="token comment"># 2.删除远程分支</span>
+<span class="token comment"># 2.删除远程分支(如果删除的是默认分支的话会失败，需要先更改默认分支)</span>
 <span class="token function">git</span> push <span class="token parameter variable">--delete</span> origin 旧分支名称
 <span class="token comment"># 3.上传新修改名称的本地分支</span>
 <span class="token function">git</span> push origin 新分支名称
 <span class="token comment"># 4.修改后的本地分支关联远程分支</span>
 <span class="token function">git</span> branch --set-upstream-to origin/新分支名称
 
-<span class="token comment"># 方案2:远程仓库修改分支后与本地仓库同步</span>
+<span class="token comment"># 方案2(未测试):先修改远程仓库分支，然后与本地仓库同步</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-m</span> master <span class="token number">2021</span>.x
 <span class="token comment"># 获取源分支</span>
 <span class="token function">git</span> fetch origin
@@ -640,15 +639,21 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> branch <span class="token parameter variable">-u</span> origin/2021.x <span class="token number">2021</span>.x
 <span class="token comment"># 设置远程分支</span>
 <span class="token function">git</span> remote set-head origin <span class="token parameter variable">-a</span>
+<span class="token comment"># 方案2另一种实现(未测试):先修改远程仓库分支，然后与本地仓库同步</span>
+<span class="token comment"># 首先，在本地仓库中切换到需要同步的分支上：这里&lt;branch-name>是需要同步的分支名称</span>
+<span class="token function">git</span> checkout <span class="token operator">&lt;</span>branch-name<span class="token operator">></span>
+<span class="token comment"># 接下来，从远程仓库中获取最新的分支列表和分支状态信息：这会更新本地仓库中的远程分支信息。</span>
+<span class="token function">git</span> fetch
+<span class="token comment"># 然后，使用以下命令来重置本地分支到远程分支的最新状态：这将强制将本地分支指向远程分支的最新状态。</span>
+<span class="token function">git</span> reset <span class="token parameter variable">--hard</span> origin/<span class="token operator">&lt;</span>branch-name<span class="token operator">></span>
 
 <span class="token comment"># 下载所有分支</span>
-<span class="token comment"># git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用git checkout 分支名来下载其他分支</span>
-<span class="token comment"># 如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。</span>
+<span class="token comment"># git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用'git checkout 分支名'来下载其他分支。如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。</span>
 <span class="token function">git</span> clone <span class="token parameter variable">--bare</span> https://github.com/xx/project.git .git
 <span class="token comment"># 或者git config --unset core.bare</span>
 <span class="token function">git</span> config <span class="token parameter variable">--bool</span> core.bare <span class="token boolean">false</span>
 <span class="token comment"># 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了</span>
-<span class="token function">git</span> reset <span class="token parameter variable">--hard</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> reset <span class="token parameter variable">--hard</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a>git checkout</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 切换分支</span>
 <span class="token function">git</span> checkout <span class="token operator">&lt;</span>name<span class="token operator">></span>
@@ -695,7 +700,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <p>git pull和git pull –rebase区别：git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。</p>
 <p>git merge和git merge –no-ff的区别<br>自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge –no-ff命令,如果不加–no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ">合并代码还在用git merge？我们都用git rebase！</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ">合并代码还在用git merge？我们都用git rebase！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CBz0ea6m623GtuTX5UkeQQ">新来个技术总监，禁止我们用Git的rebase</a></p>
 </blockquote>
 <h4 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看所有标签，可以知道历史版本的tag</span>
 <span class="token function">git</span> tag
@@ -713,7 +718,9 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> push origin <span class="token operator">&lt;</span>tagname<span class="token operator">></span>
 <span class="token comment"># 一次性推送全部尚未推送到远程的本地标签</span>
 <span class="token function">git</span> push origin <span class="token parameter variable">--tags</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># 这会将空引用推送到远程仓库，从而删除名为&lt;tag-name>的远程标签。</span>
+<span class="token function">git</span> push origin :refs/tags/<span class="token operator">&lt;</span>tag-name<span class="token operator">></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h4><blockquote>
 <p>应用场景：某一天你正在feature分支开发新需求，突然产品经理跑过来说线上有bug，必须马上修复。而此时你的功能开发到一半，于是你急忙想切到master分支，然后你就会看到以下报错：Your local changes to the following…因为当前有文件更改了，需要提交commit保持工作区干净才能切分支。由于情况紧急，你只有急忙commit上去，commit信息也随便写了个“暂存代码”，于是该分支提交记录就留了一条黑历史，如果你学会stash，就不用那么狼狈了。你只需要：git stash就这么简单，代码就被存起来了。当你修复完线上问题，切回feature分支，想恢复代码也只需要：git stash apply,但是恢复后，stash内容并不删除，需要用git stash drop来删除</p>
 </blockquote>
@@ -789,10 +796,11 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 将本地dev分支push到远程master分支</span>
 <span class="token function">git</span> push origin dev:master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-restore"><a href="#git-restore" class="headerlink" title="git restore"></a>git restore</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 恢复第一次add的文件，同git rm --cached</span>
+<h4 id="git-restore"><a href="#git-restore" class="headerlink" title="git restore"></a>git restore</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># git restore命令在工作区是不会起作用的</span>
+<span class="token comment"># 此命令将暂存区中的文件恢复到最后一次提交的状态，并将其从暂存区中移除，但保留工作目录中的修改。这意味着该文件的修改将不会包含在下一次的提交</span>
 <span class="token function">git</span> restore <span class="token parameter variable">--staged</span> <span class="token function">file</span>
-<span class="token comment"># 移除staging区的文件，同git checkout</span>
-<span class="token function">git</span> restore <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。</span>
+<span class="token function">git</span> restore <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="git删除github文件夹但不删除本地的-以-idea为例"><a href="#git删除github文件夹但不删除本地的-以-idea为例" class="headerlink" title="git删除github文件夹但不删除本地的 以.idea为例"></a>git删除github文件夹但不删除本地的 以.idea为例</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> <span class="token function">rm</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">--cached</span> .idea <span class="token comment"># --cached不会把本地的.idea删除</span>
 <span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">'delete .idea dir'</span>
 <span class="token function">git</span> push <span class="token parameter variable">-u</span> origin master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>

@@ -424,6 +424,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; #
 FLUSH PRIVILEGES; #刷新权限
 # 然后use mysql;
 update user set host = '%' where user = 'root';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '新密码'
 FLUSH PRIVILEGES;
 ```
 

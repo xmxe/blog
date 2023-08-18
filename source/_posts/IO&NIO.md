@@ -915,6 +915,7 @@ AIO也就是NIO2。Java7中引入了NIO的改进版NIO2,它是异步IO模型。
 ## NIO
 
 > [NIO demo](https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/jdkfeature/nio)
+> [浅析Java NIO](https://mp.weixin.qq.com/s/XEOYvRhtcOK2J7kdRIZcXQ)
 
 NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区),Selector(选择区)。
 IO是面向流的，NIO是面向缓冲区的。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。

@@ -206,7 +206,7 @@ public void setAbc(@Named("beanName") Abc abc){
 }
 ```
 
-**[@Autowired,@Resource,@Inject三个注解的区别](https://mp.weixin.qq.com/s/YLIsRBSiIjz3dCtSA9onDQ)**
+> [@Autowired,@Resource,@Inject三个注解的区别](https://mp.weixin.qq.com/s/YLIsRBSiIjz3dCtSA9onDQ)
 
 1. @Autowired是Spring自带的，@Inject和@Resource都是JDK提供的，其中@Inject是JSR330规范实现的，@Resource是JSR250规范实现的，而Spring通过BeanPostProcessor来提供对JDK规范的支持。
 2. @Autowired、@Inject用法基本一样，不同之处为@Autowired有一个required属性，表示该注入是否是必须的，即如果为必须的，则如果找不到对应的bean，就无法注入，无法创建当前bean。

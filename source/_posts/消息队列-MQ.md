@@ -424,8 +424,7 @@ ZooKeeper主要为Kafka提供元数据的管理的功能。
 ```java
 SendResult<String, Object> sendResult = kafkaTemplate.send(topic, o).get();
 if (sendResult.getRecordMetadata() != null) {
-  logger.info("生产者成功发送消息到" + sendResult.getProducerRecord().topic() + "-> " + sendRe
-              sult.getProducerRecord().value().toString());
+  logger.info("生产者成功发送消息到" + sendResult.getProducerRecord().topic() + "-> " + sendResult.getProducerRecord().value().toString());
 }
 ```
 
@@ -433,8 +432,8 @@ if (sendResult.getRecordMetadata() != null) {
 
 
 ```java
-        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, o);
-        future.addCallback(result -> logger.info("生产者成功发送消息到topic:{} partition:{}的消息", result.getRecordMetadata().topic(), result.getRecordMetadata().partition()),
+ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, o);
+future.addCallback(result -> logger.info("生产者成功发送消息到topic:{} partition:{}的消息", result.getRecordMetadata().topic(), result.getRecordMetadata().partition()),
                 ex -> logger.error("生产者发送消失败，原因：{}", ex.getMessage()));
 ```
 
@@ -476,6 +475,8 @@ if (sendResult.getRecordMetadata() != null) {
 
 我们最开始也说了我们发送的消息会被发送到leader副本，然后follower副本才能从leader副本中拉取消息进行同步。多个follower副本之间的消息同步情况不一样，当我们配置了**unclean.leader.election.enable=false**的话，当leader副本发生故障时就不会从follower副本中和leader同步程度达不到要求的副本中选择出leader，这样降低了消息丢失的可能性。
 
+> [Kafka是如何保证消息不丢失的](https://mp.weixin.qq.com/s/q-MrJgr8WrB_HGOFRUUWKQ)
+
 #### Kafka如何保证消息不重复消费
 
 **kafka出现消息重复消费的原因：**
@@ -512,6 +513,7 @@ if (sendResult.getRecordMetadata() != null) {
 - [图解kafka架构与工作原理](https://mp.weixin.qq.com/s/V3BlPGOuGPnmT36a500o7g)
 - [面试官：聊一聊kafka线上会遇到哪些问题？](https://mp.weixin.qq.com/s/cmDqGpTiHKRqcSaQVesJVA)
 - [《面试八股文》之Kafka21卷](https://mp.weixin.qq.com/s/l75MIcG4cf8C59z1JcfygA)
+- [20,000+字，彻底搞懂Kafka](https://mp.weixin.qq.com/s/nKjKtJ5lOmYLjUrgS5qwsQ)
 
 ### RocketMQ
 

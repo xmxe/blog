@@ -644,6 +644,7 @@
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw">Spring面试题之循环依赖的理解</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA">Spring的循环依赖，到底是什么样的</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw">面试官:SpringBoot循环依赖，如何解决？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YIokfCvLKLhcsEpO734Qtg">透过源码，捋清楚循环依赖到底是如何解决的！</a></li>
 </ul>
 <h2 id="Spring相关注解"><a href="#Spring相关注解" class="headerlink" title="Spring相关注解"></a>Spring相关注解</h2><h3 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h3><p>主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的),GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交,在方法里面标记，可以作为一个对象接收,也可以作为字符串接收，关键在于Spring中对json的解析配置.</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// jquery使用下面的请求时可以使用@RequestBody注解接收参数</span>

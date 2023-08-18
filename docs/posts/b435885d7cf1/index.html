@@ -695,7 +695,9 @@
 	<span class="token keyword">this</span><span class="token punctuation">.</span>abc <span class="token operator">=</span> abc<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YLIsRBSiIjz3dCtSA9onDQ">@Autowired,@Resource,@Inject三个注解的区别</a></strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YLIsRBSiIjz3dCtSA9onDQ">@Autowired,@Resource,@Inject三个注解的区别</a></p>
+</blockquote>
 <ol>
 <li>@Autowired是Spring自带的，@Inject和@Resource都是JDK提供的，其中@Inject是JSR330规范实现的，@Resource是JSR250规范实现的，而Spring通过BeanPostProcessor来提供对JDK规范的支持。</li>
 <li>@Autowired、@Inject用法基本一样，不同之处为@Autowired有一个required属性，表示该注入是否是必须的，即如果为必须的，则如果找不到对应的bean，就无法注入，无法创建当前bean。</li>

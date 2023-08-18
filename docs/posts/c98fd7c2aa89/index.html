@@ -1170,7 +1170,7 @@ watchService<span class="token punctuation">,</span> <span class="token class-na
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GAQxxEmYbE8Sy3oS9ePvhA">面试官：BIO、NIO、AIO之间有什么区别？</a></li>
 </ul>
 <h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/jdkfeature/nio">NIO demo</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/jdkfeature/nio">NIO demo</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XEOYvRhtcOK2J7kdRIZcXQ">浅析Java NIO</a></p>
 </blockquote>
 <p>NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区),Selector(选择区)。<br>IO是面向流的，NIO是面向缓冲区的。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p>
 <h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><p>NIO中的关键Buffer实现有：ByteBuffer,CharBuffer,DoubleBuffer,FloatBuffer,IntBuffer,LongBuffer,ShortBuffer。分别对应基本数据类型:byte,char,double,float,int,long,short。NIO中还有MappedByteBuffer,HeapByteBuffer,DirectByteBuffer等缓冲区,本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装成NIO Buffer对象，并提供了一组方法，用来方便的访问该块内存。这块内存被包装成NIO。</p>

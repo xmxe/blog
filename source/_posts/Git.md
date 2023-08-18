@@ -160,6 +160,10 @@ git clone --bare https://github.com/xx/project.git .git
 git config --bool core.bare false
 # 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了
 git reset --hard
+# 下载指定分支
+git clone -b 分支名称 git地址
+# 为了节省磁盘空间，您可以使用以下命令克隆仅导致单个分支的历史记录,如果--single-branch未添加到命令中，则所有分支的历史记录将被克隆。大型存储库可能会出现此问题。
+git clone -b <branch_name> --single-branch <url>
 ```
 
 #### git checkout

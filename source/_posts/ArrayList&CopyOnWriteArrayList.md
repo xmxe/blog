@@ -15,8 +15,7 @@ ArrayList的底层是数组队列，相当于动态数组。与Java中的数组�
 ArrayList继承于AbstractList,实现了**List**,**RandomAccess**,**Cloneable**,**java.io.Serializable**这些接口。
 
 ```java
-public class ArrayList<E> extends AbstractList<E>
-        implements List<E>, RandomAccess, Cloneable, java.io.Serializable{
+public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable{
 }
 ```
 

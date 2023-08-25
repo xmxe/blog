@@ -534,7 +534,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>我写的关于Spring扩展插件的一个<a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot/tree/3.0.x/springboot-lifecycle">示例</a>，里面有很多Spring扩展的测试。<br>其他相关文章:<a href="https://xmxe.gitee.io/blog/posts/b435885d7cf1/">Spring中的Bean对象</a></p>
+<p>我写的关于Spring扩展插件的一个<a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot/tree/3.x/springboot-lifecycle">示例</a>，里面有很多Spring扩展的测试。<br>其他相关文章:<a href="https://xmxe.gitee.io/blog/posts/b435885d7cf1/">Spring中的Bean对象</a></p>
 </blockquote>
 <h2 id="Spring循环依赖"><a href="#Spring循环依赖" class="headerlink" title="Spring循环依赖"></a>Spring循环依赖</h2><ol>
 <li>如果是原型bean的循环依赖，Spring无法解决</li>
@@ -670,14 +670,7 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <h3 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ">Spring Boot中条件注解底层如何实现的？</a></p>
 </blockquote>
-<h2 id="Spring设计模式"><a href="#Spring设计模式" class="headerlink" title="Spring设计模式"></a>Spring设计模式</h2><h3 id="控制反转-IoC-和依赖注入-DI"><a href="#控制反转-IoC-和依赖注入-DI" class="headerlink" title="控制反转(IoC)和依赖注入(DI)"></a>控制反转(IoC)和依赖注入(DI)</h3><p><strong>IoC(Inversion of Control,控制反转)</strong> 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。<strong>IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则</strong>。</p>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ioc-patterns.png" alt="ioc-patterns"></p>
-<p><strong>Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件&#x2F;注解即可，完全不用考虑对象是如何被创建出来的</strong>。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
-<blockquote>
-<p>关于Spring IOC的理解，推荐看一下这个<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23277575/answer/169698662">知乎回答</a>，非常不错。</p>
-</blockquote>
-<p><strong>控制反转怎么理解呢</strong>？举个例子：”对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中”。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。<strong>DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去</strong>。</p>
-<h3 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h3><p>Spring使用工厂模式可以通过BeanFactory或ApplicationContext创建bean对象。</p>
+<h2 id="Spring设计模式"><a href="#Spring设计模式" class="headerlink" title="Spring设计模式"></a>Spring设计模式</h2><h3 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h3><p>Spring使用工厂模式可以通过BeanFactory或ApplicationContext创建bean对象。</p>
 <p><strong>两者对比</strong>：</p>
 <ul>
 <li>BeanFactory：延迟注入(使用到某个bean的时候才会注入),相比于ApplicationContext来说会占用更少的内存，程序启动速度更快。</li>
@@ -761,8 +754,8 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <p><strong>AOP(Aspect-Oriented Programming，面向切面编程)</strong>,能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。<strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDKProxy</strong>去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong>生成一个被代理对象的子类来作为代理，如下图所示：</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg" alt="SpringAOPProcess"></p>
 <p>当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。</p>
-<h3 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别?"></a>Spring AOP和AspectJ AOP有什么区别?</h3><p><strong>Spring AOP属于运行时增强，而AspectJ是编译时增强</strong>。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。</p>
-<h3 id="模板方法"><a href="#模板方法" class="headerlink" title="模板方法"></a>模板方法</h3><p>模板方法模式是一种行为设计模式，它定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤的实现方式。</p>
+<h4 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别?"></a>Spring AOP和AspectJ AOP有什么区别?</h4><p><strong>Spring AOP属于运行时增强，而AspectJ是编译时增强</strong>。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。</p>
+<h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><p>模板方法模式是一种行为设计模式，它定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤的实现方式。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Template</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">//这是我们的模板方法</span>
     <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token class-name">TemplateMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -902,20 +895,6 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/system-design/framework/spring/spring-design-patterns-summary.html">原文链接</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O-gUDExJc5AKwb-t4ZDkNA">Spring用到了哪些设计模式</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gz2-izPrgW1AGbqqovT0cA">Spring中经典的9种设计模式</a></p>
 </blockquote>
-<h2 id="Spring相关文章"><a href="#Spring相关文章" class="headerlink" title="Spring相关文章"></a>Spring相关文章</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42092555">Java面试中常问的Spring问题，你都会吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ">如果我是面试官，我会问你Spring这些问题</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ">推荐收藏：Spring面试63问！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng">spring中那些让你爱不释手的代码技巧</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw">《轻松读懂spring》之IOC的主干流程（上）</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q">我们到底为什么要用IoC和AOP</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA">@Conditional的强大之处</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA">SpringBatch批处理框架，真心强啊！！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA">手写Spring框架</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw">Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ">聊聊Spring核心</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw">揭秘Spring依赖注入和SpEL表达式</a></li>
-</ul>
 <h2 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h2><h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p><strong>Handle</strong>:Handler是一个Controller的对象和请求方式的组合的一个Object对象<br><strong>HandleExcutionChains</strong>：是HandleMapping返回的一个处理执行链，它是对Handle的二次封装，将拦截器关联到一起。然后，在DispatcherServlert中完成了拦截器链对handler的过滤。<strong>DispatcherServlet</strong>要将一个请求交给哪个特定的Controller，它需要咨询一个Bean——这个Bean为“HandlerMapping”。HandlerMapping是把一个URL指定到一个Controller上，（就像应用系统的web.xml文件使用&lt;servlet-mapping&gt;将URL映射到servlet）。<br><strong>DispatcherServlet</strong>：作为前端控制器，整个流程控制的中心，控制其它组件执行，统一调度，降低组件之间的耦合性，提高每个组件的扩展性。<br>作用：接收请求，响应结果，相当于转发器，中央处理器。有了dispatcherServlet减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请,dispatcherServlet的存在降低了组件之间的耦合性<br><strong>HandlerMapping</strong>：通过扩展处理器映射器实现不同的映射方式，作用:根据请求的url查找Handler,HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等<br><strong>HandlAdapter</strong>：通过扩展处理器适配器，支持更多类型的处理器。<br>作用：按照特定规则（HandlerAdapter要求的规则）去执行Handler，通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。<br><strong>ViewResolver</strong>：通过扩展视图解析器，支持更多类型的视图解析，例如：jsp、freemarker、pdf、excel等。作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）<br>作用：View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。springmvc框架提供了很多的View视图类型，包括：jstlView、freemarkerView、pdfView等。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由工程师根据业务需求开发具体的页面。</p>
 <h3 id="DispatcherServlet的工作流程"><a href="#DispatcherServlet的工作流程" class="headerlink" title="DispatcherServlet的工作流程"></a>DispatcherServlet的工作流程</h3><p><img src="/blog/images/DispatcherServlet%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"></p>
 <ol>
@@ -1102,6 +1081,20 @@ environmen<span class="token punctuation">.</span><span class="token function">g
 <p>HiddenHttpMethodFilter必须作用于dispatcher前</p>
 <h3 id="org-springframework-web-context-ContextLoaderListener"><a href="#org-springframework-web-context-ContextLoaderListener" class="headerlink" title="org.springframework.web.context.ContextLoaderListener"></a>org.springframework.web.context.ContextLoaderListener</h3><p>ContextLoaderListener的作用就是启动Web容器时，自动装配ApplicationContext.xml的配置信息。<br>ContextLoaderListener继承自ContextLoader，实现的是ServletContextListener接口。在web.xml配置这个监听器，启动容器时，就会默认执行它实现的方法。ContextLoaderListener可以指定在Web应用程序启动时载入Ioc容器，正是通过ContextLoader来实现的，ContextLoader来完成实际的WebApplicationContext，也就是Ioc容器的初始化工作。如果没有显式声明，则系统默认在WEB-INF&#x2F;applicationContext.xml。</p>
 <h3 id="org-springframework-web-util-IntrospectorCleanupListener"><a href="#org-springframework-web-util-IntrospectorCleanupListener" class="headerlink" title="org.springframework.web.util.IntrospectorCleanupListener"></a>org.springframework.web.util.IntrospectorCleanupListener</h3><p>JDK中的java.beans.Introspector类的用途是发现Java类是否符合JavaBean规范,如果有的框架或程序用到了Introspector类,那么就会启用一个系统级别的缓存,此缓存会存放一些曾加载并分析过的JavaBean的引用。当Web服务器关闭时,由于此缓存中存放着这些JavaBean的引用,所以垃圾回收器无法回收Web容器中的JavaBean对象,最后导致内存变大。而org.springframework.web.util.IntrospectorCleanupListener就是专门用来处理Introspector内存泄漏问题的辅助类。IntrospectorCleanupListener会在Web服务器停止时清理Introspector缓存,使那些Javabean能被垃圾回收器正确回收。Spring自身不会出现这种问题，因为Spring在加载并分析完一个类之后会马上刷新JavaBeans Introspector缓存,这就保证Spring中不会出现这种内存泄漏的问题。但有些程序和框架在使用了JavaBeans Introspector之后,没有进行清理工作(如Quartz,Struts),最后导致内存泄漏</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42092555">Java面试中常问的Spring问题，你都会吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ">如果我是面试官，我会问你Spring这些问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ">推荐收藏：Spring面试63问！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng">spring中那些让你爱不释手的代码技巧</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw">《轻松读懂spring》之IOC的主干流程（上）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q">我们到底为什么要用IoC和AOP</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA">@Conditional的强大之处</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA">SpringBatch批处理框架，真心强啊！！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA">手写Spring框架</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw">Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ">聊聊Spring核心</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw">揭秘Spring依赖注入和SpEL表达式</a></li>
+</ul>
 
                 
             </div>

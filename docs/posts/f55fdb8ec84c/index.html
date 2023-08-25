@@ -540,6 +540,13 @@
                 <h2 id="常见限流算法有哪些？"><a href="#常见限流算法有哪些？" class="headerlink" title="常见限流算法有哪些？"></a>常见限流算法有哪些？</h2><p>简单介绍4种非常好理解并且容易实现的限流算法！</p>
 <blockquote>
 <p>图片来源于InfoQ的一篇文章<a target="_blank" rel="noopener" href="https://www.infoq.cn/article/Qg2tX8fyw5Vt-f3HH673">《分布式服务限流实战，已经为你排好坑了》</a>。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w">5种限流算法，7种限流方式，挡住突发流量？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw">常用的限流算法有哪些？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg">新来个技术总监，把限流实现的那叫一个优雅，佩服</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i93_jSf43FcN0aQ9hY8WnQ">十分钟搞懂Java限流及常见方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BRQfsbhFjSpl_MH7E-eZYQ">四种分布式限流算法实现！</a></li>
+</ul>
 </blockquote>
 <h3 id="固定窗口计数器算法"><a href="#固定窗口计数器算法" class="headerlink" title="固定窗口计数器算法"></a>固定窗口计数器算法</h3><p>固定窗口其实就是时间窗口。固定窗口计数器算法规定了我们单位时间处理的请求数量。假如我们规定系统中某个接口1分钟只能访问33次的话，使用固定窗口计数器算法的实现思路如下：</p>
 <ul>
@@ -550,7 +557,7 @@
 <p><strong>这种限流算法无法保证限流速率，因而无法保证突然激增的流量</strong>。</p>
 <p>就比如说我们限制某个接口1分钟只能访问1000次，该接口的QPS为500，前55s这个接口1个请求没有接收，后1s突然接收了1000个请求。然后，在当前场景下，这1000个请求在1s内是没办法被处理的，系统直接就被瞬时的大量请求给击垮了。</p>
 <p><img src="https://static001.infoq.cn/resource/image/8d/15/8ded7a2b90e1482093f92fff555b3615.png" alt="固定窗口计数器算法"></p>
-<h3 id="滑动窗口计数器算法"><a href="#滑动窗口计数器算法" class="headerlink" title="滑动窗口计数器算法"></a>滑动窗口计数器算法</h3><p><strong>滑动窗口计数器算法</strong>算的上是固定窗口计数器算法的升级版。滑动窗口计数器算法相比于固定窗口计数器算法的优化在于：它把时间以一定比例分片。例如我们的接口限流每分钟处理60个请求，我们可以把1分钟分为60个窗口。每隔1秒移动一次，每个窗口一秒只能处理不大于60(请求数)&#x2F;60（窗口数）的请求，如果当前窗口的请求计数总和超过了限制的数量的话就不再处理其他请求。很显然，<strong>当滑动窗口的格子划分的越多，滑动窗口的滚动就越平滑，限流的统计就会越精确</strong>。</p>
+<h3 id="滑动窗口计数器算法"><a href="#滑动窗口计数器算法" class="headerlink" title="滑动窗口计数器算法"></a>滑动窗口计数器算法</h3><p>滑动窗口计数器算法算的上是固定窗口计数器算法的升级版。滑动窗口计数器算法相比于固定窗口计数器算法的优化在于：它把时间以一定比例分片。例如我们的接口限流每分钟处理60个请求，我们可以把1分钟分为60个窗口。每隔1秒移动一次，每个窗口一秒只能处理不大于60(请求数)&#x2F;60（窗口数）的请求，如果当前窗口的请求计数总和超过了限制的数量的话就不再处理其他请求。很显然，<strong>当滑动窗口的格子划分的越多，滑动窗口的滚动就越平滑，限流的统计就会越精确</strong>。</p>
 <p><img src="https://static001.infoq.cn/resource/image/ae/15/ae4d3cd14efb8dc7046d691c90264715.png" alt="滑动窗口计数器算法"></p>
 <h3 id="漏桶算法"><a href="#漏桶算法" class="headerlink" title="漏桶算法"></a>漏桶算法</h3><p>我们可以把发请求的动作比作成注水到桶中，我们处理请求的过程可以比喻为漏桶漏水。我们往桶中以任意速率流入水，以一定速率流出水。当水超过桶流量则丢弃，因为桶容量是不变的，保证了整体的速率。如果想要实现这个算法的话也很简单，准备一个队列用来保存请求，然后我们定期从队列中拿请求来执行就好了（和消息队列削峰&#x2F;限流的思想是一样的）。</p>
 <p><img src="https://static001.infoq.cn/resource/image/75/03/75938d1010138ce66e38c6ed0392f103.png" alt="漏桶算法"></p>
@@ -561,8 +568,7 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/google/guava">Guava地址</a></p>
 </blockquote>
 <p>除了最基本的令牌桶算法(平滑突发限流)实现之外，Guava的RateLimiter还提供了<strong>平滑预热限流</strong>的算法实现。平滑突发限流就是按照指定的速率放令牌到桶里，而平滑预热限流会有一段预热时间，预热时间之内，速率会逐渐提升到配置的速率。</p>
-<p><strong>实战</strong></p>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.google.guava<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>guava<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>31.0.1-jre<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
@@ -645,13 +651,6 @@ get <span class="token number">1</span> tokens: <span class="token number">0</sp
 <p><a target="_blank" rel="noopener" href="https://github.com/apache/incubator-shenyu">ShenYu地址</a></p>
 </blockquote>
 <p><img src="https://oss.javaguide.cn/github/javaguide/csdn/e1e2a75f489e4854990dabe3b6cec522.jpg" alt="ShenYu限流脚本"></p>
-<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w">5种限流算法，7种限流方式，挡住突发流量？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw">常用的限流算法有哪些？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg">新来个技术总监，把限流实现的那叫一个优雅，佩服</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i93_jSf43FcN0aQ9hY8WnQ">十分钟搞懂Java限流及常见方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BRQfsbhFjSpl_MH7E-eZYQ">四种分布式限流算法实现！</a></li>
-</ul>
 <h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><blockquote>
 <p>相关代码已上传到<a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/algorithm/limit">GitHub</a></p>
 </blockquote>

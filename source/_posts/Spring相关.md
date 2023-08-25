@@ -10,7 +10,7 @@ top: true
 
 ---
 
-> 我写的关于Spring扩展插件的一个[示例](https://github.com/xmxe/springboot/tree/3.0.x/springboot-lifecycle)，里面有很多Spring扩展的测试。
+> 我写的关于Spring扩展插件的一个[示例](https://github.com/xmxe/springboot/tree/3.x/springboot-lifecycle)，里面有很多Spring扩展的测试。
 > 其他相关文章:[Spring中的Bean对象](https://xmxe.gitee.io/blog/posts/b435885d7cf1/)
 
 ## Spring循环依赖
@@ -198,19 +198,6 @@ $.ajax({
 
 ## Spring设计模式
 
-
-### 控制反转(IoC)和依赖注入(DI)
-
-**IoC(Inversion of Control,控制反转)** 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。**IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则**。
-
-![ioc-patterns](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ioc-patterns.png)
-
-**Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的**。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。
-
-> 关于Spring IOC的理解，推荐看一下这个[知乎回答](https://www.zhihu.com/question/23277575/answer/169698662)，非常不错。
-
-**控制反转怎么理解呢**？举个例子："对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中"。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。**DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去**。
-
 ### 工厂设计模式
 
 Spring使用工厂模式可以通过BeanFactory或ApplicationContext创建bean对象。
@@ -314,11 +301,11 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。
 
-### Spring AOP和AspectJ AOP有什么区别?
+#### Spring AOP和AspectJ AOP有什么区别?
 
 **Spring AOP属于运行时增强，而AspectJ是编译时增强**。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。
 
-### 模板方法
+### 模板方法模式
 
 模板方法模式是一种行为设计模式，它定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤的实现方式。
 
@@ -512,22 +499,6 @@ Spring框架中用到了哪些设计模式？
 > [原文链接](https://javaguide.cn/system-design/framework/spring/spring-design-patterns-summary.html)
 > [Spring用到了哪些设计模式](https://mp.weixin.qq.com/s/O-gUDExJc5AKwb-t4ZDkNA)
 > [Spring中经典的9种设计模式](https://mp.weixin.qq.com/s/gz2-izPrgW1AGbqqovT0cA)
-
-
-## Spring相关文章
-
-- [Java面试中常问的Spring问题，你都会吗？](https://zhuanlan.zhihu.com/p/42092555)
-- [如果我是面试官，我会问你Spring这些问题](https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ)
-- [推荐收藏：Spring面试63问！](https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ)
-- [spring中那些让你爱不释手的代码技巧](https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng)
-- [《轻松读懂spring》之IOC的主干流程（上）](https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw)
-- [我们到底为什么要用IoC和AOP](https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q)
-- [@Conditional的强大之处](https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA)
-- [SpringBatch批处理框架，真心强啊！！](https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA)
-- [手写Spring框架](https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA)
-- [Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？](https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw)
-- [聊聊Spring核心](https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ)
-- [揭秘Spring依赖注入和SpEL表达式](https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw)
 
 ## Spring MVC
 
@@ -807,3 +778,19 @@ ContextLoaderListener继承自ContextLoader，实现的是ServletContextListener
 
 ### org.springframework.web.util.IntrospectorCleanupListener
 JDK中的java.beans.Introspector类的用途是发现Java类是否符合JavaBean规范,如果有的框架或程序用到了Introspector类,那么就会启用一个系统级别的缓存,此缓存会存放一些曾加载并分析过的JavaBean的引用。当Web服务器关闭时,由于此缓存中存放着这些JavaBean的引用,所以垃圾回收器无法回收Web容器中的JavaBean对象,最后导致内存变大。而org.springframework.web.util.IntrospectorCleanupListener就是专门用来处理Introspector内存泄漏问题的辅助类。IntrospectorCleanupListener会在Web服务器停止时清理Introspector缓存,使那些Javabean能被垃圾回收器正确回收。Spring自身不会出现这种问题，因为Spring在加载并分析完一个类之后会马上刷新JavaBeans Introspector缓存,这就保证Spring中不会出现这种内存泄漏的问题。但有些程序和框架在使用了JavaBeans Introspector之后,没有进行清理工作(如Quartz,Struts),最后导致内存泄漏
+
+
+## 其他
+
+- [Java面试中常问的Spring问题，你都会吗？](https://zhuanlan.zhihu.com/p/42092555)
+- [如果我是面试官，我会问你Spring这些问题](https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ)
+- [推荐收藏：Spring面试63问！](https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ)
+- [spring中那些让你爱不释手的代码技巧](https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng)
+- [《轻松读懂spring》之IOC的主干流程（上）](https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw)
+- [我们到底为什么要用IoC和AOP](https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q)
+- [@Conditional的强大之处](https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA)
+- [SpringBatch批处理框架，真心强啊！！](https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA)
+- [手写Spring框架](https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA)
+- [Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？](https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw)
+- [聊聊Spring核心](https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ)
+- [揭秘Spring依赖注入和SpEL表达式](https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw)

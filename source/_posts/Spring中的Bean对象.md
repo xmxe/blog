@@ -15,6 +15,17 @@ top: true
 
 ### 谈谈自己对于Spring IoC的了解
 
+
+**IoC(Inversion of Control,控制反转)** 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。**IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则**。
+
+![ioc-patterns](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ioc-patterns.png)
+
+**Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的**。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。
+
+> 关于Spring IOC的理解，推荐看一下这个[知乎回答](https://www.zhihu.com/question/23277575/answer/169698662)，非常不错。
+
+**控制反转怎么理解呢**？举个例子："对象a依赖了对象b，当对象a需要使用对象b的时候必须自己去创建。但是当系统引入了IOC容器后，对象a和对象b之前就失去了直接的联系。这个时候，当对象a需要使用对象b的时候，我们可以指定IOC容器去创建一个对象b注入到对象a中"。对象a获得依赖对象b的过程,由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来。**DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去**。
+
 **IoC（InversionofControl:控制反转）**，是一种设计思想，而不是一个具体的技术实现。IoC的思想就是将原本在程序中手动创建对象的控制权，交由Spring框架来管理。不过，IoC并非Spring特有，在其他语言中也有应用。**为什么叫控制反转**?
 
 - **控制**：指的是对象创建（实例化、管理）的权力
@@ -251,23 +262,8 @@ public Person personPrototype() {
 
 不过，大部分Bean实际都是无状态（没有实例变量）的（比如Dao、Service），这种情况下，Bean是线程安全的。
 
-### Bean的生命周期(详细介绍见下章)
 
-> 下面的内容整理自：[https://yemengying.com/2016/07/14/spring-bean-life-cycle/](https://yemengying.com/2016/07/14/spring-bean-life-cycle/)，除了这篇文章，再推荐一篇很不错的文章：[https://www.cnblogs.com/zrtqsk/p/3735273.html](https://www.cnblogs.com/zrtqsk/p/3735273.html)。
-
-- Bean容器找到配置文件中Spring Bean的定义。
-- Bean容器利用Java Reflection API创建一个Bean的实例。
-- 如果涉及到一些属性值利用set()方法设置一些属性值。
-- 如果Bean实现了BeanNameAware接口，调用setBeanName()方法，传入Bean的名字。
-- 如果Bean实现了BeanClassLoaderAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。
-- 如果Bean实现了BeanFactoryAware接口，调用setBeanFactory()方法，传入BeanFactory对象的实例。
-- 与上面的类似，如果实现了其他\*.Aware接口，就调用相应的方法。
-- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessBeforeInitialization()方法
-- 如果Bean实现了InitializingBean接口，执行afterPropertiesSet()方法。
-- 如果Bean在配置文件中的定义包含init-method属性，执行指定的方法。
-- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessAfterInitialization()方法
-- 当要销毁Bean的时候，如果Bean实现了DisposableBean接口，执行destroy()方法。
-- 当要销毁Bean的时候，如果Bean在配置文件中的定义包含destroy-method属性，执行指定的方法。
+## Spring Bean生命周期
 
 图示：
 ![Spring Bean生命周期](https://images.xiaozhuanlan.com/photo/2019/24bc2bad3ce28144d60d9e0a2edf6c7f.jpg)
@@ -275,10 +271,6 @@ public Person personPrototype() {
 与之比较类似的中文版本:
 
 ![Spring Bean生命周期](https://images.xiaozhuanlan.com/photo/2019/b5d264565657a5395c2781081a7483e1.jpg)
-
-
-
-## Spring Bean生命周期
 
 ### 一、获取Bean
 
@@ -668,77 +660,142 @@ public DisposableBeanAdapter(Object bean, String beanName, RootBeanDefinition be
 
 ### 五、总结
 
+
+> [Bean的生命周期（五步、七步、十步法剖析）](https://blog.csdn.net/m0_61933976/article/details/128697003)
+> 
+> **五步分析法**：
+> > 第一步：实例化Bean（调用无参数构造方法）。
+> > 第二步：Bean属性赋值（调用set方法）。
+> > 第三步：初始化Bean（会调用Bean的init方法。注意：这个init方法需要自己写）。
+> > 第四步：使用Bean。
+> > 第五步：销毁Bean（会调用Bean的destroy方法。注意：这个destroy方法需要自己写）。
+>
+> **七步分析法**：在以上的5步中，第3步是初始化Bean，如果你还想在初始化前和初始化后添加代码，可以加入“Bean后处理器”；需要编写一个类实现BeanPostproccessor接口，并重写里面的befor和after方法。
+>
+> > 第一步：实例化Bean。
+> > 第二步：Bean属性赋值。
+> > 第三步：执行“Bean后处理器”的before方法。
+> > 第四步：初始化Bean。
+> > 第五步：执行“Bean后处理器”的after方法。
+> > 第六步：使用Bean。
+> > 第七步：销毁Bean
+>
+> **十步分析法**：比七步添加的那三步在哪里？
+>
+> > （1）在“Bean后处理器”before方法之前干了什么事儿？检查Bean是否实现了Aware相关的接口，如果实现了接口则调用这些接口中的方法；调用这些方法的目的是为了给你传递一些数据，让你更加方便使用。
+> > （2）在“Bean后处理器”before方法之后干了什么事儿？检查Bean是否实现了InitializingBean接口，如果实现了，则调用接口中的方法。
+> > （3）使用Bean之后，或者说销毁Bean之前干了什么事儿？检查Bean是否实现了DisposableBean接口，如果实现了，则调用接口中的方法。总结：添加的这三个点位的特点，都是在检查你这个Bean是否实现了某些特定的接口，如果实现了这些接口，则Spring容器会调用这个接口中的方法！
+
 最后来一个大的流程
 
+**实例化前的准备阶段**
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPQu4pzSyprviaBic07GicVGPvAUdAibkFqybnvOfgdzdw1M1iaMtm9qfBLDQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
-**实例化前的准备阶段**
 
+**实例化前**
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPic9W1CbpBia73nS2WJAGKRMdW9LtwbxG30IqbNT8ibvH5DfqcHO2IueBw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
-实例化前
 
+
+**实例化后**
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPp3ia71rKnC0FeypESdhAFYAqGicz9KP9LeBxaJHKmvMPUDIGrBdBkBiag/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
-实例化后
 
+**初始化前**
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPjfQ5qaic2Ro6hoqhCdoicgiabmkibR518z7vSpXxmibq91FH1XxgHvdet8Q/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
-初始化前
 
+**初始化后&销毁**
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPABU277ApFU3EVr8iaHxtFEVvsawgghYyJd7WlJQFwEkQvXoDW2sQEYQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
-初始化后&销毁
 
-## Bean的扩展接口
 
-### 初始化bean的顺序
-在将一个Bean对象配置在IOC容器中之后，这个Bean的生命周期就会交由IOC容器进行管理。一般担当管理者的角色是BeanFactory或ApplicationContext。
+### 六、Bean的扩展接口
 
-```
-1. Bean的创建
-在解析IOC容器时，根据解析容器的工厂，决定bean的初始化时间
+**顺序一**
+
+- Bean容器找到配置文件中Spring Bean的定义。
+- Bean容器利用Java Reflection API创建一个Bean的实例。
+- 如果涉及到一些属性值利用set()方法设置一些属性值。
+- 如果Bean实现了BeanNameAware接口，调用setBeanName()方法，传入Bean的名字。
+- 如果Bean实现了BeanClassLoaderAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。
+- 如果Bean实现了BeanFactoryAware接口，调用setBeanFactory()方法，传入BeanFactory对象的实例。
+- 与上面的类似，如果实现了其他\*.Aware接口，就调用相应的方法。
+- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessBeforeInitialization()方法
+- 如果Bean实现了InitializingBean接口，执行afterPropertiesSet()方法。
+- 如果Bean在配置文件中的定义包含init-method属性，执行指定的方法。
+- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessAfterInitialization()方法
+- 当要销毁Bean的时候，如果Bean实现了DisposableBean接口，执行destroy()方法。
+- 当要销毁Bean的时候，如果Bean在配置文件中的定义包含destroy-method属性，执行指定的方法。
+
+**顺序二**
+
+- spring启动，加载类路径下配置文件，解析为BeanDefinition并装配到对应容器中
+- 查找并加载spring管理的bean，进行bean的实例化
+- Bean实例化后对Bean的引用和值进行属性注入
+- 若Bean实现接口BeanNameAware，则执行setBeanName()方法，获取bean的名字
+- 若Bean实现接口BeanFactoryAware，则执行setBeanFactory()方法，获取BeanFactory
+- 若Bean实现接口ApplicationContextAware，则执行setApplicationContext()方法，获取应用上下文
+- 若Bean实现BeanPostProcessor接口，则先执行postProcessBeforeInitialization()方法
+- 若Bean实现InitializingBean接口，则执行afterPropertiesSet()方法
+- 若Bean配置了init-method方法，则执行自定义方法
+- 若Bean实现BeanPostProcessor接口，则先执行postProcessAfterInitialization()方法
+- 如Bean实现了DisposableBean接口，则容器销毁时则执行destory()方法
+- 如果Bean配置了destory-method，则容器销毁时则执行自定义方法。
+
+**顺序三(自己测试的结果)**
+
+在将一个Bean对象配置在IOC容器中之后，这个Bean的生命周期就会交由IOC容器进行管理。一般担当管理者的角色是BeanFactory或ApplicationContext。在将一个bean对象配置在ioc容器中之后，这个bean的生命周期就会交由ioc容器进行管理。一般担当管理者的角色是BeanFactory和ApplicationContext。
+
+1. bean的创建
+在解析ioc容器时，根据解析容器的工厂，决定bean的初始化时间
 BeanFactory-getBean()方法调用时初始化bean
 ApplicationContext-解析ioc容器时初始化bean
-2. 注入
-根据Bean子元素的配置实现Bean之间的被动注入
+2. setter注入
+根据bean子元素的配置实现bean之间的被动注入
 3. BeanNameAware
-如果Bean实现了该接口，执行其setBeanName(String name)方法.参数name是Bean在容器中的名称,即XML里面Bean的id名称
+如果bean实现了该接口，执行其setBeanName(String name)方法.参数name是bean在容器中的名称,即xml里面bean的id名称
 4. BeanFactoryAware
 如果实现了该接口，执行其setBeanFactory(BeanFactory factory)方法，参数是创建Bean的BeanFactory本身
 5. ApplicationContextAware
 如果这个Bean已经实现了该接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文（同样这个方式也可以实现步骤4的内容，但比4更好，因为ApplicationContext是BeanFactory的子接口，有更多的实现方法）
-import org.springframework.beans.context.ApplicationContextAware
-// 当需要从Spring容器中获取Bean时一般使用这种方式获取
+org.springframework.beans.context.ApplicationContextAware.当需要从spring容器中获取bean时一般使用这种方式获取:
+```java
 ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext-common.xml");
 AbcService abcService = (AbcService)appContext.getBean("abcService");
-// 但是这样就会存在一个问题：因为它会重新装载applicationContext-common.xml并实例化上下文Bean，如果有些线程配置类也是在这个配置文件中，那么会造成做相同工作的的线程会被启两次。一次是web容器初始化时启动，另一次是上述代码显示的实例化了一次。当于重新初始化一遍！这样就产生了冗余,所以可以通过实现ApplicationContextAware接口获取Bean,当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有Bean。换句话说，就是这个类可以直接获取Spring配置文件中，所有有引用到的Bean对象
+```
+但是这样就会存在一个问题：因为它会重新装载applicationContext-common.xml并实例化上下文bean，如果有些线程配置类也是在这个配置文件中，那么会造成做相同工作的的线程会被启两次。一次是web容器初始化时启动，另一次是上述代码显示的实例化了一次。当于重新初始化一遍！这样就产生了冗余,所以可以通过实现ApplicationContextAware接口获取bean,当一个类实现了ApplicationContextAware之后，这个类就可以方便获得ApplicationContext中的所有bean。换句话说，就是这个类可以直接获取spring配置文件中所有有引用到的bean对象.
+代码:
 
+```java
 private static ApplicationContext applicationContext;
 @Override
 public void setApplicationContext(ApplicationContext arg0) throws BeansException {
     applicationContext = arg0;
 }
-
-// 注意：从ApplicationContextAware获取ApplicationContext上下文的情况，仅仅适用于当前运行的代码和已启动的Spring代码处于同一个Spring上下文，否则获取到的ApplicationContext是空的
-
-6. BeanPostProcessor (前置方法)
-IOC容器中如果有Bean实现了该接口，那所有的Bean在初始化之前都会执行其实例的postProcessBeforeInitialization(Object bean, String beanName)前置方法，BeanPostProcessor经常被用作是Bean内容的更改,该方法最后返回Bean
+```
+注意：从ApplicationContextAware获取ApplicationContext上下文的情况，仅仅适用于当前运行的代码和已启动的Spring代码处于同一个Spring上下文，否则获取到的ApplicationContext是空的
+6. BeanPostProcessor(前置方法)
+ioc容器中如果有bean实现了该接口，那所有的bean在初始化之前都会执行其实例的postProcessBeforeInitialization(Object bean, String beanName)前置方法，BeanPostProcessor经常被用作是Bean内容的更改,该方法最后返回bean
 7. @PostConstruct修饰的非静态方法
 8. InitializingBean
-如果实现了该接口，则允许一个Bean在它的所有必须属性被BeanFactory设置后，来执行初始化的工作，会自动调用afterPropertiesSet()方法对Bean进行初始化，实现此接口的话正常情况下配置文件就不用指定init-method属性了。
-9. 如果Bean在Spring中配置了init-method属性，调用init-method属性指向的方法,此时完成Bean的初始化
+如果实现了该接口，则允许一个bean在它的所有必须属性被BeanFactory设置后，来执行初始化的工作，会自动调用afterPropertiesSet()方法对Bean进行初始化，实现此接口的话正常情况下配置文件就不用指定init-method属性了。
+9. 如果Bean在Spring中配置了init-method属性，调用init-method属性指向的方法,此时完成bean的初始化
 10. BeanPostProcessor(后置方法)
-IOC容器中如果有Bean实现了接口，那所有的Bean在初始化之后都会执行其实例的postProcessAfterInitialization(Object bean, String beanName)后置方法
-11. 实现SmartInitializingSingleton的接口后，当所有单例Bean都初始化完成以后，Spring的IOC容器会回调该接口的afterSingletonsInstantiated()方法,主要应用场合就是在所有单例Bean创建完成之后，可以在该回调中做一些事情。执行时机在ApplicationContextAware执行之后
+ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都会执行其实例的postProcessAfterInitialization(Object bean, String beanName)后置方法
+11. 实现SmartInitializingSingleton的接口后，当所有单例bean都初始化完成以后，Spring的IOC容器会回调该接口的afterSingletonsInstantiated()方法,主要应用场合就是在所有单例bean创建完成之后，可以在该回调中做一些事情。执行时机在ApplicationContextAware执行之后
 12. @PreDestroy修饰的方法
-13. IOC容器关闭时，如果Bean实现了DisposableBean接口，则执行其destory()方法，在Bean生命周期结束前调用destory()方法做一些收尾工作,重写destroy()方法
+13. ioc容器关闭时，如果bean实现了DisposableBean接口，则执行其destory()方法，在Bean生命周期结束前调用destory()方法做一些收尾工作,重写destroy()方法
 14. 如果这个Bean在Spring配置了destroy-method属性，执行destory-method属性指向的方法
-```
+
+> [Spring Boot启动扩展点超详细总结，再也不怕面试官问了](https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA)
+
 
 ![](/images/bean.png)
+
+![](https://img-blog.csdnimg.cn/500f240463544992ad05bab3408c56eb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAS0vlsI_lk6U=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center)
 
 **简单来说一个Bean的加载顺序：类构造方法 - postProcessBeforeInitialization前置方法 - @PostConstruct注解的方法 - InitializingBean的afterPropertiesSet()方法- XML中定义的bean init-method方法 - postProcessAfterInitialization后置方法**
 
 > [Spring Boot启动扩展点超详细总结，再也不怕面试官问了](https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA)
 
-### BeanFactoryPostProcessor、BeanPostProcessor区别
+#### BeanFactoryPostProcessor、BeanPostProcessor区别
 
 BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor接口是针对bean容器的，它的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.
 BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：
@@ -747,7 +804,7 @@ BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象�
 
 > [BeanFactoryPostProcessor和BeanPostProcessor有什么区别？](https://mp.weixin.qq.com/s/ZjN1XPamDaYZmvFbyI1KTQ)
 
-### BeanFactroy、ApplicationContext区别
+#### BeanFactroy、ApplicationContext区别
 
 1. BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化，这样，我们就不能发现一些存在的Spring的配置问题。而ApplicationContext则相反，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误。相对于基本的BeanFactory，ApplicationContext唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。BeanFacotry延迟加载,如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常；而ApplicationContext则在初始化自身是检验，这样有利于检查所依赖属性是否注入；所以通常情况下我们选择使用ApplicationContext。应用上下文则会在上下文启动后预载入所有的单实例Bean。通过预载入单实例bean,确保当你需要的时候，你就不用等待，因为它们已经创建好了。
 2. BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。（Applicationcontext比beanFactory加入了一些更好使用的功能。而且beanFactory的许多功能需要通过编程实现而Applicationcontext可以通过配置实现。比如后处理bean，Applicationcontext直接配置在配置文件即可而beanFactory这要在代码中显示的写出来才可以被容器识别。）
@@ -755,13 +812,13 @@ BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象�
 
 > [Spring系列之beanFactory与ApplicationContext](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493943&idx=1&sn=9eaa46ed730874fce003c66f76fe9c7f&source=41#wechat_redirect)
 
-### BeanFactory和FactoryBean的区别
+#### BeanFactory和FactoryBean的区别
 
 BeanFactory是Spring容器的顶级接口，给具体的IOC容器的实现提供了规范。
 FactoryBean也是接口，为IOC容器中Bean的实现提供了更加灵活的方式，FactoryBean在IOC容器的基础上给Bean的实现加上了⼀个简单工厂模式和装饰模式,我们可以在getObject()方法中灵活配置。其实在Spring源码中有很多FactoryBean的实现类。
 区别：BeanFactory是个Factory，也就是IOC容器或对象工厂，FactoryBean是个Bean。在Spring中，所有的Bean都是由BeanFactory(也就是IOC容器)来进行管理的。但对FactoryBean而言，这个Bean不是简单的Bean，而是⼀个能生产或者修饰对象生成的工厂Bean,它的实现与设计模式中的工厂模式和修饰器模式类似。
 
-#### BeanFactory
+##### BeanFactory
 
 BeanFactory，以Factory结尾，表示它是⼀个工厂类(接口)，它负责生产和管理bean的⼀个工厂。在Spring中，BeanFactory是IOC容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。BeanFactory只是个接口，并不是IOC容器的具体实现，但是Spring容器给出了很多种实现，如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等，其中XmlBeanFactory就是常用的⼀个，该实现将以XML方式描述组成应用的对象及对象间的依赖关系。XmlBeanFactory类将持有此XML配置元数据，并用它来构建⼀个完全可配置的系统或应用。都是附加了某种功能的实现。它为其他具体的IOC容器提供了最基本的规范，例如DefaultListableBeanFactory,XmlBeanFactory,ApplicationContext等具体的容器都是实现了BeanFactory，再在其基础之上附加了其他的功能。BeanFactory和ApplicationContext就是Spring框架的两个IOC容器，现在⼀般使用ApplicationnContext，其不但包含了BeanFactory的作用，同时还进行更多的扩展。BeanFacotry是Spring中比较原始的Factory。如XMLBeanFactory就是⼀种典型的BeanFactory。原始的BeanFactory无法⽀持Spring的许多插件，如AOP功能、Web应用等。ApplicationContext接口,它由BeanFactory接口派生而来，ApplicationContext包含BeanFactory的所有功能，通常建议比BeanFactory优先，ApplicationContext以⼀种更面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：MessageSource,提供国际化的消息访问
 资源访问，如URL和⽂件，事件传播，载入多个（有继承关系）上下文，使得每⼀个上下文都专注于⼀个特定的层次，比如应⽤的web层;
@@ -782,7 +839,7 @@ boolean isSingleton(String)
 // 返回给定bean名称的所有别名
 String[] getAliases(String name)
 ```
-#### FactoryBean
+##### FactoryBean
 
 ⼀般情况下，Spring通过反射机制利用<bean\><bean\>的class属性指定实现类实例化Bean，在某些情况下，实例化Bean过程比较复杂，如果按照传统的方式，则需要在<bean\><bean\>中提供大量的配置信息。配置⽅式的灵活性是受限的，这时采用编码的方式可能会得到⼀个简单的方案。Spring为此提供了⼀个org.springframework.bean.factory.FactoryBean的工厂类接口，用户可以通过实现该接⼝定制实例化Bean的逻辑。FactoryBean接口对于Spring框架来说占重要的地位，Spring自身就提供了70多个FactoryBean的实现。它们隐藏了实例化⼀些复杂Bean的细节，给上层应用带来了便利。从Spring3.0开始，FactoryBean开始⽀持泛型，即接口声明改为FactoryBean<T\>的形式,以Bean结尾，表示它是⼀个Bean，不同于普通Bean的是：它是实现了FactoryBean<T\>接口的Bean，根据该Bean的ID从BeanFactory中获取的实际上是FactoryBean的getObject()返回的对象，而不是FactoryBean本身，如果要获取FactoryBean对象，请在id前面加⼀个&符号来获取。例如自己实现⼀个FactoryBean，功能：用来代理⼀个对象，对该对象的所有方法做⼀个拦截，在调用前后都输出⼀行LOG，模仿ProxyFactoryBean的功能。FactoryBean是⼀个接口，当在IOC容器中的Bean实现了FactoryBean后，通过getBean(StringBeanName)获取到的Bean对象并不是FactoryBean的实现类对象，而是这个实现类中的getObject()方法返回的对象。要想获取FactoryBean的实现类，就要getBean(&BeanName)，在BeanName之前加上&。
 在该接口中还定义了以下3个⽅法：
@@ -801,7 +858,7 @@ BeanFactory是个Factory，也就是IOC容器或对象工厂，FactoryBean是个
 > [Spring中BeanFactory和FactoryBean有何区别？](https://mp.weixin.qq.com/s/r3rnVhU8vr58Cw__UWOVLA)
 
 
-### Bean的调用
+## Bean的调用
 
 ```java
 // 1、使用BeanWrapper

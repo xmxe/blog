@@ -1463,3 +1463,4 @@ body {
 - [64个超级有用的CSS资源](https://mp.weixin.qq.com/s/xYUjsf4IKYORqOLNNnEHlA)
 - [HTML、CSS demo](https://www.html5tricks.com/page/26)
 - [10个值得收藏的CSS资源](https://mp.weixin.qq.com/s/Sn22fn_70QHWD753eFZHiQ)
+- [13个让你值得一试的CSS技巧](https://mp.weixin.qq.com/s/F22r72FW1CCYug_OtarZdQ)

@@ -528,8 +528,8 @@ public class PrintClassLoaderTree {
 
 我们前面也说说了，除了BootstrapClassLoader其他类加载器均由Java实现且全部继承自java.lang.ClassLoader。如果我们要自定义自己的类加载器，很明显需要继承ClassLoader抽象类。ClassLoader类有两个关键的方法：
 
-- protectedClassloadClass(Stringname,booleanresolve)：加载指定二进制名称的类，实现了双亲委派机制。name为类的二进制名称，resove如果为true，在加载时调用`resolveClass(Class<?>c)`方法解析该类。
-- protectedClassfindClass(Stringname)：根据类的二进制名称来查找类，默认实现是空方法。
+- protectedClassloadClass(String name,boolean resolve)：加载指定二进制名称的类，实现了双亲委派机制。name为类的二进制名称，resove如果为true，在加载时调用`resolveClass(Class<?>c)`方法解析该类。
+- protectedClassfindClass(String name)：根据类的二进制名称来查找类，默认实现是空方法。
 
 官方API文档中写到：
 
@@ -662,5 +662,4 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 > [原文链接](https://javaguide.cn/java/jvm/classloader.html)
 > [我竟然被“双亲委派”给虐了](https://mp.weixin.qq.com/s/Q0MqcvbeI7gAcJH5ZaQWgA)
-> [谈谈你对双亲委派机制的理解？如何打破？为啥双亲委派？](https://mp.weixin.qq.com/s/B8agHIyGTU3pLjO7UtI-Tg)
 > [Tomcat为什么要破坏Java双亲委派机制？](https://mp.weixin.qq.com/s/IGV4-y1cWWOUWOETZI2hsw)

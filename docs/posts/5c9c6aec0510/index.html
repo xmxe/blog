@@ -628,6 +628,12 @@ after method send<span class="token punctuation">(</span><span class="token punc
 <li>自定义InvocationHandler并重写invoke方法，在invoke方法中我们会调用原生方法（被代理类的方法）并自定义一些处理逻辑；</li>
 <li>通过<code>Proxy.newProxyInstance(ClassLoaderloader,Class&lt;?&gt;[]interfaces,InvocationHandlerh)</code>方法创建代理对象；</li>
 </ol>
+<h5 id="JDK动态代理原理-给一个接口实现匿名内部类"><a href="#JDK动态代理原理-给一个接口实现匿名内部类" class="headerlink" title="JDK动态代理原理(给一个接口实现匿名内部类)"></a>JDK动态代理原理(给一个接口实现匿名内部类)</h5><p>利用拦截器（必须实现InvocationHandler）加上反射机制生成一个代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。举个例子，假设有一个接口A，A有一个实现类B，现在要给B生成代理对象，那么实际上是给A接口自动生成了一个匿名实现类，并且在这个匿名实现类中调用到B中的方法。JDK代理是不需要第三方库支持，只需要JDK环境就可以进行代理，使用条件:</p>
+<ol>
+<li>实现InvocationHandler</li>
+<li>使用Proxy.newProxyInstance产生代理对象</li>
+<li>被代理的对象必须要实现接口</li>
+</ol>
 <h5 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h5><p><strong>1. 定义发送短信的接口</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">SmsService</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">String</span> <span class="token function">send</span><span class="token punctuation">(</span><span class="token class-name">String</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -704,6 +710,8 @@ after method send<span aria-hidden="true" class="line-numbers-rows"><span></span
 <li>自定义MethodInterceptor并重写intercept方法，intercept用于拦截增强被代理类的方法，和JDK动态代理中的invoke方法类似；</li>
 <li>通过Enhancer类的create()创建代理类；</li>
 </ol>
+<h5 id="CGLIB动态代理原理-生成子类"><a href="#CGLIB动态代理原理-生成子类" class="headerlink" title="CGLIB动态代理原理(生成子类)"></a>CGLIB动态代理原理(生成子类)</h5><p>利用ASM框架，对代理对象类生成的class文件加载进来，通过修改其字节码生成子类来处理。举个例子，现在有一个类A，A没有接口，现在想给A生成一个代理对象，那么实际上是自动给A生成了一个子类，在这个子类中覆盖了A中的方法，所以要注意，A类以及它里边的方法不能是final类型的，否则无法生成代理。CGLib必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理；</p>
+<p>如果被代理的对象有接口，则可以使用JDK动态代理，没有接口就可以使用CGLIB动态代理。</p>
 <h5 id="代码示例-1"><a href="#代码示例-1" class="headerlink" title="代码示例"></a>代码示例</h5><p>不同于JDK动态代理不需要额外的依赖。<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(<em>Code Generation Library</em>)实际是属于一个开源项目，如果你要使用它的话，需要手动添加相关依赖。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>cglib<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
@@ -781,14 +789,6 @@ after method send<span aria-hidden="true" class="line-numbers-rows"><span></span
 <li>JDK动态代理只能代理实现了接口的类或者直接代理接口，而CGLIB可以代理未实现任何接口的类。另外，CGLIB动态代理是通过生成一个被代理类的子类来拦截被代理类的方法调用，因此不能代理声明为final类型的类和方法。</li>
 <li>就二者的效率来说，大部分情况都是JDK动态代理更优秀，随着JDK版本的升级，这个优势更加明显。</li>
 </ol>
-<h4 id="JDK动态代理原理-给一个接口实现匿名内部类"><a href="#JDK动态代理原理-给一个接口实现匿名内部类" class="headerlink" title="JDK动态代理原理(给一个接口实现匿名内部类)"></a>JDK动态代理原理(给一个接口实现匿名内部类)</h4><p>利用拦截器（必须实现InvocationHandler）加上反射机制生成一个代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。举个例子，假设有一个接口A，A有一个实现类B，现在要给B生成代理对象，那么实际上是给A接口自动生成了一个匿名实现类，并且在这个匿名实现类中调用到B中的方法。JDK代理是不需要第三方库支持，只需要JDK环境就可以进行代理，使用条件:</p>
-<ol>
-<li>实现InvocationHandler</li>
-<li>使用Proxy.newProxyInstance产生代理对象</li>
-<li>被代理的对象必须要实现接口</li>
-</ol>
-<h4 id="CGLIB动态代理原理-生成子类"><a href="#CGLIB动态代理原理-生成子类" class="headerlink" title="CGLIB动态代理原理(生成子类)"></a>CGLIB动态代理原理(生成子类)</h4><p>利用ASM框架，对代理对象类生成的class文件加载进来，通过修改其字节码生成子类来处理。举个例子，现在有一个类A，A没有接口，现在想给A生成一个代理对象，那么实际上是自动给A生成了一个子类，在这个子类中覆盖了A中的方法，所以要注意，A类以及它里边的方法不能是final类型的，否则无法生成代理。CGLib必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理；</p>
-<p>如果被代理的对象有接口，则可以使用JDK动态代理，没有接口就可以使用CGLIB动态代理。</p>
 <h3 id="静态代理和动态代理的对比"><a href="#静态代理和动态代理的对比" class="headerlink" title="静态代理和动态代理的对比"></a>静态代理和动态代理的对比</h3><ol>
 <li><strong>灵活性</strong>：动态代理更加灵活，不需要必须实现接口，可以直接代理实现类，并且可以不需要针对每个目标类都创建一个代理类。另外，静态代理中，接口一旦新增加方法，目标对象和代理对象都要进行修改，这是非常麻烦的！</li>
 <li><strong>JVM层面</strong>：静态代理在编译时就将接口、实现类、代理类这些都变成了一个个实际的class文件。而动态代理是在运行时动态生成类字节码，并加载到JVM中的。</li>
@@ -797,6 +797,9 @@ after method send<span aria-hidden="true" class="line-numbers-rows"><span></span
 <li><strong>中介隔离作用</strong><br>在某些情况下，一个客户类不想或者不能直接引用一个委托对象，而代理类对象可以在客户类和委托对象之间起到中介的作用，其特征是代理类和委托类实现相同的接口。</li>
 <li><strong>开闭原则，增加功能</strong><br>代理类除了是客户类和委托类的中介之外，我们还可以通过给代理类增加额外的功能来扩展委托类的功能，这样做我们只需要修改代理类而不需要再修改委托类，符合代码设计的开闭原则。代理类主要负责为委托类预处理消息、过滤消息、把消息转发给委托类，以及事后对返回结果的处理等。代理类本身并不真正实现服务，而是同过调用委托类的相关方法，来提供特定的服务。真正的业务功能还是由委托类来实现，但是可以在业务功能执行的前后加入一些公共的服务。例如我们想给项目加入缓存、日志这些功能，我们就可以使用代理类来完成，而没必要打开已经封装好的委托类。</li>
 </ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/proxy.html">原文链接</a><br><a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/designpattern/proxy">代理 demo</a><br><a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot/tree/3.x/springboot-aop">Spring AOP相关</a></p>
+</blockquote>
 <h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/C9Vpfcgl3NB_0rBpLh2yCA">终于有人把java代理讲清楚了，万字详解！</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/daniels/p/8242592.html">设计模式—代理模式</a></li>
@@ -805,143 +808,7 @@ after method send<span aria-hidden="true" class="line-numbers-rows"><span></span
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kgB03P7Ocqj8EUTv55-zNw">Java动态代理的两种方式及其优缺点</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9wJjsJRWsZsFSBTVWmA4Hg">面试官：为什么JDK动态代理只能代理接口？</a></li>
 </ul>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/proxy.html">原文链接</a></p>
-</blockquote>
-<h2 id="study-demo"><a href="#study-demo" class="headerlink" title="study-demo"></a>study-demo</h2><h3 id="静态代理-1"><a href="#静态代理-1" class="headerlink" title="静态代理"></a>静态代理</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BuyHouseProxy</span> <span class="token keyword">implements</span> <span class="token class-name">BuyHouse</span> <span class="token punctuation">&#123;</span>
-	<span class="token keyword">private</span> <span class="token class-name">BuyHouse</span> bh <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BuyHouseImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"before staticproxy"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		bh<span class="token punctuation">.</span><span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"after staticproxy"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
 
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">BuyHouseImpl</span> <span class="token keyword">implements</span> <span class="token class-name">BuyHouse</span> <span class="token punctuation">&#123;</span>
-
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is BuyHouseImpl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">interface</span> <span class="token class-name">BuyHouse</span> <span class="token punctuation">&#123;</span>
-	<span class="token keyword">void</span> <span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>测试</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StaticProxyTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">BuyHouseProxy</span> bh <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BuyHouseProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        bh<span class="token punctuation">.</span><span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="动态代理-1"><a href="#动态代理-1" class="headerlink" title="动态代理"></a>动态代理</h3><h4 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JDKProxy</span> <span class="token keyword">implements</span> <span class="token class-name">InvocationHandler</span><span class="token punctuation">&#123;</span>
-	
-	<span class="token comment">// 需要代理的目标对象</span>
-	<span class="token keyword">private</span> <span class="token class-name">Object</span> object<span class="token punctuation">;</span> 
-	
-	 <span class="token comment">/**
-     * 将目标对象传入进行代理
-     */</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">newProxy</span><span class="token punctuation">(</span><span class="token class-name">Object</span> targetObject<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>object <span class="token operator">=</span> targetObject<span class="token punctuation">;</span>
-        <span class="token comment">//返回代理对象</span>
-        <span class="token keyword">return</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span>targetObject<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                targetObject<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
-		<span class="token comment">// 一般先写业务逻辑处理</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"JDKProxy before invoke"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">Object</span> result <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>object<span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"JDKProxy after invoke"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token keyword">return</span> result<span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="Cglib动态代理"><a href="#Cglib动态代理" class="headerlink" title="Cglib动态代理"></a>Cglib动态代理</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CglibProxy</span> <span class="token keyword">implements</span> <span class="token class-name">MethodInterceptor</span> <span class="token punctuation">&#123;</span>
-
-	<span class="token comment">/** CGLib需要代理的目标对象 */</span>
-	<span class="token keyword">private</span> <span class="token class-name">Object</span> targetObject<span class="token punctuation">;</span>
-	
-	<span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">createProxyObject</span><span class="token punctuation">(</span><span class="token class-name">Object</span> obj<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>targetObject <span class="token operator">=</span> obj<span class="token punctuation">;</span>
-        <span class="token comment">// 创建Enhancer对象，类似于JDK动态代理的Proxy类</span>
-        <span class="token class-name">Enhancer</span> enhancer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Enhancer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 设置目标类的字节码文件,即需要给哪个类创建代理类</span>
-        enhancer<span class="token punctuation">.</span><span class="token function">setSuperclass</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 设置回调函数 需实现org.springframework.cglib.proxy.Callback接口，</span>
-		<span class="token comment">// 此处我们使用的是org.springframework.cglib.proxy.MethodInterceptor，也是一个接口，实现了Callback接口，</span>
-		<span class="token comment">// 当调用代理对象的任何方法的时候，都会被MethodInterceptor接口的invoke方法处理</span>
-        enhancer<span class="token punctuation">.</span><span class="token function">setCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 创建代理类</span>
-        <span class="token class-name">Object</span> proxyObj <span class="token operator">=</span> enhancer<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 返回代理对象</span>
-        <span class="token keyword">return</span> proxyObj<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-	<span class="token comment">/**
-	 * 代理对象方法拦截器
-	 * @param o 代理对象
-	 * @param method 被代理的类的方法，即BuyHouseImpl中的方法
-	 * @param objects 调用方法传递的参数
-	 * @param methodProxy 方法代理对象
-	 */</span>
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">intercept</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxyObject<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> objects<span class="token punctuation">,</span> <span class="token class-name">MethodProxy</span> methodProxy<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">Object</span> obj <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"buyHouse"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-			<span class="token comment">//业务逻辑 ...</span>
-			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"do something..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Before CglibProxy Method Invoke"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		obj <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>targetObject<span class="token punctuation">,</span> objects<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"After CglibProxy Method Invoke"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token keyword">return</span> obj<span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DynamicProxtTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">jdkDynamicProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">cglibDynamicProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">jdkDynamicProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">JDKProxy</span> jdkProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JDKProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token comment">// 创建代理对象</span>
-		<span class="token class-name">BuyHouse</span> proxyBuyHouse <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">BuyHouse</span><span class="token punctuation">)</span>jdkProxy<span class="token punctuation">.</span><span class="token function">newProxy</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">BuyHouseImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		proxyBuyHouse<span class="token punctuation">.</span><span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">cglibDynamicProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">CglibProxy</span> cglibProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CglibProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">BuyHouse</span> buyHouse <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">BuyHouse</span><span class="token punctuation">)</span> cglibProxy<span class="token punctuation">.</span><span class="token function">createProxyObject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">BuyHouseImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		buyHouse<span class="token punctuation">.</span><span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">BuyHouseImpl</span> <span class="token keyword">implements</span> <span class="token class-name">BuyHouse</span> <span class="token punctuation">&#123;</span>
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is dynamicproxy BuyHouseImpl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">interface</span> <span class="token class-name">BuyHouse</span> <span class="token punctuation">&#123;</span>
-	<span class="token keyword">void</span> <span class="token function">buyHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

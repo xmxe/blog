@@ -935,6 +935,7 @@ future<span class="token punctuation">.</span><span class="token function">addCa
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cmDqGpTiHKRqcSaQVesJVA">面试官：聊一聊kafka线上会遇到哪些问题？</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l75MIcG4cf8C59z1JcfygA">《面试八股文》之Kafka21卷</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nKjKtJ5lOmYLjUrgS5qwsQ">20,000+字，彻底搞懂Kafka</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xe3GMo8DxZUHh-y-L9B2Nw">一文掌握Kafka生产者发送消息流程原理</a></li>
 </ul>
 <h3 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h3><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/high-performance/message-queue/rocketmq-logo.png" alt="img"></p>
 <p>RocketMQ是阿里开源的一款云原生“消息、事件、流”实时数据处理平台，借鉴了Kafka，已经成为Apache顶级项目。</p>
@@ -1587,7 +1588,7 @@ Setting permissions <span class="token keyword">for</span> user <span class="tok
 </blockquote>
 <h2 id="经典面试题"><a href="#经典面试题" class="headerlink" title="经典面试题"></a>经典面试题</h2><h3 id="为什么使用消息队列"><a href="#为什么使用消息队列" class="headerlink" title="为什么使用消息队列"></a>为什么使用消息队列</h3><p><strong>解耦</strong><br>传统模式下系统间的耦合性太强。怎么说呢，举个例子：系统A通过接口调用发送数据到B、C、D三个系统，如果将来E系统接入或者B系统不需要接入了，那么系统A还需要修改代码，非常麻烦。如果系统A产生了一条比较关键的数据，那么它就要时时刻刻考虑B、C、D、E四个系统如果挂了该咋办？这条数据它们是否都收到了？显然，系统A跟其它系统严重耦合。而如果我们将数据（消息）写入消息队列，需要消息的系统直接自己从消息队列中消费。这样下来，系统A就不需要去考虑要给谁发送数据，不需要去维护这个代码，也不需要考虑其他系统是否调用成功、失败超时等情况，反正我只负责生产，别的我不管。</p>
 <p><strong>异步</strong><br>先来看传统同步的情况，举个例子：系统A接收一个用户请求，需要进行写库操作，还需要同样的在B、C、D三个系统中进行写库操作。如果A自己本地写库只要1ms，而B、C、D三个系统写库分别要100ms、200ms、300ms,最终请求总延时是1 + 100 + 200 + 300 &#x3D; 601ms，用户体验大打折扣。如果使用消息队列，那么系统A就只需要发送3条消息到消息队列中就行了，假如耗时5ms，A系统从接受一个请求到返回响应给用户，总时长是1 + 5 &#x3D; 6ms，对于用户而言，体验好感度直接拉满。</p>
-<p><strong>消峰</strong><br>如果没有使用缓存或者消息队列，那么系统就是直接基于数据库MySQL的，如果有那么一个高峰期，产生了大量的请求涌入MySQL，毫无疑问，系统将会直接崩溃。那如果我们使用消息队列，假设MySQL每秒钟最多处理1k条数据，而高峰期瞬间涌入了5k条数据，不过，这5k条数据涌入了消息队列。这样，我们的系统就可以从消息队列中根据数据库的能力慢慢的来拉取请求，不要超过自己每秒能处理的最大请求数量就行。也就是说消息队列每秒钟5k个请求进来，1k个请求出去，假设高峰期1个小时，那么这段时间就可能有几十万甚至几百万的请求积压在消息队列中。不过这个短暂的高峰期积压是完全可以的，因为高峰期过了之后，每秒钟就没有那么多的请求进入消息队列了，但是数据库依然会按照每秒1k个请求的速度处理。所以只要高峰期一过，系统就会快速的将积压的消息给处理掉。</p>
+<p><strong>削峰</strong><br>如果没有使用缓存或者消息队列，那么系统就是直接基于数据库MySQL的，如果有那么一个高峰期，产生了大量的请求涌入MySQL，毫无疑问，系统将会直接崩溃。那如果我们使用消息队列，假设MySQL每秒钟最多处理1k条数据，而高峰期瞬间涌入了5k条数据，不过，这5k条数据涌入了消息队列。这样，我们的系统就可以从消息队列中根据数据库的能力慢慢的来拉取请求，不要超过自己每秒能处理的最大请求数量就行。也就是说消息队列每秒钟5k个请求进来，1k个请求出去，假设高峰期1个小时，那么这段时间就可能有几十万甚至几百万的请求积压在消息队列中。不过这个短暂的高峰期积压是完全可以的，因为高峰期过了之后，每秒钟就没有那么多的请求进入消息队列了，但是数据库依然会按照每秒1k个请求的速度处理。所以只要高峰期一过，系统就会快速的将积压的消息给处理掉。</p>
 <h3 id="MQ怎么保证消息可靠性？MQ怎么保证消息100-消费？如何保证消息不会丢失？"><a href="#MQ怎么保证消息可靠性？MQ怎么保证消息100-消费？如何保证消息不会丢失？" class="headerlink" title="MQ怎么保证消息可靠性？MQ怎么保证消息100%消费？如何保证消息不会丢失？"></a>MQ怎么保证消息可靠性？MQ怎么保证消息100%消费？如何保证消息不会丢失？</h3><p>我们需要保障MQ消息的可靠性，需要从三个层面&#x2F;维度解决：生产者100%投递、MQ持久化、消费者100%消费，这里的100%消费指的是消息不少消费，也不多消费。</p>
 <p><strong>消息生产阶段</strong>：从消息被生产出来，然后提交给MQ的过程中，只要能正常收到MQ Broker的ack确认响应，就表示发送成功，所以只要处理好返回值和异常，这个阶段是不会出现消息丢失的。<br><strong>消息存储阶段</strong>：这个阶段一般会直接交给MQ消息中间件来保证，但是你要了解它的原理，比如Broker会做副本，保证一条消息至少同步两个节点再返回ack。<br><strong>消息消费阶段</strong>：消费端从Broker上拉取消息，只要消费端在收到消息后，不立即发送消费确认给Broker，而是等到执行完业务逻辑后，再发送消费确认，也能保证消息的不丢失。</p>
 <p><strong>以kafka为例</strong><br>一、生产者端</p>

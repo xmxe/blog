@@ -197,6 +197,7 @@ int availableProcessors = Runtime.getRuntime().availableProcessors()
 - [2万字长文详解10大多线程面试题](https://mp.weixin.qq.com/s/hq5GbYBe98YsBDNA3u2s5Q)
 - [两万字！多线程硬核50问！](https://mp.weixin.qq.com/s/wGJsOWAGUhlE4QlZsNpMXg)
 - [面试官：线程池中多余的线程是如何回收的？](https://mp.weixin.qq.com/s/Ts2DGoUJ6SOhdRuDaLa8UQ)
+- [你真的了解Thread线程类吗](https://mp.weixin.qq.com/s/PNHueqqUhKPihiJm3Hqmvw)
 
 ### 线程池
 

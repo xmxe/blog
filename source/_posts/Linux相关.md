@@ -627,11 +627,11 @@ reboot
 需要注意的是：在实际操作过程中，挂载的目录会覆盖掉原目录的文件信息。可以先进行旧目录备份，挂载完成后在恢复数据。
 
 
-### source filename与sh filename及./filename执⾏脚本的区别
+### source filename与sh filename及./filename执行脚本的区别
 
-1. 当shell脚本具有可执⾏权限时，⽤sh filename与./filename执⾏脚本是没有区别得。./filename是因为当前⽬录没有在PATH中，所有”.”是⽤来表⽰当前⽬录的。
-2. sh filename重新建⽴⼀个⼦shell，在⼦shell中执⾏脚本⾥⾯的语句，该⼦shell继承⽗shell的环境变量，但⼦shell新建的、改变的变量不会被带回⽗shell，除⾮使⽤export。
-3. source filename：这个命令其实只是简单地读取脚本⾥⾯的语句依次在当前shell⾥⾯执⾏，没有建⽴新的⼦shell。那么脚本⾥⾯所有新建、改变变量的语句都会保存在当前shell⾥⾯
+1. 当shell脚本具有可执行权限时，用`sh filename`与`./filename`执行脚本是没有区别的。`./filename`是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。
+2. `sh filename`重新建立⼀个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。
+3. `source filename`这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面
 
 
 ## 环境变量

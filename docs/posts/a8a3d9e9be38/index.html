@@ -987,10 +987,10 @@ swapoff ～/swapfile
 <span class="token comment"># 七、重启服务器</span>
 <span class="token function">reboot</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>需要注意的是：在实际操作过程中，挂载的目录会覆盖掉原目录的文件信息。可以先进行旧目录备份，挂载完成后在恢复数据。</p>
-<h3 id="source-filename与sh-filename及-x2F-filename执⾏脚本的区别"><a href="#source-filename与sh-filename及-x2F-filename执⾏脚本的区别" class="headerlink" title="source filename与sh filename及.&#x2F;filename执⾏脚本的区别"></a>source filename与sh filename及.&#x2F;filename执⾏脚本的区别</h3><ol>
-<li>当shell脚本具有可执⾏权限时，⽤sh filename与.&#x2F;filename执⾏脚本是没有区别得。.&#x2F;filename是因为当前⽬录没有在PATH中，所有”.”是⽤来表⽰当前⽬录的。</li>
-<li>sh filename重新建⽴⼀个⼦shell，在⼦shell中执⾏脚本⾥⾯的语句，该⼦shell继承⽗shell的环境变量，但⼦shell新建的、改变的变量不会被带回⽗shell，除⾮使⽤export。</li>
-<li>source filename：这个命令其实只是简单地读取脚本⾥⾯的语句依次在当前shell⾥⾯执⾏，没有建⽴新的⼦shell。那么脚本⾥⾯所有新建、改变变量的语句都会保存在当前shell⾥⾯</li>
+<h3 id="source-filename与sh-filename及-x2F-filename执行脚本的区别"><a href="#source-filename与sh-filename及-x2F-filename执行脚本的区别" class="headerlink" title="source filename与sh filename及.&#x2F;filename执行脚本的区别"></a>source filename与sh filename及.&#x2F;filename执行脚本的区别</h3><ol>
+<li>当shell脚本具有可执行权限时，用<code>sh filename</code>与<code>./filename</code>执行脚本是没有区别的。<code>./filename</code>是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。</li>
+<li><code>sh filename</code>重新建立⼀个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。</li>
+<li><code>source filename</code>这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面</li>
 </ol>
 <h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="环境变量文件"><a href="#环境变量文件" class="headerlink" title="环境变量文件"></a>环境变量文件</h3><ul>
 <li>&#x2F;etc&#x2F;profile：此文件为系统的每个用户设置环境信息，当用户第一次登录时，该文件被执行，并从&#x2F;etc&#x2F;profile.d目录的配置文件中收集shell的设置</li>

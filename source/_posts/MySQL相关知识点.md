@@ -40,7 +40,6 @@ delimiter ; -- (改回默认的MySQL delimiter：“;”）
 
 ```sql
 select getParentList('001001');
-
 select * from tbl where FIND_IN_SET(id,getParentList('001001'))
 ```
 
@@ -67,12 +66,7 @@ select getChildList('001001001');
 select * from tbl where FIND_IN_SET(id,getChildList('001001001'))
 ```
 
-**FIND_IN_SET(str,strlist)**
-str-要查询的字符串
-strlist-字段名参数以”,”分隔如(1,2,6,8)
-查询字段(strlist)中包含(str)的结果，返回结果为null或结果
-SELECT FIND_IN_SET('b','a,b,c,d');
-因为b在strlist集合中放在2的位置从1开始
+**FIND_IN_SET(str,strlist)**,str-要查询的字符串,strlist-字段名参数以”,”分隔如(1,2,6,8)。查询字段(strlist)中包含(str)的结果，返回结果为null或结果。`SELECT FIND_IN_SET('b','a,b,c,d');`因为b在strlist集合中放在2的位置,下标从1开始
 
 ```sql
 select * from treenodes where FIND_IN_SET(id,'1,2,3,4,5');
@@ -95,7 +89,7 @@ SELECT  ID,  PID, NAME, LEVEL, Type  FROM tmp_zjs  WHERE  ID = '102' UNION ALL
 SELECT sou.ID, sou.PID, sou.NAME, sou.LEVEL, sou.Type  FROM 
 cte c INNER JOIN tmp_zjs sou ON c.ID = sou.PID  )
 
-SELECT * FROM	cte
+SELECT * FROM cte
 ```
 > [MySQL使用递归CTE遍历分层数据](https://www.begtut.com/mysql/mysql-recursive-cte.html)
 > [MySQL CTE(公共表表达式)](https://www.yiibai.com/mysql/cte.html)
@@ -149,9 +143,139 @@ END LOOP myLoop; -- 结束自定义循环体
 CLOSE My_Cursor; -- 关闭游标
 END
 ```
-调用:set @a = 'a';set @b = 'b';call NewProc(@a,@b);
-select @b;
+调用
+```sql
+set @a = 'a';set @b = 'b';call NewProc(@a,@b);select @b;
+```
 
+demo
+
+```sql
+CREATE DEFINER=`root`@`%` PROCEDURE `zxjc_city_month_data`(IN `table_name` varchar(50),IN `start_time` VARCHAR(50),IN `end_time` varchar(50))
+BEGIN
+	DECLARE ydfh_table VARCHAR(255);
+	DECLARE fdcl_table VARCHAR(255);
+	DECLARE dates date;
+	DECLARE datee date;
+	delete from zxjc_city_month_data where time = table_name;
+	set dates = DATE_FORMAT(start_time,'%Y-%m-%d');
+	set datee = DATE_FORMAT(end_time,'%Y-%m-%d');
+	set ydfh_table = concat('zxjc_dp_sspwrgrid_his_',table_name);
+	set fdcl_table = concat('zxjc_dp_ssgenerator_his_',table_name);
+	set @str = concat('insert into zxjc_city_month_data(ydfh,fdcl,grl,ydl,rdb,city,time) SELECT round(ydfh.ydfh,2) as ydfh,round(fdcl.fdcl,2) as fdcl,round(grl.grl,2) as grl,round(( ydfh.ydfh * 1000 )/( 24 * 30 ),2) as ydl,round( grl.grl / ( grl.fdl * 3600 )* 100, 2 ) as rdb,dm.dq as city,\'',table_name , '\' as time	FROM bi_xzqh_dm dm LEFT JOIN ( SELECT sum( VALUE ) ydfh, id FROM ' , ydfh_table , ' WHERE meas_type = \'93872001\' AND create_time BETWEEN \'',start_time,'\' AND \'',end_time,'\' GROUP BY id ) ydfh ON ydfh.id = concat( \'0101\', dm.xzqh_dm ) LEFT JOIN ( SELECT city, sum( VALUE ) fdcl FROM ' , fdcl_table , ' WHERE create_time BETWEEN \'' ,start_time, '\' AND \'' ,end_time,'\' GROUP BY city ) fdcl ON fdcl.city = dm.dq LEFT JOIN ( SELECT city,round(ifnull(sum(
+CASE WHEN (oms_rfdl=0 || oms_rfdl is null) and tmr_rfdl!=0 and tmr_rfdl is not null THEN tmr_rfdl
+     WHEN (tmr_rfdl = 0||tmr_rfdl is NULL) and dfdc_rfdl!=0 and dfdc_rfdl is not null THEN dfdc_rfdl
+     WHEN (dfdc_rfdl = 0||dfdc_rfdl is NULL) and qsh_rfdl!=0 and qsh_rfdl is not null THEN qsh_rfdl
+     WHEN (qsh_rfdl = 0||qsh_rfdl is NULL) and gl_rfdl!=0 and gl_rfdl is not null THEN gl_rfdl
+ELSE oms_rfdl END ),0),2) as fdl, ROUND(IFNULL(sum(grl),0),2) as grl FROM zxjc_dp_fdjdata_day WHERE date_time BETWEEN \'',dates,'\' AND \'',datee,'\' GROUP BY city ) grl ON grl.city = dm.dq');
+
+-- 			select @str;
+	PREPARE cm FROM @str;
+	EXECUTE cm;
+END
+```
+调用
+```sql
+call zxjc_city_month_data('202308', '2023-08-01 00:00:00', '2023-08-31 23:59:59');
+```
+如果调用输出out的话
+```sql
+CREATE FUNCTION myfunc(OUT out_param1 INT(11), OUT out_param2 VARCHAR(20)))
+BEGIN
+SET out_param1= 10;
+SET out_param2='hello';
+END;
+CALL myfunc(@a,@b);
+SELECT CONCAT('out_param1=',@a,' out_param2=',@b);
+-- 或者
+CREATE PROCEDURE `get_total_orders`(OUT total INT)
+BEGIN
+	SELECT COUNT into total from orders;
+END;
+-- set @total = 1;
+CALL get_total_orders(@total);
+SELECT @total as total;
+```
+
+#### 存储过程和函数的区别
+
+一、含义不同
+
+1、存储过程：存储过程是SQL 语句和可选控制流语句的预编译集合，以一个名称存储并作为一个单元处理。
+2、函数：是由一个或多个 SQL 语句组成的子程序，可用于封装代码以便重新使用。 函数限制比较多，如不能用临时表，只能用表变量等
+
+二、使用条件不同
+
+1、存储过程：可以在单个存储过程中执行一系列 SQL 语句。而且可以从自己的存储过程内引用其它存储过程，这可以简化一系列复杂语句。
+2、函数：自定义函数诸多限制，有许多语句不能使用，许多功能不能实现。函数可以直接引用返回值，用表变量返回记录集。但是，用户定义函数不能用于执行一组修改全局数据库状态的操作。
+
+三、执行方式不同
+
+1、存储过程：存储过程可以返回参数，如记录集，函数只能返回值或者表对象。存储过程的参数有in，out，inout三种，存储过程声明时不需要返回类型。
+2、函数：函数参数只有in，而函数需要描述返回类型，且函数中必须包含一个有效的return语句。
+
+
+### MySQL事件(如定时执行存储过程)
+
+1. 确保事件调度器已启用。您可以通过运行以下命令来检查和启用事件调度器（如果未启用）：
+
+```sql
+-- 查看启动器状态 ON为打开 OFF为关闭
+SHOW VARIABLES LIKE 'event_scheduler';
+-- 打开
+SET GLOBAL EVENT_SCHEDULER = ON;
+-- 或者my.ini配置文件下加入
+[mysqld]
+event_scheduler = ON
+-- 然后重启MySQL
+```
+
+2. 创建一个存储过程
+
+3. 创建事件
+
+```sql
+CREATE EVENT event_name ON SCHEDULE
+-- AT '2023-07-19 10:00:00' -- 某一时间执行一次
+-- AT CURRENT_TIMESTAMP
+EVERY 1 DAY -- 设置执行间隔，例如每天
+STARTS '2023-07-19 10:00:00' -- 设置事件的开始时间
+ENDS '2023-07-21 10:00:00' -- 设置事件的结束时间（可选）
+ON COMPLETION PRESERVE -- 使事件在完成后保持有效（可选）
+ENABLE -- 启用事件（必需）
+COMMENT '这是一个定时执行存储过程的事件'
+DO
+    CALL my_stored_procedure(); -- 调用存储过程
+-- DO CALL procedure_name('input1', @output1);
+```
+
+4. 查看事件
+
+```sql
+show events;
+-- 条件筛选
+show events like '%event_name%';
+```
+
+5. 修改事件
+
+```sql
+--开启事件
+alter event event_name enable;
+--关闭事件
+alter event event_name disable;
+-- 修改执行计划
+ALTER EVENT event_name ON SCHEDULE schedule;
+-- 修改事件主体
+ALTER EVENT event_name DO event_body;
+-- 重命名事件
+ALTER EVENT event_name RENAME TO new_event_name;
+-- 移动事件到其他数据库
+-- 可修改事件名称
+ALTER EVENT demo.event_name RENAME TO test.event_name;
+-- 删除事件
+drop event event_name;
+```
 
 ### 关键字、常用操作
 

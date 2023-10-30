@@ -643,6 +643,9 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <p>你可以使用<code>-XX：MaxMetaspaceSize</code>标志设置最大元空间大小，默认值为unlimited，这意味着它只受系统内存的限制。<code>-XX：MetaspaceSize</code>调整标志定义元空间的初始大小如果未指定此标志，则Metaspace将根据运行时的应用程序需求动态地重新调整大小。</p>
 <p>2、元空间里面存放的是类的元数据，这样加载多少类的元数据就不由<code>MaxPermSize</code>控制了,而由系统的实际可用空间来控制，这样能加载的类就更多了。</p>
 <p>3、在JDK8，合并HotSpot和JRockit的代码时,JRockit从来没有一个叫永久代的东西,合并之后就没有必要额外的设置这么一个永久代的地方了。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZxKyeZ6ZkxVR7NsTlkqtKQ">JDK为什么废弃永久代，而引入元空间</a></p>
+</blockquote>
 <p><strong>方法区常用参数有哪些？</strong></p>
 <p>JDK1.8之前永久代还没被彻底移除的时候通常通过下面这些参数来调节方法区大小。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">-</span><span class="token constant">XX</span><span class="token operator">:</span><span class="token class-name">PermSize</span><span class="token operator">=</span><span class="token class-name">N</span> <span class="token comment">//方法区(永久代)初始大小</span>

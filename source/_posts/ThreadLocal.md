@@ -878,6 +878,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 > [内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal](https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g)
 > [线上系统因为一个ThreadLocal直接内存飙升](https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig)
 > [ThreadLocal搭配线程池时为什么会造成内存泄漏](https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA)
+> [为什么大家都说ThreadLocal存在内存泄漏的风险？](https://mp.weixin.qq.com/s/N2YBtHf1AutOJYwRaCrfRA)
 
 ### ThreadLocalMap为什么使用弱引用而不是强引用？
 
@@ -919,3 +920,4 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 - [Java并发之ThreadLocal](https://mp.weixin.qq.com/s/ntjmEHIj_aINhNmtwhMecA)
 - [ThreadLocal夺命11连问](https://mp.weixin.qq.com/s/s6waqV8X7KPKip8zbOIDqQ)
 - [ThreadLocal父子线程之间该如何传递数据？](https://mp.weixin.qq.com/s/yZNBAtN9AFocQ2-FR9so6g)
+- [用这4招优雅的实现Spring Boot异步线程间数据传递](https://mp.weixin.qq.com/s/HmaGSW71lAI-9WlNlfuICw)

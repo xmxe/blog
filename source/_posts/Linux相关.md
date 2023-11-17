@@ -198,7 +198,7 @@ chown -R jay:fefjay my
 ### curl命令
 
 ```shell
-curl -d 'login=emma＆password=123'-X POST URL
+curl -d 'login=emma&password=123'-X POST URL
 curl -d 'login=emma' -d 'password=123' -X POST URL
 -X # POST可以省略
 

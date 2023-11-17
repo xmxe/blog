@@ -571,16 +571,20 @@ Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
 -- 查询所有数据库数据大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables;
+select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables;
 
 -- 查看指定数据库数据的大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='database_name';
+select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables where table_schema='database_name';
+
+-- 查看所有数据库的大小,以MB为单位
+SELECT table_schema AS "Database",ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS "Size (MB)"
+FROM information_schema.tables GROUP BY table_schema;
 
 -- 查看指定数据库的某个表的数据大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='database_name' and table_name='table_name';
+select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables where table_schema='database_name' and table_name='table_name';
 
---查询索引+数据大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as '数据大小' , concat(round(sum(index_length/1024/1024),2),'MB') as '索引大小', round(sum(data_length/1024/1024),2)+round(sum(index_length/1024/1024),2) as 'all' from tables where table_schema='数据库名称';
+-- 查询索引+数据大小
+select concat(round(sum(data_length/1024/1024),2),'MB') as '数据大小' , concat(round(sum(index_length/1024/1024),2),'MB') as '索引大小', round(sum(data_length/1024/1024),2)+round(sum(index_length/1024/1024),2) as 'all' from information_schema.tables where table_schema='数据库名称';
 ```
 
 ## MySQL函数

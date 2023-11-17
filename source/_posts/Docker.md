@@ -163,7 +163,7 @@ docker -v
 
 ## 常用命令
 
-### 镜像
+### docker images
 
 - 查看镜像
 ```shell
@@ -176,15 +176,21 @@ docker images
 -q :只显示镜像ID。
 ```
 
+### docker pull
+
 - 拉取镜像
 ```shell
 docker pull name:tag
 ```
 
+### docker push
+
 - 推送镜像
 ```shell
 docker push myapache:v1
 ```
+
+### docker save
 
 - 导出镜像
 ```shell
@@ -193,12 +199,16 @@ docker save -o <保存路径> <镜像名称:标签>
 docker save -o ./ubuntu18.tar ubuntu:18.04
 ```
 
+### docker load
+
 - 导入镜像
 ```shell
 docker load -i 文件名 或者docker load --input 文件名
 
 docker load --input ./ubuntu18.tar
 ```
+
+### docker rmi
 
 - 删除镜像
 ```shell
@@ -210,48 +220,7 @@ docker rmi images_id
 docker rmi `docker images -q`
 ```
 
-- 搜索镜像
-```shell
-docker search *
-```
-
-- 查看指定镜像的创建历史
-```shell
-docker history [OPTIONS] IMAGE
-
-OPTIONS说明：
--H :以可读的格式打印镜像大小和日期，默认为true；
---no-trunc :显示完整的提交记录；
--q :仅列出提交记录ID。
-```
-
-### 容器
-
-- 查看正在运行的容器
-```shell
-docker ps 或者docker container ls
-```
-
-- 查看所有容器
-```shell
-docker ps -a 或者 docker container ls -a
-```
-
-- 导出容器
-```shell
-docker export <容器名> > <保存路径>
-
-或者docker export -o <容器名> <保存路径> -o :将输入内容写到文件。
-docker export ubuntu18 > ./ubuntu18.tar
-将id为a404c6c174a2的容器按日期保存为tar文件
-docker export -o mysql-`date +%Y%m%d`.tar a404c6c174a2
-```
-
-- 导入容器
-```shell
-docker import <文件路径> <容器名>
-docker import ./ubuntu18.tar ubuntu18
-```
+### docker rm
 
 - 删除容器
 ```shell
@@ -270,46 +239,116 @@ docker rm $(docker ps -a -q)
 docker rm `docker ps -a -q`
 ```
 
+### docker search
+
+- 搜索镜像
+```shell
+docker search *
+```
+
+### docker history
+
+- 查看指定镜像的创建历史
+```shell
+docker history [OPTIONS] IMAGE
+
+OPTIONS说明：
+-H :以可读的格式打印镜像大小和日期，默认为true；
+--no-trunc :显示完整的提交记录；
+-q :仅列出提交记录ID。
+```
+
+### docker ps
+
+- 查看正在运行的容器
+```shell
+docker ps
+# 或者
+docker container ls
+```
+
+- 查看所有容器
+```shell
+docker ps -a
+# 或者
+docker container ls -a
+```
+
+### docker export
+
+- 导出容器
+```shell
+docker export <容器名> > <保存路径>
+# 或者
+docker export -o <容器名> <保存路径> # -o :将输入内容写到文件。
+docker export ubuntu18 > ./ubuntu18.tar
+# 将id为a404c6c174a2的容器按日期保存为tar文件
+docker export -o mysql-`date +%Y%m%d`.tar a404c6c174a2
+```
+
+### docker import
+
+- 导入容器
+```shell
+docker import <文件路径> <容器名>
+docker import ./ubuntu18.tar ubuntu18
+```
+
+### docker (container) start
+
 - 启动容器
 ```shell
 docker container start container_id
 ```
+
+### docker stop
 
 - 停止所有容器
 ```shell
 docker stop $(docker ps -a -q)
 ```
 
+### docker kill
+
 - 杀掉运行中的容器
 ```shell
 docker kill -s(可忽略) CONTAINER
--s :向容器发送一个信号 
-例：docker kill -s KILL mynginx
+# -s :向容器发送一个信号 例：
+docker kill -s KILL mynginx
 ```
+
+### docker exec
 
 - 在运行的容器中执行命令
 ```shell
 docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
-例如：进入容器 docker exec -itd 容器id /bin/bash
-（-d :分离模式: 在后台运行 -i :即使没有附加也保持STDIN 打开-t :分配一个伪终端）
-/bin/bash：在container中启动一个bash shell
-exit 退出bash shell
+# 例如：进入容器
+docker exec -itd 容器id /bin/bash
+# （-d:分离模式,在后台运行 -i:即使没有附加也保持STDIN打开 -t:分配一个伪终端）/bin/bash: 在container中启动一个bash shell。exit:退出bash shell
 ```
+
+### docker pause
 
 - 暂停容器中所有的进程
 ```shell
 docker pause container_id
 ```
 
+### docker unpause
+
 - 恢复容器中所有的进程
 ```shell
 docker unpause container_id
 ```
 
+### docker create
+
 - 创建一个新的容器不运行
 ```shell
-docker create 参数同docker run
+docker create # 参数同docker run
 ```
+
+### docker run
 
 - 创建一个新的容器并运行
 ```shell
@@ -319,43 +358,47 @@ docker run
 -it 以交互模式运行
 -P: 随机端口映射，容器内部端口随机映射到主机的端口
 -p: 指定端口映射，格式为：主机(宿主)端口:容器端口
--d 后台运行 并返回容器ID
--v,--volume 挂载 主机目录:容器目录,绑定一个卷
--u,--user=""， 指定容器的用户
--a,--attach=[]， 登录容器（必须是以docker run -d启动的容器）
--w,--workdir=""， 指定容器的工作目录
--c,--cpu-shares=0， 设置容器CPU权重，在CPU共享场景使用
--e username="ritchie",--env=[] 设置环境变量容器中可以使用该环境变量
--m,--memory=""， 指定容器的内存上限
--P,--publish-all=false，指定容器暴露的端口
--h,--hostname=""， 指定容器的主机名
---name=”” 容器命名
---cap-add=[]添加权限，权限清单详见：	http://linux.die.net/man/7/capabilities
---cap-drop=[]删除权限，权限清单详见：	http://linux.die.net/man/7/capabilities
---cidfile="" 运行容器后,在指定文件中写入容器PID值，一种典型的监控系	统用法
---cpuset=""， 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU
---device=[]， 添加主机设备给容器，相当于设备直通
---dns=[]， 指定容器的dns服务器
---dns-search=[]指定容器的dns搜索域名,写入到容器的/etc/resolv.conf文	件
---entrypoint=""， 覆盖image的入口点
---env-file=[]， 从指定文件读入环境变量
---expose=[]， 指定容器暴露的端口，即修改镜像的暴露端口
---link=[]， 添加链接到另一个容器，使用其他容器的IP、env等信息
---lxc-conf=[]， 指定容器的配置文件，只有在指定--exec-driver=lxc时	使用
---net="bridge"， 容器网络设置:
-bridge 使用docker daemon指定的网桥
-host 容器使用主机的网络
+-d 后台运行并返回容器ID
+-v,--volume 挂载主机目录:容器目录,绑定一个卷
+-u,--user="":指定容器的用户
+-a,--attach=[]:登录容器（必须是以docker run -d启动的容器）
+-w,--workdir="":指定容器的工作目录
+-c,--cpu-shares=0:设置容器CPU权重,在CPU共享场景使用
+-e username="ritchie",--env=[]:设置环境变量容器中可以使用该环境变量
+-m,--memory="":指定容器的内存上限
+-P,--publish-all=false:指定容器暴露的端口
+-h,--hostname="":指定容器的主机名
+--name=””:容器命名
+--cap-add=[]:添加权限,权限清单详见:http://linux.die.net/man/7/capabilities
+--cap-drop=[]:删除权限,权限清单详见:http://linux.die.net/man/7/capabilities
+--cidfile="":运行容器后,在指定文件中写入容器PID值,一种典型的监控系统用法
+--cpuset="":设置容器可以使用哪些CPU，此参数可以用来容器独占CPU
+--device=[]:添加主机设备给容器，相当于设备直通
+--dns=[]:指定容器的dns服务器
+--dns-search=[]:指定容器的dns搜索域名,写入到容器的/etc/resolv.conf文件
+--entrypoint="":覆盖image的入口点
+--env-file=[]:从指定文件读入环境变量
+--expose=[]:指定容器暴露的端口,即修改镜像的暴露端口
+--link=[]:添加链接到另一个容器,使用其他容器的IP、env等信息
+--lxc-conf=[]:指定容器的配置文件,只有在指定--exec-driver=lxc时使用
+--net="bridge":容器网络设置:
+bridge - 使用docker daemon指定的网桥
+host - 容器使用主机的网络
 container:NAME_or_ID > 使用其他容器的网路，共享IP和PORT等网络资源
-none 容器使用自己的网络（类似--net=bridge），但是不进行配置
+none - 容器使用自己的网络（类似--net=bridge），但是不进行配置
+
 --privileged=false指定容器是否为特权容器,特权容器拥有所有的capabilities
 --restart="no"，指定容器停止后的重启策略:
 no - 容器退出时不重启
 on-failure - 只在容器以非0状态码退出时重启。可选的，可以退出docker daemon尝试重启容器的次数
 always – 不管退出状态码是什么始终重启容器。当指定always时，docker daemon将无限次数地重启容器。容器也会在daemon启动时尝试重启，不管容器当时的状态如何。
 unless-stopped – 不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
+
 --rm=false指定容器停止后自动删除容器(不支持以docker run -d启动的容器)
---sig-proxy=true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和	SIGKILL不能被代理
+--sig-proxy=true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理
 ```
+
+### docker inspect
 
 - 获取容器/镜像的元数据
 ```shell
@@ -366,22 +409,28 @@ OPTIONS说明：
 --type :为指定类型返回JSON。
 ```
 
+### docker top
+
 - 查看容器中运行的进程信息
 ```shell
 docker top container_id
 ```
+
+### docker attach
 
 - 连接到正在运行中的容器
 ```shell
 docker attach container_id
 ```
 
+### docker wait
+
 - 阻塞运行直到容器停止，然后打印出它的退出代码
 ```shell
 docker wait containser_id
 ```
 
-### 其他
+### docker events
 
 - 从服务器获取实时事件
 ```shell
@@ -394,9 +443,12 @@ OPTIONS说明：
 docker events --since="1467302400"
 ```
 
+### docker logs
+
 - 查看日志
 ```shell
 docker logs [OPTIONS] CONTAINER
+OPTIONS说明：
 --details 显示更多的信息
 -f, --follow 跟踪实时日志
 --since string 显示自某个timestamp之后的日志，或相对时间，如42m（即42分钟）
@@ -404,20 +456,24 @@ docker logs [OPTIONS] CONTAINER
 -t, --timestamps 显示时间戳
 --until string 显示自某个timestamp之前的日志，或相对时间，如42m（即42分钟）
 
-查看指定时间后的日志，只显示最后100行：
+# 查看指定时间后的日志，只显示最后100行：
 docker logs -f -t --since="2018-02-08" --tail=100 CONTAINER_ID
-查看最近30分钟的日志:
+# 查看最近30分钟的日志:
 docker logs --since 30m CONTAINER_ID
-查看某时间之后的日志：
+# 查看某时间之后的日志：
 docker logs -t --since="2018-02-08T13:23:37" CONTAINER_ID
-查看某时间段日志：
+# 查看某时间段日志：
 docker logs -t --since="2018-02-08T13:23:37" --until "2018-02-09T12:23:37" CONTAINER_ID
 ```
+
+### docker port
 
 - 列出指定的容器的端口映射
 ```shell
 docker port container_id
 ```
+
+### docker commit
 
 - 提交
 ```shell
@@ -429,30 +485,36 @@ OPTIONS说明：
 -m :提交时的说明文字；
 -p :在commit时，将容器暂停。
 
-将容器a404c6c174a2 保存为新的镜像,并添加提交人信息和说明信息。
+# 将容器a404c6c174a2 保存为新的镜像,并添加提交人信息和说明信息。
 docker commit -a "runoob.com" -m "my apache" a404c6c174a2 mymysql:v1
 ```
 
+### docker cp
+
 - 容器与主机之间的数据拷贝
 ```shell
-将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。
+# 将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。
 docker cp /www/runoob 96f7f14e99ab:/www/
 ```
+
+### docker diff
 
 - 查看容器文件结构更改
 ```shell
 docker diff mymysql
 ```
 
+### docker build
+
 - 使用 Dockerfile 创建镜像
 ```shell
 docker build
 --build-arg=[] :设置镜像创建时的变量；
---cpu-shares :设置 cpu 使用权重；
---cpu-period :限制 CPU CFS周期；
---cpu-quota :限制 CPU CFS配额；
+--cpu-shares :设置cpu使用权重；
+--cpu-period :限制CPU CFS周期；
+--cpu-quota :限制CPU CFS配额；
 --cpuset-cpus :指定使用的CPU id；
---cpuset-mems :指定使用的内存 id；
+--cpuset-mems :指定使用的内存id；
 --disable-content-trust :忽略校验，默认开启；
 -f :指定要使用的Dockerfile路径；
 --force-rm :设置镜像过程中删除中间容器；
@@ -471,23 +533,250 @@ docker build
 --network: 默认default。在构建期间设置RUN指令的网络模式
 ```
 
+### docker login
+
 - 登陆到一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库 Docker Hub
 ```shell
+# -u:登陆的用户名 -p:登陆的密码
 docker login -u -p
--u 登陆的用户名 -p :登陆的密码
 ```
+
+### docker logout
 
 - 登出一个Docker镜像仓库，如果未指定镜像仓库地址，默认为官方仓库Docker Hub
 ```shell
 docker logout
 ```
 
+### docker tag
+
 - 标记本地镜像，将其归入某一仓库
 ```shell
 docker tag
 ```
 
-## docker加速命令
+## Dockerfile
+
+1. 文件没有后缀，名字就是Dockerfile
+2. 命令约定全部使用大写，如RUN,ADD,FROM
+3. 第一条命令必需是FROM，作用是指定在哪个基础镜像上创建镜像。
+4. 注释以“#”形状
+
+### 常用参数/命令
+
+#### FROM
+
+语法：`FROM 镜像名`,最简单的命令，指定在哪个基础镜像上创建镜像
+
+例：`FROM livingobjects/jre8`,在jre8镜像基础上创建自己镜像。
+
+#### RUN
+
+它接受命令作为参数并用于创建镜像,RUN命令用于创建镜像。在镜像构建的过程中执行,这个指令有两种格式
+
+第一种形式：
+
+```text
+RUN chown user2:user2 /home/webapi (以shell形式执行命令，等同于/bin/sh -c);
+```
+
+第二种形式：
+
+```text
+RUN ["executable","param1", "param2"]
+```
+
+(等同于exec命令形式)，注意此处必须是双引号(")，因为这种格式被解析为JSON数组。
+
+#### CMD
+
+语法：`CMD ["executable", "param1", "param2"?]`
+
+1. 在镜像构建容器后执行
+2. 只能存在一条CMD命令
+
+例：`CMD exec java -Djava.security.egd=file:/dev/./urandom -jar /app.jar`
+
+#### ENTRYPOINT
+
+语法：`ENTRYPOINT ["executable", "param1", "param2"?]`,这个命令和CMD功能一样。区别在于ENTRYPOINT后面携带的参数不会被docker run 提供的参数覆盖，而CMD会被覆盖。
+
+例：`ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]`
+
+
+#### CMD 与 ENTRYPOINT
+
+二者的区别看：[docker CMD ENTRYPOINT区别终极解读](https://blog.csdn.net/u010900754/article/details/78526443)
+
+从根本上说, ENTRYPOINT和CMD都是让用户指定一个可执行程序, 这个可执行程序在container启动后自动启动。实际上, 如果你想让自己制作的镜像自动运行程序(不需要在docker run后面添加命令行指定运行的命令), 你必须在Dockerfile里面，使用ENTRYPOINT或者CMD命令。在命令行启动docker镜像时, 执行其他命令行参数，覆盖默认的CMD。和CMD类似, 默认的ENTRYPOINT也在docker run时, 也可以被覆盖. 在运行时, 用--entrypoint覆盖默认的ENTRYPOINT。
+
+dockerfile中的CMD命令被覆盖：
+
+![img](https://pic4.zhimg.com/v2-4a8d016349ee808822659ca2bf66fab3_r.jpg)
+
+**CMD**：提供了容器默认的执行命令。Dockerfile只允许使用一次CMD指令。使用多个CMD会抵消之前所有的指令，只有最后一个指令生效。CMD有三种形式：
+
+```text
+CMD ["executable","param1","param2"] (exec form, thisis the preferred form)
+```
+
+**ENTRYPOINT**：配置给容器一个可执行的命令，这意味着在每次使用镜像创建容器时一个特定的应用程序可以被设置为默认程序。同时也意味着该镜像每次被调用时仅能运行指定的应用。类似于CMD，Docker只允许一个ENTRYPOINT，多个ENTRYPOINT会抵消之前所有的指令，只执行最后的ENTRYPOINT指令。语法如下：
+
+```text
+ENTRYPOINT ["executable", "param1","param2"]
+```
+
+#### ADD
+
+语法：`ADD [source directory or URL] [destination directory]`
+它的基本作用是从源系统的文件系统上复制文件到目标容器的文件系统。
+
+1. 如果源是一个URL，那该URL的内容将被下载并复制到容器中。
+2. 如果如果文件是可识别的压缩格式，则docker会帮忙解压缩
+3. 如果要ADD本地文件，则本地文件必须在docker build PATH指定的path目录下
+4. ADD只有在build镜像的时候运行一次，后面运行container的时候不会再重新加载了
+
+ADD指令不仅能够将构建命令所在的主机本地的文件或目录，而且能够将远程URL所对应的文件或目录，作为资源复制到镜像文件系统。所以，可以认为ADD是增强版的COPY，支持将远程URL的资源加入到镜像的文件系统。
+
+exec格式用法（推荐）：
+
+```text
+ADD ["<src>",... "<dest>"]
+```
+
+特别适合路径中带有空格的情况。
+
+shell格式用法：
+
+```text
+ADD <src>... <dest>
+```
+
+对于从远程URL获取资源的情况，由于ADD指令不支持认证，如果从远程获取资源需要认证，则只能使用RUN wget或RUN curl替代。另外，如果源路径的资源发生变化，则该ADD指令将使Docker Cache失效，Dockerfile中后续的所有指令都不能使用缓存。因此尽量将ADD指令放在Dockerfile的后面。	
+
+
+#### EXPOSE
+
+语法：`EXPOSE [port]`,暴露容器内部端口
+
+例：`EXPOSE 5000`,暴露的是容器内部端口，不是主机端口，如果外部想使用这个端口需要在运行时映射，如下：`docker run -d -p 127.0.0.1:8080:5000 hello-world`。指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，docker run命令如果没有带上响应的端口映射参数，docker并不会将端口映射到宿主机。
+
+#### MAINTAINER
+
+语法：`MAINTAINER 作者名`,申明作者，辅助使用，放丰FROM命令后面
+
+#### WORKDIR
+
+语法：`WORKDIR /path`,指定容器工作目录
+
+#### VOLUME
+
+语法：`VOLUME ["/dir_1", "/dir_2" ..]`可以将本地文件夹或者其他container的文件夹挂载到container中，容器即可以访问该目录
+
+```text
+VOLUME ["/data"] (exec格式指令)
+```
+
+VOLUME指令创建一个可以从本地主机或其他容器挂载的挂载点。经常用到的是`docker run -ti -v /data:/data nginx:1.12 bash`时指定本地路径和容器内路径的映射。
+
+#### ENV
+
+语法：`ENV key value`,设置变量，可能在容器和脚本里直接使用
+
+例：`ENV WORKPATH /tmp`或`ENV abc=bye def=$abc`
+
+第一种用法用于设置单个变量(第一个空格前为key，之后都是value,包括后面的空格)，第二种用于同时设置多个变量(空格为分隔符，value中包含空格时可以用双引号把value括起来，或者在空格前加反斜线)，当需要同时设置多个环境变量时推荐使用第二种格式。这些环境变量可以通过docker run命令的--env参数来进行修改。
+
+#### ARG
+
+```text
+ARG <name>[=<default value>]
+```
+
+ARG指令设置一些创建镜像时的参数，这些参数可以在执行docker build命令时通过`--build-arg = `设置，如果指定的创建参数在Dockerfile中没有指定，创建时会输出错误信息: One or more build-args were not consumed, failing build.
+
+Dockerfile作者可以为ARG设置一个默认参数值，当创建镜像时如果没有传入参数就会使用默认值：
+
+```text
+FROM busybox
+```
+
+我们可以使用ARG或者ENV指令来指定RUN指令使用的变量。我们可以使用ENV定义与ARG定义名称相同的变量来覆盖ARG定义的变量值。如下示例，我们执行
+
+```text
+docker build --build-arg CONT_IMG_VER=v2.0.1 Dockerfile
+```
+
+后将获取到的CONTIMGVER变量值为v1.0.0:
+
+```text
+FROM ubuntu
+```
+
+#### WORKDIR
+
+```text
+WORKDIR /path/to/workdir
+```
+
+WORKDIR指令用来设置Dockerfile中任何使用目录的命令的当前工作目录，此目录如果不存在就会被自动创建，即使这个目录不被使用
+
+#### COPY
+
+COPY指令能够将构建命令所在的主机本地的文件或目录，复制到镜像文件系统。
+
+exec格式用法（推荐）：
+
+```text
+COPY ["<src>",... "<dest>"]
+```
+
+特别适合路径中带有空格的情况。
+
+shell格式用法：
+
+```text
+COPY <src>... <dest>
+```
+
+
+### 示例
+
+```dockerfile
+FROM anapsix/alpine-java:8_server-jre_unlimited
+VOLUME /tmp
+EXPOSE 19990
+ADD applet-provider.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+```
+
+```shell
+#!/bin/bash
+echo "自动构建pc包的镜像和运行容器"
+#1.停掉容器和删掉容器
+id=$(docker ps |grep mdjz  | tail -n 1| awk 'RS {print $1 }')
+echo $id
+#杀掉进程
+echo "docker kill $id"
+docker kill $id
+#删除容器
+echo "docker rm $id"
+docker rm $id
+#删掉镜像
+mid=$(docker images |grep mdjz  | tail -n 1| awk 'RS {print $1 }')
+echo "docker rmi $mid"
+docker rmi $mid
+#重新打包镜像
+docker build -f /composetest/pc/Dockerfile -t mdjz /composetest/pc/
+#运行容器
+echo "run app docker run -itd --name mdjz --restart always  -p  19901:19901 "
+docker run -itd --name mdjz --network=my-net --restart always  -p  19901:19901 mdjz
+
+```
+
+## 其他
+
+### docker加速命令
 
 ```shell
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
@@ -505,7 +794,7 @@ vim /etc/docker/daemon.json
 > https://mirror.ccs.tencentyun.com
 > https://docker.mirrors.ustc.edu.cn
 
-## 与Spring Boot
+### 与Spring Boot
 
 - [一键部署Spring Boot到远程Docker容器](https://mp.weixin.qq.com/s/15ZAVUg5DfcF53QpEetT7Q)
 - [Jenkins+Docker一键自动化部署SpringBoot项目](https://mp.weixin.qq.com/s/dP-c3twzR0PMUvPWZA-U0Q)
@@ -517,7 +806,7 @@ vim /etc/docker/daemon.json
 - [Docker+Spring Boot+FastDFS搭建一套分布式文件服务器，太强了！](https://mp.weixin.qq.com/s/HSRIYQVKR9TGtwetd3LU5w)
 
 
-## 相关文章
+### 相关文章
 
 - [图解Docker架构，傻瓜都能看懂！](https://mp.weixin.qq.com/s/ELZo2z4fHonoBGXQI0M9CA)
 - [构建Java镜像的10个最佳实践](https://mp.weixin.qq.com/s/gmZDBuYDXnNdykEx66Y0Cw)

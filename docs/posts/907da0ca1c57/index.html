@@ -803,6 +803,12 @@ default-storage-engine<span class="token operator">=</span>INNODB<span aria-hidd
 
 <p>(2) 将mysql加入环境变量</p>
 <p>(3) 管理员打开cmd切换到mysql bin目录下(一定要切换),执行<strong>mysqld install</strong>安装mysql服务，成功打印<strong>service successfully installed</strong>后执行<strong>mysqld –initialize –console</strong>会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务</p>
+<blockquote>
+<p>或者配置root用户不设置密码–”mysqld –initialize-insecure –console”。此命令是一个用于初始化MySQL服务器的命令。该命令的作用是在指定的目录中创建MySQL数据文件，并生成一个没有密码的root用户账号，以及默认的匿名用户账号和测试数据库。以下是该命令的各个选项的具体含义：</p>
+<blockquote>
+<p>mysqld: MySQL的服务器程序，用于处理MySQL的请求。<br>–initialize-insecure: 初始化MySQL服务器时不设置任何安全措施，包括不设置root用户的密码。<br>–console: 将初始化过程的输出重定向到标准输出设备（如终端窗口），以便可以查看执行结果。</p>
+</blockquote>
+</blockquote>
 <p>(4) 修改密码（5.7版本以前）</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># mysql -uroot -p输入密码后</span>
 <span class="token builtin class-name">set</span> password <span class="token keyword">for</span> root@localhost <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'123456'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>

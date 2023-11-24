@@ -533,73 +533,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
+                <h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://k8s-tutorials.pages.dev/">https://k8s-tutorials.pages.dev/</a><br><a target="_blank" rel="noopener" href="https://kuboard.cn/">https://kuboard.cn/</a><br><a target="_blank" rel="noopener" href="https://k8s.iswbm.com/">https://k8s.iswbm.com/</a></p>
 </blockquote>
-<p>下面是所有文档的集合：</p>
-<ul>
-<li><a href="#kubernetes-tutorials">kubernetes tutorials</a><ul>
-<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a><ul>
-<li><a href="#%E5%AE%89%E8%A3%85-docker">安装docker</a><ul>
-<li><a href="#%E6%8E%A8%E8%8D%90%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95">推荐安装方法</a></li>
-<li><a href="#%E5%85%B6%E5%AE%83%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95">其它安装方法</a></li>
-</ul>
-</li>
-<li><a href="#%E5%AE%89%E8%A3%85-minikube">安装minikube</a><ul>
-<li><a href="#%E5%90%AF%E5%8A%A8-minikube">启动minikube</a></li>
-</ul>
-</li>
-<li><a href="#%E5%AE%89%E8%A3%85-kubectl">安装kubectl</a></li>
-<li><a href="#%E6%B3%A8%E5%86%8C-docker-hub-%E8%B4%A6%E5%8F%B7%E7%99%BB%E5%BD%95">注册docker hub账号登录</a></li>
-</ul>
-</li>
-<li><a href="#container">Container</a></li>
-<li><a href="#pod">Pod</a><ul>
-<li><a href="#pod-%E4%B8%8E-container-%E7%9A%84%E4%B8%8D%E5%90%8C">Pod与Container的不同</a></li>
-<li><a href="#pod-%E5%85%B6%E5%AE%83%E5%91%BD%E4%BB%A4">Pod其它命令</a></li>
-</ul>
-</li>
-<li><a href="#deployment">Deployment</a><ul>
-<li><a href="#%E6%89%A9%E5%AE%B9">扩容</a></li>
-<li><a href="#%E5%8D%87%E7%BA%A7%E7%89%88%E6%9C%AC">升级版本</a></li>
-<li><a href="#rolling-update%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0">Rolling Update(滚动更新)</a></li>
-<li><a href="#%E5%AD%98%E6%B4%BB%E6%8E%A2%E9%92%88-livenessprob">存活探针(livenessProb)</a></li>
-<li><a href="#%E5%B0%B1%E7%BB%AA%E6%8E%A2%E9%92%88-readiness">就绪探针(readiness)</a></li>
-</ul>
-</li>
-<li><a href="#service">Service</a><ul>
-<li><a href="#clusterip">ClusterIP</a></li>
-<li><a href="#nodeport">NodePort</a></li>
-<li><a href="#loadbalancer">LoadBalancer</a></li>
-</ul>
-</li>
-<li><a href="#ingress">ingress</a></li>
-<li><a href="#namespace">Namespace</a></li>
-<li><a href="#configmap">Configmap</a></li>
-<li><a href="#secret">Secret</a></li>
-<li><a href="#job">Job</a></li>
-<li><a href="#cronjob">CronJob</a></li>
-<li><a href="#helm">Helm</a><ul>
-<li><a href="#%E7%94%A8-helm-%E5%AE%89%E8%A3%85-hellok8s">用helm安装hellok8s</a></li>
-<li><a href="#%E5%88%9B%E5%BB%BA-helm-charts">创建helm charts</a><ul>
-<li><a href="#rollback">rollback</a></li>
-<li><a href="#%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">多环境配置</a></li>
-</ul>
-</li>
-<li><a href="#helm-chart-%E6%89%93%E5%8C%85%E5%92%8C%E5%8F%91%E5%B8%83">helm chart打包和发布</a></li>
-</ul>
-</li>
-<li><a href="#dashboard">Dashboard</a><ul>
-<li><a href="#kubernetes-dashboard">kubernetes dashboard</a></li>
-<li><a href="#k9s">K9s</a></li>
-</ul>
-</li>
-<li><a href="#sponsor">Sponsor</a></li>
-<li><a href="#star-history">Star History</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="kubernetes-tutorials"><a href="#kubernetes-tutorials" class="headerlink" title="kubernetes tutorials"></a>kubernetes tutorials</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在开始本教程之前，需要配置好本地环境，以下是需要安装的依赖和包。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在开始本教程之前，需要配置好本地环境，以下是需要安装的依赖和包。</p>
 <h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h3><p>首先我们需要安装<code>docker</code>来打包镜像，如果你本地已经安装了<code>docker</code>，那么你可以选择跳过这一小节。</p>
 <h4 id="推荐安装方法"><a href="#推荐安装方法" class="headerlink" title="推荐安装方法"></a>推荐安装方法</h4><p>目前使用 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>来安装docker还是最简单的方案，打开官网下载对应你电脑操作系统的包即可(<a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop/)%EF%BC%8C">https://www.docker.com/products/docker-desktop/)，</a></p>
 <p>当安装完成后，可以通过<code>docker run hello-world</code>来快速校验是否安装成功！</p>
@@ -2381,13 +2318,10 @@ helm upgrade <span class="token parameter variable">--install</span> hello-helm 
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            引用
 https://k8s-tutorials.pages.dev/https://kuboard.cn/https://k8s.iswbm.com/
 
-下面是所有文档的集合：
-
-kubernetes tutorials
-准备工作
+准备工作在开始本教程之前，需要配置好本地环境，以下是需要安装的依赖和包。
 安装doc
                         
                         

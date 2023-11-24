@@ -555,10 +555,12 @@ yum <span class="token parameter variable">-y</span> <span class="token function
 </blockquote>
 <h3 id="配置jdk环境变量"><a href="#配置jdk环境变量" class="headerlink" title="配置jdk环境变量"></a>配置jdk环境变量</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/usr/jdk1.8.0_121
+<span class="token comment"># export JRE_HOME=$&#123;JAVA_HOME&#125;/jre  </span>
+<span class="token comment"># export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib  </span>
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">CLASSPATH</span><span class="token operator">=</span>.:<span class="token variable">$JAVA_HOME</span>/jre/lib/rt.jar:<span class="token variable">$JAVA_HOME</span>/lib/dt.jar:<span class="token variable">$JAVA_HOME</span>/lib/tools.jar
 <span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$JAVA_HOME</span>/bin
 <span class="token builtin class-name">source</span> /etc/profile <span class="token comment"># 使环境变量生效</span>
-<span class="token builtin class-name">echo</span> <span class="token environment constant">$PATH</span> <span class="token comment"># 查看环境变量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token builtin class-name">echo</span> <span class="token environment constant">$PATH</span> <span class="token comment"># 查看环境变量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>ubuntu按照上面的步骤在&#x2F;etc&#x2F;environment再配置一遍，配置完成后</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> /etc/environment<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>

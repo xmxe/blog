@@ -54,6 +54,8 @@ apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要
 ```shell
 vim /etc/profile
 export JAVA_HOME=/usr/jdk1.8.0_121
+# export JRE_HOME=${JAVA_HOME}/jre  
+# export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
 export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 export PATH=$PATH:$JAVA_HOME/bin
 source /etc/profile # 使环境变量生效

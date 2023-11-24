@@ -5,54 +5,11 @@ img: https://pic1.zhimg.com/70/v2-353855dec58fcaa1477e90a869b30ad0_1440w.avis
 
 ---
 
+## 引用
+
 > https://k8s-tutorials.pages.dev/
 > https://kuboard.cn/
 > https://k8s.iswbm.com/
-
-下面是所有文档的集合：
-
-- [kubernetes tutorials](#kubernetes-tutorials)
-  - [准备工作](#准备工作)
-    - [安装docker](#安装-docker)
-      - [推荐安装方法](#推荐安装方法)
-      - [其它安装方法](#其它安装方法)
-    - [安装minikube](#安装-minikube)
-      - [启动minikube](#启动-minikube)
-    - [安装kubectl](#安装-kubectl)
-    - [注册docker hub账号登录](#注册-docker-hub-账号登录)
-  - [Container](#container)
-  - [Pod](#pod)
-    - [Pod与Container的不同](#pod-与-container-的不同)
-    - [Pod其它命令](#pod-其它命令)
-  - [Deployment](#deployment)
-    - [扩容](#扩容)
-    - [升级版本](#升级版本)
-    - [Rolling Update(滚动更新)](#rolling-update滚动更新)
-    - [存活探针(livenessProb)](#存活探针-livenessprob)
-    - [就绪探针(readiness)](#就绪探针-readiness)
-  - [Service](#service)
-    - [ClusterIP](#clusterip)
-    - [NodePort](#nodeport)
-    - [LoadBalancer](#loadbalancer)
-  - [ingress](#ingress)
-  - [Namespace](#namespace)
-  - [Configmap](#configmap)
-  - [Secret](#secret)
-  - [Job](#job)
-  - [CronJob](#cronjob)
-  - [Helm](#helm)
-    - [用helm安装hellok8s](#用-helm-安装-hellok8s)
-    - [创建helm charts](#创建-helm-charts)
-      - [rollback](#rollback)
-      - [多环境配置](#多环境配置)
-    - [helm chart打包和发布](#helm-chart-打包和发布)
-  - [Dashboard](#dashboard)
-    - [kubernetes dashboard](#kubernetes-dashboard)
-    - [K9s](#k9s)
-  - [Sponsor](#sponsor)
-  - [Star History](#star-history)
-
-# kubernetes tutorials
 
 ## 准备工作
 

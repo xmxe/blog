@@ -546,7 +546,14 @@
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl stop firewalld<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>(3) 安装容器</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> docker-ce<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 更新yum源</span>
+yum <span class="token parameter variable">-y</span> update
+<span class="token comment"># 加软件源</span>
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+<span class="token comment"># 更新缓存</span>
+yum makecache fast
+<span class="token comment"># 安装</span>
+yum <span class="token parameter variable">-y</span> <span class="token function">install</span> docker-ce<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>(4) 启动服务</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -557,12 +564,15 @@
 
 <h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><p>(1) <a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/">下载离线包</a></p>
 <p>(2) 解压</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-xvf</span> docker-18.06.1-ce.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> docker-18.06.1-ce.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>(3) 将解压出来的docker文件内容移动到&#x2F;usr&#x2F;bin&#x2F;目录下</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> docker/* /usr/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>(4) 将docker注册为service</p>
+<pre class="line-numbers language-none"><code class="language-none">touch &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service
+vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>编辑docker.service</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># vim /etc/systemd/system/docker.service</span>
 
 <span class="token comment"># lib/systemd/system、/usr/lib/systemd/system、/etc/systemd/system都可以，lib/systemd/system真实地址是/usr/lib/system/system地址，</span>
@@ -584,7 +594,8 @@
 <span class="token comment"># exists and systemd currently does not support the cgroup feature set required</span>
 <span class="token comment"># for containers run by docker</span>
 
-<span class="token assign-left variable">ExecStart</span><span class="token operator">=</span>/usr/bin/dockerd <span class="token parameter variable">-H</span> tcp://0.0.0.0:2375 <span class="token parameter variable">-H</span> unix://var/run/docker.sock
+<span class="token assign-left variable">ExecStart</span><span class="token operator">=</span>/usr/bin/dockerd
+<span class="token comment"># ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock</span>
 
 <span class="token assign-left variable">ExecReload</span><span class="token operator">=</span>/bin/kill <span class="token parameter variable">-s</span> HUP <span class="token variable">$MAINPID</span>
 
@@ -622,7 +633,7 @@
 
 <span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
 
-<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>(5) 添加文件权限并启动docker</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x /etc/systemd/system/docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -894,6 +905,9 @@ OPTIONS说明：
 </ul>
 <h3 id="docker-tag"><a href="#docker-tag" class="headerlink" title="docker tag"></a>docker tag</h3><ul>
 <li>标记本地镜像，将其归入某一仓库<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> tag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h3 id="docker-network"><a href="#docker-network" class="headerlink" title="docker network"></a>docker network</h3><ul>
+<li>创建桥接网络，用于mysql与nacos通信<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network create <span class="token parameter variable">-d</span> bridge my-net<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
 <h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><ol>
 <li>文件没有后缀，名字就是Dockerfile</li>

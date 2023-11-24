@@ -28,6 +28,13 @@ systemctl stop firewalld
 (3) 安装容器
 
 ```shell
+# 更新yum源
+yum -y update
+# 加软件源
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+# 更新缓存
+yum makecache fast
+# 安装
 yum -y install docker-ce
 ```
 
@@ -51,7 +58,7 @@ docker run hello-world
 (2) 解压
 
 ```shell
-tar -xvf docker-18.06.1-ce.tgz
+tar -zxvf docker-18.06.1-ce.tgz
 ```
 
 (3) 将解压出来的docker文件内容移动到/usr/bin/目录下
@@ -61,7 +68,11 @@ cp docker/* /usr/bin/
 ```
 
 (4) 将docker注册为service
-
+```
+touch /etc/systemd/system/docker.service
+vim /etc/systemd/system/docker.service
+```
+编辑docker.service
 ```shell
 # vim /etc/systemd/system/docker.service
 
@@ -84,7 +95,8 @@ Type=notify
 # exists and systemd currently does not support the cgroup feature set required
 # for containers run by docker
 
-ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock
+ExecStart=/usr/bin/dockerd
+# ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock
 
 ExecReload=/bin/kill -s HUP $MAINPID
 
@@ -553,6 +565,13 @@ docker logout
 - 标记本地镜像，将其归入某一仓库
 ```shell
 docker tag
+```
+
+### docker network
+
+- 创建桥接网络，用于mysql与nacos通信
+```shell
+docker network create -d bridge my-net
 ```
 
 ## Dockerfile

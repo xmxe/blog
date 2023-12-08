@@ -123,7 +123,7 @@ interactive_timeout=31536000
 ##### 8.0版本
 
 ```shell
-bin/mysqld --user=mysql --initialize --datadir=/usr/local/mysql/data
+./mysqld --defaults-file=/etc/my.cnf --datadir=/usr/local/mysql/data --basedir=/usr/local/mysql/ --initialize --user=mysql
 ```
 root@localhost之后的一串字符就是初始密码
 
@@ -148,6 +148,38 @@ chmod +x /etc/init.d/mysql
 service mysql start
 ```
 
+> 延申
+> 如果想要将`service mysql start`启动替换成`systemctl start mysql`的话,步骤如下
+
+1. 创建mysql.service `vim /etc/systemd/system/mysql.service`
+
+```makefile
+[Unit]
+Description=MySQL Community Server
+After=network.target
+
+[Service]
+Type=forking
+# Set the path to the MySQL binary
+ExecStart=/usr/local/mysql/support-files/mysql.server start
+ExecStop=/usr/local/mysql/support-files/mysql.server stop
+ExecReload=/usr/local/mysql/support-files/mysql.server reload
+# Set user and group to run the service as
+User=mysql
+Group=mysql
+
+[Install]
+WantedBy=multi-user.target
+```
+
+2. 执行
+
+```shell
+chmod +x /etc/systemd/system/docker.service
+systemctl daemon-reload
+systemctl start mysql
+```
+
 #### 6. 修改密码
 
 ```shell
@@ -159,12 +191,13 @@ update mysql.user set password=password('新密码') where host='localhost' and 
 set password for root@localhost = password('新密码');
 # 或者使用mysqladmin修改密码
 ./bin/mysqladmin -hlocalhost.localdomain -uroot -p旧密码 password '新密码'
+
 # MySQL8使用
-update user set authentication_string='' where user='root';# 将字段置为空
-ALTER user 'root'@'localhost' IDENTIFIED BY 'root';#修改密码为root
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';
+#update user set authentication_string='' where user='root';# 将字段置为空
+#ALTER user 'root'@'localhost' IDENTIFIED BY 'root';#修改密码为root
 # 进入mysql更改密码
-set password='root';
+#set password='root';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';
 # 使密码生效
 flush privileges;
 ```
@@ -405,7 +438,7 @@ default-storage-engine=INNODB
 
 (3) 管理员打开cmd切换到mysql bin目录下(一定要切换),执行**mysqld install**安装mysql服务，成功打印**service successfully installed**后执行**mysqld --initialize --console**会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务
 
-> 或者配置root用户不设置密码--"mysqld --initialize-insecure --console"。此命令是一个用于初始化MySQL服务器的命令。该命令的作用是在指定的目录中创建MySQL数据文件，并生成一个没有密码的root用户账号，以及默认的匿名用户账号和测试数据库。以下是该命令的各个选项的具体含义：
+> 或者配置root用户不设置密码: **mysqld --initialize-insecure --console**。此命令是一个用于初始化MySQL服务器的命令。该命令的作用是在指定的目录中创建MySQL数据文件，并生成一个没有密码的root用户账号，以及默认的匿名用户账号和测试数据库。以下是该命令的各个选项的具体含义：
 >> mysqld: MySQL的服务器程序，用于处理MySQL的请求。
 >> --initialize-insecure: 初始化MySQL服务器时不设置任何安全措施，包括不设置root用户的密码。
 >> --console: 将初始化过程的输出重定向到标准输出设备（如终端窗口），以便可以查看执行结果。
@@ -432,6 +465,87 @@ update user set host = '%' where user = 'root';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '新密码'
 FLUSH PRIVILEGES;
 ```
+
+## 批量迁移.ibd文件脚本(AI生成)
+
+### ChatGPT 3.5(已测试)
+
+```bash
+#!/bin/bash
+# 定义目标数据库信息
+database="your_database"
+tablespace_directory="/path/to/tablespace_directory"
+
+# 遍历目录中的所有IDB文件
+for file in $(find "$tablespace_directory" -type f -name "*.ibd")
+do
+    # 提取表名
+    tablename=$(basename "$file" .ibd)
+    
+    # 执行导入表空间操作
+    # 注意:`ALTER TABLE $tablename DISCARD TABLESPACE`将删除与该表关联的.ibd文件。所以如果手动将原.idb删除后将目标的.ibd文件复制到mysql的data目录后不要执行下面的命令,因为先删掉.ibd后`ALTER TABLE $tablename IMPORT TABLESPACE`就无法执行了,当拷贝的.ibd文件不在data目录下而在其他目录时可以使用下面命令
+    # mysql -uroot -proot -e "USE $database; ALTER TABLE $tablename DISCARD TABLESPACE; ALTER TABLE $tablename IMPORT TABLESPACE;"
+    
+    mysql -uroot -proot -e "USE $database; ALTER TABLE $tablename IMPORT TABLESPACE;"
+    
+    if [ $? -eq 0 ]; then
+        echo "成功导入表 $tablename 的表空间"
+    else
+        echo "导入表 $tablename 的表空间时出现错误"
+    fi
+done
+```
+> 问题1: 如果遇到报错试下授予文件读写权限: **chmod -R 777 mysql/data/databasename/**
+> 问题2: 执行脚本时报错: **Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock**。
+> 解决方法为更改/etc/my.cnf文件**socket = /home/mysql/mysql.sock**后创建软连接**ln -s /home/mysql/mysql.sock /tmp/mysql.sock**。归结到底还是文件目录读写权限问题，一劳永逸方法**chmod -R 777 mysql安装目录**
+
+### 文心一言
+
+```bash
+#!/bin/bash  
+  
+# 目标数据库连接信息  
+DB_USER="your_username"  
+DB_PASSWORD="your_password"  
+DB_NAME="your_database"  
+  
+# IDB文件目录路径  
+IDB_DIR="/path/to/idb/files"  
+  
+# 遍历IDB文件目录  
+for file in $IDB_DIR/*.idb; do  
+    # 提取表名  
+    table_name=$(basename "$file" .idb)
+    # 导入表空间  
+    mysql -u $DB_USER -p$DB_PASSWORD -e "ALTER TABLE $table_name IMPORT TABLESPACE $file;" $DB_NAME  
+done
+```
+
+### 通义千问
+
+```bash
+#!/bin/bash
+
+# 指定要导入的目录
+IMPORT_DIR="/path/to/import/directory"
+
+# 指定目标数据库名
+DATABASE_NAME="your_database_name"
+
+# 获取目录中所有.ibd文件的列表
+IBD_FILES=$(find "$IMPORT_DIR" -name "*.ibd")
+
+# 遍历所有.ibd文件
+for IBDFILE in $IBD_FILES; do
+    # 提取表名
+    TABLE_NAME=$(basename "$IBDFILE" .ibd)
+    # 执行ALTER TABLE IMPORT TABLESPACE语句
+    mysql -uroot -proot $DATABASE_NAME -e "ALTER TABLE \`$TABLE_NAME\` IMPORT TABLESPACE;"
+done
+
+echo "Import completed."
+```
+
 
 ## 相关文章
 - [一文教你在CentOS7下安装MySQL及搭建主从复制](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect)

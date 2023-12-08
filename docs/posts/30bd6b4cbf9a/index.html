@@ -528,28 +528,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h3><h4 id="上传git仓库"><a href="#上传git仓库" class="headerlink" title="上传git仓库"></a>上传git仓库</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建.git目录</span>
-<span class="token function">git</span> init
-<span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-A</span>
-<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"init"</span>
-<span class="token function">git</span> remote <span class="token function">add</span> origin https://github.com/xmxe/project.git
-<span class="token comment"># 断开连接</span>
-<span class="token function">git</span> remote remove origin
-<span class="token comment"># 增加一个新的远程仓库</span>
-<span class="token comment">#git remote add name url</span>
-<span class="token comment"># 删除指定远程仓库</span>
-<span class="token comment">#git remote remove name</span>
-<span class="token comment"># 获取指定远程仓库的详细信息</span>
-<span class="token comment">#git remote show origin</span>
-
-<span class="token function">git</span> pull <span class="token parameter variable">--rebase</span> origin master 
-<span class="token function">git</span> push origin master
-<span class="token comment"># git push --set-upstream origin master</span>
-
-<span class="token comment"># 本地生成ssh密钥</span>
-ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-C</span> <span class="token string">"你的邮箱"</span>生成sshkey
-<span class="token function">git</span> remote set-url origin git@github.com:xmxe/springcloud.git<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 可以查看当前没有add的内容修改（不在缓冲区的文件变化）</span>
+                <h2 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h2><h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 可以查看当前没有add的内容修改（不在缓冲区的文件变化）</span>
 <span class="token function">git</span> <span class="token function">diff</span>
 <span class="token comment"># 查看已经add但没有commit的改动（在缓冲区的文件变化）</span>
 <span class="token function">git</span> <span class="token function">diff</span> <span class="token parameter variable">--cached</span>
@@ -560,7 +539,7 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
 <span class="token comment"># 查看两次提交的区别</span>
 <span class="token function">git</span> <span class="token function">diff</span> commit-id commit-id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将未commit的文件移出Staging区</span>
+<h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将未commit的文件移出Staging区</span>
 <span class="token function">git</span> reset HEAD
 <span class="token comment"># 重置Staging区与上次commit的一样</span>
 <span class="token function">git</span> reset <span class="token parameter variable">--hard</span>  
@@ -579,7 +558,7 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
 <span class="token comment"># 不删除工作空间改动代码，撤销commit，并且撤销git add操作。这个为默认参数,git reset --mixed HEAD^和git reset HEAD^效果是一样的。</span>
 <span class="token function">git</span> reset <span class="token parameter variable">--mixed</span> HEAD^<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h4><blockquote>
+<h3 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h3><blockquote>
 <p>应用场景：有一天测试突然跟你说，你开发上线的功能有问题，需要马上撤回，否则会影响到系统使用。这时可能会想到用reset回退，可是你看了看分支上最新的提交还有其他同事的代码，用reset会把这部分代码也撤回了。由于情况紧急，又想不到好方法，还是任性的使用reset，然后再让同事把他的代码合一遍（同事听到想打人），于是你的技术形象在同事眼里一落千丈</p>
 </blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 回退到指定版本。与git reset --hard commitid相比区别是在我们确认了在需要回退的版本之后的提交都可以不需要的时候，我们可以直接使用git reset命令，但是当我们只是需要撤销某个版本的时候，后面的提交还需要保留，我们就可以使用git revert.revert会生成一条新的提交记录，这时会让你编辑提交信息，编辑完后:wq保存退出就好了。-n/--no edit：这个选项不会打开文本编辑器。它将直接恢复上次的提交。</span>
@@ -589,7 +568,7 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
 <span class="token comment"># 撤销前前一次commit</span>
 <span class="token function">git</span> revert HEAD^<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># (git add -u + git commit -m ""组合)</span>
+<h3 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># (git add -u + git commit -m ""组合)</span>
 <span class="token function">git</span> commit <span class="token parameter variable">-am</span> <span class="token string">''</span>
 <span class="token comment"># 修改commit信息</span>
 <span class="token function">git</span> commit <span class="token parameter variable">--amend</span>
@@ -599,11 +578,12 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
 <span class="token function">git</span> commit file1 file2 <span class="token parameter variable">-m</span> <span class="token string">"message
 # 修改上次提交的用户名和邮箱
 git commit --amend --author="</span>name <span class="token operator">&lt;</span>email<span class="token operator">></span>" --no-edit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-A</span> <span class="token comment"># 保存所有的修改</span>
+
+<h3 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-A</span> <span class="token comment"># 保存所有的修改</span>
 <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span> <span class="token comment"># 保存新的添加和修改，但是不包括删除</span>
 <span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-u</span> <span class="token comment"># 保存修改和删除，但是不包括新建文件。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看本地分支(不包括远程分支)</span>
+<h3 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看本地分支(不包括远程分支)</span>
 <span class="token function">git</span> branch
 <span class="token comment"># 查看远程分支</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-a</span>
@@ -619,47 +599,12 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> branch <span class="token parameter variable">-d</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 设置分支上游</span>
 <span class="token function">git</span> branch --set-upstream-to origin/master
-
-<span class="token comment"># 远程分支重命名,远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</span>
-<span class="token comment"># 方案1:先重命名本地分支，然后推送到远程分支</span>
-<span class="token comment"># 1.先重命名本地分支</span>
-<span class="token function">git</span> branch <span class="token parameter variable">-m</span> 旧分支名称 新分支名称
-<span class="token comment"># 2.删除远程分支(如果删除的是默认分支的话会失败，需要先更改默认分支)</span>
-<span class="token function">git</span> push <span class="token parameter variable">--delete</span> origin 旧分支名称
-<span class="token comment"># 3.上传新修改名称的本地分支</span>
-<span class="token function">git</span> push origin 新分支名称
-<span class="token comment"># 4.修改后的本地分支关联远程分支</span>
-<span class="token function">git</span> branch --set-upstream-to origin/新分支名称
-
-<span class="token comment"># 方案2(未测试):先修改远程仓库分支，然后与本地仓库同步</span>
-<span class="token function">git</span> branch <span class="token parameter variable">-m</span> master <span class="token number">2021</span>.x
-<span class="token comment"># 获取源分支</span>
-<span class="token function">git</span> fetch origin
-<span class="token comment"># 切换源分支为远程分支</span>
-<span class="token function">git</span> branch <span class="token parameter variable">-u</span> origin/2021.x <span class="token number">2021</span>.x
-<span class="token comment"># 设置远程分支</span>
-<span class="token function">git</span> remote set-head origin <span class="token parameter variable">-a</span>
-<span class="token comment"># 方案2另一种实现(未测试):先修改远程仓库分支，然后与本地仓库同步</span>
-<span class="token comment"># 首先，在本地仓库中切换到需要同步的分支上：这里&lt;branch-name>是需要同步的分支名称</span>
-<span class="token function">git</span> checkout <span class="token operator">&lt;</span>branch-name<span class="token operator">></span>
-<span class="token comment"># 接下来，从远程仓库中获取最新的分支列表和分支状态信息：这会更新本地仓库中的远程分支信息。</span>
-<span class="token function">git</span> fetch
-<span class="token comment"># 然后，使用以下命令来重置本地分支到远程分支的最新状态：这将强制将本地分支指向远程分支的最新状态。</span>
-<span class="token function">git</span> reset <span class="token parameter variable">--hard</span> origin/<span class="token operator">&lt;</span>branch-name<span class="token operator">></span>
-
-<span class="token comment"># 下载所有分支</span>
-<span class="token comment"># git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用'git checkout 分支名'来下载其他分支。如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。</span>
-<span class="token function">git</span> clone <span class="token parameter variable">--bare</span> https://github.com/xx/project.git .git
-<span class="token comment"># 或者git config --unset core.bare</span>
-<span class="token function">git</span> config <span class="token parameter variable">--bool</span> core.bare <span class="token boolean">false</span>
-<span class="token comment"># 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了</span>
-<span class="token function">git</span> reset <span class="token parameter variable">--hard</span>
 <span class="token comment"># 下载指定分支</span>
 <span class="token function">git</span> clone <span class="token parameter variable">-b</span> 分支名称 git地址
 <span class="token comment"># 为了节省磁盘空间，您可以使用以下命令克隆仅导致单个分支的历史记录,如果--single-branch未添加到命令中，则所有分支的历史记录将被克隆。大型存储库可能会出现此问题。</span>
-<span class="token function">git</span> clone <span class="token parameter variable">-b</span> <span class="token operator">&lt;</span>branch_name<span class="token operator">></span> --single-branch <span class="token operator">&lt;</span>url<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> clone <span class="token parameter variable">-b</span> <span class="token operator">&lt;</span>branch_name<span class="token operator">></span> --single-branch <span class="token operator">&lt;</span>url<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a>git checkout</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 切换分支</span>
+<h3 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a>git checkout</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 切换分支</span>
 <span class="token function">git</span> checkout <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 创建+切换分支</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
@@ -674,24 +619,9 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment">#（先切换到develop分支然后把feature分支合并到develop分支）</span>
 <span class="token function">git</span> checkout develop <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> merge feature
 <span class="token comment"># 将某个文件回滚到某个版本</span>
-<span class="token function">git</span> checkout commitid <span class="token punctuation">[</span>file<span class="token punctuation">]</span>
+<span class="token function">git</span> checkout commitid <span class="token punctuation">[</span>file<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token comment"># 删除历史提交记录</span>
-<span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
-<span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
-<span class="token comment"># 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称</span>
-<span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> latest_branch
-<span class="token comment"># 暂存所有改动过的文件，内容为当前旧分支的最新版本所有文件</span>
-<span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-A</span>
-<span class="token comment">#提交更改</span>
-<span class="token function">git</span> commit <span class="token parameter variable">-am</span> <span class="token string">"commit message"</span>
-<span class="token comment">#删除原始主分支</span>
-<span class="token function">git</span> branch <span class="token parameter variable">-D</span> main
-<span class="token comment">#将当前分支重命名为 main</span>
-<span class="token function">git</span> branch <span class="token parameter variable">-m</span> main
-<span class="token comment">#最后，强制更新您的存储库</span>
-<span class="token function">git</span> push <span class="token parameter variable">-f</span> origin main<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="git-merge-amp-git-rebase"><a href="#git-merge-amp-git-rebase" class="headerlink" title="git merge&amp;git rebase"></a>git merge&amp;git rebase</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 合并指定分支到当前分支</span>
+<h3 id="git-merge-amp-git-rebase"><a href="#git-merge-amp-git-rebase" class="headerlink" title="git merge&amp;git rebase"></a>git merge&amp;git rebase</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 合并指定分支到当前分支</span>
 <span class="token function">git</span> merge <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 将指定分支合并到当前分支</span>
 <span class="token function">git</span> rebase branch-name
@@ -699,14 +629,20 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> rebase <span class="token parameter variable">-i</span> commit-id
 <span class="token comment"># 执行commit id将rebase停留在 项目首次commit处</span>
 <span class="token function">git</span> rebase <span class="token parameter variable">-i</span> <span class="token parameter variable">--root</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="git-rebase和git-merge区别"><a href="#git-rebase和git-merge区别" class="headerlink" title="git rebase和git merge区别"></a>git rebase和git merge区别</h5><p>采用merge和rebase后，git log的区别，merge命令不会保留merge的分支的commit，rebase会保留所有的commit：rebase会把你当前分支的commit放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。举例:如果你从master拉了个feature分支出来,然后你提交了几个commit,这个时候刚好有人把他开发的东西合并到master了,这个时候master就比你拉分支的时候多了几个commit,如果这个时候你rebase master的话，就会把你当前的几个commit，放到那个人commit的后面。merge会把公共分支和你当前的commit合并在一起，形成一个新的commit提交</p>
-<p>处理冲突的方式：（一股脑）使用merge命令合并分支，解决完冲突，执行git add .和git commit -m ‘fix conflict’。这个时候会产生一个commit。（交互式）使用rebase命令合并分支，解决完冲突，执行git add .和git rebase –continue，不会产生额外的commit。这样的好处是干净，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个commit，需要重复处理多次冲突。</p>
+
+<blockquote>
+<p>git rebase和git merge区别<br>采用merge和rebase后，git log的区别，merge命令不会保留merge的分支的commit，rebase会保留所有的commit：rebase会把你当前分支的commit放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。举例:如果你从master拉了个feature分支出来,然后你提交了几个commit,这个时候刚好有人把他开发的东西合并到master了,这个时候master就比你拉分支的时候多了几个commit,如果这个时候你rebase master的话，就会把你当前的几个commit，放到那个人commit的后面。merge会把公共分支和你当前的commit合并在一起，形成一个新的commit提交<br>处理冲突的方式：（一股脑）使用merge命令合并分支，解决完冲突，执行git add .和git commit -m ‘fix conflict’。这个时候会产生一个commit。（交互式）使用rebase命令合并分支，解决完冲突，执行git add .和git rebase –continue，不会产生额外的commit。这样的好处是干净，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个commit，需要重复处理多次冲突。</p>
+</blockquote>
+<blockquote>
 <p>git pull和git pull –rebase区别：git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。</p>
+</blockquote>
+<blockquote>
 <p>git merge和git merge –no-ff的区别<br>自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge –no-ff命令,如果不加–no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。</p>
+</blockquote>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ">合并代码还在用git merge？我们都用git rebase！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CBz0ea6m623GtuTX5UkeQQ">新来个技术总监，禁止我们用Git的rebase</a></p>
 </blockquote>
-<h4 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看所有标签，可以知道历史版本的tag</span>
+<h3 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看所有标签，可以知道历史版本的tag</span>
 <span class="token function">git</span> tag
 <span class="token comment"># 打标签，默认为HEAD。比如git tag v1.0</span>
 <span class="token function">git</span> tag <span class="token operator">&lt;</span>tagName<span class="token operator">></span>
@@ -723,9 +659,9 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 一次性推送全部尚未推送到远程的本地标签</span>
 <span class="token function">git</span> push origin <span class="token parameter variable">--tags</span>
 <span class="token comment"># 这会将空引用推送到远程仓库，从而删除名为&lt;tag-name>的远程标签。</span>
-<span class="token function">git</span> push origin :refs/tags/<span class="token operator">&lt;</span>tag-name<span class="token operator">></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h4><blockquote>
+<span class="token function">git</span> push origin :refs/tags/<span class="token operator">&lt;</span>tag-name<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h3><blockquote>
 <p>应用场景：某一天你正在feature分支开发新需求，突然产品经理跑过来说线上有bug，必须马上修复。而此时你的功能开发到一半，于是你急忙想切到master分支，然后你就会看到以下报错：Your local changes to the following…因为当前有文件更改了，需要提交commit保持工作区干净才能切分支。由于情况紧急，你只有急忙commit上去，commit信息也随便写了个“暂存代码”，于是该分支提交记录就留了一条黑历史，如果你学会stash，就不用那么狼狈了。你只需要：git stash就这么简单，代码就被存起来了。当你修复完线上问题，切回feature分支，想恢复代码也只需要：git stash apply,但是恢复后，stash内容并不删除，需要用git stash drop来删除</p>
 </blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 保存当前未commit的代码</span>
@@ -755,7 +691,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> stash drop stash@<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">&#125;</span>
 <span class="token comment"># pop，drop 同理。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a>git config</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--gloabl</span> http.postBuffer <span class="token number">524288000</span>
+<h3 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a>git config</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--gloabl</span> http.postBuffer <span class="token number">524288000</span>
 <span class="token function">git</span> config <span class="token parameter variable">--gloabl</span> http.sslVerify <span class="token string">"false"</span>
 <span class="token function">git</span> config <span class="token parameter variable">--global</span> user.name <span class="token string">"your name"</span>
 <span class="token function">git</span> config <span class="token parameter variable">--global</span> user.email <span class="token string">"your email"</span>
@@ -766,7 +702,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 设置当前项目提交代码的用户名 </span>
 <span class="token function">git</span> config user.name name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 把a分支的一个提交复制到b分支</span>
+<h3 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 把a分支的一个提交复制到b分支</span>
 <span class="token comment"># 首先复制a分支的commitid 然后切换到b分支执行</span>
 <span class="token function">git</span> cherry-pick commitid
 <span class="token comment"># 一次转移多个提交：将commit1和commit2两个提交应用到当前分支。</span>
@@ -781,7 +717,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 回到操作前的样子，就像什么都没发生过。</span>
 <span class="token function">git</span> cherry-pick <span class="token parameter variable">--quit</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除远程分支</span>
+<h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除远程分支</span>
 <span class="token function">git</span> push origin :master
 <span class="token comment">#  删除远程标签</span>
 <span class="token function">git</span> push origin <span class="token parameter variable">--delete</span> tag tag-name
@@ -800,15 +736,86 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 将本地dev分支push到远程master分支</span>
 <span class="token function">git</span> push origin dev:master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="git-restore"><a href="#git-restore" class="headerlink" title="git restore"></a>git restore</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># git restore命令在工作区是不会起作用的</span>
+<h3 id="git-restore"><a href="#git-restore" class="headerlink" title="git restore"></a>git restore</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># git restore命令在工作区是不会起作用的</span>
 <span class="token comment"># 此命令将暂存区中的文件恢复到最后一次提交的状态，并将其从暂存区中移除，但保留工作目录中的修改。这意味着该文件的修改将不会包含在下一次的提交</span>
 <span class="token function">git</span> restore <span class="token parameter variable">--staged</span> <span class="token function">file</span>
 <span class="token comment"># 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。</span>
 <span class="token function">git</span> restore <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="git删除github文件夹但不删除本地的-以-idea为例"><a href="#git删除github文件夹但不删除本地的-以-idea为例" class="headerlink" title="git删除github文件夹但不删除本地的 以.idea为例"></a>git删除github文件夹但不删除本地的 以.idea为例</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> <span class="token function">rm</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">--cached</span> .idea <span class="token comment"># --cached不会把本地的.idea删除</span>
+
+<h3 id="删除历史提交记录"><a href="#删除历史提交记录" class="headerlink" title="删除历史提交记录"></a>删除历史提交记录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
+<span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
+<span class="token comment"># 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称</span>
+<span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> latest_branch
+<span class="token comment"># 暂存所有改动过的文件，内容为当前旧分支的最新版本所有文件</span>
+<span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-A</span>
+<span class="token comment">#提交更改</span>
+<span class="token function">git</span> commit <span class="token parameter variable">-am</span> <span class="token string">"commit message"</span>
+<span class="token comment">#删除原始主分支</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-D</span> main
+<span class="token comment">#将当前分支重命名为 main</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-m</span> main
+<span class="token comment">#最后，强制更新您的存储库</span>
+<span class="token function">git</span> push <span class="token parameter variable">-f</span> origin main<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="远程分支重命名"><a href="#远程分支重命名" class="headerlink" title="远程分支重命名"></a>远程分支重命名</h3><p>远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方案1:先重命名本地分支，然后推送到远程分支</span>
+<span class="token comment"># 1.先重命名本地分支</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-m</span> 旧分支名称 新分支名称
+<span class="token comment"># 2.删除远程分支(如果删除的是默认分支的话会失败，需要先更改默认分支)</span>
+<span class="token function">git</span> push <span class="token parameter variable">--delete</span> origin 旧分支名称
+<span class="token comment"># 3.上传新修改名称的本地分支</span>
+<span class="token function">git</span> push origin 新分支名称
+<span class="token comment"># 4.修改后的本地分支关联远程分支</span>
+<span class="token function">git</span> branch --set-upstream-to origin/新分支名称
+
+<span class="token comment"># 方案2(未测试):先修改远程仓库分支，然后与本地仓库同步</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-m</span> master <span class="token number">2021</span>.x
+<span class="token comment"># 获取源分支</span>
+<span class="token function">git</span> fetch origin
+<span class="token comment"># 切换源分支为远程分支</span>
+<span class="token function">git</span> branch <span class="token parameter variable">-u</span> origin/2021.x <span class="token number">2021</span>.x
+<span class="token comment"># 设置远程分支</span>
+<span class="token function">git</span> remote set-head origin <span class="token parameter variable">-a</span>
+<span class="token comment"># 方案2另一种实现(未测试):先修改远程仓库分支，然后与本地仓库同步</span>
+<span class="token comment"># 首先，在本地仓库中切换到需要同步的分支上：这里&lt;branch-name>是需要同步的分支名称</span>
+<span class="token function">git</span> checkout <span class="token operator">&lt;</span>branch-name<span class="token operator">></span>
+<span class="token comment"># 接下来，从远程仓库中获取最新的分支列表和分支状态信息：这会更新本地仓库中的远程分支信息。</span>
+<span class="token function">git</span> fetch
+<span class="token comment"># 然后，使用以下命令来重置本地分支到远程分支的最新状态：这将强制将本地分支指向远程分支的最新状态。</span>
+<span class="token function">git</span> reset <span class="token parameter variable">--hard</span> origin/<span class="token operator">&lt;</span>branch-name<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="下载所有分支"><a href="#下载所有分支" class="headerlink" title="下载所有分支"></a>下载所有分支</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用'git checkout 分支名'来下载其他分支。如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。</span>
+<span class="token function">git</span> clone <span class="token parameter variable">--bare</span> https://github.com/xx/project.git .git
+<span class="token comment"># 或者git config --unset core.bare</span>
+<span class="token function">git</span> config <span class="token parameter variable">--bool</span> core.bare <span class="token boolean">false</span>
+<span class="token comment"># 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了</span>
+<span class="token function">git</span> reset <span class="token parameter variable">--hard</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="上传git仓库"><a href="#上传git仓库" class="headerlink" title="上传git仓库"></a>上传git仓库</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建.git目录</span>
+<span class="token function">git</span> init
+<span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-A</span>
+<span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"init"</span>
+<span class="token function">git</span> remote <span class="token function">add</span> origin https://github.com/xmxe/project.git
+<span class="token comment"># 断开连接</span>
+<span class="token function">git</span> remote remove origin
+<span class="token comment"># 增加一个新的远程仓库</span>
+<span class="token function">git</span> remote <span class="token function">add</span> name url
+<span class="token comment"># 获取指定远程仓库的详细信息</span>
+<span class="token function">git</span> remote show origin
+
+<span class="token function">git</span> pull <span class="token parameter variable">--rebase</span> origin master 
+<span class="token function">git</span> push origin master
+<span class="token comment"># git push --set-upstream origin master可以简写成git push -u</span>
+
+<span class="token comment"># 本地生成ssh密钥</span>
+ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-C</span> <span class="token string">"你的邮箱"</span>生成sshkey
+<span class="token function">git</span> remote set-url origin git@github.com:xmxe/springcloud.git<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git删除github文件夹但不删除本地的-以-idea为例"><a href="#git删除github文件夹但不删除本地的-以-idea为例" class="headerlink" title="git删除github文件夹但不删除本地的 以.idea为例"></a>git删除github文件夹但不删除本地的 以.idea为例</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> <span class="token function">rm</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">--cached</span> .idea <span class="token comment"># --cached不会把本地的.idea删除</span>
 <span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">'delete .idea dir'</span>
 <span class="token function">git</span> push <span class="token parameter variable">-u</span> origin master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h4 id="git删除大文件"><a href="#git删除大文件" class="headerlink" title="git删除大文件"></a>git删除大文件</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 显示10个最大的文件id列表</span>
+
+<h3 id="git删除大文件"><a href="#git删除大文件" class="headerlink" title="git删除大文件"></a>git删除大文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 显示10个最大的文件id列表</span>
 <span class="token function">git</span> verify-pack <span class="token parameter variable">-v</span> .git/objects/pack/pack-*.idx <span class="token operator">|</span> <span class="token function">sort</span> <span class="token parameter variable">-k</span> <span class="token number">3</span> <span class="token parameter variable">-n</span> <span class="token operator">|</span> <span class="token function">tail</span> <span class="token parameter variable">-10</span>
 <span class="token comment"># 根据文件id查询文件路径</span>
 <span class="token function">git</span> rev-list <span class="token parameter variable">--objects</span> <span class="token parameter variable">--all</span> <span class="token operator">|</span> <span class="token function">grep</span> 08a7475
@@ -828,7 +835,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> push <span class="token parameter variable">--force</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="设置Git短命令"><a href="#设置Git短命令" class="headerlink" title="设置Git短命令"></a>设置Git短命令</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方式一</span>
+<h3 id="设置Git短命令"><a href="#设置Git短命令" class="headerlink" title="设置Git短命令"></a>设置Git短命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方式一</span>
 <span class="token function">git</span> config <span class="token parameter variable">--global</span> alias.ps push
 <span class="token comment"># 方式二 打开全局配置文件</span>
 <span class="token function">vim</span> ~/.gitconfig
@@ -843,7 +850,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 等同于 git cherry-pick &lt;commitHash></span>
 <span class="token function">git</span> <span class="token function">cp</span> <span class="token operator">&lt;</span>commitHash<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ct6GWiE_hzoXUNeriLAnng">Git不要只会pull和push，试试这5条提高效率的命令</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MM7sQiFPh2vIuGvg1-813Q">Git各指令的本质，真是通俗易懂啊！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/csEgAjJwH75_IvAnFBIuvw">Git科普文，Git基本原理&amp;各种骚操作</a></li>

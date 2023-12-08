@@ -950,6 +950,9 @@ classpath:&#x2F;config&#x2F;
 classpath:&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>配置⽂件名可以通过<code>spring.config.name</code>修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:<code>spring.config.location</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">java</span> <span class="token parameter variable">-jar</span> myproject.jar <span class="token parameter variable">--spring.config.location</span><span class="token operator">=</span>classpath:/default.properties,classpath:/override.properties.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
+<p>Spring Cloud项目加载bootstrap.yml使用<code>--spring.cloud.bootstrap.location</code></p>
+</blockquote>
 <p>这样不会去默认位置加载配置⽂件，⽽是加载类路径下default.properties和override.properties的⽂件，override.properties中的同名配置会覆盖default.properties,如果指定的路径是以&#x2F;结尾则是⽬录配置，会去⽬录下找配置⽂件。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pNAU_w6RQIjzxfaadjV_pA">如何不重新编译让Spring Boot配置文件生效</a></p>

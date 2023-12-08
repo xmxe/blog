@@ -6,34 +6,9 @@ img: https://pica.zhimg.com/v2-6baae9baaef9c2a3188f9fc301833fba_1440w.jpg
 
 ---
 
-### Git常用命令
+## Git常用命令
 
-#### 上传git仓库
-
-```shell
-# 创建.git目录
-git init
-git add -A
-git commit -m "init"
-git remote add origin https://github.com/xmxe/project.git
-# 断开连接
-git remote remove origin
-# 增加一个新的远程仓库
-#git remote add name url
-# 删除指定远程仓库
-#git remote remove name
-# 获取指定远程仓库的详细信息
-#git remote show origin
-
-git pull --rebase origin master 
-git push origin master
-# git push --set-upstream origin master
-
-# 本地生成ssh密钥
-ssh-keygen -t rsa -C "你的邮箱"生成sshkey
-git remote set-url origin git@github.com:xmxe/springcloud.git
-```
-#### git diff
+### git diff
 
 ```shell
 # 可以查看当前没有add的内容修改（不在缓冲区的文件变化）
@@ -48,7 +23,7 @@ git diff branch-name file-name
 git diff commit-id commit-id
 ```
 
-#### git reset
+### git reset
 
 ```shell
 # 将未commit的文件移出Staging区
@@ -71,7 +46,7 @@ git reset --soft HEAD^
 git reset --mixed HEAD^
 ```
 
-#### git revert
+### git revert
 
 > 应用场景：有一天测试突然跟你说，你开发上线的功能有问题，需要马上撤回，否则会影响到系统使用。这时可能会想到用reset回退，可是你看了看分支上最新的提交还有其他同事的代码，用reset会把这部分代码也撤回了。由于情况紧急，又想不到好方法，还是任性的使用reset，然后再让同事把他的代码合一遍（同事听到想打人），于是你的技术形象在同事眼里一落千丈
 
@@ -84,7 +59,7 @@ git revert HEAD
 git revert HEAD^
 ```
 
-#### git commit
+### git commit
 
 ```shell
 # (git add -u + git commit -m ""组合)
@@ -98,7 +73,8 @@ git commit file1 file2 -m "message
 # 修改上次提交的用户名和邮箱
 git commit --amend --author="name <email>" --no-edit
 ```
-#### git add
+
+### git add
 
 ```shell
 git add -A # 保存所有的修改
@@ -106,7 +82,7 @@ git add . # 保存新的添加和修改，但是不包括删除
 git add -u # 保存修改和删除，但是不包括新建文件。
 ```
 
-#### git branch
+### git branch
 
 ```shell
 # 查看本地分支(不包括远程分支)
@@ -125,48 +101,13 @@ git branch <name>
 git branch -d <name>
 # 设置分支上游
 git branch --set-upstream-to origin/master
-
-# 远程分支重命名,远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
-# 方案1:先重命名本地分支，然后推送到远程分支
-# 1.先重命名本地分支
-git branch -m 旧分支名称 新分支名称
-# 2.删除远程分支(如果删除的是默认分支的话会失败，需要先更改默认分支)
-git push --delete origin 旧分支名称
-# 3.上传新修改名称的本地分支
-git push origin 新分支名称
-# 4.修改后的本地分支关联远程分支
-git branch --set-upstream-to origin/新分支名称
-
-# 方案2(未测试):先修改远程仓库分支，然后与本地仓库同步
-git branch -m master 2021.x
-# 获取源分支
-git fetch origin
-# 切换源分支为远程分支
-git branch -u origin/2021.x 2021.x
-# 设置远程分支
-git remote set-head origin -a
-# 方案2另一种实现(未测试):先修改远程仓库分支，然后与本地仓库同步
-# 首先，在本地仓库中切换到需要同步的分支上：这里<branch-name>是需要同步的分支名称
-git checkout <branch-name>
-# 接下来，从远程仓库中获取最新的分支列表和分支状态信息：这会更新本地仓库中的远程分支信息。
-git fetch
-# 然后，使用以下命令来重置本地分支到远程分支的最新状态：这将强制将本地分支指向远程分支的最新状态。
-git reset --hard origin/<branch-name>
-
-# 下载所有分支
-# git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用'git checkout 分支名'来下载其他分支。如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。
-git clone --bare https://github.com/xx/project.git .git
-# 或者git config --unset core.bare
-git config --bool core.bare false
-# 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了
-git reset --hard
 # 下载指定分支
 git clone -b 分支名称 git地址
 # 为了节省磁盘空间，您可以使用以下命令克隆仅导致单个分支的历史记录,如果--single-branch未添加到命令中，则所有分支的历史记录将被克隆。大型存储库可能会出现此问题。
 git clone -b <branch_name> --single-branch <url>
 ```
 
-#### git checkout
+### git checkout
 
 ```shell
 # 切换分支
@@ -185,24 +126,9 @@ git checkout . && git clean -df
 git checkout develop && git merge feature
 # 将某个文件回滚到某个版本
 git checkout commitid [file]
-
-# 删除历史提交记录
-# 创建孤立分支,没有以前的提交记录
-git checkout --orphan <name>
-# 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称
-git checkout --orphan latest_branch
-# 暂存所有改动过的文件，内容为当前旧分支的最新版本所有文件
-git add -A
-#提交更改
-git commit -am "commit message"
-#删除原始主分支
-git branch -D main
-#将当前分支重命名为 main
-git branch -m main
-#最后，强制更新您的存储库
-git push -f origin main
 ```
-#### git merge&git rebase
+
+### git merge&git rebase
 
 ```shell
 # 合并指定分支到当前分支
@@ -214,21 +140,20 @@ git rebase -i commit-id
 # 执行commit id将rebase停留在 项目首次commit处
 git rebase -i --root
 ```
-##### git rebase和git merge区别
 
-采用merge和rebase后，git log的区别，merge命令不会保留merge的分支的commit，rebase会保留所有的commit：rebase会把你当前分支的commit放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。举例:如果你从master拉了个feature分支出来,然后你提交了几个commit,这个时候刚好有人把他开发的东西合并到master了,这个时候master就比你拉分支的时候多了几个commit,如果这个时候你rebase master的话，就会把你当前的几个commit，放到那个人commit的后面。merge会把公共分支和你当前的commit合并在一起，形成一个新的commit提交
+> git rebase和git merge区别
+> 采用merge和rebase后，git log的区别，merge命令不会保留merge的分支的commit，rebase会保留所有的commit：rebase会把你当前分支的commit放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。举例:如果你从master拉了个feature分支出来,然后你提交了几个commit,这个时候刚好有人把他开发的东西合并到master了,这个时候master就比你拉分支的时候多了几个commit,如果这个时候你rebase master的话，就会把你当前的几个commit，放到那个人commit的后面。merge会把公共分支和你当前的commit合并在一起，形成一个新的commit提交
+> 处理冲突的方式：（一股脑）使用merge命令合并分支，解决完冲突，执行git add .和git commit -m 'fix conflict'。这个时候会产生一个commit。（交互式）使用rebase命令合并分支，解决完冲突，执行git add .和git rebase --continue，不会产生额外的commit。这样的好处是干净，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个commit，需要重复处理多次冲突。
 
-处理冲突的方式：（一股脑）使用merge命令合并分支，解决完冲突，执行git add .和git commit -m 'fix conflict'。这个时候会产生一个commit。（交互式）使用rebase命令合并分支，解决完冲突，执行git add .和git rebase --continue，不会产生额外的commit。这样的好处是干净，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个commit，需要重复处理多次冲突。
+> git pull和git pull --rebase区别：git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。
 
-git pull和git pull --rebase区别：git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。
-
-git merge和git merge --no-ff的区别
+> git merge和git merge --no-ff的区别
 自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge --no-ff命令,如果不加--no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。
 
 > [合并代码还在用git merge？我们都用git rebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
 > [新来个技术总监，禁止我们用Git的rebase](https://mp.weixin.qq.com/s/CBz0ea6m623GtuTX5UkeQQ)
 
-#### git tag
+### git tag
 
 ```shell
 # 查看所有标签，可以知道历史版本的tag
@@ -249,9 +174,9 @@ git push origin <tagname>
 git push origin --tags
 # 这会将空引用推送到远程仓库，从而删除名为<tag-name>的远程标签。
 git push origin :refs/tags/<tag-name>
-
 ```
-#### git stash
+
+### git stash
 
 > 应用场景：某一天你正在feature分支开发新需求，突然产品经理跑过来说线上有bug，必须马上修复。而此时你的功能开发到一半，于是你急忙想切到master分支，然后你就会看到以下报错：Your local changes to the following...因为当前有文件更改了，需要提交commit保持工作区干净才能切分支。由于情况紧急，你只有急忙commit上去，commit信息也随便写了个“暂存代码”，于是该分支提交记录就留了一条黑历史，如果你学会stash，就不用那么狼狈了。你只需要：git stash就这么简单，代码就被存起来了。当你修复完线上问题，切回feature分支，想恢复代码也只需要：git stash apply,但是恢复后，stash内容并不删除，需要用git stash drop来删除
 
@@ -284,7 +209,7 @@ git stash drop stash@{1}
 # pop，drop 同理。
 ```
 
-#### git config
+### git config
 
 ```shell
 git config --gloabl http.postBuffer 524288000
@@ -299,7 +224,8 @@ git config --global gui.encoding=utf-8
 git config user.name name
 ```
 
-#### git cherry-pick
+### git cherry-pick
+
 ```shell
 # 把a分支的一个提交复制到b分支
 # 首先复制a分支的commitid 然后切换到b分支执行
@@ -317,7 +243,8 @@ git cherry-pick --abort
 git cherry-pick --quit
 ```
 
-#### git push
+### git push
+
 ```shell
 # 删除远程分支
 git push origin :master
@@ -339,7 +266,7 @@ git push origin :refs/tags/tag-name
 git push origin dev:master
 ```
 
-#### git restore
+### git restore
 
 ```shell
 # git restore命令在工作区是不会起作用的
@@ -348,14 +275,102 @@ git restore --staged file
 # 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。
 git restore file
 ```
-#### git删除github文件夹但不删除本地的 以.idea为例
+
+### 删除历史提交记录
+
+```shell
+# 创建孤立分支,没有以前的提交记录
+git checkout --orphan <name>
+# 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称
+git checkout --orphan latest_branch
+# 暂存所有改动过的文件，内容为当前旧分支的最新版本所有文件
+git add -A
+#提交更改
+git commit -am "commit message"
+#删除原始主分支
+git branch -D main
+#将当前分支重命名为 main
+git branch -m main
+#最后，强制更新您的存储库
+git push -f origin main
+```
+
+### 远程分支重命名
+
+远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
+
+```shell
+# 方案1:先重命名本地分支，然后推送到远程分支
+# 1.先重命名本地分支
+git branch -m 旧分支名称 新分支名称
+# 2.删除远程分支(如果删除的是默认分支的话会失败，需要先更改默认分支)
+git push --delete origin 旧分支名称
+# 3.上传新修改名称的本地分支
+git push origin 新分支名称
+# 4.修改后的本地分支关联远程分支
+git branch --set-upstream-to origin/新分支名称
+
+# 方案2(未测试):先修改远程仓库分支，然后与本地仓库同步
+git branch -m master 2021.x
+# 获取源分支
+git fetch origin
+# 切换源分支为远程分支
+git branch -u origin/2021.x 2021.x
+# 设置远程分支
+git remote set-head origin -a
+# 方案2另一种实现(未测试):先修改远程仓库分支，然后与本地仓库同步
+# 首先，在本地仓库中切换到需要同步的分支上：这里<branch-name>是需要同步的分支名称
+git checkout <branch-name>
+# 接下来，从远程仓库中获取最新的分支列表和分支状态信息：这会更新本地仓库中的远程分支信息。
+git fetch
+# 然后，使用以下命令来重置本地分支到远程分支的最新状态：这将强制将本地分支指向远程分支的最新状态。
+git reset --hard origin/<branch-name>
+```
+
+### 下载所有分支
+
+```shell
+# git clone下载的是默认分支,分支较少的话可以使用git branch -a查看所有远程分支然后使用'git checkout 分支名'来下载其他分支。如果分支较多的话使用--bare,裸仓库(bare repository)指的是除了git仓库不包含其他工作文件的仓库，可以通过git clone --bare来生成。
+git clone --bare https://github.com/xx/project.git .git
+# 或者git config --unset core.bare
+git config --bool core.bare false
+# 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了
+git reset --hard
+```
+
+### 上传git仓库
+
+```shell
+# 创建.git目录
+git init
+git add -A
+git commit -m "init"
+git remote add origin https://github.com/xmxe/project.git
+# 断开连接
+git remote remove origin
+# 增加一个新的远程仓库
+git remote add name url
+# 获取指定远程仓库的详细信息
+git remote show origin
+
+git pull --rebase origin master 
+git push origin master
+# git push --set-upstream origin master可以简写成git push -u
+
+# 本地生成ssh密钥
+ssh-keygen -t rsa -C "你的邮箱"生成sshkey
+git remote set-url origin git@github.com:xmxe/springcloud.git
+```
+
+### git删除github文件夹但不删除本地的 以.idea为例
 
 ```shell
 git rm -r --cached .idea # --cached不会把本地的.idea删除
 git commit -m 'delete .idea dir'
 git push -u origin master
 ```
-#### git删除大文件
+
+### git删除大文件
 
 ```shell
 # 显示10个最大的文件id列表
@@ -379,7 +394,8 @@ git push --force
 
 ```
 
-#### 设置Git短命令
+### 设置Git短命令
+
 ```shell
 # 方式一
 git config --global alias.ps push
@@ -397,7 +413,7 @@ vim ~/.gitconfig
 git cp <commitHash>
 ```
 
-### 相关文章
+## 相关文章
 
 - [Git不要只会pull和push，试试这5条提高效率的命令](https://mp.weixin.qq.com/s/ct6GWiE_hzoXUNeriLAnng)
 - [Git各指令的本质，真是通俗易懂啊！](https://mp.weixin.qq.com/s/MM7sQiFPh2vIuGvg1-813Q)

@@ -610,7 +610,7 @@ collation-server<span class="token operator">=</span>utf8mb4_unicode_ci
 <h5 id="5-7版本"><a href="#5-7版本" class="headerlink" title="5.7版本"></a>5.7版本</h5><p>执行命令</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./mysqld --defaults-file<span class="token operator">=</span>/etc/my.cnf <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql/ <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data/ <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--initialize</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>查看初始密码,控制台查看或者<code>cat /usr/local/mysql/mysql.err</code>localhost:后面的一串字符就是初始密码</p>
-<h5 id="8-0版本"><a href="#8-0版本" class="headerlink" title="8.0版本"></a>8.0版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bin/mysqld <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--initialize</span> <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="8-0版本"><a href="#8-0版本" class="headerlink" title="8.0版本"></a>8.0版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./mysqld --defaults-file<span class="token operator">=</span>/etc/my.cnf <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql/ <span class="token parameter variable">--initialize</span> <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>root@localhost之后的一串字符就是初始密码</p>
 <blockquote>
 <p><strong>错误1</strong>：服务未成功启动查看data目录下的localhost.localdomain.err错误日志<br>遇到<code>Can&#39;t start server : Bind on unix socket: Address already in use Do you already have another mysqld server running on socket: /tmp/mysql.sock ?</code>解决方法是删除 rm -rf &#x2F;tmp&#x2F;mysql.sock(由于以前安装过mysql的原因)</p>
@@ -623,6 +623,36 @@ collation-server<span class="token operator">=</span>utf8mb4_unicode_ci
 <p>启动mysql服务</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">service</span> mysql start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<blockquote>
+<p>延申<br>如果想要将<code>service mysql start</code>启动替换成<code>systemctl start mysql</code>的话,步骤如下</p>
+</blockquote>
+<ol>
+<li>创建mysql.service <code>vim /etc/systemd/system/mysql.service</code></li>
+</ol>
+<pre class="line-numbers language-makefile" data-language="makefile"><code class="language-makefile">[Unit]
+Description<span class="token operator">=</span>MySQL Community Server
+After<span class="token operator">=</span>network.target
+
+[Service]
+Type<span class="token operator">=</span>forking
+<span class="token comment"># Set the path to the MySQL binary</span>
+ExecStart<span class="token operator">=</span>/usr/local/mysql/support-files/mysql.server start
+ExecStop<span class="token operator">=</span>/usr/local/mysql/support-files/mysql.server stop
+ExecReload<span class="token operator">=</span>/usr/local/mysql/support-files/mysql.server reload
+<span class="token comment"># Set user and group to run the service as</span>
+User<span class="token operator">=</span>mysql
+Group<span class="token operator">=</span>mysql
+
+[Install]
+WantedBy<span class="token operator">=</span>multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>执行</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x /etc/systemd/system/docker.service
+systemctl daemon-reload
+systemctl start mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="6-修改密码"><a href="#6-修改密码" class="headerlink" title="6. 修改密码"></a>6. 修改密码</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 测试进入mysql</span>
 mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-proot</span>
 <span class="token comment"># UPDATE直接编辑user表</span>
@@ -631,14 +661,15 @@ update mysql.user <span class="token builtin class-name">set</span> <span class=
 <span class="token builtin class-name">set</span> password <span class="token keyword">for</span> root@localhost <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'新密码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment"># 或者使用mysqladmin修改密码</span>
 ./bin/mysqladmin <span class="token parameter variable">-hlocalhost.localdomain</span> <span class="token parameter variable">-uroot</span> -p旧密码 password <span class="token string">'新密码'</span>
+
 <span class="token comment"># MySQL8使用</span>
-update user <span class="token builtin class-name">set</span> <span class="token assign-left variable">authentication_string</span><span class="token operator">=</span><span class="token string">''</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span><span class="token punctuation">;</span><span class="token comment"># 将字段置为空</span>
-ALTER user <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'root'</span><span class="token punctuation">;</span><span class="token comment">#修改密码为root</span>
-ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'新密码'</span><span class="token punctuation">;</span>
+<span class="token comment">#update user set authentication_string='' where user='root';# 将字段置为空</span>
+<span class="token comment">#ALTER user 'root'@'localhost' IDENTIFIED BY 'root';#修改密码为root</span>
 <span class="token comment"># 进入mysql更改密码</span>
-<span class="token builtin class-name">set</span> <span class="token assign-left variable">password</span><span class="token operator">=</span><span class="token string">'root'</span><span class="token punctuation">;</span>
+<span class="token comment">#set password='root';</span>
+ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'新密码'</span><span class="token punctuation">;</span>
 <span class="token comment"># 使密码生效</span>
-flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="7-修改远程连接"><a href="#7-修改远程连接" class="headerlink" title="7. 修改远程连接"></a>7. 修改远程连接</h4><p>改表法</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">use mysql
@@ -804,7 +835,7 @@ default-storage-engine<span class="token operator">=</span>INNODB<span aria-hidd
 <p>(2) 将mysql加入环境变量</p>
 <p>(3) 管理员打开cmd切换到mysql bin目录下(一定要切换),执行<strong>mysqld install</strong>安装mysql服务，成功打印<strong>service successfully installed</strong>后执行<strong>mysqld –initialize –console</strong>会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务</p>
 <blockquote>
-<p>或者配置root用户不设置密码–”mysqld –initialize-insecure –console”。此命令是一个用于初始化MySQL服务器的命令。该命令的作用是在指定的目录中创建MySQL数据文件，并生成一个没有密码的root用户账号，以及默认的匿名用户账号和测试数据库。以下是该命令的各个选项的具体含义：</p>
+<p>或者配置root用户不设置密码: <strong>mysqld –initialize-insecure –console</strong>。此命令是一个用于初始化MySQL服务器的命令。该命令的作用是在指定的目录中创建MySQL数据文件，并生成一个没有密码的root用户账号，以及默认的匿名用户账号和测试数据库。以下是该命令的各个选项的具体含义：</p>
 <blockquote>
 <p>mysqld: MySQL的服务器程序，用于处理MySQL的请求。<br>–initialize-insecure: 初始化MySQL服务器时不设置任何安全措施，包括不设置root用户的密码。<br>–console: 将初始化过程的输出重定向到标准输出设备（如终端窗口），以便可以查看执行结果。</p>
 </blockquote>
@@ -823,6 +854,72 @@ FLUSH PRIVILEGES<span class="token punctuation">;</span> <span class="token comm
 update user <span class="token builtin class-name">set</span> <span class="token function">host</span> <span class="token operator">=</span> <span class="token string">'%'</span> where user <span class="token operator">=</span> <span class="token string">'root'</span><span class="token punctuation">;</span>
 ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'新密码'</span>
 FLUSH PRIVILEGES<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="批量迁移-ibd文件脚本-AI生成"><a href="#批量迁移-ibd文件脚本-AI生成" class="headerlink" title="批量迁移.ibd文件脚本(AI生成)"></a>批量迁移.ibd文件脚本(AI生成)</h2><h3 id="ChatGPT-3-5-已测试"><a href="#ChatGPT-3-5-已测试" class="headerlink" title="ChatGPT 3.5(已测试)"></a>ChatGPT 3.5(已测试)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># 定义目标数据库信息</span>
+<span class="token assign-left variable">database</span><span class="token operator">=</span><span class="token string">"your_database"</span>
+<span class="token assign-left variable">tablespace_directory</span><span class="token operator">=</span><span class="token string">"/path/to/tablespace_directory"</span>
+
+<span class="token comment"># 遍历目录中的所有IDB文件</span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">file</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">find</span> <span class="token string">"<span class="token variable">$tablespace_directory</span>"</span> <span class="token parameter variable">-type</span> f <span class="token parameter variable">-name</span> <span class="token string">"*.ibd"</span><span class="token variable">)</span></span>
+<span class="token keyword">do</span>
+    <span class="token comment"># 提取表名</span>
+    <span class="token assign-left variable">tablename</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> <span class="token string">"<span class="token variable">$file</span>"</span> .ibd<span class="token variable">)</span></span>
+    
+    <span class="token comment"># 执行导入表空间操作</span>
+    <span class="token comment"># 注意:`ALTER TABLE $tablename DISCARD TABLESPACE`将删除与该表关联的.ibd文件。所以如果手动将原.idb删除后将目标的.ibd文件复制到mysql的data目录后不要执行下面的命令,因为先删掉.ibd后`ALTER TABLE $tablename IMPORT TABLESPACE`就无法执行了,当拷贝的.ibd文件不在data目录下而在其他目录时可以使用下面命令</span>
+    <span class="token comment"># mysql -uroot -proot -e "USE $database; ALTER TABLE $tablename DISCARD TABLESPACE; ALTER TABLE $tablename IMPORT TABLESPACE;"</span>
+    
+    mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-proot</span> <span class="token parameter variable">-e</span> <span class="token string">"USE <span class="token variable">$database</span>; ALTER TABLE <span class="token variable">$tablename</span> IMPORT TABLESPACE;"</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$?</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"成功导入表 <span class="token variable">$tablename</span> 的表空间"</span>
+    <span class="token keyword">else</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"导入表 <span class="token variable">$tablename</span> 的表空间时出现错误"</span>
+    <span class="token keyword">fi</span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>问题1: 如果遇到报错试下授予文件读写权限: <strong>chmod -R 777 mysql&#x2F;data&#x2F;databasename&#x2F;</strong><br>问题2: 执行脚本时报错: <strong>Can’t connect to local MySQL server through socket ‘&#x2F;tmp&#x2F;mysql.sock</strong>。<br>解决方法为更改&#x2F;etc&#x2F;my.cnf文件<strong>socket &#x3D; &#x2F;home&#x2F;mysql&#x2F;mysql.sock</strong>后创建软连接<strong>ln -s &#x2F;home&#x2F;mysql&#x2F;mysql.sock &#x2F;tmp&#x2F;mysql.sock</strong>。归结到底还是文件目录读写权限问题，一劳永逸方法<strong>chmod -R 777 mysql安装目录</strong></p>
+</blockquote>
+<h3 id="文心一言"><a href="#文心一言" class="headerlink" title="文心一言"></a>文心一言</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash  </span>
+  
+<span class="token comment"># 目标数据库连接信息  </span>
+<span class="token assign-left variable">DB_USER</span><span class="token operator">=</span><span class="token string">"your_username"</span>  
+<span class="token assign-left variable">DB_PASSWORD</span><span class="token operator">=</span><span class="token string">"your_password"</span>  
+<span class="token assign-left variable">DB_NAME</span><span class="token operator">=</span><span class="token string">"your_database"</span>  
+  
+<span class="token comment"># IDB文件目录路径  </span>
+<span class="token assign-left variable">IDB_DIR</span><span class="token operator">=</span><span class="token string">"/path/to/idb/files"</span>  
+  
+<span class="token comment"># 遍历IDB文件目录  </span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">file</span> <span class="token keyword">in</span> <span class="token variable">$IDB_DIR</span>/*.idb<span class="token punctuation">;</span> <span class="token keyword">do</span>  
+    <span class="token comment"># 提取表名  </span>
+    <span class="token assign-left variable">table_name</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> <span class="token string">"<span class="token variable">$file</span>"</span> .idb<span class="token variable">)</span></span>
+    <span class="token comment"># 导入表空间  </span>
+    mysql <span class="token parameter variable">-u</span> <span class="token variable">$DB_USER</span> -p<span class="token variable">$DB_PASSWORD</span> <span class="token parameter variable">-e</span> <span class="token string">"ALTER TABLE <span class="token variable">$table_name</span> IMPORT TABLESPACE <span class="token variable">$file</span>;"</span> <span class="token variable">$DB_NAME</span>  
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="通义千问"><a href="#通义千问" class="headerlink" title="通义千问"></a>通义千问</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># 指定要导入的目录</span>
+<span class="token assign-left variable">IMPORT_DIR</span><span class="token operator">=</span><span class="token string">"/path/to/import/directory"</span>
+
+<span class="token comment"># 指定目标数据库名</span>
+<span class="token assign-left variable">DATABASE_NAME</span><span class="token operator">=</span><span class="token string">"your_database_name"</span>
+
+<span class="token comment"># 获取目录中所有.ibd文件的列表</span>
+<span class="token assign-left variable">IBD_FILES</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">find</span> <span class="token string">"<span class="token variable">$IMPORT_DIR</span>"</span> <span class="token parameter variable">-name</span> <span class="token string">"*.ibd"</span><span class="token variable">)</span></span>
+
+<span class="token comment"># 遍历所有.ibd文件</span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">IBDFILE</span> <span class="token keyword">in</span> <span class="token variable">$IBD_FILES</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+    <span class="token comment"># 提取表名</span>
+    <span class="token assign-left variable">TABLE_NAME</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> <span class="token string">"<span class="token variable">$IBDFILE</span>"</span> .ibd<span class="token variable">)</span></span>
+    <span class="token comment"># 执行ALTER TABLE IMPORT TABLESPACE语句</span>
+    mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-proot</span> <span class="token variable">$DATABASE_NAME</span> <span class="token parameter variable">-e</span> <span class="token string">"ALTER TABLE \<span class="token variable"><span class="token variable">`</span>$TABLE_NAME<span class="token punctuation">\</span><span class="token variable">`</span></span> IMPORT TABLESPACE;"</span>
+<span class="token keyword">done</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">"Import completed."</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
 <h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect">一文教你在CentOS7下安装MySQL及搭建主从复制</a></li>

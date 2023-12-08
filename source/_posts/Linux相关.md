@@ -148,6 +148,21 @@ echo 2 >> a.txt 输出1 2
 
 cat file1 >> file2 # 把file1的文档内容输入file2这个文档里
 ```
+
+如果你希望在同一个操作中同时向屏幕和文件输出信息，可以使用管道（|）和tee命令。tee会复制其标准输入，并将其写入标准输出和指定的文件。
+
+```bash
+#!/bin/bash
+
+# 输出一条消息到屏幕上，并同时将其写入一个名为output.txt的文件 -a选项告诉tee命令追加输出到文件，而不是覆盖它。
+echo "This is a message" | tee -a output.txt
+```
+tee命令
+```bash
+tee file.txt
+```
+在运行这个命令后，你可以开始在命令行输入文本。当你按下Ctrl+D（EOF）时，你的输入会被写入file.txt并显示在屏幕上。
+
 ### 用户/用户组
 
 ```shell

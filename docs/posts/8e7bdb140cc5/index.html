@@ -1597,6 +1597,10 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <li>外键约束 (Foreign Key Counstraint)需要建立两表间的关系；</li>
 <li>非空约束（Not Null Counstraint）:设置非空约束，该字段不能为空。</li>
 </ol>
+<h3 id="select-for-update加锁"><a href="#select-for-update加锁" class="headerlink" title="select for update加锁"></a>select for update加锁</h3><p>总结一下select…for update加锁的情况：</p>
+<p>主键字段：加行锁。<br>唯一索引字段：加行锁。<br>普通索引字段：加间隙锁。<br>主键范围：加多个行锁。<br>唯一索引范围，加多个行锁。<br>普通字段：加间隙锁，看着像表锁。。<br>查询空数据：加间隙锁。<br>如果事务1加了行锁，一直没有释放锁，事务2操作相同行的数据时，会一直等待直到超时。<br>如果事务1加了表锁，一直没有释放锁，事务2不管操作的是哪一行数据，都会一直等待直到超时。</p>
+<p>此外，有些小伙伴，可能会好奇，直接执行update语句，也会加行锁，为什么还需要使用for update关键字加行锁呢？<br>答：for update关键字是加在select语句中的，它从查到那行数据开始，直到事务提交，整个过程中都会加锁。</p>
+<p>而直接执行update语句，是在更新数据的时候加锁，二者有本质的区别。</p>
 <h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gCT048J16KO3ucNtzvAWxA">数据库面试题（函数和存储过程区别）</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zx2PY8A_L5wnVc7goMY5WQ">吊打面试官？2020年数据库高频面试题|原力计划</a></li>
@@ -1757,6 +1761,7 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Oc188nkq4-s9ivt7Ki_M1A">面试官：怎么不用定时任务实现关闭订单？</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BG1PqUWX0XwJX6aMCXCgvw">再有人问你如何实现订单到期关闭，就把这篇文章发给他</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pGZj1jVHKPhUJKlKNnm5CQ">订单超时怎么处理？阿里用这种方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xQwOdiDGfTelXJQUp0id-g">怎么实现订单30分钟未支付自动取消？我有5种实现方案！</a></li>
 </ul>
 <h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><h3 id="何为反射"><a href="#何为反射" class="headerlink" title="何为反射"></a>何为反射</h3><p>如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些方法和属性。</p>
 <h3 id="反射的应用场景"><a href="#反射的应用场景" class="headerlink" title="反射的应用场景"></a>反射的应用场景</h3><p>像咱们平时大部分时候都是在写业务代码，很少会接触到直接使用反射机制的场景。但是，这并不代表反射没有用。相反，正是因为反射，你才能这么轻松地使用各种框架。像Spring&#x2F;SpringBoot、MyBatis等等框架中都大量使用了反射机制。这些框架中也大量使用了动态代理，而动态代理的实现也依赖反射。比如下面是通过JDK实现动态代理的示例代码，其中就使用了反射类<code>Method</code>来调用指定的方法。</p>

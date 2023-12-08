@@ -1,7 +1,7 @@
 ---
 title: kubernetes
 categories: 技术栈
-img: https://pic1.zhimg.com/70/v2-353855dec58fcaa1477e90a869b30ad0_1440w.avis
+img: https://img-blog.csdnimg.cn/img_convert/09600fbc706fb977ae53d5524d536ea9.png
 
 ---
 

@@ -583,6 +583,8 @@ classpath:/
 ```shell
 $ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/override.properties.
 ```
+> Spring Cloud项目加载bootstrap.yml使用`--spring.cloud.bootstrap.location`
+
 这样不会去默认位置加载配置⽂件，⽽是加载类路径下default.properties和override.properties的⽂件，override.properties中的同名配置会覆盖default.properties,如果指定的路径是以/结尾则是⽬录配置，会去⽬录下找配置⽂件。
 
 > [如何不重新编译让Spring Boot配置文件生效](https://mp.weixin.qq.com/s/pNAU_w6RQIjzxfaadjV_pA)

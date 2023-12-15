@@ -7,6 +7,46 @@ img: https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg
 
 ---
 
+## 基本概念
+
+### Docker架构
+
+Docker架构包括以下几个核心组件：
+
+1. Docker客户端(Client):用户与Docker交互的命令行工具或API。
+
+2. Docker服务器(Server):负责管理镜像、容器、网络等资源的后台服务。
+
+3. Docker镜像(Image):是一个只读的模板，包含用于创建容器的文件系统和应用程序代码。
+
+4. Docker容器(Container):是Docker的基本执行单元，一个镜像可以创建多个容器，容器之间互相隔离，包括文件系统、网络、进程等资源。
+
+5. Docker Registry(仓库):存储Docker镜像的中央仓库，提供镜像的下载和上传服务。
+
+6. Docker Compose:是一个用于定义和运行多个容器的工具，简化了容器编排的复杂度。
+
+7. Docker Swarm:是Docker的集群管理工具，可以将多个Docker主机组成一个虚拟的Docker主机集群，提供负载均衡、容错等功能。
+
+
+这些组件协同工作，构成了Docker强大的应用容器化解决方案
+
+### Docker隔离原理
+
+Docker通过多种技术实现容器的隔离，包括：
+
+1. 命名空间(Namespace)：Docker使用多种命名空间，如mount、pid、net、ipc、uts等，将容器的进程、网络、文件系统等资源与主机分离，使得容器拥有自己独立的运行环境。
+
+2. 控制组(Cgroups)：Docker使用Cgroups控制组技术，限制容器内部进程使用的资源，如CPU、内存、磁盘等。
+
+3. 文件系统：Docker使用OverlayFS技术，将容器的文件系统与主机分离，每个容器都有自己独立的文件系统，并可以使用Docker镜像中的文件系统层，实现镜像共享和快速启动。
+
+4. 安全机制：Docker使用安全机制，如seccomp、AppArmor、SELinux等，限制容器内部进程的系统调用和权限，防止容器被攻击和滥用。
+
+5. 网络隔离：Docker使用网络隔离技术，将容器的网络与主机分离，每个容器都有自己独立的网络命名空间和IP地址，实现容器之间的隔离和互通。
+
+通过这些技术的组合，Docker实现了容器之间的隔离，使得容器可以在相互独立的环境中运行，同时也保障了容器的安全和稳定性。
+
+
 ## 安装
 
 ### 在线安装
@@ -28,16 +68,32 @@ systemctl stop firewalld
 (3) 安装容器
 
 ```shell
+# 如果有旧版本的话先移除旧版本
+sudo yum remove docker*
 # 更新yum源
 yum -y update
 # 加软件源
+# sudo yum install -y yum-utils
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 # 更新缓存
 yum makecache fast
 # 安装
 yum -y install docker-ce
+# sudo yum install docker-ce docker-ce-cli containerd.io
 ```
 
+**安装指定版本的docker image**
+
+```shell
+#找到所有可用docker版本列表
+yum list docker-ce --showduplicates | sort -r
+# 安装指定版本，用上面的版本号替换<VERSION_STRING>
+sudo yum install docker-ce-<VERSION_STRING>.x86_64 docker-ce-cli-
+<VERSION_STRING>.x86_64 containerd.io
+#例如：
+#yum install docker-ce-3:20.10.5-3.el7.x86_64 docker-ce-cli-3:20.10.5-3.el7.x86_64 containerd.io
+#注意加上.x86_64大版本号
+```
 (4) 启动服务
 
 ```shell
@@ -55,6 +111,11 @@ docker run hello-world
 
 (1) [下载离线包](https://download.docker.com/linux/static/stable/x86_64/)
 
+> [centos rpm版本](https://download.docker.com/linux/centos/7/x86_64/stable/Packages/)
+> `rpm -ivh xxx.rpm`
+> 可以下载tar,解压启动即可
+> [官方文档](https://docs.docker.com/engine/install/binaries/#install-daemon-and-client-binaries-on-linux)
+
 (2) 解压
 
 ```shell
@@ -69,7 +130,6 @@ cp docker/* /usr/bin/
 
 (4) 将docker注册为service
 ```
-touch /etc/systemd/system/docker.service
 vim /etc/systemd/system/docker.service
 ```
 编辑docker.service
@@ -403,6 +463,7 @@ none - 容器使用自己的网络（类似--net=bridge），但是不进行配�
 --restart="no"，指定容器停止后的重启策略:
 no - 容器退出时不重启
 on-failure - 只在容器以非0状态码退出时重启。可选的，可以退出docker daemon尝试重启容器的次数
+on-failure:3，在容器非正常退出时重启容器，最多重启3次
 always – 不管退出状态码是什么始终重启容器。当指定always时，docker daemon将无限次数地重启容器。容器也会在daemon启动时尝试重启，不管容器当时的状态如何。
 unless-stopped – 不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
 
@@ -573,6 +634,61 @@ docker tag
 ```shell
 docker network create -d bridge my-net
 ```
+
+### 其他
+
+- docker查看镜像版本为latest的具体版本号
+```bash
+docker image inspect nginx:latest|grep -i version
+```
+### 表格
+
+| **命令**      | **作用**                                                     |
+| ------------- | ------------------------------------------------------------ |
+| **attach**    | **绑定到运行中容器的 标准输入, 输出,以及错误流（这样似乎也能进入容器内容，但 是一定小心，他们操作的就是控制台，控制台的退出命令会生效，比如 redis,nginx...）** |
+| **build**     | **从一个Dockerfile文件构建镜像**                             |
+| **commit**    | **把容器的改变 提交创建一个新的镜像**                        |
+| **cp**        | **容器和本地文件系统间 复制 文件/文件夹cp -rp[原文件或目录] [目标文件或目录] －r 复制目录 - p 保留文件属性** |
+| **create**    | **创建新容器，但并不启动（注意与docker run 的区分）需要手动启动。start\\stop** |
+| **diff**      | **检查容器里文件系统结构的更改【A：添加文件或目录 D：文件或者目录删除 C：文 件或者目录更改】** |
+| **events**    | **获取服务器的实时事件**                                     |
+| **exec**      | **在运行时的容器内运行命令**                                 |
+| **export**    | **导出容器的文件系统为一个tar文件。commit是直接提交成镜像，export是导出成文 件方便传输** |
+| **history**   | **显示镜像的历史**                                           |
+| **images**    | **列出所有镜像**                                             |
+| **import**    | **导入tar的内容创建一个镜像，再导入进来的镜像直接启动不了容器。 /docker-entrypoint.sh nginx -g 'daemon o** |
+| **info**      | **显示系统信息**                                             |
+| **inspect**   | **获取docker对象的底层信息**                                 |
+| **kill**      | **杀死一个或者多个容器**                                     |
+| **load**      | **从tar文件加载镜像 docker load -i xxx.tar**                 |
+| **login**     | **登录Docker registry**                                      |
+| **logout**    | **退出Docker registry**                                      |
+| **logs**      | **获取容器日志；容器以前在前台控制台能输出的所有内容，都可以看到** |
+| **pause**     | **暂停一个或者多个容器**                                     |
+| **port**      | **列出容器的端口映射**                                       |
+| **ps**        | **列出所有容器 docker ps -a 列出包括已停止的所有容器**       |
+| **pull**      | **从registry下载一个image 或者repository**                   |
+| **push**      | **给registry推送一个image或者repository**                    |
+| **rename**    | **重命名一个容器**                                           |
+| **restart**   | **重启一个或者多个容器**                                     |
+| **rm**        | **移除一个或者多个容器**                                     |
+| **rmi**       | **移除一个或者多个镜像**                                     |
+| **run**       | **创建并启动容器**                                           |
+| **save**      | **把一个或者多个镜像保存为tar文件 docker save -o [容器名称]:[容器标签] > xxx.tar** |
+| **search**    | **去docker hub寻找镜像**                                     |
+| **start**     | **启动一个或者多个容器**                                     |
+| **stop**      | **停止一个或者多个容器**                                     |
+| **tag**       | **给源镜像创建一个新的标签，变成新的镜像**                   |
+| **unpause**   | **pause的反操作**                                            |
+| **update**    | **更新一个或者多个docker容器配置**                           |
+| **version**   | **Show the Docker version information**                      |
+| **container** | **管理容器**                                                 |
+| **image**     | **管理镜像**                                                 |
+| **network**   | **管理网络**                                                 |
+| **volume**    | **管理卷**                                                   |
+| **stats**     | **显示容器资源的实时使用状态**                               |
+| **top**       | **显示正在运行容器的进程**                                   |
+
 
 ## Dockerfile
 
@@ -793,6 +909,238 @@ docker run -itd --name mdjz --network=my-net --restart always  -p  19901:19901 m
 
 ```
 
+## 使用docker安装主流软件
+
+### 安装mysql8.0
+
+1. 拉取镜像
+```bash
+docker pull mysql:8.0.16
+```
+2. 创建目录
+```bash
+mkdir -p /app/mysql/conf /app/mysql/data
+```
+3. 创建配置文件
+```bash
+vim /app/mysql/conf/my.cnf
+```
+配置文件
+```
+[client]
+#socket = /app/mysql/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+datadir = /var/lib/mysql
+character_set_server = utf8mb4
+collation_server = utf8mb4_bin
+secure-file-priv= NULL
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+# Custom config should go here
+!includedir /etc/mysql/conf.d/
+```
+4. 创建和启动容器
+```bash
+docker run --restart=always --network=my-net -d --name mysql 
+-v /app/mysql/conf/my.cnf:/etc/mysql/my.cnf
+-v /app/mysql/data:/var/lib/mysql
+-p 3306:3306 -e MYSQL_ROOT_PASSWORD=1qaz@WSX mysql:8.0.16
+```
+5. 修改mysql密码以及授权可访问主机
+进入容器内部
+```bash
+docker exec -it mysql /bin/bash
+```
+连接mysql
+```bash
+mysql -uroot -p
+```
+使用mysql库
+```bash
+use mysql
+```
+修改主机及访问密码，设置所有主机可访问
+```bash
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '1qaz@WSX';
+```
+刷新
+```bash
+flush privileges;
+```
+
+### 安装nginx
+
+1. 拉取最新镜像
+```bash
+docker pull nginx
+```
+2. 新建目录
+```bash
+# 创建挂载目录
+mkdir -p /app/nginx/conf /app/nginx/log /app/nginx/html
+#创建前端发版的目录
+mkdir -p /app/nginx/web_dist /app/nginx/app_dist
+```
+3. 容器中的nginx.conf文件和conf.d文件夹复制到宿主机
+```bash
+# 生成容器
+docker run --name nginx -p 9090:80 -d nginx
+# 将容器nginx.conf文件复制到宿主机
+docker cp nginx:/etc/nginx/nginx.conf /app/nginx/conf/nginx.conf
+# 将容器conf.d文件夹下内容复制到宿主机
+docker cp nginx:/etc/nginx/conf.d /app/nginx/conf/conf.d
+# 将容器中的html文件夹复制到宿主机
+docker cp nginx:/usr/share/nginx/html /app/nginx/
+```
+4. 删掉临时的nginx容器，并且创建新的容器
+```bash
+# 直接执行docker rm nginx或者以容器id方式关闭容器
+# 找到nginx对应的容器id
+docker ps -a
+# 关闭该容器
+docker stop nginx
+# 删除该容器
+docker rm nginx
+# 删除正在运行的nginx容器
+docker run --privileged=true --restart unless-stopped
+-p 9090:9090
+--name nginx
+-v /app/nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
+-v /app/nginx/conf/conf.d:/etc/nginx/conf.d \
+-v /app/nginx/log:/var/log/nginx \
+-v /app/nginx/html:/usr/share/nginx/html \
+-d nginx:latest
+```
+> 注意ngin配置文件里面所有的路径指向的都是容器里面的路径，而并非宿主机上面的路径，端口也是指向容器内部的端口，如果路径没有挂载或者挂载不正确访问nginx的时候会出现500错误。
+
+### 安装nacos
+
+1. 拉取镜像
+```bash
+docker pull nacos/nacos-server:1.4.1
+```
+2. 创建挂载目录
+```bash
+mkdir -p /app/nacos/logs/ /app/nacos/init.d/
+#创建一个配置文件
+vim /app/nacos/init.d/custom.properties
+
+#修改配置文件
+server.contextPath=/nacos
+server.servlet.contextPath=/nacos
+server.port=8848
+
+spring.datasource.platform=mysql
+db.num=1
+db.url.0=jdbc:mysql://121.4.114.178:3306/mmbdf-dev?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&allowPublicKeyRetrieval=true
+db.user=root
+db.password=1qaz@WSX
+
+nacos.cmdb.dumpTaskInterval=3600
+nacos.cmdb.eventTaskInterval=10
+nacos.cmdb.labelTaskInterval=300
+nacos.cmdb.loadDataAtStart=false
+management.metrics.export.elastic.enabled=false
+management.metrics.export.influx.enabled=false
+server.tomcat.accesslog.enabled=true
+server.tomcat.accesslog.pattern=%h %l %u %t "%r" %s %b %D %{User-Agent}i
+nacos.security.ignore.urls=/,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/login,/v1/console/health/**,/v1/cs/**,/v1/ns/**,/v1/cmdb/**,/actuator/**,/v1/console/server/**
+nacos.naming.distro.taskDispatchThreadCount=1
+nacos.naming.distro.taskDispatchPeriod=200
+nacos.naming.distro.batchSyncKeyCount=1000
+nacos.naming.distro.initDataRatio=0.9
+nacos.naming.distro.syncRetryDelay=5000
+nacos.naming.data.warmup=true
+nacos.naming.expireInstance=true
+```
+3. 创建内部桥接网络
+```bash
+docker network create -d bridge my-net
+```
+4. 运行容器
+```bash
+docker run -d
+--network=my-net
+--privileged=true
+-e PREFER_HOST_MODE=ip
+-e MODE=standalone
+-e TIME_ZONE='Asia/Shanghai'
+-v /app/nacos/init.d/application.properties:/home/nacos/conf/application.properties
+-v /app/nacos/logs:/home/nacos/logs
+-p 8848:8848
+--name nacos
+--restart=always
+nacos/nacos-server:1.4.1
+```
+5. 进入容器内部修改数据库连接
+```bash
+/home/nacos/conf
+```
+复制容器内的`/home/nacos/conf/application.properties`出来，修改和挂载
+```bash
+docker cp nacos:/home/nacos/conf/application.properties /app/nacos/init.d/application.properties
+# 进入容器
+docker exec -it nacos bash
+# 修改容器配置
+cd conf
+vi application.properties
+```
+6. 重启容器
+```bash
+docker restart nacos
+```
+
+### 安装redis
+
+1. 拉取最新镜像
+```bash
+docker pull redis
+```
+2. 创建挂载目录
+```bash
+mkdir -p /app/redis/data
+```
+3. 运行容器
+```bash
+docker run --name redis   
+--privileged=true 
+-p 6379:6379
+-v /app/redis/redis.conf:/etc/redis/redis.conf
+-v /app/redis/data:/data
+-d redis redis-server /etc/redis/redis.conf
+--appendonly yes
+```
+
+### 部署ElasticSearch
+
+```shell
+# 准备文件和文件夹，并chmod -R 777 xxx
+# 配置文件内容，参照
+https://www.elastic.co/guide/en/elasticsearch/reference/7.5/node.name.html 搜索相
+关配置
+# 考虑为什么挂载使用esconfig ...
+docker run --name=elasticsearch -p 9200:9200 -p 9300:9300 \
+-e "discovery.type=single-node" \
+-e ES_JAVA_OPTS="-Xms300m -Xmx300m" \
+-v /app/es/data:/usr/share/elasticsearch/data \
+-v /app/es/plugins:/usr/shrae/elasticsearch/plugins \
+-v esconfig:/usr/share/elasticsearch/config \
+-d elasticsearch:7.12.0
+```
+
+### 部署Tomcat
+
+```shell
+# 考虑，如果我们每次-v都是指定磁盘路径，是不是很麻烦？
+docker run --name tomcat-app -p 8080:8080 \
+-v tomcatconf:/usr/local/tomcat/conf \
+-v tomcatwebapp:/usr/local/tomcat/webapps \
+-d tomcat:jdk8-openjdk-slim-buster
+```
+
 ## 其他
 
 ### docker加速命令
@@ -812,6 +1160,45 @@ vim /etc/docker/daemon.json
 > http://f1361db2.m.daocloud.io
 > https://mirror.ccs.tencentyun.com
 > https://docker.mirrors.ustc.edu.cn
+
+**其他方案**
+
+
+```shell
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+"registry-mirrors": ["https://mfs5bvup.mirror.aliyuncs.com%22/]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+以后docker下载直接从阿里云拉取相关镜像
+
+
+### 可视化界面-Portainer
+
+#### 什么是Portainer
+
+Portainer社区版2.0拥有超过50万的普通用户，是功能强大的开源工具集，可让您轻松地在Docker，Swarm，Kubernetes和Azure ACI中构建和管理容器。 Portainer的工作原理是在易于使用的GUI后面隐藏使管理容器变得困难的复杂性。通过消除用户使用CLI，编写YAML或理解清单的需求，Portainer使部署应用程序和解决问题变得如此简单，任何人都可以做到。 Portainer开发团队在这里为您的Docker之旅提供帮助；
+
+
+#### 安装
+
+服务端部署
+```shell
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v
+/var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data
+portainer/portainer-ce
+# 访问9000端口即可
+```
+agent端部署
+```shell
+docker run -d -p 9001:9001 --name portainer_agent --restart=always -v
+/var/run/docker.sock:/var/run/docker.sock -v
+/var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent
+```
 
 ### 与Spring Boot
 

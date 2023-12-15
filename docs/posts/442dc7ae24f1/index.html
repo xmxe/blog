@@ -1585,7 +1585,7 @@ Setting permissions <span class="token keyword">for</span> user <span class="tok
 <li>Kafka的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时Kafka最好是支撑较少的topic数量即可，保证其超高吞吐量。Kafka唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。如果是大数据领域的实时计算、日志采集等场景，用Kafka是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</li>
 </ul>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7PDuuEChls6MDUCiI8_FaA">7个方面综合对比Kafka、RabbitMQ、RocketMQ、ActiveMQ四个分布式消息队列</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7PDuuEChls6MDUCiI8_FaA">7个方面综合对比Kafka、RabbitMQ、RocketMQ、ActiveMQ四个分布式消息队列</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uOkEXw-jMpuZOp6JteArPw">RabbitMQ vs Kafka：正面交锋</a></p>
 </blockquote>
 <h2 id="经典面试题"><a href="#经典面试题" class="headerlink" title="经典面试题"></a>经典面试题</h2><h3 id="为什么使用消息队列"><a href="#为什么使用消息队列" class="headerlink" title="为什么使用消息队列"></a>为什么使用消息队列</h3><p><strong>解耦</strong><br>传统模式下系统间的耦合性太强。怎么说呢，举个例子：系统A通过接口调用发送数据到B、C、D三个系统，如果将来E系统接入或者B系统不需要接入了，那么系统A还需要修改代码，非常麻烦。如果系统A产生了一条比较关键的数据，那么它就要时时刻刻考虑B、C、D、E四个系统如果挂了该咋办？这条数据它们是否都收到了？显然，系统A跟其它系统严重耦合。而如果我们将数据（消息）写入消息队列，需要消息的系统直接自己从消息队列中消费。这样下来，系统A就不需要去考虑要给谁发送数据，不需要去维护这个代码，也不需要考虑其他系统是否调用成功、失败超时等情况，反正我只负责生产，别的我不管。</p>
 <p><strong>异步</strong><br>先来看传统同步的情况，举个例子：系统A接收一个用户请求，需要进行写库操作，还需要同样的在B、C、D三个系统中进行写库操作。如果A自己本地写库只要1ms，而B、C、D三个系统写库分别要100ms、200ms、300ms,最终请求总延时是1 + 100 + 200 + 300 &#x3D; 601ms，用户体验大打折扣。如果使用消息队列，那么系统A就只需要发送3条消息到消息队列中就行了，假如耗时5ms，A系统从接受一个请求到返回响应给用户，总时长是1 + 5 &#x3D; 6ms，对于用户而言，体验好感度直接拉满。</p>

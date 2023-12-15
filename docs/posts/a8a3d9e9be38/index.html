@@ -591,15 +591,15 @@ systemctl list-unit-files<span class="token operator">|</span><span class="token
 systemctl is-enabled firewalld.service
 
 <span class="token comment"># 端口开放</span>
-firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">80</span>/tcp <span class="token parameter variable">--permanent</span>
 <span class="token comment">#（--permanent永久生效，没有此参数重启后失效）</span>
-
-<span class="token comment"># 重新载入</span>
-firewall-cmd --reload查看
-firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span> public --query-port<span class="token operator">=</span><span class="token number">80</span>/tcp
+<span class="token comment"># --zone=public:指定了要查询的防火墙区域。防火墙区域是网络连接的一个逻辑分组，每个区域都有自己的规则集来控制进入和离开该区域的数据包。公共区域（public）通常用于外部网络连接，例如Internet连接。可不加</span>
+firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">80</span>/tcp <span class="token parameter variable">--permanent</span>
 <span class="token comment"># 删除</span>
-firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span> public --remove-port<span class="token operator">=</span><span class="token number">80</span>/tcp <span class="token parameter variable">--permanent</span>
-
+firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --remove-port<span class="token operator">=</span><span class="token number">80</span>/tcp <span class="token parameter variable">--permanent</span>
+<span class="token comment"># 重新载入</span>
+firewall-cmd <span class="token parameter variable">--reload</span>
+<span class="token comment"># 查看</span>
+firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span> public --query-port<span class="token operator">=</span><span class="token number">80</span>/tcp
 <span class="token comment"># 查看开放的端口</span>
 firewall-cmd --list-ports
 
@@ -1303,10 +1303,10 @@ swapoff ～/swapfile
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Nginx安装下载# 下载nginx:
+                            Nginx安装离线安装下载# 下载nginx:
 wget http://nginx.org/download/nginx-1.8.1.tar.gz
 # 下载openssl:
-wget https://www.openssl.org/source/o
+wget https://www.openssl.org/sour
                         
 
                     </div>

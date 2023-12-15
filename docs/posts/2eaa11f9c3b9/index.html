@@ -537,7 +537,39 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h3><p>(1) 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。</p>
+                <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="Docker架构"><a href="#Docker架构" class="headerlink" title="Docker架构"></a>Docker架构</h3><p>Docker架构包括以下几个核心组件：</p>
+<ol>
+<li><p>Docker客户端(Client):用户与Docker交互的命令行工具或API。</p>
+</li>
+<li><p>Docker服务器(Server):负责管理镜像、容器、网络等资源的后台服务。</p>
+</li>
+<li><p>Docker镜像(Image):是一个只读的模板，包含用于创建容器的文件系统和应用程序代码。</p>
+</li>
+<li><p>Docker容器(Container):是Docker的基本执行单元，一个镜像可以创建多个容器，容器之间互相隔离，包括文件系统、网络、进程等资源。</p>
+</li>
+<li><p>Docker Registry(仓库):存储Docker镜像的中央仓库，提供镜像的下载和上传服务。</p>
+</li>
+<li><p>Docker Compose:是一个用于定义和运行多个容器的工具，简化了容器编排的复杂度。</p>
+</li>
+<li><p>Docker Swarm:是Docker的集群管理工具，可以将多个Docker主机组成一个虚拟的Docker主机集群，提供负载均衡、容错等功能。</p>
+</li>
+</ol>
+<p>这些组件协同工作，构成了Docker强大的应用容器化解决方案</p>
+<h3 id="Docker隔离原理"><a href="#Docker隔离原理" class="headerlink" title="Docker隔离原理"></a>Docker隔离原理</h3><p>Docker通过多种技术实现容器的隔离，包括：</p>
+<ol>
+<li><p>命名空间(Namespace)：Docker使用多种命名空间，如mount、pid、net、ipc、uts等，将容器的进程、网络、文件系统等资源与主机分离，使得容器拥有自己独立的运行环境。</p>
+</li>
+<li><p>控制组(Cgroups)：Docker使用Cgroups控制组技术，限制容器内部进程使用的资源，如CPU、内存、磁盘等。</p>
+</li>
+<li><p>文件系统：Docker使用OverlayFS技术，将容器的文件系统与主机分离，每个容器都有自己独立的文件系统，并可以使用Docker镜像中的文件系统层，实现镜像共享和快速启动。</p>
+</li>
+<li><p>安全机制：Docker使用安全机制，如seccomp、AppArmor、SELinux等，限制容器内部进程的系统调用和权限，防止容器被攻击和滥用。</p>
+</li>
+<li><p>网络隔离：Docker使用网络隔离技术，将容器的网络与主机分离，每个容器都有自己独立的网络命名空间和IP地址，实现容器之间的隔离和互通。</p>
+</li>
+</ol>
+<p>通过这些技术的组合，Docker实现了容器之间的隔离，使得容器可以在相互独立的环境中运行，同时也保障了容器的安全和稳定性。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h3><p>(1) 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键变量。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">SELINUX</span><span class="token operator">=</span>disabled
 
 <span class="token assign-left variable">SELINUXTYPE</span><span class="token operator">=</span>targeted<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -546,15 +578,28 @@
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl stop firewalld<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>(3) 安装容器</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 更新yum源</span>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 如果有旧版本的话先移除旧版本</span>
+<span class="token function">sudo</span> yum remove docker*
+<span class="token comment"># 更新yum源</span>
 yum <span class="token parameter variable">-y</span> update
 <span class="token comment"># 加软件源</span>
+<span class="token comment"># sudo yum install -y yum-utils</span>
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 <span class="token comment"># 更新缓存</span>
 yum makecache fast
 <span class="token comment"># 安装</span>
-yum <span class="token parameter variable">-y</span> <span class="token function">install</span> docker-ce<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+yum <span class="token parameter variable">-y</span> <span class="token function">install</span> docker-ce
+<span class="token comment"># sudo yum install docker-ce docker-ce-cli containerd.io</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p><strong>安装指定版本的docker image</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#找到所有可用docker版本列表</span>
+yum list docker-ce <span class="token parameter variable">--showduplicates</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token parameter variable">-r</span>
+<span class="token comment"># 安装指定版本，用上面的版本号替换&lt;VERSION_STRING></span>
+<span class="token function">sudo</span> yum <span class="token function">install</span> docker-ce-<span class="token operator">&lt;</span>VERSION_STRING<span class="token operator">></span>.x86_64 docker-ce-cli-
+<span class="token operator">&lt;</span>VERSION_STRING<span class="token operator">></span>.x86_64 containerd.io
+<span class="token comment">#例如：</span>
+<span class="token comment">#yum install docker-ce-3:20.10.5-3.el7.x86_64 docker-ce-cli-3:20.10.5-3.el7.x86_64 containerd.io</span>
+<span class="token comment">#注意加上.x86_64大版本号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>(4) 启动服务</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -563,6 +608,9 @@ yum <span class="token parameter variable">-y</span> <span class="token function
 <span class="token comment"># PS: centos7安装命令 yum -y install docker-ce | ubuntu安装命令 apt install docker-ce</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><p>(1) <a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/">下载离线包</a></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://download.docker.com/linux/centos/7/x86_64/stable/Packages/">centos rpm版本</a><br><code>rpm -ivh xxx.rpm</code><br>可以下载tar,解压启动即可<br><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/binaries/#install-daemon-and-client-binaries-on-linux">官方文档</a></p>
+</blockquote>
 <p>(2) 解压</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> docker-18.06.1-ce.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -570,8 +618,7 @@ yum <span class="token parameter variable">-y</span> <span class="token function
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> docker/* /usr/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>(4) 将docker注册为service</p>
-<pre class="line-numbers language-none"><code class="language-none">touch &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service
-vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>编辑docker.service</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># vim /etc/systemd/system/docker.service</span>
 
@@ -799,11 +846,12 @@ none - 容器使用自己的网络（类似--net<span class="token operator">=</
 <span class="token parameter variable">--restart</span><span class="token operator">=</span><span class="token string">"no"</span>，指定容器停止后的重启策略:
 no - 容器退出时不重启
 on-failure - 只在容器以非0状态码退出时重启。可选的，可以退出docker daemon尝试重启容器的次数
+on-failure:3，在容器非正常退出时重启容器，最多重启3次
 always – 不管退出状态码是什么始终重启容器。当指定always时，docker daemon将无限次数地重启容器。容器也会在daemon启动时尝试重启，不管容器当时的状态如何。
 unless-stopped – 不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
 
 <span class="token parameter variable">--rm</span><span class="token operator">=</span>false指定容器停止后自动删除容器<span class="token punctuation">(</span>不支持以docker run -d启动的容器<span class="token punctuation">)</span>
---sig-proxy<span class="token operator">=</span>true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+--sig-proxy<span class="token operator">=</span>true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h3 id="docker-inspect"><a href="#docker-inspect" class="headerlink" title="docker inspect"></a>docker inspect</h3><ul>
 <li>获取容器&#x2F;镜像的元数据<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> inspect <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> NAME<span class="token operator">|</span>ID <span class="token punctuation">[</span>NAME<span class="token operator">|</span>ID<span class="token punctuation">..</span>.<span class="token punctuation">]</span>
@@ -909,6 +957,189 @@ OPTIONS说明：
 <h3 id="docker-network"><a href="#docker-network" class="headerlink" title="docker network"></a>docker network</h3><ul>
 <li>创建桥接网络，用于mysql与nacos通信<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network create <span class="token parameter variable">-d</span> bridge my-net<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li>docker查看镜像版本为latest的具体版本号<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> image inspect nginx:latest<span class="token operator">|</span><span class="token function">grep</span> <span class="token parameter variable">-i</span> version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>attach</strong></td>
+<td><strong>绑定到运行中容器的 标准输入, 输出,以及错误流（这样似乎也能进入容器内容，但 是一定小心，他们操作的就是控制台，控制台的退出命令会生效，比如 redis,nginx…）</strong></td>
+</tr>
+<tr>
+<td><strong>build</strong></td>
+<td><strong>从一个Dockerfile文件构建镜像</strong></td>
+</tr>
+<tr>
+<td><strong>commit</strong></td>
+<td><strong>把容器的改变 提交创建一个新的镜像</strong></td>
+</tr>
+<tr>
+<td><strong>cp</strong></td>
+<td><strong>容器和本地文件系统间 复制 文件&#x2F;文件夹cp -rp[原文件或目录] [目标文件或目录] －r 复制目录 - p 保留文件属性</strong></td>
+</tr>
+<tr>
+<td><strong>create</strong></td>
+<td><strong>创建新容器，但并不启动（注意与docker run 的区分）需要手动启动。start\stop</strong></td>
+</tr>
+<tr>
+<td><strong>diff</strong></td>
+<td><strong>检查容器里文件系统结构的更改【A：添加文件或目录 D：文件或者目录删除 C：文 件或者目录更改】</strong></td>
+</tr>
+<tr>
+<td><strong>events</strong></td>
+<td><strong>获取服务器的实时事件</strong></td>
+</tr>
+<tr>
+<td><strong>exec</strong></td>
+<td><strong>在运行时的容器内运行命令</strong></td>
+</tr>
+<tr>
+<td><strong>export</strong></td>
+<td><strong>导出容器的文件系统为一个tar文件。commit是直接提交成镜像，export是导出成文 件方便传输</strong></td>
+</tr>
+<tr>
+<td><strong>history</strong></td>
+<td><strong>显示镜像的历史</strong></td>
+</tr>
+<tr>
+<td><strong>images</strong></td>
+<td><strong>列出所有镜像</strong></td>
+</tr>
+<tr>
+<td><strong>import</strong></td>
+<td><strong>导入tar的内容创建一个镜像，再导入进来的镜像直接启动不了容器。 &#x2F;docker-entrypoint.sh nginx -g ‘daemon o</strong></td>
+</tr>
+<tr>
+<td><strong>info</strong></td>
+<td><strong>显示系统信息</strong></td>
+</tr>
+<tr>
+<td><strong>inspect</strong></td>
+<td><strong>获取docker对象的底层信息</strong></td>
+</tr>
+<tr>
+<td><strong>kill</strong></td>
+<td><strong>杀死一个或者多个容器</strong></td>
+</tr>
+<tr>
+<td><strong>load</strong></td>
+<td><strong>从tar文件加载镜像 docker load -i xxx.tar</strong></td>
+</tr>
+<tr>
+<td><strong>login</strong></td>
+<td><strong>登录Docker registry</strong></td>
+</tr>
+<tr>
+<td><strong>logout</strong></td>
+<td><strong>退出Docker registry</strong></td>
+</tr>
+<tr>
+<td><strong>logs</strong></td>
+<td><strong>获取容器日志；容器以前在前台控制台能输出的所有内容，都可以看到</strong></td>
+</tr>
+<tr>
+<td><strong>pause</strong></td>
+<td><strong>暂停一个或者多个容器</strong></td>
+</tr>
+<tr>
+<td><strong>port</strong></td>
+<td><strong>列出容器的端口映射</strong></td>
+</tr>
+<tr>
+<td><strong>ps</strong></td>
+<td><strong>列出所有容器 docker ps -a 列出包括已停止的所有容器</strong></td>
+</tr>
+<tr>
+<td><strong>pull</strong></td>
+<td><strong>从registry下载一个image 或者repository</strong></td>
+</tr>
+<tr>
+<td><strong>push</strong></td>
+<td><strong>给registry推送一个image或者repository</strong></td>
+</tr>
+<tr>
+<td><strong>rename</strong></td>
+<td><strong>重命名一个容器</strong></td>
+</tr>
+<tr>
+<td><strong>restart</strong></td>
+<td><strong>重启一个或者多个容器</strong></td>
+</tr>
+<tr>
+<td><strong>rm</strong></td>
+<td><strong>移除一个或者多个容器</strong></td>
+</tr>
+<tr>
+<td><strong>rmi</strong></td>
+<td><strong>移除一个或者多个镜像</strong></td>
+</tr>
+<tr>
+<td><strong>run</strong></td>
+<td><strong>创建并启动容器</strong></td>
+</tr>
+<tr>
+<td><strong>save</strong></td>
+<td><strong>把一个或者多个镜像保存为tar文件 docker save -o [容器名称]:[容器标签] &gt; xxx.tar</strong></td>
+</tr>
+<tr>
+<td><strong>search</strong></td>
+<td><strong>去docker hub寻找镜像</strong></td>
+</tr>
+<tr>
+<td><strong>start</strong></td>
+<td><strong>启动一个或者多个容器</strong></td>
+</tr>
+<tr>
+<td><strong>stop</strong></td>
+<td><strong>停止一个或者多个容器</strong></td>
+</tr>
+<tr>
+<td><strong>tag</strong></td>
+<td><strong>给源镜像创建一个新的标签，变成新的镜像</strong></td>
+</tr>
+<tr>
+<td><strong>unpause</strong></td>
+<td><strong>pause的反操作</strong></td>
+</tr>
+<tr>
+<td><strong>update</strong></td>
+<td><strong>更新一个或者多个docker容器配置</strong></td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td><strong>Show the Docker version information</strong></td>
+</tr>
+<tr>
+<td><strong>container</strong></td>
+<td><strong>管理容器</strong></td>
+</tr>
+<tr>
+<td><strong>image</strong></td>
+<td><strong>管理镜像</strong></td>
+</tr>
+<tr>
+<td><strong>network</strong></td>
+<td><strong>管理网络</strong></td>
+</tr>
+<tr>
+<td><strong>volume</strong></td>
+<td><strong>管理卷</strong></td>
+</tr>
+<tr>
+<td><strong>stats</strong></td>
+<td><strong>显示容器资源的实时使用状态</strong></td>
+</tr>
+<tr>
+<td><strong>top</strong></td>
+<td><strong>显示正在运行容器的进程</strong></td>
+</tr>
+</tbody></table>
 <h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><ol>
 <li>文件没有后缀，名字就是Dockerfile</li>
 <li>命令约定全部使用大写，如RUN,ADD,FROM</li>
@@ -1022,7 +1253,155 @@ OPTIONS说明：
 <span class="token function">docker</span> run <span class="token parameter variable">-itd</span> <span class="token parameter variable">--name</span> mdjz <span class="token parameter variable">--network</span><span class="token operator">=</span>my-net <span class="token parameter variable">--restart</span> always  <span class="token parameter variable">-p</span>  <span class="token number">19901</span>:19901 mdjz
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="docker加速命令"><a href="#docker加速命令" class="headerlink" title="docker加速命令"></a>docker加速命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-sSL</span> https://get.daocloud.io/daotools/set_mirror.sh <span class="token operator">|</span> <span class="token function">sh</span> <span class="token parameter variable">-s</span> http://f1361db2.m.daocloud.io
+<h2 id="使用docker安装主流软件"><a href="#使用docker安装主流软件" class="headerlink" title="使用docker安装主流软件"></a>使用docker安装主流软件</h2><h3 id="安装mysql8-0"><a href="#安装mysql8-0" class="headerlink" title="安装mysql8.0"></a>安装mysql8.0</h3><ol>
+<li>拉取镜像<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull mysql:8.0.16<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>创建目录<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /app/mysql/conf /app/mysql/data<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>创建配置文件<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /app/mysql/conf/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+配置文件<pre class="line-numbers language-none"><code class="language-none">[client]
+#socket &#x3D; &#x2F;app&#x2F;mysql&#x2F;mysqld.sock
+default-character-set &#x3D; utf8mb4
+
+[mysqld]
+datadir &#x3D; &#x2F;var&#x2F;lib&#x2F;mysql
+character_set_server &#x3D; utf8mb4
+collation_server &#x3D; utf8mb4_bin
+secure-file-priv&#x3D; NULL
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links&#x3D;0
+sql_mode&#x3D;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+# Custom config should go here
+!includedir &#x2F;etc&#x2F;mysql&#x2F;conf.d&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>创建和启动容器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--restart</span><span class="token operator">=</span>always <span class="token parameter variable">--network</span><span class="token operator">=</span>my-net <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> mysql 
+<span class="token parameter variable">-v</span> /app/mysql/conf/my.cnf:/etc/mysql/my.cnf
+<span class="token parameter variable">-v</span> /app/mysql/data:/var/lib/mysql
+<span class="token parameter variable">-p</span> <span class="token number">3306</span>:3306 <span class="token parameter variable">-e</span> <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span>1qaz@WSX mysql:8.0.16<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>修改mysql密码以及授权可访问主机<br>进入容器内部<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> mysql /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+连接mysql<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+使用mysql库<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">use mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+修改主机及访问密码，设置所有主机可访问<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'1qaz@WSX'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+刷新<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><ol>
+<li>拉取最新镜像<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>新建目录<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建挂载目录</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /app/nginx/conf /app/nginx/log /app/nginx/html
+<span class="token comment">#创建前端发版的目录</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /app/nginx/web_dist /app/nginx/app_dist<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>容器中的nginx.conf文件和conf.d文件夹复制到宿主机<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 生成容器</span>
+<span class="token function">docker</span> run <span class="token parameter variable">--name</span> nginx <span class="token parameter variable">-p</span> <span class="token number">9090</span>:80 <span class="token parameter variable">-d</span> nginx
+<span class="token comment"># 将容器nginx.conf文件复制到宿主机</span>
+<span class="token function">docker</span> <span class="token function">cp</span> nginx:/etc/nginx/nginx.conf /app/nginx/conf/nginx.conf
+<span class="token comment"># 将容器conf.d文件夹下内容复制到宿主机</span>
+<span class="token function">docker</span> <span class="token function">cp</span> nginx:/etc/nginx/conf.d /app/nginx/conf/conf.d
+<span class="token comment"># 将容器中的html文件夹复制到宿主机</span>
+<span class="token function">docker</span> <span class="token function">cp</span> nginx:/usr/share/nginx/html /app/nginx/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>删掉临时的nginx容器，并且创建新的容器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 直接执行docker rm nginx或者以容器id方式关闭容器</span>
+<span class="token comment"># 找到nginx对应的容器id</span>
+<span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span>
+<span class="token comment"># 关闭该容器</span>
+<span class="token function">docker</span> stop nginx
+<span class="token comment"># 删除该容器</span>
+<span class="token function">docker</span> <span class="token function">rm</span> nginx
+<span class="token comment"># 删除正在运行的nginx容器</span>
+<span class="token function">docker</span> run <span class="token parameter variable">--privileged</span><span class="token operator">=</span>true <span class="token parameter variable">--restart</span> unless-stopped
+<span class="token parameter variable">-p</span> <span class="token number">9090</span>:9090
+<span class="token parameter variable">--name</span> nginx
+<span class="token parameter variable">-v</span> /app/nginx/conf/nginx.conf:/etc/nginx/nginx.conf <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /app/nginx/conf/conf.d:/etc/nginx/conf.d <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /app/nginx/log:/var/log/nginx <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /app/nginx/html:/usr/share/nginx/html <span class="token punctuation">\</span>
+<span class="token parameter variable">-d</span> nginx:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>注意ngin配置文件里面所有的路径指向的都是容器里面的路径，而并非宿主机上面的路径，端口也是指向容器内部的端口，如果路径没有挂载或者挂载不正确访问nginx的时候会出现500错误。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="安装nacos"><a href="#安装nacos" class="headerlink" title="安装nacos"></a>安装nacos</h3><ol>
+<li>拉取镜像<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull nacos/nacos-server:1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>创建挂载目录<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /app/nacos/logs/ /app/nacos/init.d/
+<span class="token comment">#创建一个配置文件</span>
+<span class="token function">vim</span> /app/nacos/init.d/custom.properties
+
+<span class="token comment">#修改配置文件</span>
+<span class="token assign-left variable">server.contextPath</span><span class="token operator">=</span>/nacos
+<span class="token assign-left variable">server.servlet.contextPath</span><span class="token operator">=</span>/nacos
+<span class="token assign-left variable">server.port</span><span class="token operator">=</span><span class="token number">8848</span>
+
+<span class="token assign-left variable">spring.datasource.platform</span><span class="token operator">=</span>mysql
+<span class="token assign-left variable">db.num</span><span class="token operator">=</span><span class="token number">1</span>
+<span class="token assign-left variable">db.url.0</span><span class="token operator">=</span>jdbc:mysql://121.4.114.178:3306/mmbdf-dev?characterEncoding<span class="token operator">=</span>utf8<span class="token operator">&amp;</span><span class="token assign-left variable">connectTimeout</span><span class="token operator">=</span><span class="token number">1000</span><span class="token operator">&amp;</span><span class="token assign-left variable">socketTimeout</span><span class="token operator">=</span><span class="token number">3000</span><span class="token operator">&amp;</span><span class="token assign-left variable">autoReconnect</span><span class="token operator">=</span>true<span class="token operator">&amp;</span><span class="token assign-left variable">allowPublicKeyRetrieval</span><span class="token operator">=</span>true
+<span class="token assign-left variable">db.user</span><span class="token operator">=</span>root
+<span class="token assign-left variable">db.password</span><span class="token operator">=</span>1qaz@WSX
+
+<span class="token assign-left variable">nacos.cmdb.dumpTaskInterval</span><span class="token operator">=</span><span class="token number">3600</span>
+<span class="token assign-left variable">nacos.cmdb.eventTaskInterval</span><span class="token operator">=</span><span class="token number">10</span>
+<span class="token assign-left variable">nacos.cmdb.labelTaskInterval</span><span class="token operator">=</span><span class="token number">300</span>
+<span class="token assign-left variable">nacos.cmdb.loadDataAtStart</span><span class="token operator">=</span>false
+<span class="token assign-left variable">management.metrics.export.elastic.enabled</span><span class="token operator">=</span>false
+<span class="token assign-left variable">management.metrics.export.influx.enabled</span><span class="token operator">=</span>false
+<span class="token assign-left variable">server.tomcat.accesslog.enabled</span><span class="token operator">=</span>true
+<span class="token assign-left variable">server.tomcat.accesslog.pattern</span><span class="token operator">=</span>%h %l %u %t <span class="token string">"%r"</span> %s %b %D %<span class="token punctuation">&#123;</span>User-Agent<span class="token punctuation">&#125;</span>i
+<span class="token assign-left variable">nacos.security.ignore.urls</span><span class="token operator">=</span>/,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/login,/v1/console/health/**,/v1/cs/**,/v1/ns/**,/v1/cmdb/**,/actuator/**,/v1/console/server/**
+<span class="token assign-left variable">nacos.naming.distro.taskDispatchThreadCount</span><span class="token operator">=</span><span class="token number">1</span>
+<span class="token assign-left variable">nacos.naming.distro.taskDispatchPeriod</span><span class="token operator">=</span><span class="token number">200</span>
+<span class="token assign-left variable">nacos.naming.distro.batchSyncKeyCount</span><span class="token operator">=</span><span class="token number">1000</span>
+<span class="token assign-left variable">nacos.naming.distro.initDataRatio</span><span class="token operator">=</span><span class="token number">0.9</span>
+<span class="token assign-left variable">nacos.naming.distro.syncRetryDelay</span><span class="token operator">=</span><span class="token number">5000</span>
+<span class="token assign-left variable">nacos.naming.data.warmup</span><span class="token operator">=</span>true
+<span class="token assign-left variable">nacos.naming.expireInstance</span><span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>创建内部桥接网络<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network create <span class="token parameter variable">-d</span> bridge my-net<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>运行容器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span>
+<span class="token parameter variable">--network</span><span class="token operator">=</span>my-net
+<span class="token parameter variable">--privileged</span><span class="token operator">=</span>true
+<span class="token parameter variable">-e</span> <span class="token assign-left variable">PREFER_HOST_MODE</span><span class="token operator">=</span>ip
+<span class="token parameter variable">-e</span> <span class="token assign-left variable">MODE</span><span class="token operator">=</span>standalone
+<span class="token parameter variable">-e</span> <span class="token assign-left variable">TIME_ZONE</span><span class="token operator">=</span><span class="token string">'Asia/Shanghai'</span>
+<span class="token parameter variable">-v</span> /app/nacos/init.d/application.properties:/home/nacos/conf/application.properties
+<span class="token parameter variable">-v</span> /app/nacos/logs:/home/nacos/logs
+<span class="token parameter variable">-p</span> <span class="token number">8848</span>:8848
+<span class="token parameter variable">--name</span> nacos
+<span class="token parameter variable">--restart</span><span class="token operator">=</span>always
+nacos/nacos-server:1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>进入容器内部修改数据库连接<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/home/nacos/conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+复制容器内的<code>/home/nacos/conf/application.properties</code>出来，修改和挂载<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">cp</span> nacos:/home/nacos/conf/application.properties /app/nacos/init.d/application.properties
+<span class="token comment"># 进入容器</span>
+<span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> nacos <span class="token function">bash</span>
+<span class="token comment"># 修改容器配置</span>
+<span class="token builtin class-name">cd</span> conf
+<span class="token function">vi</span> application.properties<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>重启容器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> restart nacos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h3 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h3><ol>
+<li>拉取最新镜像<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull redis<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>创建挂载目录<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /app/redis/data<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>运行容器<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--name</span> redis   
+<span class="token parameter variable">--privileged</span><span class="token operator">=</span>true 
+<span class="token parameter variable">-p</span> <span class="token number">6379</span>:6379
+<span class="token parameter variable">-v</span> /app/redis/redis.conf:/etc/redis/redis.conf
+<span class="token parameter variable">-v</span> /app/redis/data:/data
+<span class="token parameter variable">-d</span> redis redis-server /etc/redis/redis.conf
+<span class="token parameter variable">--appendonly</span> <span class="token function">yes</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="部署ElasticSearch"><a href="#部署ElasticSearch" class="headerlink" title="部署ElasticSearch"></a>部署ElasticSearch</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 准备文件和文件夹，并chmod -R 777 xxx</span>
+<span class="token comment"># 配置文件内容，参照</span>
+https://www.elastic.co/guide/en/elasticsearch/reference/7.5/node.name.html 搜索相
+关配置
+<span class="token comment"># 考虑为什么挂载使用esconfig ...</span>
+<span class="token function">docker</span> run <span class="token parameter variable">--name</span><span class="token operator">=</span>elasticsearch <span class="token parameter variable">-p</span> <span class="token number">9200</span>:9200 <span class="token parameter variable">-p</span> <span class="token number">9300</span>:9300 <span class="token punctuation">\</span>
+<span class="token parameter variable">-e</span> <span class="token string">"discovery.type=single-node"</span> <span class="token punctuation">\</span>
+<span class="token parameter variable">-e</span> <span class="token assign-left variable">ES_JAVA_OPTS</span><span class="token operator">=</span><span class="token string">"-Xms300m -Xmx300m"</span> <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /app/es/data:/usr/share/elasticsearch/data <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /app/es/plugins:/usr/shrae/elasticsearch/plugins <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> esconfig:/usr/share/elasticsearch/config <span class="token punctuation">\</span>
+<span class="token parameter variable">-d</span> elasticsearch:7.12.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="部署Tomcat"><a href="#部署Tomcat" class="headerlink" title="部署Tomcat"></a>部署Tomcat</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 考虑，如果我们每次-v都是指定磁盘路径，是不是很麻烦？</span>
+<span class="token function">docker</span> run <span class="token parameter variable">--name</span> tomcat-app <span class="token parameter variable">-p</span> <span class="token number">8080</span>:8080 <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> tomcatconf:/usr/local/tomcat/conf <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> tomcatwebapp:/usr/local/tomcat/webapps <span class="token punctuation">\</span>
+<span class="token parameter variable">-d</span> tomcat:jdk8-openjdk-slim-buster<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><h3 id="docker加速命令"><a href="#docker加速命令" class="headerlink" title="docker加速命令"></a>docker加速命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-sSL</span> https://get.daocloud.io/daotools/set_mirror.sh <span class="token operator">|</span> <span class="token function">sh</span> <span class="token parameter variable">-s</span> http://f1361db2.m.daocloud.io
 或
 <span class="token function">vim</span> /etc/docker/daemon.json
 <span class="token punctuation">&#123;</span>
@@ -1032,6 +1411,27 @@ OPTIONS说明：
 <blockquote>
 <p>其他站点<br><a target="_blank" rel="noopener" href="http://hub-mirror.c.163.com/">http://hub-mirror.c.163.com</a><br><a target="_blank" rel="noopener" href="https://3laho3y3.mirror.aliyuncs.com/">https://3laho3y3.mirror.aliyuncs.com</a><br><a target="_blank" rel="noopener" href="http://f1361db2.m.daocloud.io/">http://f1361db2.m.daocloud.io</a><br><a target="_blank" rel="noopener" href="https://mirror.ccs.tencentyun.com/">https://mirror.ccs.tencentyun.com</a><br><a target="_blank" rel="noopener" href="https://docker.mirrors.ustc.edu.cn/">https://docker.mirrors.ustc.edu.cn</a></p>
 </blockquote>
+<p><strong>其他方案</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/docker
+<span class="token function">sudo</span> <span class="token function">tee</span> /etc/docker/daemon.json <span class="token operator">&lt;&lt;-</span><span class="token string">'EOF'
+&#123;
+"registry-mirrors": ["https://mfs5bvup.mirror.aliyuncs.com%22/]
+&#125;
+EOF</span>
+<span class="token function">sudo</span> systemctl daemon-reload
+<span class="token function">sudo</span> systemctl restart <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>以后docker下载直接从阿里云拉取相关镜像</p>
+<h3 id="可视化界面-Portainer"><a href="#可视化界面-Portainer" class="headerlink" title="可视化界面-Portainer"></a>可视化界面-Portainer</h3><h4 id="什么是Portainer"><a href="#什么是Portainer" class="headerlink" title="什么是Portainer"></a>什么是Portainer</h4><p>Portainer社区版2.0拥有超过50万的普通用户，是功能强大的开源工具集，可让您轻松地在Docker，Swarm，Kubernetes和Azure ACI中构建和管理容器。 Portainer的工作原理是在易于使用的GUI后面隐藏使管理容器变得困难的复杂性。通过消除用户使用CLI，编写YAML或理解清单的需求，Portainer使部署应用程序和解决问题变得如此简单，任何人都可以做到。 Portainer开发团队在这里为您的Docker之旅提供帮助；</p>
+<h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p>服务端部署</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">-p</span> <span class="token number">8000</span>:8000 <span class="token parameter variable">-p</span> <span class="token number">9000</span>:9000 <span class="token parameter variable">--name</span><span class="token operator">=</span>portainer <span class="token parameter variable">--restart</span><span class="token operator">=</span>always <span class="token parameter variable">-v</span>
+/var/run/docker.sock:/var/run/docker.sock <span class="token parameter variable">-v</span> portainer_data:/data
+portainer/portainer-ce
+<span class="token comment"># 访问9000端口即可</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>agent端部署</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">-p</span> <span class="token number">9001</span>:9001 <span class="token parameter variable">--name</span> portainer_agent <span class="token parameter variable">--restart</span><span class="token operator">=</span>always <span class="token parameter variable">-v</span>
+/var/run/docker.sock:/var/run/docker.sock <span class="token parameter variable">-v</span>
+/var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="与Spring-Boot"><a href="#与Spring-Boot" class="headerlink" title="与Spring Boot"></a>与Spring Boot</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/15ZAVUg5DfcF53QpEetT7Q">一键部署Spring Boot到远程Docker容器</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dP-c3twzR0PMUvPWZA-U0Q">Jenkins+Docker一键自动化部署SpringBoot项目</a></li>

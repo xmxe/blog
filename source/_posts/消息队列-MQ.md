@@ -1447,6 +1447,7 @@ Pulsar的关键特性如下（摘自官网）：
 - Kafka的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时Kafka最好是支撑较少的topic数量即可，保证其超高吞吐量。Kafka唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。如果是大数据领域的实时计算、日志采集等场景，用Kafka是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。
 
 > [7个方面综合对比Kafka、RabbitMQ、RocketMQ、ActiveMQ四个分布式消息队列](https://mp.weixin.qq.com/s/7PDuuEChls6MDUCiI8_FaA)
+> [RabbitMQ vs Kafka：正面交锋](https://mp.weixin.qq.com/s/uOkEXw-jMpuZOp6JteArPw)
 
 
 ## 经典面试题

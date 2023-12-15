@@ -544,9 +544,9 @@
 </blockquote>
 <h4 id="3-创建用户及用户组"><a href="#3-创建用户及用户组" class="headerlink" title="3. 创建用户及用户组"></a>3. 创建用户及用户组</h4><p>先检查是否有mysql用户组和mysql用户,没有就添加</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看所有用户</span>
-<span class="token function">cat</span> /etc/passwd
+<span class="token comment">#cat /etc/passwd</span>
 <span class="token comment"># 查看用户组</span>
-<span class="token function">groups</span> mysql
+<span class="token comment">#groups mysql</span>
 <span class="token comment"># 添加用户组</span>
 <span class="token function">groupadd</span> mysql
 <span class="token comment"># 删除用户组 groupdel</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -592,7 +592,7 @@ collation-server<span class="token operator">=</span>utf8mb4_unicode_ci
 <span class="token assign-left variable">wait_timeout</span><span class="token operator">=</span><span class="token number">31536000</span>
 <span class="token assign-left variable">interactive_timeout</span><span class="token operator">=</span><span class="token number">31536000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>进入安装mysql软件目录<code>cd mysql/</code>,修改目录拥有者为mysql用户<code>chown -R mysql:mysql ./</code></p>
+<p><strong>进入安装mysql软件目录<code>cd mysql/</code>,修改目录拥有者为mysql用户<code>chown -R mysql:mysql ./</code>，或者单独修改MySQL的data目录<code>chown -R mysql:mysql data/</code></strong></p>
 <h5 id="5-6版本"><a href="#5-6版本" class="headerlink" title="5.6版本"></a>5.6版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># --defaults-file指定配置文件 --basedir指定Mysql安装目录 --datadir指定数据目录 --user所属用户</span>
 ./scripts/mysql_install_db <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -615,6 +615,7 @@ collation-server<span class="token operator">=</span>utf8mb4_unicode_ci
 <blockquote>
 <p><strong>错误1</strong>：服务未成功启动查看data目录下的localhost.localdomain.err错误日志<br>遇到<code>Can&#39;t start server : Bind on unix socket: Address already in use Do you already have another mysqld server running on socket: /tmp/mysql.sock ?</code>解决方法是删除 rm -rf &#x2F;tmp&#x2F;mysql.sock(由于以前安装过mysql的原因)</p>
 <p><strong>错误2</strong>：.&#x2F;mysqld: error while loading shared libraries: libnuma.so.1: cannot open shared object file: No such file or directory就执行下<code>yum install -y libaio</code>、<code> yum -y install numactl</code>后再执行初始化</p>
+<p><strong>错误3</strong>：mysql -uroot -proot无法连接的话,报错Can’t connect to local MySQL server through socket ‘&#x2F;tmp&#x2F;mysql.sock<br>创建软连接<code>ln -s /data/mysql/mysql.sock /tmp/mysql.sock</code>,注意查看&#x2F;etc&#x2F;my.cnf中socket配置的mysql.sock的位置,<br>mysql.sock默认位置是<code>ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock</code></p>
 </blockquote>
 <h4 id="5-启动mysql"><a href="#5-启动mysql" class="headerlink" title="5. 启动mysql"></a>5. 启动mysql</h4><p>添加开机启动，把启动脚本放到开机初始化目录。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -692,8 +693,6 @@ GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'myuser'</span>@<span 
 </blockquote>
 <p>创建软连接</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ln</span> <span class="token parameter variable">-s</span> /usr/local/mysql/bin/mysql /usr/local/bin/mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>mysql -uroot -proot无法连接的话</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ln</span> <span class="token parameter variable">-s</span> /var/lib/mysql/mysql.sock /tmp/mysql.sock<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>默认配置文件路径如下</p>
 <pre class="line-numbers language-none"><code class="language-none">配置文件：&#x2F;etc&#x2F;my.cnf
@@ -924,6 +923,7 @@ FLUSH PRIVILEGES<span class="token punctuation">;</span><span aria-hidden="true"
 <h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect">一文教你在CentOS7下安装MySQL及搭建主从复制</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/R89aCCFvCvudLp6FUn2JjQ">手把手教大家搭建MySQL主从复制</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/cst522445906/article/details/129165658">Linux系统安装MySQL8.0版本详细教程</a></li>
 </ul>
 
                 
@@ -1179,7 +1179,13 @@ FLUSH PRIVILEGES<span class="token punctuation">;</span><span aria-hidden="true"
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            安装在线安装(1) 安装docker需要关闭selinux,由于selinux和LXC（Docker实现虚拟化的方式）有冲突，所以需要禁用selinux。编辑&#x2F;etc&#x2F;selinux&#x2F;config，设置两个关键
+                            基本概念Docker架构Docker架构包括以下几个核心组件：
+
+Docker客户端(Client):用户与Docker交互的命令行工具或API。
+
+Docker服务器(Server):负责管理镜像、容器、网络等资源的后台服务。
+
+Dock
                         
 
                     </div>

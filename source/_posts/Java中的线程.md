@@ -199,6 +199,7 @@ int availableProcessors = Runtime.getRuntime().availableProcessors()
 - [面试官：线程池中多余的线程是如何回收的？](https://mp.weixin.qq.com/s/Ts2DGoUJ6SOhdRuDaLa8UQ)
 - [你真的了解Thread线程类吗](https://mp.weixin.qq.com/s/PNHueqqUhKPihiJm3Hqmvw)
 - [面试官提问：线程中的wait和notify方法有啥作用？](https://mp.weixin.qq.com/s/ZY65yfzxVaWn-WFNKy1v4A)
+- [什么是线程组？](https://mp.weixin.qq.com/s/fbdJyn1Roa3Vxn1q1BPa6w)
 
 ### 线程池
 

@@ -27,9 +27,9 @@ tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz
 先检查是否有mysql用户组和mysql用户,没有就添加
 ```shell
 # 查看所有用户
-cat /etc/passwd
+#cat /etc/passwd
 # 查看用户组
-groups mysql
+#groups mysql
 # 添加用户组
 groupadd mysql
 # 删除用户组 groupdel
@@ -82,7 +82,7 @@ wait_timeout=31536000
 interactive_timeout=31536000
 ```
 
-进入安装mysql软件目录`cd mysql/`,修改目录拥有者为mysql用户`chown -R mysql:mysql ./`
+**进入安装mysql软件目录`cd mysql/`,修改目录拥有者为mysql用户`chown -R mysql:mysql ./`，或者单独修改MySQL的data目录`chown -R mysql:mysql data/`**
 
 ##### 5.6版本
 
@@ -131,6 +131,10 @@ root@localhost之后的一串字符就是初始密码
 > 遇到`Can't start server : Bind on unix socket: Address already in use Do you already have another mysqld server running on socket: /tmp/mysql.sock ?`解决方法是删除 rm -rf /tmp/mysql.sock(由于以前安装过mysql的原因)
 >
 > **错误2**：./mysqld: error while loading shared libraries: libnuma.so.1: cannot open shared object file: No such file or directory就执行下`yum install -y libaio`、` yum -y install numactl`后再执行初始化
+> 
+> **错误3**：mysql -uroot -proot无法连接的话,报错Can't connect to local MySQL server through socket '/tmp/mysql.sock
+> 创建软连接`ln -s /data/mysql/mysql.sock /tmp/mysql.sock`,注意查看/etc/my.cnf中socket配置的mysql.sock的位置,
+> mysql.sock默认位置是`ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock`
 
 #### 5. 启动mysql
 
@@ -235,11 +239,6 @@ chkconfig --level 345 mysql on
 创建软连接
 ```shell
 ln -s /usr/local/mysql/bin/mysql /usr/local/bin/mysql
-```
-mysql -uroot -proot无法连接的话
-
-```shell
-ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock
 ```
 
 默认配置文件路径如下
@@ -550,3 +549,4 @@ echo "Import completed."
 ## 相关文章
 - [一文教你在CentOS7下安装MySQL及搭建主从复制](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect)
 - [手把手教大家搭建MySQL主从复制](https://mp.weixin.qq.com/s/R89aCCFvCvudLp6FUn2JjQ)
+- [Linux系统安装MySQL8.0版本详细教程](https://blog.csdn.net/cst522445906/article/details/129165658)

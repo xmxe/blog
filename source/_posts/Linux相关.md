@@ -104,15 +104,15 @@ systemctl list-unit-files|grep enabled
 systemctl is-enabled firewalld.service
 
 # 端口开放
-firewall-cmd --zone=public --add-port=80/tcp --permanent
 #（--permanent永久生效，没有此参数重启后失效）
-
-# 重新载入
-firewall-cmd --reload查看
-firewall-cmd --zone= public --query-port=80/tcp
+# --zone=public:指定了要查询的防火墙区域。防火墙区域是网络连接的一个逻辑分组，每个区域都有自己的规则集来控制进入和离开该区域的数据包。公共区域（public）通常用于外部网络连接，例如Internet连接。可不加
+firewall-cmd --zone=public --add-port=80/tcp --permanent
 # 删除
-firewall-cmd --zone= public --remove-port=80/tcp --permanent
-
+firewall-cmd --zone=public --remove-port=80/tcp --permanent
+# 重新载入
+firewall-cmd --reload
+# 查看
+firewall-cmd --zone= public --query-port=80/tcp
 # 查看开放的端口
 firewall-cmd --list-ports
 

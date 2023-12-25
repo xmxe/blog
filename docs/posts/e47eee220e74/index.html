@@ -663,10 +663,6 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 </blockquote>
 <h3 id="PostConstruct和-PreDestroy"><a href="#PostConstruct和-PreDestroy" class="headerlink" title="@PostConstruct和@PreDestroy"></a>@PostConstruct和@PreDestroy</h3><p>@PostConstruct该注解被用来修饰一个非静态的void()方法,被@PostConstruct修饰的方法会当bean创建完成的时候，会后置执行@PostConstruct修饰的方法。PostConstruct在构造函数之后执行，bean的init()方法之前执行,相当于init-method,使用在方法上，当Bean初始化时执行,Constructor(构造方法) -&gt; @Autowired(依赖注入) -&gt; @PostConstruct(注释的方法)</p>
 <p>@PreDestroy类似于destory-method在servlet destory()方法之后执行</p>
-<h3 id="Configuration和-Component的区别"><a href="#Configuration和-Component的区别" class="headerlink" title="@Configuration和@Component的区别"></a>@Configuration和@Component的区别</h3><p>一句话概括就是@Configuration中所有带@Bean注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。<br>理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog">终于搞懂了@Configuration和@Component的区别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D84pWlXs7wbHFYvCE5TAVQ">@Configuration和@Component有何区别？</a></p>
-</blockquote>
 <h3 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ">Spring Boot中条件注解底层如何实现的？</a></p>
 </blockquote>
@@ -948,7 +944,7 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 file:.&#x2F;
 classpath:&#x2F;config&#x2F;
 classpath:&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>配置⽂件名可以通过<code>spring.config.name</code>修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:<code>spring.config.location</code></p>
+<p>配置文件名可以通过<code>spring.config.name</code>修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:<code>spring.config.location</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">java</span> <span class="token parameter variable">-jar</span> myproject.jar <span class="token parameter variable">--spring.config.location</span><span class="token operator">=</span>classpath:/default.properties,classpath:/override.properties.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>Spring Cloud项目加载bootstrap.yml使用<code>--spring.cloud.bootstrap.location</code></p>

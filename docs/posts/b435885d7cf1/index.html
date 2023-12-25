@@ -533,7 +533,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Spring-IoC"><a href="#Spring-IoC" class="headerlink" title="Spring IoC"></a>Spring IoC</h2><h3 id="谈谈自己对于Spring-IoC的了解"><a href="#谈谈自己对于Spring-IoC的了解" class="headerlink" title="谈谈自己对于Spring IoC的了解"></a>谈谈自己对于Spring IoC的了解</h3><p><strong>IoC(Inversion of Control,控制反转)</strong> 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。<strong>IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则</strong>。</p>
+                <h2 id="Spring-Bean"><a href="#Spring-Bean" class="headerlink" title="Spring Bean"></a>Spring Bean</h2><h3 id="谈谈自己对于Spring-IoC的了解"><a href="#谈谈自己对于Spring-IoC的了解" class="headerlink" title="谈谈自己对于Spring IoC的了解"></a>谈谈自己对于Spring IoC的了解</h3><p><strong>IoC(Inversion of Control,控制反转)</strong> 是Spring中一个非常非常重要的概念，它不是什么技术，而是一种解耦的设计思想。IoC的主要目的是借助于“第三方”(Spring中的IoC容器)实现具有依赖关系的对象之间的解耦(IOC容器管理对象，你只管使用即可)，从而降低代码之间的耦合度。<strong>IoC是一个原则，而不是一个模式，以下模式（但不限于）实现了IoC原则</strong>。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ioc-patterns.png" alt="ioc-patterns"></p>
 <p><strong>Spring IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件&#x2F;注解即可，完全不用考虑对象是如何被创建出来的</strong>。IoC容器负责创建对象，将对象连接在一起，配置这些对象，并从创建中处理这些对象的整个生命周期，直到它们被完全销毁。在实际项目中一个Service类如果有几百甚至上千个类作为它的底层，我们需要实例化这个Service，你可能要每次都要搞清这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
 <blockquote>
@@ -601,7 +601,13 @@
                 <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">serviceImpl3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Hi0Tdr9DW4bJrOzzDINgCA">@Bean与@Component用在同一个类上，会怎么样？</a></p>
+</blockquote>
+<h3 id="Configuration和-Component的区别"><a href="#Configuration和-Component的区别" class="headerlink" title="@Configuration和@Component的区别"></a>@Configuration和@Component的区别</h3><p>一句话概括就是@Configuration中所有带@Bean注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。<br>理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog">终于搞懂了@Configuration和@Component的区别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D84pWlXs7wbHFYvCE5TAVQ">@Configuration和@Component有何区别？</a></p>
+</blockquote>
 <h3 id="注入Bean的注解有哪些？"><a href="#注入Bean的注解有哪些？" class="headerlink" title="注入Bean的注解有哪些？"></a>注入Bean的注解有哪些？</h3><p>Spring内置的@Autowired以及JDK内置的@Resource和@Inject都可以用于注入Bean。</p>
 <table>
 <thead>

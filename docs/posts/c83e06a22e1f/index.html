@@ -971,6 +971,52 @@ attribute_info attributes<span class="token punctuation">[</span>attributes_coun
 <p>建议<code>ClassLoader</code>的子类重写<code>findClass(String name)</code>方法而不是<code>loadClass(String name, boolean resolve)</code>方法。</p>
 </blockquote>
 <p>如果我们不想打破双亲委派模型，就重写ClassLoader类中的findClass()方法即可，无法被父类加载器加载的类最终会通过这个方法被加载。但是，如果想打破双亲委派模型则需要重写loadClass()方法。</p>
+<h4 id="ClassLoader-loadClass-、Class-forName-区别"><a href="#ClassLoader-loadClass-、Class-forName-区别" class="headerlink" title="ClassLoader.loadClass()、Class.forName()区别"></a>ClassLoader.loadClass()、Class.forName()区别</h4><p>**ClassLoader.loadClass()<strong>和</strong>Class.forName()**都是用于加载Java类的方法，但它们之间存在一些关键的区别：</p>
+<ol>
+<li><p>初始化行为：</p>
+<ul>
+<li>**Class.forName(className)**会初始化加载的类。这意味着如果类中包含静态初始化块或静态字段，这些静态内容会在加载时被初始化。</li>
+<li>**ClassLoader.loadClass(className)**只是加载类，不会执行任何初始化操作。除非你随后通过反射调用<code>.newInstance()</code>、访问静态字段或方法，或者调用<code>Class.forName(className, true, classLoader)</code>（第二个参数为<code>true</code>）来显式地初始化类。</li>
+</ul>
+</li>
+<li><p>类加载器的使用：</p>
+<ul>
+<li>**Class.forName(className)**默认使用当前线程的上下文类加载器来加载类。</li>
+<li>**ClassLoader.loadClass(className)**需要你提供一个具体的类加载器实例来加载类。这提供了更多的灵活性，允许你控制使用哪个类加载器来加载类。<blockquote>
+<p>**Class.forName(className)<strong>默认使用当前线程的上下文类加载器来加载类。如果你的当前线程的上下文类加载器能够找到并加载这个类，那么这个方法就能正常工作。而</strong>ClassLoader.getSystemClassLoader().loadClass(className)**则明确使用系统类加载器来加载类。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>异常处理：</p>
+<ul>
+<li>**Class.forName(className)**会抛出ClassNotFoundException或LinkageError的子类。</li>
+<li>**ClassLoader.loadClass(className)**除了抛出上述异常外，还可能抛出SecurityException，因为该方法涉及到安全相关的类加载。</li>
+</ul>
+</li>
+<li><p>双亲委派模型：</p>
+<ul>
+<li>**Class.forName(className)<strong>和</strong>Thread.currentThread().getContextClassLoader().loadClass(className)**通常遵循双亲委派模型，即先委托给父类加载器加载，只有当父类加载器无法加载时才由当前类加载器尝试加载。</li>
+<li>**ClassLoader.getSystemClassLoader().loadClass(className)**直接使用系统类加载器加载，可能会跳过一些类加载器，这在某些情况下可能导致类找不到。<blockquote>
+<p>**Class.forName(className)<strong>和</strong>Thread.currentThread().getContextClassLoader().loadClass(className)<strong>通常会遵循双亲委托机制，而直接使用</strong>ClassLoader.getSystemClassLoader().loadClass(className)<strong>可能会跳过一些类加载器，导致类找不到。因此，如果你的类是通过系统类加载器以外的其他类加载器加载的（比如自定义类加载器或者应用类加载器），那么直接使用</strong>ClassLoader.getSystemClassLoader().loadClass(className)<strong>可能无法找到这个类，而</strong>Class.forName(className)<strong>或者</strong>Thread.currentThread().getContextClassLoader().loadClass(className)**可能能够正确加载。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>功能和使用场景：</p>
+<ul>
+<li>**Class.forName()**常用于需要触发类初始化的场景，比如在JDBC编程中加载数据库驱动类。</li>
+<li>**ClassLoader.loadClass()**则更多地用于更精细的类加载控制，特别是在涉及自定义类加载器或者需要避免类初始化的场景。</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，选择使用哪个方法取决于你的具体需求，包括是否需要初始化类、希望使用哪个类加载器以及是否需要遵循双亲委派模型等。</p>
+<p>为了更好地控制类加载过程和解决你的问题(<strong>使用ClassLoad加载spring boot jar包提示ClassNotFoundException</strong>)，你可以尝试以下方法：</p>
+<ul>
+<li>使用Thread.currentThread().getContextClassLoader().loadClass(className)代替ClassLoader.getSystemClassLoader().loadClass(className)。</li>
+<li>如果你在使用自定义类加载器，确保你的类加载器遵循双亲委派模型，并且正确地委托给父类加载器。</li>
+<li>检查你的类路径和类名是否正确，确保类文件可以被正确的类加载器找到。</li>
+</ul>
 <h3 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h3><h4 id="双亲委派模型介绍"><a href="#双亲委派模型介绍" class="headerlink" title="双亲委派模型介绍"></a>双亲委派模型介绍</h4><p>类加载器有很多种，当我们想要加载一个类的时候，具体是哪个类加载器加载呢？这就需要提到双亲委派模型了。</p>
 <p>根据官网介绍：</p>
 <blockquote>

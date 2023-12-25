@@ -266,18 +266,20 @@ docker push myapache:v1
 
 - 导出镜像
 ```shell
-docker save -o <保存路径> <镜像名称:标签>
-
+docker save -o <保存路径> <镜像名称:标签>(或者镜像id)
 docker save -o ./ubuntu18.tar ubuntu:18.04
+# docker save 仓库名称 > 本地镜像文件名称.tar
 ```
 
 ### docker load
 
 - 导入镜像
 ```shell
-docker load -i 文件名 或者docker load --input 文件名
-
+docker load -i 文件名
+# 或者
+docker load --input 文件名
 docker load --input ./ubuntu18.tar
+docker load < 本地镜像.tar
 ```
 
 ### docker rmi
@@ -351,9 +353,9 @@ docker container ls -a
 - 导出容器
 ```shell
 docker export <容器名> > <保存路径>
+docker export ubuntu18 > ./ubuntu18.tar
 # 或者
 docker export -o <容器名> <保存路径> # -o :将输入内容写到文件。
-docker export ubuntu18 > ./ubuntu18.tar
 # 将id为a404c6c174a2的容器按日期保存为tar文件
 docker export -o mysql-`date +%Y%m%d`.tar a404c6c174a2
 ```
@@ -454,21 +456,20 @@ docker run
 --link=[]:添加链接到另一个容器,使用其他容器的IP、env等信息
 --lxc-conf=[]:指定容器的配置文件,只有在指定--exec-driver=lxc时使用
 --net="bridge":容器网络设置:
-bridge - 使用docker daemon指定的网桥
-host - 容器使用主机的网络
-container:NAME_or_ID > 使用其他容器的网路，共享IP和PORT等网络资源
-none - 容器使用自己的网络（类似--net=bridge），但是不进行配置
-
+        bridge - 使用docker daemon指定的网桥
+        host - 容器使用主机的网络
+        container:NAME_or_ID > 使用其他容器的网路，共享IP和PORT等网络资源
+        none - 容器使用自己的网络（类似--net=bridge），但是不进行配置
 --privileged=false指定容器是否为特权容器,特权容器拥有所有的capabilities
 --restart="no"，指定容器停止后的重启策略:
-no - 容器退出时不重启
-on-failure - 只在容器以非0状态码退出时重启。可选的，可以退出docker daemon尝试重启容器的次数
-on-failure:3，在容器非正常退出时重启容器，最多重启3次
-always – 不管退出状态码是什么始终重启容器。当指定always时，docker daemon将无限次数地重启容器。容器也会在daemon启动时尝试重启，不管容器当时的状态如何。
-unless-stopped – 不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
-
+        no - 容器退出时不重启
+        on-failure - 只在容器以非0状态码退出时重启。可选的，可以退出docker daemon尝试重启容器的次数
+        on-failure:3，在容器非正常退出时重启容器，最多重启3次
+        always – 不管退出状态码是什么始终重启容器。当指定always时，docker daemon将无限次数地重启容器。容器也会在daemon启动时尝试重启，不管容器当时的状态如何。
+        unless-stopped – 不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
 --rm=false指定容器停止后自动删除容器(不支持以docker run -d启动的容器)
 --sig-proxy=true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理
+--log-driver=json-file --log-opt max-size=10m --log-opt max-file=3:使用--log-opt参数限制容器日志大小:在启动容器时,可以使用--log-opt参数设置日志驱动程序的选项.在这个例子中,我们设置了以下选项:max-size=10m:限制单个日志文件的最大大小为10MB.max-file=3:限制日志文件的数量为3个.当日志文件达到10MB时，Docker会自动轮换日志文件，保留最新的3个日志文件。
 ```
 
 ### docker inspect
@@ -634,13 +635,137 @@ docker tag
 ```shell
 docker network create -d bridge my-net
 ```
+### docker system
+
+```shell
+# 这个命令的缩写docker info
+docker system info
+# 提供Docker整体磁盘使用率的概况，包括镜像、容器和(本地)volume。所以我们现在随时都可以查看Docker使用了多少资源。
+docker system df
+# 显示Docker系统中的实时事件，如容器创建、启动、停止、删除等。
+docker system events
+# 这两个命令用于设置Docker守护进程的网络相关配置，例如DNS查找超时时间和HTTP代理设置。
+docker system dial-timeout 和 docker system http-proxy
+# 列出所有当前配置文件。
+docker system config ls
+# (谨慎使用)此命令将重置Docker到初始化状态，删除所有数据包括镜像、容器、网络和定制配置。
+docker system reset
+```
+### docker prune
+
+#### docker system prune
+
+官网描述：删除所有未使用的容器、网络、映像（包括悬挂的和未引用的），以及卷（可选）。
+> **名词解释**：
+> 未使用的容器：所有已停止的容器将被删除。
+> 未使用的镜像：只有悬挂的镜像（未被任何容器引用）将被删除，除非使用了-a或--all参数。
+> 未使用的网络：所有未被容器使用的自定义网络将被删除。
+> 未使用的卷（如果使用--volumes或-v选项）：所有未被容器引用的卷将被删除。
+> **相关参数**：
+> -a,--all：删除未被任何容器引用的所有镜像，而不仅仅是悬挂的镜像。
+> --filter：根据提供的条件过滤要删除的内容。
+> --force,-f：跳过确认步骤，直接执行删除，不加的话在执行步骤时需要手动确认，建议不用。手动容错率高一点
+> --volumes,-v：删除所有未被至少一个容器引用的卷。
+
+```shell
+# 删除所有未使用的容器、镜像、网络
+docker system prune
+#删除所有未使用的容器、镜像（包括未被引用的）、网络
+docker system prune -a
+# 删除所有未使用的容器、镜像、网络、卷
+docker system prune --volumes
+# 最后使用时间超过1小时的日志保留
+docker system prune --filter "until=1h"
+# 删除所有带有“version=1.21.0”标签的未使用的容器、镜像和网络
+docker system prune --filter "label=version=1.21.0"
+# 删除所有不带有“app=nginx”标签的未使用的容器、镜像和网络
+docker system prune --filter "label!=app=nginx"
+docker system prune -a -v --filter "label!=app=nginx"
+```
+label可以使用`docker inspect <容器id或名称>`来查看labels
+```json
+{
+  
+  "Labels": {
+                "com.docker.compose.config-hash": "b637c41bf29efe8fcd1d3c7baa3ad5ba8dc44f21cec0d3937d665fb79df76644",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "jpom",
+                "com.docker.compose.project.config_files": "docker-compose.yml",
+                "com.docker.compose.project.working_dir": "/www/docker-compose/jpom",
+                "com.docker.compose.service": "jpom",
+                "com.docker.compose.version": "1.29.2"
+  }
+}
+```
+删除特定项目的所有容器、图像和网络：
+```shell
+docker system prune --filter "label=com.docker.compose.project=jpom"
+```
+删除特定服务的所有容器、图像和网络：
+```shell
+docker system prune --filter "label=com.docker.compose.service=jpom"
+```
+删除使用特定版本的Docker Compose创建的所有容器、图像和网络：
+```shell
+docker system prune --filter "label=com.docker.compose.version=1.29.2"
+```
+
+#### docker image prune
+
+修剪镜像,清理none镜像(虚悬镜像),默认情况下，`docker image prune`命令只会清理虚无镜像（没被标记且没被其它任何镜像或容器引用的镜像）。当添加`-a`或`--all`选项时，`docker image prune`的行为会发生变化。这个命令不仅会删除未使用的镜像，还会删除所有没有标签（即dangling或者说悬挂的）的镜像，即使这些镜像被其他标记了的镜像所引用。换句话说，`docker image prune -a` 会清理所有不带有标签且不在使用中的镜像，以及所有未被任何容器引用的镜像。默认情况下，系统会提示是否继续。要绕过提示，请使用-f或--force标志。可以使用--filter标志使用过滤表达式来限制修剪哪些镜像。例如，只考虑24小时前创建的镜像：
+```shell
+docker image prune -a --filter "until=24h"
+```
+
+#### docker container prune
+
+修剪容器,停止容器后不会自动删除这个容器，除非在启动容器的时候指定了–rm标志。使用`docker ps -a`命令查看Docker主机上包含停止的容器在内的所有容器。要清理掉这些，可以使用`docker container prune`命令。默认情况下，系统会提示是否继续。要绕过提示，请使用-f或--force标志。默认情况下，所有停止状态的容器会被删除。可以使用--filter标志来限制范围。例如，可以只删除24小时之前创建的停止状态的容器：
+
+#### docker volume prune
+
+修剪卷。卷可以被一个或多个容器使用，并占用Docker主机上的空间。卷永远不会被自动删除，因为这么做会破坏数据。
+
+#### docker network prune
+
+修剪网络。Docker网络不会占用太多磁盘空间，但是它们会创建iptables规则，桥接网络设备和路由表条目。要清理这些东西，可以使用`docker network prune`来清理没有被容器未使用的网络。
+
 
 ### 其他
 
-- docker查看镜像版本为latest的具体版本号
+#### docker查看镜像版本为latest的具体版本号
 ```bash
 docker image inspect nginx:latest|grep -i version
 ```
+
+#### 查看docker日志文件大小
+```shell
+ls -lh $(find /var/lib/docker/containers/ -name '*-json.log')
+```
+#### 删除日志文件
+```shell
+ rm -rf /var/lib/docker/containers/*/*.log
+```
+#### 查看docker日志存储路径(一般在/var/lib/docker/containers/container_id/\*-json.log)
+```shell
+docker inspect -f '{{.LogPath}}' <container_id_or_name>
+```
+
+#### 设置日志文件的大小
+1. 使用--log-opt参数限制容器日志大小:在启动容器时,可以使用--log-opt参数设置日志驱动程序的选项。示例：`docker run -d --name example-container --log-opt max-size=10m --log-opt max-file=3 nginx:latest`。在这个例子中，我们设置了以下选项：max-size=10m:限制单个日志文件的最大大小为10MB。max-file=3:限制日志文件的数量为3个。当日志文件达到10MB时，Docker会自动轮换日志文件，保留最新的3个日志文件。
+2. 永久方法：全局设置：新建/etc/docker/daemon.json，若有就不用新建了；添加log-dirver和log-opts参数。
+```json
+{
+"log-driver":"json-file",
+"log-opts":{
+	"max-size":"500m",
+    "max-file":"3"
+	}
+}
+```
+max-size=500m，意味着一个容器日志大小上限是500M，max-file=3，意味着一个容器有三个日志，分别是id+.json、id+1.json、id+2.json。
+
+
 ### 表格
 
 | **命令**      | **作用**                                                     |
@@ -813,6 +938,33 @@ VOLUME ["/data"] (exec格式指令)
 ```
 
 VOLUME指令创建一个可以从本地主机或其他容器挂载的挂载点。经常用到的是`docker run -ti -v /data:/data nginx:1.12 bash`时指定本地路径和容器内路径的映射。
+
+相信大部分人对`docker run -v`这个参数都比较熟悉，无非就是把宿主机目录和容器目录做映射，以便于容器中的某些文件可以直接保存在宿主机上，实现容器被删除之后数据还在，比如我们把mysql装在容器中，肯定不能说容器被删mysql所有的数据也都不在了。第二个作用是也可以用来实现多容器共享同一份文件。但如果玩过dockerfile的话就知道dockerfile还有个VOLUME指令，如
+```docker
+FROM centos:latest
+RUN groupadd -r redis && useradd -r -g redis rediså
+RUN yum -y update &&  yum -y install epel-release && yum -y install redis && yum -y install net-tools
+RUN mkdir -p /config && chown -R redis:redis /config
+VOLUME /share/data　#声明容器中/share/data为匿名卷
+EXPOSE 6379
+```
+这个指令很容易和启动时的-v指令搞混淆，他们之间到底有什么区别呢，什么时候需要使用volume呢？volume指令指定的位置在容器被删除以后数据文件会被删除吗？如果-v和volume指定了同一个位置，会发生什么事呢？
+
+1. volume和run -v的区别，什么时候需要使用volume
+    容器运行时应该尽量保持容器存储层不发生写操作，对于数据库类需要保存动态数据的应用，其数据库文件应该保存于卷(volume)中。为了防止运行时用户忘记将动态文件所保存目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。
+
+2. 那么Dockerfile中的VOLUME指令实际使用中是不是就是跟docker run中的-v参数一样是将宿主机的一个目录绑定到容器中的目录以达到共享目录的作用呢？
+    并不然，其实VOLUME指令只是起到了声明了容器中的目录作为匿名卷，但是并没有将匿名卷绑定到宿主机指定目录的功能。当我们生成镜像的Dockerfile中以Volume声明了匿名卷，并且我们以这个镜像run了一个容器的时候，docker会在安装目录下的指定目录下面生成一个目录来绑定容器的匿名卷（这个指定目录不同版本的docker会有所不同），我当前的目录为：/var/lib/docker/volumes/{容器ID}。
+    **总结**：volume只是指定了一个目录，用以在用户忘记启动时指定-v参数也可以保证容器的正常运行。比如mysql，你不能说用户启动时没有指定-v，然后删了容器，就把mysql的数据文件都删了，那样生产上是会出大事故的，所以mysql的dockerfile里面就需要配置volume，这样即使用户没有指定-v，容器被删后也不会导致数据文件都不在了。还是可以恢复的。
+
+3. volume指令指定的位置在容器被删除以后数据文件会被删除吗
+    volume与-v指令一样，容器被删除以后映射在主机上的文件不会被删除。
+
+4. 如果-v和volume指定了同一个位置，会发生什么事呢？
+    会以-v设定的目录为准，其实volume指令的设定的目的就是为了避免用户忘记指定-v的时候导致的数据丢失，那么如果用户指定了-v，自然而然就不需要volume指定的位置了。
+    **总结**：其实一般的dockfile如果不是数据库类的这种需要持久化数据到磁盘上的应用，都是无需指定volume的。指定volume只是为了避免用户忘记指定-v时导致的数据全部在容器中，这样的话容器一旦被删除所有的数据都丢失了。
+
+那么为什么dockerfile中不提供一个能够映射为主机目录:容器目录这样的指令呢？其实这样的设计是有道理的，如果在dockerfile中指定了主机目录，这样dockerfile就不具备了可移植性了，毕竟每个人所需要映射的目录可能是不同的，那么最好的办法就是把这个权利交给每个运行这个dockerfile的人，所以才会有`run -v主机目录:容器目录`这样的指令。
 
 #### ENV
 

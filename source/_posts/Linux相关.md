@@ -14,12 +14,12 @@ img: https://img2.baidu.com/it/u=1090189516,820941418&fm=253&fmt=auto&app=138&f=
 **nohup command &**
 command参数表示要执行的命令行。但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用>/dev/null 2>&1，这条命令的作用是将标准输出1重定向到/dev/null中。/dev/null代表linux的空设备文件，所有往这个文件里面写入的内容都会丢失，俗称“黑洞”。那么执行了>/dev/null之后，标准输出就会不再存在，没有任何地方能够找到输出的内容。
 
-> 1>/dev/null 2>&1 &详解：
-> 0：表示标准输入stdin (键盘输入)
-> 1：表示标准输出stdout，系统默认为1，可省略(即1>/dev/null等价于>/dev/null)
-> 2：表示标准错误stderr
-> \>：表示重定向（即将输出定向到指定路径文件，>/dev/null表示Linux的空设备文件，即将标准输出重定向到空设备文件，即不输出任何信息到终端，即不显示任何信息。）
-> 2>&1：其中的&表示等同于的意思，即2(标准错误stderr)的重定向等同于1
+> `1>/dev/null 2>&1 &`详解：
+>> 0：表示标准输入stdin (键盘输入)
+>> 1：表示标准输出stdout，系统默认为1，可省略(即1>/dev/null等价于>/dev/null)
+>> 2：表示标准错误stderr
+>> \>：表示重定向（即将输出定向到指定路径文件，>/dev/null表示Linux的空设备文件，即将标准输出重定向到空设备文件，即不输出任何信息到终端，即不显示任何信息。）
+>> 2>&1：其中的&表示等同于的意思，即2(标准错误stderr)的重定向等同于1
 &表示后台运行
 
 最终命令
@@ -43,9 +43,8 @@ yum -y install net-tools
 apt install net-tools
 ```
 
-- apt与apt-get的区别
-apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt
-
+> apt与apt-get的区别
+> apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt
 > [centos7更换yum源](https://mirrors.cnnic.cn/help/centos/)
 
 
@@ -70,13 +69,25 @@ source /etc/environment
 ### 安装iptables
 
 ```shell
-systemctl stop firewalld.service # 停止服务
-systemctl mask firewalld.service # 屏蔽服务
-yum -y install iptables-services  # 安装iptables服务
-systemctl enable iptables # 开机启动iptables
-systemctl start iptables # 启动iptables
-service iptables save # 保存防火墙规则
+# 停止服务
+systemctl stop firewalld.service
+# 屏蔽服务
+systemctl mask firewalld.service
+# 安装iptables服务
+yum -y install iptables-services
+# 开机启动iptables
+systemctl enable iptables
+# 启动iptables
+systemctl start iptables
+# 保存防火墙规则
+service iptables save
 ```
+> iptables和firewalld都是用于管理防火墙的工具，但它们在操作方式、规则设置、安全级别以及和内核的关系方面存在一些区别。
+> 操作方式：iptables需要通过编辑配置文件来设置规则，每次修改规则后需要全部刷新才能生效。而firewalld提供了动态修改单条规则和管理规则集的特性，允许在不破坏现有会话和连接的情况下更新规则。
+> 规则设置：iptables主要基于接口来设置规则，判断网络的安全性。而firewalld则是基于区域，根据不同的区域来设置不同的规则，保证网络的安全。
+> 安全级别：iptables默认是允许的，需要设置以后才能放行，而firewalld默认是拒绝的，需要设置以后才能放行。
+> 和内核的关系：iptables和firewalld都通过内核的netfilter来实现防火墙功能。但firewalld自身并不具备防火墙的功能，而是作为一个封装，使得管理iptables规则更加容易。
+> 此外，firewalld还提供了支持网络区域所定义的网络连接以及接口安全等级的动态防火墙管理工具，支持IPv4、IPv6防火墙设置以及以太网桥（在某些高级服务可能会用到，比如云计算），并且拥有两种配置模式∶ 运行时配置与永久配置。
 
 ### centos7防火墙
 
@@ -153,7 +164,6 @@ cat file1 >> file2 # 把file1的文档内容输入file2这个文档里
 
 ```bash
 #!/bin/bash
-
 # 输出一条消息到屏幕上，并同时将其写入一个名为output.txt的文件 -a选项告诉tee命令追加输出到文件，而不是覆盖它。
 echo "This is a message" | tee -a output.txt
 ```
@@ -180,25 +190,30 @@ groups # 用户名：查看用户所在用户组
 yum install vixie-cron
 yum install crontabs
 # 开启crontab服务
-service crond start # 启动服务
-service crond stop # 关闭服务
-service crond restart # 重新启动服务
-service crond reload # 又一次加载配置
+# 启动服务
+service crond start
+# 关闭服务
+service crond stop
+# 重新启动服务
+service crond restart
+# 又一次加载配置
+service crond reload
 # 添加任务(两种方式)
-1. crontab -e  * * * * * /usr/local/a.sh。
-crontab -l # 列出当前的全部调度任务
-crontab -l -u jp #列出用户jp的全部调度任务
-crontab -r # 删除全部任务调度工作
-2. # 直接编辑 vim /etc/crontab
-# 添加* * * * * root /usr/local/a.sh
-# 注意要使用绝对路径
+# 1.crontab -e  * * * * * /usr/local/a.sh
+# 列出当前的全部调度任务
+crontab -l
+# 列出用户jp的全部调度任务
+crontab -l -u jp
+# 删除全部任务调度工作
+crontab -r
+# 2.直接编辑 vim /etc/crontab
+# 添加* * * * * root /usr/local/a.sh 注意要使用绝对路径
 
 # 查看邮件
 cat /var/spool/mail/root
 # 查看日志
 cd /var/log
 ls cron
-
 ```
 > [Linux定时任务调度(crontab)，太实用了！](https://mp.weixin.qq.com/s/c91XWEQvr9Axcf0hjvuKgg)
 
@@ -221,7 +236,6 @@ curl -d 'login=emma' -d 'password=123' -X POST URL
 
 curl -L -X POST URL -d 'id=3&pwd=jae_123'
 curl -H "Content-Type: application/json" -X POST -d '{"abc":123,"bcd":"nihao"}' URL
-
 ```
 
 > [Linux curl命令最全详解](https://blog.csdn.net/angle_chen123/article/details/120675472)
@@ -232,11 +246,14 @@ curl -H "Content-Type: application/json" -X POST -d '{"abc":123,"bcd":"nihao"}' 
 ### Linux系统服务
 
 ```shell
-# 添加自定义系统服务的目录：
-/lib/systemd/system # lib/systemd/system真实地址是/usr/lib/system/system地址，
-/usr/lib/systemd/system/ # 软件包安装的单元
-/etc/systemd/system/ # 系统管理员安装的单元,优先级更高
-# 优先级为 /etc/systemd/system /run/systemd/system /lib/systemd/system
+# 添加自定义系统服务的目录
+# lib/systemd/system真实地址是/usr/lib/system/system地址
+/lib/systemd/system
+# 软件包安装的单元
+/usr/lib/systemd/system/
+# 系统管理员安装的单元,优先级更高
+/etc/systemd/system/
+# 优先级为 /etc/systemd/system->/run/systemd/system->/lib/systemd/system
 # 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。
 
 # 开机启动执行命令：编辑/etc/rc.d/rc.local
@@ -272,35 +289,24 @@ rename “a” “xxx” *.txt
 # 或者使用mv命令
 ```
 
-### 端口
+### 查看端口
 
 ```shell
-netstat -antu # 可以查看所有tcp、udp端口开放情况
-netstat -ntlp # 查看正在运行的端口(t代表tcp 加u查看udp)
-lsof -i: 9090 # 查看某一端口运行的程序
-netstat -ntulp|grep # 端口号 查看指定端口被哪个进程占用的情况
-ps -ef|grep abc # 查找abc进程
-ps -aux # 显示所有进程
+# 可以查看所有tcp、udp端口开放情况
+netstat -antu
+# 查看正在运行的端口(t代表tcp 加u查看udp)
+netstat -ntlp
+# 查看某一端口运行的程序
+lsof -i: 9090
+# 端口号 查看指定端口被哪个进程占用的情况
+netstat -ntulp|grep
+# 查找abc进程
+ps -ef|grep abc
+# 显示所有进程
+ps -aux
 # 发现A进程占用该端口号
-ps -ef|grep A #查看pid
-
-kill 9 pid #杀掉进程
+ps -ef|grep A
 ```
-
-### 找到pid并kill的shell脚本
-
-```shell
-#!/bin/sh
-# #!/bin/bash是指此脚本使用/bin/bash来解释执行。其中，#!是一个特殊的表示符，其后，跟着解释此脚本的shell路径。命令文件所在的路径是/bin/sh或者/usr/bin/sh.bash只是shell的一种，还有很多其它shell，如：sh,csh,ksh,tcsh.除第一行外，脚本中所有以“#”开头的行都是注释。
-# 注意不要有空格，否则解释成命令
-jar=abc.jar
-# ``等价于$()
-pid=$(ps -ef | grep java | grep $jar |grep -v grep | awk '{print $2}')
-kill -9 $pid
-echo "$pid killed"
-nohup command >/dev/null 2>&1 &
-```
-> [shell菜鸟教程](https://www.runoob.com/linux/linux-shell.html)
 
 ### 设置静态ip后无法连接外网的问题
 因为动态ip会自动分配DNS，而静态ip需要手动配置DNS。centos7在/etc/sysconfig/network-scripts/ifcfg-ens33 写入DNS1=114.114.114.114。ubuntu在/etc/resolv.conf写入nameserver 114.114.114.114
@@ -319,21 +325,30 @@ service network restart
 ### 查看文件
 
 ```shell
-cat h.txt | grep -v # "hello"过滤掉特定字符串,效率低，因为有管道
-grep -v "hello" h.txt # 可以直接跟文件名，效率快
+# "hello"过滤掉特定字符串,效率低，因为有管道
+cat h.txt | grep -v
+# 可以直接跟文件名，效率快
+grep -v "hello" h.txt
 
 head -n k = head -n +k = head k
-tail -n k = tail -n -k = tail k # k为指定行数
-
-head -n 3 = head -n +3 = head -3 # 显示文件前3行
-
-tail -n 3 = tail -n -3 = tail -3  # 显示文件最后3行
-head -n -k # 其中-k的意义是除了最后k行的所有行
-head -n -3 filename # 查看filename除了最后3行的所有行
-tail -n +k # 是从第k行开始，输出所有行
-tail -n +3 # 从第三行开始输出所有行
-tail -f finename # 实时跟踪文件，如果文件不存在，则终止
-tail -F filename # 如果文件不存在，会继续尝试
+# k为指定行数
+tail -n k = tail -n -k = tail k
+# 显示文件前3行
+head -n 3 = head -n +3 = head -3
+# 显示文件最后3行
+tail -n 3 = tail -n -3 = tail -3
+# 其中-k的意义是除了最后k行的所有行
+head -n -k
+# 查看filename除了最后3行的所有行
+head -n -3 filename
+# 是从第k行开始，输出所有行
+tail -n +k
+# 从第三行开始输出所有行
+tail -n +3
+# 实时跟踪文件，如果文件不存在，则终止
+tail -f finename
+# 如果文件不存在，会继续尝试
+tail -F filename
 ```
 
 ### 源码安装配置(configure)、编译(make)、安装(make install)
@@ -363,11 +378,12 @@ chkconfig --add name
 # 设置root密码
 sudo passwd root  # 终端会先验证密码 然后在设置root密码
 vi /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-# 增加两行  greeter-show-manual-login=true all-guest=false#不允许guest用户登陆
+# 增加两行
+# greeter-show-manual-login=true
+# all-guest=false #不允许guest用户登陆
 cd /etc/pam.d  # 编辑gdm-autologin和gdm-password文件 注释掉auth required pam_succeed_if.so user != root quiet_success
 vi /root/.profile # 将mesg n || true 修改为 tty -s && mesg n || true
 reboot
-
 ```
 
 > [解决Ubuntu的root账号无法登录SSH问题](https://www.cnblogs.com/yixius/articles/6971054.html)
@@ -376,6 +392,16 @@ reboot
 ### 查看指定目录大小
 ```shell
 du -h --max-depth=1 /usr
+# -a或--all: 显示所有文件和目录的使用情况，而不仅仅是目录。
+# -b或--bytes: 以字节为单位显示磁盘使用量。
+# -c: 在结果中添加总计。
+# -h或--human-readable: 以人类可读的格式（KB, MB, GB）显示磁盘使用量。
+# -H或--si: 与-h选项类似，但以1000为换算单位而不是1024。
+# -k: 以千字节（KB）为单位显示磁盘使用量。
+# -m: 以兆字节（MB）为单位显示磁盘使用量。
+# -s或--summarize: 只显示总计，不列出每个文件和目录的使用情况。
+# -L: 跟随符号链接。
+# -x: 仅在当前文件系统中查找。
 ```
 
 ### 查看磁盘空间
@@ -405,15 +431,14 @@ chmod 754 filename
 
 ```shell
 rpm -qa|grep jdk  # 查看已有的openjdk -q(query) -a(all)
-rpm -ev --nodeps (上条命令的查询结果) #卸载
+rpm -ev --nodeps $(上条命令的查询结果) # 卸载
 
-ubuntu 
+# ubuntu 
 apt-get remove openjdk*
-
 ```
 ### rpm参数
 
-```yaml
+```
 -a　查询所有套件。
 -b<完成阶段><套件档>+或-t<完成阶段><套件档>+　设置包装套件的完成阶段，并指定套件档的文件名称。
 -c　只列出组态配置文件，本参数需配合"-l"参数使用。
@@ -497,7 +522,6 @@ apt-get remove openjdk*
 --version　显示版本信息。
 --whatprovides<功能特性>　查询该套件对指定的功能特性所提供的兼容度。
 --whatrequires<功能特性>　查询该套件对指定的功能特性所需要的兼容度。
-
 ```
 
 ### 从服务器复制文件到本地
@@ -542,7 +566,6 @@ ssh登陆 ssh root@ip
 ```shell
 # 默认命令行
 systemctl set-default multi-user.target  （init 3）
-
 # 默认图形页面
 systemctl set-default graphical.target  (init 5)
 ```

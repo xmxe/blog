@@ -11,7 +11,7 @@ top: true
 
 ---
 
-## Spring IoC
+## Spring Bean
 
 ### 谈谈自己对于Spring IoC的了解
 
@@ -107,6 +107,14 @@ public OneService getService(status) {
     }
 }
 ```
+> [@Bean与@Component用在同一个类上，会怎么样？](https://mp.weixin.qq.com/s/Hi0Tdr9DW4bJrOzzDINgCA)
+
+### @Configuration和@Component的区别
+一句话概括就是@Configuration中所有带@Bean注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。
+理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。
+
+> [终于搞懂了@Configuration和@Component的区别](https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog)
+> [@Configuration和@Component有何区别？](https://mp.weixin.qq.com/s/D84pWlXs7wbHFYvCE5TAVQ)
 
 ### 注入Bean的注解有哪些？
 

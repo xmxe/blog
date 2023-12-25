@@ -539,6 +539,40 @@ public class PrintClassLoaderTree {
 
 如果我们不想打破双亲委派模型，就重写ClassLoader类中的findClass()方法即可，无法被父类加载器加载的类最终会通过这个方法被加载。但是，如果想打破双亲委派模型则需要重写loadClass()方法。
 
+#### ClassLoader.loadClass()、Class.forName()区别
+
+**ClassLoader.loadClass()**和**Class.forName()**都是用于加载Java类的方法，但它们之间存在一些关键的区别：
+
+1. 初始化行为：
+   - **Class.forName(className)**会初始化加载的类。这意味着如果类中包含静态初始化块或静态字段，这些静态内容会在加载时被初始化。
+   - **ClassLoader.loadClass(className)**只是加载类，不会执行任何初始化操作。除非你随后通过反射调用`.newInstance()`、访问静态字段或方法，或者调用`Class.forName(className, true, classLoader)`（第二个参数为`true`）来显式地初始化类。
+
+2. 类加载器的使用：
+   - **Class.forName(className)**默认使用当前线程的上下文类加载器来加载类。
+   - **ClassLoader.loadClass(className)**需要你提供一个具体的类加载器实例来加载类。这提供了更多的灵活性，允许你控制使用哪个类加载器来加载类。
+   > **Class.forName(className)**默认使用当前线程的上下文类加载器来加载类。如果你的当前线程的上下文类加载器能够找到并加载这个类，那么这个方法就能正常工作。而**ClassLoader.getSystemClassLoader().loadClass(className)**则明确使用系统类加载器来加载类。
+
+3. 异常处理：
+   - **Class.forName(className)**会抛出ClassNotFoundException或LinkageError的子类。
+   - **ClassLoader.loadClass(className)**除了抛出上述异常外，还可能抛出SecurityException，因为该方法涉及到安全相关的类加载。
+
+4. 双亲委派模型：
+   - **Class.forName(className)**和**Thread.currentThread().getContextClassLoader().loadClass(className)**通常遵循双亲委派模型，即先委托给父类加载器加载，只有当父类加载器无法加载时才由当前类加载器尝试加载。
+   - **ClassLoader.getSystemClassLoader().loadClass(className)**直接使用系统类加载器加载，可能会跳过一些类加载器，这在某些情况下可能导致类找不到。
+   > **Class.forName(className)**和**Thread.currentThread().getContextClassLoader().loadClass(className)**通常会遵循双亲委托机制，而直接使用**ClassLoader.getSystemClassLoader().loadClass(className)**可能会跳过一些类加载器，导致类找不到。因此，如果你的类是通过系统类加载器以外的其他类加载器加载的（比如自定义类加载器或者应用类加载器），那么直接使用**ClassLoader.getSystemClassLoader().loadClass(className)**可能无法找到这个类，而**Class.forName(className)**或者**Thread.currentThread().getContextClassLoader().loadClass(className)**可能能够正确加载。
+
+5. 功能和使用场景：
+   - **Class.forName()**常用于需要触发类初始化的场景，比如在JDBC编程中加载数据库驱动类。
+   - **ClassLoader.loadClass()**则更多地用于更精细的类加载控制，特别是在涉及自定义类加载器或者需要避免类初始化的场景。
+
+总的来说，选择使用哪个方法取决于你的具体需求，包括是否需要初始化类、希望使用哪个类加载器以及是否需要遵循双亲委派模型等。
+
+为了更好地控制类加载过程和解决你的问题(**使用ClassLoad加载spring boot jar包提示ClassNotFoundException**)，你可以尝试以下方法：
+
+-  使用Thread.currentThread().getContextClassLoader().loadClass(className)代替ClassLoader.getSystemClassLoader().loadClass(className)。
+- 如果你在使用自定义类加载器，确保你的类加载器遵循双亲委派模型，并且正确地委托给父类加载器。
+- 检查你的类路径和类名是否正确，确保类文件可以被正确的类加载器找到。
+
 ### 双亲委派模型
 
 #### 双亲委派模型介绍

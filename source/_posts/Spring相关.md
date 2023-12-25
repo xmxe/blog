@@ -186,14 +186,6 @@ $.ajax({
 
 @PreDestroy类似于destory-method在servlet destory()方法之后执行
 
-
-### @Configuration和@Component的区别
-一句话概括就是@Configuration中所有带@Bean注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。
-理解：调用@Configuration类中的@Bean注解的方法，返回的是同一个实例；而调用@Component类中的@Bean注解的方法，返回的是一个新的实例。
-
-> [终于搞懂了@Configuration和@Component的区别](https://mp.weixin.qq.com/s/-_h5Hz6MOBb8TK3qm9gBog)
-> [@Configuration和@Component有何区别？](https://mp.weixin.qq.com/s/D84pWlXs7wbHFYvCE5TAVQ)
-
 ### 条件注解
 > [Spring Boot中条件注解底层如何实现的？](https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ)
 
@@ -578,7 +570,7 @@ file:./
 classpath:/config/
 classpath:/
 ```
-配置⽂件名可以通过`spring.config.name`修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:`spring.config.location`
+配置文件名可以通过`spring.config.name`修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:`spring.config.location`
 
 ```shell
 $ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/override.properties.

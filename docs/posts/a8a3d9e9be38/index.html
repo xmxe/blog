@@ -530,7 +530,10 @@
             <div id="articleContent">
                 <h2 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h2><h3 id="关闭ssh情况下不退出进程"><a href="#关闭ssh情况下不退出进程" class="headerlink" title="关闭ssh情况下不退出进程"></a>关闭ssh情况下不退出进程</h3><p><strong>nohup command &amp;</strong><br>command参数表示要执行的命令行。但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1，这条命令的作用是将标准输出1重定向到&#x2F;dev&#x2F;null中。&#x2F;dev&#x2F;null代表linux的空设备文件，所有往这个文件里面写入的内容都会丢失，俗称“黑洞”。那么执行了&gt;&#x2F;dev&#x2F;null之后，标准输出就会不再存在，没有任何地方能够找到输出的内容。</p>
 <blockquote>
-<p>1&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;详解：<br>0：表示标准输入stdin (键盘输入)<br>1：表示标准输出stdout，系统默认为1，可省略(即1&gt;&#x2F;dev&#x2F;null等价于&gt;&#x2F;dev&#x2F;null)<br>2：表示标准错误stderr<br>&gt;：表示重定向（即将输出定向到指定路径文件，&gt;&#x2F;dev&#x2F;null表示Linux的空设备文件，即将标准输出重定向到空设备文件，即不输出任何信息到终端，即不显示任何信息。）<br>2&gt;&amp;1：其中的&amp;表示等同于的意思，即2(标准错误stderr)的重定向等同于1<br>&amp;表示后台运行</p>
+<p><code>1&gt;/dev/null 2&gt;&amp;1 &amp;</code>详解：</p>
+<blockquote>
+<p>0：表示标准输入stdin (键盘输入)<br>1：表示标准输出stdout，系统默认为1，可省略(即1&gt;&#x2F;dev&#x2F;null等价于&gt;&#x2F;dev&#x2F;null)<br>2：表示标准错误stderr<br>&gt;：表示重定向（即将输出定向到指定路径文件，&gt;&#x2F;dev&#x2F;null表示Linux的空设备文件，即将标准输出重定向到空设备文件，即不输出任何信息到终端，即不显示任何信息。）<br>2&gt;&amp;1：其中的&amp;表示等同于的意思，即2(标准错误stderr)的重定向等同于1<br>&amp;表示后台运行</p>
+</blockquote>
 </blockquote>
 <p>最终命令</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> <span class="token builtin class-name">command</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span>
@@ -547,11 +550,8 @@ yum <span class="token parameter variable">-y</span> <span class="token function
 <span class="token comment"># ubuntu</span>
 <span class="token function">apt</span> <span class="token function">install</span> net-tools<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<ul>
-<li>apt与apt-get的区别<br>apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt</li>
-</ul>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mirrors.cnnic.cn/help/centos/">centos7更换yum源</a></p>
+<p>apt与apt-get的区别<br>apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt<br><a target="_blank" rel="noopener" href="https://mirrors.cnnic.cn/help/centos/">centos7更换yum源</a></p>
 </blockquote>
 <h3 id="配置jdk环境变量"><a href="#配置jdk环境变量" class="headerlink" title="配置jdk环境变量"></a>配置jdk环境变量</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/usr/jdk1.8.0_121
@@ -565,13 +565,21 @@ yum <span class="token parameter variable">-y</span> <span class="token function
 <p>ubuntu按照上面的步骤在&#x2F;etc&#x2F;environment再配置一遍，配置完成后</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> /etc/environment<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="安装iptables"><a href="#安装iptables" class="headerlink" title="安装iptables"></a>安装iptables</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl stop firewalld.service <span class="token comment"># 停止服务</span>
-systemctl mask firewalld.service <span class="token comment"># 屏蔽服务</span>
-yum <span class="token parameter variable">-y</span> <span class="token function">install</span> iptables-services  <span class="token comment"># 安装iptables服务</span>
-systemctl <span class="token builtin class-name">enable</span> iptables <span class="token comment"># 开机启动iptables</span>
-systemctl start iptables <span class="token comment"># 启动iptables</span>
-<span class="token function">service</span> iptables save <span class="token comment"># 保存防火墙规则</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<h3 id="安装iptables"><a href="#安装iptables" class="headerlink" title="安装iptables"></a>安装iptables</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 停止服务</span>
+systemctl stop firewalld.service
+<span class="token comment"># 屏蔽服务</span>
+systemctl mask firewalld.service
+<span class="token comment"># 安装iptables服务</span>
+yum <span class="token parameter variable">-y</span> <span class="token function">install</span> iptables-services
+<span class="token comment"># 开机启动iptables</span>
+systemctl <span class="token builtin class-name">enable</span> iptables
+<span class="token comment"># 启动iptables</span>
+systemctl start iptables
+<span class="token comment"># 保存防火墙规则</span>
+<span class="token function">service</span> iptables save<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>iptables和firewalld都是用于管理防火墙的工具，但它们在操作方式、规则设置、安全级别以及和内核的关系方面存在一些区别。<br>操作方式：iptables需要通过编辑配置文件来设置规则，每次修改规则后需要全部刷新才能生效。而firewalld提供了动态修改单条规则和管理规则集的特性，允许在不破坏现有会话和连接的情况下更新规则。<br>规则设置：iptables主要基于接口来设置规则，判断网络的安全性。而firewalld则是基于区域，根据不同的区域来设置不同的规则，保证网络的安全。<br>安全级别：iptables默认是允许的，需要设置以后才能放行，而firewalld默认是拒绝的，需要设置以后才能放行。<br>和内核的关系：iptables和firewalld都通过内核的netfilter来实现防火墙功能。但firewalld自身并不具备防火墙的功能，而是作为一个封装，使得管理iptables规则更加容易。<br>此外，firewalld还提供了支持网络区域所定义的网络连接以及接口安全等级的动态防火墙管理工具，支持IPv4、IPv6防火墙设置以及以太网桥（在某些高级服务可能会用到，比如云计算），并且拥有两种配置模式∶ 运行时配置与永久配置。</p>
+</blockquote>
 <h3 id="centos7防火墙"><a href="#centos7防火墙" class="headerlink" title="centos7防火墙"></a>centos7防火墙</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动</span>
 systemctl start firewalld.service
 <span class="token comment"># 关闭</span>
@@ -633,9 +641,8 @@ firewall-cmd --list-ports
 
 <p>如果你希望在同一个操作中同时向屏幕和文件输出信息，可以使用管道（|）和tee命令。tee会复制其标准输入，并将其写入标准输出和指定的文件。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
 <span class="token comment"># 输出一条消息到屏幕上，并同时将其写入一个名为output.txt的文件 -a选项告诉tee命令追加输出到文件，而不是覆盖它。</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"This is a message"</span> <span class="token operator">|</span> <span class="token function">tee</span> <span class="token parameter variable">-a</span> output.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token builtin class-name">echo</span> <span class="token string">"This is a message"</span> <span class="token operator">|</span> <span class="token function">tee</span> <span class="token parameter variable">-a</span> output.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>tee命令</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tee</span> file.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>在运行这个命令后，你可以开始在命令行输入文本。当你按下Ctrl+D（EOF）时，你的输入会被写入file.txt并显示在屏幕上。</p>
@@ -649,25 +656,30 @@ firewall-cmd --list-ports
 yum <span class="token function">install</span> vixie-cron
 yum <span class="token function">install</span> crontabs
 <span class="token comment"># 开启crontab服务</span>
-<span class="token function">service</span> crond start <span class="token comment"># 启动服务</span>
-<span class="token function">service</span> crond stop <span class="token comment"># 关闭服务</span>
-<span class="token function">service</span> crond restart <span class="token comment"># 重新启动服务</span>
-<span class="token function">service</span> crond reload <span class="token comment"># 又一次加载配置</span>
+<span class="token comment"># 启动服务</span>
+<span class="token function">service</span> crond start
+<span class="token comment"># 关闭服务</span>
+<span class="token function">service</span> crond stop
+<span class="token comment"># 重新启动服务</span>
+<span class="token function">service</span> crond restart
+<span class="token comment"># 又一次加载配置</span>
+<span class="token function">service</span> crond reload
 <span class="token comment"># 添加任务(两种方式)</span>
-<span class="token number">1</span>. <span class="token function">crontab</span> <span class="token parameter variable">-e</span>  * * * * * /usr/local/a.sh。
-<span class="token function">crontab</span> <span class="token parameter variable">-l</span> <span class="token comment"># 列出当前的全部调度任务</span>
-<span class="token function">crontab</span> <span class="token parameter variable">-l</span> <span class="token parameter variable">-u</span> jp <span class="token comment">#列出用户jp的全部调度任务</span>
-<span class="token function">crontab</span> <span class="token parameter variable">-r</span> <span class="token comment"># 删除全部任务调度工作</span>
-<span class="token number">2</span>. <span class="token comment"># 直接编辑 vim /etc/crontab</span>
-<span class="token comment"># 添加* * * * * root /usr/local/a.sh</span>
-<span class="token comment"># 注意要使用绝对路径</span>
+<span class="token comment"># 1.crontab -e  * * * * * /usr/local/a.sh</span>
+<span class="token comment"># 列出当前的全部调度任务</span>
+<span class="token function">crontab</span> <span class="token parameter variable">-l</span>
+<span class="token comment"># 列出用户jp的全部调度任务</span>
+<span class="token function">crontab</span> <span class="token parameter variable">-l</span> <span class="token parameter variable">-u</span> jp
+<span class="token comment"># 删除全部任务调度工作</span>
+<span class="token function">crontab</span> <span class="token parameter variable">-r</span>
+<span class="token comment"># 2.直接编辑 vim /etc/crontab</span>
+<span class="token comment"># 添加* * * * * root /usr/local/a.sh 注意要使用绝对路径</span>
 
 <span class="token comment"># 查看邮件</span>
 <span class="token function">cat</span> /var/spool/mail/root
 <span class="token comment"># 查看日志</span>
 <span class="token builtin class-name">cd</span> /var/log
-<span class="token function">ls</span> <span class="token function">cron</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">ls</span> <span class="token function">cron</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c91XWEQvr9Axcf0hjvuKgg">Linux定时任务调度(crontab)，太实用了！</a></p>
 </blockquote>
@@ -681,22 +693,24 @@ yum <span class="token function">install</span> crontabs
 <span class="token parameter variable">-X</span> <span class="token comment"># POST可以省略</span>
 
 <span class="token function">curl</span> <span class="token parameter variable">-L</span> <span class="token parameter variable">-X</span> POST URL <span class="token parameter variable">-d</span> <span class="token string">'id=3&amp;pwd=jae_123'</span>
-<span class="token function">curl</span> <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token parameter variable">-X</span> POST <span class="token parameter variable">-d</span> <span class="token string">'&#123;"abc":123,"bcd":"nihao"&#125;'</span> URL
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">curl</span> <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token parameter variable">-X</span> POST <span class="token parameter variable">-d</span> <span class="token string">'&#123;"abc":123,"bcd":"nihao"&#125;'</span> URL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/angle_chen123/article/details/120675472">Linux curl命令最全详解</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fan-gx/p/12321351.html">curl其他参数介绍</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ryhphDFvx0ml9NrDUks2NA">堪称神器的命令行工具系列——curl</a></p>
 </blockquote>
-<h3 id="Linux系统服务"><a href="#Linux系统服务" class="headerlink" title="Linux系统服务"></a>Linux系统服务</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 添加自定义系统服务的目录：</span>
-/lib/systemd/system <span class="token comment"># lib/systemd/system真实地址是/usr/lib/system/system地址，</span>
-/usr/lib/systemd/system/ <span class="token comment"># 软件包安装的单元</span>
-/etc/systemd/system/ <span class="token comment"># 系统管理员安装的单元,优先级更高</span>
-<span class="token comment"># 优先级为 /etc/systemd/system /run/systemd/system /lib/systemd/system</span>
+<h3 id="Linux系统服务"><a href="#Linux系统服务" class="headerlink" title="Linux系统服务"></a>Linux系统服务</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 添加自定义系统服务的目录</span>
+<span class="token comment"># lib/systemd/system真实地址是/usr/lib/system/system地址</span>
+/lib/systemd/system
+<span class="token comment"># 软件包安装的单元</span>
+/usr/lib/systemd/system/
+<span class="token comment"># 系统管理员安装的单元,优先级更高</span>
+/etc/systemd/system/
+<span class="token comment"># 优先级为 /etc/systemd/system->/run/systemd/system->/lib/systemd/system</span>
 <span class="token comment"># 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。</span>
 
 <span class="token comment"># 开机启动执行命令：编辑/etc/rc.d/rc.local</span>
 <span class="token comment"># 添加要执行的命令或者脚本,并且赋予执行权限</span>
-<span class="token function">chmod</span> +x /etc/rc.d/rc.local<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">chmod</span> +x /etc/rc.d/rc.local<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="复制目录"><a href="#复制目录" class="headerlink" title="复制目录"></a>复制目录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> <span class="token parameter variable">-r</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -710,29 +724,21 @@ yum <span class="token function">install</span> crontabs
 <span class="token function">rename</span> “a” “xxx” *.txt
 <span class="token comment"># 或者使用mv命令</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">netstat</span> <span class="token parameter variable">-antu</span> <span class="token comment"># 可以查看所有tcp、udp端口开放情况</span>
-<span class="token function">netstat</span> <span class="token parameter variable">-ntlp</span> <span class="token comment"># 查看正在运行的端口(t代表tcp 加u查看udp)</span>
-<span class="token function">lsof</span> -i: <span class="token number">9090</span> <span class="token comment"># 查看某一端口运行的程序</span>
-<span class="token function">netstat</span> -ntulp<span class="token operator">|</span><span class="token function">grep</span> <span class="token comment"># 端口号 查看指定端口被哪个进程占用的情况</span>
-<span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> abc <span class="token comment"># 查找abc进程</span>
-<span class="token function">ps</span> <span class="token parameter variable">-aux</span> <span class="token comment"># 显示所有进程</span>
+<h3 id="查看端口"><a href="#查看端口" class="headerlink" title="查看端口"></a>查看端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 可以查看所有tcp、udp端口开放情况</span>
+<span class="token function">netstat</span> <span class="token parameter variable">-antu</span>
+<span class="token comment"># 查看正在运行的端口(t代表tcp 加u查看udp)</span>
+<span class="token function">netstat</span> <span class="token parameter variable">-ntlp</span>
+<span class="token comment"># 查看某一端口运行的程序</span>
+<span class="token function">lsof</span> -i: <span class="token number">9090</span>
+<span class="token comment"># 端口号 查看指定端口被哪个进程占用的情况</span>
+<span class="token function">netstat</span> -ntulp<span class="token operator">|</span><span class="token function">grep</span>
+<span class="token comment"># 查找abc进程</span>
+<span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> abc
+<span class="token comment"># 显示所有进程</span>
+<span class="token function">ps</span> <span class="token parameter variable">-aux</span>
 <span class="token comment"># 发现A进程占用该端口号</span>
-<span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> A <span class="token comment">#查看pid</span>
+<span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> A<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token function">kill</span> <span class="token number">9</span> pid <span class="token comment">#杀掉进程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="找到pid并kill的shell脚本"><a href="#找到pid并kill的shell脚本" class="headerlink" title="找到pid并kill的shell脚本"></a>找到pid并kill的shell脚本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token comment"># #!/bin/bash是指此脚本使用/bin/bash来解释执行。其中，#!是一个特殊的表示符，其后，跟着解释此脚本的shell路径。命令文件所在的路径是/bin/sh或者/usr/bin/sh.bash只是shell的一种，还有很多其它shell，如：sh,csh,ksh,tcsh.除第一行外，脚本中所有以“#”开头的行都是注释。</span>
-<span class="token comment"># 注意不要有空格，否则解释成命令</span>
-<span class="token assign-left variable">jar</span><span class="token operator">=</span>abc.jar
-<span class="token comment"># ``等价于$()</span>
-<span class="token assign-left variable">pid</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">ps</span> <span class="token parameter variable">-ef</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token function">java</span> <span class="token operator">|</span> <span class="token function">grep</span> $jar <span class="token operator">|</span><span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token function">grep</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print $2&#125;'</span><span class="token variable">)</span></span>
-<span class="token function">kill</span> <span class="token parameter variable">-9</span> <span class="token variable">$pid</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$pid</span> killed"</span>
-<span class="token function">nohup</span> <span class="token builtin class-name">command</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell.html">shell菜鸟教程</a></p>
-</blockquote>
 <h3 id="设置静态ip后无法连接外网的问题"><a href="#设置静态ip后无法连接外网的问题" class="headerlink" title="设置静态ip后无法连接外网的问题"></a>设置静态ip后无法连接外网的问题</h3><p>因为动态ip会自动分配DNS，而静态ip需要手动配置DNS。centos7在&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 写入DNS1&#x3D;114.114.114.114。ubuntu在&#x2F;etc&#x2F;resolv.conf写入nameserver 114.114.114.114</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/adforce/p/3363681.html">Linux配置IP地址</a></p>
@@ -742,21 +748,30 @@ yum <span class="token function">install</span> crontabs
 /sbin/ifconfig eth0 up
 <span class="token function">service</span> network restart<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> h.txt <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token comment"># "hello"过滤掉特定字符串,效率低，因为有管道</span>
-<span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token string">"hello"</span> h.txt <span class="token comment"># 可以直接跟文件名，效率快</span>
+<h3 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># "hello"过滤掉特定字符串,效率低，因为有管道</span>
+<span class="token function">cat</span> h.txt <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-v</span>
+<span class="token comment"># 可以直接跟文件名，效率快</span>
+<span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token string">"hello"</span> h.txt
 
 <span class="token function">head</span> <span class="token parameter variable">-n</span> k <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-n</span> +k <span class="token operator">=</span> <span class="token function">head</span> k
-<span class="token function">tail</span> <span class="token parameter variable">-n</span> k <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-k</span> <span class="token operator">=</span> <span class="token function">tail</span> k <span class="token comment"># k为指定行数</span>
-
-<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token number">3</span> <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-n</span> +3 <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-3</span> <span class="token comment"># 显示文件前3行</span>
-
-<span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token number">3</span> <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-3</span> <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-3</span>  <span class="token comment"># 显示文件最后3行</span>
-<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-k</span> <span class="token comment"># 其中-k的意义是除了最后k行的所有行</span>
-<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-3</span> filename <span class="token comment"># 查看filename除了最后3行的所有行</span>
-<span class="token function">tail</span> <span class="token parameter variable">-n</span> +k <span class="token comment"># 是从第k行开始，输出所有行</span>
-<span class="token function">tail</span> <span class="token parameter variable">-n</span> +3 <span class="token comment"># 从第三行开始输出所有行</span>
-<span class="token function">tail</span> <span class="token parameter variable">-f</span> finename <span class="token comment"># 实时跟踪文件，如果文件不存在，则终止</span>
-<span class="token function">tail</span> <span class="token parameter variable">-F</span> filename <span class="token comment"># 如果文件不存在，会继续尝试</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># k为指定行数</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> k <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-k</span> <span class="token operator">=</span> <span class="token function">tail</span> k
+<span class="token comment"># 显示文件前3行</span>
+<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token number">3</span> <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-n</span> +3 <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-3</span>
+<span class="token comment"># 显示文件最后3行</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token number">3</span> <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-3</span> <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-3</span>
+<span class="token comment"># 其中-k的意义是除了最后k行的所有行</span>
+<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-k</span>
+<span class="token comment"># 查看filename除了最后3行的所有行</span>
+<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-3</span> filename
+<span class="token comment"># 是从第k行开始，输出所有行</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> +k
+<span class="token comment"># 从第三行开始输出所有行</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> +3
+<span class="token comment"># 实时跟踪文件，如果文件不存在，则终止</span>
+<span class="token function">tail</span> <span class="token parameter variable">-f</span> finename
+<span class="token comment"># 如果文件不存在，会继续尝试</span>
+<span class="token function">tail</span> <span class="token parameter variable">-F</span> filename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="源码安装配置-configure-、编译-make-、安装-make-install"><a href="#源码安装配置-configure-、编译-make-、安装-make-install" class="headerlink" title="源码安装配置(configure)、编译(make)、安装(make install)"></a>源码安装配置(configure)、编译(make)、安装(make install)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure <span class="token parameter variable">--prefix</span><span class="token operator">=</span>/usr/local/test
 <span class="token comment"># 编译出错时，清除编译生成的文件</span>
@@ -774,16 +789,27 @@ yum <span class="token function">install</span> crontabs
 <h3 id="Ubuntu图形界面允许root登陆"><a href="#Ubuntu图形界面允许root登陆" class="headerlink" title="Ubuntu图形界面允许root登陆"></a>Ubuntu图形界面允许root登陆</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置root密码</span>
 <span class="token function">sudo</span> <span class="token function">passwd</span> root  <span class="token comment"># 终端会先验证密码 然后在设置root密码</span>
 <span class="token function">vi</span> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-<span class="token comment"># 增加两行  greeter-show-manual-login=true all-guest=false#不允许guest用户登陆</span>
+<span class="token comment"># 增加两行</span>
+<span class="token comment"># greeter-show-manual-login=true</span>
+<span class="token comment"># all-guest=false #不允许guest用户登陆</span>
 <span class="token builtin class-name">cd</span> /etc/pam.d  <span class="token comment"># 编辑gdm-autologin和gdm-password文件 注释掉auth required pam_succeed_if.so user != root quiet_success</span>
 <span class="token function">vi</span> /root/.profile <span class="token comment"># 将mesg n || true 修改为 tty -s &amp;&amp; mesg n || true</span>
-<span class="token function">reboot</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">reboot</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yixius/articles/6971054.html">解决Ubuntu的root账号无法登录SSH问题</a></p>
 </blockquote>
-<h3 id="查看指定目录大小"><a href="#查看指定目录大小" class="headerlink" title="查看指定目录大小"></a>查看指定目录大小</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token parameter variable">-h</span> --max-depth<span class="token operator">=</span><span class="token number">1</span> /usr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="查看指定目录大小"><a href="#查看指定目录大小" class="headerlink" title="查看指定目录大小"></a>查看指定目录大小</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token parameter variable">-h</span> --max-depth<span class="token operator">=</span><span class="token number">1</span> /usr
+<span class="token comment"># -a或--all: 显示所有文件和目录的使用情况，而不仅仅是目录。</span>
+<span class="token comment"># -b或--bytes: 以字节为单位显示磁盘使用量。</span>
+<span class="token comment"># -c: 在结果中添加总计。</span>
+<span class="token comment"># -h或--human-readable: 以人类可读的格式（KB, MB, GB）显示磁盘使用量。</span>
+<span class="token comment"># -H或--si: 与-h选项类似，但以1000为换算单位而不是1024。</span>
+<span class="token comment"># -k: 以千字节（KB）为单位显示磁盘使用量。</span>
+<span class="token comment"># -m: 以兆字节（MB）为单位显示磁盘使用量。</span>
+<span class="token comment"># -s或--summarize: 只显示总计，不列出每个文件和目录的使用情况。</span>
+<span class="token comment"># -L: 跟随符号链接。</span>
+<span class="token comment"># -x: 仅在当前文件系统中查找。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="查看磁盘空间"><a href="#查看磁盘空间" class="headerlink" title="查看磁盘空间"></a>查看磁盘空间</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">df</span> <span class="token parameter variable">-h</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -799,95 +825,93 @@ yum <span class="token function">install</span> crontabs
 <span class="token comment"># chmod +x是将文件状态改为可执行，而chmod 777是改变文件读写权限。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="centos7卸载openjdk"><a href="#centos7卸载openjdk" class="headerlink" title="centos7卸载openjdk"></a>centos7卸载openjdk</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> -qa<span class="token operator">|</span><span class="token function">grep</span> jdk  <span class="token comment"># 查看已有的openjdk -q(query) -a(all)</span>
-<span class="token function">rpm</span> <span class="token parameter variable">-ev</span> <span class="token parameter variable">--nodeps</span> <span class="token punctuation">(</span>上条命令的查询结果<span class="token punctuation">)</span> <span class="token comment">#卸载</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ev</span> <span class="token parameter variable">--nodeps</span> <span class="token variable"><span class="token variable">$(</span>上条命令的查询结果<span class="token variable">)</span></span> <span class="token comment"># 卸载</span>
 
-ubuntu 
-<span class="token function">apt-get</span> remove openjdk*
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="rpm参数"><a href="#rpm参数" class="headerlink" title="rpm参数"></a>rpm参数</h3><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span>a　查询所有套件。
-<span class="token punctuation">-</span>b&lt;完成阶段<span class="token punctuation">></span>&lt;套件档<span class="token punctuation">></span>+或<span class="token punctuation">-</span>t&lt;完成阶段<span class="token punctuation">></span>&lt;套件档<span class="token punctuation">></span>+　设置包装套件的完成阶段，并指定套件档的文件名称。
-<span class="token punctuation">-</span>c　只列出组态配置文件，本参数需配合"<span class="token punctuation">-</span>l"参数使用。
-<span class="token punctuation">-</span>d　只列出文本文件，本参数需配合"<span class="token punctuation">-</span>l"参数使用。
-<span class="token punctuation">-</span>e&lt;套件档<span class="token punctuation">></span>或<span class="token punctuation">-</span><span class="token punctuation">-</span>erase&lt;套件档<span class="token punctuation">></span>　删除指定的套件。
-<span class="token punctuation">-</span>f&lt;文件<span class="token punctuation">></span>+　查询拥有指定文件的套件。
-<span class="token punctuation">-</span>h或<span class="token punctuation">-</span><span class="token punctuation">-</span>hash　套件安装时列出标记。
-<span class="token punctuation">-</span>i　显示套件的相关信息。
-<span class="token punctuation">-</span>i&lt;套件档<span class="token punctuation">></span>或<span class="token punctuation">-</span><span class="token punctuation">-</span>install&lt;套件档<span class="token punctuation">></span>　安装指定的套件档。
-<span class="token punctuation">-</span>l　显示套件的文件列表。
-<span class="token punctuation">-</span>p&lt;套件档<span class="token punctuation">></span>+　查询指定的RPM套件档。
-<span class="token punctuation">-</span>q　使用询问模式，当遇到任何问题时，rpm指令会先询问用户。
-<span class="token punctuation">-</span>R　显示套件的关联性信息。
-<span class="token punctuation">-</span>s　显示文件状态，本参数需配合"<span class="token punctuation">-</span>l"参数使用。
-<span class="token punctuation">-</span>U&lt;套件档<span class="token punctuation">></span>或<span class="token punctuation">-</span><span class="token punctuation">-</span>upgrade&lt;套件档<span class="token punctuation">></span>升级指定的套件档。
-<span class="token punctuation">-</span>v　显示指令执行过程。
-<span class="token punctuation">-</span>vv　详细显示指令执行过程，便于排错。
-<span class="token punctuation">-</span>addsign&lt;套件档<span class="token punctuation">></span>+　在指定的套件里加上新的签名认证。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>allfiles　安装所有文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>allmatches　删除符合指定的套件所包含的文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>badreloc　发生错误时，重新配置文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>buildroot&lt;根目录<span class="token punctuation">></span>　设置产生套件时，欲当作根目录的目录。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>changelog　显示套件的更改记录。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>checksig&lt;套件档<span class="token punctuation">></span>+　检验该套件的签名认证。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>clean　完成套件的包装后，删除包装过程中所建立的目录。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>dbpath&lt;数据库目录<span class="token punctuation">></span>　设置欲存放RPM数据库的目录。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>dump　显示每个文件的验证信息。本参数需配合"<span class="token punctuation">-</span>l"参数使用。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>excludedocs　安装套件时，不要安装文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>excludepath&lt;排除目录<span class="token punctuation">></span>　忽略在指定目录里的所有文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>force　强行置换套件或文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>ftpproxy&lt;主机名称或IP地址<span class="token punctuation">></span>　指定FTP代理服务器。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>ftpport&lt;通信端口<span class="token punctuation">></span>　设置FTP服务器或代理服务器使用的通信端口。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>help　在线帮助。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>httpproxy&lt;主机名称或IP地址<span class="token punctuation">></span>　指定HTTP代理服务器。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>httpport&lt;通信端口<span class="token punctuation">></span>　设置HTTP服务器或代理服务器使用的通信端口。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>ignorearch　不验证套件档的结构正确性。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>ignoreos　不验证套件档的结构正确性。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>ignoresize　安装前不检查磁盘空间是否足够。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>includedocs　安装套件时，一并安装文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>initdb　确认有正确的数据库可以使用。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>justdb　更新数据库，当不变动任何文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>nobulid　不执行任何完成阶段。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>nodeps　不验证套件档的相互关联性。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>nofiles　不验证文件的属性。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>nogpg　略过所有GPG的签名认证。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>nomd5　不使用MD5编码演算确认文件的大小与正确性。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>nopgp　略过所有PGP的签名认证。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>noorder　不重新编排套件的安装顺序，以便满足其彼此间的关联性。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>noscripts　不执行任何安装Script文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>notriggers　不执行该套件包装内的任何Script文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>oldpackage　升级成旧版本的套件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>percent　安装套件时显示完成度百分比。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>pipe&lt;执行指令<span class="token punctuation">></span>　建立管道，把输出结果转为该执行指令的输入数据。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>prefix&lt;目的目录<span class="token punctuation">></span>　若重新配置文件，就把文件放到指定的目录下。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>provides　查询该套件所提供的兼容度。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>queryformat&lt;档头格式<span class="token punctuation">></span>　设置档头的表示方式。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>querytags　列出可用于档头格式的标签。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>rcfile&lt;配置文件<span class="token punctuation">></span>　使用指定的配置文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>rebulid&lt;套件档<span class="token punctuation">></span>　安装原始代码套件，重新产生二进制文件的套件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>rebuliddb　以现有的数据库为主，重建一份数据库。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>recompile&lt;套件档<span class="token punctuation">></span>　此参数的效果和指定"<span class="token punctuation">-</span><span class="token punctuation">-</span>rebulid"参数类似，当不产生套件档。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>relocate&lt;原目录<span class="token punctuation">></span>=&lt;新目录<span class="token punctuation">></span>　把本来会放到原目录下的文件改放到新目录。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>replacefiles　强行置换文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>replacepkgs　强行置换套件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>requires　查询该套件所需要的兼容度。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>resing&lt;套件档<span class="token punctuation">></span>+　删除现有认证，重新产生签名认证。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>rmsource　完成套件的包装后，删除原始代码。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>rmsource&lt;文件<span class="token punctuation">></span>　删除原始代码和指定的文件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>root&lt;根目录<span class="token punctuation">></span>　设置欲当作根目录的目录。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>scripts　列出安装套件的Script的变量。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>setperms　设置文件的权限。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>setugids　设置文件的拥有者和所属群组。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>short<span class="token punctuation">-</span>circuit　直接略过指定完成阶段的步骤。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>sign　产生PGP或GPG的签名认证。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>target=&lt;安装平台<span class="token punctuation">></span>+　设置产生的套件的安装平台。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>test　仅作测试，并不真的安装套件。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>timecheck&lt;检查秒数<span class="token punctuation">></span>　设置检查时间的计时秒数。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>triggeredby&lt;套件档<span class="token punctuation">></span>　查询该套件的包装者。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>triggers　展示套件档内的包装Script。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>verify　此参数的效果和指定"<span class="token punctuation">-</span>q"参数相同。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>version　显示版本信息。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>whatprovides&lt;功能特性<span class="token punctuation">></span>　查询该套件对指定的功能特性所提供的兼容度。
-<span class="token punctuation">-</span><span class="token punctuation">-</span>whatrequires&lt;功能特性<span class="token punctuation">></span>　查询该套件对指定的功能特性所需要的兼容度。
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># ubuntu </span>
+<span class="token function">apt-get</span> remove openjdk*<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="rpm参数"><a href="#rpm参数" class="headerlink" title="rpm参数"></a>rpm参数</h3><pre class="line-numbers language-none"><code class="language-none">-a　查询所有套件。
+-b&lt;完成阶段&gt;&lt;套件档&gt;+或-t&lt;完成阶段&gt;&lt;套件档&gt;+　设置包装套件的完成阶段，并指定套件档的文件名称。
+-c　只列出组态配置文件，本参数需配合&quot;-l&quot;参数使用。
+-d　只列出文本文件，本参数需配合&quot;-l&quot;参数使用。
+-e&lt;套件档&gt;或--erase&lt;套件档&gt;　删除指定的套件。
+-f&lt;文件&gt;+　查询拥有指定文件的套件。
+-h或--hash　套件安装时列出标记。
+-i　显示套件的相关信息。
+-i&lt;套件档&gt;或--install&lt;套件档&gt;　安装指定的套件档。
+-l　显示套件的文件列表。
+-p&lt;套件档&gt;+　查询指定的RPM套件档。
+-q　使用询问模式，当遇到任何问题时，rpm指令会先询问用户。
+-R　显示套件的关联性信息。
+-s　显示文件状态，本参数需配合&quot;-l&quot;参数使用。
+-U&lt;套件档&gt;或--upgrade&lt;套件档&gt;升级指定的套件档。
+-v　显示指令执行过程。
+-vv　详细显示指令执行过程，便于排错。
+-addsign&lt;套件档&gt;+　在指定的套件里加上新的签名认证。
+--allfiles　安装所有文件。
+--allmatches　删除符合指定的套件所包含的文件。
+--badreloc　发生错误时，重新配置文件。
+--buildroot&lt;根目录&gt;　设置产生套件时，欲当作根目录的目录。
+--changelog　显示套件的更改记录。
+--checksig&lt;套件档&gt;+　检验该套件的签名认证。
+--clean　完成套件的包装后，删除包装过程中所建立的目录。
+--dbpath&lt;数据库目录&gt;　设置欲存放RPM数据库的目录。
+--dump　显示每个文件的验证信息。本参数需配合&quot;-l&quot;参数使用。
+--excludedocs　安装套件时，不要安装文件。
+--excludepath&lt;排除目录&gt;　忽略在指定目录里的所有文件。
+--force　强行置换套件或文件。
+--ftpproxy&lt;主机名称或IP地址&gt;　指定FTP代理服务器。
+--ftpport&lt;通信端口&gt;　设置FTP服务器或代理服务器使用的通信端口。
+--help　在线帮助。
+--httpproxy&lt;主机名称或IP地址&gt;　指定HTTP代理服务器。
+--httpport&lt;通信端口&gt;　设置HTTP服务器或代理服务器使用的通信端口。
+--ignorearch　不验证套件档的结构正确性。
+--ignoreos　不验证套件档的结构正确性。
+--ignoresize　安装前不检查磁盘空间是否足够。
+--includedocs　安装套件时，一并安装文件。
+--initdb　确认有正确的数据库可以使用。
+--justdb　更新数据库，当不变动任何文件。
+--nobulid　不执行任何完成阶段。
+--nodeps　不验证套件档的相互关联性。
+--nofiles　不验证文件的属性。
+--nogpg　略过所有GPG的签名认证。
+--nomd5　不使用MD5编码演算确认文件的大小与正确性。
+--nopgp　略过所有PGP的签名认证。
+--noorder　不重新编排套件的安装顺序，以便满足其彼此间的关联性。
+--noscripts　不执行任何安装Script文件。
+--notriggers　不执行该套件包装内的任何Script文件。
+--oldpackage　升级成旧版本的套件。
+--percent　安装套件时显示完成度百分比。
+--pipe&lt;执行指令&gt;　建立管道，把输出结果转为该执行指令的输入数据。
+--prefix&lt;目的目录&gt;　若重新配置文件，就把文件放到指定的目录下。
+--provides　查询该套件所提供的兼容度。
+--queryformat&lt;档头格式&gt;　设置档头的表示方式。
+--querytags　列出可用于档头格式的标签。
+--rcfile&lt;配置文件&gt;　使用指定的配置文件。
+--rebulid&lt;套件档&gt;　安装原始代码套件，重新产生二进制文件的套件。
+--rebuliddb　以现有的数据库为主，重建一份数据库。
+--recompile&lt;套件档&gt;　此参数的效果和指定&quot;--rebulid&quot;参数类似，当不产生套件档。
+--relocate&lt;原目录&gt;&#x3D;&lt;新目录&gt;　把本来会放到原目录下的文件改放到新目录。
+--replacefiles　强行置换文件。
+--replacepkgs　强行置换套件。
+--requires　查询该套件所需要的兼容度。
+--resing&lt;套件档&gt;+　删除现有认证，重新产生签名认证。
+--rmsource　完成套件的包装后，删除原始代码。
+--rmsource&lt;文件&gt;　删除原始代码和指定的文件。
+--root&lt;根目录&gt;　设置欲当作根目录的目录。
+--scripts　列出安装套件的Script的变量。
+--setperms　设置文件的权限。
+--setugids　设置文件的拥有者和所属群组。
+--short-circuit　直接略过指定完成阶段的步骤。
+--sign　产生PGP或GPG的签名认证。
+--target&#x3D;&lt;安装平台&gt;+　设置产生的套件的安装平台。
+--test　仅作测试，并不真的安装套件。
+--timecheck&lt;检查秒数&gt;　设置检查时间的计时秒数。
+--triggeredby&lt;套件档&gt;　查询该套件的包装者。
+--triggers　展示套件档内的包装Script。
+--verify　此参数的效果和指定&quot;-q&quot;参数相同。
+--version　显示版本信息。
+--whatprovides&lt;功能特性&gt;　查询该套件对指定的功能特性所提供的兼容度。
+--whatrequires&lt;功能特性&gt;　查询该套件对指定的功能特性所需要的兼容度。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="从服务器复制文件到本地"><a href="#从服务器复制文件到本地" class="headerlink" title="从服务器复制文件到本地"></a>从服务器复制文件到本地</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 从服务器复制文件到本地</span>
 <span class="token function">scp</span> root@192.168.1.100:/data/test.txt /home/myfile/
@@ -920,9 +944,8 @@ ssh登陆 <span class="token function">ssh</span> root@ip<span aria-hidden="true
 </blockquote>
 <h3 id="centos7-x2F-ubuntu通用"><a href="#centos7-x2F-ubuntu通用" class="headerlink" title="centos7&#x2F;ubuntu通用"></a>centos7&#x2F;ubuntu通用</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认命令行</span>
 systemctl set-default multi-user.target  （init <span class="token number">3</span>）
-
 <span class="token comment"># 默认图形页面</span>
-systemctl set-default graphical.target  <span class="token punctuation">(</span>init <span class="token number">5</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+systemctl set-default graphical.target  <span class="token punctuation">(</span>init <span class="token number">5</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="查看系统内核-uname-r"><a href="#查看系统内核-uname-r" class="headerlink" title="查看系统内核 uname -r"></a>查看系统内核 uname -r</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 全部内核</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> kernel

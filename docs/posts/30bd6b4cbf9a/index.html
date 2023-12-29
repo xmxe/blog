@@ -742,7 +742,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。</span>
 <span class="token function">git</span> restore <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="删除历史提交记录"><a href="#删除历史提交记录" class="headerlink" title="删除历史提交记录"></a>删除历史提交记录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
+<h3 id="删除全部历史提交记录"><a href="#删除全部历史提交记录" class="headerlink" title="删除全部历史提交记录"></a>删除全部历史提交记录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> latest_branch
@@ -757,6 +757,15 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment">#最后，强制更新您的存储库</span>
 <span class="token function">git</span> push <span class="token parameter variable">-f</span> origin main<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="删除部分历史提交记录"><a href="#删除部分历史提交记录" class="headerlink" title="删除部分历史提交记录"></a>删除部分历史提交记录</h3><ol>
+<li>运行<code>git log</code>来查找你要删除的提交记录的hash值(commit id)，记录下来。</li>
+<li>执行交互式rebase命令：<code>git rebase -i commit_id</code><blockquote>
+<p>如果想要删除最近3次历史提交: <code>git rebase -i HEAD~3</code></p>
+</blockquote>
+</li>
+<li>进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。</li>
+<li>推送更新到远程仓库：<code>git push --force</code></li>
+</ol>
 <h3 id="远程分支重命名"><a href="#远程分支重命名" class="headerlink" title="远程分支重命名"></a>远程分支重命名</h3><p>远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方案1:先重命名本地分支，然后推送到远程分支</span>
 <span class="token comment"># 1.先重命名本地分支</span>

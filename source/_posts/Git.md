@@ -276,7 +276,7 @@ git restore --staged file
 git restore file
 ```
 
-### 删除历史提交记录
+### 删除全部历史提交记录
 
 ```shell
 # 创建孤立分支,没有以前的提交记录
@@ -294,6 +294,14 @@ git branch -m main
 #最后，强制更新您的存储库
 git push -f origin main
 ```
+
+### 删除部分历史提交记录
+
+1. 运行`git log`来查找你要删除的提交记录的hash值(commit id)，记录下来。
+2. 执行交互式rebase命令：`git rebase -i commit_id`
+    > 如果想要删除最近3次历史提交: `git rebase -i HEAD~3`
+3. 进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。
+4. 推送更新到远程仓库：`git push --force`
 
 ### 远程分支重命名
 

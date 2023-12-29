@@ -891,6 +891,7 @@ System.out.println(hw.getMsg());
 
 ## 相关文章
 
+- [聊一聊Spring Bean的生命周期](https://mp.weixin.qq.com/s/-C6CMbaPLLRkJnC0DCMIMA)
 - [11张流程图帮你搞定Spring Bean生命周期](https://mp.weixin.qq.com/s/I8tsf7cFXkHX1pUp7SPByw)
 - [面试官：说说Spring Bean的实例化过程？面试必问的！](https://mp.weixin.qq.com/s/5hAt9_KyyqHy7zzOjZ9LyQ)
 - [你知道Spring lazy-init懒加载的原理吗？](https://mp.weixin.qq.com/s/_je69-0J72X5YMCrS-92MQ)

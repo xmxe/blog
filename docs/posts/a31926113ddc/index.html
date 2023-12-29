@@ -1668,6 +1668,7 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RxhaZFnMAf7bAgYUtTGLuA">Redis宕机，数据丢了</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/q7KEOA2Dy2Q5QpDX8FkPjg">小伙用12张图讲明白了Redis持久化！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5IBOKcoBxVoGSMrn3vBGOw">彻底理解Redis的持久化和主从复制</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zUw7yPIT1dQixDbZy5kkkw">一文了解Redis的持久化</a></li>
 </ul>
 <h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h3><p>主从模式中，一旦主节点由于故障不能提供服务，需要人工将从节点晋升为主节点，同时还要通知应用方更新主节点地址。显然，多数业务场景都不能接受这种故障处理方式。Redis从2.8开始正式提供了Redis Sentinel（哨兵）架构来解决这个问题。哨兵模式，由一个或多个Sentinel实例组成的Sentinel系统，它可以监视所有的Redis主节点和从节点，并在被监视的主节点进入下线状态时，自动将下线主服务器属下的某个从节点升级为新的主节点。但是呢，一个哨兵进程对Redis节点进行监控，就可能会出现问题（单点问题），因此，可以使用多个哨兵来进行监控Redis节点，并且各个哨兵之间还会进行监控。简单来说，哨兵模式就三个作用：</p>
 <ul>

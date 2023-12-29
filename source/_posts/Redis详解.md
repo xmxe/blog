@@ -1263,6 +1263,7 @@ Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频
 - [Redis宕机，数据丢了](https://mp.weixin.qq.com/s/RxhaZFnMAf7bAgYUtTGLuA)
 - [小伙用12张图讲明白了Redis持久化！](https://mp.weixin.qq.com/s/q7KEOA2Dy2Q5QpDX8FkPjg)
 - [彻底理解Redis的持久化和主从复制](https://mp.weixin.qq.com/s/5IBOKcoBxVoGSMrn3vBGOw)
+- [一文了解Redis的持久化](https://mp.weixin.qq.com/s/zUw7yPIT1dQixDbZy5kkkw)
 
 
 ## Redis高可用

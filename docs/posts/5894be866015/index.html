@@ -1018,7 +1018,7 @@
 <td align="left">用于指定能够触发事务回滚的异常类型，并且可以指定多个异常类型。</td>
 </tr>
 </tbody></table>
-<h4 id="Transactional事务注解原理"><a href="#Transactional事务注解原理" class="headerlink" title="@Transactional事务注解原理"></a>@Transactional事务注解原理</h4><p>我们知道，**@Transactional的工作机制是基于AOP实现的，AOP又是使用动态代理实现的。如果目标对象实现了接口，默认情况下会采用JDK的动态代理，如果目标对象没有实现了接口,会使用CGLIB动态代理**。<code>createAopProxy()</code>方法决定了是使用JDK还是Cglib来做动态代理，源码如下：</p>
+<h4 id="Transactional事务注解原理"><a href="#Transactional事务注解原理" class="headerlink" title="@Transactional事务注解原理"></a>@Transactional事务注解原理</h4><p>我们知道，@Transactional的工作机制是基于AOP实现的，AOP又是使用动态代理实现的。如果目标对象实现了接口，默认情况下会采用JDK的动态代理，如果目标对象没有实现了接口,会使用CGLIB动态代理。<code>createAopProxy()</code>方法决定了是使用JDK还是Cglib来做动态代理，源码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultAopProxyFactory</span> <span class="token keyword">implements</span> <span class="token class-name">AopProxyFactory</span><span class="token punctuation">,</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>
 
 	<span class="token annotation punctuation">@Override</span>
@@ -1168,7 +1168,7 @@
 <li><strong>共享锁（S锁）</strong>：又称读锁，事务在读取记录的时候获取共享锁，允许多个事务同时获取（锁兼容）。</li>
 <li><strong>排他锁（X锁）</strong>：又称写锁&#x2F;独占锁，事务在修改记录的时候获取排他锁，不允许多个事务同时获取。如果一个记录已经被加了排他锁，那其他事务不能再对这条记录加任何类型的锁（锁不兼容）。</li>
 </ul>
-<p>读写锁可以做到读读并行，但是无法做到写读、写写并行。另外，根据根据锁粒度的不同，又被分为**表级锁(table-levellocking)和行级锁(row-levellocking)**。InnoDB不光支持表级锁，还支持行级锁，默认为行级锁。行级锁的粒度更小，仅对相关的记录上锁即可（对一行或者多行记录加锁），所以对于并发写入操作来说，InnoDB的性能更高。不论是表级锁还是行级锁，都存在共享锁（ShareLock，S锁）和排他锁（ExclusiveLock，X锁）这两类。</p>
+<p>读写锁可以做到读读并行，但是无法做到写读、写写并行。另外，根据根据锁粒度的不同，又被分为表级锁(table-levellocking)和行级锁(row-levellocking)。InnoDB不光支持表级锁，还支持行级锁，默认为行级锁。行级锁的粒度更小，仅对相关的记录上锁即可（对一行或者多行记录加锁），所以对于并发写入操作来说，InnoDB的性能更高。不论是表级锁还是行级锁，都存在共享锁（ShareLock，S锁）和排他锁（ExclusiveLock，X锁）这两类。</p>
 <p><strong>MVCC</strong>是多版本并发控制方法，即对一份数据会存储多个版本，通过事务的可见性来保证事务能看到自己应该看到的版本。通常会有一个全局的版本分配器来为每一行数据设置版本号，版本号是唯一的。</p>
 <p>MVCC在MySQL中实现所依赖的手段主要是:<strong>隐藏字段、readview、undolog</strong>。</p>
 <ul>
@@ -1767,7 +1767,7 @@ Dock
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2023
+                <span id="year">2022-2024
                 </span>
             
             

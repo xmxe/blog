@@ -587,6 +587,38 @@ select concat(round(sum(data_length/1024/1024),2),'MB') as data from information
 select concat(round(sum(data_length/1024/1024),2),'MB') as '数据大小' , concat(round(sum(index_length/1024/1024),2),'MB') as '索引大小', round(sum(data_length/1024/1024),2)+round(sum(index_length/1024/1024),2) as 'all' from information_schema.tables where table_schema='数据库名称';
 ```
 
+#### 分析CPU使用率过高
+
+```sql
+-- 1. 使用SHOW VARIABLES LIKE 'performance_schema'; 确保performance_schema是开启的。这个模式可以为你提供关于服务器内部操作的详细信息，这对于诊断性能问题非常有用。
+-- 2. 查看数据库连接数
+show status like '%threads_connected%';
+-- 3. 查看进程,高CPU使用的查询可能会在这里显示。
+SHOW PROCESSLIST; -- 或SHOW FULL PROCESSLIST
+-- 4. EXPLAIN执行计划
+```
+使用慢查询日志。请注意，慢查询日志可能会对数据库性能产生一定的影响，因为它需要记录和写入日志文件。因此，在生产环境中使用慢查询日志时，应该谨慎考虑其影响，并根据需要进行适当的调整。要使用MySQL的慢查询日志，可以按照以下步骤进行操作：
+1. 首先，确保MySQL的慢查询日志功能已经启用。你可以通过编辑MySQL的配置文件（通常是my.cnf或my.ini）来实现。在[mysqld]部分下添加或修改以下行：
+
+```
+# slow_query_log参数用于启用或禁用慢查询日志功能。1表示启用，0表示禁用
+slow_query_log = 1
+# slow_query_log_file参数用于指定慢查询日志文件的路径
+slow_query_log_file = /path/to/your/logfile.log
+# long_query_time参数用于设置查询执行时间的阈值（以秒为单位）
+long_query_time = 2  # 设置阈值为2秒，你可以根据需要调整这个值
+```
+
+2. 重启MySQL服务：修改配置文件后，需要重启MySQL服务以使更改生效。根据你的操作系统和MySQL的安装方式，可以使用相应的命令来重启MySQL服务。
+3. 记录慢查询日志：一旦慢查询日志功能启用，MySQL将会记录执行时间超过阈值的查询。这些查询将被写入你在配置文件中指定的日志文件中。你可以使用任何文本编辑器或日志查看工具来查看和查看慢查询日志文件。
+4. 分析慢查询日志：一旦你有了慢查询日志文件，可以使用工具如mysqldumpslow来分析日志文件，找出执行缓慢的查询。mysqldumpslow是一个Perl脚本，可以用来分析慢查询日志文件并统计各种查询的执行情况。你可以在终端中运行以下命令来使用mysqldumpslow：
+
+```perl
+mysqldumpslow /path/to/your/logfile.log
+```
+这将显示慢查询日志中的统计信息，包括执行次数、总执行时间、平均执行时间等。你可以根据这些信息找出需要优化的查询。
+
+
 ## MySQL函数
 
 ### 字符串函数

@@ -982,6 +982,30 @@ You can turn <span class="token keyword">off</span> this feature <span class="to
 <span class="token comment">-- 查询索引+数据大小</span>
 <span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'数据大小'</span> <span class="token punctuation">,</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>index_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'索引大小'</span><span class="token punctuation">,</span> <span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>index_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'all'</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">where</span> table_schema<span class="token operator">=</span><span class="token string">'数据库名称'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h4 id="分析CPU使用率过高"><a href="#分析CPU使用率过高" class="headerlink" title="分析CPU使用率过高"></a>分析CPU使用率过高</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 1. 使用SHOW VARIABLES LIKE 'performance_schema'; 确保performance_schema是开启的。这个模式可以为你提供关于服务器内部操作的详细信息，这对于诊断性能问题非常有用。</span>
+<span class="token comment">-- 2. 查看数据库连接数</span>
+<span class="token keyword">show</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'%threads_connected%'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 3. 查看进程,高CPU使用的查询可能会在这里显示。</span>
+<span class="token keyword">SHOW</span> PROCESSLIST<span class="token punctuation">;</span> <span class="token comment">-- 或SHOW FULL PROCESSLIST</span>
+<span class="token comment">-- 4. EXPLAIN执行计划</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用慢查询日志。请注意，慢查询日志可能会对数据库性能产生一定的影响，因为它需要记录和写入日志文件。因此，在生产环境中使用慢查询日志时，应该谨慎考虑其影响，并根据需要进行适当的调整。要使用MySQL的慢查询日志，可以按照以下步骤进行操作：</p>
+<ol>
+<li>首先，确保MySQL的慢查询日志功能已经启用。你可以通过编辑MySQL的配置文件（通常是my.cnf或my.ini）来实现。在[mysqld]部分下添加或修改以下行：</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none"># slow_query_log参数用于启用或禁用慢查询日志功能。1表示启用，0表示禁用
+slow_query_log &#x3D; 1
+# slow_query_log_file参数用于指定慢查询日志文件的路径
+slow_query_log_file &#x3D; &#x2F;path&#x2F;to&#x2F;your&#x2F;logfile.log
+# long_query_time参数用于设置查询执行时间的阈值（以秒为单位）
+long_query_time &#x3D; 2  # 设置阈值为2秒，你可以根据需要调整这个值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>重启MySQL服务：修改配置文件后，需要重启MySQL服务以使更改生效。根据你的操作系统和MySQL的安装方式，可以使用相应的命令来重启MySQL服务。</li>
+<li>记录慢查询日志：一旦慢查询日志功能启用，MySQL将会记录执行时间超过阈值的查询。这些查询将被写入你在配置文件中指定的日志文件中。你可以使用任何文本编辑器或日志查看工具来查看和查看慢查询日志文件。</li>
+<li>分析慢查询日志：一旦你有了慢查询日志文件，可以使用工具如mysqldumpslow来分析日志文件，找出执行缓慢的查询。mysqldumpslow是一个Perl脚本，可以用来分析慢查询日志文件并统计各种查询的执行情况。你可以在终端中运行以下命令来使用mysqldumpslow：</li>
+</ol>
+<pre class="line-numbers language-perl" data-language="perl"><code class="language-perl">mysqldumpslow <span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>your<span class="token operator">/</span>logfile<span class="token operator">.</span>log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这将显示慢查询日志中的统计信息，包括执行次数、总执行时间、平均执行时间等。你可以根据这些信息找出需要优化的查询。</p>
 <h2 id="MySQL函数"><a href="#MySQL函数" class="headerlink" title="MySQL函数"></a>MySQL函数</h2><h3 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h3><blockquote>
 <p>对于针对字符串位置的操作，第一个位置被标记为1。</p>
 </blockquote>
@@ -3200,7 +3224,7 @@ var str2 = &#123;name:"cxh",sex
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2023
+                <span id="year">2022-2024
                 </span>
             
             

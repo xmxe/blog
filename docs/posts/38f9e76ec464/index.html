@@ -828,7 +828,7 @@
 
 <h2 id="05-入门-RESTful-amp-JSON"><a href="#05-入门-RESTful-amp-JSON" class="headerlink" title="05-入门-RESTful &amp; JSON"></a>05-入门-RESTful &amp; JSON</h2><p>REST指的是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就是RESTful。Web应用程序最重要的REST原则是，客户端和服务器之间的交互在请求之间是无状态的。从客户端到服务器的每个请求都必须包含理解请求所必需的信息。如果服务器在请求之间的任何时间点重启，客户端不会得到通知。此外，无状态请求可以由任何可用服务器回答，这十分适合云计算之类的环境。客户端可以缓存数据以改进性能。</p>
 <p>在服务器端，应用程序状态和功能可以分为各种资源。资源是一个有趣的概念实体，它向客户端公开。资源的例子有：应用程序对象、数据库记录、算法等等。每个资源都使用URI(Universal Resource Identifier)得到一个唯一的地址。所有资源都共享统一的接口，以便在客户端和服务器之间传输状态。使用的是标准的HTTP方法，比如GET、PUT、POST和DELETE。</p>
-<p>在REST样式的Web服务中，每个资源都有一个地址。资源本身都是方法调用的目<br>标，方法列表对所有资源都是一样的。这些方法都是标准方法，包括HTTP GET、POST、PUT、DELETE，还可能包括HEAD和OPTIONS。简单的理解就是，**如果想要访问互联网上的资源，就必须向资源所在的服务器发出请求，请求体中必须包含资源的网络路径，以及对资源进行的操作(增删改查)**。</p>
+<p>在REST样式的Web服务中，每个资源都有一个地址。资源本身都是方法调用的目<br>标，方法列表对所有资源都是一样的。这些方法都是标准方法，包括HTTP GET、POST、PUT、DELETE，还可能包括HEAD和OPTIONS。简单的理解就是，如果想要访问互联网上的资源，就必须向资源所在的服务器发出请求，请求体中必须包含资源的网络路径，以及对资源进行的操作(增删改查)。</p>
 <p>REST样式的Web服务若有返回结果，大多数以JSON字符串形式返回。</p>
 <h2 id="06-入门-Postman客户端工具"><a href="#06-入门-Postman客户端工具" class="headerlink" title="06-入门-Postman客户端工具"></a>06-入门-<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Postman&spm=1001.2101.3001.7020">Postman</a>客户端工具</h2><p>如果直接通过浏览器向Elasticsearch服务器发请求，那么需要在发送的请求中包含<br>HTTP标准的方法，而HTTP的大部分特性且仅支持GET和POST方法。所以为了能方便地进行客户端的访问，可以使用Postman软件Postman是一款强大的网页调试工具，提供功能强大的Web API和HTTP请求调试。</p>
 <p>软件功能强大，界面简洁明晰、操作方便快捷，设计得很人性化。Postman中文版能够发送任何类型的HTTP请求(GET,HEAD,POST,PUT…)，不仅能够表单提交，且可以附带任意类型请求体。</p>
@@ -6441,7 +6441,7 @@ Apache Dubbo|ˈdʌbəʊ|是一款高性能、轻量级的开源Java RPC框架。
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2023
+                <span id="year">2022-2024
                 </span>
             
             

@@ -207,14 +207,14 @@ ps -ef | grep nginx
 - **$request_completion**：当请求已经全部完成时，其值为“ok”。若没有完成，就要返回客户端，则其值为空字符串；或者在断点续传等情况下使用HTTP range访问的并不是文件的最后一块，那么其值也是空字符串。
 - **$request_method**：表示HTTP请求的方法名，如GET、PUT、POST等
 - **$scheme**：表示HTTP scheme，如在请求https://nginx.com/中表示https
-- **$server_addr **：表示服务器地址
+- **$server_addr**：表示服务器地址
 - **$server_name**：表示服务器名称
 - **$server_port**：表示服务器端口
 - **$server_protocol**：表示服务器向客户端发送响应的协议，如HTTP/1.1或HTTP/1.0
 
 ### 日志配置
 
-- **$remote_addr,$http_x_forwarded_for- **：记录客户端IP地址
+- **$remote_addr,$http_x_forwarded_for-** ：记录客户端IP地址
 - **$remote_user**：记录客户端用户名称
 - **$request**：记录请求的URL和HTTP协议
 - **$status**：记录请求状态
@@ -366,6 +366,239 @@ location /api {
 
 1. proxy_pass代理地址端口后有目录(包括 / )，转发后地址：代理地址+访问URL目录部分去除location匹配目录
 2. proxy_pass代理地址端口后无任何，转发后地址：代理地址+访问URL目录部
+
+## Nginx设置黑/白名单IP限制
+
+### 第一种方法:allow、deny
+
+deny和allow指令属于ngx_http_access_module，nginx默认加载此模块，所以可直接使用。这种方式，最简单，最直接。设置类似防火墙iptable，使用方法：直接配置文件中添加：
+```nginx
+# 白名单设置，allow后面为可访问IP
+location / {
+     allow 123.13.123.12;
+     allow 23.53.32.1/100;
+     deny  all;
+}
+
+# 黑名单设置，deny后面接限制的IP，为什么不加allow all?因为这个默认是开启的
+location / {
+     deny 123.13.123.12;
+}
+
+# 白名单，特定目录访问限制
+location /tree/list {
+     allow 123.13.123.12;
+     deny all;
+}
+```
+
+或者通过读取文件IP配置白名单
+
+```nginx
+location /{
+    include /home/whitelist.conf;
+    # 默认位置路径为/etc/nginx/下，
+    # 如直接写include whitelist.conf，则只需要在/etc/nginx目录下创建whitelist.conf
+    deny all;
+}
+```
+
+在/home/目录下创建whitelist.conf，并写入需要加入白名单的IP，添加完成后查看如下：
+
+```shell
+cat /home/whitelist.conf
+
+# 白名单IP
+allow 10.1.1.10;
+allow 10.1.1.11;
+```
+
+白名单设置完成，黑名单设置方法一样。
+
+### 第二种方法:ngx_http_geo_module
+
+默认情况下，一般nginx是有加该模块的，[ngx_http_geo_module官方文档](https://nginx.org/en/docs/http/ngx_http_geo_module.html)。参数需设置在位置在http模块中。此模块可设置IP限制，也可设置国家地区限制。位置在server模块外即可。语法示例：配置文件直接添加
+
+```nginx
+geo $ip_list {
+    default 0;
+    # 设置默认值为0
+    192.168.1.0/24 1;
+    10.1.0.0/16    1;
+}
+server {
+   listen       8081;
+   server_name  192.168.152.100;
+
+   location / {
+       root   /var/www/test;
+       index  index.html index.htm index.php;
+       if ( $ip_list = 0 ) {
+           # 判断默认值，如果值为0，可访问，这时上面添加的IP为黑名单。
+           # 白名单，将设置$ip_list = 1，这时上面添加的IP为白名单。
+           proxy_pass http://192.168.152.100:8081;
+        }
+    }
+
+}
+```
+
+同样可通过读取文件IP配置
+
+```nginx
+geo $ip_list {
+    default 0;
+    #设置默认值为0
+    include ip_white.conf;
+}
+server {
+    listen       8081;
+    server_name  192.168.152.100;
+
+    location / {
+        root   /var/www/test;
+        index  index.html index.htm index.php;
+        if ( $ip_list = 0 ) {
+            return 403;
+            # 限制的IP返回值为403，也可以设置为503，504其他值。
+            # 建议设置503，504这样返回的页面不会暴露nginx相关信息，限制的IP看到的信息只显示服务器错误，无法判断真正原因。
+        }
+    }
+}
+```
+在/etc/nginx目录下创建ip_list.conf，添加IP完成后，查看如下：
+
+```shell
+cat /etc/nginx/ip_list.conf
+
+192.168.152.1 1;
+192.168.150.0/24 1;
+```
+
+设置完成，ip_list.conf的IP为白名单，不在名单中的，直接返回403页面。黑名单设置方法相同。
+
+### ngx_http_geo_module负载均衡（扩展）
+
+ngx_http_geo_module，模块还可以做负载均衡使用，如web集群在不同地区都有服务器，某个地区IP段，负载均衡至访问某个地区的服务器。方式类似，IP后面加上自定义值，不仅仅数字，如US,CN等字母。示例：如果三台服务器：122.11.11.11，133.11.12.22，144.11.11.33
+
+```nginx
+geo $country {
+    default default;
+    111.11.11.0/24   uk;
+    # IP段定义值uk
+    111.11.12.0/24   us;
+    # IP段定义值us
+    }
+upstream  uk.server {
+    erver 122.11.11.11:9090;
+    # 定义值uk的IP直接访问此服务器
+}
+
+upstream  us.server {
+    server 133.11.12.22:9090;
+    # 定义值us的IP直接访问此服务器
+}
+
+upstream  default.server {
+    server 144.11.11.33:9090;
+    #默认的定义值default的IP直接访问此服务器
+}
+
+server {
+    listen    9090;
+    server_name 144.11.11.33;
+
+    location / {
+      root  /var/www/html/;
+      index index.html index.htm;
+     }
+ }
+```
+
+## 国家城市IP访问限制
+
+有些第三方也提供设置，如cloudflare，设置更简单，防火墙规则里设置。这里讲讲nginx的设置方法。
+
+### 安装ngx_http_geoip_module模块
+
+[ngx_http_geoip_module官方文档](https://nginx.org/en/docs/http/ngx_http_geoip_module.html)，参数需设置在位置在http模块中。nginx默认情况下不构建此模块，应使用`--with-http_geoip_module`配置参数启用它。对于ubuntu系统来说，直接安装nginx-extras组件，包括几乎所有的模块。
+
+```shell
+sudo apt install nginx-extras
+```
+
+对于centos系统，安装模块。
+
+```shell
+yum install nginx-module-geoip
+```
+
+### 下载 IP 数据库
+
+此模块依赖于IP数据库，所有数据在此数据库中读取，所有还需要下载ip库（dat格式）。MaxMind提供了免费的IP地域数据库，坏消息是MaxMind官方已经停止支持dat格式的ip库。在其他地方可以找到dat格式的文件，或者老版本的，当然数据不可能最新，多少有误差。
+
+> 第三方下载地址：https://www.miyuru.lk/geoiplegacy
+
+下载同时包括Ipv4和Ipv6的country、city版本。
+
+```shell
+# 下载国家IP库，解压并移动到nginx配置文件目录，
+sudo wget https://dl.miyuru.lk/geoip/maxmind/country/maxmind.dat.gz
+gunzip maxmind.dat.gz
+sudo mv maxmind.dat /etc/nginx/GeoCountry.dat
+
+sudo wget https://dl.miyuru.lk/geoip/maxmind/city/maxmind.dat.gz
+gunzip maxmind.dat.gz
+sudo mv maxmind.dat /etc/nginx/GeoCity.dat
+```
+
+### 配置nginx
+
+示例：
+
+```nginx
+geoip_country /etc/nginx/GeoCountry.dat;
+geoip_city /etc/nginx/GeoCity.dat;
+
+server {
+    listen  80;
+    server_name 144.11.11.33;
+
+    location / {
+      root  /var/www/html/;
+      index index.html index.htm;
+      if ($geoip_country_code = CN) {
+         return 403;
+       # 中国地区，拒绝访问。返回403页面
+      }
+   }
+ }
+```
+这里，地区国家基础设置就完成了。
+
+Geoip其他参数：
+
+- 国家相关参数：
+
+```nginx
+$geoip_country_code # 两位字符的英文国家码。如：CN,US
+$geoip_country_code3 # 三位字符的英文国家码。如：CHN, USA
+$geoip_country_name # 国家英文全称。如：China,United States
+```
+
+- 城市相关参数：
+
+```nginx
+$geoip_city_country_code # 也是两位字符的英文国家码。
+$geoip_city_country_code3 # 上同
+$geoip_city_country_name # 上同.
+$geoip_region # 这个经测试是两位数的数字，如杭州是02,上海是23。但是没有搜到相关资料，希望知道的朋友留言告之。
+$geoip_city # 城市的英文名称。如：Hangzhou
+$geoip_postal_code # 城市的邮政编码。经测试，国内这字段为空
+$geoip_city_continent_code # 不知什么用途，国内好像都是AS
+$geoip_latitude # 纬度
+$geoip_longitude # 经度
+```
 
 ## 封禁恶意ip
 
@@ -563,7 +796,7 @@ server {
 建议为off，则nginx会将缓存⽂件直接写⼊指定的cache文件中
   - proxy_cache
 启用proxy cache，并指定key_zone，如果proxy_cache off表示关闭掉缓存
-  - add_header Nging-Cache "$upstream_cache_status"**
+  - add_header Nging-Cache "$upstream_cache_status"
 用于前端判断是否是缓存，miss、hit、expired(缓存过期)、updating(更新，使用旧的应答)
 ```nginx
 proxy_cache_path /root/cache levels=1:2 keys_zone=xd_cache:10m max_size=1g inactive=60m use_temp_path=off;

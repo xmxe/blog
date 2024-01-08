@@ -600,7 +600,7 @@ OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><
 <li><strong>EX</strong>：过期时间设置（秒为单位）EX3标示这个锁有一个3秒的自动过期时间。与EX对应的是PX（毫秒为单位），这两个都是过期时间设置。</li>
 </ul>
 <p>一定要保证设置指定key的值和过期时间是一个原子操作!!不然的话，依然可能会出现锁无法被释放的问题。这样确实可以解决问题，不过，这种解决办法同样存在漏洞：如果操作共享资源的时间大于过期时间，就会出现锁提前过期的问题，进而导致分布式锁直接失效。如果锁的超时时间设置过长，又会影响到性能。你或许在想：如果操作共享资源的操作还未完成，锁过期时间能够自己续期就好了！</p>
-<h4 id="如何实现锁的优雅续期？"><a href="#如何实现锁的优雅续期？" class="headerlink" title="如何实现锁的优雅续期？"></a>如何实现锁的优雅续期？</h4><p>对于Java开发的小伙伴来说，已经有了现成的解决方案：**<a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">Redisson</a>**。其他语言的解决方案，可以在<a target="_blank" rel="noopener" href="https://redis.io/topics/distlock">Redis官方文档</a>中找到</p>
+<h4 id="如何实现锁的优雅续期？"><a href="#如何实现锁的优雅续期？" class="headerlink" title="如何实现锁的优雅续期？"></a>如何实现锁的优雅续期？</h4><p>对于Java开发的小伙伴来说，已经有了现成的解决方案：<a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">Redisson</a>。其他语言的解决方案，可以在<a target="_blank" rel="noopener" href="https://redis.io/topics/distlock">Redis官方文档</a>中找到</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/redis-distributed-lock.png" alt="DistributedlockswithRedis"></p>
 <p>Redisson是一个开源的Java语言Redis客户端，提供了很多开箱即用的功能，不仅仅包括多种分布式锁的实现。并且，Redisson还支持Redis单机、RedisSentinel、RedisCluster等多种部署架构。Redisson中的分布式锁自带自动续期机制，使用起来非常简单，原理也比较简单，其提供了一个专门用来监控和续期锁的<strong>WatchDog（看门狗）</strong>，如果操作共享资源的线程还未执行完成的话，WatchDog会不断地延长锁的过期时间，进而保证锁不会因为超时而被释放。看门狗名字的由来于<code>getLockWatchdogTimeout()</code>方法，这个方法返回的是看门狗给锁续期的过期时间，默认为30秒（<a target="_blank" rel="noopener" href="https://github.com/redisson/redisson/releases/tag/redisson-3.17.6">redisson-3.17.6</a>）。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 默认30秒，支持修改</span>
@@ -1590,7 +1590,7 @@ vo
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2023
+                <span id="year">2022-2024
                 </span>
             
             

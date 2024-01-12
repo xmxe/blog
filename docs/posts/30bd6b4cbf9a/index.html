@@ -528,7 +528,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h2><h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 可以查看当前没有add的内容修改（不在缓冲区的文件变化）</span>
+                <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 可以查看当前没有add的内容修改（不在缓冲区的文件变化）</span>
 <span class="token function">git</span> <span class="token function">diff</span>
 <span class="token comment"># 查看已经add但没有commit的改动（在缓冲区的文件变化）</span>
 <span class="token function">git</span> <span class="token function">diff</span> <span class="token parameter variable">--cached</span>
@@ -742,7 +742,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。</span>
 <span class="token function">git</span> restore <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="删除全部历史提交记录"><a href="#删除全部历史提交记录" class="headerlink" title="删除全部历史提交记录"></a>删除全部历史提交记录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
+<h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><h3 id="删除全部历史提交记录"><a href="#删除全部历史提交记录" class="headerlink" title="删除全部历史提交记录"></a>删除全部历史提交记录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> latest_branch

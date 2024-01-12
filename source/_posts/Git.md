@@ -6,7 +6,7 @@ img: https://pica.zhimg.com/v2-6baae9baaef9c2a3188f9fc301833fba_1440w.jpg
 
 ---
 
-## Git常用命令
+## 常用命令
 
 ### git diff
 
@@ -275,6 +275,8 @@ git restore --staged file
 # 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。
 git restore file
 ```
+
+## 常用操作
 
 ### 删除全部历史提交记录
 

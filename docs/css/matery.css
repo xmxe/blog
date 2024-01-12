@@ -507,8 +507,8 @@ header .side-nav .social-link2 {
 }
 
 .cover-social-link2 {
-    position: relative;
-    top: 23vh;
+    position: absolute;
+    bottom: 20vh;
     width: 100%;
     text-align: center;
 }

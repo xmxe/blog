@@ -533,7 +533,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Arthas常用命令"><a href="#Arthas常用命令" class="headerlink" title="Arthas常用命令"></a>Arthas常用命令</h2><h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/stack.html">stack</a></h3><p>输出当前方法被调用的调用路径。很多时候我们都知道一个方法被执行，但是有很多地方调用了它，你并不知道是谁调用了它，此时你需要的是stack命令。</p>
+                <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/stack.html">stack</a></h3><p>输出当前方法被调用的调用路径。很多时候我们都知道一个方法被执行，但是有很多地方调用了它，你并不知道是谁调用了它，此时你需要的是stack命令。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">stack com.baomidou.mybatisplus.extension.service.IService getOne<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="jad"><a href="#jad" class="headerlink" title="jad"></a><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/jad.html">jad</a></h3><p>反编译指定已加载类的源码。有时候，版本发布后，代码竟然没有执行，代码是最新的吗，这时可以使用jad反编译相应的class。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jad cn.test.mobile.controller.order.OrderController<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -613,16 +613,89 @@ logger <span class="token parameter variable">-c</span> 18b4aac2 <span class="to
 <p>然后代码就更新成功了。</p>
 </li>
 </ol>
+<blockquote>
+<p>注意：<br>redefine的class不能修改、添加、删除类的field和method，包括方法参数、方法名称及返回值<br>redefine后的原来的类不能恢复，redefine有可能失败（比如增加了新的field），参考jdk本身的文档<br>reset命令对redefine的类无效。如果想重置，需要redefine原始的字节码。<br>redefine命令和jad&#x2F;watch&#x2F;trace&#x2F;monitor&#x2F;tt等命令会冲突。执行完redefine之后，如果再执行上面提到的命令，则会把redefine的字节码重置。原因是jdk本身redefine和Retransform是不同的机制，同时使用两种机制来更新字节码，只有最后修改的会生效。<br>正在跑的函数，没有退出不能生效<br>推荐使用<code>retransform</code>命令</p>
+</blockquote>
+<h3 id="retransform"><a href="#retransform" class="headerlink" title="retransform"></a><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/retransform.html">retransform</a></h3><p>加载外部的.class文件，retransform jvm已加载的类。使用参考如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">retransform /tmp/Test.class
+retransform <span class="token parameter variable">-l</span> <span class="token comment"># 查看retransform entry</span>
+retransform <span class="token parameter variable">-d</span> <span class="token number">1</span>                    <span class="token comment"># delete retransform entry</span>
+retransform <span class="token parameter variable">--deleteAll</span>             <span class="token comment"># delete all retransform entries</span>
+retransform <span class="token parameter variable">--classPattern</span> demo.*   <span class="token comment"># triger retransform classes</span>
+retransform <span class="token parameter variable">-c</span> 327a647b /tmp/Test.class /tmp/Test<span class="token punctuation">\</span><span class="token variable">$Inner</span>.class
+retransform <span class="token parameter variable">--classLoaderClass</span> <span class="token string">'sun.misc.Launcher$AppClassLoader'</span> /tmp/Test.class<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>retransform指定的.class文件</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ retransform /tmp/MathGame.class
+retransform success, size: <span class="token number">1</span>, classes:
+demo.MathGame<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>加载指定的.class文件，然后解析出class name，再retransform jvm中已加载的对应的类。每加载一个.class文件，则会记录一个retransform entry.如果多次执行retransform加载同一个class文件，则会有多条retransform entry.</p>
+<ul>
+<li>查看retransform entry</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ retransform <span class="token parameter variable">-l</span>
+Id              ClassName       TransformCount  LoaderHash      LoaderClassName
+<span class="token number">1</span>               demo.MathGame   <span class="token number">1</span>               null            null<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>ransformCount统计在ClassFileTransformer#transform函数里尝试返回entry对应的.class文件的次数，但并不表明transform一定成功</p>
+<ul>
+<li>删除指定retransform entry需要指定id：</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">retransform <span class="token parameter variable">-d</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>删除所有retransform entry</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">retransform <span class="token parameter variable">--deleteAll</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>显式触发retransform</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ retransform <span class="token parameter variable">--classPattern</span> demo.MathGame
+retransform success, size: <span class="token number">1</span>, classes:
+demo.MathGame<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>注意：对于同一个类，当存在多个retransform entry时，如果显式触发retransform，则最后添加的entry生效(id最大的)。</p>
+</blockquote>
+<ul>
+<li><p>消除retransform的影响<br>如果对某个类执行retransform之后，想消除影响，则需要：</p>
+<ol>
+<li>删除这个类对应的retransform entry</li>
+<li>重新触发retransform</li>
+</ol>
+<blockquote>
+<p>提示<br>如果不清除掉所有的retransform entry，并重新触发retransform，则arthas stop时，retransform过的类仍然生效。</p>
+</blockquote>
+</li>
+<li><p>结合jad&#x2F;mc命令使用</p>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># jad命令反编译，然后可以用其它编译器，比如vim来修改源码</span>
+jad --source-only com.example.demo.arthas.user.UserController <span class="token operator">></span> /tmp/UserController.java
+<span class="token comment"># mc命令来内存编译修改过的代码</span>
+<span class="token function">mc</span> /tmp/UserController.java <span class="token parameter variable">-d</span> /tmp
+<span class="token comment"># 用retransform命令加载新的字节码</span>
+retransform /tmp/com/example/demo/arthas/user/UserController.class<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>上传.class文件到服务器的技巧<br>使用mc命令来编译jad的反编译的代码有可能失败。可以在本地修改代码，编译好后再上传到服务器上。有的服务器不允许直接上传文件，可以使用base64命令来绕过。</p>
+</li>
+<li><p>retransform的限制</p>
+<ol>
+<li>不允许新增加field&#x2F;method</li>
+<li>正在跑的函数，没有退出不能生效</li>
+</ol>
+</li>
+</ul>
 <h3 id="thread"><a href="#thread" class="headerlink" title="thread"></a><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/thread.html">thread</a></h3><p>使用thread命令可以查看线程的状态，显示的结果实际就是dashboard结果的第一栏。thread命令可以追加参数<br>id：可以查看指定线程id的堆栈信息<br>-n value：找出最忙的value个线程，并打印堆栈信息<br>-b：找出当前正在阻塞其他线程的线程<br>-i value：指定采样cpu占比的时间间隔，默认为100ms。</p>
 <h3 id="cls"><a href="#cls" class="headerlink" title="cls"></a>cls</h3><p>清空当前屏幕内容</p>
 <h3 id="退出arthas"><a href="#退出arthas" class="headerlink" title="退出arthas"></a>退出arthas</h3><p>quit或exit退出当前连接，完全退出使用stop(所有客户端连接都会退出)</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/quick-start.html">arthas官方文档</a></p>
 </blockquote>
-<h2 id="java程序cpu飙高如何排查"><a href="#java程序cpu飙高如何排查" class="headerlink" title="java程序cpu飙高如何排查"></a>java程序cpu飙高如何排查</h2><ul>
-<li>方式一</li>
-</ul>
-<ol>
+<h2 id="java程序cpu飙高如何排查"><a href="#java程序cpu飙高如何排查" class="headerlink" title="java程序cpu飙高如何排查"></a>java程序cpu飙高如何排查</h2><h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><ol>
 <li><p>执行<code>top</code>命令，查看CPU占用情况，找到进程的pid</p>
 </li>
 <li><p>使用<code>top -Hp &lt;pid&gt;</code>命令（pid为Java进程的id号）查看该Java进程内所有线程的资源占用情况,找出负载高的线程，记录tid(thread pid)</p>
@@ -640,10 +713,7 @@ logger <span class="token parameter variable">-c</span> 18b4aac2 <span class="to
 </blockquote>
 </li>
 </ol>
-<ul>
-<li>方式二</li>
-</ul>
-<ol>
+<h3 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h3><ol>
 <li><code>top</code>命令找到占用CPU高的Java进程PID</li>
 <li>根据进程ID找到占用CPU高的线程<code>ps -T -p pid -o tid,cmd | sort -r</code></li>
 <li>将指定的线程ID输出为16进制格式<code>printf “%x\n” tid</code></li>
@@ -900,8 +970,8 @@ logger <span class="token parameter variable">-c</span> 18b4aac2 <span class="to
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Arthas常用命令stack输出当前方法被调用的调用路径。很多时候我们都知道一个方法被执行，但是有很多地方调用了它，你并不知道是谁调用了它，此时你需要的是stack命令。
-stack com.baomidou.mybatisplus.ex
+                            常用命令stack输出当前方法被调用的调用路径。很多时候我们都知道一个方法被执行，但是有很多地方调用了它，你并不知道是谁调用了它，此时你需要的是stack命令。
+stack com.baomidou.mybatisplus.extensio
                         
                         
                     </div>

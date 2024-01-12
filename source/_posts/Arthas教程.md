@@ -6,7 +6,7 @@ img: https://pic1.zhimg.com/70/v2-25803fd579557b184ec9282d63167976_1440w.avis
 ---
 
 
-## Arthas常用命令
+## 常用命令
 
 ### [stack](https://arthas.aliyun.com/doc/stack.html)
 
@@ -158,6 +158,96 @@ redefine -c 18b4aac2 OrderController.class
 ```
 然后代码就更新成功了。
 
+> 注意：
+> redefine的class不能修改、添加、删除类的field和method，包括方法参数、方法名称及返回值
+> redefine后的原来的类不能恢复，redefine有可能失败（比如增加了新的field），参考jdk本身的文档
+> reset命令对redefine的类无效。如果想重置，需要redefine原始的字节码。
+> redefine命令和jad/watch/trace/monitor/tt等命令会冲突。执行完redefine之后，如果再执行上面提到的命令，则会把redefine的字节码重置。原因是jdk本身redefine和Retransform是不同的机制，同时使用两种机制来更新字节码，只有最后修改的会生效。
+> 正在跑的函数，没有退出不能生效
+> 推荐使用`retransform`命令
+
+
+
+### [retransform](https://arthas.aliyun.com/doc/retransform.html)
+
+加载外部的.class文件，retransform jvm已加载的类。使用参考如下：
+
+```sh
+retransform /tmp/Test.class
+retransform -l # 查看retransform entry
+retransform -d 1                    # delete retransform entry
+retransform --deleteAll             # delete all retransform entries
+retransform --classPattern demo.*   # triger retransform classes
+retransform -c 327a647b /tmp/Test.class /tmp/Test\$Inner.class
+retransform --classLoaderClass 'sun.misc.Launcher$AppClassLoader' /tmp/Test.class
+```
+
+- retransform指定的.class文件
+
+```sh
+$ retransform /tmp/MathGame.class
+retransform success, size: 1, classes:
+demo.MathGame
+```
+加载指定的.class文件，然后解析出class name，再retransform jvm中已加载的对应的类。每加载一个.class文件，则会记录一个retransform entry.如果多次执行retransform加载同一个class文件，则会有多条retransform entry.
+
+- 查看retransform entry
+
+```shell
+$ retransform -l
+Id              ClassName       TransformCount  LoaderHash      LoaderClassName
+1               demo.MathGame   1               null            null
+```
+ransformCount统计在ClassFileTransformer#transform函数里尝试返回entry对应的.class文件的次数，但并不表明transform一定成功
+
+- 删除指定retransform entry需要指定id：
+
+```sh
+retransform -d 1
+```
+
+- 删除所有retransform entry
+
+```sh
+retransform --deleteAll
+```
+
+- 显式触发retransform
+
+```sh
+$ retransform --classPattern demo.MathGame
+retransform success, size: 1, classes:
+demo.MathGame
+```
+
+> 注意：对于同一个类，当存在多个retransform entry时，如果显式触发retransform，则最后添加的entry生效(id最大的)。
+
+- 消除retransform的影响
+  如果对某个类执行retransform之后，想消除影响，则需要：
+  1. 删除这个类对应的retransform entry
+  2. 重新触发retransform
+
+  > 提示
+  > 如果不清除掉所有的retransform entry，并重新触发retransform，则arthas stop时，retransform过的类仍然生效。
+
+- 结合jad/mc命令使用
+
+```sh
+# jad命令反编译，然后可以用其它编译器，比如vim来修改源码
+jad --source-only com.example.demo.arthas.user.UserController > /tmp/UserController.java
+# mc命令来内存编译修改过的代码
+mc /tmp/UserController.java -d /tmp
+# 用retransform命令加载新的字节码
+retransform /tmp/com/example/demo/arthas/user/UserController.class
+```
+
+- 上传.class文件到服务器的技巧
+  使用mc命令来编译jad的反编译的代码有可能失败。可以在本地修改代码，编译好后再上传到服务器上。有的服务器不允许直接上传文件，可以使用base64命令来绕过。
+
+- retransform的限制
+  1. 不允许新增加field/method
+  2. 正在跑的函数，没有退出不能生效
+
 ### [thread](https://arthas.aliyun.com/doc/thread.html)
 
 使用thread命令可以查看线程的状态，显示的结果实际就是dashboard结果的第一栏。thread命令可以追加参数
@@ -177,7 +267,7 @@ quit或exit退出当前连接，完全退出使用stop(所有客户端连接都�
 
 ## java程序cpu飙高如何排查
 
-- 方式一
+### 方式一
 
 1. 执行`top`命令，查看CPU占用情况，找到进程的pid
 2. 使用`top -Hp <pid>`命令（pid为Java进程的id号）查看该Java进程内所有线程的资源占用情况,找出负载高的线程，记录tid(thread pid)
@@ -189,7 +279,7 @@ quit或exit退出当前连接，完全退出使用stop(所有客户端连接都�
 5. `cat jstack_result.log | grep -A 200 'nid=0x6a'`根据线程号定位具体代码
     > -A 200: 这个选项表示“after”，意思是显示匹配行后的200行
 
-- 方式二
+### 方式二
 
 1. `top`命令找到占用CPU高的Java进程PID
 2. 根据进程ID找到占用CPU高的线程`ps -T -p pid -o tid,cmd | sort -r`

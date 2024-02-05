@@ -733,7 +733,7 @@ docker image prune -a --filter "until=24h"
 
 ### 其他
 
-#### docker查看镜像版本为latest的具体版本号
+#### 查看镜像版本为latest的具体版本号
 ```bash
 docker image inspect nginx:latest|grep -i version
 ```
@@ -746,7 +746,10 @@ ls -lh $(find /var/lib/docker/containers/ -name '*-json.log')
 ```shell
  rm -rf /var/lib/docker/containers/*/*.log
 ```
-#### 查看docker日志存储路径(一般在/var/lib/docker/containers/container_id/\*-json.log)
+#### 查看docker日志存储路径
+
+> 一般在/var/lib/docker/containers/container_id/\*-json.log
+
 ```shell
 docker inspect -f '{{.LogPath}}' <container_id_or_name>
 ```
@@ -1032,6 +1035,7 @@ COPY <src>... <dest>
 ```dockerfile
 FROM anapsix/alpine-java:8_server-jre_unlimited
 VOLUME /tmp
+ENV TZ=Asia/Shanghai
 EXPOSE 19990
 ADD applet-provider.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
@@ -1057,8 +1061,7 @@ docker rmi $mid
 docker build -f /composetest/pc/Dockerfile -t mdjz /composetest/pc/
 #运行容器
 echo "run app docker run -itd --name mdjz --restart always  -p  19901:19901 "
-docker run -itd --name mdjz --network=my-net --restart always  -p  19901:19901 mdjz
-
+docker run -itd --name mdjz --network=my-net --restart always -p 19901:19901 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro mdjz
 ```
 
 ## 使用docker安装主流软件

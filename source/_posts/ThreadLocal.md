@@ -10,7 +10,8 @@ img: https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg
 
 ### ThreadLocal有什么用？
 
-通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。如果想实现每一个线程都有自己的专属本地变量该如何解决呢？JDK中自带的ThreadLocal类正是为了解决这样的问题。ThreadLocal类主要解决的就是让每个线程绑定自己的值，可以将ThreadLocal类形象的比喻成存放数据的盒子，盒子中可以存储每个线程的私有数据。如果你创建了一个ThreadLocal变量，那么访问这个变量的每个线程都会有这个变量的本地副本，这也是ThreadLocal变量名的由来。他们可以使用get()和set()方法来获取默认值或将其值更改为当前线程所存的副本的值，从而避免了线程安全问题。再举个简单的例子：两个人去宝屋收集宝物，这两个共用一个袋子的话肯定会产生争执，但是给他们两个人每个人分配一个袋子的话就不会出现这样的问题。如果把这两个人比作线程的话，那么ThreadLocal就是用来避免这两个线程竞争的。**ThreadLocal使用场景**:当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。
+通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。如果想实现每一个线程都有自己的专属本地变量该如何解决呢？JDK中自带的ThreadLocal类正是为了解决这样的问题。ThreadLocal类主要解决的就是让每个线程绑定自己的值，可以将ThreadLocal类形象的比喻成存放数据的盒子，盒子中可以存储每个线程的私有数据。如果你创建了一个ThreadLocal变量，那么访问这个变量的每个线程都会有这个变量的本地副本，这也是ThreadLocal变量名的由来。他们可以使用get()和set()方法来获取默认值或将其值更改为当前线程所存的副本的值，从而避免了线程安全问题。
+**总结ThreadLocal使用场景: 当需要存储线程私有变量的时候、当需要实现线程安全的变量时、当需要减少线程资源竞争的时候。**
 
 ### 如何使用ThreadLocal？
 
@@ -45,7 +46,6 @@ public class ThreadLocalExample implements Runnable{
 
         System.out.println("Thread Name= "+Thread.currentThread().getName()+" formatter = "+formatter.get().toPattern());
     }
-
 }
 ```
 
@@ -260,7 +260,7 @@ public class ThreadLocalDemo {
 new ThreadLocal<>().set(s);
 ```
 
-所以这里在GC之后，key就会被回收，我们看到上面debug中的referent=null。这个问题刚开始看，如果没有过多思考，弱引用，还有垃圾回收，那么肯定会觉得是null。其实是不对的，因为题目说的是在做ThreadLocal.get()操作，证明其实还是有强引用存在的，所以key并不为null。如果我们的强引用不存在的话，那么key就会被回收，也就是会出现我们value没被回收，key被回收，导致value永远存在，出现内存泄漏。
+所以这里在GC之后，key就会被回收，我们看到上面debug中的referent=null。这个问题刚开始看，如果没有过多思考，弱引用，还有垃圾回收，那么肯定会觉得是null。其实是不对的，因为题目说的是在做ThreadLocal.get()操作，证明其实还是有强引用存在的，所以key并不为null。**如果我们的强引用不存在的话，那么key就会被回收，也就是会出现我们value没被回收，key被回收，导致value永远存在，出现内存泄漏**。
 
 #### ThreadLocal.set()方法源码详解
 
@@ -854,7 +854,7 @@ public class MyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
 ### ThreadLocal内存泄露问题是怎么导致的？
 
-ThreadLocalMap中使用的key为ThreadLocal的弱引用，而value是强引用。所以，如果ThreadLocal没有被外部强引用的情况下，在垃圾回收的时候，key会被清理掉，而value不会被清理掉。这样一来，ThreadLocalMap中就会出现key为null的Entry。假如我们不做任何措施的话，value永远无法被GC回收，这个时候就可能会产生内存泄露。ThreadLocalMap实现中已经考虑了这种情况，在调用set()、get()、remove()方法的时候，会清理掉key为null的记录。使用完ThreadLocal方法后最好手动调用remove()方法.
+ThreadLocalMap中使用的key为ThreadLocal的弱引用，而value是强引用。所以，**如果ThreadLocal没有被外部强引用的情况下**，在垃圾回收的时候，key会被清理掉，而value不会被清理掉。这样一来，ThreadLocalMap中就会出现key为null的Entry。假如我们不做任何措施的话，value永远无法被GC回收，这个时候就可能会产生内存泄露。ThreadLocalMap实现中已经考虑了这种情况，在调用set()、get()、remove()方法的时候，会清理掉key为null的记录。使用完ThreadLocal方法后最好手动调用remove()方法.
 
 ```java
 static class Entry extends WeakReference<ThreadLocal<?>> {

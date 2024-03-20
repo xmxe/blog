@@ -348,12 +348,72 @@ service network restart
 
 ### 源码安装配置(configure)、编译(make)、安装(make install)
 
+- **./configure**
+
+`./configure`是一个脚本文件，通常用于Unix-like系统上的源代码安装。它的主要作用是根据系统的特性和用户提供的选项来配置软件的构建环境，并生成Makefile文件。`./configure`脚本会检测系统的各种参数，如操作系统类型、编译器版本、库文件的位置等，并确定这些参数是否满足软件的构建要求。同时，它还会检查软件所需的依赖项是否已安装，并确定是否需要额外的配置选项。一旦`./configure`脚本执行完成，它会生成一个适合当前系统的Makefile文件。这个Makefile文件将用于后续的make命令，指导如何编译和安装软件。
+
+`./configure`是一个在源代码安装过程中常见的脚本命令，主要用于准备软件的构建环境。它的主要作用包括：
+
+- 检测环境：`./configure`会检测你的安装平台的目标特征，包括操作系统的类型、版本，以及系统中已安装的库和工具链等。
+- 检查依赖：该脚本会检查即将安装的软件所需要的依赖是否已满足。例如，对于使用C语言编写的Unix程序，`./configure`会确保系统中有C编译器，并确定其名称和路径。
+- 生成Makefile：根据给定的参数和系统环境，`./configure`会生成一个Makefile文件。这个Makefile文件定义了软件构建和安装过程中需要执行的一系列任务。
+
+需要注意的是，`./configure`只是源代码安装的第一步。一旦配置完成并生成了Makefile，你可以使用`make`命令来执行实际的构建过程，将源代码编译成可执行文件。随后，使用`make install`命令将编译好的文件安装到指定的目录。
+
+此外，`./configure`脚本通常支持各种选项，通过`./configure --help`命令可以查看详细的选项列表。其中一个常见的选项是`--prefix`，它用于配置安装目录。如果不配置该选项，安装后的文件可能会分散到系统的默认目录中。通过指定`--prefix`选项，你可以将所有资源文件集中放置在一个目录下，便于管理和维护。
+
+最后，如果在`./configure`过程中报错，可以尝试删除生成的config.cache相关文件，然后重新运行`./configure`。如果问题依旧存在，可能需要检查系统环境或依赖是否完全满足软件安装的要求。
+
+- **make**
+
+make是一个自动化构建工具，它根据Makefile文件中定义的规则来编译和链接源代码，生成可执行文件或库文件。Makefile文件中包含了构建项目所需的各种指令和依赖关系，`make`会根据这些指令自动执行相应的编译和链接操作。使用`make`的主要好处在于自动化和效率。它可以根据源代码文件的修改情况，只重新编译那些自上次编译以来已经更改过的文件，避免了不必要的重复编译。此外，`make`还支持并行编译，可以显著提高编译速度。
+
+在`make`命令的上下文中，prefix通常是一个变量，用于指定软件安装的目标目录。当执行`make install`时，这个prefix变量决定了可执行文件、库文件、头文件等应该被安装到哪个目录下。默认情况下，prefix通常被设置为/usr/local，这意味着如果不指定其他值，软件将被安装到/usr/local目录下。但是，开发者或用户经常需要改变这个默认的安装位置，尤其是在多用户系统或特定的软件部署环境中。你可以在命令行中通过以下方式设置prefix变量的值：
+
+```bash
+make prefix=/path/to/install install
+```
+
+或者，在Makefile中直接设置这个变量的值：
+
+```makefile
+prefix=/path/to/install
+```
+
+然后，当执行`make install`时，Makefile中的安装规则会使用这个prefix变量的值来确定安装路径。例如，如果prefix被设置为/opt/myapp，那么可执行文件可能会被安装到/opt/myapp/bin，库文件到/opt/myapp/lib，头文件到/opt/myapp/include等。这样的设计使得`make`和`make install`命令更加灵活，可以根据不同的需求和环境来定制软件的安装位置。
+
+**make和make install区别**
+
+`make`和`make install`在Linux系统中是构建和安装软件的两个重要步骤，它们的主要区别如下：
+
+- 功能与作用：
+make：主要用于编译源代码。它根据Makefile文件中的指令，自动确定大型程序中哪一部分需要重新编译，并调用相应的命令进行编译。通过自动化这一过程，可以大大提高项目开发的效率。
+make install：主要用于安装软件。当源代码经过make命令编译后，生成的可执行文件或库文件需要进行安装，以便系统或用户能够正常使用。make install命令会读取Makefile中定义的安装指令，将编译好的文件安装到指定的目录。
+
+- 执行时机：
+make：通常在源代码下载并解压后，配置好编译环境（如通过./configure脚本）后执行，用于生成可执行文件或库文件。
+make install：在make命令成功执行，生成了所需的文件后执行，用于将这些文件安装到系统中。
+
+- 所需权限：
+make：通常不需要特殊权限，除非编译过程中需要访问系统级别的资源或文件。
+make install：由于需要将文件安装到系统目录中，因此通常需要root权限（或使用sudo命令）来执行。
+
+- 依赖文件：
+这两个命令都依赖于Makefile文件，该文件描述了编译和安装的规则和步骤。
+
+总结来说，make和make install是软件构建和安装过程中的两个关键步骤。make负责编译源代码，而make install则负责将编译好的文件安装到系统中。在开发或安装软件时，通常需要按照这两个步骤来操作。
+
+
+**使用./configure --prefix后还需要make prefix指定吗**
+
+在使用`./configure --prefix`来指定安装目录后，通常不需要在后续的make命令中再次指定prefix。`./configure --prefix`的作用是在配置软件安装环境时设定一个基础目录，该目录将用于后续的`make install`过程中，决定可执行文件、库文件、配置文件等应被安装到哪个具体的子目录中。一旦`./configure`脚本运行并生成了Makefile，这个prefix的值就已经被Makefile所记录。接下来的make命令会根据Makefile中的指示进行编译，但并不需要（也不应该）再次指定prefix。make会按照Makefile中已经设置好的规则和路径进行工作。最后，当执行make install时，它会依据Makefile中记录的prefix值，将编译好的文件安装到先前通过`./configure --prefix`指定的目录中。因此，简而言之，你不需要在make命令中再次指定prefix，只需要在./configure时设定好即可。
+
 ```shell
 ./configure --prefix=/usr/local/test
 # 编译出错时，清除编译生成的文件
 make distclean
 # 编译安装到指定目录下
-make PREFIX=/usr/local/redis install
+make prefix=/usr/local/redis install
 # 卸载
 make uninstall
 ```

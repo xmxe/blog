@@ -715,6 +715,7 @@ foo<span class="token punctuation">.</span><span class="token function">f</span>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8uGOt1OJloZMHQl43vrbyQ">终于搞懂了Java 8的内存结构，再也不纠结方法区和常量池了！！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1rxmi3lg02I7nHwWbldvLA">个人笔记，深入理解JVM，很全！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RySwVg9SYvSM-ONdB9cOVw">JVM内存布局详解，图文并茂，写得太好了！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mY6Il7S104jun54tEE_WJw">虚拟机的内存结构有哪些</a></li>
 </ul>
 <h2 id="JVM垃圾回收"><a href="#JVM垃圾回收" class="headerlink" title="JVM垃圾回收"></a>JVM垃圾回收</h2><blockquote>
 <p>常见面试题：</p>
@@ -981,6 +982,7 @@ Java HotSpot<span class="token punctuation">(</span>TM<span class="token punctua
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/U8uzm3YjdqoYCtLPPosSrg">一口气问了我18个JVM问题</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nF489_nmrFAWcw1IfFF9lg">一文了解Java 8-18，垃圾回收的十次进化</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LfGrLo0fVrR85qOXAZxnvw">CMS和G1改用三色标记法，可达性分析到底做错了什么</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sCavGQHQ0cRVy5EX5BkHAg">简单聊聊JVM中的几种垃圾收集算法</a></li>
 </ul>
 <h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><p>根据刚刚涉及的jvm的知识点，我们可以尝试对JVM进行调优，主要就是堆内存那块。</p>
 <p>所有线程共享数据区大小&#x3D;新生代大小+年老代大小+持久代大小。持久代一般固定大小为64m。所以java堆中增大年轻代后，将会减小年老代大小（因为老年代的清理是使用fullgc，所以老年代过小的话反而是会增多fullgc的）。此值对系统性能影响较大，Sun官方推荐配置为java堆的3&#x2F;8。</p>
@@ -1330,6 +1332,7 @@ Found 1 deadlock<span class="token punctuation">.</span><span aria-hidden="true"
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rLhkbpe0Uo3Nsy8Xs68Z7A">有了这款可视化工具，Java应用性能调优so easy！(JVisualVM简介)</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5l6q1-jcfZNegpUsriaj5g">死锁的4种排查工具！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/phD24wUysUDQkx5pAjp5tg">6款Java8自带工具，轻松分析定位JVM问题！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/R0Bu7o518KUnmgYJRdtDgg">一文搞定JVM相关的命令汇总</a></li>
 </ul>
 <h2 id="JVM参数"><a href="#JVM参数" class="headerlink" title="JVM参数"></a>JVM参数</h2><h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><pre class="line-numbers language-none"><code class="language-none">-Xms:初始堆大小,默认值:物理内存的1&#x2F;64(&lt;1GB)
 默认(MinHeapFreeRatio参数可以调整)空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制.
@@ -1551,6 +1554,7 @@ JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/A4BbKDmy8oe3uBfHfrgGQA">【秒懂！】JVM虚拟机图文详解！一点都不难！</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s2nnXDY7phqKX07nwZiHyA">从JMM透析volatile与synchronized原理</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/guITssdS4aYXzDJD3xl4HA">JVM锁优化和逃逸分析详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DVkfC48P8he0Z6PqIo_Chw">浅谈JVM运行期的几种优化手段</a></li>
 </ul>
 <h3 id="内存溢出分析"><a href="#内存溢出分析" class="headerlink" title="内存溢出分析"></a>内存溢出分析</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OtSoZWIl4XuIzqTayfORHw">Java内存泄漏了，怎么排查？</a></li>
@@ -1897,12 +1901,12 @@ git
                         </span>
                         <span class="publish-author">
                             
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/blog/tags/%E9%9A%8F%E7%AC%94/">
-                                    <span class="chip bg-color">随笔</span>
-                                </a>
+                                    <a href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                        技术栈
+                                    </a>
                                 
-                            
                             
                         </span>
                     </div>

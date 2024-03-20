@@ -908,3 +908,4 @@ System.out.println(hw.getMsg());
 - [Bean异步初始化，让你的应用启动飞起来](https://mp.weixin.qq.com/s/aZCgJS3Uaj28UiKTtUFcmw)
 - [Spring中的父子容器是咋回事？](https://mp.weixin.qq.com/s/06Mmgnhhu98lQtQ8X13QBA)
 - [Spring容器原始Bean是如何创建的？](https://mp.weixin.qq.com/s/jB9Vzt-uAj6njg2ADVFmyw)
+- [Spring Bean实例化过程](https://mp.weixin.qq.com/s/TIeAVipENXik8yGzFfKeeA)

@@ -1,8 +1,7 @@
 ---
 title: 分布式ID
 img: https://pic1.zhimg.com/v2-a813d6ce08aea23e86f1f269a1760810_1440w.jpg
-categories: Java
-
+tags: 代码实战
 ---
 
 

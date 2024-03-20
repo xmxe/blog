@@ -1126,6 +1126,7 @@ cat time_temp.log|awk '($NF > 2){print $7}'|sort -n|uniq -c|sort -nr|head -5
 - [nginx配置参数](https://blog.51cto.com/ting2junshui/2066268)
 - [Nginx轻松搞定跨域问题！](https://mp.weixin.qq.com/s/clSjaLJSht5J8woIaiH4gA)
 - [如何使用Nginx优雅地限流？](https://mp.weixin.qq.com/s/YXJ1jcr7XLKTbzf9kyjiEg)
+- [一文学会Nginx的限流配置](https://mp.weixin.qq.com/s/s4j043__MiXst8wHpEPUoA)
 - [Nginx如何限流？](https://mp.weixin.qq.com/s/R6GajrvNphXfgKWDsFWzFw)
 - [nginxconfig.io](https://nginxconfig.io)
 - [为什么Nginx比Apache更牛叉？](https://mp.weixin.qq.com/s/pPV5s3uO1sjPTAhz_BDcJg)

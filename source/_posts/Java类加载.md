@@ -355,6 +355,8 @@ Java在new一个对象的时候，会先查看对象所属的类有没有被加�
 - [IDEA的debug调试为什么这么强？我挖出了背后的技术。](https://mp.weixin.qq.com/s/JIt5WCBtdHHORjeOmX5KaA)
 - [Class类文件的结构](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494349&amp;idx=1&amp;sn=3a297393ea4a38af4fd277f4fc83c284&amp;source=41#wechat_redirect)
 - [一把小刀，直插class文件的小心脏](https://mp.weixin.qq.com/s/mNDWN2P1mOBL8C5qLtXG8A)
+- [面试官：说说类加载的几个阶段](https://mp.weixin.qq.com/s/hV65V_fDoaBMA7xqcwy2TA)
+- [3分钟带你了解对象的创建过程](https://mp.weixin.qq.com/s/Xxp6rcnrEuJvQNfjiFe46Q)
 
 ### 类卸载
 

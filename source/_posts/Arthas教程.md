@@ -1,6 +1,6 @@
 ---
 title: Arthas教程
-categories: Java
+categories: 技术栈
 img: https://pic1.zhimg.com/70/v2-25803fd579557b184ec9282d63167976_1440w.avis
 
 ---

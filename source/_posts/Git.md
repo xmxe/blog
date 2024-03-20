@@ -1,6 +1,6 @@
 ---
 title: Git
-tags: 随笔
+categories: 技术栈
 index_img: /assert/git.jpg
 img: https://pica.zhimg.com/v2-6baae9baaef9c2a3188f9fc301833fba_1440w.jpg
 

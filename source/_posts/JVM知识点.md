@@ -296,6 +296,7 @@ foo.f();
 - [终于搞懂了Java 8的内存结构，再也不纠结方法区和常量池了！！](https://mp.weixin.qq.com/s/8uGOt1OJloZMHQl43vrbyQ)
 - [个人笔记，深入理解JVM，很全！](https://mp.weixin.qq.com/s/1rxmi3lg02I7nHwWbldvLA)
 - [JVM内存布局详解，图文并茂，写得太好了！](https://mp.weixin.qq.com/s/RySwVg9SYvSM-ONdB9cOVw)
+- [虚拟机的内存结构有哪些](https://mp.weixin.qq.com/s/mY6Il7S104jun54tEE_WJw)
 
 ## JVM垃圾回收
 
@@ -705,6 +706,7 @@ G1收集器在后台维护了一个优先列表，每次根据允许的收集时
 - [一口气问了我18个JVM问题](https://mp.weixin.qq.com/s/U8uzm3YjdqoYCtLPPosSrg)
 - [一文了解Java 8-18，垃圾回收的十次进化](https://mp.weixin.qq.com/s/nF489_nmrFAWcw1IfFF9lg)
 - [CMS和G1改用三色标记法，可达性分析到底做错了什么](https://mp.weixin.qq.com/s/LfGrLo0fVrR85qOXAZxnvw)
+- [简单聊聊JVM中的几种垃圾收集算法](https://mp.weixin.qq.com/s/sCavGQHQ0cRVy5EX5BkHAg)
 
 ## JVM调优
 
@@ -1266,6 +1268,7 @@ VisualVM基于NetBeans平台开发，因此他一开始就具备了插件扩展�
 - [有了这款可视化工具，Java应用性能调优so easy！(JVisualVM简介)](https://mp.weixin.qq.com/s/rLhkbpe0Uo3Nsy8Xs68Z7A)
 - [死锁的4种排查工具！](https://mp.weixin.qq.com/s/5l6q1-jcfZNegpUsriaj5g)
 - [6款Java8自带工具，轻松分析定位JVM问题！](https://mp.weixin.qq.com/s/phD24wUysUDQkx5pAjp5tg)
+- [一文搞定JVM相关的命令汇总](https://mp.weixin.qq.com/s/R0Bu7o518KUnmgYJRdtDgg)
 
 
 ## JVM参数
@@ -1557,6 +1560,7 @@ JVM具有四种类型的GC实现：
 - [【秒懂！】JVM虚拟机图文详解！一点都不难！](https://mp.weixin.qq.com/s/A4BbKDmy8oe3uBfHfrgGQA)
 - [从JMM透析volatile与synchronized原理](https://mp.weixin.qq.com/s/s2nnXDY7phqKX07nwZiHyA)
 - [JVM锁优化和逃逸分析详解](https://mp.weixin.qq.com/s/guITssdS4aYXzDJD3xl4HA)
+- [浅谈JVM运行期的几种优化手段](https://mp.weixin.qq.com/s/DVkfC48P8he0Z6PqIo_Chw)
 
 
 ### 内存溢出分析

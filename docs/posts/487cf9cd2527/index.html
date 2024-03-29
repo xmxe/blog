@@ -528,10 +528,34 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="mac开启允许安装任何来源"><a href="#mac开启允许安装任何来源" class="headerlink" title="mac开启允许安装任何来源"></a>mac开启允许安装任何来源</h2><ul>
-<li>打开命令: <code>sudo spctl --master-disable</code></li>
-<li>关闭命令: <code>sudo spctl --master-enable</code></li>
+                <h2 id="mac安装软件"><a href="#mac安装软件" class="headerlink" title="mac安装软件"></a>mac安装软件</h2><ul>
+<li><p>打开任何来源命令: <code>sudo spctl --master-disable</code></p>
+<blockquote>
+<p>关闭任何来源命令: <code>sudo spctl --master-enable</code></p>
+</blockquote>
+</li>
+<li><p>移除应用的安全隔离属性: <code>sudo xattr -rd com.apple.quarantine /Applications/*.app</code></p>
+<blockquote>
+<p>命令用于递归删除指定目录中的全部文件的“quarantine”扩展属性。在macOS系统中，当你从网络或其他未知来源下载并打开文件时，系统会将该文件标记为“quarantine”，以防止其潜在的安全风险。然而有时候，这种标记可能会对某些文件操作造成限制，例如某些脚本文件不能被执行。因此，当使用<code>xattr -r -d com.apple.quarantine</code>命令时，系统会删除指定目录中所有文件的“quarantine”扩展属性，以便您可以自由地使用这些文件。该命令的具体含义如下：</p>
+<ul>
+<li>xattr：用于查看、设置和删除扩展属性的命令。</li>
+<li>-r：表示以递归方式处理目录及其子目录中的文件。</li>
+<li>-d：表示删除指定文件的扩展属性。com.apple.quarantine：是指要删除的扩展属性的名称，即“quarantine”。</li>
 </ul>
+</blockquote>
+</li>
+<li><p>关闭SIP</p>
+</li>
+</ul>
+<ol>
+<li>关机，然后重新启动你的Mac电脑，在开机时一直按住<code>Command+R</code>迸入Recovery模式（m1改为长按电源键，点击选项，选择一个用户进去）</li>
+<li>进入Recovery模式后在顶部菜单栏点击:实用工具-&gt;终端</li>
+<li>在终端上输入以下命令然后回车：<code>csrutil disable</code><blockquote>
+<p>打开SIP:<code>csrutil enable</code>，查看SIP:<code>csrutil status</code>。或系统信息-软件-系统完整性保护</p>
+</blockquote>
+</li>
+<li>点击左上角苹果图标，点击重新启动</li>
+</ol>
 <h2 id="mac显示隐藏文件"><a href="#mac显示隐藏文件" class="headerlink" title="mac显示隐藏文件"></a>mac显示隐藏文件</h2><p>快捷键<code>command+shift+.</code>。或者在终端输入</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Mac显示“隐藏文件”命令</span>
 defaults <span class="token function">write</span> com.apple.finder AppleShowAllFiles <span class="token parameter variable">-bool</span> <span class="token boolean">true</span>
@@ -556,7 +580,7 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 
 <h2 id="源码构建git"><a href="#源码构建git" class="headerlink" title="源码构建git"></a>源码构建git</h2><p>准备git依赖库autotools、curl、zlib、openssl、expat和libiconv</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">起步-安装-Gi</a><br>如果报错缺少环境可以使用<code>brew install autoconf</code>安装</p>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">1.起步-安装-Git</a> <a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">2.download&#x2F;mac</a><br>如果报错缺少环境可以使用<code>brew install autoconf</code>安装</p>
 </blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxf</span> git-2.8.0.tar.gz
 <span class="token builtin class-name">cd</span> git-2.8.0
@@ -567,8 +591,7 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 
 <h2 id="clean-my-mac-x"><a href="#clean-my-mac-x" class="headerlink" title="clean my mac x"></a>clean my mac x</h2><p>清理垃圾时一直让输密码解决方案: <code>sudo launchctl load -w /Library/LaunchDaemons/com.macpaw.CleanMyMac.Agent.plist</code></p>
 <h2 id="更换app图标"><a href="#更换app图标" class="headerlink" title="更换app图标"></a>更换app图标</h2><p>在<a target="_blank" rel="noopener" href="https://macosicons.com/">这里</a>选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可</p>
-<h2 id="允许远程登陆"><a href="#允许远程登陆" class="headerlink" title="允许远程登陆"></a>允许远程登陆</h2><p>通用-共享-打开远程登录，</p>
-<p>授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd</p>
+<h2 id="允许远程登陆"><a href="#允许远程登陆" class="headerlink" title="允许远程登陆"></a>允许远程登陆</h2><p>通用-共享-打开远程登录,授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd</p>
 <h2 id="command-line-tools"><a href="#command-line-tools" class="headerlink" title="command line tools"></a>command line tools</h2><p>访问<a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">这里</a>下载</p>
 <h2 id="盘里多了-fseventsd，-Spotlight-V100，-Trashes三个文件夹"><a href="#盘里多了-fseventsd，-Spotlight-V100，-Trashes三个文件夹" class="headerlink" title="盘里多了.fseventsd，.Spotlight-V100，.Trashes三个文件夹"></a>盘里多了.fseventsd，.Spotlight-V100，.Trashes三个文件夹</h2><p>这三个文件夹（.fseventsd，.Spotlight-V100，.Trashes）是Mac OS X系统生成的隐藏文件，用于存储系统的临时数据和缓存。通常，它们不应该被手动删除，因为它们对系统的正常运行非常重要。但是，如果你确实需要删除它们，可以尝试使用命令行或者第三方软件来进行操作。</p>
 <ol>
@@ -579,6 +602,11 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 <li><p>.Trashes文件夹：这个文件夹用于存储每个用户在废纸篓中删除的文件。每个用户都有自己的.Trashes子文件夹，这些子文件夹被链接到用户的废纸篓。手动删除这个文件夹可能会导致你无法正常使用废纸篓，或者丢失已删除的文件。</p>
 </li>
 </ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://google.cn/chrome?standalone=1&platform=mac">离线chrome</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/qianguyihao/Mac-list">Mac-list</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jaywcjlove/awesome-mac">awesome-mac</a></li>
+</ul>
 
                 
             </div>
@@ -834,12 +862,13 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            mac开启允许安装任何来源
-打开命令: sudo spctl --master-disable
-关闭命令: sudo spctl --master-enable
+                            mac安装软件
+打开任何来源命令: sudo spctl --master-disable
 
-mac显示隐藏文件快捷键command+shift+.。或者在终端输入
-# 
+关闭任何来源命令: sudo spctl --master-enable
+
+
+移除应用的安全隔离属性: sudo xattr -rd com.ap
                         
                         
                     </div>

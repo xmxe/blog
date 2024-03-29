@@ -902,12 +902,13 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                mac开启允许安装任何来源
-打开命令: sudo spctl --master-disable
-关闭命令: sudo spctl --master-enable
+                                mac安装软件
+打开任何来源命令: sudo spctl --master-disable
 
-mac显示隐藏文件快捷键command+shift+.。或者在终端输入
-# 
+关闭任何来源命令: sudo spctl --master-enable
+
+
+移除应用的安全隔离属性: sudo xattr -rd com.ap
                             
                         </div>
                         <div class="publish-info">

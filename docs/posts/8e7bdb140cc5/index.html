@@ -644,7 +644,7 @@ mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>(3) IDEA图标Skip Tests。点击选中，再用LifeCycle中的打包就会跳过测试<br>(4) 打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在VM option中添加-Dmaven.test.skip&#x3D;true或者-DskipTests&#x3D;true，就能在打包时跳过测试。<br>(5) 打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在Properties中勾选Skip Test选项。</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JD2wfLGXdujoc9DOJEZFpA">说一个大家都知道的Spring Boot小细节</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vq6Id8g0IBRVM3xdPRYFbA">如何利用Maven将代码打包成第三方公共jar包？</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JD2wfLGXdujoc9DOJEZFpA">说一个大家都知道的Spring Boot小细节</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vq6Id8g0IBRVM3xdPRYFbA">如何利用Maven将代码打包成第三方公共jar包？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ctjJBNHiflsTr5O4SffvHQ">Maven中的classifier属性用过没？</a></p>
 </blockquote>
 <h4 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h4><ul>
 <li><p>implementation，默认的scope,取代compile（已弃用）。implementation的作用域会让依赖在编译和运行时均包含在内，但是不会暴露在类库使用者的编译时。举例，如果我们的类库包含了gson，那么其他人使用我们的类库时，编译时不会出现gson的依赖。</p>
@@ -1627,6 +1627,7 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/03lD4P0rE909Kkvm_7vLNg">聊聊数据库建表的15个小技巧</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FPdl_-jqgeIXSGOh-MQNFQ">百亿级数据分库分表后怎么分页查询？</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PhGDmIumM0nmp8CA6nuzfQ">加密的手机号，如何模糊查询？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/C1tokV2zikn69KmaJtgU5Q">为什么SQL查询以%开头索引就失效了呢</a></li>
 </ul>
 <h2 id="怎么保证幂等性"><a href="#怎么保证幂等性" class="headerlink" title="怎么保证幂等性"></a>怎么保证幂等性</h2><h3 id="幂等性的几种方案"><a href="#幂等性的几种方案" class="headerlink" title="幂等性的几种方案"></a>幂等性的几种方案</h3><ul>
 <li><p>唯一索引，防止新增脏数据</p>

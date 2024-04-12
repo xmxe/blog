@@ -528,7 +528,54 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="mac安装软件"><a href="#mac安装软件" class="headerlink" title="mac安装软件"></a>mac安装软件</h2><ul>
+                <h2 id="mac软件推荐"><a href="#mac软件推荐" class="headerlink" title="mac软件推荐"></a>mac软件推荐</h2><h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a><a target="_blank" rel="noopener" href="https://typora.io/">Typora</a></h3><p>找到<code>/Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/js/LicenseIndex.180dd4c7.5dc16d09.chunk.js</code>这一行代码<code>e.hasActivated = &quot;true&quot; == e.hasActivated</code>改为<code>e.hasActivated = &quot;true&quot; == &quot;true&quot;</code>保存即可。</p>
+<h3 id="Navicat"><a href="#Navicat" class="headerlink" title="Navicat"></a><a target="_blank" rel="noopener" href="https://www.navicat.com.cn/download/navicat-premium">Navicat</a></h3><p>脚本重置试用日期，项目地址<a target="_blank" rel="noopener" href="https://gitee.com/ProgHub/unlimited_trial_navicat_premium">点这里</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+defaults delete com.navicat.NavicatPremium 91F6C435D172C8163E0689D3DAD3F3E9
+defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> ~/Library/Application<span class="token punctuation">\</span> Support/PremiumSoft<span class="token punctuation">\</span> CyberTech/Navicat<span class="token punctuation">\</span> CC/Navicat<span class="token punctuation">\</span> Premium/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a><a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">Git</a></h3><p>准备Git依赖库autotools、curl、zlib、openssl、expat和libiconv</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">起步-安装-Git</a><br>如果报错缺少环境可以使用<code>brew install autoconf</code>安装</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxf</span> git-2.8.0.tar.gz
+<span class="token builtin class-name">cd</span> git-2.8.0
+<span class="token function">make</span> configure
+./configure <span class="token parameter variable">--prefix</span><span class="token operator">=</span>/Users/ventura/Downloads/git
+<span class="token function">make</span>
+<span class="token function">make</span> <span class="token assign-left variable">prefix</span><span class="token operator">=</span>/Users/ventura/Downloads/git <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="CleanMyMac-X"><a href="#CleanMyMac-X" class="headerlink" title="CleanMyMac X"></a><a target="_blank" rel="noopener" href="https://www.cleanmymac.cn/">CleanMyMac X</a></h3><p>清理垃圾时一直让输密码解决方案:<code>sudo launchctl load -w /Library/LaunchDaemons/com.macpaw.CleanMyMac.Agent.plist</code></p>
+<h3 id="Command-Line-Tools"><a href="#Command-Line-Tools" class="headerlink" title="Command Line Tools"></a><a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">Command Line Tools</a></h3><p>安装：在终端使用<code>xcode-select --install</code>命令</p>
+<p>卸载：<code>sudo rm -rf /Library/Developer/CommandLineTools</code></p>
+<h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a><a target="_blank" rel="noopener" href="https://brew.sh/zh-cn/">Homebrew</a></h3><ul>
+<li>安装Homebrew需要先安装<a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">CommandLineTools</a></li>
+<li>通过<code>brew install</code>安装软件的路径为<code>/usr/local/Cellar</code>然后将下载的可执行二进制程序软连接到<code>/usr/local/bin</code></li>
+</ul>
+<h3 id="Parallels-Desktop"><a href="#Parallels-Desktop" class="headerlink" title="Parallels Desktop"></a><a target="_blank" rel="noopener" href="https://www.parallels.cn/products/desktop/">Parallels Desktop</a></h3><p>构建arm版windows ISO</p>
+<ol>
+<li><p>访问<a target="_blank" rel="noopener" href="https://uupdump.net/">uupdump</a>，选择要构建的版本后下载压缩文件</p>
+</li>
+<li><p>阅读read.unix.md文件安装依赖</p>
+<blockquote>
+<p>注意：安装依赖可能不成功，解决方案见:<a target="_blank" rel="noopener" href="https://github.com/sidneys/homebrew-homebrew/issues/2">https://github.com/sidneys/homebrew-homebrew/issues/2</a><br>省流版：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># brew tap sidneys/homebrew</span>
+<span class="token comment"># brew install cabextract wimlib cdrtools sidneys/homebrew/chntpw</span>
+<span class="token comment"># 使用下面的命令替换上面的命令</span>
+brew <span class="token function">install</span> cabextract wimlib cdrtools
+brew tap minacle/chntpw
+brew <span class="token function">install</span> minacle/chntpw/chntpw
+brew <span class="token function">install</span> aria2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+</li>
+<li><p><code>sh uup_download_macos.sh</code>或<code>./uup_download_macos.sh</code>,如果提示权限不足的话授权命令：<code>chmod +x uup_download_macos.sh</code></p>
+</li>
+</ol>
+<h3 id="Peek"><a href="#Peek" class="headerlink" title="Peek"></a><a target="_blank" rel="noopener" href="https://www.quicklookplugins.com/">Peek</a></h3><blockquote>
+<p>quicklook插件安装将下载的.qlgenerator文件移动到~&#x2F;Library&#x2F;QuickLook后运行<code>qlmanage -r</code><br><code>qlmanage -caches</code>：列出Quick Look缓存中的文件和其相关信息。<br><code>qlmanage -m plugins</code>：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。<br><code>qlmanage -p 文件路径</code>：会在Quick Look中打开指定文件的预览。</p>
+</blockquote>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="Bandizip"><a href="#Bandizip" class="headerlink" title="Bandizip"></a><a target="_blank" rel="noopener" href="https://www.bandisoft.com/bandizip.mac/">Bandizip</a></h4><h4 id="Betterzip"><a href="#Betterzip" class="headerlink" title="Betterzip"></a><a target="_blank" rel="noopener" href="https://macitbetter.com/downloads/">Betterzip</a></h4><h4 id="Termius"><a href="#Termius" class="headerlink" title="Termius"></a><a target="_blank" rel="noopener" href="https://www.termius.com/">Termius</a></h4><h4 id="Chrome"><a href="#Chrome" class="headerlink" title="Chrome"></a><a target="_blank" rel="noopener" href="https://google.cn/chrome?standalone=1&platform=mac">Chrome</a></h4><h4 id="Intellij-IDEA"><a href="#Intellij-IDEA" class="headerlink" title="Intellij IDEA"></a><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">Intellij IDEA</a></h4><h4 id="iShot"><a href="#iShot" class="headerlink" title="iShot"></a><a target="_blank" rel="noopener" href="https://www.better365.cn/apps.html">iShot</a></h4><h4 id="超级右键"><a href="#超级右键" class="headerlink" title="超级右键"></a><a target="_blank" rel="noopener" href="https://www.better365.cn/apps.html">超级右键</a></h4><h4 id="右键助手专业版"><a href="#右键助手专业版" class="headerlink" title="右键助手专业版"></a><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/%E5%8F%B3%E9%94%AE-%E4%B8%93%E4%B8%9A%E7%89%88/id6473515689">右键助手专业版</a></h4><h4 id="Motrix"><a href="#Motrix" class="headerlink" title="Motrix"></a><a target="_blank" rel="noopener" href="https://motrix.app/">Motrix</a></h4><h4 id="Downie"><a href="#Downie" class="headerlink" title="Downie"></a><a target="_blank" rel="noopener" href="https://www.downie.cn/">Downie</a></h4><h4 id="App-Cleaner-amp-Uninstaller"><a href="#App-Cleaner-amp-Uninstaller" class="headerlink" title="App Cleaner &amp; Uninstaller"></a><a target="_blank" rel="noopener" href="https://app-cleaner.com/">App Cleaner &amp; Uninstaller</a></h4><h4 id="NodeJS"><a href="#NodeJS" class="headerlink" title="NodeJS"></a><a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">NodeJS</a></h4><h4 id="Java"><a href="#Java" class="headerlink" title="Java"></a><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/">Java</a></h4><h4 id="Python"><a href="#Python" class="headerlink" title="Python"></a><a target="_blank" rel="noopener" href="https://www.python.org/downloads/macos/">Python</a></h4><h4 id="VS-Code"><a href="#VS-Code" class="headerlink" title="VS Code"></a><a target="_blank" rel="noopener" href="https://code.visualstudio.com/Download">VS Code</a></h4><h4 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text"></a><a target="_blank" rel="noopener" href="https://www.sublimetext.com/download">Sublime Text</a></h4><h4 id="WPS-x2F-Office"><a href="#WPS-x2F-Office" class="headerlink" title="WPS &#x2F; Office"></a><a target="_blank" rel="noopener" href="https://macwk.cn/2141.html">WPS &#x2F; Office</a></h4><h4 id="微信开发者工具"><a href="#微信开发者工具" class="headerlink" title="微信开发者工具"></a><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html">微信开发者工具</a></h4><h4 id="Clash-X"><a href="#Clash-X" class="headerlink" title="Clash X"></a><a target="_blank" rel="noopener" href="https://github.com/yichengchen/clashX/releases">Clash X</a></h4><h4 id="IINA"><a href="#IINA" class="headerlink" title="IINA"></a><a target="_blank" rel="noopener" href="https://iina.io/">IINA</a></h4><h4 id="Fliqlo"><a href="#Fliqlo" class="headerlink" title="Fliqlo"></a><a target="_blank" rel="noopener" href="https://fliqlo.com/">Fliqlo</a></h4><h4 id="Mac-EveryThing"><a href="#Mac-EveryThing" class="headerlink" title="Mac EveryThing"></a><a target="_blank" rel="noopener" href="https://tool.atomtech.top/index.html">Mac EveryThing</a></h4><h2 id="mac安装软件"><a href="#mac安装软件" class="headerlink" title="mac安装软件"></a>mac安装软件</h2><ul>
 <li><p>打开任何来源命令: <code>sudo spctl --master-disable</code></p>
 <blockquote>
 <p>关闭任何来源命令: <code>sudo spctl --master-enable</code></p>
@@ -571,28 +618,9 @@ defaults <span class="token function">write</span> com.apple.finder AppleShowAll
 <blockquote>
 <p>注意: 检查mac的shell是zsh还是bash，新系统默认是zsh。zsh读取的配置文件是<code>~/.zshrc</code>，bash读取的配置文件是<code>~/.bash_profile</code>。所以当使用<code>source ~/.bash_profile</code>时退出终端再打开会导致环境变量失效，此时要么在<code>~/.zshrc</code>文件编辑同样的内容后执行<code>source ~/.zshrc</code>，要么在<code>~/.zshrc</code>文件里面添加<code>source ~/.bash_profile</code>内容</p>
 </blockquote>
-<h2 id="typora"><a href="#typora" class="headerlink" title="typora"></a>typora</h2><p>找到<code>/Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/js/LicenseIndex.180dd4c7.5dc16d09.chunk.js</code>这一行代码<code>e.hasActivated = &quot;true&quot; == e.hasActivated</code>改为<code>e.hasActivated = &quot;true&quot; == &quot;true&quot;</code>保存即可。</p>
-<h2 id="Navicat"><a href="#Navicat" class="headerlink" title="Navicat"></a>Navicat</h2><p>脚本重置试用日期，项目地址<a target="_blank" rel="noopener" href="https://gitee.com/ProgHub/unlimited_trial_navicat_premium">点这里</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-defaults delete com.navicat.NavicatPremium 91F6C435D172C8163E0689D3DAD3F3E9
-defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
-<span class="token function">rm</span> <span class="token parameter variable">-rf</span> ~/Library/Application<span class="token punctuation">\</span> Support/PremiumSoft<span class="token punctuation">\</span> CyberTech/Navicat<span class="token punctuation">\</span> CC/Navicat<span class="token punctuation">\</span> Premium/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="源码构建git"><a href="#源码构建git" class="headerlink" title="源码构建git"></a>源码构建git</h2><p>准备git依赖库autotools、curl、zlib、openssl、expat和libiconv</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">1.起步-安装-Git</a> <a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">2.download&#x2F;mac</a><br>如果报错缺少环境可以使用<code>brew install autoconf</code>安装</p>
-</blockquote>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxf</span> git-2.8.0.tar.gz
-<span class="token builtin class-name">cd</span> git-2.8.0
-<span class="token function">make</span> configure
-./configure <span class="token parameter variable">--prefix</span><span class="token operator">=</span>/Users/ventura/Downloads/git
-<span class="token function">make</span>
-<span class="token function">make</span> <span class="token assign-left variable">prefix</span><span class="token operator">=</span>/Users/ventura/Downloads/git <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="clean-my-mac-x"><a href="#clean-my-mac-x" class="headerlink" title="clean my mac x"></a>clean my mac x</h2><p>清理垃圾时一直让输密码解决方案: <code>sudo launchctl load -w /Library/LaunchDaemons/com.macpaw.CleanMyMac.Agent.plist</code></p>
 <h2 id="更换app图标"><a href="#更换app图标" class="headerlink" title="更换app图标"></a>更换app图标</h2><p>在<a target="_blank" rel="noopener" href="https://macosicons.com/">这里</a>选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可</p>
-<h2 id="允许远程登陆"><a href="#允许远程登陆" class="headerlink" title="允许远程登陆"></a>允许远程登陆</h2><p>通用-共享-打开远程登录,授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd</p>
-<h2 id="command-line-tools"><a href="#command-line-tools" class="headerlink" title="command line tools"></a>command line tools</h2><p>访问<a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">这里</a>下载</p>
+<h2 id="允许远程登陆"><a href="#允许远程登陆" class="headerlink" title="允许远程登陆"></a>允许远程登陆</h2><p>通用-共享-打开远程登录</p>
+<p>授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd</p>
 <h2 id="盘里多了-fseventsd，-Spotlight-V100，-Trashes三个文件夹"><a href="#盘里多了-fseventsd，-Spotlight-V100，-Trashes三个文件夹" class="headerlink" title="盘里多了.fseventsd，.Spotlight-V100，.Trashes三个文件夹"></a>盘里多了.fseventsd，.Spotlight-V100，.Trashes三个文件夹</h2><p>这三个文件夹（.fseventsd，.Spotlight-V100，.Trashes）是Mac OS X系统生成的隐藏文件，用于存储系统的临时数据和缓存。通常，它们不应该被手动删除，因为它们对系统的正常运行非常重要。但是，如果你确实需要删除它们，可以尝试使用命令行或者第三方软件来进行操作。</p>
 <ol>
 <li><p>.fseventsd文件夹：这个文件夹是Mac OS X的File System Events框架使用的，它用于跟踪文件和目录的更改。这个框架是Mac OS X的核心部分，很多应用程序都依赖于它，因此，手动删除这个文件夹可能会导致系统不稳定或者应用程序出错。</p>
@@ -602,8 +630,7 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 <li><p>.Trashes文件夹：这个文件夹用于存储每个用户在废纸篓中删除的文件。每个用户都有自己的.Trashes子文件夹，这些子文件夹被链接到用户的废纸篓。手动删除这个文件夹可能会导致你无法正常使用废纸篓，或者丢失已删除的文件。</p>
 </li>
 </ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://google.cn/chrome?standalone=1&platform=mac">离线chrome</a></li>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/qianguyihao/Mac-list">Mac-list</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/jaywcjlove/awesome-mac">awesome-mac</a></li>
 </ul>
@@ -862,13 +889,7 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            mac安装软件
-打开任何来源命令: sudo spctl --master-disable
-
-关闭任何来源命令: sudo spctl --master-enable
-
-
-移除应用的安全隔离属性: sudo xattr -rd com.ap
+                            mac软件推荐Typora找到/Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/js/LicenseIndex.180dd4c7.5dc16d09.c
                         
                         
                     </div>

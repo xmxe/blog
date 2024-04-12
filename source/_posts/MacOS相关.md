@@ -4,6 +4,128 @@ tags: 随笔
 img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 ---
 
+## mac软件推荐
+
+### [Typora](https://typora.io/)
+
+找到`/Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/js/LicenseIndex.180dd4c7.5dc16d09.chunk.js`这一行代码`e.hasActivated = "true" == e.hasActivated`改为`e.hasActivated = "true" == "true"`保存即可。
+
+### [Navicat](https://www.navicat.com.cn/download/navicat-premium)
+
+脚本重置试用日期，项目地址[点这里](https://gitee.com/ProgHub/unlimited_trial_navicat_premium)
+
+```bash
+#!/bin/bash
+defaults delete com.navicat.NavicatPremium 91F6C435D172C8163E0689D3DAD3F3E9
+defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
+rm -rf ~/Library/Application\ Support/PremiumSoft\ CyberTech/Navicat\ CC/Navicat\ Premium/
+```
+
+### [Git](https://git-scm.com/download/mac)
+
+准备Git依赖库autotools、curl、zlib、openssl、expat和libiconv
+
+> [起步-安装-Git](https://git-scm.com/book/zh/v2/起步-安装-Git)
+> 如果报错缺少环境可以使用`brew install autoconf`安装
+
+```bash
+tar -zxf git-2.8.0.tar.gz
+cd git-2.8.0
+make configure
+./configure --prefix=/Users/ventura/Downloads/git
+make
+make prefix=/Users/ventura/Downloads/git install
+```
+
+### [CleanMyMac X](https://www.cleanmymac.cn/)
+
+清理垃圾时一直让输密码解决方案:`sudo launchctl load -w /Library/LaunchDaemons/com.macpaw.CleanMyMac.Agent.plist`
+
+### [Command Line Tools](https://developer.apple.com/download/all/)
+
+安装：在终端使用`xcode-select --install`命令
+
+卸载：`sudo rm -rf /Library/Developer/CommandLineTools`
+
+### [Homebrew](https://brew.sh/zh-cn/)
+
+- 安装Homebrew需要先安装[CommandLineTools](https://developer.apple.com/download/all/)
+- 通过`brew install`安装软件的路径为`/usr/local/Cellar`然后将下载的可执行二进制程序软连接到`/usr/local/bin`
+
+### [Parallels Desktop](https://www.parallels.cn/products/desktop/)
+
+构建arm版windows ISO
+
+1. 访问[uupdump](https://uupdump.net/)，选择要构建的版本后下载压缩文件
+2. 阅读read.unix.md文件安装依赖
+> 注意：安装依赖可能不成功，解决方案见:https://github.com/sidneys/homebrew-homebrew/issues/2
+> 省流版：
+>
+> ```shell
+> # brew tap sidneys/homebrew
+> # brew install cabextract wimlib cdrtools sidneys/homebrew/chntpw
+> # 使用下面的命令替换上面的命令
+> brew install cabextract wimlib cdrtools
+> brew tap minacle/chntpw
+> brew install minacle/chntpw/chntpw
+> brew install aria2
+> ```
+
+3. `sh uup_download_macos.sh`或`./uup_download_macos.sh`,如果提示权限不足的话授权命令：`chmod +x uup_download_macos.sh`
+
+### [Peek](https://www.quicklookplugins.com/)
+
+> quicklook插件安装将下载的.qlgenerator文件移动到~/Library/QuickLook后运行`qlmanage -r`
+> `qlmanage -caches`：列出Quick Look缓存中的文件和其相关信息。
+> `qlmanage -m plugins`：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。
+> `qlmanage -p 文件路径`：会在Quick Look中打开指定文件的预览。
+
+### 其他
+
+#### [Bandizip](https://www.bandisoft.com/bandizip.mac/)
+
+#### [Betterzip](https://macitbetter.com/downloads/)
+
+#### [Termius](https://www.termius.com/)
+
+#### [Chrome](https://google.cn/chrome?standalone=1&platform=mac)
+
+#### [Intellij IDEA](https://www.jetbrains.com/idea/)
+
+#### [iShot](https://www.better365.cn/apps.html)
+
+#### [超级右键](https://www.better365.cn/apps.html)
+
+#### [右键助手专业版](https://apps.apple.com/cn/app/%E5%8F%B3%E9%94%AE-%E4%B8%93%E4%B8%9A%E7%89%88/id6473515689)
+
+#### [Motrix](https://motrix.app/)
+
+#### [Downie](https://www.downie.cn/)
+
+#### [App Cleaner & Uninstaller](https://app-cleaner.com/)
+
+#### [NodeJS](https://nodejs.org/en/download/)
+
+#### [Java](https://www.oracle.com/java/technologies/downloads/)
+
+#### [Python](https://www.python.org/downloads/macos/)
+
+#### [VS Code](https://code.visualstudio.com/Download)
+
+#### [Sublime Text](https://www.sublimetext.com/download)
+
+#### [WPS / Office](https://macwk.cn/2141.html)
+
+#### [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
+
+#### [Clash X](https://github.com/yichengchen/clashX/releases)
+
+#### [IINA](https://iina.io/)
+
+#### [Fliqlo](https://fliqlo.com/)
+
+#### [Mac EveryThing](https://tool.atomtech.top/index.html)
+
 ## mac安装软件
 
 - 打开任何来源命令: `sudo spctl --master-disable`
@@ -47,53 +169,15 @@ source ~/.bash_profile
 
 > 注意: 检查mac的shell是zsh还是bash，新系统默认是zsh。zsh读取的配置文件是`~/.zshrc`，bash读取的配置文件是`~/.bash_profile`。所以当使用`source ~/.bash_profile`时退出终端再打开会导致环境变量失效，此时要么在`~/.zshrc`文件编辑同样的内容后执行`source ~/.zshrc`，要么在`~/.zshrc`文件里面添加`source ~/.bash_profile`内容
 
-## typora
-
-找到`/Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/js/LicenseIndex.180dd4c7.5dc16d09.chunk.js`这一行代码`e.hasActivated = "true" == e.hasActivated`改为`e.hasActivated = "true" == "true"`保存即可。
-
-## Navicat
-
-脚本重置试用日期，项目地址[点这里](https://gitee.com/ProgHub/unlimited_trial_navicat_premium)
-
-```bash
-#!/bin/bash
-defaults delete com.navicat.NavicatPremium 91F6C435D172C8163E0689D3DAD3F3E9
-defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
-rm -rf ~/Library/Application\ Support/PremiumSoft\ CyberTech/Navicat\ CC/Navicat\ Premium/
-```
-
-## 源码构建git
-
-准备git依赖库autotools、curl、zlib、openssl、expat和libiconv
-
-> [1.起步-安装-Git](https://git-scm.com/book/zh/v2/起步-安装-Git) [2.download/mac](https://git-scm.com/download/mac)
-> 如果报错缺少环境可以使用`brew install autoconf`安装
-
-
-```bash
-tar -zxf git-2.8.0.tar.gz
-cd git-2.8.0
-make configure
-./configure --prefix=/Users/ventura/Downloads/git
-make
-make prefix=/Users/ventura/Downloads/git install
-```
-
-## clean my mac x
-
-清理垃圾时一直让输密码解决方案: `sudo launchctl load -w /Library/LaunchDaemons/com.macpaw.CleanMyMac.Agent.plist`
-
 ## 更换app图标
 
 在[这里](https://macosicons.com/)选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可
 
 ## 允许远程登陆
 
-通用-共享-打开远程登录,授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd
+通用-共享-打开远程登录
 
-## command line tools
-
-访问[这里](https://developer.apple.com/download/all/)下载
+授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd
 
 ## 盘里多了.fseventsd，.Spotlight-V100，.Trashes三个文件夹
 
@@ -107,6 +191,5 @@ make prefix=/Users/ventura/Downloads/git install
 
 ## 其他
 
-- [离线chrome](https://google.cn/chrome?standalone=1&platform=mac)
 - [Mac-list](https://github.com/qianguyihao/Mac-list)
 - [awesome-mac](https://github.com/jaywcjlove/awesome-mac)

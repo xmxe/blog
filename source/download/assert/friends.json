@@ -5,19 +5,9 @@
         "appId": "wx7c8d593b2c3a7703"
     },
     {
-        "src": "assert/ltt.jpg",
-        "text": "李跳跳",
-        "appId": "https://www.123pan.com/s/ZYAZVv-TBYjd.html"
-    },
-    {
         "src": "assert/github.jpg",
         "text": "GitHub App",
         "appId": "https://apkpure.com/cn/github/com.github.android"
-    },
-    {
-        "src": "assert/ah.png",
-        "text": "AH视频",
-        "appId": "https://ahsp.app/"
     },
     {
         "src": "assert/qywx.jpg",
@@ -48,10 +38,5 @@
         "src": "assert/ps.jpg",
         "text": "PS CC2019直装版",
         "appId": "https://n459.com/file/5210373-315857187"
-    },
-    {
-        "src": "https://pica.zhimg.com/v2-0f20d0f0a5eef262101c3c8ee303c1f8_1440w.jpg",
-        "text": "fliqlo",
-        "appId": "https://fliqlo.com/"
     }
 ]

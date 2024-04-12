@@ -2371,6 +2371,7 @@ InnoDB存储引擎在RR级别下通过MVCC和Next-keyLock来解决幻读问题�
 在当前读下，读取的都是最新的数据，如果其它事务有插入新的记录，并且刚好在当前事务查询范围内，就会产生幻读！InnoDB使用[Next-keyLock](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-next-key-locks)来防止这种情况。当执行当前读时，会锁定读取到的记录的同时，锁定它们的间隙，防止其它事务在查询范围内插入数据。只要我不让你插入，就不会发生幻读
 
 > [原文链接](https://javaguide.cn/database/mysql/innodb-implementation-of-mvcc.html)
+> [面试中的MVCC到底是什么意思？](https://mp.weixin.qq.com/s/wE43jx9svrHg5U16sq8CYw)
 
 ## SQL语句在MySQL中的执行过程
 

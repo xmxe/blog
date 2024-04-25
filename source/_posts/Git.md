@@ -439,3 +439,4 @@ git cp <commitHash>
 - [45个GIT经典操作场景，专治不会合代码](https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw)
 - [Git的奇技淫巧](https://github.com/521xueweihan/git-tips)
 - [如何配置SSH管理多个Git仓库和以及多个Github账号](https://mp.weixin.qq.com/s/ADzad6e6uTF0vpZ903SJ-A)
+- [那些年我们错过的Git指南](https://mp.weixin.qq.com/s/L5NEAOgoee8TQ0bOpp6PgQ)

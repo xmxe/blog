@@ -189,19 +189,24 @@ systemctl start mysql
 ```shell
 # 测试进入mysql
 mysql -uroot -proot
-# UPDATE直接编辑user表
-update mysql.user set password=password('新密码') where host='localhost' and user='root';
-# 或者使用SET PASSWORD命令
-set password for root@localhost = password('新密码');
-# 或者使用mysqladmin修改密码
+
+# UPDATE直接编辑user表,旧版本中密码字段是password,而不是authentication_string.注意加上user和host的查询条件,因为有可能host不一样,比如user表里查询user='root'有两条记录,一个host为'localhost',一个为'%',意味着相同用户本地登录是一个密码，远程登陆是一个密码
+#update mysql.user set password=password('新密码') where host='localhost' and user='root';
+update mysql.user set authentication_string=password('password') where user='root' and host='hostname';
+
+# 使用SET PASSWORD命令修改当前用户密码
+set password=password("new-password");
+# 使用SET PASSWORD命令修改其他用户密码
+set password for 'user'@'hostname' = password('新密码');
+
+# 使用mysqladmin修改密码
 ./bin/mysqladmin -hlocalhost.localdomain -uroot -p旧密码 password '新密码'
 
-# MySQL8使用
-#update user set authentication_string='' where user='root';# 将字段置为空
-#ALTER user 'root'@'localhost' IDENTIFIED BY 'root';#修改密码为root
-# 进入mysql更改密码
-#set password='root';
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';
+# 修改当前用户密码(USER()为获取当前连接用户的函数)
+ALTER user USER() IDENTIFIED BY 'root';
+# 修改其他用户的密码,使用user表中的user,host匹配,如:'root'@'%',mysql8默认WITH mysql_native_password
+ALTER user 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';
+
 # 使密码生效
 flush privileges;
 ```

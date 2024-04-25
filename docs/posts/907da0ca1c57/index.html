@@ -656,21 +656,26 @@ systemctl start mysql<span aria-hidden="true" class="line-numbers-rows"><span></
 
 <h4 id="6-修改密码"><a href="#6-修改密码" class="headerlink" title="6. 修改密码"></a>6. 修改密码</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 测试进入mysql</span>
 mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-proot</span>
-<span class="token comment"># UPDATE直接编辑user表</span>
-update mysql.user <span class="token builtin class-name">set</span> <span class="token assign-left variable">password</span><span class="token operator">=</span>password<span class="token punctuation">(</span><span class="token string">'新密码'</span><span class="token punctuation">)</span> where <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'localhost'</span> and <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span><span class="token punctuation">;</span>
-<span class="token comment"># 或者使用SET PASSWORD命令</span>
-<span class="token builtin class-name">set</span> password <span class="token keyword">for</span> root@localhost <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'新密码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment"># 或者使用mysqladmin修改密码</span>
+
+<span class="token comment"># UPDATE直接编辑user表,旧版本中密码字段是password,而不是authentication_string.注意加上user和host的查询条件,因为有可能host不一样,比如user表里查询user='root'有两条记录,一个host为'localhost',一个为'%',意味着相同用户本地登录是一个密码，远程登陆是一个密码</span>
+<span class="token comment">#update mysql.user set password=password('新密码') where host='localhost' and user='root';</span>
+update mysql.user <span class="token builtin class-name">set</span> <span class="token assign-left variable">authentication_string</span><span class="token operator">=</span>password<span class="token punctuation">(</span><span class="token string">'password'</span><span class="token punctuation">)</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'hostname'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 使用SET PASSWORD命令修改当前用户密码</span>
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">password</span><span class="token operator">=</span>password<span class="token punctuation">(</span><span class="token string">"new-password"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># 使用SET PASSWORD命令修改其他用户密码</span>
+<span class="token builtin class-name">set</span> password <span class="token keyword">for</span> <span class="token string">'user'</span>@<span class="token string">'hostname'</span> <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'新密码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 使用mysqladmin修改密码</span>
 ./bin/mysqladmin <span class="token parameter variable">-hlocalhost.localdomain</span> <span class="token parameter variable">-uroot</span> -p旧密码 password <span class="token string">'新密码'</span>
 
-<span class="token comment"># MySQL8使用</span>
-<span class="token comment">#update user set authentication_string='' where user='root';# 将字段置为空</span>
-<span class="token comment">#ALTER user 'root'@'localhost' IDENTIFIED BY 'root';#修改密码为root</span>
-<span class="token comment"># 进入mysql更改密码</span>
-<span class="token comment">#set password='root';</span>
-ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'新密码'</span><span class="token punctuation">;</span>
+<span class="token comment"># 修改当前用户密码(USER()为获取当前连接用户的函数)</span>
+ALTER user <span class="token environment constant">USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span> IDENTIFIED BY <span class="token string">'root'</span><span class="token punctuation">;</span>
+<span class="token comment"># 修改其他用户的密码,使用user表中的user,host匹配,如:'root'@'%',mysql8默认WITH mysql_native_password</span>
+ALTER user <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'新密码'</span><span class="token punctuation">;</span>
+
 <span class="token comment"># 使密码生效</span>
-flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="7-修改远程连接"><a href="#7-修改远程连接" class="headerlink" title="7. 修改远程连接"></a>7. 修改远程连接</h4><p>改表法</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">use mysql

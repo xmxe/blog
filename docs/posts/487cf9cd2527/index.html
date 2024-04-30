@@ -550,7 +550,7 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 <h3 id="Command-Line-Tools"><a href="#Command-Line-Tools" class="headerlink" title="Command Line Tools"></a><a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">Command Line Tools</a></h3><p>安装：在终端使用<code>xcode-select --install</code>命令</p>
 <p>卸载：<code>sudo rm -rf /Library/Developer/CommandLineTools</code></p>
 <h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a><a target="_blank" rel="noopener" href="https://brew.sh/zh-cn/">Homebrew</a></h3><ul>
-<li>安装Homebrew需要先安装<a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">CommandLineTools</a></li>
+<li>安装Homebrew需要先安装[CommandLineTools](#Command Line Tools)</li>
 <li>通过<code>brew install</code>安装软件的路径为<code>/usr/local/Cellar</code>然后将下载的可执行二进制程序软连接到<code>/usr/local/bin</code></li>
 </ul>
 <h3 id="Parallels-Desktop"><a href="#Parallels-Desktop" class="headerlink" title="Parallels Desktop"></a><a target="_blank" rel="noopener" href="https://www.parallels.cn/products/desktop/">Parallels Desktop</a></h3><ul>
@@ -584,7 +584,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 </li>
 </ul>
 <h3 id="Peek"><a href="#Peek" class="headerlink" title="Peek"></a><a target="_blank" rel="noopener" href="https://www.quicklookplugins.com/">Peek</a></h3><blockquote>
-<p>quicklook插件安装将下载的.qlgenerator文件移动到~&#x2F;Library&#x2F;QuickLook后运行<code>qlmanage -r</code><br><code>qlmanage -caches</code>：列出Quick Look缓存中的文件和其相关信息。<br><code>qlmanage -m plugins</code>：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。<br><code>qlmanage -p 文件路径</code>：会在Quick Look中打开指定文件的预览。</p>
+<p>quicklook插件安装：将下载的.qlgenerator文件移动到<code>~/Library/QuickLook</code>后运行<code>qlmanage -r</code><br><code>qlmanage -caches</code>：列出Quick Look缓存中的文件和其相关信息。<br><code>qlmanage -m plugins</code>：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。<br><code>qlmanage -p 文件路径</code>：会在Quick Look中打开指定文件的预览。</p>
 </blockquote>
 <h3 id="Office"><a href="#Office" class="headerlink" title="Office"></a><a target="_blank" rel="noopener" href="https://macwk.cn/2141.html">Office</a></h3><table>
 <thead>
@@ -655,6 +655,12 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <td align="center"><a target="_blank" rel="noopener" href="https://www.zeroonetwenty.com/profind/">ProFind</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://neatdownloadmanager.com/">NDM</a></td>
 </tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.pdfreaderpro.com/">PDF Reader Pro</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/permute-3/id1444998321">Permute 3</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://zh.mweb.im/">MWeb Pro</a></td>
+<td align="center"></td>
+</tr>
 </tbody></table>
 <h2 id="mac安装软件"><a href="#mac安装软件" class="headerlink" title="mac安装软件"></a>mac安装软件</h2><ul>
 <li><p>打开任何来源命令: <code>sudo spctl --master-disable</code></p>
@@ -672,6 +678,12 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 </ul>
 </blockquote>
 </li>
+<li><p>对应用进行签名<br>安装[CommandLineTools](#Command Line Tools)后打开终端，输入<code>sudo codesign --force --deep --sign - 应用路径</code>，注意最后的–后面加一个空格。如遇错误：”&#x2F;文件位置 : replacing existing signature，&#x2F;文件位置 : resource fork,Finder information,or similar detritus not allowed”先在终端执行：<code>xattr -cr 应用路径</code>然后再次执行指令即可：<code>codesign --force --deep --sign - 应用路径</code>,完成后再次打开应用尝试</p>
+</li>
+<li><p>安装Rosetta 2（Intel运行M芯片程序）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装完成后可以在显示简介中勾选使用Rosetta打开</span>
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
 <li><p>关闭SIP</p>
 </li>
 </ul>
@@ -688,8 +700,10 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Mac显示“隐藏文件”命令</span>
 defaults <span class="token function">write</span> com.apple.finder AppleShowAllFiles <span class="token parameter variable">-bool</span> <span class="token boolean">true</span>
 <span class="token comment"># Mac隐藏“隐藏文件”命令</span>
-defaults <span class="token function">write</span> com.apple.finder AppleShowAllFiles <span class="token parameter variable">-bool</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>之后<code>killall Finder</code>重启访达进程</p>
+defaults <span class="token function">write</span> com.apple.finder AppleShowAllFiles <span class="token parameter variable">-bool</span> <span class="token boolean">false</span>
+<span class="token comment"># 重启访达进程</span>
+<span class="token comment"># killall Finder</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="mac设置环境变量"><a href="#mac设置环境变量" class="headerlink" title="mac设置环境变量"></a>mac设置环境变量</h2><p>创建<code>~/.bash_profile</code>文件。编辑java环境变量</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
 <span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$JAVA_HOME</span>/bin
@@ -699,14 +713,14 @@ defaults <span class="token function">write</span> com.apple.finder AppleShowAll
 <blockquote>
 <p>注意：检查mac的shell是zsh还是bash，新系统默认是zsh。zsh读取的配置文件是<code>~/.zshrc</code>，bash读取的配置文件是<code>~/.bash_profile</code>。所以当使用<code>source ~/.bash_profile</code>时退出终端再打开会导致环境变量失效，此时要么在<code>~/.zshrc</code>文件编辑同样的内容后执行<code>source ~/.zshrc</code>，要么在<code>~/.zshrc</code>文件里面添加<code>source ~/.bash_profile</code>内容</p>
 </blockquote>
-<h2 id="更换app图标"><a href="#更换app图标" class="headerlink" title="更换app图标"></a>更换app图标</h2><p>在<a target="_blank" rel="noopener" href="https://macosicons.com/">这里</a>选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可</p>
-<h2 id="允许远程登陆"><a href="#允许远程登陆" class="headerlink" title="允许远程登陆"></a>允许远程登陆</h2><ul>
+<h2 id="mac更换app图标"><a href="#mac更换app图标" class="headerlink" title="mac更换app图标"></a>mac更换app图标</h2><p>在<a target="_blank" rel="noopener" href="https://macosicons.com/">这里</a>选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可</p>
+<h2 id="mac允许远程登陆"><a href="#mac允许远程登陆" class="headerlink" title="mac允许远程登陆"></a>mac允许远程登陆</h2><ul>
 <li><p>通用-共享-打开远程登录</p>
 </li>
 <li><p>授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd</p>
 </li>
 </ul>
-<h2 id="fseventsd，-Spotlight-V100，-Trashes"><a href="#fseventsd，-Spotlight-V100，-Trashes" class="headerlink" title=".fseventsd，.Spotlight-V100，.Trashes"></a>.fseventsd，.Spotlight-V100，.Trashes</h2><p>这三个文件夹（.fseventsd，.Spotlight-V100，.Trashes）是Mac OS X系统生成的隐藏文件，用于存储系统的临时数据和缓存。通常，它们不应该被手动删除，因为它们对系统的正常运行非常重要。但是，如果你确实需要删除它们，可以尝试使用命令行或者第三方软件来进行操作。</p>
+<h2 id="mac下的-fseventsd，-Spotlight-V100，-Trashes"><a href="#mac下的-fseventsd，-Spotlight-V100，-Trashes" class="headerlink" title="mac下的.fseventsd，.Spotlight-V100，.Trashes"></a>mac下的.fseventsd，.Spotlight-V100，.Trashes</h2><p>这三个文件夹（.fseventsd，.Spotlight-V100，.Trashes）是Mac OS X系统生成的隐藏文件，用于存储系统的临时数据和缓存。通常，它们不应该被手动删除，因为它们对系统的正常运行非常重要。但是，如果你确实需要删除它们，可以尝试使用命令行或者第三方软件来进行操作。</p>
 <ol>
 <li><p>.fseventsd文件夹：这个文件夹是Mac OS X的File System Events框架使用的，它用于跟踪文件和目录的更改。这个框架是Mac OS X的核心部分，很多应用程序都依赖于它，因此，手动删除这个文件夹可能会导致系统不稳定或者应用程序出错。</p>
 </li>
@@ -715,7 +729,10 @@ defaults <span class="token function">write</span> com.apple.finder AppleShowAll
 <li><p>.Trashes文件夹：这个文件夹用于存储每个用户在废纸篓中删除的文件。每个用户都有自己的.Trashes子文件夹，这些子文件夹被链接到用户的废纸篓。手动删除这个文件夹可能会导致你无法正常使用废纸篓，或者丢失已删除的文件。</p>
 </li>
 </ol>
-<h2 id="mac制作U盘启动盘"><a href="#mac制作U盘启动盘" class="headerlink" title="mac制作U盘启动盘"></a>mac制作U盘启动盘</h2><p><strong>Windows</strong></p>
+<h2 id="mac制作U盘启动盘"><a href="#mac制作U盘启动盘" class="headerlink" title="mac制作U盘启动盘"></a>mac制作U盘启动盘</h2><blockquote>
+<p>注意U盘的格式，Windows启动盘经实验使用fat32无法正常安装（报错”复制Windows安装文件时出错”，原因看<a target="_blank" rel="noopener" href="https://twocanoes.com/using-larger-windows-10-isos-with-boot-camp-assistant/">这里</a>），因为fat32单个文件大小不支持4G，制作Wondows启动盘的话最好是统一使用NTFS或exFAT</p>
+</blockquote>
+<p><strong>Windows启动盘</strong></p>
 <ol>
 <li><p>准备U盘和ISO文件</p>
 <blockquote>
@@ -724,7 +741,7 @@ defaults <span class="token function">write</span> com.apple.finder AppleShowAll
 <span class="token keyword">select</span> disk n
 clean
 create partition primary
-<span class="token comment"># 如果要格式化为NTFS，将fat32替换为ntfs或exFAT</span>
+<span class="token comment"># fat32、ntfs、exFAT</span>
 <span class="token function">format</span> <span class="token assign-left variable">fs</span><span class="token operator">=</span>ntfs quick<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </blockquote>
 </li>
@@ -741,12 +758,15 @@ create partition primary
 </blockquote>
 </li>
 </ol>
-<p><strong>Ubuntu</strong></p>
+<p><strong>Ubuntu启动盘</strong></p>
 <ol>
-<li>用hdiutil将ISO转dmg<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hdiutil convert <span class="token parameter variable">-format</span> UDRW <span class="token parameter variable">-o</span> /Users/Downloads/ubuntu /Users/Downloads/ubuntu-22.04.1-live-server.iso<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>用hdiutil将ISO转dmg<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hdiutil convert <span class="token parameter variable">-format</span> UDRW <span class="token parameter variable">-o</span> /Users/Downloads/ubuntu /Users/Downloads/ubuntu-22.04.1-live-server.iso
+<span class="token comment"># 制作windows启动盘同理</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 <li>查看U盘名称<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">diskutil list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>解除U盘占用<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">diskutil unmountDisk /dev/disk2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>将镜像写入U盘(带r加快速度)<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">dd</span> <span class="token assign-left variable">if</span><span class="token operator">=</span>/Users/Downloads/ubuntu.dmg <span class="token assign-left variable">of</span><span class="token operator">=</span>/dev/rdisk2 <span class="token assign-left variable">bs</span><span class="token operator">=</span>1m <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>将镜像写入U盘(带r加快速度)<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">dd</span> <span class="token assign-left variable">if</span><span class="token operator">=</span>/Users/Downloads/ubuntu.dmg <span class="token assign-left variable">of</span><span class="token operator">=</span>/dev/rdisk2 <span class="token assign-left variable">bs</span><span class="token operator">=</span>1m
+<span class="token comment"># windows</span>
+<span class="token comment"># sudo dd if=/path/win10.dmg of=/dev/rdisk2 bs=1m</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li>弹出U盘<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">diskutil <span class="token function">eject</span> /dev/disk2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
 <p><strong>Ubuntu系统制作Windows启动盘</strong></p>

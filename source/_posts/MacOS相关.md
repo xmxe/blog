@@ -50,7 +50,7 @@ make prefix=/Users/ventura/Downloads/git install
 
 ### [Homebrew](https://brew.sh/zh-cn/)
 
-- 安装Homebrew需要先安装[CommandLineTools](https://developer.apple.com/download/all/)
+- 安装Homebrew需要先安装[CommandLineTools](#Command Line Tools)
 - 通过`brew install`安装软件的路径为`/usr/local/Cellar`然后将下载的可执行二进制程序软连接到`/usr/local/bin`
 
 ### [Parallels Desktop](https://www.parallels.cn/products/desktop/)
@@ -86,7 +86,7 @@ make prefix=/Users/ventura/Downloads/git install
 
 ### [Peek](https://www.quicklookplugins.com/)
 
-> quicklook插件安装将下载的.qlgenerator文件移动到~/Library/QuickLook后运行`qlmanage -r`
+> quicklook插件安装：将下载的.qlgenerator文件移动到`~/Library/QuickLook`后运行`qlmanage -r`
 > `qlmanage -caches`：列出Quick Look缓存中的文件和其相关信息。
 > `qlmanage -m plugins`：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。
 > `qlmanage -p 文件路径`：会在Quick Look中打开指定文件的预览。
@@ -110,6 +110,7 @@ make prefix=/Users/ventura/Downloads/git install
 | [Java](https://www.oracle.com/java/technologies/downloads/) |      [Python](https://www.python.org/downloads/macos/)       |   [VS Code](https://code.visualstudio.com/Download)   |     [Sublime Text](https://www.sublimetext.com/download)     |
 |      [Intellij IDEA](https://www.jetbrains.com/idea/)       | [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) |    [MySQL](https://dev.mysql.com/downloads/mysql/)    |                   [IINA](https://iina.io/)                   |
 |                [Fliqlo](https://fliqlo.com/)                |    [Mac EveryThing](https://tool.atomtech.top/index.html)    |   [ProFind](https://www.zeroonetwenty.com/profind/)   |            [NDM](https://neatdownloadmanager.com)            |
+|       [PDF Reader Pro](https://www.pdfreaderpro.com/)       | [Permute 3](https://apps.apple.com/cn/app/permute-3/id1444998321) |            [MWeb Pro](https://zh.mweb.im/)            |                                                              |
 
 
 ## mac安装软件
@@ -122,6 +123,15 @@ make prefix=/Users/ventura/Downloads/git install
 > - xattr：用于查看、设置和删除扩展属性的命令。
 > - r：表示以递归方式处理目录及其子目录中的文件。
 > - d：表示删除指定文件的扩展属性。com.apple.quarantine：是指要删除的扩展属性的名称，即“quarantine”。
+
+- 对应用进行签名
+安装[CommandLineTools](#Command Line Tools)后打开终端，输入`sudo codesign --force --deep --sign - 应用路径`，注意最后的–后面加一个空格。如遇错误："/文件位置 : replacing existing signature，/文件位置 : resource fork,Finder information,or similar detritus not allowed"先在终端执行：`xattr -cr 应用路径`然后再次执行指令即可：`codesign --force --deep --sign - 应用路径`,完成后再次打开应用尝试
+
+- 安装Rosetta 2（Intel运行M芯片程序）
+```bash
+# 安装完成后可以在显示简介中勾选使用Rosetta打开
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+```
 
 - 关闭SIP
 1. 关机，然后重新启动你的Mac电脑，在开机时一直按住`Command+R`迸入Recovery模式（m1改为长按电源键，点击选项，选择一个用户进去）
@@ -139,8 +149,9 @@ make prefix=/Users/ventura/Downloads/git install
 defaults write com.apple.finder AppleShowAllFiles -bool true
 # Mac隐藏“隐藏文件”命令
 defaults write com.apple.finder AppleShowAllFiles -bool false
+# 重启访达进程
+# killall Finder
 ```
-之后`killall Finder`重启访达进程
 
 ## mac设置环境变量
 
@@ -155,17 +166,17 @@ source ~/.bash_profile
 
 > 注意：检查mac的shell是zsh还是bash，新系统默认是zsh。zsh读取的配置文件是`~/.zshrc`，bash读取的配置文件是`~/.bash_profile`。所以当使用`source ~/.bash_profile`时退出终端再打开会导致环境变量失效，此时要么在`~/.zshrc`文件编辑同样的内容后执行`source ~/.zshrc`，要么在`~/.zshrc`文件里面添加`source ~/.bash_profile`内容
 
-## 更换app图标
+## mac更换app图标
 
 在[这里](https://macosicons.com/)选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可
 
-## 允许远程登陆
+## mac允许远程登陆
 
 - 通用-共享-打开远程登录
 
 - 授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd
 
-## .fseventsd，.Spotlight-V100，.Trashes
+## mac下的.fseventsd，.Spotlight-V100，.Trashes
 
 这三个文件夹（.fseventsd，.Spotlight-V100，.Trashes）是Mac OS X系统生成的隐藏文件，用于存储系统的临时数据和缓存。通常，它们不应该被手动删除，因为它们对系统的正常运行非常重要。但是，如果你确实需要删除它们，可以尝试使用命令行或者第三方软件来进行操作。
 
@@ -177,7 +188,9 @@ source ~/.bash_profile
 
 ## mac制作U盘启动盘
 
-**Windows**
+> 注意U盘的格式，Windows启动盘经实验使用fat32无法正常安装（报错"复制Windows安装文件时出错"，原因看[这里](https://twocanoes.com/using-larger-windows-10-isos-with-boot-camp-assistant/)），因为fat32单个文件大小不支持4G，制作Wondows启动盘的话最好是统一使用NTFS或exFAT
+
+**Windows启动盘**
 
 1. 准备U盘和ISO文件
 > 如果U盘无法正常读取且提示无法格式化，windows上的解决办法
@@ -186,7 +199,7 @@ source ~/.bash_profile
 > select disk n
 > clean
 > create partition primary
-> # 如果要格式化为NTFS，将fat32替换为ntfs或exFAT
+> # fat32、ntfs、exFAT
 > format fs=ntfs quick
 > ```
 
@@ -199,10 +212,12 @@ source ~/.bash_profile
 >> **同步能力**：cp命令复制文件时，如果目标文件已经存在，它会直接覆盖目标文件。rsync命令能够进行增量同步，只复制发生变化的部分，因此效率更高。它还可以在复制过程中实时显示进度，方便监控和管理。
 >> **网络传输**：cp命令只能在本地文件系统内复制文件，不能在网络上进行文件同步。rsync命令可以在本地和远程系统之间同步文件，因此适用于在不同主机之间同步文件或备份数据。
 
-**Ubuntu**
+**Ubuntu启动盘**
+
 1. 用hdiutil将ISO转dmg
 ```bash
 hdiutil convert -format UDRW -o /Users/Downloads/ubuntu /Users/Downloads/ubuntu-22.04.1-live-server.iso
+# 制作windows启动盘同理
 ```
 2. 查看U盘名称
 ```bash
@@ -214,7 +229,9 @@ diskutil unmountDisk /dev/disk2
 ```
 4. 将镜像写入U盘(带r加快速度)
 ```bash
-sudo dd if=/Users/Downloads/ubuntu.dmg of=/dev/rdisk2 bs=1m 
+sudo dd if=/Users/Downloads/ubuntu.dmg of=/dev/rdisk2 bs=1m
+# windows
+# sudo dd if=/path/win10.dmg of=/dev/rdisk2 bs=1m
 ```
 5. 弹出U盘
 ```bash

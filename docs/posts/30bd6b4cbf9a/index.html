@@ -544,24 +544,22 @@
 <span class="token comment"># 查看两次提交的区别</span>
 <span class="token function">git</span> <span class="token function">diff</span> commit-id commit-id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将未commit的文件移出Staging区</span>
+<h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将未commit的文件移出Staging区(撤销git add)</span>
 <span class="token function">git</span> reset HEAD
-<span class="token comment"># 重置Staging区与上次commit的一样</span>
-<span class="token function">git</span> reset <span class="token parameter variable">--hard</span>  
-<span class="token comment"># 重置Commit代码和远程分支代码一样</span>
+<span class="token comment"># 撤销git add操作(已经将文件添加到暂存区)不加filename就是上一次add里面的全部撤销了</span>
+<span class="token function">git</span> reset HEAD filename
+<span class="token comment"># 重置代码和远程分支代码一样</span>
 <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> origin/master
 <span class="token comment"># 回退到上个commit 删除工作空间改动代码，撤销commit，撤销git add</span>
 <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> HEAD^
 <span class="token comment"># 回退到前3次提交之前，以此类推，回退到n次提交之前</span>
 <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> HEAD~3
-<span class="token comment"># 撤销git add操作（已经将文件添加到暂存区）不加filename就是上一次add里面的全部撤销了</span>
-<span class="token function">git</span> reset HEAD filename
 <span class="token comment"># 回退到指定版本 --hard强制将暂存区和工作目录都同步到你指定的提交</span>
 <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> commitid
 <span class="token comment"># 不删除工作空间改动代码，撤销commit，不撤销git add</span>
 <span class="token function">git</span> reset <span class="token parameter variable">--soft</span> HEAD^
 <span class="token comment"># 不删除工作空间改动代码，撤销commit，并且撤销git add操作。这个为默认参数,git reset --mixed HEAD^和git reset HEAD^效果是一样的。</span>
-<span class="token function">git</span> reset <span class="token parameter variable">--mixed</span> HEAD^<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> reset <span class="token parameter variable">--mixed</span> HEAD^<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h3><blockquote>
 <p>应用场景：有一天测试突然跟你说，你开发上线的功能有问题，需要马上撤回，否则会影响到系统使用。这时可能会想到用reset回退，可是你看了看分支上最新的提交还有其他同事的代码，用reset会把这部分代码也撤回了。由于情况紧急，又想不到好方法，还是任性的使用reset，然后再让同事把他的代码合一遍（同事听到想打人），于是你的技术形象在同事眼里一落千丈</p>
@@ -907,7 +905,7 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xmxe.gitee.io/blog/posts/30bd6b4cbf9a/">https://xmxe.gitee.io/blog/posts/30bd6b4cbf9a/</a>
+                    <a href="https://xmxe.github.io/blog/posts/30bd6b4cbf9a/">https://xmxe.github.io/blog/posts/30bd6b4cbf9a/</a>
                 </span>
             </div>
             <div class="reprint__notice">

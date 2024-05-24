@@ -11,7 +11,7 @@ top: true
 ---
 
 > 我写的关于Spring扩展插件的一个[示例](https://github.com/xmxe/springboot/tree/3.x/springboot-lifecycle)，里面有很多Spring扩展的测试。
-> 其他相关文章:[Spring中的Bean对象](https://xmxe.gitee.io/blog/posts/b435885d7cf1/)
+> 其他相关文章:[Spring中的Bean对象](https://xmxe.github.io/blog/posts/b435885d7cf1/)
 
 ## Spring循环依赖
 
@@ -188,6 +188,9 @@ $.ajax({
 
 ### 条件注解
 > [Spring Boot中条件注解底层如何实现的？](https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ)
+
+### 异步注解
+> [@Async注解失效的9种场景](https://mp.weixin.qq.com/s/zHACex918yh04MdPgNuaGw)
 
 ## Spring设计模式
 

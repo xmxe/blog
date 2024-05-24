@@ -593,7 +593,7 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kx_111lekaIzkYYYAwjwxg">你知道Java中的注解是如何工作的？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247493932&amp;idx=1&amp;sn=c8e75d1f75467f240ad749853eae4668&amp;source=41#wechat_redirect">深入理解Java：注解</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494076&amp;idx=2&amp;sn=ba12e71724444dfd8ce10297778682aa&amp;source=41#wechat_redirect">JDK中注解的底层原来是这样实现的</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ggw-uPBmxZ0VDyACreMNOw">原来注解是这么实现的啊</a></p>
 </blockquote>
-<h3 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a>构建工具</h3><h4 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h4><p><strong>常用命令</strong></p>
+<h3 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a>构建工具</h3><h4 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h4><p><strong>常用命令</strong></p>
 <ul>
 <li><p>mvn package、install、deploy区别<br><strong>package</strong>命令完成了项目编译、单元测试、打包功能，但没有把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库<br><strong>install</strong>命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库，但没有布署到远程maven私服仓库<br><strong>deploy</strong>命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库</p>
 </li>
@@ -606,6 +606,22 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 <li><p>test (测试)<br>test范围依赖在一般的编译和运行时都不需要，它们只有在测试编译和测试运行阶段可用。</p>
 </li>
 <li><p>system (系统)<br>Maven不会在仓库中去寻找它。如果你将一个依赖范围设置成系统范围，你必须同时提供一个systemPath元素。注意该范围是不推荐使用的（建议尽量去从公共或定制的Maven仓库中引用依赖）</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.example<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>local-jar-name<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>system<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>systemPath</span><span class="token punctuation">></span></span>$&#123;project.basedir&#125;/lib/local-jar-name.jar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>systemPath</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!-- $&#123;pom.basedir&#125;:表示pom文件的目录 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!-- springboot打jar包时将本地jar也添加进去 --></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-maven-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>includeSystemScope</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>includeSystemScope</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>import(导入)<br>import仅支持在&lt;dependencyManagement&gt;中的类型依赖项上。它表示要在指定的POM&lt;dependencyManagement&gt;部分中用有效的依赖关系列表替换的依赖关系。该scope类型的依赖项实际上不会参与限制依赖项的可传递性。</p>
 </li>
@@ -644,7 +660,7 @@ mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>(3) IDEA图标Skip Tests。点击选中，再用LifeCycle中的打包就会跳过测试<br>(4) 打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在VM option中添加-Dmaven.test.skip&#x3D;true或者-DskipTests&#x3D;true，就能在打包时跳过测试。<br>(5) 打开配置，找到Build,Exxcution,Deployment–&gt;Build Tools–&gt;Maven–&gt;Runner，在Properties中勾选Skip Test选项。</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JD2wfLGXdujoc9DOJEZFpA">说一个大家都知道的Spring Boot小细节</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vq6Id8g0IBRVM3xdPRYFbA">如何利用Maven将代码打包成第三方公共jar包？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ctjJBNHiflsTr5O4SffvHQ">Maven中的classifier属性用过没？</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JD2wfLGXdujoc9DOJEZFpA">说一个大家都知道的Spring Boot小细节</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kt51X_VEeC_EQSw22pqB-A">Maven(五)：resources、profiles标签的实践</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dEmCRy_9CtRPtOP4DViDHw">Maven最全教程，看了必懂，99%的人都收藏了！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vq6Id8g0IBRVM3xdPRYFbA">如何利用Maven将代码打包成第三方公共jar包？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ctjJBNHiflsTr5O4SffvHQ">Maven中的classifier属性用过没？</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43842093/article/details/131015256">Maven配置中repositories、distributionManagement、pluginRepositories详解&amp;将已有jar包部署到私服</a></p>
 </blockquote>
 <h4 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h4><ul>
 <li><p>implementation，默认的scope,取代compile（已弃用）。implementation的作用域会让依赖在编译和运行时均包含在内，但是不会暴露在类库使用者的编译时。举例，如果我们的类库包含了gson，那么其他人使用我们的类库时，编译时不会出现gson的依赖。</p>
@@ -1828,7 +1844,7 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xmxe.gitee.io/blog/posts/8e7bdb140cc5/">https://xmxe.gitee.io/blog/posts/8e7bdb140cc5/</a>
+                    <a href="https://xmxe.github.io/blog/posts/8e7bdb140cc5/">https://xmxe.github.io/blog/posts/8e7bdb140cc5/</a>
                 </span>
             </div>
             <div class="reprint__notice">

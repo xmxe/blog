@@ -606,6 +606,7 @@ docker build
 --tag, -t: 镜像的名字及标签，通常name:tag或者name格式；可以在一次构建中为一个镜像设置多个标签。
 --network: 默认default。在构建期间设置RUN指令的网络模式
 ```
+`docker build`最后参数表示Docker上下文的路径。当你执行`docker build`命令并指定一个Dockerfile时，Docker会将这个路径下的所有文件和目录发送到Docker守护进程，以便它可以在构建镜像时使用这些文件。如果你在命令行中看到一个点作为`docker build`命令的最后一个参数，即`docker build .`通常是因为用户想要在当前目录下执行构建，并且没有明确指定一个不同的路径。这里的点（.）表示当前目录，Dockerfile将在这个目录下查找任何需要的构建上下文。如果你有一个特定的Dockerfile名字或者你想要指定一个不同的上下文目录，你可以使用**-f**标志来指定Dockerfile的路径和名字，然后指定你想要发送到守护进程的上下文目录：`docker build -f /path/to/a/Dockerfile /path/to/a/context/`，在这个例子中，Docker会使用/path/to/a/Dockerfile作为构建的Dockerfile，并将/path/to/a/context/目录下的所有文件和目录发送到守护进程。
 
 ### docker login
 

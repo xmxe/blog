@@ -847,6 +847,8 @@ yum <span class="token function">install</span> crontabs
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yixius/articles/6971054.html">解决Ubuntu的root账号无法登录SSH问题</a></p>
 </blockquote>
 <h3 id="查看指定目录大小"><a href="#查看指定目录大小" class="headerlink" title="查看指定目录大小"></a>查看指定目录大小</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token parameter variable">-h</span> --max-depth<span class="token operator">=</span><span class="token number">1</span> /usr
+<span class="token comment"># 查看指定文件大小</span>
+<span class="token function">du</span> <span class="token parameter variable">-sh</span> 文件名
 <span class="token comment"># -a或--all: 显示所有文件和目录的使用情况，而不仅仅是目录。</span>
 <span class="token comment"># -b或--bytes: 以字节为单位显示磁盘使用量。</span>
 <span class="token comment"># -c: 在结果中添加总计。</span>
@@ -859,7 +861,7 @@ yum <span class="token function">install</span> crontabs
 <span class="token comment"># -x: 仅在当前文件系统中查找。</span>
 
 <span class="token comment"># 查看整个磁盘空间</span>
-<span class="token function">df</span> <span class="token parameter variable">-h</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">df</span> <span class="token parameter variable">-h</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="查看内存"><a href="#查看内存" class="headerlink" title="查看内存"></a>查看内存</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">free</span> <span class="token parameter variable">-h</span>
 
@@ -1120,7 +1122,7 @@ swapoff ～/swapfile
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xmxe.gitee.io/blog/posts/a8a3d9e9be38/">https://xmxe.gitee.io/blog/posts/a8a3d9e9be38/</a>
+                    <a href="https://xmxe.github.io/blog/posts/a8a3d9e9be38/">https://xmxe.github.io/blog/posts/a8a3d9e9be38/</a>
                 </span>
             </div>
             <div class="reprint__notice">

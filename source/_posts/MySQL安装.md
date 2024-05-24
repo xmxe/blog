@@ -187,7 +187,7 @@ systemctl start mysql
 #### 6. 修改密码
 
 ```shell
-# 测试进入mysql
+# 测试进入mysql(注意端口为默认的3306,如果修改过默认端口,使用-P来指定端口)
 mysql -uroot -proot
 
 # UPDATE直接编辑user表,旧版本中密码字段是password,而不是authentication_string.注意加上user和host的查询条件,因为有可能host不一样,比如user表里查询user='root'有两条记录,一个host为'localhost',一个为'%',意味着相同用户本地登录是一个密码，远程登陆是一个密码
@@ -214,7 +214,7 @@ flush privileges;
 #### 7. 修改远程连接
 
 改表法
-```shell
+```sql
 use mysql
 update user set host='%' where user='root';
 flush privileges;
@@ -226,7 +226,20 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '密码' WITH GRANT OPTI
 GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'192.168.1.3' IDENTIFIED BY 'mypassword' WITH GRANT OPTION;
 ```
 
-#### 8. 其他
+#### 8.创建用户
+
+```sql
+-- 创建用户
+CREATE USER 'username'@'host' IDENTIFIED BY 'password';
+-- 授权
+GRANT ALL PRIVILEGES ON my_database.* TO 'username'@'host';
+-- 只授予部分权限
+GRANT SELECT, INSERT ON my_database.* TO 'username'@'host';
+-- 刷新权限
+flush privileges;
+```
+
+#### 9. 其他
 
 添加服务自启动
 ```shell

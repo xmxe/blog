@@ -1073,7 +1073,7 @@
 </blockquote>
 <p>现在，有两个线程都执行transfer方法。每个线程都会在它们自己的工作内存生成一个newTable的数组，用于存储变化后的链表，它们互不影响（这里互不影响，指的是两个新数组本身互不影响）。但是，需要注意的是，它们操作的数据却是同一份。一番扩容操作后出现环形链表，这时，有的同学可能就会问了，就算他们成环了，又怎样，跟死循环有什么关系？我们看下get()方法（最终调用getEntry方法），可以看到查找元素时，只要e不为空，就会一直循环查找下去。若有某个元素C的hash值也落在了和A，B元素同一个桶中，则会由于，A，B互相指向，e.next永远不为空，就会形成死循环。主要原因在于并发下的Rehash会造成元素之间会形成一个循环链表。不过，jdk1.8后解决了这个问题，但是还是不建议在多线程下使用HashMap,因为多线程下使用HashMap还是会存在其他问题比如数据丢失。并发环境下推荐使用ConcurrentHashMap。</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/9606.html">JAVA HASHMAP的死循环</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ">美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg">多线程环境下，HashMap为什么会出现死循环？</a></p>
+<p><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/9606.html">JAVA HASHMAP的死循环</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ">美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg">多线程环境下，HashMap为什么会出现死循环？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-IvCgU8fC0Au21BPxPyo-g">听说过HashMap会导致CPU飙升100%吗？</a></p>
 </blockquote>
 <h4 id="HashMap有哪几种常见的遍历方式"><a href="#HashMap有哪几种常见的遍历方式" class="headerlink" title="HashMap有哪几种常见的遍历方式?"></a>HashMap有哪几种常见的遍历方式?</h4><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zQBN3UvJDhRTKP6SzcZFKw">HashMap的7种遍历方式与性能分析</a></li>
@@ -1824,7 +1824,7 @@ person3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xmxe.gitee.io/blog/posts/366519dedccc/">https://xmxe.gitee.io/blog/posts/366519dedccc/</a>
+                    <a href="https://xmxe.github.io/blog/posts/366519dedccc/">https://xmxe.github.io/blog/posts/366519dedccc/</a>
                 </span>
             </div>
             <div class="reprint__notice">

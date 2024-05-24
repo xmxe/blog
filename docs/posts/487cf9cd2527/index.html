@@ -528,17 +528,19 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="mac软件推荐"><a href="#mac软件推荐" class="headerlink" title="mac软件推荐"></a>mac软件推荐</h2><h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a><a target="_blank" rel="noopener" href="https://typora.io/">Typora</a></h3><p>找到&#x2F;Applications&#x2F;Typora.app&#x2F;Contents&#x2F;Resources&#x2F;TypeMark&#x2F;page-dist&#x2F;static&#x2F;js&#x2F;LicenseIndex.180dd4c7.5dc16d09.chunk.js这一行代码<code>e.hasActivated = &quot;true&quot; == e.hasActivated</code>改为<code>e.hasActivated = &quot;true&quot; == &quot;true&quot;</code>保存即可。</p>
-<h3 id="Navicat"><a href="#Navicat" class="headerlink" title="Navicat"></a><a target="_blank" rel="noopener" href="https://www.navicat.com.cn/download/navicat-premium">Navicat</a></h3><p>脚本重置试用日期，项目地址<a target="_blank" rel="noopener" href="https://gitee.com/ProgHub/unlimited_trial_navicat_premium">点这里</a></p>
+                <h2 id="Mac软件推荐"><a href="#Mac软件推荐" class="headerlink" title="Mac软件推荐"></a>Mac软件推荐</h2><h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a><a target="_blank" rel="noopener" href="https://typora.io/">Typora</a></h3><blockquote>
+<p>找到&#x2F;Applications&#x2F;Typora.app&#x2F;Contents&#x2F;Resources&#x2F;TypeMark&#x2F;page-dist&#x2F;static&#x2F;js&#x2F;LicenseIndex.180dd4c7.5dc16d09.chunk.js这一行代码<code>e.hasActivated = &quot;true&quot; == e.hasActivated</code><br>改为<code>e.hasActivated = &quot;true&quot; == &quot;true&quot;</code>保存即可。</p>
+</blockquote>
+<h3 id="Navicat"><a href="#Navicat" class="headerlink" title="Navicat"></a><a target="_blank" rel="noopener" href="https://www.navicat.com.cn/download/navicat-premium">Navicat</a></h3><blockquote>
+<p>Navicat Premium16脚本重置试用日期，项目地址<a target="_blank" rel="noopener" href="https://gitee.com/ProgHub/unlimited_trial_navicat_premium">点这里</a>，下面为reset_navicat.sh源码</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 defaults delete com.navicat.NavicatPremium 91F6C435D172C8163E0689D3DAD3F3E9
 defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 <span class="token function">rm</span> <span class="token parameter variable">-rf</span> ~/Library/Application<span class="token punctuation">\</span> Support/PremiumSoft<span class="token punctuation">\</span> CyberTech/Navicat<span class="token punctuation">\</span> CC/Navicat<span class="token punctuation">\</span> Premium/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a><a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">Git</a></h3><p>源码构建：准备Git依赖库autotools、curl、zlib、openssl、expat和libiconv</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">起步-安装-Git</a><br>如果报错缺少环境可以使用<code>brew install autoconf</code>安装</p>
 </blockquote>
+<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a><a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">Git</a></h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">起步-安装-Git</a><br>源码构建：准备Git依赖库autotools、curl、zlib、openssl、expat和libiconv，如果报错缺少环境可以使用<code>brew install autoconf</code>安装</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxf</span> git-2.8.0.tar.gz
 <span class="token builtin class-name">cd</span> git-2.8.0
 <span class="token function">make</span> configure
@@ -546,45 +548,63 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 <span class="token function">make</span>
 <span class="token function">make</span> <span class="token assign-left variable">prefix</span><span class="token operator">=</span>/Users/ventura/Downloads/git <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="CleanMyMac-X"><a href="#CleanMyMac-X" class="headerlink" title="CleanMyMac X"></a><a target="_blank" rel="noopener" href="https://www.cleanmymac.cn/">CleanMyMac X</a></h3><p>清理垃圾时一直让输密码解决方案：<code>sudo launchctl load -w /Library/LaunchDaemons/com.macpaw.CleanMyMac.Agent.plist</code></p>
-<h3 id="Command-Line-Tools"><a href="#Command-Line-Tools" class="headerlink" title="Command Line Tools"></a><a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">Command Line Tools</a></h3><p>安装：在终端使用<code>xcode-select --install</code>命令</p>
-<p>卸载：<code>sudo rm -rf /Library/Developer/CommandLineTools</code></p>
-<h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a><a target="_blank" rel="noopener" href="https://brew.sh/zh-cn/">Homebrew</a></h3><ul>
-<li>安装Homebrew需要先安装[CommandLineTools](#Command Line Tools)</li>
-<li>通过<code>brew install</code>安装软件的路径为<code>/usr/local/Cellar</code>然后将下载的可执行二进制程序软连接到<code>/usr/local/bin</code></li>
-</ul>
-<h3 id="Parallels-Desktop"><a href="#Parallels-Desktop" class="headerlink" title="Parallels Desktop"></a><a target="_blank" rel="noopener" href="https://www.parallels.cn/products/desktop/">Parallels Desktop</a></h3><ul>
-<li>构建arm版windows ISO</li>
-</ul>
+</blockquote>
+<h3 id="CleanMyMac-X"><a href="#CleanMyMac-X" class="headerlink" title="CleanMyMac X"></a><a target="_blank" rel="noopener" href="https://www.cleanmymac.cn/">CleanMyMac X</a></h3><blockquote>
+<p>清理垃圾时一直让输密码解决方案：<br><code>sudo launchctl load -w /Library/LaunchDaemons/com.macpaw.CleanMyMac.Agent.plist</code></p>
+</blockquote>
+<h3 id="Command-Line-Tools"><a href="#Command-Line-Tools" class="headerlink" title="Command Line Tools"></a><a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">Command Line Tools</a></h3><blockquote>
+<p>安装：在终端使用<code>xcode-select --install</code>命令<br>卸载：<code>sudo rm -rf /Library/Developer/CommandLineTools</code></p>
+</blockquote>
+<h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a><a target="_blank" rel="noopener" href="https://brew.sh/zh-cn/">Homebrew</a></h3><blockquote>
+<p>安装Homebrew需要先安装[CommandLineTools](#Command Line Tools)。通过<code>brew install</code>安装软件的路径为<code>/usr/local/Cellar</code>然后将下载的可执行二进制程序软连接到<code>/usr/local/bin</code></p>
+</blockquote>
+<h3 id="Parallels-Desktop-VMWare-Fusion-Pro"><a href="#Parallels-Desktop-VMWare-Fusion-Pro" class="headerlink" title="Parallels Desktop||VMWare Fusion Pro"></a><a target="_blank" rel="noopener" href="https://www.parallels.cn/products/desktop/">Parallels Desktop</a>||<a target="_blank" rel="noopener" href="https://www.vmware.com/products/desktop-hypervisor.html">VMWare Fusion Pro</a></h3><p><strong>自己构建arm版windows ISO</strong></p>
 <ol>
-<li>访问<a target="_blank" rel="noopener" href="https://uupdump.net/">uupdump</a>，选择要构建的版本后下载压缩文件</li>
-<li>阅读read.unix.md文件安装依赖<blockquote>
-<p>注意：安装依赖可能不成功，解决方案见:<a target="_blank" rel="noopener" href="https://github.com/sidneys/homebrew-homebrew/issues/2">https://github.com/sidneys/homebrew-homebrew/issues/2</a><br>省流版：</p>
+<li><p>访问<a target="_blank" rel="noopener" href="https://uupdump.net/">uupdump</a>，选择要构建的版本后下载压缩文件</p>
+</li>
+<li><p>阅读read.unix.md文件安装依赖</p>
+<blockquote>
+<p>注意：安装依赖可能不成功，解决方案点<a target="_blank" rel="noopener" href="https://github.com/sidneys/homebrew-homebrew/issues/2">这里</a><br>省流版：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># brew tap sidneys/homebrew</span>
 <span class="token comment"># brew install cabextract wimlib cdrtools sidneys/homebrew/chntpw</span>
 <span class="token comment"># 使用下面的命令替换上面的命令</span>
 brew <span class="token function">install</span> cabextract wimlib cdrtools
 brew tap minacle/chntpw
 brew <span class="token function">install</span> minacle/chntpw/chntpw
-brew <span class="token function">install</span> aria2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></blockquote>
+brew <span class="token function">install</span> aria2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</blockquote>
 </li>
-<li><code>sh uup_download_macos.sh</code>或<code>./uup_download_macos.sh</code>,如果提示权限不足的话授权命令：<code>chmod +x uup_download_macos.sh</code></li>
+<li><p>执行<code>sh uup_download_macos.sh</code>或<code>./uup_download_macos.sh</code>。如果提示权限不足的话授权命令：<code>chmod +x uup_download_macos.sh</code></p>
+</li>
 </ol>
-<ul>
-<li>通过<a target="_blank" rel="noopener" href="https://next.itellyou.cn/">itellyou</a>下载镜像，可通过文件哈希值对比校验<blockquote>
-<p>查看文件MD5值</p>
+<p><strong>通过<a target="_blank" rel="noopener" href="https://next.itellyou.cn/">itellyou</a>下载镜像，可通过文件哈希值对比校验</strong></p>
 <blockquote>
-<p>Windows：<code>certutil -hashfile 文件路径 MD5</code>或者<code>Get-FileHash -Path 文件路径 -Algorithm MD5</code><br>Linux：<code>md5sum 文件路径</code><br>MacOS：<code>md5 文件路径</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token comment"># 查看文件MD5值</span>
+<span class="token operator">></span><span class="token comment"># Windows</span>
+<span class="token operator">></span>Get-FileHash <span class="token parameter variable">-Path</span> 文件路径 <span class="token parameter variable">-Algorithm</span> MD5
+<span class="token operator">></span><span class="token comment"># 或者certutil -hashfile 文件路径 MD5</span>
+<span class="token operator">></span><span class="token comment"># Linux</span>
+<span class="token operator">></span>md5sum 文件路径
+<span class="token operator">></span><span class="token comment"># MacOS</span>
+<span class="token operator">></span>md5 文件路径
+<span class="token operator">></span><span class="token comment"># 查看文件SHA-1或SHA-256值</span>
+<span class="token operator">></span><span class="token comment"># Windows</span>
+<span class="token operator">></span>Get-FileHash <span class="token parameter variable">-Path</span> 文件路径 <span class="token parameter variable">-Algorithm</span> SHA1<span class="token punctuation">(</span>SHA256<span class="token punctuation">)</span>
+<span class="token operator">></span><span class="token comment"># Linux</span>
+<span class="token operator">></span>shasum <span class="token parameter variable">-a</span> <span class="token number">1</span> 文件名 <span class="token operator">|</span> shasum <span class="token parameter variable">-a</span> <span class="token number">256</span> 文件名
+<span class="token operator">></span><span class="token comment"># 或者</span>
+<span class="token operator">></span>sha1sum 文件名 <span class="token operator">|</span> sha256sum 文件名
+<span class="token operator">></span><span class="token comment"># MacOS</span>
+<span class="token operator">></span>shasum <span class="token parameter variable">-a</span> <span class="token number">1</span> 文件名 <span class="token operator">|</span> shasum <span class="token parameter variable">-a</span> <span class="token number">256</span> 文件名
+<span class="token operator">></span><span class="token comment"># 或者</span>
+<span class="token operator">></span>openssl dgst <span class="token parameter variable">-sha1</span> 文件名 <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 </blockquote>
-<p>查看文件SHA-1或SHA-256值</p>
-<blockquote>
-<p>Windows：<code>Get-FileHash -Path 文件路径 -Algorithm SHA1</code> 或者<code>Get-FileHash -Path 文件路径 -Algorithm SHA256</code><br>Linux：<code>shasum -a 1 文件名</code>或者<code>shasum -a 256 文件名</code>或者<code>sha1sum 文件名</code>或者<code>sha256sum 文件名</code><br>MacOS：<code>shasum -a 1 文件名</code>或者<code>shasum -a 256 文件名</code>或者<code>openssl dgst -sha1 文件名</code>或者<code>openssl dgst -sha256 文件名</code></p>
-</blockquote>
-</blockquote>
-</li>
-</ul>
 <h3 id="Peek"><a href="#Peek" class="headerlink" title="Peek"></a><a target="_blank" rel="noopener" href="https://www.quicklookplugins.com/">Peek</a></h3><blockquote>
-<p>quicklook插件安装：将下载的.qlgenerator文件移动到<code>~/Library/QuickLook</code>后运行<code>qlmanage -r</code><br><code>qlmanage -caches</code>：列出Quick Look缓存中的文件和其相关信息。<br><code>qlmanage -m plugins</code>：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。<br><code>qlmanage -p 文件路径</code>：会在Quick Look中打开指定文件的预览。</p>
+<p>quicklook插件安装：将下载的.qlgenerator文件移动到<code>~/Library/QuickLook</code>后运行<code>qlmanage -r</code></p>
+<blockquote>
+<p><code>qlmanage -caches</code>：列出Quick Look缓存中的文件和其相关信息。<br><code>qlmanage -m plugins</code>：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。<br><code>qlmanage -p 文件路径</code>：会在Quick Look中打开指定文件的预览。</p>
+</blockquote>
 </blockquote>
 <h3 id="Office"><a href="#Office" class="headerlink" title="Office"></a><a target="_blank" rel="noopener" href="https://macwk.cn/2141.html">Office</a></h3><table>
 <thead>
@@ -623,17 +643,17 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <td align="center"><a target="_blank" rel="noopener" href="https://www.bandisoft.com/bandizip.mac/">Bandizip</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://macitbetter.com/downloads/">Betterzip</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.termius.com/">Termius</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://google.cn/chrome?standalone=1&platform=mac">Chrome</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">MySQL</a></td>
 </tr>
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://github.com/yichengchen/clashX/releases">Clash X</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.better365.cn/apps.html">iShot</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.better365.cn/apps.html">超级右键</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://google.cn/chrome?standalone=1&platform=mac">Chrome</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/%E5%8F%B3%E9%94%AE-%E4%B8%93%E4%B8%9A%E7%89%88/id6473515689">右键助手专业版</a></td>
 </tr>
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://motrix.app/">Motrix</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.downie.cn/">Downie</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://neatdownloadmanager.com/">NDM</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://app-cleaner.com/">App Cleaner &amp; Uninstaller</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">NodeJS</a></td>
 </tr>
@@ -646,29 +666,27 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">Intellij IDEA</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html">微信开发者工具</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">MySQL</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.pdfreaderpro.com/">PDF Reader Pro</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://iina.io/">IINA</a></td>
 </tr>
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://fliqlo.com/">Fliqlo</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://tool.atomtech.top/index.html">Mac EveryThing</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.zeroonetwenty.com/profind/">ProFind</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://neatdownloadmanager.com/">NDM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/permute-3/id1444998321">Permute 3</a></td>
 </tr>
 <tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.pdfreaderpro.com/">PDF Reader Pro</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/permute-3/id1444998321">Permute 3</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://zh.mweb.im/">MWeb Pro</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.downie.cn/">Downie</a></td>
+<td align="center"></td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h2 id="mac安装软件"><a href="#mac安装软件" class="headerlink" title="mac安装软件"></a>mac安装软件</h2><ul>
-<li><p>打开任何来源命令: <code>sudo spctl --master-disable</code></p>
-<blockquote>
-<p>关闭任何来源命令: <code>sudo spctl --master-enable</code></p>
-</blockquote>
-</li>
-<li><p>移除应用的安全隔离属性: <code>sudo xattr -rd com.apple.quarantine /Applications/*.app</code></p>
+<h2 id="Mac安装软件"><a href="#Mac安装软件" class="headerlink" title="Mac安装软件"></a>Mac安装软件</h2><h3 id="任何来源"><a href="#任何来源" class="headerlink" title="任何来源"></a>任何来源</h3><ul>
+<li>打开任何来源命令: <code>sudo spctl --master-disable</code></li>
+<li>关闭任何来源命令: <code>sudo spctl --master-enable</code></li>
+</ul>
+<h3 id="移除应用的安全隔离属性"><a href="#移除应用的安全隔离属性" class="headerlink" title="移除应用的安全隔离属性"></a>移除应用的安全隔离属性</h3><p><strong>sudo xattr -rd com.apple.quarantine &#x2F;Applications&#x2F;*.app</strong></p>
 <blockquote>
 <p>命令用于递归删除指定目录中的全部文件的“quarantine”扩展属性。在macOS系统中，当你从网络或其他未知来源下载并打开文件时，系统会将该文件标记为“quarantine”，以防止其潜在的安全风险。然而有时候，这种标记可能会对某些文件操作造成限制，例如某些脚本文件不能被执行。因此，当使用<code>xattr -r -d com.apple.quarantine</code>命令时，系统会删除指定目录中所有文件的“quarantine”扩展属性，以便您可以自由地使用这些文件。该命令的具体含义如下：</p>
 <ul>
@@ -677,17 +695,11 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <li>d：表示删除指定文件的扩展属性。com.apple.quarantine：是指要删除的扩展属性的名称，即“quarantine”。</li>
 </ul>
 </blockquote>
-</li>
-<li><p>对应用进行签名<br>安装[CommandLineTools](#Command Line Tools)后打开终端，输入<code>sudo codesign --force --deep --sign - 应用路径</code>，注意最后的–后面加一个空格。如遇错误：”&#x2F;文件位置 : replacing existing signature，&#x2F;文件位置 : resource fork,Finder information,or similar detritus not allowed”先在终端执行：<code>xattr -cr 应用路径</code>然后再次执行指令即可：<code>codesign --force --deep --sign - 应用路径</code>,完成后再次打开应用尝试</p>
-</li>
-<li><p>安装Rosetta 2（Intel运行M芯片程序）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装完成后可以在显示简介中勾选使用Rosetta打开</span>
+<h3 id="对应用进行签名"><a href="#对应用进行签名" class="headerlink" title="对应用进行签名"></a>对应用进行签名</h3><p>安装[CommandLineTools](#Command Line Tools)后打开终端，输入<code>sudo codesign --force --deep --sign - 应用路径</code>，注意最后的–后面加一个空格。如遇错误：”&#x2F;文件位置 : replacing existing signature，&#x2F;文件位置 : resource fork,Finder information,or similar detritus not allowed“先在终端执行：<code>xattr -cr 应用路径</code>然后再次执行指令即可：<code>codesign --force --deep --sign - 应用路径</code>,完成后再次打开应用尝试</p>
+<h3 id="安装Rosetta-2（M芯片运行Intel程序）"><a href="#安装Rosetta-2（M芯片运行Intel程序）" class="headerlink" title="安装Rosetta 2（M芯片运行Intel程序）"></a>安装Rosetta 2（M芯片运行Intel程序）</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装完成后可以在显示简介中勾选使用Rosetta打开</span>
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>关闭SIP</p>
-</li>
-</ul>
-<ol>
+
+<h3 id="关闭SIP"><a href="#关闭SIP" class="headerlink" title="关闭SIP"></a>关闭SIP</h3><ol>
 <li>关机，然后重新启动你的Mac电脑，在开机时一直按住<code>Command+R</code>迸入Recovery模式（m1改为长按电源键，点击选项，选择一个用户进去）</li>
 <li>进入Recovery模式后在顶部菜单栏点击:实用工具-&gt;终端</li>
 <li>在终端上输入以下命令然后回车：<code>csrutil disable</code><blockquote>
@@ -696,44 +708,29 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 </li>
 <li>点击左上角苹果图标，点击重新启动</li>
 </ol>
-<h2 id="mac显示隐藏文件"><a href="#mac显示隐藏文件" class="headerlink" title="mac显示隐藏文件"></a>mac显示隐藏文件</h2><p>快捷键<code>command+shift+.</code>。或者在终端输入</p>
+<h2 id="Mac显示隐藏文件"><a href="#Mac显示隐藏文件" class="headerlink" title="Mac显示隐藏文件"></a>Mac显示隐藏文件</h2><blockquote>
+<p>快捷键<code>command+shift+.</code>。或者在终端输入</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Mac显示“隐藏文件”命令</span>
 defaults <span class="token function">write</span> com.apple.finder AppleShowAllFiles <span class="token parameter variable">-bool</span> <span class="token boolean">true</span>
 <span class="token comment"># Mac隐藏“隐藏文件”命令</span>
 defaults <span class="token function">write</span> com.apple.finder AppleShowAllFiles <span class="token parameter variable">-bool</span> <span class="token boolean">false</span>
 <span class="token comment"># 重启访达进程</span>
 <span class="token comment"># killall Finder</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="mac设置环境变量"><a href="#mac设置环境变量" class="headerlink" title="mac设置环境变量"></a>mac设置环境变量</h2><p>创建<code>~/.bash_profile</code>文件。编辑java环境变量</p>
+</blockquote>
+<h2 id="Mac设置环境变量"><a href="#Mac设置环境变量" class="headerlink" title="Mac设置环境变量"></a>Mac设置环境变量</h2><blockquote>
+<p>创建<code>~/.bash_profile</code>文件。编辑java环境变量</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
 <span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$JAVA_HOME</span>/bin
 <span class="token comment"># 终端执行命令使环境变量生效</span>
 <span class="token builtin class-name">source</span> ~/.bash_profile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
+</blockquote>
 <blockquote>
 <p>注意：检查mac的shell是zsh还是bash，新系统默认是zsh。zsh读取的配置文件是<code>~/.zshrc</code>，bash读取的配置文件是<code>~/.bash_profile</code>。所以当使用<code>source ~/.bash_profile</code>时退出终端再打开会导致环境变量失效，此时要么在<code>~/.zshrc</code>文件编辑同样的内容后执行<code>source ~/.zshrc</code>，要么在<code>~/.zshrc</code>文件里面添加<code>source ~/.bash_profile</code>内容</p>
 </blockquote>
-<h2 id="mac更换app图标"><a href="#mac更换app图标" class="headerlink" title="mac更换app图标"></a>mac更换app图标</h2><p>在<a target="_blank" rel="noopener" href="https://macosicons.com/">这里</a>选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可</p>
-<h2 id="mac允许远程登陆"><a href="#mac允许远程登陆" class="headerlink" title="mac允许远程登陆"></a>mac允许远程登陆</h2><ul>
-<li><p>通用-共享-打开远程登录</p>
-</li>
-<li><p>授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd</p>
-</li>
-</ul>
-<h2 id="mac下的-fseventsd，-Spotlight-V100，-Trashes"><a href="#mac下的-fseventsd，-Spotlight-V100，-Trashes" class="headerlink" title="mac下的.fseventsd，.Spotlight-V100，.Trashes"></a>mac下的.fseventsd，.Spotlight-V100，.Trashes</h2><p>这三个文件夹（.fseventsd，.Spotlight-V100，.Trashes）是Mac OS X系统生成的隐藏文件，用于存储系统的临时数据和缓存。通常，它们不应该被手动删除，因为它们对系统的正常运行非常重要。但是，如果你确实需要删除它们，可以尝试使用命令行或者第三方软件来进行操作。</p>
-<ol>
-<li><p>.fseventsd文件夹：这个文件夹是Mac OS X的File System Events框架使用的，它用于跟踪文件和目录的更改。这个框架是Mac OS X的核心部分，很多应用程序都依赖于它，因此，手动删除这个文件夹可能会导致系统不稳定或者应用程序出错。</p>
-</li>
-<li><p>.Spotlight-V100文件夹：Spotlight是Mac OS X的内置搜索引擎，.Spotlight-V100文件夹是Spotlight用来存储索引数据的。如果你删除了这个文件夹，Spotlight将无法正常工作，你可能会在搜索文件时遇到问题。</p>
-</li>
-<li><p>.Trashes文件夹：这个文件夹用于存储每个用户在废纸篓中删除的文件。每个用户都有自己的.Trashes子文件夹，这些子文件夹被链接到用户的废纸篓。手动删除这个文件夹可能会导致你无法正常使用废纸篓，或者丢失已删除的文件。</p>
-</li>
-</ol>
-<h2 id="mac制作U盘启动盘"><a href="#mac制作U盘启动盘" class="headerlink" title="mac制作U盘启动盘"></a>mac制作U盘启动盘</h2><blockquote>
-<p>注意U盘的格式，Windows启动盘经实验使用fat32无法正常安装（报错”复制Windows安装文件时出错”，原因看<a target="_blank" rel="noopener" href="https://twocanoes.com/using-larger-windows-10-isos-with-boot-camp-assistant/">这里</a>），因为fat32单个文件大小不支持4G，制作Wondows启动盘的话最好是统一使用NTFS或exFAT</p>
+<h2 id="Mac制作U盘启动盘"><a href="#Mac制作U盘启动盘" class="headerlink" title="Mac制作U盘启动盘"></a>Mac制作U盘启动盘</h2><blockquote>
+<p>注意U盘的格式，Windows启动盘经实验使用fat32无法正常安装，因为fat32单个文件大小不支持4G，制作Windows启动盘的话最好是统一使用NTFS或exFAT（报错”复制Windows安装文件时出错”，具体原因看<a target="_blank" rel="noopener" href="https://twocanoes.com/using-larger-windows-10-isos-with-boot-camp-assistant/">这里</a>）</p>
 </blockquote>
-<p><strong>Windows启动盘</strong></p>
-<ol>
+<h3 id="Windows启动盘"><a href="#Windows启动盘" class="headerlink" title="Windows启动盘"></a>Windows启动盘</h3><ol>
 <li><p>准备U盘和ISO文件</p>
 <blockquote>
 <p>如果U盘无法正常读取且提示无法格式化，windows上的解决办法</p>
@@ -751,15 +748,14 @@ create partition primary
 </li>
 <li><p><code>cp -rp /Volumes/IR5_CCSA_X86FRE_ZH-CN_DV9/* /Volumes/WIN7/</code>,将ISO文件拷贝到U盘。其中IR5_CCSA_X86FRE_ZH-CN_DV9为打开ISO后的磁盘映像。</p>
 <blockquote>
-<p><code>rsync -avh --progress --exclude=sources/install.wim /Volumes/CCCOMA_X64FRE_EN-CN_DV9/ /Volumes/WINDOWS11</code>以归档模式同步文件，并显示详细进度信息，但排除名为install.wim的文件。</p>
+<p><code>rsync -avh --progress --exclude=sources/install.wim /Volumes/CCCOMA_X64FRE_EN-CN_DV9/ /Volumes/WINDOWS11</code><br>以归档模式同步文件，并显示详细进度信息，但排除名为install.wim的文件。</p>
 <blockquote>
 <p>rsync和cp都是用于文件复制的命令，但它们之间有几个关键的区别：<br><strong>功能</strong>：cp命令用于简单的文件复制，它将源文件复制到目标位置，但不会保留额外的元数据或权限信息。rsync命令不仅可以复制文件，还可以实现文件同步。它可以在本地文件系统之间，或者通过网络，同步文件和目录，并保留文件的属性、权限等。<br><strong>同步能力</strong>：cp命令复制文件时，如果目标文件已经存在，它会直接覆盖目标文件。rsync命令能够进行增量同步，只复制发生变化的部分，因此效率更高。它还可以在复制过程中实时显示进度，方便监控和管理。<br><strong>网络传输</strong>：cp命令只能在本地文件系统内复制文件，不能在网络上进行文件同步。rsync命令可以在本地和远程系统之间同步文件，因此适用于在不同主机之间同步文件或备份数据。</p>
 </blockquote>
 </blockquote>
 </li>
 </ol>
-<p><strong>Ubuntu启动盘</strong></p>
-<ol>
+<h3 id="Ubuntu启动盘"><a href="#Ubuntu启动盘" class="headerlink" title="Ubuntu启动盘"></a>Ubuntu启动盘</h3><ol>
 <li>用hdiutil将ISO转dmg<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hdiutil convert <span class="token parameter variable">-format</span> UDRW <span class="token parameter variable">-o</span> /Users/Downloads/ubuntu /Users/Downloads/ubuntu-22.04.1-live-server.iso
 <span class="token comment"># 制作windows启动盘同理</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 <li>查看U盘名称<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">diskutil list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
@@ -769,17 +765,61 @@ create partition primary
 <span class="token comment"># sudo dd if=/path/win10.dmg of=/dev/rdisk2 bs=1m</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li>弹出U盘<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">diskutil <span class="token function">eject</span> /dev/disk2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
-<p><strong>Ubuntu系统制作Windows启动盘</strong></p>
-<ol>
+<h3 id="在Ubuntu系统下制作Windows启动盘"><a href="#在Ubuntu系统下制作Windows启动盘" class="headerlink" title="在Ubuntu系统下制作Windows启动盘"></a>在Ubuntu系统下制作Windows启动盘</h3><ol>
 <li>打开磁盘工具，格式化U盘(NTFS)，并记录U盘设备名称<code>/dev/sdb</code></li>
 <li>下载<a target="_blank" rel="noopener" href="https://github.com/WoeUSB/WoeUSB/releases/">woeusb.bash</a>并授权<code>chmod +x woeusb-5.2.4.bash</code></li>
 <li><code>apt install wimtools</code></li>
 <li><code>bash woeusb-5.2.4.bash --device win7.iso /dev/sdb --target-filesystem NTFS</code></li>
 </ol>
-<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/qianguyihao/Mac-list">Mac-list</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jaywcjlove/awesome-mac">awesome-mac</a></li>
+<h2 id="Mac更换app图标"><a href="#Mac更换app图标" class="headerlink" title="Mac更换app图标"></a>Mac更换app图标</h2><p>在<a target="_blank" rel="noopener" href="https://macosicons.com/">这里</a>选取图标，拖动网页中的图标到“显示简介”界面左上角旧图标处即可</p>
+<h2 id="Mac允许远程登陆"><a href="#Mac允许远程登陆" class="headerlink" title="Mac允许远程登陆"></a>Mac允许远程登陆</h2><ul>
+<li><p>通用-共享-打开远程登录</p>
+</li>
+<li><p>授权sftp软件访问目录：隐私-完全磁盘访问权限-sshd</p>
+</li>
 </ul>
+<h2 id="Mac下的隐藏文件夹"><a href="#Mac下的隐藏文件夹" class="headerlink" title="Mac下的隐藏文件夹"></a>Mac下的隐藏文件夹</h2><p>这三个文件夹（.fseventsd，.Spotlight-V100，.Trashes）是Mac OS X系统生成的隐藏文件，用于存储系统的临时数据和缓存。通常，它们不应该被手动删除，因为它们对系统的正常运行非常重要。但是，如果你确实需要删除它们，可以尝试使用命令行或者第三方软件来进行操作。</p>
+<ol>
+<li>.fseventsd文件夹：这个文件夹是Mac OS X的File System Events框架使用的，它用于跟踪文件和目录的更改。这个框架是Mac OS X的核心部分，很多应用程序都依赖于它，因此，手动删除这个文件夹可能会导致系统不稳定或者应用程序出错。</li>
+<li>.Spotlight-V100文件夹：Spotlight是Mac OS X的内置搜索引擎，.Spotlight-V100文件夹是Spotlight用来存储索引数据的。如果你删除了这个文件夹，Spotlight将无法正常工作，你可能会在搜索文件时遇到问题。</li>
+<li>.Trashes文件夹：这个文件夹用于存储每个用户在废纸篓中删除的文件。每个用户都有自己的.Trashes子文件夹，这些子文件夹被链接到用户的废纸篓。手动删除这个文件夹可能会导致你无法正常使用废纸篓，或者丢失已删除的文件。</li>
+</ol>
+<h2 id="动态壁纸路径"><a href="#动态壁纸路径" class="headerlink" title="动态壁纸路径"></a>动态壁纸路径</h2><pre class="line-numbers language-none"><code class="language-none">&#x2F;Library&#x2F;Application Support&#x2F;com.apple.idleassetsd&#x2F;Customer&#x2F;4KSDR240FPS<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://github.com/qianguyihao/Mac-list">Mac-list</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://github.com/jaywcjlove/awesome-mac">awesome-mac</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://www.macqj.com/">MAC青桔</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.macat.vip/">马克喵</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.macgf.com/">MACGF</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://macked.app/">macked</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://appstorrent.ru/">appstorrent</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://foxirj.com/">佛系软件</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://macwk.cn/">macwk</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.macvk.com/">macvk</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.macbed.com/">Appked</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://macoshome.com/">苹果系统之家</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.seemac.cn/">SeeMac</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://macxzb.com/">MAC下载吧</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.macdo.cn/">Mac毒</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://xclient.info/">Xclient</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.mac8k.com/">Mac8k</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
                 
             </div>
@@ -806,7 +846,7 @@ create partition primary
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xmxe.gitee.io/blog/posts/487cf9cd2527/">https://xmxe.gitee.io/blog/posts/487cf9cd2527/</a>
+                    <a href="https://xmxe.github.io/blog/posts/487cf9cd2527/">https://xmxe.github.io/blog/posts/487cf9cd2527/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1035,7 +1075,8 @@ create partition primary
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            mac软件推荐Typora找到&#x2F;Applications&#x2F;Typora.app&#x2F;Contents&#x2F;Resources&#x2F;TypeMark&#x2F;page-dist&#x2F;static&
+                            Mac软件推荐Typora
+找到&#x2F;Applications&#x2F;Typora.app&#x2F;Contents&#x2F;Resources&#x2F;TypeMark&#x2F;page-dist&#x2F;static
                         
                         
                     </div>

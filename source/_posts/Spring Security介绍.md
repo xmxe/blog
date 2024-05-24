@@ -119,3 +119,4 @@ AuthenticationManager.authenticate()-->ProviderManager.authenticate()-->DaoAuthe
 - [Spring Security6全新写法，大变样！](https://mp.weixin.qq.com/s/RXNt1M3KND4aJbr0ZhHing)
 - [最新版Spring Security，该如何实现动态权限管理？](https://mp.weixin.qq.com/s/DrwmgouVzWvJPpnvWJuxhQ)
 - [新版Spring Security中的路径匹配方案！](https://mp.weixin.qq.com/s/pirWNQx6nCKI650MR3_1Mw)
+- [解锁Spring Security6：核心安全机制](https://mp.weixin.qq.com/s/5Sa4eYj1JqqE0FiuoeG47w)

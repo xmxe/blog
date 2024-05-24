@@ -638,6 +638,7 @@ public class HashMapDemo {
 > [JAVA HASHMAP的死循环](https://coolshell.cn/articles/9606.html)
 > [美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）](https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ)
 > [多线程环境下，HashMap为什么会出现死循环？](https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg)
+> [听说过HashMap会导致CPU飙升100%吗？](https://mp.weixin.qq.com/s/-IvCgU8fC0Au21BPxPyo-g)
 
 #### HashMap有哪几种常见的遍历方式?
 

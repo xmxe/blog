@@ -26,18 +26,16 @@ git diff commit-id commit-id
 ### git reset
 
 ```shell
-# 将未commit的文件移出Staging区
+# 将未commit的文件移出Staging区(撤销git add)
 git reset HEAD
-# 重置Staging区与上次commit的一样
-git reset --hard  
-# 重置Commit代码和远程分支代码一样
+# 撤销git add操作(已经将文件添加到暂存区)不加filename就是上一次add里面的全部撤销了
+git reset HEAD filename
+# 重置代码和远程分支代码一样
 git reset --hard origin/master
 # 回退到上个commit 删除工作空间改动代码，撤销commit，撤销git add
 git reset --hard HEAD^
 # 回退到前3次提交之前，以此类推，回退到n次提交之前
 git reset --hard HEAD~3
-# 撤销git add操作（已经将文件添加到暂存区）不加filename就是上一次add里面的全部撤销了
-git reset HEAD filename
 # 回退到指定版本 --hard强制将暂存区和工作目录都同步到你指定的提交
 git reset --hard commitid
 # 不删除工作空间改动代码，撤销commit，不撤销git add

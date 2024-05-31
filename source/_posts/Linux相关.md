@@ -727,21 +727,10 @@ reboot
 
 ## 相关文章
 
-- [Linux基础知识总结](https://javaguide.cn/cs-basics/operating-system/linux-intro.html)
-- [程序员必备的150个Linux命令！](https://mp.weixin.qq.com/s/wejhjmbtS16AdlDo0JiLMA)
-- [新人必备的Linux命令！](https://mp.weixin.qq.com/s/TvUcd7mLkHxD_botoo7BQg)
-- [1000+常用的Linux命令来袭](https://mp.weixin.qq.com/s/43JCaDehv0nbzDKbe0S8Kg)
-- [作为一名Java开发人员，应该从多大程度上掌握Linux？](https://www.zhihu.com/question/319076999/answer/672319588?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline)
-- [30个实例详解TOP命令](https://mp.weixin.qq.com/s/2FDa8fOm6x4-1MP9l9N7vA)
-- [ping命令的7大用法,看完秒变大神！](https://mp.weixin.qq.com/s/liiz58PC1JlfPaEW81wUpg)
-- [听说你ping用的很6,给我图解一下ping的工作原理](https://mp.weixin.qq.com/s/4pPdcSak3YLyqiz4Ns8htQ)
-- [ping命令还能这么玩？](https://mp.weixin.qq.com/s/fLY3JH5_4_h4vABV7B-4uw)
-- [后端线上问题排查常用命令收藏](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494347&idx=1&sn=2f6bfe4a5716d4b0aba6d8b5348f7033&source=41#wechat_redirect)
-- [Java开发常用的Linux命令知识积累](https://mp.weixin.qq.com/s/jlmPjqFTfP4JNmbhpGoHsA)
-- [这篇Linux总结的真棒！](https://mp.weixin.qq.com/s/F_0kiOWgQS4BINx2t2Rqtw)
-- [Linux远程桌面管理工具！功能真心强大](https://mp.weixin.qq.com/s/UT3RYrUGP2E5JQbf1Z8c8w)
-- [在Linux上保护SSH服务器连接的8种方法](https://mp.weixin.qq.com/s/kxvc95RJoSKqcXwwmyrPKg)
-- [发现谁用kill -9关闭程序就开除！](https://mp.weixin.qq.com/s/zmfCC083VBrA8P6uWHL2DQ)
-- [万字详解Linux常用指令](https://mp.weixin.qq.com/s/hXDAZD0LUJ9g85t6fkBR-Q)
-- [最强Linux命令总结（特别推荐版）](https://mp.weixin.qq.com/s/KN9OPZMhmuA6rhx5YTjwDA)
-- [Linux命令大全搜索工具，内容包含Linux命令手册、详解、学习、搜集](https://github.com/jaywcjlove/linux-command)
+| [Linux基础知识总结](https://javaguide.cn/cs-basics/operating-system/linux-intro.html) | [程序员必备的150个Linux命令！](https://mp.weixin.qq.com/s/wejhjmbtS16AdlDo0JiLMA) | [新人必备的Linux命令！](https://mp.weixin.qq.com/s/TvUcd7mLkHxD_botoo7BQg) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [1000+常用的Linux命令来袭](https://mp.weixin.qq.com/s/43JCaDehv0nbzDKbe0S8Kg) | [作为一名Java开发人员，应该从多大程度上掌握Linux？](https://www.zhihu.com/question/319076999/answer/672319588?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline) | [30个实例详解TOP命令](https://mp.weixin.qq.com/s/2FDa8fOm6x4-1MP9l9N7vA) |
+| [ping命令的7大用法,看完秒变大神！](https://mp.weixin.qq.com/s/liiz58PC1JlfPaEW81wUpg) | [听说你ping用的很6,给我图解一下ping的工作原理](https://mp.weixin.qq.com/s/4pPdcSak3YLyqiz4Ns8htQ) | [ping命令还能这么玩？](https://mp.weixin.qq.com/s/fLY3JH5_4_h4vABV7B-4uw) |
+| [后端线上问题排查常用命令收藏](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494347&idx=1&sn=2f6bfe4a5716d4b0aba6d8b5348f7033&source=41#wechat_redirect) | [Java开发常用的Linux命令知识积累](https://mp.weixin.qq.com/s/jlmPjqFTfP4JNmbhpGoHsA) | [这篇Linux总结的真棒！](https://mp.weixin.qq.com/s/F_0kiOWgQS4BINx2t2Rqtw) |
+| [Linux远程桌面管理工具！功能真心强大](https://mp.weixin.qq.com/s/UT3RYrUGP2E5JQbf1Z8c8w) | [在Linux上保护SSH服务器连接的8种方法](https://mp.weixin.qq.com/s/kxvc95RJoSKqcXwwmyrPKg) | [发现谁用kill -9关闭程序就开除！](https://mp.weixin.qq.com/s/zmfCC083VBrA8P6uWHL2DQ) |
+| [万字详解Linux常用指令](https://mp.weixin.qq.com/s/hXDAZD0LUJ9g85t6fkBR-Q) | [最强Linux命令总结（特别推荐版）](https://mp.weixin.qq.com/s/KN9OPZMhmuA6rhx5YTjwDA) | [Linux命令大全搜索工具，内容包含Linux命令手册、详解、学习、搜集](https://github.com/jaywcjlove/linux-command) |

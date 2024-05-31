@@ -506,9 +506,7 @@ Tinyid的优缺点这里就不分析了，结合数据库号段模式的优缺�
 通过这篇文章，我基本上已经把最常见的分布式ID生成方案都总结了一波。除了上面介绍的方式之外，像ZooKeeper这类中间件也可以帮助我们生成唯一ID。需要结合实际项目来选择最适合自己的方案。
 
 > [原文链接](https://javaguide.cn/distributed-system/distributed-id.html)
-> 
->
-> [深度介绍分布式系统原理与设计](https://mp.weixin.qq.com/s/-30WmwoYHg0oWZSWedE5MQ)
-> [一口气说出9种分布式ID生成方式](https://mp.weixin.qq.com/s/zXchd2SEjLkHftCe9-2_-Q)
-> [七种分布式全局ID生成策略，你更爱哪种](https://mp.weixin.qq.com/s/jGq7SvVggZ7gNqM2SZ320Q)
-> [一起学习下一线大厂的分布式唯一ID生成方案](https://mp.weixin.qq.com/s/dEkkSCbQzfhH3NuXsbbY0w)
+
+| [深度介绍分布式系统原理与设计](https://mp.weixin.qq.com/s/-30WmwoYHg0oWZSWedE5MQ) | [一口气说出9种分布式ID生成方式](https://mp.weixin.qq.com/s/zXchd2SEjLkHftCe9-2_-Q) | [七种分布式全局ID生成策略，你更爱哪种](https://mp.weixin.qq.com/s/jGq7SvVggZ7gNqM2SZ320Q) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [一起学习下一线大厂的分布式唯一ID生成方案](https://mp.weixin.qq.com/s/dEkkSCbQzfhH3NuXsbbY0w) |                                                              |                                                              |

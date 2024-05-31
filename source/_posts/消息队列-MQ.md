@@ -497,24 +497,13 @@ future.addCallback(result -> logger.info("生产者成功发送消息到topic:{}
 
 #### 相关文章
 
-- [Kafka安装及快速入门](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493725&idx=1&sn=96eb8c16aa8cfe8336334d93c4034ed2&source=41#wechat_redirect)
-- [带你涨姿势的认识一下kafka](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491187&idx=1&sn=f0f092e675677d87ea0675f65bb1eb14&source=41#wechat_redirect)
-- [Kafka Shell基本命令](https://www.cnblogs.com/xiaodf/p/6093261.html)
-- [漫画：图解Kafka，看本篇就足够啦](https://mp.weixin.qq.com/s/FP3z5JMRB9Oo5pr22kr3XA)
-- [你能说出Kafka这些原理吗？](https://mp.weixin.qq.com/s/lXds_G5LLs7CArMLyTAF6g)
-- [Kafka基本架构及原理](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493937&idx=1&sn=3b2710a62cbb51b3f7c607bfd97664c1&source=41#wechat_redirect)
-- [9个Kafka面试题，你会几个？](https://mp.weixin.qq.com/s/LAXrK6WT1bv7I63BmvpXQg)
-- [Kafka中副本机制的设计和原理](https://mp.weixin.qq.com/s/yIPIABpAzaHJvGoJ6pv0kg)
-- [从面试角度一文学完Kafka](https://mp.weixin.qq.com/s/Ndwrlst-aVdUpcNz-inM3Q)
-- [支持百万级TPS，Kafka是怎么做到的？](https://mp.weixin.qq.com/s/Fvd_RcdMHzcwm3fBlpT8vw)
-- [Kafka深度剖析](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494362&idx=1&sn=f16c4f215dd83c81957b0b431b147902&source=41#wechat_redirect)
-- [Kafka性能篇：为何Kafka这么"快"](https://mp.weixin.qq.com/s/2wGCEWisbynCIjRsO2gxDg)
-- [Kafka为什么吞吐量大、速度快？](https://mp.weixin.qq.com/s/fOhlF6crYGXRNHjV0nLQLQ)
-- [图解kafka架构与工作原理](https://mp.weixin.qq.com/s/V3BlPGOuGPnmT36a500o7g)
-- [面试官：聊一聊kafka线上会遇到哪些问题？](https://mp.weixin.qq.com/s/cmDqGpTiHKRqcSaQVesJVA)
-- [《面试八股文》之Kafka21卷](https://mp.weixin.qq.com/s/l75MIcG4cf8C59z1JcfygA)
-- [20,000+字，彻底搞懂Kafka](https://mp.weixin.qq.com/s/nKjKtJ5lOmYLjUrgS5qwsQ)
-- [一文掌握Kafka生产者发送消息流程原理](https://mp.weixin.qq.com/s/xe3GMo8DxZUHh-y-L9B2Nw)
+| [Kafka安装及快速入门](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493725&idx=1&sn=96eb8c16aa8cfe8336334d93c4034ed2&source=41#wechat_redirect) | [带你涨姿势的认识一下kafka](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491187&idx=1&sn=f0f092e675677d87ea0675f65bb1eb14&source=41#wechat_redirect) | [Kafka Shell基本命令](https://www.cnblogs.com/xiaodf/p/6093261.html) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [漫画：图解Kafka，看本篇就足够啦](https://mp.weixin.qq.com/s/FP3z5JMRB9Oo5pr22kr3XA) | [你能说出Kafka这些原理吗？](https://mp.weixin.qq.com/s/lXds_G5LLs7CArMLyTAF6g) | [Kafka基本架构及原理](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493937&idx=1&sn=3b2710a62cbb51b3f7c607bfd97664c1&source=41#wechat_redirect) |
+| [9个Kafka面试题，你会几个？](https://mp.weixin.qq.com/s/LAXrK6WT1bv7I63BmvpXQg) | [Kafka中副本机制的设计和原理](https://mp.weixin.qq.com/s/yIPIABpAzaHJvGoJ6pv0kg) | [从面试角度一文学完Kafka](https://mp.weixin.qq.com/s/Ndwrlst-aVdUpcNz-inM3Q) |
+| [支持百万级TPS，Kafka是怎么做到的？](https://mp.weixin.qq.com/s/Fvd_RcdMHzcwm3fBlpT8vw) | [Kafka深度剖析](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494362&idx=1&sn=f16c4f215dd83c81957b0b431b147902&source=41#wechat_redirect) | [Kafka性能篇：为何Kafka这么"快"](https://mp.weixin.qq.com/s/2wGCEWisbynCIjRsO2gxDg) |
+| [Kafka为什么吞吐量大、速度快？](https://mp.weixin.qq.com/s/fOhlF6crYGXRNHjV0nLQLQ) | [图解kafka架构与工作原理](https://mp.weixin.qq.com/s/V3BlPGOuGPnmT36a500o7g) | [面试官：聊一聊kafka线上会遇到哪些问题？](https://mp.weixin.qq.com/s/cmDqGpTiHKRqcSaQVesJVA) |
+| [《面试八股文》之Kafka21卷](https://mp.weixin.qq.com/s/l75MIcG4cf8C59z1JcfygA) | [20,000+字，彻底搞懂Kafka](https://mp.weixin.qq.com/s/nKjKtJ5lOmYLjUrgS5qwsQ) | [一文掌握Kafka生产者发送消息流程原理](https://mp.weixin.qq.com/s/xe3GMo8DxZUHh-y-L9B2Nw) |
 
 ### RocketMQ
 
@@ -941,12 +930,9 @@ class Broker {
 
 #### 相关文章
 
-- [阿里二面：RocketMQ消息积压了，增加消费者有用吗？](https://mp.weixin.qq.com/s/804KWy4Gf9EIo9GiNRg5Fg)
-- [如何基于RocketMQ设计一套全链路消息不丢失方案？](https://mp.weixin.qq.com/s/_Gl8MqcSa5gASLXSxyhHCg)
-- [通过这三个文件彻底搞懂rocketmq的存储原理](https://mp.weixin.qq.com/s/4k_g85aktaBhwSl9iu6r5A)
-- [RocketMQ集群Broker挂了，会造成什么影响？](https://mp.weixin.qq.com/s/vIqOEeNBCSQJDB-qNYukTQ)
-- [RocketMQ高级功能代码实现](https://mp.weixin.qq.com/s/WVZRVMUACXuYwuJLjGIUHA)
-- [解读RocketMQ5.0全新的高可用设计](https://mp.weixin.qq.com/s/uXL5LKYBMzNsmWtRk6MYAg)
+| [阿里二面：RocketMQ消息积压了，增加消费者有用吗？](https://mp.weixin.qq.com/s/804KWy4Gf9EIo9GiNRg5Fg) | [如何基于RocketMQ设计一套全链路消息不丢失方案？](https://mp.weixin.qq.com/s/_Gl8MqcSa5gASLXSxyhHCg) | [通过这三个文件彻底搞懂rocketmq的存储原理](https://mp.weixin.qq.com/s/4k_g85aktaBhwSl9iu6r5A) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [RocketMQ集群Broker挂了，会造成什么影响？](https://mp.weixin.qq.com/s/vIqOEeNBCSQJDB-qNYukTQ) | [RocketMQ高级功能代码实现](https://mp.weixin.qq.com/s/WVZRVMUACXuYwuJLjGIUHA) | [解读RocketMQ5.0全新的高可用设计](https://mp.weixin.qq.com/s/uXL5LKYBMzNsmWtRk6MYAg) |
 
 ### RabbitMQ
 
@@ -1385,18 +1371,11 @@ RabbtiMQ是可以设置过期时间的，也就是TTL。如果消息在queue中�
 
 #### 相关文章
 
-- [四种策略确保RabbitMQ消息发送可靠性！你用哪种？](https://mp.weixin.qq.com/s/hj8iqASSOk2AgdtkuLPCCQ)
-- [新来个技术总监，把RabbitMQ讲的那叫一个透彻，佩服！](https://mp.weixin.qq.com/s/RzxiXBQk3zjHt9PVI3JSQw)
-- [RabbitMQ高可用之如何确保消息成功消费](https://mp.weixin.qq.com/s/5szA0KBpFn9G3DeS9C0U3w)
-- [RabbitMQ中的消息会过期吗](https://mp.weixin.qq.com/s/fFqzuN2AnLazoCyahL3EFw)
-- [RabbitMQ七种消息传递形式](https://mp.weixin.qq.com/s/inhSj-nIiDCfUf24TrE2XA)
-- [使用rabbitmq延时队列实现超时取消订单](https://mp.weixin.qq.com/s/V_XZ2vC2jZmzxm-0ThhiTg)
-- [面试官：引入RabbitMQ后，你如何保证全链路数据100%不丢失？](https://mp.weixin.qq.com/s/38XaTeHdgiH5GfCIQiWlnQ)
-- [RabbitMQ详解](https://mp.weixin.qq.com/s/_G_hd8OX9D76Pd5TmM3_BQ)
-- [RabbitMQ的AMQP协议都是些什么内容呢](https://mp.weixin.qq.com/s/JDkIP7Kzi2uWcWoy9k7SQA)
-- [RabbitMQ有哪几种消息模式？](https://mp.weixin.qq.com/s/yM5NFnt0vZ9A5LaQt3-Kbw)
-- [非常强悍的RabbitMQ总结，写得真好！](https://mp.weixin.qq.com/s/pARhOtb0jDVYpAJbxrEx7w)
-- [RabbitMQ有哪几种消息模式？怎么防止消息丢失？](https://mp.weixin.qq.com/s/_remApfbLkxGWD2EY8Cj3A)
+| [四种策略确保RabbitMQ消息发送可靠性！你用哪种？](https://mp.weixin.qq.com/s/hj8iqASSOk2AgdtkuLPCCQ) | [新来个技术总监，把RabbitMQ讲的那叫一个透彻，佩服！](https://mp.weixin.qq.com/s/RzxiXBQk3zjHt9PVI3JSQw) | [RabbitMQ高可用之如何确保消息成功消费](https://mp.weixin.qq.com/s/5szA0KBpFn9G3DeS9C0U3w) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [RabbitMQ中的消息会过期吗](https://mp.weixin.qq.com/s/fFqzuN2AnLazoCyahL3EFw) | [RabbitMQ七种消息传递形式](https://mp.weixin.qq.com/s/inhSj-nIiDCfUf24TrE2XA) | [使用rabbitmq延时队列实现超时取消订单](https://mp.weixin.qq.com/s/V_XZ2vC2jZmzxm-0ThhiTg) |
+| [面试官：引入RabbitMQ后，你如何保证全链路数据100%不丢失？](https://mp.weixin.qq.com/s/38XaTeHdgiH5GfCIQiWlnQ) | [RabbitMQ详解](https://mp.weixin.qq.com/s/_G_hd8OX9D76Pd5TmM3_BQ) | [RabbitMQ的AMQP协议都是些什么内容呢](https://mp.weixin.qq.com/s/JDkIP7Kzi2uWcWoy9k7SQA) |
+| [RabbitMQ有哪几种消息模式？](https://mp.weixin.qq.com/s/yM5NFnt0vZ9A5LaQt3-Kbw) | [非常强悍的RabbitMQ总结，写得真好！](https://mp.weixin.qq.com/s/pARhOtb0jDVYpAJbxrEx7w) | [RabbitMQ有哪几种消息模式？怎么防止消息丢失？](https://mp.weixin.qq.com/s/_remApfbLkxGWD2EY8Cj3A) |
 
 
 ### Pulsar
@@ -1500,19 +1479,13 @@ Pulsar的关键特性如下（摘自官网）：
 
 ### MQ高可用的相关文章
 
-- [消息队列消息丢失和消息重复发送的处理策略](https://mp.weixin.qq.com/s/Yu95odAgq7VVzCa5ttkwow)
-- [消息队列如何保证消息不丢失，且只被消费一次，这篇就教会你](https://mp.weixin.qq.com/s/wzYvFEowBHB-MJNQU6N3OQ)
-- [面试官：如何保障消息100%投递成功、消息幂等性？](https://mp.weixin.qq.com/s/ON4avaV8pOjmJVll3K90RQ)
-- [如何保证MQ消息是有序的？](https://mp.weixin.qq.com/s/tNyJhqzOyQFE2fIEygFyTw)
-- [消息被重复消费，怎么避免？有什么好的解决方案？](https://mp.weixin.qq.com/s/T3aEpibbP1u48LTat1KxHQ)
-- [如何保证消息队列里的数据顺序执行？](https://mp.weixin.qq.com/s/b_2OZkTIViA4IbfsfwwbxA)
-- [面试基操：MQ怎么保障消息可靠性？](https://mp.weixin.qq.com/s/F6JsNbLfeo_63kCzcBgogA)
-- [使用MQ的时候，怎么确保消息100%不丢失](https://mp.weixin.qq.com/s/yVatpQzVd--dlbR5ImBkWg)
+| [消息队列消息丢失和消息重复发送的处理策略](https://mp.weixin.qq.com/s/Yu95odAgq7VVzCa5ttkwow) | [消息队列如何保证消息不丢失，且只被消费一次，这篇就教会你](https://mp.weixin.qq.com/s/wzYvFEowBHB-MJNQU6N3OQ) | [面试官：如何保障消息100%投递成功、消息幂等性？](https://mp.weixin.qq.com/s/ON4avaV8pOjmJVll3K90RQ) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [如何保证MQ消息是有序的？](https://mp.weixin.qq.com/s/tNyJhqzOyQFE2fIEygFyTw) | [消息被重复消费，怎么避免？有什么好的解决方案？](https://mp.weixin.qq.com/s/T3aEpibbP1u48LTat1KxHQ) | [如何保证消息队列里的数据顺序执行？](https://mp.weixin.qq.com/s/b_2OZkTIViA4IbfsfwwbxA) |
+| [面试基操：MQ怎么保障消息可靠性？](https://mp.weixin.qq.com/s/F6JsNbLfeo_63kCzcBgogA) | [使用MQ的时候，怎么确保消息100%不丢失](https://mp.weixin.qq.com/s/yVatpQzVd--dlbR5ImBkWg) |                                                              |
 
 ### other
 
-- [什么是MQ？](https://mp.weixin.qq.com/s/mXX2hjRQ7qlPs0wK98Kb4Q)
-- [消息队列原理和选型：Kafka、RocketMQ、RabbitMQ和ActiveMQ](https://mp.weixin.qq.com/s/upKoeiT2EvMBBlqyRKiv8g)
-- [一篇文章把RabbitMQ、RocketMQ、Kafka三元归一](https://mp.weixin.qq.com/s/pXjLoPkyLNj9AHFoHI-GdA)
-- [这个队列的思路真的好，现在它是我简历上的亮点了。](https://mp.weixin.qq.com/s/mtEdb-vJGF7irOJ26QbnvA)
-- [面试官必问的3道MQ面试题，还有谁不会？？](https://mp.weixin.qq.com/s/8-zvNtXlad0pACg7Yhh4TA)
+| [什么是MQ？](https://mp.weixin.qq.com/s/mXX2hjRQ7qlPs0wK98Kb4Q) | [消息队列原理和选型：Kafka、RocketMQ、RabbitMQ和ActiveMQ](https://mp.weixin.qq.com/s/upKoeiT2EvMBBlqyRKiv8g) | [一篇文章把RabbitMQ、RocketMQ、Kafka三元归一](https://mp.weixin.qq.com/s/pXjLoPkyLNj9AHFoHI-GdA) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [这个队列的思路真的好，现在它是我简历上的亮点了。](https://mp.weixin.qq.com/s/mtEdb-vJGF7irOJ26QbnvA) | [面试官必问的3道MQ面试题，还有谁不会？？](https://mp.weixin.qq.com/s/8-zvNtXlad0pACg7Yhh4TA) |                                                              |

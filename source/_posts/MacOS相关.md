@@ -120,12 +120,12 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 
 |                           (●'◡'●)                           |                           (●ˇ∀ˇ●)                            |                            (✿◡‿◡)                            |                          ( $ _ $ )                           |
 | :---------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-|     [Bandizip](https://www.bandisoft.com/bandizip.mac/)     |       [Betterzip](https://macitbetter.com/downloads/)        |             [Termius](https://www.termius.com/)              |       [MySQL](https://dev.mysql.com/downloads/mysql/)        |
+|     [Bandizip](https://www.bandisoft.com/bandizip.mac/)     |  [Affinity Photo](https://affinity.serif.com/zh-cn/photo/)   |             [Termius](https://www.termius.com/)              |       [MySQL](https://dev.mysql.com/downloads/mysql/)        |
 |  [Clash X](https://github.com/yichengchen/clashX/releases)  |         [iShot](https://www.better365.cn/apps.html)          | [Chrome](https://google.cn/chrome?standalone=1&platform=mac) | [右键助手专业版](https://apps.apple.com/cn/app/%E5%8F%B3%E9%94%AE-%E4%B8%93%E4%B8%9A%E7%89%88/id6473515689) |
 |                [Motrix](https://motrix.app/)                |            [NDM](https://neatdownloadmanager.com)            |    [App Cleaner & Uninstaller](https://app-cleaner.com/)     |          [NodeJS](https://nodejs.org/en/download/)           |
 | [Java](https://www.oracle.com/java/technologies/downloads/) |      [Python](https://www.python.org/downloads/macos/)       |      [VS Code](https://code.visualstudio.com/Download)       |     [Sublime Text](https://www.sublimetext.com/download)     |
 |      [Intellij IDEA](https://www.jetbrains.com/idea/)       | [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) |       [PDF Reader Pro](https://www.pdfreaderpro.com/)        |                   [IINA](https://iina.io/)                   |
-|                [Fliqlo](https://fliqlo.com/)                |    [Mac EveryThing](https://tool.atomtech.top/index.html)    |      [ProFind](https://www.zeroonetwenty.com/profind/)       | [Permute 3](https://apps.apple.com/cn/app/permute-3/id1444998321) |
+|                [Fliqlo](https://fliqlo.com/)                |    [Mac EveryThing](https://tool.atomtech.top/index.html)    | [android-file-transfer](https://formulae.brew.sh/cask/android-file-transfer) | [Permute 3](https://apps.apple.com/cn/app/permute-3/id1444998321) |
 |              [Downie](https://www.downie.cn/)               |                                                              |                                                              |                                                              |
 
 
@@ -152,8 +152,11 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 ### 安装Rosetta 2（M芯片运行Intel程序）
 
 ```bash
-# 安装完成后可以在显示简介中勾选使用Rosetta打开
+# 如果有root权限
+/usr/sbin/softwareupdate --install-rosetta
+# 如果没有root权限
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+# 安装完成后可以在显示简介中勾选使用Rosetta打开
 ```
 
 ### 关闭SIP
@@ -276,10 +279,10 @@ diskutil eject /dev/disk2
 
 ## 其他
 
-| [Mac-list](https://github.com/qianguyihao/Mac-list) | [awesome-mac](https://github.com/jaywcjlove/awesome-mac) |   [MAC青桔](https://www.macqj.com/)    |
+| [Mac-list](https://github.com/qianguyihao/Mac-list) | [awesome-mac](https://github.com/jaywcjlove/awesome-mac) |   [mac青桔](https://www.macqj.com/)    |
 | :-------------------------------------------------: | :------------------------------------------------------: | :------------------------------------: |
-|          [马克喵](https://www.macat.vip/)           |             [MACGF](https://www.macgf.com/)              |     [macked](https://macked.app/)      |
+|          [马克喵](https://www.macat.vip/)           |             [macGF](https://www.macgf.com/)              |     [macked](https://macked.app/)      |
 |       [appstorrent](https://appstorrent.ru/)        |             [佛系软件](https://foxirj.com/)              |       [macwk](https://macwk.cn/)       |
-|           [macvk](https://www.macvk.com/)           |            [Appked](https://www.macbed.com/)             | [苹果系统之家](https://macoshome.com/) |
-|          [SeeMac](https://www.seemac.cn/)           |             [MAC下载吧](https://macxzb.com/)             |     [Mac毒](https://www.macdo.cn/)     |
-|          [Xclient](https://xclient.info/)           |             [Mac8k](https://www.mac8k.com/)              |                                        |
+|           [Mac毒](https://www.macdo.cn/)            |            [Appked](https://www.macbed.com/)             | [苹果系统之家](https://macoshome.com/) |
+|          [SeeMac](https://www.seemac.cn/)           |             [MAC下载吧](https://macxzb.com/)             |    [Xclient](https://xclient.info/)    |
+|           [Mac8k](https://www.mac8k.com/)           |                                                          |                                        |

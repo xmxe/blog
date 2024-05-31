@@ -97,26 +97,12 @@ AuthenticationManager.authenticate()-->ProviderManager.authenticate()-->DaoAuthe
 > - [离线 PDF 地址](https://pan.baidu.com/s/1PQPSWZONgo3_4TYOSjV8Vw?pwd=6p63)提取码: 6p63
 > - [Spring Security5.x教程合集(江南一点雨)](http://www.javaboy.org/springsecurity/)
 
-
-- [官方文档](https://docs.spring.io/spring-security/reference/)
-- [SpringBoot安全认证Security](https://zhuanlan.zhihu.com/p/67519928)
-- [单点登陆注解@EnableOAuth2Sso](https://mp.weixin.qq.com/s?__biz=MzI1NDY0MTkzNQ==&mid=2247488278&idx=1&sn=b21345a1daa86dd48ea89cdb9138def8&scene=21#wechat_redirect)
-- [Spring Security中的权限注解很神奇吗?(@PreAuthorize)](https://mp.weixin.qq.com/s/TaPlws-ZLTDUnffuiw-r1Q)
-- [想要控制好权限，这八个注解你必须知道](https://mp.weixin.qq.com/s/1NlWRwiBs8dl3Lu40haz5Q)
-- [进入SpringBoot2.7，有一个重要的类过期了](https://mp.weixin.qq.com/s/WFbcvzqIM2muK3Ha4B0a3w)
-- [新版SpringSecurity如何自定义JSON登录](https://mp.weixin.qq.com/s/KKdhQNrNfALzcHxyMFsqAw)
-- [Spring Security中，想在权限中使用通配符，怎么做？](https://mp.weixin.qq.com/s/2Ci_Xg8wTrRcEnjgt18CDw)
-- [如何在项目中自定义权限表达式](https://mp.weixin.qq.com/s/NTyYPGOSF9NobwtHas97sA)
-- [权限想要细化到按钮，怎么做？](https://mp.weixin.qq.com/s/g_8UprUi6cX70q4kTv4W9g)
-- [Spring Security用户认证和权限控制（默认实现）](https://blog.csdn.net/weixin_44516305/article/details/87860966)
-- [Spring Security用户认证和权限控制（自定义实现）](https://blog.csdn.net/weixin_44516305/article/details/88868791)
-- [Spring Security动态权限实现方案！](https://mp.weixin.qq.com/s/Bau8poOA4fMh3DNb9GaR1A)
-- [Spring Security最佳实践，看了必懂！※](https://mp.weixin.qq.com/s/rJqXpL7Zy9q_TU5B_E7nSw)
-- [认证和授权：前后端分离状态下使用Spring Security实现安全访问控制](https://mp.weixin.qq.com/s/kB2SViBlcKwl2cV91FbidQ)
-- [Spring Security中的RememberMe登录](https://mp.weixin.qq.com/s/ZWwlheacryW5Zmo-Xw269g)
-- [一文带你搞懂Spring Security](https://mp.weixin.qq.com/s/3L-RTpvB9Q248_g7fBtDVA)
-- [盘点Spring Security框架中的八大经典设计模式](https://mp.weixin.qq.com/s/xZrsy7bp8xN3EJblz7TLHw)
-- [Spring Security6全新写法，大变样！](https://mp.weixin.qq.com/s/RXNt1M3KND4aJbr0ZhHing)
-- [最新版Spring Security，该如何实现动态权限管理？](https://mp.weixin.qq.com/s/DrwmgouVzWvJPpnvWJuxhQ)
-- [新版Spring Security中的路径匹配方案！](https://mp.weixin.qq.com/s/pirWNQx6nCKI650MR3_1Mw)
-- [解锁Spring Security6：核心安全机制](https://mp.weixin.qq.com/s/5Sa4eYj1JqqE0FiuoeG47w)
+| [官方文档](https://docs.spring.io/spring-security/reference/) | [SpringBoot安全认证Security](https://zhuanlan.zhihu.com/p/67519928) | [单点登陆注解@EnableOAuth2Sso](https://mp.weixin.qq.com/s?__biz=MzI1NDY0MTkzNQ==&mid=2247488278&idx=1&sn=b21345a1daa86dd48ea89cdb9138def8&scene=21#wechat_redirect) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [Spring Security中的权限注解很神奇吗?(@PreAuthorize)](https://mp.weixin.qq.com/s/TaPlws-ZLTDUnffuiw-r1Q) | [想要控制好权限，这八个注解你必须知道](https://mp.weixin.qq.com/s/1NlWRwiBs8dl3Lu40haz5Q) | [进入SpringBoot2.7，有一个重要的类过期了](https://mp.weixin.qq.com/s/WFbcvzqIM2muK3Ha4B0a3w) |
+| [新版SpringSecurity如何自定义JSON登录](https://mp.weixin.qq.com/s/KKdhQNrNfALzcHxyMFsqAw) | [Spring Security中，想在权限中使用通配符，怎么做？](https://mp.weixin.qq.com/s/2Ci_Xg8wTrRcEnjgt18CDw) | [如何在项目中自定义权限表达式](https://mp.weixin.qq.com/s/NTyYPGOSF9NobwtHas97sA) |
+| [权限想要细化到按钮，怎么做？](https://mp.weixin.qq.com/s/g_8UprUi6cX70q4kTv4W9g) | [Spring Security用户认证和权限控制（默认实现）](https://blog.csdn.net/weixin_44516305/article/details/87860966) | [Spring Security用户认证和权限控制（自定义实现）](https://blog.csdn.net/weixin_44516305/article/details/88868791) |
+| [Spring Security动态权限实现方案！](https://mp.weixin.qq.com/s/Bau8poOA4fMh3DNb9GaR1A) | [Spring Security最佳实践，看了必懂！※](https://mp.weixin.qq.com/s/rJqXpL7Zy9q_TU5B_E7nSw) | [认证和授权：前后端分离状态下使用Spring Security实现安全访问控制](https://mp.weixin.qq.com/s/kB2SViBlcKwl2cV91FbidQ) |
+| [Spring Security中的RememberMe登录](https://mp.weixin.qq.com/s/ZWwlheacryW5Zmo-Xw269g) | [一文带你搞懂Spring Security](https://mp.weixin.qq.com/s/3L-RTpvB9Q248_g7fBtDVA) | [盘点Spring Security框架中的八大经典设计模式](https://mp.weixin.qq.com/s/xZrsy7bp8xN3EJblz7TLHw) |
+| [Spring Security6全新写法，大变样！](https://mp.weixin.qq.com/s/RXNt1M3KND4aJbr0ZhHing) | [最新版Spring Security，该如何实现动态权限管理？](https://mp.weixin.qq.com/s/DrwmgouVzWvJPpnvWJuxhQ) | [新版Spring Security中的路径匹配方案！](https://mp.weixin.qq.com/s/pirWNQx6nCKI650MR3_1Mw) |
+| [解锁Spring Security6：核心安全机制](https://mp.weixin.qq.com/s/5Sa4eYj1JqqE0FiuoeG47w) |                                                              |                                                              |

@@ -423,18 +423,9 @@ git cp <commitHash>
 
 ## 相关文章
 
-- [Git不要只会pull和push，试试这5条提高效率的命令](https://mp.weixin.qq.com/s/ct6GWiE_hzoXUNeriLAnng)
-- [Git各指令的本质，真是通俗易懂啊！](https://mp.weixin.qq.com/s/MM7sQiFPh2vIuGvg1-813Q)
-- [Git科普文，Git基本原理&各种骚操作](https://mp.weixin.qq.com/s/csEgAjJwH75_IvAnFBIuvw)
-- [一文快速掌握Git用法](https://mp.weixin.qq.com/s/xoyQ4TzVKLQb2VjZJLUqFQ)
-- [精心整理：Git从入门到精通、包教包会、收藏一下、随时学习](https://mp.weixin.qq.com/s/wtPizZ3RlwY3Ex1Lc3Pf4A)
-- [大牛总结的Git使用技巧，写得太好了！](https://mp.weixin.qq.com/s/OchvVMGoBzSFWhou4WhrWw)
-- [通过.git目录深入理解Git！](https://mp.weixin.qq.com/s/q6tI0qctvciJhNz_5KLx-w)
-- [Git命令全方位学习](https://mp.weixin.qq.com/s/KwTsWyFh07iYdfINqo9UTg)
-- [图解Git，一目了然！](https://mp.weixin.qq.com/s/TW_qUWRVEnberle5q0ws9Q)
-- [Git代码防丢指南，再也不怕丢失代码了！](https://mp.weixin.qq.com/s/dYiWQQ5PsSS7F7z7cDLEuw)
-- [20个最常用的Git命令，你都会用吗？](https://mp.weixin.qq.com/s/XB_G7TZqBX8r3CJlvqA0Cg)
-- [45个GIT经典操作场景，专治不会合代码](https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw)
-- [Git的奇技淫巧](https://github.com/521xueweihan/git-tips)
-- [如何配置SSH管理多个Git仓库和以及多个Github账号](https://mp.weixin.qq.com/s/ADzad6e6uTF0vpZ903SJ-A)
-- [那些年我们错过的Git指南](https://mp.weixin.qq.com/s/L5NEAOgoee8TQ0bOpp6PgQ)
+| [Git不要只会pull和push，试试这5条提高效率的命令](https://mp.weixin.qq.com/s/ct6GWiE_hzoXUNeriLAnng) | [Git各指令的本质，真是通俗易懂啊！](https://mp.weixin.qq.com/s/MM7sQiFPh2vIuGvg1-813Q) | [Git科普文，Git基本原理&各种骚操作](https://mp.weixin.qq.com/s/csEgAjJwH75_IvAnFBIuvw) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [一文快速掌握Git用法](https://mp.weixin.qq.com/s/xoyQ4TzVKLQb2VjZJLUqFQ) | [精心整理：Git从入门到精通、包教包会、收藏一下、随时学习](https://mp.weixin.qq.com/s/wtPizZ3RlwY3Ex1Lc3Pf4A) | [大牛总结的Git使用技巧，写得太好了！](https://mp.weixin.qq.com/s/OchvVMGoBzSFWhou4WhrWw) |
+| [通过.git目录深入理解Git！](https://mp.weixin.qq.com/s/q6tI0qctvciJhNz_5KLx-w) | [Git命令全方位学习](https://mp.weixin.qq.com/s/KwTsWyFh07iYdfINqo9UTg) | [图解Git，一目了然！](https://mp.weixin.qq.com/s/TW_qUWRVEnberle5q0ws9Q) |
+| [Git代码防丢指南，再也不怕丢失代码了！](https://mp.weixin.qq.com/s/dYiWQQ5PsSS7F7z7cDLEuw) | [20个最常用的Git命令，你都会用吗？](https://mp.weixin.qq.com/s/XB_G7TZqBX8r3CJlvqA0Cg) | [45个GIT经典操作场景，专治不会合代码](https://mp.weixin.qq.com/s/Fa8mmQpNZ1S80Kg9Oyocbw) |
+|  [Git的奇技淫巧](https://github.com/521xueweihan/git-tips)   | [如何配置SSH管理多个Git仓库和以及多个Github账号](https://mp.weixin.qq.com/s/ADzad6e6uTF0vpZ903SJ-A) | [那些年我们错过的Git指南](https://mp.weixin.qq.com/s/L5NEAOgoee8TQ0bOpp6PgQ) |

@@ -1113,13 +1113,10 @@ public Object getObjectInclNullById(Integer id) {
 2. 事发中：万一Redis真的挂了，我们可以设置本地缓存(ehcache)+限流(hystrix)，尽量避免我们的数据库被干掉
 3. 事发后：redis持久化，重启后自动从磁盘上加载数据，快速恢复缓存数据
 
-> [Redis缓存击穿（失效）、缓存穿透、缓存雪崩怎么解决？](https://mp.weixin.qq.com/s/dig6ZcUzMvQZG0u-Bub2AQ)
-> [Redis缓存的常见异常及解决方案](https://mp.weixin.qq.com/s/pOUjLIgUSgbjoJ2KtfaQyw)
-> [常说的「缓存穿透」和「击穿」是什么](https://mp.weixin.qq.com/s/8cNZ2glJC6p3w0ogtgKQ-w)
-> [漫话：如何给女朋友解释什么是缓存穿透、缓存击穿、缓存雪崩](https://mp.weixin.qq.com/s/7h_IOg7RgR3bFscgbGnGFw)
-> [再也不怕，缓存雪崩、击穿、穿透！](https://mp.weixin.qq.com/s/rD6h874mPzUCRlE7l8CnUQ)
-> [一个Redis的雪崩和穿透问题](https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A)
-> [烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？](https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw)
+| [Redis缓存击穿（失效）、缓存穿透、缓存雪崩怎么解决？](https://mp.weixin.qq.com/s/dig6ZcUzMvQZG0u-Bub2AQ) | [Redis缓存的常见异常及解决方案](https://mp.weixin.qq.com/s/pOUjLIgUSgbjoJ2KtfaQyw) | [常说的「缓存穿透」和「击穿」是什么](https://mp.weixin.qq.com/s/8cNZ2glJC6p3w0ogtgKQ-w) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [漫话：如何给女朋友解释什么是缓存穿透、缓存击穿、缓存雪崩](https://mp.weixin.qq.com/s/7h_IOg7RgR3bFscgbGnGFw) | [再也不怕，缓存雪崩、击穿、穿透！](https://mp.weixin.qq.com/s/rD6h874mPzUCRlE7l8CnUQ) | [一个Redis的雪崩和穿透问题](https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A) |
+| [烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？](https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw) |                                                              |                                                              |
 
 ### 如何保证缓存和数据库数据的一致性？
 
@@ -1152,18 +1149,11 @@ public Object getObjectInclNullById(Integer id) {
 
 #### 相关文章
 
-- [如何保证缓存与数据库的双写一致性？](https://mp.weixin.qq.com/s/FldS8ynxoK8fD1QPVocnjA)
-- [如何保证数据库和缓存双写一致性？](https://mp.weixin.qq.com/s/1uJmVb_E980NWn_sCzM6mA)
-- [解决缓存和数据库双写数据一致性问题✳](https://blog.csdn.net/D812359/article/details/121645548)
-- [如何保证Redis缓存与数据库双写一致性？](https://mp.weixin.qq.com/s/5I4IQFYZDdeNulSZfEj79A)
-- [高并发场景下，到底先更新缓存还是先更新数据库？](https://mp.weixin.qq.com/s/JxdAEt4rfZp5KQwpxRPZlA)
-- [MySQL与Redis缓存的同步方案](https://mp.weixin.qq.com/s/_WCg3TDZCxRKPiVot1dG8Q)
-- [数据库跟缓存的双写一致性](https://mp.weixin.qq.com/s/bKtVlr9JZ1HCp1tgEEKENA)
-- [Redis和Mysql如何保证数据一致?](https://mp.weixin.qq.com/s/6WxbY-BOjX_5mwHNgoVl8g)
-- [高并发先操作数据库，还是先操作缓存？5个方案告诉你！](https://mp.weixin.qq.com/s/BwKTvDig4BjMqXb_O468Uw)
-- [Redis数据更新，是先更新数据库还是先更新缓存？](https://mp.weixin.qq.com/s/HVPsyNd7XxmxiVQ9Nza_TQ)
-- [缓存一致性方案](https://mp.weixin.qq.com/s/tpb6Xf4Vf6O6gxbZN3pWfA)
-- [如何保证mongodb和数据库双写数据一致性](https://mp.weixin.qq.com/s/RqQ2AyDZ5f8vvcP76TyuAA)
+| [如何保证缓存与数据库的双写一致性？](https://mp.weixin.qq.com/s/FldS8ynxoK8fD1QPVocnjA) | [如何保证数据库和缓存双写一致性？](https://mp.weixin.qq.com/s/1uJmVb_E980NWn_sCzM6mA) | [解决缓存和数据库双写数据一致性问题✳](https://blog.csdn.net/D812359/article/details/121645548) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [如何保证Redis缓存与数据库双写一致性？](https://mp.weixin.qq.com/s/5I4IQFYZDdeNulSZfEj79A) | [高并发场景下，到底先更新缓存还是先更新数据库？](https://mp.weixin.qq.com/s/JxdAEt4rfZp5KQwpxRPZlA) | [MySQL与Redis缓存的同步方案](https://mp.weixin.qq.com/s/_WCg3TDZCxRKPiVot1dG8Q) |
+| [数据库跟缓存的双写一致性](https://mp.weixin.qq.com/s/bKtVlr9JZ1HCp1tgEEKENA) | [Redis和Mysql如何保证数据一致?](https://mp.weixin.qq.com/s/6WxbY-BOjX_5mwHNgoVl8g) | [高并发先操作数据库，还是先操作缓存？5个方案告诉你！](https://mp.weixin.qq.com/s/BwKTvDig4BjMqXb_O468Uw) |
+| [Redis数据更新，是先更新数据库还是先更新缓存？](https://mp.weixin.qq.com/s/HVPsyNd7XxmxiVQ9Nza_TQ) | [缓存一致性方案](https://mp.weixin.qq.com/s/tpb6Xf4Vf6O6gxbZN3pWfA) | [如何保证mongodb和数据库双写数据一致性](https://mp.weixin.qq.com/s/RqQ2AyDZ5f8vvcP76TyuAA) |
 
 ## Redis的key过期策略
 
@@ -1255,15 +1245,11 @@ Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频
 2. 文件恢复
 那么混合持久化中是如何来进行数据恢复的呢？在Redis重启时，先加载RDB的内容，然后再重放增量AOF格式命令。这样就避免了AOF持久化时的全量加载，从而使加载速率得到大幅提升。
 
-
 ### 相关文章
 
-- [同样是持久化，竟然有这么大的差别！](https://mp.weixin.qq.com/s/SVbVwHOAwL1RX0fa-rYGxg)
-- [如何让Redis更持久](https://mp.weixin.qq.com/s/G3ct5tWox5Qt4tLUDEpRuw)
-- [Redis宕机，数据丢了](https://mp.weixin.qq.com/s/RxhaZFnMAf7bAgYUtTGLuA)
-- [小伙用12张图讲明白了Redis持久化！](https://mp.weixin.qq.com/s/q7KEOA2Dy2Q5QpDX8FkPjg)
-- [彻底理解Redis的持久化和主从复制](https://mp.weixin.qq.com/s/5IBOKcoBxVoGSMrn3vBGOw)
-- [一文了解Redis的持久化](https://mp.weixin.qq.com/s/zUw7yPIT1dQixDbZy5kkkw)
+| [同样是持久化，竟然有这么大的差别！](https://mp.weixin.qq.com/s/SVbVwHOAwL1RX0fa-rYGxg) | [如何让Redis更持久](https://mp.weixin.qq.com/s/G3ct5tWox5Qt4tLUDEpRuw) | [Redis宕机，数据丢了](https://mp.weixin.qq.com/s/RxhaZFnMAf7bAgYUtTGLuA) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [小伙用12张图讲明白了Redis持久化！](https://mp.weixin.qq.com/s/q7KEOA2Dy2Q5QpDX8FkPjg) | [彻底理解Redis的持久化和主从复制](https://mp.weixin.qq.com/s/5IBOKcoBxVoGSMrn3vBGOw) | [一文了解Redis的持久化](https://mp.weixin.qq.com/s/zUw7yPIT1dQixDbZy5kkkw) |
 
 
 ## Redis高可用
@@ -1287,17 +1273,11 @@ Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频
 
 ### 相关文章
 
-- [Redis主库宕机如何快速恢复](https://mp.weixin.qq.com/s/PA31mNTzlQ2EGYEXfWagXQ)
-- [Redis官方的高可用性解决方案](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494325&idx=1&sn=0458cd40672c1f3918efb47963e56c9c&source=41#wechat_redirect)
-- [一文把Redis主从复制、哨兵、Cluster三种模式摸透](https://mp.weixin.qq.com/s/BPcis9rPiWosFid5w0M40A)
-- [Redis主从、哨兵、Cluster集群一锅端！](https://mp.weixin.qq.com/s/U_5Tla4_XzlJsq3uRI2ifA)
-- [Redis的主从复制是如何做的？复制过程中也会产生各种问题](https://mp.weixin.qq.com/s/I3GimkIf27DL1uRqxImKWA)
-- [Redis中主、从库宕机如何恢复？](https://mp.weixin.qq.com/s/oRcOPBHwbimFak6CtooHEg)
-- [Redis高可用篇：你管这叫主从架构数据同步原理？](https://mp.weixin.qq.com/s/NEUdCfRtHma3mkJqFKym5A)
-- [如何从0到1构建一个稳定、高性能的Redis集群？](https://mp.weixin.qq.com/s/ZXz2IzbQjQJzCq_hkpkuEg)
-- [4种Redis集群方案介绍+优缺点对比](https://mp.weixin.qq.com/s/Po85M418zvos3pHev2q0Tg)
-- [详细剖析Redis三种集群策略](https://mp.weixin.qq.com/s/M1RymGVUqhQG0KnKupnDXQ)
-- [一文掌握，单机Redis、哨兵和Redis Cluster的搭建](https://mp.weixin.qq.com/s/m9K6acUUc41j44b8zPh28w)
+| [Redis主库宕机如何快速恢复](https://mp.weixin.qq.com/s/PA31mNTzlQ2EGYEXfWagXQ) | [Redis官方的高可用性解决方案](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494325&idx=1&sn=0458cd40672c1f3918efb47963e56c9c&source=41#wechat_redirect) | [一文把Redis主从复制、哨兵、Cluster三种模式摸透](https://mp.weixin.qq.com/s/BPcis9rPiWosFid5w0M40A) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [Redis主从、哨兵、Cluster集群一锅端！](https://mp.weixin.qq.com/s/U_5Tla4_XzlJsq3uRI2ifA) | [Redis的主从复制是如何做的？复制过程中也会产生各种问题](https://mp.weixin.qq.com/s/I3GimkIf27DL1uRqxImKWA) | [Redis中主、从库宕机如何恢复？](https://mp.weixin.qq.com/s/oRcOPBHwbimFak6CtooHEg) |
+| [Redis高可用篇：你管这叫主从架构数据同步原理？](https://mp.weixin.qq.com/s/NEUdCfRtHma3mkJqFKym5A) | [如何从0到1构建一个稳定、高性能的Redis集群？](https://mp.weixin.qq.com/s/ZXz2IzbQjQJzCq_hkpkuEg) | [4种Redis集群方案介绍+优缺点对比](https://mp.weixin.qq.com/s/Po85M418zvos3pHev2q0Tg) |
+| [详细剖析Redis三种集群策略](https://mp.weixin.qq.com/s/M1RymGVUqhQG0KnKupnDXQ) | [一文掌握，单机Redis、哨兵和Redis Cluster的搭建](https://mp.weixin.qq.com/s/m9K6acUUc41j44b8zPh28w) |                                                              |
 
 ## 阿里官方Redis开发规范
 

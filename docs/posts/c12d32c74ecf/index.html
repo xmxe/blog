@@ -1630,21 +1630,21 @@ long_query_time &#x3D; 2  # 设置阈值为2秒，你可以根据需要调整这
 <table>
 <thead>
 <tr>
-<th align="left">innodb_autoinc_lock_mode</th>
-<th align="left">介绍</th>
+<th align="center">innodb_autoinc_lock_mode</th>
+<th align="center">介绍</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">0</td>
-<td align="left">传统模式</td>
+<td align="center">0</td>
+<td align="center">传统模式</td>
 </tr>
 <tr>
-<td align="left">1</td>
-<td align="left">连续模式（MySQL 8.0 之前默认）</td>
+<td align="center">1</td>
+<td align="center">连续模式（MySQL 8.0 之前默认）</td>
 </tr>
 <tr>
-<td align="left">2</td>
-<td align="left">交错模式(MySQL 8.0 之后默认)</td>
+<td align="center">2</td>
+<td align="center">交错模式(MySQL 8.0 之后默认)</td>
 </tr>
 </tbody></table>
 <p>交错模式下，所有的“INSERT-LIKE”语句（所有的插入语句，包括：<code>INSERT</code>、<code>REPLACE</code>、<code>INSERT…SELECT</code>、<code>REPLACE…SELECT</code>、<code>LOADDATA</code>等）都不使用表级锁，使用的是轻量级互斥锁实现，多条插入语句可以并发执行，速度更快，扩展性也更好。不过，如果你的MySQL数据库有主从同步需求并且bin log存储格式为Statement的话，不要将InnoDB自增锁模式设置为交叉模式，不然会有数据不一致性问题。这是因为并发情况下插入语句的执行顺序就无法得到保障。</p>
@@ -1886,57 +1886,57 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <table>
 <thead>
 <tr>
-<th><strong>列名</strong></th>
-<th><strong>含义</strong></th>
+<th align="center"><strong>列名</strong></th>
+<th align="center"><strong>含义</strong></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>id</td>
-<td>SELECT 查询的序列标识符</td>
+<td align="center">id</td>
+<td align="center">SELECT 查询的序列标识符</td>
 </tr>
 <tr>
-<td>select_type</td>
-<td>SELECT 关键字对应的查询类型</td>
+<td align="center">select_type</td>
+<td align="center">SELECT 关键字对应的查询类型</td>
 </tr>
 <tr>
-<td>table</td>
-<td>用到的表名</td>
+<td align="center">table</td>
+<td align="center">用到的表名</td>
 </tr>
 <tr>
-<td>partitions</td>
-<td>匹配的分区，对于未分区的表，值为 NULL</td>
+<td align="center">partitions</td>
+<td align="center">匹配的分区，对于未分区的表，值为 NULL</td>
 </tr>
 <tr>
-<td>type</td>
-<td>表的访问方法</td>
+<td align="center">type</td>
+<td align="center">表的访问方法</td>
 </tr>
 <tr>
-<td>possible_keys</td>
-<td>可能用到的索引</td>
+<td align="center">possible_keys</td>
+<td align="center">可能用到的索引</td>
 </tr>
 <tr>
-<td>key</td>
-<td>实际用到的索引</td>
+<td align="center">key</td>
+<td align="center">实际用到的索引</td>
 </tr>
 <tr>
-<td>key_len</td>
-<td>所选索引的长度</td>
+<td align="center">key_len</td>
+<td align="center">所选索引的长度</td>
 </tr>
 <tr>
-<td>ref</td>
-<td>当使用索引等值查询时，与索引作比较的列或常量</td>
+<td align="center">ref</td>
+<td align="center">当使用索引等值查询时，与索引作比较的列或常量</td>
 </tr>
 <tr>
-<td>rows</td>
-<td>预计要读取的行数</td>
+<td align="center">rows</td>
+<td align="center">预计要读取的行数</td>
 </tr>
 <tr>
-<td>filtered</td>
-<td>按表条件过滤后，留存的记录数的百分比</td>
+<td align="center">filtered</td>
+<td align="center">按表条件过滤后，留存的记录数的百分比</td>
 </tr>
 <tr>
-<td>Extra</td>
-<td>附加信息</td>
+<td align="center">Extra</td>
+<td align="center">附加信息</td>
 </tr>
 </tbody></table>
 <blockquote>
@@ -1955,39 +1955,65 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <li>联合索引如果不遵循最左前缀原则，那么索引也将失效</li>
 <li>索引列如果使用了隐式转换也会导致索引失效</li>
 </ol>
-<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/B1Dr_w3oeIsFTRtZCKS5Ow">如何防止MySQL索引失效</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wyotVRKbBJ7LGdqFSxZOFg">你设计索引的原则是什么？怎么避免索引失效？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/k7AXALxURez5nS34KZZIxA">超全的数据库建表&#x2F;SQL&#x2F;索引规范，建议贴在工位上！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hsvdbGXBcHPA0JOO7gkpjw">MySQL索引扫盲总结</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491020&idx=1&sn=f703a7a54cf9bccd8aed6dd384515945&source=41#wechat_redirect">为什么Mysql的常用引擎都默认使用B+树作为索引？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ii9gF-TZZ84WghB8Xtwxig">为什么MySQL使用B+树，而不是B树或者Hash？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/opbgvTX_GDytR-MS3-6yEA">MySQL索引底层：B+树详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZbkRWFT5rXIA9ZXzwTZTTA">为什么Mongodb索引用B树，而Mysql用B+树?</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I6g_O2lq3iI6DdnxFGGsuA">腾讯面试官用「B+树」虐哭我了</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIwMDgzMjc3NA==&mid=2247484720&idx=1&sn=7bd7774058e7886eeb3dedb38aa8657a&chksm=96f66759a181ee4f4c177a755c3ac6b6e97fef148bbf4afea8616f4edec33bf6d4f18cda9f69&scene=21#wechat_redirect">面试官:谈谈你对mysql索引的认识？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RfA8r3IXECqmvvTJX4sz0w">面试的时候，如果你没掌握索引，绝对没戏！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yxS4tpX_6fz9LBsh0UoHpw">什么是MySQ索引?</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1RdEIq4EDYpIge_84dunEw">MySQL的索引实现原理</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b5xc6mRzzqg5Bjd5scJ_ug">浅入浅出MySQL索引</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F1EY0hY9WrzmeRp3C5C9Pw">别再一知半解啦，索引其实就这么回事</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HUy5RPBsxhu7g5Sr-l3XlQ">MySQL索引凭什么让查询效率提高这么多？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6N-Do7Av6y6VP_vK9CVK3A">索引为什么能提高查询性能….</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YRbHVNeJNjvQcgC4PunW6w">常见索引类型</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iS8V65my03EQtOQAkxfMag">主键索引就是聚集索引？MySQL索引类型大梳理</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F0cEzIqecF4sWg7ZRmHKRQ">再聊MySQL聚簇索引</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5EymS2IyB7yyYsxX5UWrtw">MySQL主键自增也有坑?innodb_autoinc_lock_mode</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9yeModGuGvDu5S0bW9sU6w">再有人问你MySQL索引原理，就把这篇文章甩给他！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dKvPKUVDTM1OiP_qzNiFBg">为什么索引可以让查询变快？终于有人说清楚了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EyYBqfZcBWP60Y1gAADeOg">面试官问我索引为什么这快？我好像解释不清楚了</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0_4Jq06LLaTEfjetLQP0iA">一文讲清，MySQL中的二级索引</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_hdGKhB-A4ZOFZ42POmgjQ">明明加了唯一索引，为什么还是产生重复数据？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4XfSv004Vy7hyvZsjlQXwQ">面试官提问：什么是前缀索引？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IYRTE00_3bXD6y3YBW9P6Q">MySQL遵循最左前缀匹配原则！面试官：回去等通知吧</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/N95kMxVduiA6ZA3TSexAtA">MySQL索引15连问</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QLQvMT2sPmmjVE_pXj5FIA">MySQL索引数据结构入门</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mqi7MyF183FUmgy2FXi3Tw">前缀索引，在性能和空间中寻找平衡</a></li>
-</ul>
+<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/B1Dr_w3oeIsFTRtZCKS5Ow">如何防止MySQL索引失效</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wyotVRKbBJ7LGdqFSxZOFg">你设计索引的原则是什么？怎么避免索引失效？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/k7AXALxURez5nS34KZZIxA">超全的数据库建表&#x2F;SQL&#x2F;索引规范，建议贴在工位上！</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hsvdbGXBcHPA0JOO7gkpjw">MySQL索引扫盲总结</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491020&idx=1&sn=f703a7a54cf9bccd8aed6dd384515945&source=41#wechat_redirect">为什么Mysql的常用引擎都默认使用B+树作为索引？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ii9gF-TZZ84WghB8Xtwxig">为什么MySQL使用B+树，而不是B树或者Hash？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/opbgvTX_GDytR-MS3-6yEA">MySQL索引底层：B+树详解</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZbkRWFT5rXIA9ZXzwTZTTA">为什么Mongodb索引用B树，而Mysql用B+树?</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I6g_O2lq3iI6DdnxFGGsuA">腾讯面试官用「B+树」虐哭我了</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIwMDgzMjc3NA==&mid=2247484720&idx=1&sn=7bd7774058e7886eeb3dedb38aa8657a&chksm=96f66759a181ee4f4c177a755c3ac6b6e97fef148bbf4afea8616f4edec33bf6d4f18cda9f69&scene=21#wechat_redirect">面试官:谈谈你对mysql索引的认识？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RfA8r3IXECqmvvTJX4sz0w">面试的时候，如果你没掌握索引，绝对没戏！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yxS4tpX_6fz9LBsh0UoHpw">什么是MySQ索引?</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1RdEIq4EDYpIge_84dunEw">MySQL的索引实现原理</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b5xc6mRzzqg5Bjd5scJ_ug">浅入浅出MySQL索引</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F1EY0hY9WrzmeRp3C5C9Pw">别再一知半解啦，索引其实就这么回事</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HUy5RPBsxhu7g5Sr-l3XlQ">MySQL索引凭什么让查询效率提高这么多？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6N-Do7Av6y6VP_vK9CVK3A">索引为什么能提高查询性能….</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YRbHVNeJNjvQcgC4PunW6w">常见索引类型</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iS8V65my03EQtOQAkxfMag">主键索引就是聚集索引？MySQL索引类型大梳理</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F0cEzIqecF4sWg7ZRmHKRQ">再聊MySQL聚簇索引</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5EymS2IyB7yyYsxX5UWrtw">MySQL主键自增也有坑?innodb_autoinc_lock_mode</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9yeModGuGvDu5S0bW9sU6w">再有人问你MySQL索引原理，就把这篇文章甩给他！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dKvPKUVDTM1OiP_qzNiFBg">为什么索引可以让查询变快？终于有人说清楚了！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EyYBqfZcBWP60Y1gAADeOg">面试官问我索引为什么这快？我好像解释不清楚了</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0_4Jq06LLaTEfjetLQP0iA">一文讲清，MySQL中的二级索引</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_hdGKhB-A4ZOFZ42POmgjQ">明明加了唯一索引，为什么还是产生重复数据？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4XfSv004Vy7hyvZsjlQXwQ">面试官提问：什么是前缀索引？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IYRTE00_3bXD6y3YBW9P6Q">MySQL遵循最左前缀匹配原则！面试官：回去等通知吧</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/N95kMxVduiA6ZA3TSexAtA">MySQL索引15连问</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QLQvMT2sPmmjVE_pXj5FIA">MySQL索引数据结构入门</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mqi7MyF183FUmgy2FXi3Tw">前缀索引，在性能和空间中寻找平衡</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h2 id="MySQL三大日志"><a href="#MySQL三大日志" class="headerlink" title="MySQL三大日志"></a>MySQL三大日志</h2><p>MySQL日志主要包括错误日志、查询日志、慢查询日志、事务日志、二进制日志几大类。其中，比较重要的还要属二进制日志bin log（归档日志）和事务日志redo log（重做日志）和undo log（回滚日志）。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/01.png" alt="img"></p>
 <p>今天就来聊聊redo log（重做日志）、bin log（归档日志）、两阶段提交、undo log（回滚日志）。</p>
@@ -2100,23 +2126,35 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <li>redo log是MySQL的InnoDB引擎所产生的。bin log无论MySQL用什么引擎，都会有的。</li>
 </ol>
 <p><strong>undo log</strong><br>主要有两个作用：回滚和多版本控制(MVCC)<br>在数据修改的时候，不仅记录了redo log，还记录undo log，如果因为某些原因导致事务失败或回滚了，可以用undo log进行回滚，undo log主要存储的也是逻辑日志，比如我们要insert一条数据了，那undo log会记录的一条对应的delete日志。我们要update一条记录时，它会记录一条对应相反的update记录。</p>
-<h3 id="相关文章-2"><a href="#相关文章-2" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0z6GmUp0Lb1hDUo0EyYiUg">MySQL undo log、bin log、redo log</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494134&idx=1&sn=241d91929e6a8b7b5f92db1528286645&source=41#wechat_redirect">必须了解的mysql三大日志-bin log、redo log和undo log</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JLV8GEcF1z4D8oiDhFo6-g">MySQL日志(redo log 和 undo log)都是什么鬼？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/d_CRZGbC6qpxdP4BYetFcA">MySQL不会丢失数据的秘密，就藏在它的7种日志里</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IEG6O3xNv62moh5DYxPL2Q">Java代码中，如何监控Mysql的bin log？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/w4vPFHJkog2nbl68_0LOnw">手把手教你玩MySQL删库不跑路，直接把MySQL的bin log玩溜！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FlhZsx9MBGY0ypXQMqe6wA">MySQL的bin log的三种格式这么好玩！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0dBwL3nwcldbS7hv7O5rOQ">讲一讲MySQL数据备份杀手锏bin log</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lvw89Ix73oTqc2juF4X5sg">3000帧动画图解MySQL为什么需要bin log、redo log和undo log</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kqfMxkpYZ3ICkHfbv8ET1g">MySQL bin log的三个业务应用场景</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/299512401">MySQL中bin log与redo log的区别</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PvQxdDMdC98mpwSb7pyXvw">听我讲完redo log、bin log原理，面试官老脸一红</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JYuh2c3Tad8C_DP7LZO5bg">bin log恢复误删除的数据</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ayI190ZxhAoUracU3K_HTA">聊聊redo log是什么？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cXQ3RFwi-4JgH_x-3HJQnA">MySQL为什么需要redo log？</a></li>
-</ul>
+<h3 id="相关文章-2"><a href="#相关文章-2" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0z6GmUp0Lb1hDUo0EyYiUg">MySQL undo log、bin log、redo log</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494134&idx=1&sn=241d91929e6a8b7b5f92db1528286645&source=41#wechat_redirect">必须了解的mysql三大日志-bin log、redo log和undo log</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JLV8GEcF1z4D8oiDhFo6-g">MySQL日志(redo log 和 undo log)都是什么鬼？</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/d_CRZGbC6qpxdP4BYetFcA">MySQL不会丢失数据的秘密，就藏在它的7种日志里</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IEG6O3xNv62moh5DYxPL2Q">Java代码中，如何监控Mysql的bin log？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/w4vPFHJkog2nbl68_0LOnw">手把手教你玩MySQL删库不跑路，直接把MySQL的bin log玩溜！</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FlhZsx9MBGY0ypXQMqe6wA">MySQL的bin log的三种格式这么好玩！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0dBwL3nwcldbS7hv7O5rOQ">讲一讲MySQL数据备份杀手锏bin log</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lvw89Ix73oTqc2juF4X5sg">3000帧动画图解MySQL为什么需要bin log、redo log和undo log</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kqfMxkpYZ3ICkHfbv8ET1g">MySQL bin log的三个业务应用场景</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/299512401">MySQL中bin log与redo log的区别</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PvQxdDMdC98mpwSb7pyXvw">听我讲完redo log、bin log原理，面试官老脸一红</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JYuh2c3Tad8C_DP7LZO5bg">bin log恢复误删除的数据</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ayI190ZxhAoUracU3K_HTA">聊聊redo log是什么？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cXQ3RFwi-4JgH_x-3HJQnA">MySQL为什么需要redo log？</a></td>
+</tr>
+</tbody></table>
 <h2 id="InnoDB存储引擎对MVCC的实现"><a href="#InnoDB存储引擎对MVCC的实现" class="headerlink" title="InnoDB存储引擎对MVCC的实现"></a>InnoDB存储引擎对MVCC的实现</h2><h3 id="一致性非锁定读和锁定读"><a href="#一致性非锁定读和锁定读" class="headerlink" title="一致性非锁定读和锁定读"></a>一致性非锁定读和锁定读</h3><h4 id="一致性非锁定读"><a href="#一致性非锁定读" class="headerlink" title="一致性非锁定读"></a>一致性非锁定读</h4><p>对于<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html">一致性非锁定读（Consistent Nonlocking Reads）</a>的实现，通常做法是加一个版本号或者时间戳字段，在更新数据的同时版本号+1或者更新时间戳。查询时，将当前可见的版本号与对应记录的版本号进行比对，如果记录的版本小于可见版本，则表示该记录可见。在InnoDB存储引擎中，<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/innodb-multi-versioning.html">多版本控制(multi versioning)</a>就是对非锁定读的实现。如果读取的行正在执行DELETE或UPDATE操作，这时读取操作不会去等待行上锁的释放。相反地，InnoDB存储引擎会去读取行的一个快照数据，对于这种读取历史数据的方式，我们叫它快照读(snapshot read)。在<code>Repeatable Read</code>和<code>Read Committed</code>两个隔离级别下，如果是执行普通的select语句（不包括select…lock in share mode,select…for update）则会使用一致性非锁定读（MVCC）。并且在Repeatable Read下MVCC实现了可重复读和防止部分幻读</p>
 <h4 id="锁定读"><a href="#锁定读" class="headerlink" title="锁定读"></a>锁定读</h4><p>如果执行的是下列语句，就是<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html">锁定读（Locking Reads）</a></p>
 <ul>
@@ -2324,12 +2362,20 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/database/mysql/how-sql-executed-in-mysql.html">原文链接</a></p>
 </blockquote>
 <h3 id="sql执行顺序"><a href="#sql执行顺序" class="headerlink" title="sql执行顺序"></a>sql执行顺序</h3><pre class="line-numbers language-none"><code class="language-none">from、on、join、where、group by、(avg,sum)、having、select、distinct、union、order by、limit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="相关文章-3"><a href="#相关文章-3" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247490897&idx=1&sn=e5eaa58d426255c2c1401578d5606138&source=41#wechat_redirect">面试官：你来讲讲一条查询语句的具体执行过程</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dLJet2geb-dQ9hLE0oL6Qw">一文读懂MySQL查询语句的执行过程</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DS4-ObUFeGsU2l6FvF0Pcw">MySQL的执行过程及执行顺序</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/k1Zjr6ucFZzI-w6wC2Hz3Q">图解SQL执行顺序，通俗易懂！</a></li>
-</ul>
+<h3 id="相关文章-3"><a href="#相关文章-3" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247490897&idx=1&sn=e5eaa58d426255c2c1401578d5606138&source=41#wechat_redirect">面试官：你来讲讲一条查询语句的具体执行过程</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dLJet2geb-dQ9hLE0oL6Qw">一文读懂MySQL查询语句的执行过程</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DS4-ObUFeGsU2l6FvF0Pcw">MySQL的执行过程及执行顺序</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/k1Zjr6ucFZzI-w6wC2Hz3Q">图解SQL执行顺序，通俗易懂！</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h2 id="MySQL查询缓存详解"><a href="#MySQL查询缓存详解" class="headerlink" title="MySQL查询缓存详解"></a>MySQL查询缓存详解</h2><p>缓存是一个有效且实用的系统性能优化的手段，不论是操作系统还是各种软件和网站或多或少都用到了缓存。然而，有经验的DBA都建议生产环境中把MySQL自带的QueryCache（查询缓存）给关掉。而且，从MySQL5.7.20开始，就已经默认弃用查询缓存了。在MySQL8.0及之后，更是直接删除了查询缓存的功能。这又是为什么呢？查询缓存真就这么鸡肋么?带着如下几个问题，我们正式进入本文。</p>
 <ul>
 <li>MySQL查询缓存是什么？适用范围？</li>
@@ -2635,65 +2681,112 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <li>filtered ：查询的表行占表的百分比</li>
 <li>partitions：匹配的分区</li>
 </ol>
-<h3 id="相关文章-4"><a href="#相关文章-4" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aTkGwVU5D9u1RAbMHQconw">explain都不懂，还好意思说会SQL调优?</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NwRVW6Z8AMZ_QClTXH71ow">MySQL之Explain输出分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/E8wJQvldwEAzxK5mEuFhog">什么是MySQL的执行计划（Explain关键字）？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kYcrHtE82-sOqNOp_qM4Ig">MySQL究竟是怎么执行的(explain)</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-YrZFxTbutLdEbkfa9aOKQ">EXPLAIN进行索引分析和优化</a></li>
-</ul>
-<h2 id="相关文章-5"><a href="#相关文章-5" class="headerlink" title="相关文章"></a>相关文章</h2><h3 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FHoOdlWyefQLJ34MkQgFvA">InnoDB自增原理都搞不清楚，还怎么CRUD？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/V0BX5tRlrrZhfe2-ui2aRA">InnoDB原理篇：聊聊数据页变成索引这件事</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Io64o3tbEcf150dS5_ltbQ">两万字详解！InnoDB锁专题！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6BoGlaYpdDjzZy19YhInEw">MySQL存储引擎InnoDB详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sr5tQF7lNjTcvwg7Fr6HjQ">innodb是如何存数据的</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ymWeGlaBYWYmfogVDFHo5w">MySQL是如何查询数据的</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KbOiJ8SKJ_wFZcIyDVGD9g">MySQL是如何实现ACID的?</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qJINIZ3QcXODHSMm1RTPKQ">一文讲清，MySQL数据库一行数据在磁盘上是怎么存储的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Oiefzj2b3NZxTwjnRdAFRw">一文讲述MySQL所有的存储引擎</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s2c9L2p5kGC_InjorgDRnQ">MySQL的InnoDB引擎原来是这样的</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7Xx7rdl7dabbTNJOOLlFVg">InnoDB事务隔离级别及其实现原理</a></li>
-</ul>
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OHhX9XCQJnrBYdA27ipHHg">MySQL的主从如何配置</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xES94DmApf_GGYvT1Ku5QQ">MySQL主从复制</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2JtNBnKShIe-0pgt3nYGkg">面试官：Mysql中主库跑太快，从库追不上怎么整？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gUoDR4WLeHQYzyGtmR5K3w">MySQL定时备份的几种方式，这下稳了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zOOBkcl8Ns7Kk-k-WaXNhw">MySQL怎么保证备份数据的一致性？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jgM0aZY7UJSA2NMnkmKO3Q">删库不跑路！我含泪写下了MySQL数据恢复大法…</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SXnwM_n8UVMkKF04cDVNtw">京东一面：MySQL主备延迟有哪些坑？主备切换策略</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ALcivJKxtTZUHS-HTnSsXA">MySQL主从数据不一致，怎么办？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bq-sMw6mJg4I_TCvHZ-Zcw">一文讲解MySQL的主从复制</a></li>
-</ul>
-<h3 id="other"><a href="#other" class="headerlink" title="other"></a>other</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zv25dNB8FXn3KrnN3uJ3uQ">MySQL自增主键为何不是连续的呢？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c6Dx1xEh2BNIuGpxQahAuw">线上MySQL的自增id用尽怎么办？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BHE7YTOlo6UZ2WQzRieDxA">MySQL的自增id</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5o-sAOFpmjRSqIoLUNesOQ">MySQL用limit为什么会影响性能？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1pmVqHBS0CyFJW9ykySF_Q">MySQL查询limit 1000,10和limit 10速度一样快吗？深度分页如何破解</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HdE5QiK5Qp3_sGd_cXABIg">MySQL体系架构简介</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HWQbWSQE4O5ndI-NG1Hwwg">炸裂！MySQL82张图带你飞！※</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9Ex9tzoQCAEUZNU6iXLHgQ">MySQL面试必会！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FUyRHpPgw0LFWEOPTPmT0g">MySQL都不清楚？直接挂了!</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_Gd-lBfJnhwczNQA4IJyGg">最全91道MySQL面试题|附答案解析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XcNZeHdaMgx35dFoB4_n4A">138张图带你MySQL入门</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ar35RqaoDgasO-OY0TnDpQ">专治MySQL乱码，再也不想看到� �！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ImB0O-Z8IXldvt6YQk80jg">MySQL的varchar水太深了，你真的会用吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vdz0aS8qgHHHhvZWPuaE8A">聊聊MySQL的10大经典错误</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3gc8tMfnih7WQoPwTtN8IA">MySQ8.0推出直方图，性能大大提升！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZAzRtRnYGhvie8MDZvy1Gg">MySQL模糊查询再也用不着like+%了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PeZ8Py3NNb4CU2BUtxpygg">MySQL最大建议行数2000w,靠谱吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1XmvVNYqt5KycmD8pJanug">图解MVCC！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/WZa5UKYgU-pYKbvovLt1YQ">再有人问你什么是MVCC，就把这篇文章发给他！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/meS5Au1o9qdrSv7505mIcA">MySQL最朴素的监控方式</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c71ATJLT6_KXtb_iiUlMjg">1亿条数据批量插入MySQL，哪种方式最快</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing">6种MySQL数据库平滑扩容方案剖析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rDdUBw803tvjHkJALY5P2w">什么是插入意向锁？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XbSADUXIz1aw0kqp7p5urQ">从MySQL读取100w数据进行处理，应该怎么做</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vyrLOH1NRXXQd0oEnv0M1Q">MySQL误删数据不用跑路了，快速恢复指南来了</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZCM2FYzKw24Fk8yv4a9b0w">MySQL单表数据最大不要超过多少行？为什么</a></li>
-</ul>
+<h3 id="相关文章-4"><a href="#相关文章-4" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aTkGwVU5D9u1RAbMHQconw">explain都不懂，还好意思说会SQL调优?</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NwRVW6Z8AMZ_QClTXH71ow">MySQL之Explain输出分析</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/E8wJQvldwEAzxK5mEuFhog">什么是MySQL的执行计划（Explain关键字）？</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kYcrHtE82-sOqNOp_qM4Ig">MySQL究竟是怎么执行的(explain)</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-YrZFxTbutLdEbkfa9aOKQ">EXPLAIN进行索引分析和优化</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="相关文章-5"><a href="#相关文章-5" class="headerlink" title="相关文章"></a>相关文章</h2><h3 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FHoOdlWyefQLJ34MkQgFvA">InnoDB自增原理都搞不清楚，还怎么CRUD？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/V0BX5tRlrrZhfe2-ui2aRA">InnoDB原理篇：聊聊数据页变成索引这件事</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Io64o3tbEcf150dS5_ltbQ">两万字详解！InnoDB锁专题！</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6BoGlaYpdDjzZy19YhInEw">MySQL存储引擎InnoDB详解</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sr5tQF7lNjTcvwg7Fr6HjQ">innodb是如何存数据的</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ymWeGlaBYWYmfogVDFHo5w">MySQL是如何查询数据的</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KbOiJ8SKJ_wFZcIyDVGD9g">MySQL是如何实现ACID的?</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qJINIZ3QcXODHSMm1RTPKQ">一文讲清，MySQL数据库一行数据在磁盘上是怎么存储的？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Oiefzj2b3NZxTwjnRdAFRw">一文讲述MySQL所有的存储引擎</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s2c9L2p5kGC_InjorgDRnQ">MySQL的InnoDB引擎原来是这样的</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7Xx7rdl7dabbTNJOOLlFVg">InnoDB事务隔离级别及其实现原理</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OHhX9XCQJnrBYdA27ipHHg">MySQL的主从如何配置</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xES94DmApf_GGYvT1Ku5QQ">MySQL主从复制</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2JtNBnKShIe-0pgt3nYGkg">面试官：Mysql中主库跑太快，从库追不上怎么整？</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gUoDR4WLeHQYzyGtmR5K3w">MySQL定时备份的几种方式，这下稳了！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zOOBkcl8Ns7Kk-k-WaXNhw">MySQL怎么保证备份数据的一致性？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jgM0aZY7UJSA2NMnkmKO3Q">删库不跑路！我含泪写下了MySQL数据恢复大法…</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SXnwM_n8UVMkKF04cDVNtw">京东一面：MySQL主备延迟有哪些坑？主备切换策略</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ALcivJKxtTZUHS-HTnSsXA">MySQL主从数据不一致，怎么办？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bq-sMw6mJg4I_TCvHZ-Zcw">一文讲解MySQL的主从复制</a></td>
+</tr>
+</tbody></table>
+<h3 id="other"><a href="#other" class="headerlink" title="other"></a>other</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zv25dNB8FXn3KrnN3uJ3uQ">MySQL自增主键为何不是连续的呢？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c6Dx1xEh2BNIuGpxQahAuw">线上MySQL的自增id用尽怎么办？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BHE7YTOlo6UZ2WQzRieDxA">MySQL的自增id</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5o-sAOFpmjRSqIoLUNesOQ">MySQL用limit为什么会影响性能？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1pmVqHBS0CyFJW9ykySF_Q">MySQL查询limit 1000,10和limit 10速度一样快吗？深度分页如何破解</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HdE5QiK5Qp3_sGd_cXABIg">MySQL体系架构简介</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HWQbWSQE4O5ndI-NG1Hwwg">炸裂！MySQL82张图带你飞！※</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9Ex9tzoQCAEUZNU6iXLHgQ">MySQL面试必会！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FUyRHpPgw0LFWEOPTPmT0g">MySQL都不清楚？直接挂了!</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_Gd-lBfJnhwczNQA4IJyGg">最全91道MySQL面试题</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XcNZeHdaMgx35dFoB4_n4A">138张图带你MySQL入门</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ar35RqaoDgasO-OY0TnDpQ">专治MySQL乱码，再也不想看到� �！</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ImB0O-Z8IXldvt6YQk80jg">MySQL的varchar水太深了，你真的会用吗？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vdz0aS8qgHHHhvZWPuaE8A">聊聊MySQL的10大经典错误</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3gc8tMfnih7WQoPwTtN8IA">MySQ8.0推出直方图，性能大大提升！</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZAzRtRnYGhvie8MDZvy1Gg">MySQL模糊查询再也用不着like+%了！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PeZ8Py3NNb4CU2BUtxpygg">MySQL最大建议行数2000w,靠谱吗？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1XmvVNYqt5KycmD8pJanug">图解MVCC！</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/WZa5UKYgU-pYKbvovLt1YQ">再有人问你什么是MVCC，就把这篇文章发给他！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/meS5Au1o9qdrSv7505mIcA">MySQL最朴素的监控方式</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c71ATJLT6_KXtb_iiUlMjg">1亿条数据批量插入MySQL，哪种方式最快</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing">6种MySQL数据库平滑扩容方案剖析</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rDdUBw803tvjHkJALY5P2w">什么是插入意向锁？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XbSADUXIz1aw0kqp7p5urQ">从MySQL读取100w数据进行处理，应该怎么做</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vyrLOH1NRXXQd0oEnv0M1Q">MySQL误删数据不用跑路了，快速恢复指南来了</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZCM2FYzKw24Fk8yv4a9b0w">MySQL单表数据最大不要超过多少行？为什么</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
                 
             </div>

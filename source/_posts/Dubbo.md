@@ -403,9 +403,7 @@ Dubbo官方文档中还有一个关于这些[序列化协议的性能对比图](
 
 > [原文链接](https://javaguide.cn/distributed-system/rpc/dubbo.html)
 
-
 ## 相关文章
 
-- [dubbo官方文档](http://dubbo.apache.org/zh-cn/docs/user/quick-start.html)
-- [长文图解七种负载均衡策略](https://mp.weixin.qq.com/s/jveqCUAiqKdKRoea9wESbw)
-- [如果Dubbo还没精通原理，就从这里开始吧](https://mp.weixin.qq.com/s/NEfWwnRVOI73_TQurmxk9A)
+| [dubbo官方文档](http://dubbo.apache.org/zh-cn/docs/user/quick-start.html) | [长文图解七种负载均衡策略](https://mp.weixin.qq.com/s/jveqCUAiqKdKRoea9wESbw) | [如果Dubbo还没精通原理，就从这里开始吧](https://mp.weixin.qq.com/s/NEfWwnRVOI73_TQurmxk9A) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |

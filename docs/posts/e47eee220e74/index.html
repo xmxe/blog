@@ -630,22 +630,35 @@
 <li>提前AOP：A依赖B的时候，去检查是否发生了循环依赖（检查的方式就是将正在创建的A标记出来，然后B需要A，B去创建A的时候，发现A正在创建，就说明发生了循环依赖），如果发生了循环依赖，就提前进行AOP处理，处理完成后再使用（三级缓存）。</li>
 </ul>
 <p>原本AOP这个过程是属性赋完值之后，再由各种后置处理器去处理AOP的（AbstractAutoProxyCreator），但是如果发生了循环依赖，就先AOP，然后属性赋值，最后等到后置处理器执行的时候，就不再做AOP的处理了。不过需要注意，三级缓存并不能解决所有的循环依赖</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA">如何通过三级缓存解决Spring循环依赖※</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Un8pyET2XDXpDY4FnRbwXw">Spring能解决所有循环依赖吗？</a></p>
-</blockquote>
-<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ns9JEpvMt7U-nsMZzEUIUQ">Spring三级缓存解决循环依赖</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/L1PJ-cikoS8sOORszEYnfw">终于有人把Spring循环依赖讲清楚了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5VHU2qRQMPL0IOZuEOPmQA">烂大街的Spring循环依赖该如何回答？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7S9wVOVJyoHiC_RnhZrJTw">spring：我是如何解决循环依赖的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BaRlMNo0HlPP9Vz4x9bUaA">Spring为何需要三级缓存解决循环依赖，而不是二级缓存？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JuS6aewMXSp22zjwWCKt6g">图解Spring循环依赖，写得太好了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/e7e-Pct5CcMrHBCsdjsLSQ">Spring是如何解决循环依赖的</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw">Spring面试题之循环依赖的理解</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA">Spring的循环依赖，到底是什么样的</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw">面试官:SpringBoot循环依赖，如何解决？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YIokfCvLKLhcsEpO734Qtg">透过源码，捋清楚循环依赖到底是如何解决的！</a></li>
-</ul>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA">如何通过三级缓存解决Spring循环依赖※</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Un8pyET2XDXpDY4FnRbwXw">Spring能解决所有循环依赖吗？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ns9JEpvMt7U-nsMZzEUIUQ">Spring三级缓存解决循环依赖</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/L1PJ-cikoS8sOORszEYnfw">终于有人把Spring循环依赖讲清楚了！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5VHU2qRQMPL0IOZuEOPmQA">烂大街的Spring循环依赖该如何回答？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7S9wVOVJyoHiC_RnhZrJTw">spring：我是如何解决循环依赖的？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BaRlMNo0HlPP9Vz4x9bUaA">Spring为何需要三级缓存解决循环依赖，而不是二级缓存？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JuS6aewMXSp22zjwWCKt6g">图解Spring循环依赖，写得太好了！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/e7e-Pct5CcMrHBCsdjsLSQ">Spring是如何解决循环依赖的</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw">Spring面试题之循环依赖的理解</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA">Spring的循环依赖，到底是什么样的</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw">面试官:SpringBoot循环依赖，如何解决？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YIokfCvLKLhcsEpO734Qtg">透过源码，捋清楚循环依赖到底是如何解决的！</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h2 id="Spring相关注解"><a href="#Spring相关注解" class="headerlink" title="Spring相关注解"></a>Spring相关注解</h2><h3 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h3><p>主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的),GET方式无请求体，所以使用@RequestBody接收数据时，前端不能使用GET方式提交数据，而是用POST方式进行提交,在方法里面标记，可以作为一个对象接收,也可以作为字符串接收，关键在于Spring中对json的解析配置.</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// jquery使用下面的请求时可以使用@RequestBody注解接收参数</span>
 <span class="token keyword">var</span> data <span class="token operator">=</span>  <span class="token punctuation">&#123;</span><span class="token string-property property">"id"</span> <span class="token operator">:</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#id"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string-property property">"userId"</span> <span class="token operator">:</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#userId"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
@@ -929,19 +942,30 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <li>View——&gt;渲染，View会根据传进来的Model模型数据进行渲染，此处的Model实际是一个Map数据结构，因此很容易支持其他视图技术；</li>
 <li>返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。<br>下边两个组件通常情况下需要开发：<br>Handler：处理器，即后端控制器用controller表示。<br>View：视图，即展示给用户的界面，视图中通常需要标签语言展示模型数据。</li>
 </ol>
-<h3 id="Spring-MVC相关文章"><a href="#Spring-MVC相关文章" class="headerlink" title="Spring MVC相关文章"></a>Spring MVC相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494012&amp;idx=2&amp;sn=1c5052c5b4a5547a21449412f619327b&amp;source=41#wechat_redirect">SpringMVC执行过程解析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/klCAv0TM2tvgy4xqoC1hQw">Spring MVC请求处理过程不是两张流程图就能讲清楚的</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IeMOfnXhOX5RCf4i5Xsdzw">Spring MVC初始化流程分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F0QZ-Ukgtn3oC6a4loM9Vg">Spring MVC源码分析之DispatcherServlet</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0x7_OXPDFX5BqF0jGxN2Vg">Spring MVC九大组件之HandlerMapping深入分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NCnawbIaLUQJNZiDi2yeCw">Spring MVC九大组件之HandlerAdapter深入分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rn-6QyuYIsM_P5b4B1OIrg">Spring MVC九大组件之ViewResolver深入分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/685jUKqg6I6r0RbmirsRxg">编写Spring MVC控制器的14个技巧！涨知识了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZKBQSCMPV7T9yNcMQ5_pQQ">SpringMVC异常处理体系深入分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DAWdH_0VWZp3oaws_leJhQ">使用Spring MVC的14个顶级技巧！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uzI-ilR-cv5iX3HWFUOmXA">Spring5里边的新玩法！这种URL请求让我涨见识了</a></li>
-</ul>
+<h3 id="Spring-MVC相关文章"><a href="#Spring-MVC相关文章" class="headerlink" title="Spring MVC相关文章"></a>Spring MVC相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494012&amp;idx=2&amp;sn=1c5052c5b4a5547a21449412f619327b&amp;source=41#wechat_redirect">SpringMVC执行过程解析</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/klCAv0TM2tvgy4xqoC1hQw">Spring MVC请求处理过程不是两张流程图就能讲清楚的</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IeMOfnXhOX5RCf4i5Xsdzw">Spring MVC初始化流程分析</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F0QZ-Ukgtn3oC6a4loM9Vg">Spring MVC源码分析之DispatcherServlet</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0x7_OXPDFX5BqF0jGxN2Vg">Spring MVC九大组件之HandlerMapping深入分析</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NCnawbIaLUQJNZiDi2yeCw">Spring MVC九大组件之HandlerAdapter深入分析</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rn-6QyuYIsM_P5b4B1OIrg">Spring MVC九大组件之ViewResolver深入分析</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/685jUKqg6I6r0RbmirsRxg">编写Spring MVC控制器的14个技巧！涨知识了！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZKBQSCMPV7T9yNcMQ5_pQQ">SpringMVC异常处理体系深入分析</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DAWdH_0VWZp3oaws_leJhQ">使用Spring MVC的14个顶级技巧！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uzI-ilR-cv5iX3HWFUOmXA">Spring5里边的新玩法！这种URL请求让我涨见识了</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h2 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a><a target="_blank" rel="noopener" href="https://github.com/xmxe/springboot">Spring Boot</a></h2><p><strong>配置文件默认的查找路径如下</strong>：</p>
 <pre class="line-numbers language-none"><code class="language-none">file:.&#x2F;config&#x2F;
 file:.&#x2F;
@@ -1083,20 +1107,30 @@ environmen<span class="token punctuation">.</span><span class="token function">g
 <p>HiddenHttpMethodFilter必须作用于dispatcher前</p>
 <h3 id="org-springframework-web-context-ContextLoaderListener"><a href="#org-springframework-web-context-ContextLoaderListener" class="headerlink" title="org.springframework.web.context.ContextLoaderListener"></a>org.springframework.web.context.ContextLoaderListener</h3><p>ContextLoaderListener的作用就是启动Web容器时，自动装配ApplicationContext.xml的配置信息。<br>ContextLoaderListener继承自ContextLoader，实现的是ServletContextListener接口。在web.xml配置这个监听器，启动容器时，就会默认执行它实现的方法。ContextLoaderListener可以指定在Web应用程序启动时载入Ioc容器，正是通过ContextLoader来实现的，ContextLoader来完成实际的WebApplicationContext，也就是Ioc容器的初始化工作。如果没有显式声明，则系统默认在WEB-INF&#x2F;applicationContext.xml。</p>
 <h3 id="org-springframework-web-util-IntrospectorCleanupListener"><a href="#org-springframework-web-util-IntrospectorCleanupListener" class="headerlink" title="org.springframework.web.util.IntrospectorCleanupListener"></a>org.springframework.web.util.IntrospectorCleanupListener</h3><p>JDK中的java.beans.Introspector类的用途是发现Java类是否符合JavaBean规范,如果有的框架或程序用到了Introspector类,那么就会启用一个系统级别的缓存,此缓存会存放一些曾加载并分析过的JavaBean的引用。当Web服务器关闭时,由于此缓存中存放着这些JavaBean的引用,所以垃圾回收器无法回收Web容器中的JavaBean对象,最后导致内存变大。而org.springframework.web.util.IntrospectorCleanupListener就是专门用来处理Introspector内存泄漏问题的辅助类。IntrospectorCleanupListener会在Web服务器停止时清理Introspector缓存,使那些Javabean能被垃圾回收器正确回收。Spring自身不会出现这种问题，因为Spring在加载并分析完一个类之后会马上刷新JavaBeans Introspector缓存,这就保证Spring中不会出现这种内存泄漏的问题。但有些程序和框架在使用了JavaBeans Introspector之后,没有进行清理工作(如Quartz,Struts),最后导致内存泄漏</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42092555">Java面试中常问的Spring问题，你都会吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ">如果我是面试官，我会问你Spring这些问题</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ">推荐收藏：Spring面试63问！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng">spring中那些让你爱不释手的代码技巧</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw">《轻松读懂spring》之IOC的主干流程（上）</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q">我们到底为什么要用IoC和AOP</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA">@Conditional的强大之处</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA">SpringBatch批处理框架，真心强啊！！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA">手写Spring框架</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw">Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ">聊聊Spring核心</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw">揭秘Spring依赖注入和SpEL表达式</a></li>
-</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42092555">Java面试中常问的Spring问题，你都会吗？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ">如果我是面试官，我会问你Spring这些问题</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ">推荐收藏：Spring面试63问！</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng">spring中那些让你爱不释手的代码技巧</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw">《轻松读懂spring》之IOC的主干流程（上）</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q">我们到底为什么要用IoC和AOP</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA">@Conditional的强大之处</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA">SpringBatch批处理框架，真心强啊！！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA">手写Spring框架</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw">Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ">聊聊Spring核心</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw">揭秘Spring依赖注入和SpEL表达式</a></td>
+</tr>
+</tbody></table>
 
                 
             </div>

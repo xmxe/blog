@@ -531,13 +531,6 @@
                 <h2 id="常见限流算法有哪些？"><a href="#常见限流算法有哪些？" class="headerlink" title="常见限流算法有哪些？"></a>常见限流算法有哪些？</h2><p>简单介绍4种非常好理解并且容易实现的限流算法！</p>
 <blockquote>
 <p>图片来源于InfoQ的一篇文章<a target="_blank" rel="noopener" href="https://www.infoq.cn/article/Qg2tX8fyw5Vt-f3HH673">《分布式服务限流实战，已经为你排好坑了》</a>。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w">5种限流算法，7种限流方式，挡住突发流量？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw">常用的限流算法有哪些？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg">新来个技术总监，把限流实现的那叫一个优雅，佩服</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i93_jSf43FcN0aQ9hY8WnQ">十分钟搞懂Java限流及常见方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BRQfsbhFjSpl_MH7E-eZYQ">四种分布式限流算法实现！</a></li>
-</ul>
 </blockquote>
 <h3 id="固定窗口计数器算法"><a href="#固定窗口计数器算法" class="headerlink" title="固定窗口计数器算法"></a>固定窗口计数器算法</h3><p>固定窗口其实就是时间窗口。固定窗口计数器算法规定了我们单位时间处理的请求数量。假如我们规定系统中某个接口1分钟只能访问33次的话，使用固定窗口计数器算法的实现思路如下：</p>
 <ul>
@@ -645,6 +638,20 @@ get <span class="token number">1</span> tokens: <span class="token number">0</sp
 <h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><blockquote>
 <p>相关代码已上传到<a target="_blank" rel="noopener" href="https://github.com/xmxe/demo/tree/master/study-demo/src/main/java/com/xmxe/algorithm/limit">GitHub</a></p>
 </blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w">5种限流算法，7种限流方式，挡住突发流量？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw">常用的限流算法有哪些？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg">新来个技术总监，把限流实现的那叫一个优雅，佩服</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i93_jSf43FcN0aQ9hY8WnQ">十分钟搞懂Java限流及常见方案</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BRQfsbhFjSpl_MH7E-eZYQ">四种分布式限流算法实现！</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
                 
             </div>

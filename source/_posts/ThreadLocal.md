@@ -872,13 +872,10 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 
 因为ThreadLocal是基于ThreadLocalMap实现的，其中ThreadLocalMap的Entry继承了WeakReference，而Entry对象中的key使用了WeakReference封装，也就是说，Entry中的key是一个弱引用类型，对于弱引用来说，它只能存活到下次GC之前，如果此时一个线程调用了ThreadLocalMap的set设置变量，当前的ThreadLocalMap就会新增一条记录，但由于发生了一次垃圾回收，这样就会造成一个结果:key值被回收掉了，但是value值还在内存中，而且如果线程一直存在的话，那么它的value值就会一直存在,这样被垃圾回收掉的key就会一直存在一条引用链:Thread->ThreadLocalMap->Entry->Value:就是因为这条引用链的存在，就会导致如果Thread还在运行，那么Entry不会被回收，进而value也不会被回收掉，但是Entry里面的key值已经被回收掉了,这只是一个线程，如果再来一个线程，又来一个线程…多了之后就会造成内存泄漏
 
-> [详细解读ThreadLocal的内存泄露](https://mp.weixin.qq.com/s/gasR16pjlN3WfuFj9mQxdQ)
-> [ThreadLocal你怎么动不动就内存泄漏？](https://mp.weixin.qq.com/s/S0IwbXadRgZ86fFLSFObVQ)
-> [细数ThreadLocal三大坑，内存泄露仅是小儿科](https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg)
-> [内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal](https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g)
-> [线上系统因为一个ThreadLocal直接内存飙升](https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig)
-> [ThreadLocal搭配线程池时为什么会造成内存泄漏](https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA)
-> [为什么大家都说ThreadLocal存在内存泄漏的风险？](https://mp.weixin.qq.com/s/N2YBtHf1AutOJYwRaCrfRA)
+| [详细解读ThreadLocal的内存泄露](https://mp.weixin.qq.com/s/gasR16pjlN3WfuFj9mQxdQ) | [ThreadLocal你怎么动不动就内存泄漏？](https://mp.weixin.qq.com/s/S0IwbXadRgZ86fFLSFObVQ) | [细数ThreadLocal三大坑，内存泄露仅是小儿科](https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal](https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g) | [线上系统因为一个ThreadLocal直接内存飙升](https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig) | [ThreadLocal搭配线程池时为什么会造成内存泄漏](https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA) |
+| [为什么大家都说ThreadLocal存在内存泄漏的风险？](https://mp.weixin.qq.com/s/N2YBtHf1AutOJYwRaCrfRA) |                                                              |                                                              |
 
 ### ThreadLocalMap为什么使用弱引用而不是强引用？
 
@@ -913,11 +910,8 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 
 比较两种情况，我们可以发现：由于ThreadLocalMap的生命周期跟Thread一样长，如果都没有手动删除对应key，都会导致内存泄漏，但是使用弱引用可以多一层保障：弱引用ThreadLocal被清理后key为null，对应的value在下一次ThreadLocalMap调用set、get、remove的时候可能会被清除。因此，ThreadLocal内存泄漏的根源是：由于ThreadLocalMap的生命周期跟Thread一样长，如果没有手动删除对应key就会导致内存泄漏，而不是因为弱引用。
 
-
 ### 相关文章
 
-- [面试官：听说你看过ThreadLocal源码](https://mp.weixin.qq.com/s/7sR7okSS1_LGpUWudWtQNw)
-- [Java并发之ThreadLocal](https://mp.weixin.qq.com/s/ntjmEHIj_aINhNmtwhMecA)
-- [ThreadLocal夺命11连问](https://mp.weixin.qq.com/s/s6waqV8X7KPKip8zbOIDqQ)
-- [ThreadLocal父子线程之间该如何传递数据？](https://mp.weixin.qq.com/s/yZNBAtN9AFocQ2-FR9so6g)
-- [用这4招优雅的实现Spring Boot异步线程间数据传递](https://mp.weixin.qq.com/s/HmaGSW71lAI-9WlNlfuICw)
+| [面试官：听说你看过ThreadLocal源码](https://mp.weixin.qq.com/s/7sR7okSS1_LGpUWudWtQNw) | [Java并发之ThreadLocal](https://mp.weixin.qq.com/s/ntjmEHIj_aINhNmtwhMecA) | [ThreadLocal夺命11连问](https://mp.weixin.qq.com/s/s6waqV8X7KPKip8zbOIDqQ) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [ThreadLocal父子线程之间该如何传递数据？](https://mp.weixin.qq.com/s/yZNBAtN9AFocQ2-FR9so6g) | [用这4招优雅的实现Spring Boot异步线程间数据传递](https://mp.weixin.qq.com/s/HmaGSW71lAI-9WlNlfuICw) |                                                              |

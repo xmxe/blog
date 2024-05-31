@@ -74,7 +74,8 @@ sudo yum remove docker*
 yum -y update
 # 加软件源
 # sudo yum install -y yum-utils
-yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+# yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 # 更新缓存
 yum makecache fast
 # 安装
@@ -233,6 +234,33 @@ systemctl status docker
 docker -v
 ```
 
+## 卸载
+
+### CentOS
+
+```shell
+# 停止所有运行的容器
+sudo docker stop $(docker ps -aq)
+# 删除所有容器
+sudo docker rm $(docker ps -aq)
+# 删除所有镜像
+sudo docker rmi $(docker images -q)
+sudo systemctl stop docker
+sudo yum remove docker-ce docker-ce-cli containerd.io
+sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine
+# 删除Docker数据目录
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+sudo rm -rf /etc/systemd/system/docker.service.d
+sudo rm -rf /etc/systemd/system/docker.service
+sudo rm -rf /var/run/docker
+sudo rm -rf /usr/local/docker
+sudo rm -rf /etc/docker
+sudo rm -rf /usr/bin/docker* /usr/bin/containerd* /usr/bin/runc /usr/bin/ctr
+
+```
+
+
 ## 常用命令
 
 ### docker images
@@ -300,10 +328,10 @@ docker rmi `docker images -q`
 ```shell
 docker rm [OPTIONS] container_id
 
-OPTIONS说明：
--f :通过 SIGKILL 信号强制删除一个运行中的容器。
--l :移除容器间的网络连接，而非容器本身。
--v :删除与容器关联的卷。
+OPTIONS说明:
+-f: 通过 SIGKILL 信号强制删除一个运行中的容器。
+-l: 移除容器间的网络连接，而非容器本身。
+-v: 删除与容器关联的卷。
 ```
 
 - 删除所有容器
@@ -326,7 +354,7 @@ docker search *
 ```shell
 docker history [OPTIONS] IMAGE
 
-OPTIONS说明：
+OPTIONS说明:
 -H :以可读的格式打印镜像大小和日期，默认为true；
 --no-trunc :显示完整的提交记录；
 -q :仅列出提交记录ID。
@@ -387,7 +415,7 @@ docker stop $(docker ps -a -q)
 - 杀掉运行中的容器
 ```shell
 docker kill -s(可忽略) CONTAINER
-# -s :向容器发送一个信号 例：
+# -s :向容器发送一个信号 例:
 docker kill -s KILL mynginx
 ```
 
@@ -397,8 +425,9 @@ docker kill -s KILL mynginx
 ```shell
 docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
 # 例如：进入容器
-docker exec -itd 容器id /bin/bash
-# （-d:分离模式,在后台运行 -i:即使没有附加也保持STDIN打开 -t:分配一个伪终端）/bin/bash: 在container中启动一个bash shell。exit:退出bash shell
+docker exec -it 容器id /bin/bash
+# -i:即使没有附加也保持STDIN打开 -t:分配一个伪终端
+# /bin/bash: 在container中启动一个bash shell。exit:退出bash shell
 ```
 
 ### docker pause
@@ -426,50 +455,42 @@ docker create # 参数同docker run
 
 - 创建一个新的容器并运行
 ```shell
-docker run
+docker run [OPTIONS] IMAGE [COMMAND] [ARG...].其中，OPTIONS是一系列用于配置容器运行方式的选项，IMAGE是要运行的容器镜像，COMMAND是在容器内部执行的命令，ARG是传递给命令的参数。
+OPTIONS:
 -i: 以交互模式运行容器，通常与-t同时使用
 -t: 为容器重新分配一个伪输入终端，通常与-i同时使用
 -it 以交互模式运行
 -P: 随机端口映射，容器内部端口随机映射到主机的端口
--p: 指定端口映射，格式为：主机(宿主)端口:容器端口
--d 后台运行并返回容器ID
--v,--volume 挂载主机目录:容器目录,绑定一个卷
--u,--user="":指定容器的用户
--a,--attach=[]:登录容器（必须是以docker run -d启动的容器）
--w,--workdir="":指定容器的工作目录
--c,--cpu-shares=0:设置容器CPU权重,在CPU共享场景使用
--e username="ritchie",--env=[]:设置环境变量容器中可以使用该环境变量
--m,--memory="":指定容器的内存上限
--P,--publish-all=false:指定容器暴露的端口
--h,--hostname="":指定容器的主机名
---name=””:容器命名
---cap-add=[]:添加权限,权限清单详见:http://linux.die.net/man/7/capabilities
---cap-drop=[]:删除权限,权限清单详见:http://linux.die.net/man/7/capabilities
---cidfile="":运行容器后,在指定文件中写入容器PID值,一种典型的监控系统用法
---cpuset="":设置容器可以使用哪些CPU，此参数可以用来容器独占CPU
---device=[]:添加主机设备给容器，相当于设备直通
---dns=[]:指定容器的dns服务器
---dns-search=[]:指定容器的dns搜索域名,写入到容器的/etc/resolv.conf文件
---entrypoint="":覆盖image的入口点
---env-file=[]:从指定文件读入环境变量
---expose=[]:指定容器暴露的端口,即修改镜像的暴露端口
---link=[]:添加链接到另一个容器,使用其他容器的IP、env等信息
---lxc-conf=[]:指定容器的配置文件,只有在指定--exec-driver=lxc时使用
---net="bridge":容器网络设置:
-        bridge - 使用docker daemon指定的网桥
-        host - 容器使用主机的网络
-        container:NAME_or_ID > 使用其他容器的网路，共享IP和PORT等网络资源
-        none - 容器使用自己的网络（类似--net=bridge），但是不进行配置
---privileged=false指定容器是否为特权容器,特权容器拥有所有的capabilities
---restart="no"，指定容器停止后的重启策略:
-        no - 容器退出时不重启
-        on-failure - 只在容器以非0状态码退出时重启。可选的，可以退出docker daemon尝试重启容器的次数
-        on-failure:3，在容器非正常退出时重启容器，最多重启3次
-        always – 不管退出状态码是什么始终重启容器。当指定always时，docker daemon将无限次数地重启容器。容器也会在daemon启动时尝试重启，不管容器当时的状态如何。
-        unless-stopped – 不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
---rm=false指定容器停止后自动删除容器(不支持以docker run -d启动的容器)
---sig-proxy=true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理
---log-driver=json-file --log-opt max-size=10m --log-opt max-file=3:使用--log-opt参数限制容器日志大小:在启动容器时,可以使用--log-opt参数设置日志驱动程序的选项.在这个例子中,我们设置了以下选项:max-size=10m:限制单个日志文件的最大大小为10MB.max-file=3:限制日志文件的数量为3个.当日志文件达到10MB时，Docker会自动轮换日志文件，保留最新的3个日志文件。
+-p: 指定端口映射，格式为主机(宿主)端口:容器端口
+-d: 后台运行并返回容器ID
+-v,--volume: 挂载主机目录:容器目录,绑定一个卷
+-u,--user="": 指定容器的用户
+-a,--attach=[]: 登录容器（必须是以docker run -d启动的容器）
+-w,--workdir="": 指定容器的工作目录
+-c,--cpu-shares=0: 设置容器CPU权重,在CPU共享场景使用
+-e username="ritchie",--env=[]: 设置环境变量容器中可以使用该环境变量
+-m,--memory="": 指定容器的内存上限
+-P,--publish-all=false: 指定容器暴露的端口
+-h,--hostname="": 指定容器的主机名
+--name=””: 容器命名
+--cap-add=[]: 添加权限,权限清单详见:http://linux.die.net/man/7/capabilities
+--cap-drop=[]: 删除权限,权限清单详见:http://linux.die.net/man/7/capabilities
+--cidfile="": 运行容器后,在指定文件中写入容器PID值,一种典型的监控系统用法
+--cpuset="": 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU
+--device=[]: 添加主机设备给容器，相当于设备直通
+--dns=[]: 指定容器的dns服务器
+--dns-search=[]: 指定容器的dns搜索域名,写入到容器的/etc/resolv.conf文件
+--entrypoint="": 覆盖image的入口点
+--env-file=[]: 从指定文件读入环境变量
+--expose=[]: 指定容器暴露的端口,即修改镜像的暴露端口
+--link=[]: 添加链接到另一个容器,使用其他容器的IP、env等信息
+--lxc-conf=[]: 指定容器的配置文件,只有在指定`--exec-driver=lxc`时使用
+--net=bridge(或--network=bridge): 容器网络设置。bridge:使用docker daemon指定的网桥。host:容器使用主机的网络。container:NAME_or_ID:使用其他容器的网路，共享IP和PORT等网络资源。none:容器使用自己的网络（类似`--net=bridge`），但是不进行配置
+--privileged=false: 指定容器是否为特权容器,特权容器拥有所有的capabilities(能力),它赋予了容器几乎与宿主机相同的权限
+--restart="no": 指定容器停止后的重启策略。no:容器退出时不重启。on-failure:只在容器以非0状态码退出时重启，可选的，可以退出docker daemon尝试重启容器的次数。on-failure:3，在容器非正常退出时重启容器，最多重启3次。always:不管退出状态码是什么始终重启容器，当指定always时，docker daemon将无限次数地重启容器，容器也会在daemon启动时尝试重启，不管容器当时的状态如何。unless-stopped:不管退出状态码是什么始终重启容器，不过当daemon启动时，如果容器之前已经为停止状态，不要尝试启动它。
+--rm: 指定容器停止后自动删除容器(不支持以docker run -d启动的容器)
+--sig-proxy=true: 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理
+--log-driver=json-file --log-opt max-size=10m --log-opt max-file=3: 使用--log-opt参数限制容器日志大小。在启动容器时,可以使用--log-opt参数设置日志驱动程序的选项.在这个例子中,我们设置了以下选项:max-size=10m:限制单个日志文件的最大大小为10MB.max-file=3:限制日志文件的数量为3个.当日志文件达到10MB时，Docker会自动轮换日志文件，保留最新的3个日志文件。
 ```
 
 ### docker inspect
@@ -477,10 +498,10 @@ docker run
 - 获取容器/镜像的元数据
 ```shell
 docker inspect [OPTIONS] NAME|ID [NAME|ID...]
-OPTIONS说明：
--f :指定返回值的模板文件。
--s :显示总的文件大小。
---type :为指定类型返回JSON。
+OPTIONS说明:
+-f: 指定返回值的模板文件。
+-s: 显示总的文件大小。
+--type: 为指定类型返回JSON。
 ```
 
 ### docker top
@@ -510,10 +531,10 @@ docker wait containser_id
 ```shell
 docker events OPTIONS
 
-OPTIONS说明：
--f ：根据条件过滤事件；
---since ：从指定的时间戳后显示所有事件;
---until ：流水时间显示到指定的时间为止；
+OPTIONS说明:
+-f: 根据条件过滤事件
+--since: 从指定的时间戳后显示所有事件
+--until: 流水时间显示到指定的时间为止
 docker events --since="1467302400"
 ```
 
@@ -522,13 +543,13 @@ docker events --since="1467302400"
 - 查看日志
 ```shell
 docker logs [OPTIONS] CONTAINER
-OPTIONS说明：
---details 显示更多的信息
--f, --follow 跟踪实时日志
---since string 显示自某个timestamp之后的日志，或相对时间，如42m（即42分钟）
---tail string 从日志末尾显示多少行日志，默认是all
--t, --timestamps 显示时间戳
---until string 显示自某个timestamp之前的日志，或相对时间，如42m（即42分钟）
+OPTIONS说明:
+--details: 显示更多的信息
+-f, --follow: 跟踪实时日志
+--since string: 显示自某个timestamp之后的日志，或相对时间，如42m（即42分钟）
+--tail string: 从日志末尾显示多少行日志，默认是all
+-t, --timestamps: 显示时间戳
+--until string: 显示自某个timestamp之前的日志，或相对时间，如42m（即42分钟）
 
 # 查看指定时间后的日志，只显示最后100行：
 docker logs -f -t --since="2018-02-08" --tail=100 CONTAINER_ID
@@ -553,11 +574,11 @@ docker port container_id
 ```shell
 docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 
-OPTIONS说明：
--a :提交的镜像作者；
--c :使用Dockerfile指令来创建镜像；
--m :提交时的说明文字；
--p :在commit时，将容器暂停。
+OPTIONS说明:
+-a: 提交的镜像作者；
+-c: 使用Dockerfile指令来创建镜像；
+-m: 提交时的说明文字；
+-p: 在commit时，将容器暂停。
 
 # 将容器a404c6c174a2 保存为新的镜像,并添加提交人信息和说明信息。
 docker commit -a "runoob.com" -m "my apache" a404c6c174a2 mymysql:v1
@@ -567,7 +588,7 @@ docker commit -a "runoob.com" -m "my apache" a404c6c174a2 mymysql:v1
 
 - 容器与主机之间的数据拷贝
 ```shell
-# 将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。
+# 将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下
 docker cp /www/runoob 96f7f14e99ab:/www/
 ```
 
@@ -583,26 +604,26 @@ docker diff mymysql
 - 使用 Dockerfile 创建镜像
 ```shell
 docker build
---build-arg=[] :设置镜像创建时的变量；
---cpu-shares :设置cpu使用权重；
---cpu-period :限制CPU CFS周期；
---cpu-quota :限制CPU CFS配额；
---cpuset-cpus :指定使用的CPU id；
---cpuset-mems :指定使用的内存id；
---disable-content-trust :忽略校验，默认开启；
--f :指定要使用的Dockerfile路径；
---force-rm :设置镜像过程中删除中间容器；
---isolation :使用容器隔离技术；
---label=[] :设置镜像使用的元数据；
--m :设置内存最大值；
---memory-swap :设置Swap的最大值为内存+swap，"-1"表示不限swap；
---no-cache :创建镜像的过程不使用缓存；
---pull :尝试去更新镜像的新版本；
---quiet, -q :安静模式，成功后只输出镜像 ID；
---rm :设置镜像成功后删除中间容器；
---shm-size :设置/dev/shm的大小，默认值是64M；
---ulimit :Ulimit配置。
---squash :将Dockerfile中所有的操作压缩为一层。
+--build-arg=[]: 设置镜像创建时的变量
+--cpu-shares: 设置cpu使用权重
+--cpu-period: 限制CPU CFS周期
+--cpu-quota: 限制CPU CFS配额
+--cpuset-cpus: 指定使用的CPU id
+--cpuset-mems: 指定使用的内存id
+--disable-content-trust: 忽略校验，默认开启
+-f: 指定要使用的Dockerfile路径
+--force-rm: 设置镜像过程中删除中间容器
+--isolation: 使用容器隔离技术
+--label=[]: 设置镜像使用的元数据
+-m: 设置内存最大值
+--memory-swap: 设置Swap的最大值为内存+swap，"-1"表示不限swap
+--no-cache: 创建镜像的过程不使用缓存
+--pull: 尝试去更新镜像的新版本
+--quiet, -q: 安静模式，成功后只输出镜像ID
+--rm: 设置镜像成功后删除中间容器
+--shm-size: 设置/dev/shm的大小，默认值是64M
+--ulimit: Ulimit配置
+--squash: 将Dockerfile中所有的操作压缩为一层。
 --tag, -t: 镜像的名字及标签，通常name:tag或者name格式；可以在一次构建中为一个镜像设置多个标签。
 --network: 默认default。在构建期间设置RUN指令的网络模式
 ```
@@ -632,10 +653,46 @@ docker tag
 
 ### docker network
 
-- 创建桥接网络，用于mysql与nacos通信
+- 创建网络
 ```shell
 docker network create -d bridge my-net
+docker network ls
 ```
+
+- 指定容器ip
+
+```shell
+# 使用自定义Bridge网络
+# 创建了一个名为mybridge的自定义Bridge网络，其IP地址段为172.25.0.0/16。
+docker network create --driver=bridge --subnet=172.25.0.0/16 mybridge
+# 在mybridge网络中创建了一个名为mycontainer的容器，并为其分配了静态IP地址172.25.0.2。
+docker run -itd --name=mycontainer --network=mybridge --ip=172.25.0.2 your_image_name
+
+# 使用Macvlan网络模式
+# 创建名为macvlan-network的Macvlan网络,其IP地址段为192.168.88.0/24,网关为192.168.88.254,并指定了父网卡为eth0。
+docker network create -d macvlan --subnet=192.168.88.0/24 --gateway=192.168.88.254 -o parent=eth0 macvlan-network
+# 在macvlan-network网络中创建了一个名为mycontainer的容器，并为其分配了静态IP地址192.168.88.56
+docker run -itd --name=mycontainer --privileged=true --network=macvlan-network --ip=192.168.88.56 your_image_name
+```
+```yml
+# 使用Docker Compose
+version: '3'  
+services:  
+  myservice:  
+    image: your_image_name  
+    networks:  
+      mynet:  
+        ipv4_address: 172.18.0.2  
+networks:  
+  mynet:  
+    ipam:  
+      config:  
+        - subnet: 172.18.0.0/16  
+          gateway: 172.18.0.1
+```
+
+> [Docker有几种网络模式](https://mp.weixin.qq.com/s/KU3bpxiNbHGJQ_XVRqsedg)
+
 ### docker system
 
 ```shell
@@ -688,14 +745,14 @@ label可以使用`docker inspect <容器id或名称>`来查看labels
 {
   
   "Labels": {
-                "com.docker.compose.config-hash": "b637c41bf29efe8fcd1d3c7baa3ad5ba8dc44f21cec0d3937d665fb79df76644",
-                "com.docker.compose.container-number": "1",
-                "com.docker.compose.oneoff": "False",
-                "com.docker.compose.project": "jpom",
-                "com.docker.compose.project.config_files": "docker-compose.yml",
-                "com.docker.compose.project.working_dir": "/www/docker-compose/jpom",
-                "com.docker.compose.service": "jpom",
-                "com.docker.compose.version": "1.29.2"
+              "com.docker.compose.config-hash": "b637c41bf29efe8fcd1d3c7baa3ad5ba8dc44f21cec0d3937d665fb79df76644",
+              "com.docker.compose.container-number": "1",
+              "com.docker.compose.oneoff": "False",
+              "com.docker.compose.project": "jpom",
+              "com.docker.compose.project.config_files": "docker-compose.yml",
+              "com.docker.compose.project.working_dir": "/www/docker-compose/jpom",
+              "com.docker.compose.service": "jpom",
+              "com.docker.compose.version": "1.29.2"
   }
 }
 ```
@@ -772,52 +829,54 @@ max-size=500m，意味着一个容器日志大小上限是500M，max-file=3，�
 
 ### 表格
 
-| **命令**      | **作用**                                                     |
-| ------------- | ------------------------------------------------------------ |
-| **attach**    | **绑定到运行中容器的 标准输入, 输出,以及错误流（这样似乎也能进入容器内容，但 是一定小心，他们操作的就是控制台，控制台的退出命令会生效，比如 redis,nginx...）** |
-| **build**     | **从一个Dockerfile文件构建镜像**                             |
-| **commit**    | **把容器的改变 提交创建一个新的镜像**                        |
-| **cp**        | **容器和本地文件系统间 复制 文件/文件夹cp -rp[原文件或目录] [目标文件或目录] －r 复制目录 - p 保留文件属性** |
-| **create**    | **创建新容器，但并不启动（注意与docker run 的区分）需要手动启动。start\\stop** |
-| **diff**      | **检查容器里文件系统结构的更改【A：添加文件或目录 D：文件或者目录删除 C：文 件或者目录更改】** |
-| **events**    | **获取服务器的实时事件**                                     |
-| **exec**      | **在运行时的容器内运行命令**                                 |
-| **export**    | **导出容器的文件系统为一个tar文件。commit是直接提交成镜像，export是导出成文 件方便传输** |
-| **history**   | **显示镜像的历史**                                           |
-| **images**    | **列出所有镜像**                                             |
-| **import**    | **导入tar的内容创建一个镜像，再导入进来的镜像直接启动不了容器。 /docker-entrypoint.sh nginx -g 'daemon o** |
-| **info**      | **显示系统信息**                                             |
-| **inspect**   | **获取docker对象的底层信息**                                 |
-| **kill**      | **杀死一个或者多个容器**                                     |
-| **load**      | **从tar文件加载镜像 docker load -i xxx.tar**                 |
-| **login**     | **登录Docker registry**                                      |
-| **logout**    | **退出Docker registry**                                      |
-| **logs**      | **获取容器日志；容器以前在前台控制台能输出的所有内容，都可以看到** |
-| **pause**     | **暂停一个或者多个容器**                                     |
-| **port**      | **列出容器的端口映射**                                       |
-| **ps**        | **列出所有容器 docker ps -a 列出包括已停止的所有容器**       |
-| **pull**      | **从registry下载一个image 或者repository**                   |
-| **push**      | **给registry推送一个image或者repository**                    |
-| **rename**    | **重命名一个容器**                                           |
-| **restart**   | **重启一个或者多个容器**                                     |
-| **rm**        | **移除一个或者多个容器**                                     |
-| **rmi**       | **移除一个或者多个镜像**                                     |
-| **run**       | **创建并启动容器**                                           |
-| **save**      | **把一个或者多个镜像保存为tar文件 docker save -o [容器名称]:[容器标签] > xxx.tar** |
-| **search**    | **去docker hub寻找镜像**                                     |
-| **start**     | **启动一个或者多个容器**                                     |
-| **stop**      | **停止一个或者多个容器**                                     |
-| **tag**       | **给源镜像创建一个新的标签，变成新的镜像**                   |
-| **unpause**   | **pause的反操作**                                            |
-| **update**    | **更新一个或者多个docker容器配置**                           |
-| **version**   | **Show the Docker version information**                      |
-| **container** | **管理容器**                                                 |
-| **image**     | **管理镜像**                                                 |
-| **network**   | **管理网络**                                                 |
-| **volume**    | **管理卷**                                                   |
-| **stats**     | **显示容器资源的实时使用状态**                               |
-| **top**       | **显示正在运行容器的进程**                                   |
+|   **命令**    |                           **作用**                           |
+| :-----------: | :----------------------------------------------------------: |
+|  **attach**   | **绑定到运行中容器的 标准输入, 输出,以及错误流（这样似乎也能进入容器内容，但 是一定小心，他们操作的就是控制台，控制台的退出命令会生效，比如 redis,nginx...）** |
+|   **build**   |               **从一个Dockerfile文件构建镜像**               |
+|  **commit**   |            **把容器的改变 提交创建一个新的镜像**             |
+|    **cp**     | **容器和本地文件系统间 复制 文件/文件夹cp -rp[原文件或目录] [目标文件或目录] －r 复制目录 - p 保留文件属性** |
+|  **create**   | **创建新容器，但并不启动（注意与docker run 的区分）需要手动启动。start\\stop** |
+|   **diff**    | **检查容器里文件系统结构的更改【A：添加文件或目录 D：文件或者目录删除 C：文 件或者目录更改】** |
+|  **events**   |                   **获取服务器的实时事件**                   |
+|   **exec**    |                 **在运行时的容器内运行命令**                 |
+|  **export**   | **导出容器的文件系统为一个tar文件。commit是直接提交成镜像，export是导出成文 件方便传输** |
+|  **history**  |                      **显示镜像的历史**                      |
+|  **images**   |                       **列出所有镜像**                       |
+|  **import**   | **导入tar的内容创建一个镜像，再导入进来的镜像直接启动不了容器。 /docker-entrypoint.sh nginx -g 'daemon o** |
+|   **info**    |                       **显示系统信息**                       |
+|  **inspect**  |                 **获取docker对象的底层信息**                 |
+|   **kill**    |                   **杀死一个或者多个容器**                   |
+|   **load**    |         **从tar文件加载镜像 docker load -i xxx.tar**         |
+|   **login**   |                   **登录Docker registry**                    |
+|  **logout**   |                   **退出Docker registry**                    |
+|   **logs**    | **获取容器日志；容器以前在前台控制台能输出的所有内容，都可以看到** |
+|   **pause**   |                   **暂停一个或者多个容器**                   |
+|   **port**    |                    **列出容器的端口映射**                    |
+|    **ps**     |    **列出所有容器 docker ps -a 列出包括已停止的所有容器**    |
+|   **pull**    |          **从registry下载一个image 或者repository**          |
+|   **push**    |          **给registry推送一个image或者repository**           |
+|  **rename**   |                      **重命名一个容器**                      |
+|  **restart**  |                   **重启一个或者多个容器**                   |
+|    **rm**     |                   **移除一个或者多个容器**                   |
+|    **rmi**    |                   **移除一个或者多个镜像**                   |
+|    **run**    |                      **创建并启动容器**                      |
+|   **save**    | **把一个或者多个镜像保存为tar文件 docker save -o [容器名称]:[容器标签] > xxx.tar** |
+|  **search**   |                   **去docker hub寻找镜像**                   |
+|   **start**   |                   **启动一个或者多个容器**                   |
+|   **stop**    |                   **停止一个或者多个容器**                   |
+|    **tag**    |          **给源镜像创建一个新的标签，变成新的镜像**          |
+|  **unpause**  |                      **pause的反操作**                       |
+|  **update**   |              **更新一个或者多个docker容器配置**              |
+|  **version**  |           **Show the Docker version information**            |
+| **container** |                         **管理容器**                         |
+|   **image**   |                         **管理镜像**                         |
+|  **network**  |                         **管理网络**                         |
+|  **volume**   |                          **管理卷**                          |
+|   **stats**   |                **显示容器资源的实时使用状态**                |
+|    **top**    |                  **显示正在运行容器的进程**                  |
 
+
+> [Docker常用命令，还有谁不会？](https://mp.weixin.qq.com/s/fzlNnJe9SMA5k3TDXOfZUA)
 
 ## Dockerfile
 
@@ -830,9 +889,14 @@ max-size=500m，意味着一个容器日志大小上限是500M，max-file=3，�
 
 #### FROM
 
-语法：`FROM 镜像名`,最简单的命令，指定在哪个基础镜像上创建镜像
+语法：
 
-例：`FROM livingobjects/jre8`,在jre8镜像基础上创建自己镜像。
+```dockerfile
+FROM 镜像名
+#例 在jre8镜像基础上创建自己镜像。
+FROM livingobjects/jre8
+```
+最简单的命令，指定在哪个基础镜像上创建镜像
 
 #### RUN
 
@@ -840,35 +904,41 @@ max-size=500m，意味着一个容器日志大小上限是500M，max-file=3，�
 
 第一种形式：
 
-```text
-RUN chown user2:user2 /home/webapi (以shell形式执行命令，等同于/bin/sh -c);
+```dockerfile
+RUN chown user2:user2 /home/webapi #以shell形式执行命令，等同于/bin/sh -c
 ```
 
 第二种形式：
 
-```text
-RUN ["executable","param1", "param2"]
+```dockerfile
+RUN ["executable","param1", "param2"] # (等同于exec命令形式)，注意此处必须是双引号(")，因为这种格式被解析为JSON数组。
 ```
-
-(等同于exec命令形式)，注意此处必须是双引号(")，因为这种格式被解析为JSON数组。
 
 #### CMD
 
-语法：`CMD ["executable", "param1", "param2"?]`
+语法：
+
+```dockerfile
+CMD ["executable", "param1", "param2"?]
+# 例
+CMD exec java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+```
 
 1. 在镜像构建容器后执行
 2. 只能存在一条CMD命令
 
-例：`CMD exec java -Djava.security.egd=file:/dev/./urandom -jar /app.jar`
-
 #### ENTRYPOINT
 
-语法：`ENTRYPOINT ["executable", "param1", "param2"?]`,这个命令和CMD功能一样。区别在于ENTRYPOINT后面携带的参数不会被docker run 提供的参数覆盖，而CMD会被覆盖。
+语法：
 
-例：`ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]`
+```dockerfile
+ENTRYPOINT ["executable", "param1", "param2"?]
+# 例
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+```
+这个命令和CMD功能一样。区别在于ENTRYPOINT后面携带的参数不会被docker run提供的参数覆盖，而CMD会被覆盖。
 
-
-#### CMD 与 ENTRYPOINT
+##### 扩展CMD与ENTRYPOINT
 
 二者的区别看：[docker CMD ENTRYPOINT区别终极解读](https://blog.csdn.net/u010900754/article/details/78526443)
 
@@ -880,19 +950,24 @@ dockerfile中的CMD命令被覆盖：
 
 **CMD**：提供了容器默认的执行命令。Dockerfile只允许使用一次CMD指令。使用多个CMD会抵消之前所有的指令，只有最后一个指令生效。CMD有三种形式：
 
-```text
+```dockerfile
 CMD ["executable","param1","param2"] (exec form, thisis the preferred form)
 ```
 
 **ENTRYPOINT**：配置给容器一个可执行的命令，这意味着在每次使用镜像创建容器时一个特定的应用程序可以被设置为默认程序。同时也意味着该镜像每次被调用时仅能运行指定的应用。类似于CMD，Docker只允许一个ENTRYPOINT，多个ENTRYPOINT会抵消之前所有的指令，只执行最后的ENTRYPOINT指令。语法如下：
 
-```text
+```dockerfile
 ENTRYPOINT ["executable", "param1","param2"]
 ```
 
 #### ADD
 
-语法：`ADD [source directory or URL] [destination directory]`
+语法：
+
+```dockerfile
+ADD [source directory or URL] [destination directory]
+```
+
 它的基本作用是从源系统的文件系统上复制文件到目标容器的文件系统。
 
 1. 如果源是一个URL，那该URL的内容将被下载并复制到容器中。
@@ -904,7 +979,7 @@ ADD指令不仅能够将构建命令所在的主机本地的文件或目录，�
 
 exec格式用法（推荐）：
 
-```text
+```dockerfile
 ADD ["<src>",... "<dest>"]
 ```
 
@@ -912,39 +987,71 @@ ADD ["<src>",... "<dest>"]
 
 shell格式用法：
 
-```text
+```dockerfile
 ADD <src>... <dest>
 ```
 
-对于从远程URL获取资源的情况，由于ADD指令不支持认证，如果从远程获取资源需要认证，则只能使用RUN wget或RUN curl替代。另外，如果源路径的资源发生变化，则该ADD指令将使Docker Cache失效，Dockerfile中后续的所有指令都不能使用缓存。因此尽量将ADD指令放在Dockerfile的后面。	
+对于从远程URL获取资源的情况，由于ADD指令不支持认证，如果从远程获取资源需要认证，则只能使用RUN wget或RUN curl替代。另外，如果源路径的资源发生变化，则该ADD指令将使Docker Cache失效，Dockerfile中后续的所有指令都不能使用缓存。因此尽量将ADD指令放在Dockerfile的后面。
 
+#### COPY
+
+COPY指令能够将构建命令所在的主机本地的文件或目录，复制到镜像文件系统。
+
+exec格式用法（推荐）：
+
+```dockerfile
+COPY ["<src>",... "<dest>"]
+```
+
+特别适合路径中带有空格的情况。
+
+shell格式用法：
+
+```dockerfile
+COPY <src>... <dest>
+```
 
 #### EXPOSE
 
-语法：`EXPOSE [port]`,暴露容器内部端口
+语法：
 
-例：`EXPOSE 5000`,暴露的是容器内部端口，不是主机端口，如果外部想使用这个端口需要在运行时映射，如下：`docker run -d -p 127.0.0.1:8080:5000 hello-world`。指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，docker run命令如果没有带上响应的端口映射参数，docker并不会将端口映射到宿主机。
+```dockerfile
+EXPOSE [port] #暴露容器内部端口
+# 例
+EXPOSE 5000
+```
+
+暴露的是容器内部端口，不是主机端口，如果外部想使用这个端口需要在运行时映射，如下：**docker run -d -p 127.0.0.1:8080:5000 hello-world**。指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，docker run命令如果没有带上响应的端口映射参数，docker并不会将端口映射到宿主机。
 
 #### MAINTAINER
 
-语法：`MAINTAINER 作者名`,申明作者，辅助使用，放丰FROM命令后面
+语法：
+
+```dockerfile
+MAINTAINER 作者名 #申明作者，辅助使用，放在FROM命令后面
+```
 
 #### WORKDIR
 
-语法：`WORKDIR /path`,指定容器工作目录
+语法：
+
+```dockerfile
+WORKDIR /path # 指定容器工作目录
+```
 
 #### VOLUME
 
-语法：`VOLUME ["/dir_1", "/dir_2" ..]`可以将本地文件夹或者其他container的文件夹挂载到container中，容器即可以访问该目录
+语法：
 
-```text
+```dockerfile
+VOLUME ["/dir_1", "/dir_2" ..] # 可以将本地文件夹或者其他container的文件夹挂载到container中，容器即可以访问该目录
 VOLUME ["/data"] (exec格式指令)
 ```
 
-VOLUME指令创建一个可以从本地主机或其他容器挂载的挂载点。经常用到的是`docker run -ti -v /data:/data nginx:1.12 bash`时指定本地路径和容器内路径的映射。
+VOLUME指令创建一个可以从本地主机或其他容器挂载的挂载点。经常用到的是**docker run -ti -v /data:/data nginx:1.12 bash**时指定本地路径和容器内路径的映射。
 
 相信大部分人对`docker run -v`这个参数都比较熟悉，无非就是把宿主机目录和容器目录做映射，以便于容器中的某些文件可以直接保存在宿主机上，实现容器被删除之后数据还在，比如我们把mysql装在容器中，肯定不能说容器被删mysql所有的数据也都不在了。第二个作用是也可以用来实现多容器共享同一份文件。但如果玩过dockerfile的话就知道dockerfile还有个VOLUME指令，如
-```docker
+```dockerfile
 FROM centos:latest
 RUN groupadd -r redis && useradd -r -g redis rediså
 RUN yum -y update &&  yum -y install epel-release && yum -y install redis && yum -y install net-tools
@@ -972,63 +1079,51 @@ EXPOSE 6379
 
 #### ENV
 
-语法：`ENV key value`,设置变量，可能在容器和脚本里直接使用
+语法：
 
-例：`ENV WORKPATH /tmp`或`ENV abc=bye def=$abc`
+```dockerfile
+# 设置变量，可能在容器和脚本里直接使用
+ENV key value
+#例：
+ENV WORKPATH /tmp
+# 或
+ENV abc=bye def=$abc
 
-第一种用法用于设置单个变量(第一个空格前为key，之后都是value,包括后面的空格)，第二种用于同时设置多个变量(空格为分隔符，value中包含空格时可以用双引号把value括起来，或者在空格前加反斜线)，当需要同时设置多个环境变量时推荐使用第二种格式。这些环境变量可以通过docker run命令的--env参数来进行修改。
+# 第一种用法用于设置单个变量(第一个空格前为key，之后都是value,包括后面的空格)，第二种用于同时设置多个变量(空格为分隔符，value中包含空格时可以用双引号把value括起来，或者在空格前加反斜线)，当需要同时设置多个环境变量时推荐使用第二种格式。这些环境变量可以通过docker run命令的--env参数来进行修改。
+```
 
 #### ARG
 
-```text
+```dockerfile
 ARG <name>[=<default value>]
 ```
 
-ARG指令设置一些创建镜像时的参数，这些参数可以在执行docker build命令时通过`--build-arg = `设置，如果指定的创建参数在Dockerfile中没有指定，创建时会输出错误信息: One or more build-args were not consumed, failing build.
+ARG指令设置一些创建镜像时的参数，这些参数可以在执行docker build命令时通过`--build-arg= `设置，如果指定的创建参数在Dockerfile中没有指定，创建时会输出错误信息: One or more build-args were not consumed, failing build.
 
 Dockerfile作者可以为ARG设置一个默认参数值，当创建镜像时如果没有传入参数就会使用默认值：
 
-```text
-FROM busybox
-```
 
 我们可以使用ARG或者ENV指令来指定RUN指令使用的变量。我们可以使用ENV定义与ARG定义名称相同的变量来覆盖ARG定义的变量值。如下示例，我们执行
 
-```text
+```dockerfile
 docker build --build-arg CONT_IMG_VER=v2.0.1 Dockerfile
 ```
 
-后将获取到的CONTIMGVER变量值为v1.0.0:
+后将获取到的CONTIMGVER变量值为v2.0.0:
 
-```text
-FROM ubuntu
+```dockefile
+ARG CONT_IMG_VER
+ENV MY_SECRET_KEY=$CONT_IMG_VER
+
 ```
 
 #### WORKDIR
 
-```text
+```dockerfile
 WORKDIR /path/to/workdir
 ```
 
-WORKDIR指令用来设置Dockerfile中任何使用目录的命令的当前工作目录，此目录如果不存在就会被自动创建，即使这个目录不被使用
-
-#### COPY
-
-COPY指令能够将构建命令所在的主机本地的文件或目录，复制到镜像文件系统。
-
-exec格式用法（推荐）：
-
-```text
-COPY ["<src>",... "<dest>"]
-```
-
-特别适合路径中带有空格的情况。
-
-shell格式用法：
-
-```text
-COPY <src>... <dest>
-```
+WORKDIR指令用来设置Dockerfile中任何使用目录的命令(包括RUN、CMD、ENTRYPOINT、COPY、ADD等指令)的当前工作目录，此目录如果不存在就会被自动创建，即使这个目录不被使用
 
 
 ### 示例
@@ -1064,6 +1159,11 @@ docker build -f /composetest/pc/Dockerfile -t mdjz /composetest/pc/
 echo "run app docker run -itd --name mdjz --restart always  -p  19901:19901 "
 docker run -itd --name mdjz --network=my-net --restart always -p 19901:19901 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro mdjz
 ```
+
+
+> [如何编写最佳的Dockerfile](https://mp.weixin.qq.com/s/x-M5iKvvuseIQwUdVmxSPQ)
+> [构建Java镜像的10个最佳实践](https://mp.weixin.qq.com/s/gmZDBuYDXnNdykEx66Y0Cw)
+
 
 ## 使用docker安装主流软件
 
@@ -1176,41 +1276,47 @@ docker run --privileged=true --restart unless-stopped
 
 1. 拉取镜像
 ```bash
-docker pull nacos/nacos-server:1.4.1
+docker pull nacos/nacos-server:2.2.3
 ```
 2. 创建挂载目录
 ```bash
-mkdir -p /app/nacos/logs/ /app/nacos/init.d/
+mkdir -p /app/nacos/logs/ /app/nacos/conf/
 #创建一个配置文件
-vim /app/nacos/init.d/custom.properties
+vim /app/nacos/conf/application.properties
 
 #修改配置文件
-server.contextPath=/nacos
 server.servlet.contextPath=/nacos
-server.port=8848
+server.error.include-message=ALWAYS
+server.port=18848
 
-spring.datasource.platform=mysql
-db.num=1
-db.url.0=jdbc:mysql://121.4.114.178:3306/mmbdf-dev?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&allowPublicKeyRetrieval=true
-db.user=root
-db.password=1qaz@WSX
+db.pool.config.connectionTimeout=30000
+db.pool.config.validationTimeout=10000
+db.pool.config.maximumPoolSize=20
+db.pool.config.minimumIdle=2
 
-nacos.cmdb.dumpTaskInterval=3600
-nacos.cmdb.eventTaskInterval=10
-nacos.cmdb.labelTaskInterval=300
-nacos.cmdb.loadDataAtStart=false
+nacos.naming.empty-service.auto-clean=true
+nacos.naming.empty-service.clean.initial-delay-ms=50000
+nacos.naming.empty-service.clean.period-time-ms=30000
+
 management.metrics.export.elastic.enabled=false
+#management.metrics.export.elastic.host=http://localhost:9200
 management.metrics.export.influx.enabled=false
+
 server.tomcat.accesslog.enabled=true
-server.tomcat.accesslog.pattern=%h %l %u %t "%r" %s %b %D %{User-Agent}i
-nacos.security.ignore.urls=/,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/login,/v1/console/health/**,/v1/cs/**,/v1/ns/**,/v1/cmdb/**,/actuator/**,/v1/console/server/**
-nacos.naming.distro.taskDispatchThreadCount=1
-nacos.naming.distro.taskDispatchPeriod=200
-nacos.naming.distro.batchSyncKeyCount=1000
-nacos.naming.distro.initDataRatio=0.9
-nacos.naming.distro.syncRetryDelay=5000
-nacos.naming.data.warmup=true
-nacos.naming.expireInstance=true
+server.tomcat.accesslog.pattern=%h %l %u %t "%r" %s %b %D %{User-Agent}i %{Request-Source}i
+server.tomcat.basedir=file:.
+
+nacos.security.ignore.urls=/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-ui/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**
+nacos.core.auth.system.type=nacos
+nacos.core.auth.enabled=true
+nacos.core.auth.caching.enabled=true
+nacos.core.auth.enable.userAgentAuthWhite=false
+nacos.core.auth.server.identity.key=abc
+nacos.core.auth.server.identity.value=abc/123
+nacos.core.auth.plugin.nacos.token.cache.enable=false
+nacos.core.auth.plugin.nacos.token.expire.seconds=18000
+nacos.core.auth.plugin.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+nacos.istio.mcp.server.enabled=false
 ```
 3. 创建内部桥接网络
 ```bash
@@ -1224,27 +1330,24 @@ docker run -d
 -e PREFER_HOST_MODE=ip
 -e MODE=standalone
 -e TIME_ZONE='Asia/Shanghai'
--v /app/nacos/init.d/application.properties:/home/nacos/conf/application.properties
+-v /app/nacos/conf/application.properties:/home/nacos/conf/application.properties
 -v /app/nacos/logs:/home/nacos/logs
 -p 8848:8848
 --name nacos
 --restart=always
-nacos/nacos-server:1.4.1
+nacos/nacos-server:2.2.3
 ```
-5. 进入容器内部修改数据库连接
+5. 进入容器内部修改配置文件
 ```bash
-/home/nacos/conf
+docker exec -it nacos /bin/bash
+cd /home/nacos/conf
+vim application.properties
 ```
-复制容器内的`/home/nacos/conf/application.properties`出来，修改和挂载
+6. 复制容器内的文件出来，修改和挂载
 ```bash
-docker cp nacos:/home/nacos/conf/application.properties /app/nacos/init.d/application.properties
-# 进入容器
-docker exec -it nacos bash
-# 修改容器配置
-cd conf
-vi application.properties
+docker cp nacos:/home/nacos/conf/application.properties /app/nacos/conf/application.properties
 ```
-6. 重启容器
+7. 重启容器
 ```bash
 docker restart nacos
 ```
@@ -1261,12 +1364,12 @@ mkdir -p /app/redis/data
 ```
 3. 运行容器
 ```bash
-docker run --name redis   
+docker run --name redis -d 
 --privileged=true 
 -p 6379:6379
 -v /app/redis/redis.conf:/etc/redis/redis.conf
 -v /app/redis/data:/data
--d redis redis-server /etc/redis/redis.conf
+redis redis-server /etc/redis/redis.conf
 --appendonly yes
 ```
 
@@ -1306,17 +1409,9 @@ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2
 或
 vim /etc/docker/daemon.json
 {
-  "registry-mirrors": ["https://registry.docker-cn.com"]
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
-
 ```
-> 其他站点
-> http://hub-mirror.c.163.com
-> https://3laho3y3.mirror.aliyuncs.com
-> http://f1361db2.m.daocloud.io
-> https://mirror.ccs.tencentyun.com
-> https://docker.mirrors.ustc.edu.cn
-
 **其他方案**
 
 
@@ -1358,35 +1453,15 @@ docker run -d -p 9001:9001 --name portainer_agent --restart=always -v
 
 ### 与Spring Boot
 
-- [一键部署Spring Boot到远程Docker容器](https://mp.weixin.qq.com/s/15ZAVUg5DfcF53QpEetT7Q)
-- [Jenkins+Docker一键自动化部署SpringBoot项目](https://mp.weixin.qq.com/s/dP-c3twzR0PMUvPWZA-U0Q)
-- [搭建SpringBoot项目并将其Docker化](https://mp.weixin.qq.com/s/CXUwpTbAVoXEeB7EcrCjAw)
-- [SpringBoot使用Docker快速部署项目](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493762&idx=1&sn=114663a4a13ba5bb27d05e0d77de37c1&source=41#wechat_redirect)
-- [Docker部署Spring Boot项目的2种方式！](https://mp.weixin.qq.com/s/du2sypGQczJh7gQz_4IX9g)
-- [SpringBoot项目构建Docker镜像深度调优](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493962&idx=1&sn=af6c945d629003cfd30564698c017598&source=41#wechat_redirect)
-- [还在手动部署springboot项目？不妨试试它，让你部署项目飞起来！](https://mp.weixin.qq.com/s/01SZo3NNf5zuAC8wAI6C-g)
-- [Docker+Spring Boot+FastDFS搭建一套分布式文件服务器，太强了！](https://mp.weixin.qq.com/s/HSRIYQVKR9TGtwetd3LU5w)
-
+| [一键部署Spring Boot到远程Docker容器](https://mp.weixin.qq.com/s/15ZAVUg5DfcF53QpEetT7Q) | [Jenkins+Docker一键自动化部署SpringBoot项目](https://mp.weixin.qq.com/s/dP-c3twzR0PMUvPWZA-U0Q) | [搭建SpringBoot项目并将其Docker化](https://mp.weixin.qq.com/s/CXUwpTbAVoXEeB7EcrCjAw) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [SpringBoot使用Docker快速部署项目](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493762&idx=1&sn=114663a4a13ba5bb27d05e0d77de37c1&source=41#wechat_redirect) | [Docker部署Spring Boot项目的2种方式！](https://mp.weixin.qq.com/s/du2sypGQczJh7gQz_4IX9g) | [SpringBoot项目构建Docker镜像深度调优](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493962&idx=1&sn=af6c945d629003cfd30564698c017598&source=41#wechat_redirect) |
+| [还在手动部署springboot项目？不妨试试它，让你部署项目飞起来！](https://mp.weixin.qq.com/s/01SZo3NNf5zuAC8wAI6C-g) | [Docker+Spring Boot+FastDFS搭建一套分布式文件服务器，太强了！](https://mp.weixin.qq.com/s/HSRIYQVKR9TGtwetd3LU5w) |                                                              |
 
 ### 相关文章
 
-- [图解Docker架构，傻瓜都能看懂！](https://mp.weixin.qq.com/s/ELZo2z4fHonoBGXQI0M9CA)
-- [构建Java镜像的10个最佳实践](https://mp.weixin.qq.com/s/gmZDBuYDXnNdykEx66Y0Cw)
-- [10个冷门但又非常实用的Docker使用技巧！！](https://mp.weixin.qq.com/s/LOmqsoBJd7h1HPwf0i1uwQ)
-- [Docker实战总结](https://mp.weixin.qq.com/s/tTsizeLeVyvQ44GXMNqrjA)
-- [Docker从入门到干活，看这一篇足矣](https://mp.weixin.qq.com/s/t81enr-ypBxk1K4lYqWZww)
-- [如何编写最佳的Dockerfile](https://mp.weixin.qq.com/s/x-M5iKvvuseIQwUdVmxSPQ)
-- [Docker：Docker Compose详解](https://www.jianshu.com/p/658911a8cff3)
-- [CentOS/Ubuntu安装Docker和Docker Compose](https://mp.weixin.qq.com/s/fB59zXK7cPBt1asSyUpqDg)
-- [DaoCloud安装docker指南](http://guide.daocloud.io/dcs/docker-9152677.html)
-- [Docker常用命令，还有谁不会？](https://mp.weixin.qq.com/s/fzlNnJe9SMA5k3TDXOfZUA)
-- [一款吊炸天的Docker图形化工具，太强大](https://mp.weixin.qq.com/s/PpI7_fY5ACjmtmnlqr7ZMQ)
-- [5款顶级Docker容器GUI管理工具！免费又好用](https://mp.weixin.qq.com/s/w0sFaHApOSrwgva0886ijQ)
-- [Docker轻量级编排创建工具Humpback](https://mp.weixin.qq.com/s/rAOsia2LU2_Fl4vrjQ2tvA)
-- [带着问题学Kubernetes架构！](https://mp.weixin.qq.com/s/6smzsvYSbRvSPcpbfnH98A)
-- [为什么大家都在学习k8s](https://mp.weixin.qq.com/s/B2tIs6YitA93iYxEZ_8Ovw)
-- [Kuboard-Kubernetes多集群管理界面](https://kuboard.cn/)
-- [图文详解Kubernetes，傻瓜都能看懂！](https://mp.weixin.qq.com/s/WWRp-e9QPcLg8-m-V3UU1Q)
-- [Kubernetes缺少的多租户功能，你可以通过这些方式实现](https://mp.weixin.qq.com/s/8UJnsx0NJyxlKXeduhg5Yw)
-- [IDEA使用Docker插件，实现一键自动化部署](https://mp.weixin.qq.com/s/yg5ACCeeyJa0AVP1LatUhA)
-- [Docker有几种网络模式](https://mp.weixin.qq.com/s/KU3bpxiNbHGJQ_XVRqsedg)
+| [图解Docker架构，傻瓜都能看懂！](https://mp.weixin.qq.com/s/ELZo2z4fHonoBGXQI0M9CA) | [10个冷门但又非常实用的Docker使用技巧！！](https://mp.weixin.qq.com/s/LOmqsoBJd7h1HPwf0i1uwQ) | [Docker实战总结](https://mp.weixin.qq.com/s/tTsizeLeVyvQ44GXMNqrjA) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [Docker从入门到干活，看这一篇足矣](https://mp.weixin.qq.com/s/t81enr-ypBxk1K4lYqWZww) | [Docker：Docker Compose详解](https://www.jianshu.com/p/658911a8cff3) | [CentOS/Ubuntu安装Docker和Docker Compose](https://mp.weixin.qq.com/s/fB59zXK7cPBt1asSyUpqDg) |
+| [DaoCloud安装docker指南](http://guide.daocloud.io/dcs/docker-9152677.html) | [一款吊炸天的Docker图形化工具，太强大](https://mp.weixin.qq.com/s/PpI7_fY5ACjmtmnlqr7ZMQ) | [5款顶级Docker容器GUI管理工具！免费又好用](https://mp.weixin.qq.com/s/w0sFaHApOSrwgva0886ijQ) |
+| [Docker轻量级编排创建工具Humpback](https://mp.weixin.qq.com/s/rAOsia2LU2_Fl4vrjQ2tvA) | [IDEA使用Docker插件，实现一键自动化部署](https://mp.weixin.qq.com/s/yg5ACCeeyJa0AVP1LatUhA) |                                                              |

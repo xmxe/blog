@@ -817,11 +817,7 @@ public class ArraycopyTest {
 }
 ```
 
-结果：
-```text
-0 1 99 2 3 0 0 0 0 0
-```
-
+结果：0 1 99 2 3 0 0 0 0 0
 ##### Arrays.copyOf()方法
 
 源码：
@@ -862,11 +858,7 @@ public class ArrayscopyOfTest {
 }
 ```
 
-结果：
-
-```text
-10
-```
+结果：10
 
 ##### 两者联系和区别
 

@@ -6307,14 +6307,9 @@ Trie的核心思想是空间换时间，利用字符串的公共前缀来降低�
 
 倒排索引是搜索引擎的核心。搜索引擎的主要目标是在查找发生搜索条件的文档时提供快速搜索。ES中的倒排索引其实就是lucene的倒排索引，区别于传统的正向索引，倒排索引会再存储数据时将关键词和数据进行关联，保存到倒排表中，然后查询时，将查询内容进行分词后在倒排表中进行查询，最后匹配数据即可。
 
-
 # 相关文章
 
-- [ElasticSearch自定义中文分词插件开发介绍](https://mp.weixin.qq.com/s/UjVH0IhSrbyk9MTKi7Nwhg)
-- [一篇就懂Elasticsearch|原力计划](https://mp.weixin.qq.com/s/W1jy-ECW_2hsvtNkrTy5eg)
-- [Elasticsearch为什么能做到快速检索？秘密在这里！](https://mp.weixin.qq.com/s/7OmlaV7yrod2_5FWyq-Y4Q)
-- [手把手教你使用Elasticsearch实现海量级数据搜索（上）](https://mp.weixin.qq.com/s/WavG7tl-xZDn7hfw24vDuw)
-- [手把手教你在CentOS上安装ELK，对服务器日志进行收集](https://mp.weixin.qq.com/s/LX2cKF6wH1IvlxmCSnWgCw)
-- [2万字详解，彻底讲透全文搜索引擎Elasticsearch](https://mp.weixin.qq.com/s/ZBsv3o5XfQq7gZkqa2yA6Q)
-- [ElasticSearch深度分页详解](https://mp.weixin.qq.com/s/Quoym4438irm4Uexb40asw)
-- [来聊一聊ElasticSearch最新版的Java客户端](https://mp.weixin.qq.com/s/nOVXS4XjNwig_2wNhaCYVw)
+| [ElasticSearch自定义中文分词插件开发介绍](https://mp.weixin.qq.com/s/UjVH0IhSrbyk9MTKi7Nwhg) | [一篇就懂Elasticsearch](https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&mid=2247780376&idx=3&sn=e297e34815947062fb4da86301561238&source=41#wechat_redirect) | [Elasticsearch为什么能做到快速检索？秘密在这里！](https://mp.weixin.qq.com/s/7OmlaV7yrod2_5FWyq-Y4Q) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [手把手教你使用Elasticsearch实现海量级数据搜索（上）](https://mp.weixin.qq.com/s/WavG7tl-xZDn7hfw24vDuw) | [手把手教你在CentOS上安装ELK，对服务器日志进行收集](https://mp.weixin.qq.com/s/LX2cKF6wH1IvlxmCSnWgCw) | [2万字详解，彻底讲透全文搜索引擎Elasticsearch](https://mp.weixin.qq.com/s/ZBsv3o5XfQq7gZkqa2yA6Q) |
+| [ElasticSearch深度分页详解](https://mp.weixin.qq.com/s/Quoym4438irm4Uexb40asw) | [来聊一聊ElasticSearch最新版的Java客户端](https://mp.weixin.qq.com/s/nOVXS4XjNwig_2wNhaCYVw) |                                                              |

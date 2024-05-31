@@ -817,21 +817,35 @@ attribute_info attributes<span class="token punctuation">[</span>attributes_coun
 <li>linking:连接分为验证-准备-解析三个阶段，验证的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求。准备阶段是正式为类中定义的变量（即静态变量，被static修饰的变量）分配内存并设置类变量初始值的阶段，当类变量被final修饰时，在准备阶段就直接会被复制，不是使用初始值。解析阶段是Java虚拟机将常量池内的符号引用替换为直接引用的过程</li>
 <li>initialization:初始化，真正开始执行Java代码的阶段(比如给类属性赋真实的值)执行&lt;clinit&gt;方法的过程</li>
 </ol>
-<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/23nIQlguz0-jaEEyTwR16g">在Java中new一个对象的流程是怎样的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X-LuMvirhSQkZahFHsRl8g">Java new一个对象时发生了什么？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i52wFjkksaAosUorPqT-1A">JVM的类初始化机制</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4yPyhMc1MW2np0sjmuilog">Java类加载器解析及常见类加载问题</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VKu6U58F4vo6OCzKMF2zxA">深入理解JVM-类加载机制</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dZA3UJqfqK76zwJdhMa14g">自己手写一个热加载～</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2ZDNDvJeB-WG5t3uWXvn4Q">六种方法创建Java对象</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1AXWlNXz6OG3OCyZiFU2yA">JVM是如何加载Java类的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JIt5WCBtdHHORjeOmX5KaA">IDEA的debug调试为什么这么强？我挖出了背后的技术。</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494349&amp;idx=1&amp;sn=3a297393ea4a38af4fd277f4fc83c284&amp;source=41#wechat_redirect">Class类文件的结构</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mNDWN2P1mOBL8C5qLtXG8A">一把小刀，直插class文件的小心脏</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hV65V_fDoaBMA7xqcwy2TA">面试官：说说类加载的几个阶段</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Xxp6rcnrEuJvQNfjiFe46Q">3分钟带你了解对象的创建过程</a></li>
-</ul>
+<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/23nIQlguz0-jaEEyTwR16g">在Java中new一个对象的流程是怎样的？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X-LuMvirhSQkZahFHsRl8g">Java new一个对象时发生了什么？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i52wFjkksaAosUorPqT-1A">JVM的类初始化机制</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4yPyhMc1MW2np0sjmuilog">Java类加载器解析及常见类加载问题</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VKu6U58F4vo6OCzKMF2zxA">深入理解JVM-类加载机制</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dZA3UJqfqK76zwJdhMa14g">自己手写一个热加载</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2ZDNDvJeB-WG5t3uWXvn4Q">六种方法创建Java对象</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1AXWlNXz6OG3OCyZiFU2yA">JVM是如何加载Java类的？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JIt5WCBtdHHORjeOmX5KaA">IDEA的debug调试为什么这么强？我挖出了背后的技术。</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494349&amp;idx=1&amp;sn=3a297393ea4a38af4fd277f4fc83c284&amp;source=41#wechat_redirect">Class类文件的结构</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mNDWN2P1mOBL8C5qLtXG8A">一把小刀，直插class文件的小心脏</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hV65V_fDoaBMA7xqcwy2TA">面试官：说说类加载的几个阶段</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Xxp6rcnrEuJvQNfjiFe46Q">3分钟带你了解对象的创建过程</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h3 id="类卸载"><a href="#类卸载" class="headerlink" title="类卸载"></a>类卸载</h3><blockquote>
 <p>卸载这部分内容来自<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/662">issue#662</a>由 <strong><a target="_blank" rel="noopener" href="https://github.com/guang19">guang19</a></strong> 补充完善。</p>
 </blockquote>

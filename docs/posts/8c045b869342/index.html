@@ -730,12 +730,20 @@ client_secret&#x3D;<span aria-hidden="true" class="line-numbers-rows"><span></sp
 </li>
 </ol>
 <p>用一个现实生活中的比喻来解释Access&#x2F;Refresh Token的使用过程：假设我在网上预定了一家酒店。如果要入住这家酒店，我必须出示身份证和订单。酒店前台会登记相关证件和订单信息，确认无误后会给我一张票据和一张房卡（票据记录我需要入住多少天，而房卡则让我有当天的入住权）。以上场景中，“身份证和订单”是我的用户名密码，“票据&#x2F;房卡”是Refresh&#x2F;Access Token，“前台”是认证服务器，“房间”是资源服务器。在整个入住过程中，“身份证和订单”只在前台使用一次；实际能进入房间的是“房卡”，但是房卡只有一天的有效期；如果房卡过期，我需要凭“票据”去前台刷新“房卡”，获取第二天的入住权。将Token拆分成两个，就是为了解决安全性和用户体验方面的矛盾—Access Token使用频繁，且与用户数据直接关联，安全性方面比较敏感，因此有效期设置得较短，即使Access Token泄漏也将很快失效。利用过期时间较短这个特性，也可以及时更新用户的访问权限（比如管理员缩小了的某员工访问公司数据的权限，当Token过期后换取的新Access Token将立马缩小其访问数据的权限）。而Refresh Token仅用于获取新的Access Token，使用频率较低，不与用户数据直接关联，过期时间允许设置得长一些。这样就解决了用户反复登录的问题。</p>
-<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i8hvrKPSCwlzpmt_p52ZbA">妹子始终没搞懂OAuth 2.0，今天整合Spring Cloud Security一次说明白！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l1vll9aSL1IzjsI-DhbtUw">快速接入GitHub、QQ第三方登录真有那么难吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/S7NNeiPJAEtNQtypxrWcmw">Spring Security OAuth2整合企业微信扫码登录</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/r0H5zsm2H0AZui5nfeElRw">实战：画了几张图，终于把OAuth2搞清楚了</a></li>
-</ul>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i8hvrKPSCwlzpmt_p52ZbA">妹子始终没搞懂OAuth 2.0，今天整合Spring Cloud Security一次说明白！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l1vll9aSL1IzjsI-DhbtUw">快速接入GitHub、QQ第三方登录真有那么难吗？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/S7NNeiPJAEtNQtypxrWcmw">Spring Security OAuth2整合企业微信扫码登录</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/r0H5zsm2H0AZui5nfeElRw">实战：画了几张图，终于把OAuth2搞清楚了</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
                 
             </div>

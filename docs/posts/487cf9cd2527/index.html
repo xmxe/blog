@@ -641,7 +641,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 </thead>
 <tbody><tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.bandisoft.com/bandizip.mac/">Bandizip</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://macitbetter.com/downloads/">Betterzip</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://affinity.serif.com/zh-cn/photo/">Affinity Photo</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.termius.com/">Termius</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">MySQL</a></td>
 </tr>
@@ -672,7 +672,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://fliqlo.com/">Fliqlo</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://tool.atomtech.top/index.html">Mac EveryThing</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.zeroonetwenty.com/profind/">ProFind</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://formulae.brew.sh/cask/android-file-transfer">android-file-transfer</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/permute-3/id1444998321">Permute 3</a></td>
 </tr>
 <tr>
@@ -696,8 +696,11 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 </ul>
 </blockquote>
 <h3 id="对应用进行签名"><a href="#对应用进行签名" class="headerlink" title="对应用进行签名"></a>对应用进行签名</h3><p>安装[CommandLineTools](#Command Line Tools)后打开终端，输入<code>sudo codesign --force --deep --sign - 应用路径</code>，注意最后的–后面加一个空格。如遇错误：”&#x2F;文件位置 : replacing existing signature，&#x2F;文件位置 : resource fork,Finder information,or similar detritus not allowed“先在终端执行：<code>xattr -cr 应用路径</code>然后再次执行指令即可：<code>codesign --force --deep --sign - 应用路径</code>,完成后再次打开应用尝试</p>
-<h3 id="安装Rosetta-2（M芯片运行Intel程序）"><a href="#安装Rosetta-2（M芯片运行Intel程序）" class="headerlink" title="安装Rosetta 2（M芯片运行Intel程序）"></a>安装Rosetta 2（M芯片运行Intel程序）</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装完成后可以在显示简介中勾选使用Rosetta打开</span>
-/usr/sbin/softwareupdate --install-rosetta --agree-to-license<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="安装Rosetta-2（M芯片运行Intel程序）"><a href="#安装Rosetta-2（M芯片运行Intel程序）" class="headerlink" title="安装Rosetta 2（M芯片运行Intel程序）"></a>安装Rosetta 2（M芯片运行Intel程序）</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 如果有root权限</span>
+/usr/sbin/softwareupdate --install-rosetta
+<span class="token comment"># 如果没有root权限</span>
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+<span class="token comment"># 安装完成后可以在显示简介中勾选使用Rosetta打开</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="关闭SIP"><a href="#关闭SIP" class="headerlink" title="关闭SIP"></a>关闭SIP</h3><ol>
 <li>关机，然后重新启动你的Mac电脑，在开机时一直按住<code>Command+R</code>迸入Recovery模式（m1改为长按电源键，点击选项，选择一个用户进去）</li>
@@ -791,12 +794,12 @@ create partition primary
 <tr>
 <th align="center"><a target="_blank" rel="noopener" href="https://github.com/qianguyihao/Mac-list">Mac-list</a></th>
 <th align="center"><a target="_blank" rel="noopener" href="https://github.com/jaywcjlove/awesome-mac">awesome-mac</a></th>
-<th align="center"><a target="_blank" rel="noopener" href="https://www.macqj.com/">MAC青桔</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://www.macqj.com/">mac青桔</a></th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.macat.vip/">马克喵</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.macgf.com/">MACGF</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.macgf.com/">macGF</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://macked.app/">macked</a></td>
 </tr>
 <tr>
@@ -805,18 +808,18 @@ create partition primary
 <td align="center"><a target="_blank" rel="noopener" href="https://macwk.cn/">macwk</a></td>
 </tr>
 <tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.macvk.com/">macvk</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.macdo.cn/">Mac毒</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.macbed.com/">Appked</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://macoshome.com/">苹果系统之家</a></td>
 </tr>
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.seemac.cn/">SeeMac</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://macxzb.com/">MAC下载吧</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.macdo.cn/">Mac毒</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://xclient.info/">Xclient</a></td>
 </tr>
 <tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://xclient.info/">Xclient</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.mac8k.com/">Mac8k</a></td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody></table>
@@ -1059,32 +1062,42 @@ create partition primary
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/posts/487cf9cd2527/">
+                <a href="/blog/posts/cd3486d816d5/">
                     <div class="card-image">
                         
-                        <img src="https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis" class="responsive-img" alt="MacOS相关">
+                        <img src="https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis" class="responsive-img" alt="Flash Flash,Hundred Yard Dash">
                         
-                        <span class="card-title">MacOS相关</span>
+                        <span class="card-title">Flash Flash,Hundred Yard Dash</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Mac软件推荐Typora
-找到&#x2F;Applications&#x2F;Typora.app&#x2F;Contents&#x2F;Resources&#x2F;TypeMark&#x2F;page-dist&#x2F;static
+                            Java
+
+
+java关键字名单
+Class.forName和ClassLoader到底有啥区别
+说说Java深拷贝和浅拷贝区别
+
+
+
+面试难缠的深拷贝浅拷贝，这次终于通透了
+简单聊聊对象浅拷贝和深拷贝，真不简单！
+零拷贝技术在Java中为
                         
-                        
+
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <!--
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-20
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-05-30
                             -->
+
                             
                                 <i class="fas fa-user fa-fw"></i>
                                 <a href="/blog/about" >
@@ -1100,12 +1113,13 @@ create partition primary
                                     <span class="chip bg-color">随笔</span>
                                 </a>
                                 
+                                
                             
-                            
+
                         </span>
                     </div>
                 </div>
-
+                
             </div>
         </div>
         

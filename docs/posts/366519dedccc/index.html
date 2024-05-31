@@ -1072,20 +1072,35 @@
 <p>&#x2F;&#x2F;添加元素方法-&gt;添加新节点方法-&gt;扩容方法-&gt;把原数组元素重新分配到新数组中<br>put()–&gt;addEntry()–&gt;resize()–&gt;transfer()</p>
 </blockquote>
 <p>现在，有两个线程都执行transfer方法。每个线程都会在它们自己的工作内存生成一个newTable的数组，用于存储变化后的链表，它们互不影响（这里互不影响，指的是两个新数组本身互不影响）。但是，需要注意的是，它们操作的数据却是同一份。一番扩容操作后出现环形链表，这时，有的同学可能就会问了，就算他们成环了，又怎样，跟死循环有什么关系？我们看下get()方法（最终调用getEntry方法），可以看到查找元素时，只要e不为空，就会一直循环查找下去。若有某个元素C的hash值也落在了和A，B元素同一个桶中，则会由于，A，B互相指向，e.next永远不为空，就会形成死循环。主要原因在于并发下的Rehash会造成元素之间会形成一个循环链表。不过，jdk1.8后解决了这个问题，但是还是不建议在多线程下使用HashMap,因为多线程下使用HashMap还是会存在其他问题比如数据丢失。并发环境下推荐使用ConcurrentHashMap。</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/9606.html">JAVA HASHMAP的死循环</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ">美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg">多线程环境下，HashMap为什么会出现死循环？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-IvCgU8fC0Au21BPxPyo-g">听说过HashMap会导致CPU飙升100%吗？</a></p>
-</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/9606.html">JAVA HASHMAP的死循环</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ">美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg">多线程环境下，HashMap为什么会出现死循环？</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-IvCgU8fC0Au21BPxPyo-g">听说过HashMap会导致CPU飙升100%吗？</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h4 id="HashMap有哪几种常见的遍历方式"><a href="#HashMap有哪几种常见的遍历方式" class="headerlink" title="HashMap有哪几种常见的遍历方式?"></a>HashMap有哪几种常见的遍历方式?</h4><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zQBN3UvJDhRTKP6SzcZFKw">HashMap的7种遍历方式与性能分析</a></li>
 </ul>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/collection/java-collection-questions-02.html">原文链接</a></p>
 </blockquote>
-<h3 id="HashMap相关文章"><a href="#HashMap相关文章" class="headerlink" title="HashMap相关文章"></a>HashMap相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8Nl9dv_ywubW7Wc45--pgw">面试官再问你HashMap底层原理，就把这篇文章甩给他看</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/WyPnPAKZfA58eX7qSBcP8Q">HashMap面试21问，这次要跪了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JZiSfe7IIIJCstTucH5tlw">为什么HashMap不能一边遍历一边删除</a></li>
-</ul>
+<h3 id="HashMap相关文章"><a href="#HashMap相关文章" class="headerlink" title="HashMap相关文章"></a>HashMap相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8Nl9dv_ywubW7Wc45--pgw">面试官再问你HashMap底层原理，就把这篇文章甩给他看</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/WyPnPAKZfA58eX7qSBcP8Q">HashMap面试21问，这次要跪了！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JZiSfe7IIIJCstTucH5tlw">为什么HashMap不能一边遍历一边删除</a></th>
+</tr>
+</thead>
+</table>
 <h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>jdk1.7 ConcurrentHashMap类所采用的是分段锁的思想，将HashMap进行切割，把HashMap中的哈希数组切分成小数组，这个小数组名叫Segment,每个Segment有n个HashEntry组成，其中Segment继承自ReentrantLock（可重入锁）,在操作的时候给Segment赋予了一个对象锁，从而保证多线程环境下并发操作安全。</p>
 <p>JDK1.8对HashMap做了改造，当冲突链表长度大于8时，会将链表转变成红黑树结构,JDK1.8中ConcurrentHashMap类取消了Segment分段锁，采用CAS+synchronized来保证并发安全，数据结构跟jdk1.8中HashMap结构类似，都是数组+链表（当链表长度大于8时，链表结构转为红黑二叉树）结构。ConcurrentHashMap中synchronized只锁定当前链表或红黑二叉树的首节点，只要节点hash不冲突，就不会产生并发，相比JDK1.7的ConcurrentHashMap效率又提升了N倍！</p>
 <h3 id="ConcurrentHashMap源码-amp-底层数据结构分析"><a href="#ConcurrentHashMap源码-amp-底层数据结构分析" class="headerlink" title="ConcurrentHashMap源码&amp;底层数据结构分析"></a>ConcurrentHashMap源码&amp;底层数据结构分析</h3><h4 id="ConcurrentHashMap-1-7"><a href="#ConcurrentHashMap-1-7" class="headerlink" title="ConcurrentHashMap 1.7"></a>ConcurrentHashMap 1.7</h4><h5 id="1-存储结构"><a href="#1-存储结构" class="headerlink" title="1.存储结构"></a>1.存储结构</h5><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java7_concurrenthashmap.png" alt="Java7 ConcurrentHashMap存储结构"></p>
@@ -1660,11 +1675,15 @@
 <li>如果某个分段特别的大，那么就会影响效率，耽误时间。</li>
 </ol>
 <h3 id="HashMap可以存null，ConcurrentHashMap不可以，为什么？"><a href="#HashMap可以存null，ConcurrentHashMap不可以，为什么？" class="headerlink" title="HashMap可以存null，ConcurrentHashMap不可以，为什么？"></a>HashMap可以存null，ConcurrentHashMap不可以，为什么？</h3><p>关于这个问题，其实最有发言权的就是ConcurrentHashMap的作者——Doug Lea<br>ConcurrentMap(如ConcurrentHashMap、ConcurrentSkipListMap)不允许使用null值的主要原因是在非并发的Map中(如HashMap)是可以容忍模糊性(二义性)的，而在并发Map中是无法容忍的。假如说，所有的Map都支持null的话，那么map.get(key)就可以返回null，但是这时候就会存在一个不确定性，当你拿到null的时候，你是不知道他是因为本来就存了一个null进去还是说就是因为没找到而返回了null。在HashMap中，因为它的设计就是给单线程用的，所以当我们map.get(key)返回null的时候，我们是可以通过map.contains(key)检查来进行检测的，如果它返回true，则认为是存了一个null，否则就是因为没找到而返回了null。但是像ConcurrentHashMap，它是为并发而生的，它是要用在并发场景中的，当我们map.get(key)返回null的时候，是没办法通过通过map.contains(key)检查来准确的检测，因为在检测过程中可能会被其他线程锁修改，而导致检测结果并不可靠。所以，为了让ConcurrentHashMap的语义更加准确，不存在二义性的问题，他就不支持null。</p>
-<h3 id="ConcurrentHashMap相关文章"><a href="#ConcurrentHashMap相关文章" class="headerlink" title="ConcurrentHashMap相关文章"></a>ConcurrentHashMap相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ufoKhs4VRXhE8_PT2rXoeg">那些年你啃过的ConcurrentHashMap</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491116&idx=1&sn=30ee6196266dab2cbf46cf7f98d99120&source=41#wechat_redirect">面试必问之ConcurrentHashMap线程安全的具体实现方式</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Hb7JCkMrri0VDiPcl8HnBQ">ConcurrentHashMap是如何保证线程安全的</a></li>
-</ul>
+<h3 id="ConcurrentHashMap相关文章"><a href="#ConcurrentHashMap相关文章" class="headerlink" title="ConcurrentHashMap相关文章"></a>ConcurrentHashMap相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ufoKhs4VRXhE8_PT2rXoeg">那些年你啃过的ConcurrentHashMap</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491116&idx=1&sn=30ee6196266dab2cbf46cf7f98d99120&source=41#wechat_redirect">面试必问之ConcurrentHashMap线程安全的具体实现方式</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Hb7JCkMrri0VDiPcl8HnBQ">ConcurrentHashMap是如何保证线程安全的</a></th>
+</tr>
+</thead>
+</table>
 <h2 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h2><h3 id="HashMap和Hashtable的区别"><a href="#HashMap和Hashtable的区别" class="headerlink" title="HashMap和Hashtable的区别"></a>HashMap和Hashtable的区别</h3><ul>
 <li><strong>线程是否安全</strong>：HashMap是非线程安全的，Hashtable是线程安全的,因为Hashtable内部的方法基本都经过synchronized修饰。（如果你要保证线程安全的话就使用ConcurrentHashMap）；</li>
 <li><strong>效率</strong>：因为线程安全的问题，HashMap要比Hashtable效率高一点。另外，Hashtable基本被淘汰，不要在代码中使用它；</li>

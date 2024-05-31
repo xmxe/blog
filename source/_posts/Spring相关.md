@@ -143,22 +143,14 @@ public class UserService {
 
 原本AOP这个过程是属性赋完值之后，再由各种后置处理器去处理AOP的（AbstractAutoProxyCreator），但是如果发生了循环依赖，就先AOP，然后属性赋值，最后等到后置处理器执行的时候，就不再做AOP的处理了。不过需要注意，三级缓存并不能解决所有的循环依赖
 
-> [如何通过三级缓存解决Spring循环依赖※](https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA)
-> [Spring能解决所有循环依赖吗？](https://mp.weixin.qq.com/s/Un8pyET2XDXpDY4FnRbwXw)
-
 ### 相关文章
 
-- [Spring三级缓存解决循环依赖](https://mp.weixin.qq.com/s/ns9JEpvMt7U-nsMZzEUIUQ)
-- [终于有人把Spring循环依赖讲清楚了！](https://mp.weixin.qq.com/s/L1PJ-cikoS8sOORszEYnfw)
-- [烂大街的Spring循环依赖该如何回答？](https://mp.weixin.qq.com/s/5VHU2qRQMPL0IOZuEOPmQA)
-- [spring：我是如何解决循环依赖的？](https://mp.weixin.qq.com/s/7S9wVOVJyoHiC_RnhZrJTw)
-- [Spring为何需要三级缓存解决循环依赖，而不是二级缓存？](https://mp.weixin.qq.com/s/BaRlMNo0HlPP9Vz4x9bUaA)
-- [图解Spring循环依赖，写得太好了！](https://mp.weixin.qq.com/s/JuS6aewMXSp22zjwWCKt6g)
-- [Spring是如何解决循环依赖的](https://mp.weixin.qq.com/s/e7e-Pct5CcMrHBCsdjsLSQ)
-- [Spring面试题之循环依赖的理解](https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw)
-- [Spring的循环依赖，到底是什么样的](https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA)
-- [面试官:SpringBoot循环依赖，如何解决？](https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw)
-- [透过源码，捋清楚循环依赖到底是如何解决的！](https://mp.weixin.qq.com/s/YIokfCvLKLhcsEpO734Qtg)
+| [如何通过三级缓存解决Spring循环依赖※](https://mp.weixin.qq.com/s/ig22T20Ie3jmTLhuPVPmdA) | [Spring能解决所有循环依赖吗？](https://mp.weixin.qq.com/s/Un8pyET2XDXpDY4FnRbwXw) | [Spring三级缓存解决循环依赖](https://mp.weixin.qq.com/s/ns9JEpvMt7U-nsMZzEUIUQ) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [终于有人把Spring循环依赖讲清楚了！](https://mp.weixin.qq.com/s/L1PJ-cikoS8sOORszEYnfw) | [烂大街的Spring循环依赖该如何回答？](https://mp.weixin.qq.com/s/5VHU2qRQMPL0IOZuEOPmQA) | [spring：我是如何解决循环依赖的？](https://mp.weixin.qq.com/s/7S9wVOVJyoHiC_RnhZrJTw) |
+| [Spring为何需要三级缓存解决循环依赖，而不是二级缓存？](https://mp.weixin.qq.com/s/BaRlMNo0HlPP9Vz4x9bUaA) | [图解Spring循环依赖，写得太好了！](https://mp.weixin.qq.com/s/JuS6aewMXSp22zjwWCKt6g) | [Spring是如何解决循环依赖的](https://mp.weixin.qq.com/s/e7e-Pct5CcMrHBCsdjsLSQ) |
+| [Spring面试题之循环依赖的理解](https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw) | [Spring的循环依赖，到底是什么样的](https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA) | [面试官:SpringBoot循环依赖，如何解决？](https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw) |
+| [透过源码，捋清楚循环依赖到底是如何解决的！](https://mp.weixin.qq.com/s/YIokfCvLKLhcsEpO734Qtg) |                                                              |                                                              |
 
 ## Spring相关注解
 
@@ -551,17 +543,11 @@ View：视图，即展示给用户的界面，视图中通常需要标签语言�
 
 ### Spring MVC相关文章
 
-- [SpringMVC执行过程解析](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494012&amp;idx=2&amp;sn=1c5052c5b4a5547a21449412f619327b&amp;source=41#wechat_redirect)
-- [Spring MVC请求处理过程不是两张流程图就能讲清楚的](https://mp.weixin.qq.com/s/klCAv0TM2tvgy4xqoC1hQw)
-- [Spring MVC初始化流程分析](https://mp.weixin.qq.com/s/IeMOfnXhOX5RCf4i5Xsdzw)
-- [Spring MVC源码分析之DispatcherServlet](https://mp.weixin.qq.com/s/F0QZ-Ukgtn3oC6a4loM9Vg)
-- [Spring MVC九大组件之HandlerMapping深入分析](https://mp.weixin.qq.com/s/0x7_OXPDFX5BqF0jGxN2Vg)
-- [Spring MVC九大组件之HandlerAdapter深入分析](https://mp.weixin.qq.com/s/NCnawbIaLUQJNZiDi2yeCw)
-- [Spring MVC九大组件之ViewResolver深入分析](https://mp.weixin.qq.com/s/rn-6QyuYIsM_P5b4B1OIrg)
-- [编写Spring MVC控制器的14个技巧！涨知识了！](https://mp.weixin.qq.com/s/685jUKqg6I6r0RbmirsRxg)
-- [SpringMVC异常处理体系深入分析](https://mp.weixin.qq.com/s/ZKBQSCMPV7T9yNcMQ5_pQQ)
-- [使用Spring MVC的14个顶级技巧！](https://mp.weixin.qq.com/s/DAWdH_0VWZp3oaws_leJhQ)
-- [Spring5里边的新玩法！这种URL请求让我涨见识了](https://mp.weixin.qq.com/s/uzI-ilR-cv5iX3HWFUOmXA)
+| [SpringMVC执行过程解析](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494012&amp;idx=2&amp;sn=1c5052c5b4a5547a21449412f619327b&amp;source=41#wechat_redirect) | [Spring MVC请求处理过程不是两张流程图就能讲清楚的](https://mp.weixin.qq.com/s/klCAv0TM2tvgy4xqoC1hQw) | [Spring MVC初始化流程分析](https://mp.weixin.qq.com/s/IeMOfnXhOX5RCf4i5Xsdzw) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [Spring MVC源码分析之DispatcherServlet](https://mp.weixin.qq.com/s/F0QZ-Ukgtn3oC6a4loM9Vg) | [Spring MVC九大组件之HandlerMapping深入分析](https://mp.weixin.qq.com/s/0x7_OXPDFX5BqF0jGxN2Vg) | [Spring MVC九大组件之HandlerAdapter深入分析](https://mp.weixin.qq.com/s/NCnawbIaLUQJNZiDi2yeCw) |
+| [Spring MVC九大组件之ViewResolver深入分析](https://mp.weixin.qq.com/s/rn-6QyuYIsM_P5b4B1OIrg) | [编写Spring MVC控制器的14个技巧！涨知识了！](https://mp.weixin.qq.com/s/685jUKqg6I6r0RbmirsRxg) | [SpringMVC异常处理体系深入分析](https://mp.weixin.qq.com/s/ZKBQSCMPV7T9yNcMQ5_pQQ) |
+| [使用Spring MVC的14个顶级技巧！](https://mp.weixin.qq.com/s/DAWdH_0VWZp3oaws_leJhQ) | [Spring5里边的新玩法！这种URL请求让我涨见识了](https://mp.weixin.qq.com/s/uzI-ilR-cv5iX3HWFUOmXA) |                                                              |
 
 
 ## [Spring Boot](https://github.com/xmxe/springboot)
@@ -777,18 +763,10 @@ ContextLoaderListener继承自ContextLoader，实现的是ServletContextListener
 ### org.springframework.web.util.IntrospectorCleanupListener
 JDK中的java.beans.Introspector类的用途是发现Java类是否符合JavaBean规范,如果有的框架或程序用到了Introspector类,那么就会启用一个系统级别的缓存,此缓存会存放一些曾加载并分析过的JavaBean的引用。当Web服务器关闭时,由于此缓存中存放着这些JavaBean的引用,所以垃圾回收器无法回收Web容器中的JavaBean对象,最后导致内存变大。而org.springframework.web.util.IntrospectorCleanupListener就是专门用来处理Introspector内存泄漏问题的辅助类。IntrospectorCleanupListener会在Web服务器停止时清理Introspector缓存,使那些Javabean能被垃圾回收器正确回收。Spring自身不会出现这种问题，因为Spring在加载并分析完一个类之后会马上刷新JavaBeans Introspector缓存,这就保证Spring中不会出现这种内存泄漏的问题。但有些程序和框架在使用了JavaBeans Introspector之后,没有进行清理工作(如Quartz,Struts),最后导致内存泄漏
 
-
 ## 其他
 
-- [Java面试中常问的Spring问题，你都会吗？](https://zhuanlan.zhihu.com/p/42092555)
-- [如果我是面试官，我会问你Spring这些问题](https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ)
-- [推荐收藏：Spring面试63问！](https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ)
-- [spring中那些让你爱不释手的代码技巧](https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng)
-- [《轻松读懂spring》之IOC的主干流程（上）](https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw)
-- [我们到底为什么要用IoC和AOP](https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q)
-- [@Conditional的强大之处](https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA)
-- [SpringBatch批处理框架，真心强啊！！](https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA)
-- [手写Spring框架](https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA)
-- [Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？](https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw)
-- [聊聊Spring核心](https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ)
-- [揭秘Spring依赖注入和SpEL表达式](https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw)
+| [Java面试中常问的Spring问题，你都会吗？](https://zhuanlan.zhihu.com/p/42092555) | [如果我是面试官，我会问你Spring这些问题](https://mp.weixin.qq.com/s/SqsAO3dBF3d5iQ5TDqmSRQ) | [推荐收藏：Spring面试63问！](https://mp.weixin.qq.com/s/txmK9ui20aXTewNOG17ZxQ) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [spring中那些让你爱不释手的代码技巧](https://mp.weixin.qq.com/s/Aet8wzzzxGGfAAJAnBcLng) | [《轻松读懂spring》之IOC的主干流程（上）](https://mp.weixin.qq.com/s/SZn9WRZjOuGXo2sX6TU0Uw) | [我们到底为什么要用IoC和AOP](https://mp.weixin.qq.com/s/LjMV4TAng0kldVoubk8T-Q) |
+| [@Conditional的强大之处](https://mp.weixin.qq.com/s/rONWZ1YcnGc7QDW4-XOKlA) | [SpringBatch批处理框架，真心强啊！！](https://mp.weixin.qq.com/s/M14kvrWMT_4MRZDZ1TpTYA) | [手写Spring框架](https://mp.weixin.qq.com/s/YfS9xtaXWnt42xkk-kk4WA) |
+| [Spring的Bean明明设置了Scope为Prototype，为什么还是只能获取到单例对象？](https://mp.weixin.qq.com/s/_j_0fZKTX6YUhgytWXRKEw) | [聊聊Spring核心](https://mp.weixin.qq.com/s/xqs0Q8zRKsOp-LdsW-uKeQ) | [揭秘Spring依赖注入和SpEL表达式](https://mp.weixin.qq.com/s/uBLKOXiwOsaa5za_grlMZw) |

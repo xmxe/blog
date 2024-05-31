@@ -944,9 +944,21 @@ myFirstPromise<span class="token punctuation">.</span><span class="token functio
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token comment">//promise.then(onFulfilled, onRejected)等价于promise.then(onFulfilled).catch(onRejected)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fe5f173276bd">前端基础进阶（十五）：透彻掌握Promise的使用，读这篇就够了</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/javascript-promise-object.html">JavaScript Promise对象</a><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">mozilla promise</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ">写给Java程序员的前端Promise教程</a></p>
-</blockquote>
+
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fe5f173276bd">前端基础进阶（十五）：透彻掌握Promise的使用，读这篇就够了</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/javascript-promise-object.html">JavaScript Promise对象</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">mozilla promise</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ">写给Java程序员的前端Promise教程</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h3 id="await、async"><a href="#await、async" class="headerlink" title="await、async"></a>await、async</h3><p>async是一个修饰符，async定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 0. async基础用法测试</span>
 <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">fun0</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1401,16 +1413,25 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token punctuation">&#125;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>concatValue<span class="token punctuation">)</span> <span class="token comment">// &#123;key1: 'value1', key2: 'value2'&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web">Web开发技术(mozilla)</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wolPlpUDizVnzh-kBKMtxg">万字干货！详解JavaScript执行过程</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ct4AyU--sewtOaDOlO2Oxw">20分钟全面理解JavaScript事件机制</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aPFCrPGBTus_Spf1QL1WWA">面试官：有了for循环为什么还要forEach？</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22486908">每日一题」JS中的闭包是什么？</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44001753/article/details/114266453">post请求下载excel文档解决方法</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QoS5z9Qfokpcw42zDbiE2A">不懂Vue的Java猿不是一个好的前端工程师</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/CavsZhouyou/Front-End-Interview-Notebook">前端面试复习笔记</a></li>
-</ul>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web">Web开发技术(mozilla)</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wolPlpUDizVnzh-kBKMtxg">万字干货！详解JavaScript执行过程</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ct4AyU--sewtOaDOlO2Oxw">20分钟全面理解JavaScript事件机制</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aPFCrPGBTus_Spf1QL1WWA">面试官：有了for循环为什么还要forEach？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22486908">每日一题」JS中的闭包是什么？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44001753/article/details/114266453">post请求下载excel文档解决方法</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QoS5z9Qfokpcw42zDbiE2A">不懂Vue的Java猿不是一个好的前端工程师</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/CavsZhouyou/Front-End-Interview-Notebook">前端面试复习笔记</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
                 
             </div>

@@ -238,7 +238,6 @@ Token作为用户获取受保护资源的凭证，必须设置一个过期时间
 
 ### 相关文章
 
-- [妹子始终没搞懂OAuth 2.0，今天整合Spring Cloud Security一次说明白！](https://mp.weixin.qq.com/s/i8hvrKPSCwlzpmt_p52ZbA)
-- [快速接入GitHub、QQ第三方登录真有那么难吗？](https://mp.weixin.qq.com/s/l1vll9aSL1IzjsI-DhbtUw)
-- [Spring Security OAuth2整合企业微信扫码登录](https://mp.weixin.qq.com/s/S7NNeiPJAEtNQtypxrWcmw)
-- [实战：画了几张图，终于把OAuth2搞清楚了](https://mp.weixin.qq.com/s/r0H5zsm2H0AZui5nfeElRw)
+| [妹子始终没搞懂OAuth 2.0，今天整合Spring Cloud Security一次说明白！](https://mp.weixin.qq.com/s/i8hvrKPSCwlzpmt_p52ZbA) | [快速接入GitHub、QQ第三方登录真有那么难吗？](https://mp.weixin.qq.com/s/l1vll9aSL1IzjsI-DhbtUw) | [Spring Security OAuth2整合企业微信扫码登录](https://mp.weixin.qq.com/s/S7NNeiPJAEtNQtypxrWcmw) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [实战：画了几张图，终于把OAuth2搞清楚了](https://mp.weixin.qq.com/s/r0H5zsm2H0AZui5nfeElRw) |                                                              |                                                              |

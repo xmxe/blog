@@ -1192,9 +1192,25 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
 
 <p><strong>ThreadLocal为什么内存泄漏</strong></p>
 <p>因为ThreadLocal是基于ThreadLocalMap实现的，其中ThreadLocalMap的Entry继承了WeakReference，而Entry对象中的key使用了WeakReference封装，也就是说，Entry中的key是一个弱引用类型，对于弱引用来说，它只能存活到下次GC之前，如果此时一个线程调用了ThreadLocalMap的set设置变量，当前的ThreadLocalMap就会新增一条记录，但由于发生了一次垃圾回收，这样就会造成一个结果:key值被回收掉了，但是value值还在内存中，而且如果线程一直存在的话，那么它的value值就会一直存在,这样被垃圾回收掉的key就会一直存在一条引用链:Thread-&gt;ThreadLocalMap-&gt;Entry-&gt;Value:就是因为这条引用链的存在，就会导致如果Thread还在运行，那么Entry不会被回收，进而value也不会被回收掉，但是Entry里面的key值已经被回收掉了,这只是一个线程，如果再来一个线程，又来一个线程…多了之后就会造成内存泄漏</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gasR16pjlN3WfuFj9mQxdQ">详细解读ThreadLocal的内存泄露</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/S0IwbXadRgZ86fFLSFObVQ">ThreadLocal你怎么动不动就内存泄漏？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg">细数ThreadLocal三大坑，内存泄露仅是小儿科</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g">内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig">线上系统因为一个ThreadLocal直接内存飙升</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA">ThreadLocal搭配线程池时为什么会造成内存泄漏</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/N2YBtHf1AutOJYwRaCrfRA">为什么大家都说ThreadLocal存在内存泄漏的风险？</a></p>
-</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gasR16pjlN3WfuFj9mQxdQ">详细解读ThreadLocal的内存泄露</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/S0IwbXadRgZ86fFLSFObVQ">ThreadLocal你怎么动不动就内存泄漏？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg">细数ThreadLocal三大坑，内存泄露仅是小儿科</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g">内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig">线上系统因为一个ThreadLocal直接内存飙升</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA">ThreadLocal搭配线程池时为什么会造成内存泄漏</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/N2YBtHf1AutOJYwRaCrfRA">为什么大家都说ThreadLocal存在内存泄漏的风险？</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h3 id="ThreadLocalMap为什么使用弱引用而不是强引用？"><a href="#ThreadLocalMap为什么使用弱引用而不是强引用？" class="headerlink" title="ThreadLocalMap为什么使用弱引用而不是强引用？"></a>ThreadLocalMap为什么使用弱引用而不是强引用？</h3><h4 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h4><p>一直活着：类似“Object obj&#x3D;new Object()”这类的引用，只要强引用还存在，垃圾收集器永远不会回收掉被引用的对象实例。</p>
 <h4 id="弱引用"><a href="#弱引用" class="headerlink" title="弱引用"></a>弱引用</h4><p><strong>弱引用介绍：</strong></p>
 <blockquote>
@@ -1210,13 +1226,20 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
 <li>key使用弱引<br>引用ThreadLocal的对象被回收了，由于ThreadLocalMap持有ThreadLocal的弱引用，即使没有手动删除，ThreadLocal也会被回收。value在下一次ThreadLocalMap调用set、get、remove的时候会被清除。</li>
 </ol>
 <p>比较两种情况，我们可以发现：由于ThreadLocalMap的生命周期跟Thread一样长，如果都没有手动删除对应key，都会导致内存泄漏，但是使用弱引用可以多一层保障：弱引用ThreadLocal被清理后key为null，对应的value在下一次ThreadLocalMap调用set、get、remove的时候可能会被清除。因此，ThreadLocal内存泄漏的根源是：由于ThreadLocalMap的生命周期跟Thread一样长，如果没有手动删除对应key就会导致内存泄漏，而不是因为弱引用。</p>
-<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7sR7okSS1_LGpUWudWtQNw">面试官：听说你看过ThreadLocal源码</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ntjmEHIj_aINhNmtwhMecA">Java并发之ThreadLocal</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s6waqV8X7KPKip8zbOIDqQ">ThreadLocal夺命11连问</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yZNBAtN9AFocQ2-FR9so6g">ThreadLocal父子线程之间该如何传递数据？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HmaGSW71lAI-9WlNlfuICw">用这4招优雅的实现Spring Boot异步线程间数据传递</a></li>
-</ul>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7sR7okSS1_LGpUWudWtQNw">面试官：听说你看过ThreadLocal源码</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ntjmEHIj_aINhNmtwhMecA">Java并发之ThreadLocal</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s6waqV8X7KPKip8zbOIDqQ">ThreadLocal夺命11连问</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yZNBAtN9AFocQ2-FR9so6g">ThreadLocal父子线程之间该如何传递数据？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HmaGSW71lAI-9WlNlfuICw">用这4招优雅的实现Spring Boot异步线程间数据传递</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
                 
             </div>

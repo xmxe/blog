@@ -563,8 +563,7 @@ done
 echo "Import completed."
 ```
 
-
 ## 相关文章
-- [一文教你在CentOS7下安装MySQL及搭建主从复制](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect)
-- [手把手教大家搭建MySQL主从复制](https://mp.weixin.qq.com/s/R89aCCFvCvudLp6FUn2JjQ)
-- [Linux系统安装MySQL8.0版本详细教程](https://blog.csdn.net/cst522445906/article/details/129165658)
+
+| [一文教你在CentOS7下安装MySQL及搭建主从复制](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect) | [手把手教大家搭建MySQL主从复制](https://mp.weixin.qq.com/s/R89aCCFvCvudLp6FUn2JjQ) | [Linux系统安装MySQL8.0版本详细教程](https://blog.csdn.net/cst522445906/article/details/129165658) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |

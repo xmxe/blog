@@ -808,18 +808,9 @@ List<String> childrenPaths = zkClient.getChildren().forPath("/node1");
 
 ## 相关文章
 
-- [ZooKeeper基本原理及安装部署](https://zhuanlan.zhihu.com/p/30024403?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline)
-- [不耍流氓，有答案的Zookeeper面试题](https://mp.weixin.qq.com/s/QUIEoZLhkF3ozBj_GS9UMA)
-- [ZooKeeper不仅仅是注册中心，你还知道有哪些](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491198&idx=1&sn=7bfd06e81d7fd361b1db2631ed81e9f0&source=41#wechat_redirect)
-- [什么是Zookeeper?](https://zhuanlan.zhihu.com/p/62526102?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline)
-- [不懂ZooKeeper？没关系，这一篇给你讲的明明白白](https://mp.weixin.qq.com/s/X-10DjJQE3sIBVmoOVV77g)
-- [ZooKeeper的十二连问，你顶得了嘛](https://mp.weixin.qq.com/s/Nx8QrO8bwVRatP6jzb6HZg)
-- [ZooKeeper到底解决了什么问题？](https://mp.weixin.qq.com/s/kaXKnzbaq0NNMPKrfowQHg)
-- [大白话说清楚Zookeeper的选举机制！](https://mp.weixin.qq.com/s/Co2XO6EiFu-oEsFookpxuw)
-- [Zookeeper的选举流程是怎样的？](https://mp.weixin.qq.com/s/RdTDJSMYBqkZGnGsmwoDvw)
-- [Zookeeper怎么保证分布式事务的最终一致性？](https://mp.weixin.qq.com/s/n0UKU7BxPT1r4OCPPKHGaA)
-- [Zookeeper夺命连环9问](https://mp.weixin.qq.com/s/KyDmcyi6bALQg-W6F-VuUg)
-- [不懂Zookeeper？没关系呀，你看这篇就够了！](https://mp.weixin.qq.com/s/u9Gn0XSIB35k3BxlW_E23g)
-- [Zookeeper的5个核心知识点！](https://mp.weixin.qq.com/s/ByfASCD2V-JcBtVCXTXPew)
-- [Zookeeper典型应用场景介绍](https://mp.weixin.qq.com/s/we1KRq_WtRveHES2Xw6C9A)
-- [zkcli.sh命令](https://www.cnblogs.com/chengxuyuanzhilu/p/6698059.html)
+| [ZooKeeper基本原理及安装部署](https://zhuanlan.zhihu.com/p/30024403?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline) | [不耍流氓，有答案的Zookeeper面试题](https://mp.weixin.qq.com/s/QUIEoZLhkF3ozBj_GS9UMA) | [ZooKeeper不仅仅是注册中心，你还知道有哪些](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491198&idx=1&sn=7bfd06e81d7fd361b1db2631ed81e9f0&source=41#wechat_redirect) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [什么是Zookeeper?](https://zhuanlan.zhihu.com/p/62526102?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline) | [不懂ZooKeeper？没关系，这一篇给你讲的明明白白](https://mp.weixin.qq.com/s/X-10DjJQE3sIBVmoOVV77g) | [ZooKeeper的十二连问，你顶得了嘛](https://mp.weixin.qq.com/s/Nx8QrO8bwVRatP6jzb6HZg) |
+| [ZooKeeper到底解决了什么问题？](https://mp.weixin.qq.com/s/kaXKnzbaq0NNMPKrfowQHg) | [大白话说清楚Zookeeper的选举机制！](https://mp.weixin.qq.com/s/Co2XO6EiFu-oEsFookpxuw) | [Zookeeper的选举流程是怎样的？](https://mp.weixin.qq.com/s/RdTDJSMYBqkZGnGsmwoDvw) |
+| [Zookeeper怎么保证分布式事务的最终一致性？](https://mp.weixin.qq.com/s/n0UKU7BxPT1r4OCPPKHGaA) | [Zookeeper夺命连环9问](https://mp.weixin.qq.com/s/KyDmcyi6bALQg-W6F-VuUg) | [不懂Zookeeper？没关系呀，你看这篇就够了！](https://mp.weixin.qq.com/s/u9Gn0XSIB35k3BxlW_E23g) |
+| [Zookeeper的5个核心知识点！](https://mp.weixin.qq.com/s/ByfASCD2V-JcBtVCXTXPew) | [Zookeeper典型应用场景介绍](https://mp.weixin.qq.com/s/we1KRq_WtRveHES2Xw6C9A) | [zkcli.sh命令](https://www.cnblogs.com/chengxuyuanzhilu/p/6698059.html) |

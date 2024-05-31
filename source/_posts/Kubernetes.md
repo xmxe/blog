@@ -1990,3 +1990,9 @@ minikube dashboard
 [K9s](https://k9scli.io/)是一个基于Terminal的轻量级UI，可以更加轻松的观察和管理已部署的k8s资源。使用方式非常简单，安装后输入`k9s`即可开启Terminal Dashboard，更多用法可以参考官网。
 
 ![83ybd4](https://cdn.jsdelivr.net/gh/guangzhengli/PicURL@master/uPic/83ybd4.png)
+
+## 文章
+
+| [带着问题学Kubernetes架构！](https://mp.weixin.qq.com/s/6smzsvYSbRvSPcpbfnH98A) | [为什么大家都在学习k8s](https://mp.weixin.qq.com/s/B2tIs6YitA93iYxEZ_8Ovw) | [Kuboard-Kubernetes多集群管理界面](https://kuboard.cn/) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :-----------------------------------------------------: |
+| [图文详解Kubernetes，傻瓜都能看懂！](https://mp.weixin.qq.com/s/WWRp-e9QPcLg8-m-V3UU1Q) | [Kubernetes缺少的多租户功能，你可以通过这些方式实现](https://mp.weixin.qq.com/s/8UJnsx0NJyxlKXeduhg5Yw) |                                                         |

@@ -1572,9 +1572,25 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>事发中：万一Redis真的挂了，我们可以设置本地缓存(ehcache)+限流(hystrix)，尽量避免我们的数据库被干掉</li>
 <li>事发后：redis持久化，重启后自动从磁盘上加载数据，快速恢复缓存数据</li>
 </ol>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dig6ZcUzMvQZG0u-Bub2AQ">Redis缓存击穿（失效）、缓存穿透、缓存雪崩怎么解决？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pOUjLIgUSgbjoJ2KtfaQyw">Redis缓存的常见异常及解决方案</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8cNZ2glJC6p3w0ogtgKQ-w">常说的「缓存穿透」和「击穿」是什么</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7h_IOg7RgR3bFscgbGnGFw">漫话：如何给女朋友解释什么是缓存穿透、缓存击穿、缓存雪崩</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rD6h874mPzUCRlE7l8CnUQ">再也不怕，缓存雪崩、击穿、穿透！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A">一个Redis的雪崩和穿透问题</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw">烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？</a></p>
-</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dig6ZcUzMvQZG0u-Bub2AQ">Redis缓存击穿（失效）、缓存穿透、缓存雪崩怎么解决？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pOUjLIgUSgbjoJ2KtfaQyw">Redis缓存的常见异常及解决方案</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8cNZ2glJC6p3w0ogtgKQ-w">常说的「缓存穿透」和「击穿」是什么</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7h_IOg7RgR3bFscgbGnGFw">漫话：如何给女朋友解释什么是缓存穿透、缓存击穿、缓存雪崩</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rD6h874mPzUCRlE7l8CnUQ">再也不怕，缓存雪崩、击穿、穿透！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FDqctV8xun1fDxVmlFA45A">一个Redis的雪崩和穿透问题</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5bz2-D-IglLHiwwmMLxohw">烂大街的缓存穿透、缓存击穿和缓存雪崩，你真的懂了？</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h3 id="如何保证缓存和数据库数据的一致性？"><a href="#如何保证缓存和数据库数据的一致性？" class="headerlink" title="如何保证缓存和数据库数据的一致性？"></a>如何保证缓存和数据库数据的一致性？</h3><p>下面单独对<strong>Cache Aside Pattern（旁路缓存模式）</strong> 来聊聊。Cache Aside Pattern中遇到写请求是这样的：更新DB，然后直接删除cache。如果更新数据库成功，而删除缓存这一步失败的情况的话，简单说两个解决方案：</p>
 <ol>
 <li><strong>缓存失效时间变短（不推荐，治标不治本）</strong>：我们让缓存数据的过期时间变短，这样的话缓存就会从数据库中加载数据。另外，这种解决办法对于先操作缓存后操作数据库的场景不适用。</li>
@@ -1595,20 +1611,30 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>如果是主从数据库，binglog取自于从库</li>
 <li>如果是一主多从，每个从库都要采集binlog，然后消费端收到最后一台binlog数据才删除缓存</li>
 </ol>
-<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FldS8ynxoK8fD1QPVocnjA">如何保证缓存与数据库的双写一致性？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1uJmVb_E980NWn_sCzM6mA">如何保证数据库和缓存双写一致性？</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/D812359/article/details/121645548">解决缓存和数据库双写数据一致性问题✳</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5I4IQFYZDdeNulSZfEj79A">如何保证Redis缓存与数据库双写一致性？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JxdAEt4rfZp5KQwpxRPZlA">高并发场景下，到底先更新缓存还是先更新数据库？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_WCg3TDZCxRKPiVot1dG8Q">MySQL与Redis缓存的同步方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bKtVlr9JZ1HCp1tgEEKENA">数据库跟缓存的双写一致性</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6WxbY-BOjX_5mwHNgoVl8g">Redis和Mysql如何保证数据一致?</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BwKTvDig4BjMqXb_O468Uw">高并发先操作数据库，还是先操作缓存？5个方案告诉你！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HVPsyNd7XxmxiVQ9Nza_TQ">Redis数据更新，是先更新数据库还是先更新缓存？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tpb6Xf4Vf6O6gxbZN3pWfA">缓存一致性方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RqQ2AyDZ5f8vvcP76TyuAA">如何保证mongodb和数据库双写数据一致性</a></li>
-</ul>
+<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FldS8ynxoK8fD1QPVocnjA">如何保证缓存与数据库的双写一致性？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1uJmVb_E980NWn_sCzM6mA">如何保证数据库和缓存双写一致性？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://blog.csdn.net/D812359/article/details/121645548">解决缓存和数据库双写数据一致性问题✳</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5I4IQFYZDdeNulSZfEj79A">如何保证Redis缓存与数据库双写一致性？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JxdAEt4rfZp5KQwpxRPZlA">高并发场景下，到底先更新缓存还是先更新数据库？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_WCg3TDZCxRKPiVot1dG8Q">MySQL与Redis缓存的同步方案</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bKtVlr9JZ1HCp1tgEEKENA">数据库跟缓存的双写一致性</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6WxbY-BOjX_5mwHNgoVl8g">Redis和Mysql如何保证数据一致?</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BwKTvDig4BjMqXb_O468Uw">高并发先操作数据库，还是先操作缓存？5个方案告诉你！</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HVPsyNd7XxmxiVQ9Nza_TQ">Redis数据更新，是先更新数据库还是先更新缓存？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tpb6Xf4Vf6O6gxbZN3pWfA">缓存一致性方案</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RqQ2AyDZ5f8vvcP76TyuAA">如何保证mongodb和数据库双写数据一致性</a></td>
+</tr>
+</tbody></table>
 <h2 id="Redis的key过期策略"><a href="#Redis的key过期策略" class="headerlink" title="Redis的key过期策略"></a>Redis的key过期策略</h2><p>我们在set key的时候，可以给它设置一个过期时间，比如expire key 60。指定这key60s后过期，60s后，redis是如何处理的？我们先来介绍几种过期策略：一般有<strong>定时过期、惰性过期、定期过期</strong>三种。</p>
 <h3 id="定时过期"><a href="#定时过期" class="headerlink" title="定时过期"></a>定时过期</h3><p>每个设置过期时间的key都需要创建一个定时器，到过期时间就会立即对key进行清除。该策略可以立即清除过期的数据，对内存很友好；但是会占用大量的CPU资源去处理过期的数据，从而影响缓存的响应时间和吞吐量。</p>
 <h3 id="惰性过期"><a href="#惰性过期" class="headerlink" title="惰性过期"></a>惰性过期</h3><p>只有当访问一个key时，才会判断该key是否已过期，过期则清除。该策略可以最大化地节省CPU资源，却对内存非常不友好。极端情况可能出现大量的过期key没有再次被访问，从而不会被清除，占用大量内存。</p>
@@ -1662,14 +1688,20 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>持久化方式<br>混合持久化是通过aof-use-rdb-preamble参数来开启的。它的操作方式是这样的，在写入的时候先把数据以RDB的形式写入文件的开头，再将后续的写命令以AOF的格式追加到文件中。这样既能保证数据恢复时的速度，同时又能减少数据丢失的风险。</li>
 <li>文件恢复<br>那么混合持久化中是如何来进行数据恢复的呢？在Redis重启时，先加载RDB的内容，然后再重放增量AOF格式命令。这样就避免了AOF持久化时的全量加载，从而使加载速率得到大幅提升。</li>
 </ol>
-<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SVbVwHOAwL1RX0fa-rYGxg">同样是持久化，竟然有这么大的差别！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/G3ct5tWox5Qt4tLUDEpRuw">如何让Redis更持久</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RxhaZFnMAf7bAgYUtTGLuA">Redis宕机，数据丢了</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/q7KEOA2Dy2Q5QpDX8FkPjg">小伙用12张图讲明白了Redis持久化！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5IBOKcoBxVoGSMrn3vBGOw">彻底理解Redis的持久化和主从复制</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zUw7yPIT1dQixDbZy5kkkw">一文了解Redis的持久化</a></li>
-</ul>
+<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SVbVwHOAwL1RX0fa-rYGxg">同样是持久化，竟然有这么大的差别！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/G3ct5tWox5Qt4tLUDEpRuw">如何让Redis更持久</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RxhaZFnMAf7bAgYUtTGLuA">Redis宕机，数据丢了</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/q7KEOA2Dy2Q5QpDX8FkPjg">小伙用12张图讲明白了Redis持久化！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5IBOKcoBxVoGSMrn3vBGOw">彻底理解Redis的持久化和主从复制</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zUw7yPIT1dQixDbZy5kkkw">一文了解Redis的持久化</a></td>
+</tr>
+</tbody></table>
 <h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h3><p>主从模式中，一旦主节点由于故障不能提供服务，需要人工将从节点晋升为主节点，同时还要通知应用方更新主节点地址。显然，多数业务场景都不能接受这种故障处理方式。Redis从2.8开始正式提供了Redis Sentinel（哨兵）架构来解决这个问题。哨兵模式，由一个或多个Sentinel实例组成的Sentinel系统，它可以监视所有的Redis主节点和从节点，并在被监视的主节点进入下线状态时，自动将下线主服务器属下的某个从节点升级为新的主节点。但是呢，一个哨兵进程对Redis节点进行监控，就可能会出现问题（单点问题），因此，可以使用多个哨兵来进行监控Redis节点，并且各个哨兵之间还会进行监控。简单来说，哨兵模式就三个作用：</p>
 <ul>
 <li>发送命令，等待Redis服务器（包括主服务器和从服务器）返回监控其运行状态；</li>
@@ -1678,19 +1710,30 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 </ul>
 <h4 id="故障切换的过程是怎样的呢"><a href="#故障切换的过程是怎样的呢" class="headerlink" title="故障切换的过程是怎样的呢"></a>故障切换的过程是怎样的呢</h4><p>假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为主观下线。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为客观下线。这样对于客户端而言，一切都是透明的。哨兵的工作模式如下：每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他Sentinel实例发送一个PING命令。如果一个实例（instance）距离最后一次有效回复PING命令的时间超过down-after-milliseconds选项所指定的值，则这个实例会被Sentinel标记为主观下线。如果一个Master被标记为主观下线，则正在监视这个Master的所有Sentinel要以每秒一次的频率确认Master的确进入了主观下线状态。当有足够数量的Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态，则Master会被标记为客观下线。在一般情况下，每个Sentinel会以每10秒一次的频率向它已知的所有Master，Slave发送INFO命令。当Master被Sentinel标记为客观下线时，Sentinel向下线的Master的所有Slave发送INFO命令的频率会从10秒一次改为每秒一次，若没有足够数量的Sentinel同意Master已经下线，Master的客观下线状态就会被移除；若Master重新向Sentinel的PING命令返回有效回复，Master的主观下线状态就会被移除。</p>
 <h3 id="Cluster集群"><a href="#Cluster集群" class="headerlink" title="Cluster集群"></a>Cluster集群</h3><p>哨兵解决和主从不能自动故障恢复的问题，但是同时也存在难以扩容以及单机存储、读写能力受限的问题，并且集群之前都是一台redis都是全量的数据，这样所有的redis都冗余一份，就会大大消耗内存空间。集群模式实现了Redis数据的分布式存储，实现数据的分片，每个redis节点存储不同的内容，并且解决了在线的节点收缩（下线）和扩容（上线）问题。集群模式真正意义上实现了系统的高可用和高性能，但是集群同时进一步使系统变得越来越复杂，接下来我们来详细的了解集群的运作原理。</p>
-<h3 id="相关文章-2"><a href="#相关文章-2" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PA31mNTzlQ2EGYEXfWagXQ">Redis主库宕机如何快速恢复</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494325&idx=1&sn=0458cd40672c1f3918efb47963e56c9c&source=41#wechat_redirect">Redis官方的高可用性解决方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BPcis9rPiWosFid5w0M40A">一文把Redis主从复制、哨兵、Cluster三种模式摸透</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/U_5Tla4_XzlJsq3uRI2ifA">Redis主从、哨兵、Cluster集群一锅端！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I3GimkIf27DL1uRqxImKWA">Redis的主从复制是如何做的？复制过程中也会产生各种问题</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oRcOPBHwbimFak6CtooHEg">Redis中主、从库宕机如何恢复？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NEUdCfRtHma3mkJqFKym5A">Redis高可用篇：你管这叫主从架构数据同步原理？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZXz2IzbQjQJzCq_hkpkuEg">如何从0到1构建一个稳定、高性能的Redis集群？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Po85M418zvos3pHev2q0Tg">4种Redis集群方案介绍+优缺点对比</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M1RymGVUqhQG0KnKupnDXQ">详细剖析Redis三种集群策略</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/m9K6acUUc41j44b8zPh28w">一文掌握，单机Redis、哨兵和Redis Cluster的搭建</a></li>
-</ul>
+<h3 id="相关文章-2"><a href="#相关文章-2" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PA31mNTzlQ2EGYEXfWagXQ">Redis主库宕机如何快速恢复</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494325&idx=1&sn=0458cd40672c1f3918efb47963e56c9c&source=41#wechat_redirect">Redis官方的高可用性解决方案</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BPcis9rPiWosFid5w0M40A">一文把Redis主从复制、哨兵、Cluster三种模式摸透</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/U_5Tla4_XzlJsq3uRI2ifA">Redis主从、哨兵、Cluster集群一锅端！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I3GimkIf27DL1uRqxImKWA">Redis的主从复制是如何做的？复制过程中也会产生各种问题</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oRcOPBHwbimFak6CtooHEg">Redis中主、从库宕机如何恢复？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NEUdCfRtHma3mkJqFKym5A">Redis高可用篇：你管这叫主从架构数据同步原理？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZXz2IzbQjQJzCq_hkpkuEg">如何从0到1构建一个稳定、高性能的Redis集群？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Po85M418zvos3pHev2q0Tg">4种Redis集群方案介绍+优缺点对比</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M1RymGVUqhQG0KnKupnDXQ">详细剖析Redis三种集群策略</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/m9K6acUUc41j44b8zPh28w">一文掌握，单机Redis、哨兵和Redis Cluster的搭建</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h2 id="阿里官方Redis开发规范"><a href="#阿里官方Redis开发规范" class="headerlink" title="阿里官方Redis开发规范"></a>阿里官方Redis开发规范</h2><h3 id="键值设计"><a href="#键值设计" class="headerlink" title="键值设计"></a>键值设计</h3><ol>
 <li>key名设计</li>
 </ol>

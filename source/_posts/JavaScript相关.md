@@ -591,10 +591,10 @@ test('1234').catch(function(err) {
 })
 //promise.then(onFulfilled, onRejected)等价于promise.then(onFulfilled).catch(onRejected)
 ```
-> [前端基础进阶（十五）：透彻掌握Promise的使用，读这篇就够了](https://www.jianshu.com/p/fe5f173276bd)
-> [JavaScript Promise对象](https://www.runoob.com/w3cnote/javascript-promise-object.html)
-> [mozilla promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-> [写给Java程序员的前端Promise教程](https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ)
+
+| [前端基础进阶（十五）：透彻掌握Promise的使用，读这篇就够了](https://www.jianshu.com/p/fe5f173276bd) | [JavaScript Promise对象](https://www.runoob.com/w3cnote/javascript-promise-object.html) | [mozilla promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [写给Java程序员的前端Promise教程](https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ) |                                                              |                                                              |
 
 
 ### await、async
@@ -1143,11 +1143,7 @@ console.log(concatValue) // {key1: 'value1', key2: 'value2'}
 
 ## 相关文章
 
-- [Web开发技术(mozilla)](https://developer.mozilla.org/zh-CN/docs/Web)
-- [万字干货！详解JavaScript执行过程](https://mp.weixin.qq.com/s/wolPlpUDizVnzh-kBKMtxg)
-- [20分钟全面理解JavaScript事件机制](https://mp.weixin.qq.com/s/ct4AyU--sewtOaDOlO2Oxw)
-- [面试官：有了for循环为什么还要forEach？](https://mp.weixin.qq.com/s/aPFCrPGBTus_Spf1QL1WWA)
-- [每日一题」JS中的闭包是什么？](https://zhuanlan.zhihu.com/p/22486908)
-- [post请求下载excel文档解决方法](https://blog.csdn.net/weixin_44001753/article/details/114266453)
-- [不懂Vue的Java猿不是一个好的前端工程师](https://mp.weixin.qq.com/s/QoS5z9Qfokpcw42zDbiE2A)
-- [前端面试复习笔记](https://github.com/CavsZhouyou/Front-End-Interview-Notebook)
+| [Web开发技术(mozilla)](https://developer.mozilla.org/zh-CN/docs/Web) | [万字干货！详解JavaScript执行过程](https://mp.weixin.qq.com/s/wolPlpUDizVnzh-kBKMtxg) | [20分钟全面理解JavaScript事件机制](https://mp.weixin.qq.com/s/ct4AyU--sewtOaDOlO2Oxw) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [面试官：有了for循环为什么还要forEach？](https://mp.weixin.qq.com/s/aPFCrPGBTus_Spf1QL1WWA) | [每日一题」JS中的闭包是什么？](https://zhuanlan.zhihu.com/p/22486908) | [post请求下载excel文档解决方法](https://blog.csdn.net/weixin_44001753/article/details/114266453) |
+| [不懂Vue的Java猿不是一个好的前端工程师](https://mp.weixin.qq.com/s/QoS5z9Qfokpcw42zDbiE2A) | [前端面试复习笔记](https://github.com/CavsZhouyou/Front-End-Interview-Notebook) |                                                              |

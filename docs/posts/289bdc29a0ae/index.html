@@ -1272,9 +1272,7 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>结果：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">0 1 99 2 3 0 0 0 0 0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<p>结果：0 1 99 2 3 0 0 0 0 0</p>
 <h5 id="Arrays-copyOf-方法"><a href="#Arrays-copyOf-方法" class="headerlink" title="Arrays.copyOf()方法"></a>Arrays.copyOf()方法</h5><p>源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">copyOf</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> original<span class="token punctuation">,</span> <span class="token keyword">int</span> newLength<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 申请一个新的数组</span>
@@ -1306,9 +1304,7 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>结果：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">10<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<p>结果：10</p>
 <h5 id="两者联系和区别"><a href="#两者联系和区别" class="headerlink" title="两者联系和区别"></a>两者联系和区别</h5><p><strong>联系</strong>：<br>看两者源代码可以发现<code>copyOf()</code>内部实际调用了<code>System.arraycopy()</code>方法</p>
 <p><strong>区别</strong>：<br><code>arraycopy()</code>需要目标数组，将原数组拷贝到你自己定义的数组里或者原数组，而且可以选择拷贝的起点和长度以及放入新数组中的位置,<code>copyOf()</code>是系统自动在内部新建一个数组，并返回该数组。</p>
 <h4 id="ensureCapacity-方法"><a href="#ensureCapacity-方法" class="headerlink" title="ensureCapacity()方法"></a>ensureCapacity()方法</h4><p>ArrayList源码中有一个ensureCapacity方法，这个方法ArrayList内部没有被调用过，所以很显然是提供给用户调用的，那么这个方法有什么作用呢？</p>

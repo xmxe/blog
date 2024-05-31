@@ -917,20 +917,31 @@
 <p>相关阅读：<a target="_blank" rel="noopener" href="https://javaguide.cn/database/mysql/transaction-isolation-level.html">MySQL事务隔离级别详解</a>。</p>
 </blockquote>
 <h5 id="总结5种隔离级别"><a href="#总结5种隔离级别" class="headerlink" title="总结5种隔离级别"></a>总结5种隔离级别</h5><ol>
-<li><p>DEFAULT	<br>使用数据库本身使用的隔离级别(oracle默认读已提交,mysql默认可重复读)</p>
+<li><p>DEFAULT	<br>  使用数据库本身使用的隔离级别(oracle默认读已提交,mysql默认可重复读)</p>
 </li>
-<li><p>READ_UNCOMITTED	<br>读未提交：事务即使未提交，却可以被别的事务读取到的，这级别的事务隔离有脏读、重复读、幻读的问题。</p>
+<li><p>READ_UNCOMITTED	<br>  读未提交：事务即使未提交，却可以被别的事务读取到的，这级别的事务隔离有脏读、重复读、幻读的问题。</p>
 </li>
-<li><p>READ_COMMITED<br>读已提交：当前事务只能读取到其他事务提交的数据，这种事务的隔离级别解决了脏读问题，但还是会存在不可重复读、幻读问题。</p>
+<li><p>READ_COMMITED<br>  读已提交：当前事务只能读取到其他事务提交的数据，这种事务的隔离级别解决了脏读问题，但还是会存在不可重复读、幻读问题。</p>
 </li>
-<li><p>REPEATABLE_READ<br>可重复读：限制了读取数据的时候，不可以进行修改，所以解决了不可重复读的问题，但是读取范围数据的时候，是可以插入数据，所以还会存在幻读问题。</p>
+<li><p>REPEATABLE_READ<br>  可重复读：限制了读取数据的时候，不可以进行修改，所以解决了不可重复读的问题，但是读取范围数据的时候，是可以插入数据，所以还会存在幻读问题。</p>
 </li>
-<li><p>SERLALIZABLE	<br>串行化：事务最高的隔离级别，在该级别下，所有事务都是进行串行化顺序执行的。可以避免脏读、不可重复读与幻读所有并发问题。但是这种事务隔离级别下，事务执行很耗性能。</p>
+<li><p>SERLALIZABLE	<br>  串行化：事务最高的隔离级别，在该级别下，所有事务都是进行串行化顺序执行的。可以避免脏读、不可重复读与幻读所有并发问题。但是这种事务隔离级别下，事务执行很耗性能。</p>
 </li>
 </ol>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/l1394049664/article/details/81814090">MySQL事务隔离级别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eTbWDz8NiM8L8BbIrNiLHQ">四个案例看懂MySQL事务隔离级别</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6tRPXwXnWUW4mVfCdBlkog">长文捋明白Spring事务！隔离性？传播性？一网打尽！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/H1VuZxC1JRUh2gAM-KZn6w">一文详解幻读、脏读和不可重复读</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UcQdZYUP3Eb_V3XNk2dk6A">关于幻读，该捋清楚了！</a></p>
-</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://blog.csdn.net/l1394049664/article/details/81814090">MySQL事务隔离级别</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eTbWDz8NiM8L8BbIrNiLHQ">四个案例看懂MySQL事务隔离级别</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6tRPXwXnWUW4mVfCdBlkog">长文捋明白Spring事务！隔离性？传播性？一网打尽！</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/H1VuZxC1JRUh2gAM-KZn6w">一文详解幻读、脏读和不可重复读</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UcQdZYUP3Eb_V3XNk2dk6A">关于幻读，该捋清楚了！</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h4 id="事务超时属性"><a href="#事务超时属性" class="headerlink" title="事务超时属性"></a>事务超时属性</h4><p>所谓事务超时，就是指一个事务所允许执行的最长时间，如果超过该时间限制但事务还没有完成，则自动回滚事务。在TransactionDefinition中以int的值来表示超时时间，其单位是秒，默认值为-1，这表示事务的超时时间取决于底层事务系统或者没有超时时间。</p>
 <h4 id="事务只读属性"><a href="#事务只读属性" class="headerlink" title="事务只读属性"></a>事务只读属性</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>transaction</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span><span class="token class-name">Nullable</span></span><span class="token punctuation">;</span>
@@ -1094,11 +1105,15 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/system-design/framework/spring/spring-transaction.html">原文链接</a></p>
 </blockquote>
-<h3 id="事务相关文章"><a href="#事务相关文章" class="headerlink" title="事务相关文章"></a>事务相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZCwiz5FwUuslf6ireP8o_g">三问Spring事务：解决什么问题？如何解决？存在什么问题?</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J7A0rwnwpCc92IbaQ6Q6Yw">Spring事务失效了，怎么办？(介绍的很好，包括代理相关内容,跨方法调用导致事务失效的原因)</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zMAFhZi9wYGwofasv-0aMA">Spring事务(介绍的很详细)</a></li>
-</ul>
+<h3 id="事务相关文章"><a href="#事务相关文章" class="headerlink" title="事务相关文章"></a>事务相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZCwiz5FwUuslf6ireP8o_g">三问Spring事务：解决什么问题？如何解决？存在什么问题?</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J7A0rwnwpCc92IbaQ6Q6Yw">Spring事务失效了，怎么办？(介绍的很好，包括代理相关内容,跨方法调用导致事务失效的原因)</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zMAFhZi9wYGwofasv-0aMA">Spring事务(介绍的很详细)</a></th>
+</tr>
+</thead>
+</table>
 <h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p>CAP理论告诉我们，一个分布式系统不可能同时满足一致(C:Consistency)，可用性(A:Availability)和分区容错性(P:Partition tolerance)这三个基本需求，最多只能同时满足其中的2个。</p>
 <p>BASE：全称：Basically Available(基本可用)，Soft state（软状态）,和Eventually consistent（最终一致性）。Base理论是对CAP中一致性和可用性权衡的结果，其来源于对大型互联网分布式实践的总结，是基于CAP定理逐步演化而来的。其核心思想是：既是无法做到强一致性（Strong consistency），但每个应用都可以根据自身的业务特点，采用适当的方式来使系统达到最终一致性(Eventual consistency)</p>
 <h3 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h3><p><strong>阶段一(准备阶段)</strong>:协调者向所有的参与者询问，是否准备好了执行事务，并开始等待各参与者的响应。执行事务各参与者节点执行事务操作，并将Undo和Redo信息记入事务日志中，各参与者向协调者反馈事务询问的响应，如果参与者成功执行了事务操作，那么就反馈给协调者Yes响应，表示事务可以执行；如果参与者没有成功执行事务，就返回No给协调者，表示事务不可以执行。</p>
@@ -1118,35 +1133,55 @@
 <li>在第一阶段和第二阶段中插入一个<strong>准备阶段</strong>。保证了在最后提交阶段之前各参与节点的状态是一致的.如果段时间内没有收到协调者的commit请求，那么就会自动进行commit，解决了2PC单点故障的问题。</li>
 </ol>
 <h3 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h3><p>2PC要求参与者实现了XA协议，通常用来解决多个数据库之间的事务问题，比较局限。在多个系统服务利用api接口相互调用的时候，就不遵守XA协议了，这时候2PC就不适用了。现代企业多采用分布式的微服务，因此更多的是要解决多个微服务之间的分布式事务问题。<br>TCC就是一种解决多个微服务之间的分布式事务问题的方案。TCC是Try、Confirm、Cancel三个词的缩写，其本质是一个应用层面上的2PC，同样分为两个阶段：<br><strong>准备阶段</strong>：协调者调用所有的每个微服务提供的try接口，将整个全局事务涉及到的资源锁定住，若锁定成功try接口向协调者返回yes。<br><strong>提交阶段</strong>：若所有的服务的try接口在阶段一都返回yes，则进入提交阶段，协调者调用所有服务的confirm接口，各个服务进行事务提交。如果有任何一个服务的try接口在阶段一返回no或者超时，则协调者调用所有服务的cancel接口<br>这里有个关键问题，既然TCC是一种服务层面上的2PC。它是如何解决2PC无法应对宕机问题的缺陷的呢？答案是不断重试。</p>
-<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="http://seata.io/zh-cn/">seata官网</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YxlAtPmCZ8h_oyPStXJP_A">一致性协议算法-2PC、3PC、Paxos、Raft、ZAB、NWR详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JZnLbBrRx_fDtnsYsRs4Aw">阿里终面：分布式事务原理</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eczKVv7Jgt4f0Mhwaq1JXw">分布式事务，阿里为什么钟爱TCC</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VIuJ5ywyjfGjAWd3Fb-XWg">七种分布式事务的解决方案，一次讲给你听！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J3BMnwRD-Ag8BAlJQiYuhg">对比7种分布式事务方案，还是偏爱阿里开源的Seata，真香</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hBSY7VwHu9kM_3OrJ8WDwA">实战！阿里神器Seata实现TCC模式解决分布式事务</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Aj_BECgTZWkxX-dy5sayOw">分布式事务的6种解决方案，写得非常好！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MbPRpBudXtdfl8o4hlqNlQ">我还不懂什么是分布式事务</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494401&amp;idx=1&amp;sn=915f97e20b4cb58bea2f638389ff60e5&amp;source=41#wechat_redirect">一文看懂分布式事务</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QpOwudYMY1HMRpU6SIXjzA">面试官：聊聊分布式事务，再说说解决方案！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/83-I7hPDuWRTTfrldHJ0VA">看了那么多博客，还是不懂TCC，不妨看看这个案例！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EQuVJGFi6SEj3Qj2FS-uSg">听说TCC不支持OpenFeign</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/47efAPrm10l1Bxn1zECwvA">五分钟带你体验一把分布式事务</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BJHmVkNrvNL87hBT8DM8vg">XA事务水很深，小伙子我怕你把握不住</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cZabAt7JF4QrQHERHHAWjA">你这Saga事务保“隔离性”吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jcavJfjseBvaETAuTPnRqw">哪种分布式事务处理方案效率最高</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6DOtO5OQyCL8bR03Z-3q9A">一文搞明白分布式事务解决方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fzlr-6pDPWKbwVuJlXe8sA">手把手带领小伙伴们写一个分布式事务案例</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NbnCiRwRFUZGym5vDxOoPQ">Spring Boot多数据源如何处理事务</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lwCNNCyG9wwtRHsni5pD8g">亿级流量架构分布式事务如何实现？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ic57T3Yj2C_5tpdnM39IrQ">SpringBoot分布式事务的解决方案（JTA+Atomic+多数据源）</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/29PmqK_bzDgh8bl9SBY3Uw">分布式事务，原理简单，写起来全是坑！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kiRD3Hmdx2b__cBWeQOTWQ">分布式事务处理方案大PK！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wTF3LlUKtH3lzsVgCLdCpQ">如何用RabbitMQ解决分布式事务</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XRGIO7S9q9XqAfwqWr0OsQ">MySQL为什么需要两阶段提交？</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nM81BRyQRTWab78a6KTD-g">阿里Seata新版本终于解决了TCC模式的幂等、悬挂和空回滚问题</a></li>
-</ul>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YxlAtPmCZ8h_oyPStXJP_A">一致性协议算法-2PC、3PC、Paxos、Raft、ZAB、NWR详解</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JZnLbBrRx_fDtnsYsRs4Aw">阿里终面：分布式事务原理</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eczKVv7Jgt4f0Mhwaq1JXw">分布式事务，阿里为什么钟爱TCC</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VIuJ5ywyjfGjAWd3Fb-XWg">七种分布式事务的解决方案，一次讲给你听！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J3BMnwRD-Ag8BAlJQiYuhg">对比7种分布式事务方案，还是偏爱阿里开源的Seata，真香</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hBSY7VwHu9kM_3OrJ8WDwA">实战！阿里神器Seata实现TCC模式解决分布式事务</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Aj_BECgTZWkxX-dy5sayOw">分布式事务的6种解决方案，写得非常好！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MbPRpBudXtdfl8o4hlqNlQ">我还不懂什么是分布式事务</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494401&amp;idx=1&amp;sn=915f97e20b4cb58bea2f638389ff60e5&amp;source=41#wechat_redirect">一文看懂分布式事务</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QpOwudYMY1HMRpU6SIXjzA">面试官：聊聊分布式事务，再说说解决方案！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/83-I7hPDuWRTTfrldHJ0VA">看了那么多博客，还是不懂TCC，不妨看看这个案例！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EQuVJGFi6SEj3Qj2FS-uSg">听说TCC不支持OpenFeign</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/47efAPrm10l1Bxn1zECwvA">五分钟带你体验一把分布式事务</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BJHmVkNrvNL87hBT8DM8vg">XA事务水很深，小伙子我怕你把握不住</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cZabAt7JF4QrQHERHHAWjA">你这Saga事务保“隔离性”吗？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jcavJfjseBvaETAuTPnRqw">哪种分布式事务处理方案效率最高</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6DOtO5OQyCL8bR03Z-3q9A">一文搞明白分布式事务解决方案</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fzlr-6pDPWKbwVuJlXe8sA">手把手带领小伙伴们写一个分布式事务案例</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NbnCiRwRFUZGym5vDxOoPQ">Spring Boot多数据源如何处理事务</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lwCNNCyG9wwtRHsni5pD8g">亿级流量架构分布式事务如何实现？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ic57T3Yj2C_5tpdnM39IrQ">SpringBoot分布式事务的解决方案（JTA+Atomic+多数据源）</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/29PmqK_bzDgh8bl9SBY3Uw">分布式事务，原理简单，写起来全是坑！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kiRD3Hmdx2b__cBWeQOTWQ">分布式事务处理方案大PK！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wTF3LlUKtH3lzsVgCLdCpQ">如何用RabbitMQ解决分布式事务</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XRGIO7S9q9XqAfwqWr0OsQ">MySQL为什么需要两阶段提交？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nM81BRyQRTWab78a6KTD-g">阿里Seata新版本终于解决了TCC模式的幂等、悬挂和空回滚问题</a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h2 id="MySQL事务"><a href="#MySQL事务" class="headerlink" title="MySQL事务"></a>MySQL事务</h2><h3 id="并发事务带来了哪些问题"><a href="#并发事务带来了哪些问题" class="headerlink" title="并发事务带来了哪些问题?"></a>并发事务带来了哪些问题?</h3><p>在典型的应用程序中，多个事务并发运行，经常会操作相同的数据来完成各自的任务（多个用户对同一数据进行操作）。并发虽然是必须的，但可能会导致以下的问题。</p>
 <h4 id="脏读（Dirtyread）"><a href="#脏读（Dirtyread）" class="headerlink" title="脏读（Dirtyread）"></a>脏读（Dirtyread）</h4><p>一个事务读取数据并且对数据进行了修改，这个修改对其他事务来说是可见的，即使当前事务没有提交。这时另外一个事务读取了这个还未提交的数据，但第一个事务突然回滚，导致数据并没有被提交到数据库，那第二个事务读取到的就是脏数据，这也就是脏读的由来。</p>
 <p>例如：事务1读取某表中的数据A&#x3D;20，事务1修改A&#x3D;A-1，事务2读取到A&#x3D;19,事务1回滚导致对A的修改并为提交到数据库，A的值还是20。</p>
@@ -1229,11 +1264,15 @@
 <span class="token operator">|</span> <span class="token keyword">REPEATABLE</span><span class="token operator">-</span><span class="token keyword">READ</span> <span class="token operator">|</span>
 <span class="token operator">+</span><span class="token comment">-----------------+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TWBztovuzR3jXm9TZibTIA">面试官灵魂的一击：你懂MySQL事务吗</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BLmcN_hhen-lbbSlGIQcCQ">MySQL事务的实现原理，写得太好了！</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1x0GDRowziRtgNr2Bwz2Vw">一文讲清，MySQL如何解决多事务并发问题</a></li>
-</ul>
+<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TWBztovuzR3jXm9TZibTIA">面试官灵魂的一击：你懂MySQL事务吗</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BLmcN_hhen-lbbSlGIQcCQ">MySQL事务的实现原理，写得太好了！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1x0GDRowziRtgNr2Bwz2Vw">一文讲清，MySQL如何解决多事务并发问题</a></th>
+</tr>
+</thead>
+</table>
 
                 
             </div>

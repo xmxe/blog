@@ -189,17 +189,12 @@ int availableProcessors = Runtime.getRuntime().availableProcessors()
 7. 使用线程的CyclicBarrier(回环栅栏)方法
 8. 使用线程的Semaphore(信号量)方法
 
-
 #### 线程相关文章
-- [Java多线程与并发高频面试题解析](https://mp.weixin.qq.com/s/DIbxSun2NcD-wbqKGQpRLg)
-- [超赞，大牛总结的多线程的问题及答案](https://mp.weixin.qq.com/s/0KmWOLNqhck85WECC9uQ-g)
-- [99道Java多线程面试题，看完我跪了！](https://mp.weixin.qq.com/s/dRqLZG7eev87hda9ohlJrA)
-- [2万字长文详解10大多线程面试题](https://mp.weixin.qq.com/s/hq5GbYBe98YsBDNA3u2s5Q)
-- [两万字！多线程硬核50问！](https://mp.weixin.qq.com/s/wGJsOWAGUhlE4QlZsNpMXg)
-- [面试官：线程池中多余的线程是如何回收的？](https://mp.weixin.qq.com/s/Ts2DGoUJ6SOhdRuDaLa8UQ)
-- [你真的了解Thread线程类吗](https://mp.weixin.qq.com/s/PNHueqqUhKPihiJm3Hqmvw)
-- [面试官提问：线程中的wait和notify方法有啥作用？](https://mp.weixin.qq.com/s/ZY65yfzxVaWn-WFNKy1v4A)
-- [什么是线程组？](https://mp.weixin.qq.com/s/fbdJyn1Roa3Vxn1q1BPa6w)
+
+| [Java多线程与并发高频面试题解析](https://mp.weixin.qq.com/s/DIbxSun2NcD-wbqKGQpRLg) | [超赞，大牛总结的多线程的问题及答案](https://mp.weixin.qq.com/s/0KmWOLNqhck85WECC9uQ-g) | [99道Java多线程面试题，看完我跪了！](https://mp.weixin.qq.com/s/dRqLZG7eev87hda9ohlJrA) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [2万字长文详解10大多线程面试题](https://mp.weixin.qq.com/s/hq5GbYBe98YsBDNA3u2s5Q) | [两万字！多线程硬核50问！](https://mp.weixin.qq.com/s/wGJsOWAGUhlE4QlZsNpMXg) | [面试官：线程池中多余的线程是如何回收的？](https://mp.weixin.qq.com/s/Ts2DGoUJ6SOhdRuDaLa8UQ) |
+| [你真的了解Thread线程类吗](https://mp.weixin.qq.com/s/PNHueqqUhKPihiJm3Hqmvw) | [面试官提问：线程中的wait和notify方法有啥作用？](https://mp.weixin.qq.com/s/ZY65yfzxVaWn-WFNKy1v4A) | [什么是线程组？](https://mp.weixin.qq.com/s/fbdJyn1Roa3Vxn1q1BPa6w) |
 
 ### 线程池
 

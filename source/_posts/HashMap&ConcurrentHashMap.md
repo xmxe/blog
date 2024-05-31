@@ -635,10 +635,9 @@ public class HashMapDemo {
 
 现在，有两个线程都执行transfer方法。每个线程都会在它们自己的工作内存生成一个newTable的数组，用于存储变化后的链表，它们互不影响（这里互不影响，指的是两个新数组本身互不影响）。但是，需要注意的是，它们操作的数据却是同一份。一番扩容操作后出现环形链表，这时，有的同学可能就会问了，就算他们成环了，又怎样，跟死循环有什么关系？我们看下get()方法（最终调用getEntry方法），可以看到查找元素时，只要e不为空，就会一直循环查找下去。若有某个元素C的hash值也落在了和A，B元素同一个桶中，则会由于，A，B互相指向，e.next永远不为空，就会形成死循环。主要原因在于并发下的Rehash会造成元素之间会形成一个循环链表。不过，jdk1.8后解决了这个问题，但是还是不建议在多线程下使用HashMap,因为多线程下使用HashMap还是会存在其他问题比如数据丢失。并发环境下推荐使用ConcurrentHashMap。
 
-> [JAVA HASHMAP的死循环](https://coolshell.cn/articles/9606.html)
-> [美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）](https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ)
-> [多线程环境下，HashMap为什么会出现死循环？](https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg)
-> [听说过HashMap会导致CPU飙升100%吗？](https://mp.weixin.qq.com/s/-IvCgU8fC0Au21BPxPyo-g)
+| [JAVA HASHMAP的死循环](https://coolshell.cn/articles/9606.html) | [美团面试题：HashMap是如何形成死循环的？（最完整的配图讲解）](https://mp.weixin.qq.com/s/5FdDjDo5H-nDZhFxo7H6QQ) | [多线程环境下，HashMap为什么会出现死循环？](https://mp.weixin.qq.com/s/gAw9K6yd-w9ZyP90xyvTwg) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [听说过HashMap会导致CPU飙升100%吗？](https://mp.weixin.qq.com/s/-IvCgU8fC0Au21BPxPyo-g) |                                                              |                                                              |
 
 #### HashMap有哪几种常见的遍历方式?
 
@@ -648,9 +647,8 @@ public class HashMapDemo {
 
 ### HashMap相关文章
 
-- [面试官再问你HashMap底层原理，就把这篇文章甩给他看](https://mp.weixin.qq.com/s/8Nl9dv_ywubW7Wc45--pgw)
-- [HashMap面试21问，这次要跪了！](https://mp.weixin.qq.com/s/WyPnPAKZfA58eX7qSBcP8Q)
-- [为什么HashMap不能一边遍历一边删除](https://mp.weixin.qq.com/s/JZiSfe7IIIJCstTucH5tlw)
+| [面试官再问你HashMap底层原理，就把这篇文章甩给他看](https://mp.weixin.qq.com/s/8Nl9dv_ywubW7Wc45--pgw) | [HashMap面试21问，这次要跪了！](https://mp.weixin.qq.com/s/WyPnPAKZfA58eX7qSBcP8Q) | [为什么HashMap不能一边遍历一边删除](https://mp.weixin.qq.com/s/JZiSfe7IIIJCstTucH5tlw) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 
 
 ## ConcurrentHashMap
@@ -1341,9 +1339,9 @@ Java8中，锁粒度更细，synchronized只锁定当前链表或红黑二叉树
 ConcurrentMap(如ConcurrentHashMap、ConcurrentSkipListMap)不允许使用null值的主要原因是在非并发的Map中(如HashMap)是可以容忍模糊性(二义性)的，而在并发Map中是无法容忍的。假如说，所有的Map都支持null的话，那么map.get(key)就可以返回null，但是这时候就会存在一个不确定性，当你拿到null的时候，你是不知道他是因为本来就存了一个null进去还是说就是因为没找到而返回了null。在HashMap中，因为它的设计就是给单线程用的，所以当我们map.get(key)返回null的时候，我们是可以通过map.contains(key)检查来进行检测的，如果它返回true，则认为是存了一个null，否则就是因为没找到而返回了null。但是像ConcurrentHashMap，它是为并发而生的，它是要用在并发场景中的，当我们map.get(key)返回null的时候，是没办法通过通过map.contains(key)检查来准确的检测，因为在检测过程中可能会被其他线程锁修改，而导致检测结果并不可靠。所以，为了让ConcurrentHashMap的语义更加准确，不存在二义性的问题，他就不支持null。
 
 ### ConcurrentHashMap相关文章
-- [那些年你啃过的ConcurrentHashMap](https://mp.weixin.qq.com/s/ufoKhs4VRXhE8_PT2rXoeg)
-- [面试必问之ConcurrentHashMap线程安全的具体实现方式](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491116&idx=1&sn=30ee6196266dab2cbf46cf7f98d99120&source=41#wechat_redirect)
-- [ConcurrentHashMap是如何保证线程安全的](https://mp.weixin.qq.com/s/Hb7JCkMrri0VDiPcl8HnBQ)
+
+| [那些年你啃过的ConcurrentHashMap](https://mp.weixin.qq.com/s/ufoKhs4VRXhE8_PT2rXoeg) | [面试必问之ConcurrentHashMap线程安全的具体实现方式](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491116&idx=1&sn=30ee6196266dab2cbf46cf7f98d99120&source=41#wechat_redirect) | [ConcurrentHashMap是如何保证线程安全的](https://mp.weixin.qq.com/s/Hb7JCkMrri0VDiPcl8HnBQ) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 
 
 ## 面试题

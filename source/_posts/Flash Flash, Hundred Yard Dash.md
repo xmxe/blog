@@ -8,15 +8,16 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 
 ## Java
 
-| [java关键字名单](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491305&idx=2&sn=c8b3f2d88d16aa3ebb9f5b674dce0a55&source=41#wechat_redirect) | [Class.forName和ClassLoader到底有啥区别](https://mp.weixin.qq.com/s/qvKunFJfDuBesjJUIsJdXg) | [说说Java深拷贝和浅拷贝区别](https://mp.weixin.qq.com/s/GOSoJrArIQrctiP3ArG6lA) |
+| [java关键字名单](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491305&idx=2&sn=c8b3f2d88d16aa3ebb9f5b674dce0a55&source=41#wechat_redirect) | [盘点历届Java语言的关键字，一定有你不认识的](https://mp.weixin.qq.com/s/Pm9Rp_xKIA8UodtmyX4iMA) | [Class.forName和ClassLoader到底有啥区别](https://mp.weixin.qq.com/s/qvKunFJfDuBesjJUIsJdXg) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [Java中经常被提到的SPI到底是什么](https://mp.weixin.qq.com/s/t92OtlMD_dwk1ldCVNvHBA) | [post为什么会发送两次请求？](https://mp.weixin.qq.com/s/rcYoIbgxHLsnXzKqmcKtSg) | [说说Java深拷贝和浅拷贝区别](https://mp.weixin.qq.com/s/GOSoJrArIQrctiP3ArG6lA) |
 | [面试难缠的深拷贝浅拷贝，这次终于通透了](https://mp.weixin.qq.com/s/SQB4ZteKe7-fHFzL__6cSQ) | [简单聊聊对象浅拷贝和深拷贝，真不简单！](https://mp.weixin.qq.com/s/P1mlsdacKGF0vB566fqm3g) | [零拷贝技术在Java中为何这么牛](https://mp.weixin.qq.com/s/GSzbiVge-aoDHxYCzCTALw) |
 | [什么是零拷贝？](https://mp.weixin.qq.com/s/Fsw01-dXjeS4X8I-zmu8hQ) | [天天都会写接口，但它的用途和好处有多少人能说得清楚？](https://mp.weixin.qq.com/s/R7JyIRnRYEEMNKZG-aEoMw) | [Java中的接口还可以这样用，你知道吗？](https://mp.weixin.qq.com/s/NN3Zy1RGpwWUIgaatAJ4HQ) |
 | [10大Java面试难题，打趴无数面试者！](https://mp.weixin.qq.com/s/Fap6REHGxmnaHOPwp94iRA)※ | [知名互联网公司Java开发岗面试知识点解析](https://mp.weixin.qq.com/s/efM15hYwgowrprWWNgbYjg) | [社招后端20问！](https://mp.weixin.qq.com/s/kbvWCme1T-_3_MaIvgH66g) |
 | [Java面试题全梳理](https://mp.weixin.qq.com/s/3cqRu-STSX7aL_3kRQffTQ) | [oppo面试题](https://mp.weixin.qq.com/s/UZld1hKUgeBrYFrhQ_wjMQ) | [扪心自问！一百多道难搞的面试题，你能答对了多少](https://mp.weixin.qq.com/s/aj-WmrJsWnH2Utsbhurnbg) |
 | [B站面试经历](https://mp.weixin.qq.com/s/ZbP8kBTKpnxKsogZyQL1nw) | [Java基础夺命连环16问](https://mp.weixin.qq.com/s/_JsVu1Vcj8kCl1gZc8tNXg) | [15个常见的Node.js面试问题及答案](https://mp.weixin.qq.com/s/-v3PCoVInPYpkhnO9y3SNQ) |
 | [30道计网常考面试题含答案总结！血赚！](https://mp.weixin.qq.com/s/OY6oO-1dSxc9Flseal22zw) | [2W字！梳理50道经典计算机网络面试题（收藏版）](https://mp.weixin.qq.com/s/PlBwyJ4wpDeZ7J-PKw3sgA) | [蚂蚁金服一面：十道经典面试题解析](https://mp.weixin.qq.com/s/6KhtiAdDOljqQ4bzc7pSnw) |
-| [美团面试题](https://mp.weixin.qq.com/s/2IUaDr5XRgWoVaGgPGsAxA) | [Java中经常被提到的SPI到底是什么](https://mp.weixin.qq.com/s/t92OtlMD_dwk1ldCVNvHBA) | [post为什么会发送两次请求？](https://mp.weixin.qq.com/s/rcYoIbgxHLsnXzKqmcKtSg) |
+| [美团面试题](https://mp.weixin.qq.com/s/2IUaDr5XRgWoVaGgPGsAxA) |                                                              |                                                              |
 
 ## 分布式
 
@@ -34,8 +35,14 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 
 ## 下载
 
-| [apache旗下安装包](https://dlcdn.apache.org/) | [centos rpm包（cat /etc/centos-release）](http://vault.centos.org/) | [PLSQL历史版本下载](https://www.allroundautomations.com/registered-plsqldev/) |
-| :-------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|        [apache旗下安装包](https://dlcdn.apache.org/)         | [centos rpm包（cat /etc/centos-release）](http://vault.centos.org/) | [PLSQL历史版本下载](https://www.allroundautomations.com/registered-plsqldev/) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [ClashX](https://clashx.org/) / [github](https://github.com/yichengchen/clashX) |             [ClashX Pro](https://clashxpro.org/)             | [Clash for Windows](https://clashforwindows.org/) / [github](https://github.com/Fndroid/clash_for_windows_pkg) |
+|          [clashN](https://github.com/2dust/clashN)           | [Clash for Android](https://clashforandroid.org/) / [github](https://github.com/Kr328/ClashForAndroid) | [Clash Verge](https://clashverge.org/) / [github](https://github.com/zzzgydi/clash-verge) |
+| [Clash下载](https://clash.top/download/) / [github](https://github.com/clashdownload) |         [Stash(Clash iOS)](https://clashstash.org/)          |         [v2rayNG](https://github.com/2dust/v2rayNG)          |
+|          [v2rayN](https://github.com/2dust/v2rayN)           |          [V2rayU](https://github.com/yanue/V2rayU)           | [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android) |
+| [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows) |    [FakeLocation](https://github.com/Lerist/FakeLocation)    | [surfboard(cfa替代品)](https://apkpure.com/surfboard/com.getsurfboard) |
+|              [surge](https://www.nssurge.com/)               |                                                              |                                                              |
 
 ## 工具
 

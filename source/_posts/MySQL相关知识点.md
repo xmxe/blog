@@ -1941,7 +1941,7 @@ mysql> EXPLAIN SELECT `score`,`name` FROM `cus_order` ORDER BY `score` DESC;
 | [再有人问你MySQL索引原理，就把这篇文章甩给他！](https://mp.weixin.qq.com/s/9yeModGuGvDu5S0bW9sU6w) | [为什么索引可以让查询变快？终于有人说清楚了！](https://mp.weixin.qq.com/s/dKvPKUVDTM1OiP_qzNiFBg) | [面试官问我索引为什么这快？我好像解释不清楚了](https://mp.weixin.qq.com/s/EyYBqfZcBWP60Y1gAADeOg) |
 | [一文讲清，MySQL中的二级索引](https://mp.weixin.qq.com/s/0_4Jq06LLaTEfjetLQP0iA) | [明明加了唯一索引，为什么还是产生重复数据？](https://mp.weixin.qq.com/s/_hdGKhB-A4ZOFZ42POmgjQ) | [面试官提问：什么是前缀索引？](https://mp.weixin.qq.com/s/4XfSv004Vy7hyvZsjlQXwQ) |
 | [MySQL遵循最左前缀匹配原则！面试官：回去等通知吧](https://mp.weixin.qq.com/s/IYRTE00_3bXD6y3YBW9P6Q) | [MySQL索引15连问](https://mp.weixin.qq.com/s/N95kMxVduiA6ZA3TSexAtA) | [MySQL索引数据结构入门](https://mp.weixin.qq.com/s/QLQvMT2sPmmjVE_pXj5FIA) |
-| [前缀索引，在性能和空间中寻找平衡](https://mp.weixin.qq.com/s/mqi7MyF183FUmgy2FXi3Tw) |                                                              |                                                              |
+| [前缀索引，在性能和空间中寻找平衡](https://mp.weixin.qq.com/s/mqi7MyF183FUmgy2FXi3Tw) | [聊聊mysql优化神器：前缀索引！](https://mp.weixin.qq.com/s/bhlzlILDSpLkiRBfVyZj0w) | [全文索引](https://mp.weixin.qq.com/s/SLIrSYnrNYkTyioE4syhFA) |
 
 ## MySQL三大日志
 

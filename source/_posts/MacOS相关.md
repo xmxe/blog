@@ -100,7 +100,7 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 >```
 >
 
-### [Peek](https://www.quicklookplugins.com/)
+### [Peek/iPreview](https://www.quicklookplugins.com/)
 
 > quicklook插件安装：将下载的.qlgenerator文件移动到`~/Library/QuickLook`后运行`qlmanage -r`
 >> `qlmanage -caches`：列出Quick Look缓存中的文件和其相关信息。
@@ -120,13 +120,13 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 
 |                           (●'◡'●)                           |                           (●ˇ∀ˇ●)                            |                            (✿◡‿◡)                            |                          ( $ _ $ )                           |
 | :---------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-|     [Bandizip](https://www.bandisoft.com/bandizip.mac/)     |  [Affinity Photo](https://affinity.serif.com/zh-cn/photo/)   |             [Termius](https://www.termius.com/)              |       [MySQL](https://dev.mysql.com/downloads/mysql/)        |
+|       [BetterZip](https://macitbetter.com/downloads/)       |  [Affinity Photo](https://affinity.serif.com/zh-cn/photo/)   |             [Termius](https://www.termius.com/)              |       [MySQL](https://dev.mysql.com/downloads/mysql/)        |
 |  [Clash X](https://github.com/yichengchen/clashX/releases)  |         [iShot](https://www.better365.cn/apps.html)          | [Chrome](https://google.cn/chrome?standalone=1&platform=mac) | [右键助手专业版](https://apps.apple.com/cn/app/%E5%8F%B3%E9%94%AE-%E4%B8%93%E4%B8%9A%E7%89%88/id6473515689) |
-|                [Motrix](https://motrix.app/)                |            [NDM](https://neatdownloadmanager.com)            |    [App Cleaner & Uninstaller](https://app-cleaner.com/)     |          [NodeJS](https://nodejs.org/en/download/)           |
+|  [Final Cut Pro](https://www.apple.com.cn/final-cut-pro/)   |            [NDM](https://neatdownloadmanager.com)            |    [App Cleaner & Uninstaller](https://app-cleaner.com/)     |          [NodeJS](https://nodejs.org/en/download/)           |
 | [Java](https://www.oracle.com/java/technologies/downloads/) |      [Python](https://www.python.org/downloads/macos/)       |      [VS Code](https://code.visualstudio.com/Download)       |     [Sublime Text](https://www.sublimetext.com/download)     |
 |      [Intellij IDEA](https://www.jetbrains.com/idea/)       | [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) |       [PDF Reader Pro](https://www.pdfreaderpro.com/)        |                   [IINA](https://iina.io/)                   |
 |                [Fliqlo](https://fliqlo.com/)                |    [Mac EveryThing](https://tool.atomtech.top/index.html)    | [android-file-transfer](https://formulae.brew.sh/cask/android-file-transfer) | [Permute 3](https://apps.apple.com/cn/app/permute-3/id1444998321) |
-|              [Downie](https://www.downie.cn/)               |                                                              |                                                              |                                                              |
+|             [Downie 4](https://www.downie.cn/)              |                                                              |                                                              |                                                              |
 
 
 ## Mac安装软件
@@ -144,6 +144,7 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 > - xattr：用于查看、设置和删除扩展属性的命令。
 > - r：表示以递归方式处理目录及其子目录中的文件。
 > - d：表示删除指定文件的扩展属性。com.apple.quarantine：是指要删除的扩展属性的名称，即“quarantine”。
+> -  sudo xattr -rc /Applications/Navicat\ Premium.app。`-c`是清除属性的选项，它指示`xattr`命令删除文件或目录中的所有扩展属性。
 
 ### 对应用进行签名
 

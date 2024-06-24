@@ -11,13 +11,8 @@
     },
     {
         "src": "assert/qywx.jpg",
-        "text": "企业微信",
+        "text": "企业微信(3.1.8/2.7.6)",
         "appId": "https://www.wandoujia.com/apps/6860656/history_v16713"
-    },
-    {
-        "src": "assert/v.jpg",
-        "text": "v",
-        "appId": "https://github.com/2dust"
     },
     {
         "src": "assert/fakelocation.jpg",

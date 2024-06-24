@@ -600,7 +600,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <span class="token operator">></span>openssl dgst <span class="token parameter variable">-sha1</span> 文件名 <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 </blockquote>
-<h3 id="Peek"><a href="#Peek" class="headerlink" title="Peek"></a><a target="_blank" rel="noopener" href="https://www.quicklookplugins.com/">Peek</a></h3><blockquote>
+<h3 id="Peek-x2F-iPreview"><a href="#Peek-x2F-iPreview" class="headerlink" title="Peek&#x2F;iPreview"></a><a target="_blank" rel="noopener" href="https://www.quicklookplugins.com/">Peek&#x2F;iPreview</a></h3><blockquote>
 <p>quicklook插件安装：将下载的.qlgenerator文件移动到<code>~/Library/QuickLook</code>后运行<code>qlmanage -r</code></p>
 <blockquote>
 <p><code>qlmanage -caches</code>：列出Quick Look缓存中的文件和其相关信息。<br><code>qlmanage -m plugins</code>：查看系统中已安装的Quick Look插件，并显示它们支持的文件类型。<br><code>qlmanage -p 文件路径</code>：会在Quick Look中打开指定文件的预览。</p>
@@ -640,7 +640,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.bandisoft.com/bandizip.mac/">Bandizip</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://macitbetter.com/downloads/">BetterZip</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://affinity.serif.com/zh-cn/photo/">Affinity Photo</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://www.termius.com/">Termius</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">MySQL</a></td>
@@ -652,7 +652,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <td align="center"><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/%E5%8F%B3%E9%94%AE-%E4%B8%93%E4%B8%9A%E7%89%88/id6473515689">右键助手专业版</a></td>
 </tr>
 <tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://motrix.app/">Motrix</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.apple.com.cn/final-cut-pro/">Final Cut Pro</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://neatdownloadmanager.com/">NDM</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://app-cleaner.com/">App Cleaner &amp; Uninstaller</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">NodeJS</a></td>
@@ -676,7 +676,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <td align="center"><a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/permute-3/id1444998321">Permute 3</a></td>
 </tr>
 <tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.downie.cn/">Downie</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.downie.cn/">Downie 4</a></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
@@ -693,6 +693,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <li>xattr：用于查看、设置和删除扩展属性的命令。</li>
 <li>r：表示以递归方式处理目录及其子目录中的文件。</li>
 <li>d：表示删除指定文件的扩展属性。com.apple.quarantine：是指要删除的扩展属性的名称，即“quarantine”。</li>
+<li>sudo xattr -rc &#x2F;Applications&#x2F;Navicat\ Premium.app。<code>-c</code>是清除属性的选项，它指示<code>xattr</code>命令删除文件或目录中的所有扩展属性。</li>
 </ul>
 </blockquote>
 <h3 id="对应用进行签名"><a href="#对应用进行签名" class="headerlink" title="对应用进行签名"></a>对应用进行签名</h3><p>安装[CommandLineTools](#Command Line Tools)后打开终端，输入<code>sudo codesign --force --deep --sign - 应用路径</code>，注意最后的–后面加一个空格。如遇错误：”&#x2F;文件位置 : replacing existing signature，&#x2F;文件位置 : resource fork,Finder information,or similar detritus not allowed“先在终端执行：<code>xattr -cr 应用路径</code>然后再次执行指令即可：<code>codesign --force --deep --sign - 应用路径</code>,完成后再次打开应用尝试</p>
@@ -1081,14 +1082,14 @@ create partition primary
 
 
 java关键字名单
+盘点历届Java语言的关键字，一定有你不认识的
 Class.forName和ClassLoader到底有啥区别
-说说Java深拷贝和浅拷贝区别
 
 
 
-面试难缠的深拷贝浅拷贝，这次终于通透了
-简单聊聊对象浅拷贝和深拷贝，真不简单！
-零拷贝技术在Java中为
+Java中经常被提到的SPI到底是什么
+post为什么会发送两次请求？
+说说Java深拷
                         
 
                     </div>

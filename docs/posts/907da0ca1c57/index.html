@@ -933,6 +933,328 @@ FLUSH PRIVILEGES<span class="token punctuation">;</span><span aria-hidden="true"
 
 <span class="token builtin class-name">echo</span> <span class="token string">"Import completed."</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="主从同步"><a href="#主从同步" class="headerlink" title="主从同步"></a>主从同步</h2><p><strong>MySQL5.6数据库主从（Master&#x2F;Slave）同步安装与配置详解,两台服务器-Master主:192.168.159.28、Slave从:192.168.159.30</strong></p>
+<h3 id="Master的配置"><a href="#Master的配置" class="headerlink" title="Master的配置"></a>Master的配置</h3><p>在Linux环境下MySQL的配置文件的位置是在&#x2F;etc&#x2F;my.cnf,在该文件下指定Master的配置如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token comment"># server-id用于标识唯一的数据库，这里设置为2，在设置从库的时候就需要设置为其他值。</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">2</span>
+<span class="token comment"># binlog-ignore-db：表示同步的时候ignore的数据库 </span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information_schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+<span class="token comment"># binlog-do-db：指定需要同步的数据库</span>
+<span class="token key attr-name">binlog-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">ufind_db</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>完整配置如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">datadir</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql/mysql.sock</span>
+<span class="token comment"># Disabling symbolic-links is recommended to prevent symbolic-links=0</span>
+<span class="token comment"># Settings user and group are ignored when systemd is If you need to run mysqld under a different user or customize your systemd unit file for mariadb accord instructions in http://fedoraproject.org/wiki/Syste</span>
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">2</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information_schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+<span class="token key attr-name">binlog-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">ufind_db</span>
+<span class="token key attr-name">wait_timeout</span><span class="token punctuation">=</span><span class="token value attr-value">31536000</span>
+<span class="token key attr-name">interactive_timeout</span><span class="token punctuation">=</span><span class="token value attr-value">31536000</span>
+<span class="token key attr-name">character-set-server</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4</span>
+<span class="token key attr-name">collation-server</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4_unicode_ci</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">client</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">default-character-set</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysgl</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">default-character-set</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld_safe</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">log-error</span><span class="token punctuation">=</span><span class="token value attr-value">/var/log/mariadb/mariadb.log</span>
+<span class="token key attr-name">pid-file</span><span class="token punctuation">=</span><span class="token value attr-value">/var/run/mariadb/mariadb.pid</span>
+<span class="token comment">#include all files from the config directory</span>
+!includedir /etc/my.cnf.d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后重启mysql：<code>service mysqld restart</code>。进入mysql：<code>./bin/mysql –h127.0.0.1 –uroot -proot</code>赋予从库权限帐号，允许用户在主库上读取日志，赋予192.168.159.130也就是Slave机器有File权限，只赋予Slave机器有File权限还不行，还要给它REPLICATION SLAVE的权限才可以。命令如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">GRANT FILE ON *.* TO <span class="token string">'root'</span>@<span class="token string">'192.168.159.130'</span> IDENTIFIED BY <span class="token string">'root'</span><span class="token punctuation">;</span>
+GRANT  REPLICATION SLAVE ON *.* TO <span class="token string">'root'</span>@<span class="token string">'192.168.159.130'</span> IDENTIFIED BY <span class="token string">'root'</span><span class="token punctuation">;</span>
+FLUSH  PRIVILEGES<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这里使用的仍是root用户作为同步的时候使用到的用户，可以自己设定。重启mysql，登录mysql，显示主库信息<code>show master status;</code>这里的File、Position是在配置Salve的时候要使用到的，Binlog_Do_DB表示要同步的数据库，Binlog_Ignore_DB表示Ignore的数据库，这些都是在配置的时候进行指定的。另外：如果执行这个步骤始终为Empty set(0.00 sec)，那说明前面的my.cnf没配置对。</p>
+<h3 id="Slave的配置"><a href="#Slave的配置" class="headerlink" title="Slave的配置"></a>Slave的配置</h3><p>从库的配置，首先也是修改配置文件：&#x2F;etc&#x2F;my.cnf如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">3</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information_schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+<span class="token key attr-name">replicate-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">ufind_db</span>
+<span class="token key attr-name">replicate-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+log-slave-updates
+<span class="token key attr-name">slave-skip-errors</span><span class="token punctuation">=</span><span class="token value attr-value">all</span>
+<span class="token key attr-name">slave-net-timeout</span><span class="token punctuation">=</span><span class="token value attr-value">60</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>完整配置如下</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+
+<span class="token key attr-name">datadir</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql/mysql.sock</span>
+
+<span class="token comment"># Disabling symbolic-links is recommended to prevent assorted security risks symbolic-links=0</span>
+
+<span class="token comment"># Settings user and group are ignored when systemd is used. # If you need to run mysgld under a different user or group, customize your systemd unit file for mariadb according to the instructions in http://fedoraproject.org/wiki/Systemd</span>
+
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">3</span>
+
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysgl</span>
+<span class="token key attr-name">replicate-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">uf ind db</span>
+<span class="token key attr-name">replicate-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+log-slave-updates
+
+<span class="token key attr-name">slave-skip-errors</span><span class="token punctuation">=</span><span class="token value attr-value">all</span>
+<span class="token key attr-name">slave-net-timeout</span><span class="token punctuation">=</span><span class="token value attr-value">60</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld_safe</span><span class="token punctuation">]</span></span>
+
+<span class="token key attr-name">log-error</span><span class="token punctuation">=</span><span class="token value attr-value">/var/log/mariadb/mariadb.log</span>
+<span class="token key attr-name">pid-file</span><span class="token punctuation">=</span><span class="token value attr-value">/var/run/mariadb/mariadb.pid</span>
+
+<span class="token comment"># include all files from the config directory</span>
+!includedir /etc/my.cnf.d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>修改完&#x2F;etc&#x2F;my.cnf文件之后，重启一下MySQL<code>service mysqld restart</code>,进入Slave mysql控制台，执行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">stop slave<span class="token punctuation">;</span>  <span class="token comment">#关闭Slave</span>
+change master to <span class="token assign-left variable">master_host</span><span class="token operator">=</span><span class="token string">'192.168.159.128'</span>,master_user<span class="token operator">=</span><span class="token string">'root'</span>,master_password<span class="token operator">=</span><span class="token string">'root'</span>,master_log_file<span class="token operator">=</span><span class="token string">'mysql-bin.000001'</span>, <span class="token assign-left variable">master_log_pos</span><span class="token operator">=</span><span class="token number">610</span><span class="token punctuation">;</span>
+
+start slave<span class="token punctuation">;</span> <span class="token comment">#开启Slave</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在这里指定Master的信息，master_log_file是在配置Master的时候的File选项，master_log_pos是在配置Master的Position选项，这里要进行对应。然后可以通过<code>show slave status;</code>查看配置的信息：完成！</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xlgen157387/article/details/51331244/">MySQL5.6数据库主从（Master&#x2F;Slave）同步安装与配置详解</a></p>
+<hr>
+<p>一、实验目标<br>搭建两台MySQL服务器，一台作为主服务器，一台作为从服务器，主服务器进行写操作，从服务器进行读操作。</p>
+<p>二、测试环境<br>主数据库： CentOS7， MySQL15.1 ， 192.168.1.233<br>从数据库： CentOS7， MySQL15.1 ， 192.168.1.234</p>
+<p>三、主从配置步骤</p>
+<ol>
+<li><p>确保主数据库与从数据库里的数据一样<br>例如：主数据库里的a的数据库里有b，c，d表，那从数据库里的就应该有一个模子刻出来的a的数据库和b，c，d表<br>我这里在两台MySQL上都创建了个名为“test”的数据库来测试</p>
+</li>
+<li><p>在主数据库里创建一个同步账号</p>
+</li>
+</ol>
+<p>1）每个从数据库会使用一个MySQL账号来连接主数据库，所以我们要在主数据库里创建一个账号，并且该账号要授予 REPLICATION SLAVE权限，你可以为每个从数据库分别创建账号，当然也可以用同一个！）</p>
+<p>2）你可以用原来的账号不一定要新创账号，但你应该注意，这个账号和密码会被明文存放在master.info文件中，因此建议单独创一个只拥有相关权限的账号，以减少对其它账号的危害！）</p>
+<p>3）创建新账号使用“CREATE USER”，给账号授权使用“GRANT”命令，如果你仅仅为了主从复制创建账号，只需要授予REPLICATION SLAVE权限。</p>
+<p>4）下面来创建一个账号，账号名：repl，密码：repl123，只允许192.168.1.的IP段登录，如下：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'repl'</span><span class="token variable">@'192.168.1.%'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'repl123'</span><span class="token punctuation">;</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">REPLICATION</span> SLAVE <span class="token keyword">ON</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'repl'</span><span class="token variable">@'192.168.1.%'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>5）如果开发防火墙，可能要配置下端口，如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">3306</span>/tcp <span class="token parameter variable">--permanent</span>
+firewall-cmd <span class="token parameter variable">--reload</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>配置主数据库</li>
+</ol>
+<p>1）要主数据库，你必须要启用二进制日志（binary logging），并且创建一个唯一的Server ID，这步骤可能要重启MySQL。<br>2）主服务器发送变更记录到从服务器依赖的是二进制日志，如果没启用二进制日志，复制操作不能实现（主库复制到从库）。<br>3）复制组中的每台服务器都要配置唯一的Server ID，取值范围是1到(232)−1，你自己决定取值。<br>4）配置二进制日志和Server ID，你需要关闭MySQL和编辑my.cnf或者my.ini文件，在[mysqld]节点下添加配置。<br>5）下面是启用二进制日志，日志文件名以“mysql-bin”作为前缀，Server ID配置为1，如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">1</span>
+<span class="token comment">#网络上还有如下配置</span>
+<span class="token comment">#binlog-do-db=mstest //要同步的mstest数据库,要同步多个数据库，就多加几个replicate-db-db=数据库名</span>
+<span class="token comment">#binlog-ignore-db=mysql //要忽略的数据库</span>
+<span class="token comment">#提示1：如果你不配置server-id或者配置值为0，那么主服务器将拒绝所有从服务器的连接。</span>
+<span class="token comment">#提示2：在使用InnoDB的事务复制，为了尽可能持久和数据一致，你应该在my.cnf里配置innodb_flush_log_at_trx_commit=1和 sync_binlog=1；</span>
+<span class="token comment">#For the greatest possible durability and consistency in a replication setup using InnoDB with transactions, you should useinnodb_flush_log_at_trx_commit=1 and sync_binlog=1 in the master my.cnf file.</span>
+<span class="token comment">#提示3：确保主服务器里的skip-networking选项未启用，如果网络被禁用，你的从服务器将不能与主服务器通信并且复制失败。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意：实际操作发现&#x2F;etc&#x2F;my.cnf文件和教材说的不一样，可能我装的是MariaDB,目测文件被放到了&#x2F;etc&#x2F;my.cnf.d目录里，在&#x2F;etc&#x2F;my.cnf.d&#x2F;server.cnf增加相关配置</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>重启MySQL,查看主服务器状态，<code>show master status;</code><br>4. 配置从数据库</p>
+<p>1）从服务器，同理，要分配一个唯一的Server ID，需要关闭MySQL，修改好后再重启，如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">2</span>
+<span class="token comment">#可以指定要复制的库</span>
+<span class="token key attr-name">replicate-do-db</span> <span class="token punctuation">=</span> <span class="token value attr-value">test #在master端不指定binlog-do-db，在slave端用replication-do-db来过滤</span>
+<span class="token key attr-name">replicate-ignore-db</span> <span class="token punctuation">=</span> <span class="token value attr-value">mysql #忽略的库</span>
+<span class="token comment">#网上还有下面配置</span>
+<span class="token comment">#relay-log=mysqld-relay-bin</span>
+<span class="token comment">#提示1：如果有多个从服务器，每个服务器的server-id不能重复，跟IP一样是唯一标识，如果你没设置server-id或者设置为0，则从服务器不会连接到主服务器。</span>
+<span class="token comment">#提示2：一般你不需要在从服务器上启用二进制日志，如果你在从服务器上启用二进制日志，那你可用它来做数据备份和崩溃恢复，或者做更复杂的事情（比如这个从服务器用来当作其它从服务器的主服务器）。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2）配置连接主服务器的信息</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"> stop slave<span class="token punctuation">;</span>
+CHANGE MASTER <span class="token keyword">TO</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_HOST<span class="token operator">=</span><span class="token string">'192.168.1.233'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_USER<span class="token operator">=</span><span class="token string">'repl'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_PASSWORD<span class="token operator">=</span><span class="token string">'repl123'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_LOG_FILE<span class="token operator">=</span><span class="token string">'mysql-bin.000002'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_LOG_POS<span class="token operator">=</span><span class="token number">313</span><span class="token punctuation">;</span>
+<span class="token keyword">start</span> slave<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3）查看从服务器状态</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">show</span> slave <span class="token keyword">status</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ol start="5">
+<li>测试数据同步</li>
+</ol>
+<p>测试，连接主服务器192.168.1.233，添加了表stu_user，然后再连接上192.168.1.234，发现也自己同步创建了表stu_user，然后在主数据库添加一条记录，从数据库也自动添加了记录，至此，主从的配置已经完成了， 目前是在从库里面配置复制“test”这个库，<br>如果要添加其它库，可以在主服务器中添加“binlog-do-db”配置，或者在从服务器中添加“replicate-do-db”配置。</p>
+<p>四、读写分离实现<br>主从配置是读写分离的前提，现在前提已经配置好了，读写分离就看具体项目的实现，读写分离，就是“写”的操作都在主数据库，“读”的操作都在从数据库！<br>（完）</p>
+<h2 id="MySQL高可用"><a href="#MySQL高可用" class="headerlink" title="MySQL高可用"></a>MySQL高可用</h2><ol>
+<li>卸载系统原有的Mysql,查看系统是否已安装Mysql，命令如下：<code>rpm -qa | grep mysql</code>,查看系统是否已启动Mysql，命令如下：<code>ps -ef | grep mysql</code>.如果已启动，则将相应进程杀死，命令如下：<code>kill -9 进程号</code>,卸载已安装的Mysql，命令如下：<br><code>rpm -ev mysql-5.1.71-1.el6.x86_64 mysql-libs-5.1.71-1.el6.x86_64 mysql-devel-5.1.71-1.el6.x86_64 --nodeps</code>.查看是否残留Mysql安装文件<code>find / -name mysql</code></li>
+<li>安装Mysql<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建Mysql安装目录</span>
+<span class="token function">mkdir</span> /home/mysqlapp
+<span class="token comment"># 创建临时目录</span>
+<span class="token function">mkdir</span> /home/mysqlapp/tmp
+<span class="token comment"># 创建数据目录</span>
+<span class="token function">mkdir</span> /home/mysqlapp/data
+<span class="token comment"># 创建用户与用户组，命令如下：</span>
+<span class="token function">groupadd</span> mysql
+<span class="token function">useradd</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-g</span> mysql <span class="token parameter variable">-s</span> /bin/false mysql
+<span class="token comment"># 修改临时目录、数据目录所有者和权限</span>
+<span class="token function">chown</span> mysql:mysql /home/mysqlapp/data/
+<span class="token function">chmod</span> <span class="token number">750</span> /home/mysqlapp/data/
+<span class="token function">chown</span> mysql:mysql /home/mysqlapp/tmp/
+<span class="token function">chmod</span> <span class="token number">750</span> /home/mysqlapp/tmp/
+<span class="token comment"># 上传mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz至/home/mysqlapp目录下，解压</span>
+<span class="token function">tar</span> xvf mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz
+<span class="token comment"># 创建软连接，命令如下：</span>
+<span class="token function">ln</span> <span class="token parameter variable">-s</span> mysql-8.0.12-linux-glibc2.12-x86_64 mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+编辑&#x2F;etc&#x2F;profile文件，末尾增加如下两行：<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">MYSQL_HOME</span><span class="token operator">=</span>/home/mysqlapp/mysql
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$MYSQL_HOME</span>/bin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+保存后，执行<code>source /etc/profile</code>，使配置立即生效,在&#x2F;etc目录创建文件my.cnf,文件内容如下：<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">client</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">port</span><span class="token punctuation">=</span><span class="token value attr-value">3306</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/tmp/mysql.sock</span>
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">port</span><span class="token punctuation">=</span><span class="token value attr-value">3306</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/tmp/mysql.sock</span>
+<span class="token key attr-name">basedir</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/mysql</span>
+<span class="token key attr-name">datadir</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/data</span>
+<span class="token key attr-name">key_buffer_size</span><span class="token punctuation">=</span><span class="token value attr-value">16M</span>
+<span class="token key attr-name">max_allowed_packet</span><span class="token punctuation">=</span><span class="token value attr-value">128M</span>
+<span class="token key attr-name">character_set_server</span><span class="token punctuation">=</span><span class="token value attr-value">UTF8MB4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+初始化数据目录，命令如下：<code>mysqld --initialize --user=mysql</code>,执行后打印如下内容，则表示初始化成功：<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>System<span class="token punctuation">]</span> <span class="token punctuation">[</span>MY-013169<span class="token punctuation">]</span> <span class="token punctuation">[</span>Server<span class="token punctuation">]</span> mysqld <span class="token punctuation">(</span>mysqld <span class="token number">8.0</span>.12<span class="token punctuation">)</span> initializing of server <span class="token keyword">in</span> progress as process <span class="token number">23352</span>
+<span class="token punctuation">[</span>Note<span class="token punctuation">]</span> <span class="token punctuation">[</span>MY-010454<span class="token punctuation">]</span> <span class="token punctuation">[</span>Server<span class="token punctuation">]</span> A temporary password is generated <span class="token keyword">for</span> root@localhost: qq<span class="token operator"><span class="token file-descriptor important">4</span>></span>Vrw*oF2+
+<span class="token punctuation">[</span>System<span class="token punctuation">]</span> <span class="token punctuation">[</span>MY-013170<span class="token punctuation">]</span> <span class="token punctuation">[</span>Server<span class="token punctuation">]</span> mysqld <span class="token punctuation">(</span>mysqld <span class="token number">8.0</span>.12<span class="token punctuation">)</span> initializing of server has completed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+启动Mysql，命令如下：<code>mysqld_safe --user=mysql &amp;</code>查看Mysql进程是否存在：<code>ps -ef | grep mysql</code><br>修改root用户密码（初始化数据目录时，生成了随机的root用户密码，且被标记为已过期，使用随机密码登录后，需要修改root密码）<code>mysql -u root -p</code>输入密码进入mysql控制台<code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;lnsoft&#39;;</code>停止数据库<code>mysqladmin -u root -p shutdown</code></li>
+</ol>
+<p>按照以上步骤在hadoop3、4、5上安装Mysql</p>
+<ol start="3">
+<li>配置Group Replication,安装group_replication插件：<pre class="line-numbers language-none"><code class="language-none">install PLUGIN group_replication SONAME &#39;group_replication.so&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+修改&#x2F;etc&#x2F;my.cnf配置文件，增加以下配置：<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token key attr-name">server_id</span><span class="token punctuation">=</span><span class="token value attr-value">1</span>
+<span class="token key attr-name">gtid_mode</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">enforce_gtid_consistency</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">binlog_checksum</span><span class="token punctuation">=</span><span class="token value attr-value">NONE</span>
+
+<span class="token key attr-name">log_bin</span><span class="token punctuation">=</span><span class="token value attr-value">binlog</span>
+<span class="token key attr-name">log_slave_updates</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">binlog_format</span><span class="token punctuation">=</span><span class="token value attr-value">ROW</span>
+<span class="token key attr-name">master_info_repository</span><span class="token punctuation">=</span><span class="token value attr-value">TABLE</span>
+<span class="token key attr-name">relay_log_info_repository</span><span class="token punctuation">=</span><span class="token value attr-value">TABLE</span>
+
+<span class="token key attr-name">transaction_write_set_extraction</span><span class="token punctuation">=</span><span class="token value attr-value">XXHASH64</span>
+<span class="token key attr-name">loose-group_replication_group_name</span><span class="token punctuation">=</span><span class="token value attr-value">"<span class="token inner-value">33f5efc0-186f-11e9-9c97-c81fbe536994</span>"</span>
+<span class="token key attr-name">loose-group_replication_start_on_boot</span><span class="token punctuation">=</span><span class="token value attr-value">OFF</span>
+<span class="token key attr-name">loose-group_replication_local_address</span><span class="token punctuation">=</span><span class="token value attr-value">"<span class="token inner-value">10.37.169.62:33081</span>"</span>
+<span class="token key attr-name">loose-group_replication_group_seeds</span><span class="token punctuation">=</span><span class="token value attr-value">"<span class="token inner-value">10.37.169.62:33081,10.37.169.63:33081,10.37.169.64:33081</span>"</span>
+<span class="token key attr-name">loose-group_replication_bootstrap_group</span><span class="token punctuation">=</span><span class="token value attr-value">OFF</span>
+<span class="token key attr-name">loose-group_replication_single_primary_mode</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">loose-group_replication_enforce_update_everywhere_checks</span><span class="token punctuation">=</span><span class="token value attr-value">OFF</span>
+server_id #必须唯一
+gtid_mode #必须开启
+enforce_gtid_consistency #强制GTID的一致性
+binlog_checksum #binlog校验规则，MGR要求使用NONE
+binlog_format #binlog格式，MGR要求必须是ROW
+master_info_repository #MGR集群要求复制模式要改成slave记录到表中，否则报错
+transaction_write_set_extraction #记录事物的算法
+group_replication_group_name #Group名称，UUID值
+group_replication_start_on_boot #是否随服务器启动而自动启动组复制
+group_replication_single_primary_mode #是否单主模式
+group_replication_enforce_update_everywhere_checks #是否强制检查每个实例是否允许该操作，多主模式下必须开启<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>启动MGR集群,启动MGR要注意顺序，需要指定其中一台数据库做引导，其它数据库才可以顺利加入进来。如果是单主模式，那么主库一定要先启动并做引导。这里使用hadoop3作为主库。在hadoop3上登录msql服务端<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#启动引导，hadoop4、hadoop5略过此步</span>
+mysql<span class="token operator">></span> <span class="token builtin class-name">set</span> GLOBAL <span class="token assign-left variable">group_replication_bootstrap_group</span><span class="token operator">=</span>ON<span class="token punctuation">;</span>
+<span class="token comment">#创建一个用户用来做同步，并授权</span>
+mysql<span class="token operator">></span> create user <span class="token string">'rpl_user'</span>@<span class="token string">'%'</span> identified with <span class="token string">'mysql_native_password'</span> by <span class="token string">'lnsoft'</span><span class="token punctuation">;</span>
+mysql<span class="token operator">></span> GRANT REPLICATION SLAVE ON *.* TO <span class="token string">'rpl_user'</span>@<span class="token string">'%'</span> with grant option<span class="token punctuation">;</span>
+mysql<span class="token operator">></span> FLUSH PRIVILEGES<span class="token punctuation">;</span>
+
+mysql<span class="token operator">></span> show variables like <span class="token string">'SQL_LOG_BIN%'</span><span class="token punctuation">;</span>
++---------------+-------+
+<span class="token operator">|</span> Variable_name <span class="token operator">|</span> Value <span class="token operator">|</span>
++---------------+-------+
+<span class="token operator">|</span> sql_log_bin   <span class="token operator">|</span> ON    <span class="token operator">|</span>
++---------------+-------+
+<span class="token comment"># 如果是OFF，执行</span>
+mysql<span class="token operator">></span> <span class="token builtin class-name">set</span> <span class="token assign-left variable">SQL_LOG_BIN</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment">#清空所有旧的GTID信息，避免冲突</span>
+mysql<span class="token operator">></span> reset master<span class="token punctuation">;</span>
+<span class="token comment">#创建同步规则认证信息，配置和改变slave服务器用于连接master服务器的参数</span>
+mysql<span class="token operator">></span> CHANGE MASTER TO <span class="token assign-left variable">MASTER_USER</span><span class="token operator">=</span><span class="token string">'rpl_user'</span>, <span class="token assign-left variable">MASTER_PASSWORD</span><span class="token operator">=</span><span class="token string">'lnsoft'</span> FOR  CHANNEL <span class="token string">'group_replication_recovery'</span><span class="token punctuation">;</span>
+<span class="token comment">#启动MGR</span>
+mysql<span class="token operator">></span> start group_replication<span class="token punctuation">;</span>
+<span class="token comment">#查看是否启动成功，状态为ONLINE即表示启动成功</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> * from performance_schema.replication_group_members<span class="token punctuation">;</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> CHANNEL_NAME              <span class="token operator">|</span> MEMBER_ID                            <span class="token operator">|</span> MEMBER_HOST <span class="token operator">|</span> MEMBER_PORT <span class="token operator">|</span> MEMBER_STATE <span class="token operator">|</span> MEMBER_ROLE <span class="token operator">|</span> MEMBER_VERSION <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 314051b4-17d1-11e9-8d1f-c81fbe536994 <span class="token operator">|</span> hadoop3     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> PRIMARY     <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token comment"># 关闭引导</span>
+mysql<span class="token operator">></span> <span class="token builtin class-name">set</span> GLOBAL <span class="token assign-left variable">group_replication_bootstrap_group</span><span class="token operator">=</span>OFF<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+hadoop4、hadoop5上执行除了启动引导和关闭引导以外的语句，加入复制组。hadoop4、hadoop5加入成功后，查看复制组成员：</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mysql<span class="token operator">></span> <span class="token keyword">select</span> * from performance_schema.replication_group_members<span class="token punctuation">;</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> CHANNEL_NAME              <span class="token operator">|</span> MEMBER_ID                            <span class="token operator">|</span> MEMBER_HOST <span class="token operator">|</span> MEMBER_PORT <span class="token operator">|</span> MEMBER_STATE <span class="token operator">|</span> MEMBER_ROLE <span class="token operator">|</span> MEMBER_VERSION <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 314051b4-17d1-11e9-8d1f-c81fbe536994 <span class="token operator">|</span> hadoop3     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> PRIMARY     <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7b4faa2d-1862-11e9-bfae-c81fbea4d979 <span class="token operator">|</span> hadoop4     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> SECONDARY   <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7e32e66b-1862-11e9-9cf0-c81fbea4da25 <span class="token operator">|</span> hadoop5     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> SECONDARY   <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>至此，MGR集群搭建成功。</p>
+<ol start="5">
+<li>CM Server元数据迁移</li>
+</ol>
+<p>5.1 备份hadoop2上原有mysql数据库的数据，命令如下：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft amon <span class="token operator">></span>amon<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft cm <span class="token operator">></span>cm<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft hive <span class="token operator">></span>hive<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft hue <span class="token operator">></span>hue<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft oozie <span class="token operator">></span>oozie<span class="token punctuation">.</span><span class="token keyword">sql</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>5.2 在主节点（hadoop3）上创建数据库：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">database</span> cm<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> amon<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> hive<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> hue<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> oozie<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>导入sql数据文件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">set</span> names utf8<span class="token punctuation">;</span>
+use cm<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/cm.sql
+use amon<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/amon.sql
+use hive<span class="token punctuation">;</span>
+<span class="token builtin class-name">set</span> names utf8<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/hive.sql
+use hue<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/hue.sql
+use oozie<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/oozie.sql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>导入数据过程中可能会出现缺少主键的报错，这是因为MGR要求每个表必须有主键，只需要根据报错行数，找到对应的表，为其添加上主键。</p>
+<p>5.3 在hadoop3、hadoop4、hadoop5上新建用户scm,重启hadoop3、hadoop4、hadoop5上的mysql，先不启动MGR,在每个节点上新建scm用户并授权，此过程需要关闭binlog，否则会导致MGR从节点报错</p>
+<pre class="line-numbers language-none"><code class="language-none">set SQL_LOG_BIN&#x3D;0;
+create user &#39;scm&#39;@&#39;%&#39; identified with &#39;mysql_native_password&#39; by &#39;lnsoft&#39;;
+grant all privileges on cm.* to &#39;scm&#39;@&#39;%&#39;;
+FLUSH PRIVILEGES;
+set SQL_LOG_BIN&#x3D;1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>新建用户后重启启用binlog<br>5.4 将CM Server访问的数据库指向MGR集群的主节点（hadoop3）,修改&#x2F;opt&#x2F;cm-5.14.2&#x2F;etc&#x2F;cloudera-scm-server&#x2F;db.properties中的数据库地址、用户名、密码<br>部署新版Mysql JDBC驱动 mysql-connector-java-5.1.47.jar，将其上传至hadoop2的<br>&#x2F;opt&#x2F;cm-5.14.2&#x2F;share&#x2F;cmf&#x2F;lib目录下,重启CM Server</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/opt/cm-5.14.2/etc/init.d/cloudera-scm-server stop
+/opt/cm-5.14.2/etc/init.d/cloudera-scm-server start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>启动完毕后访问<a target="_blank" rel="noopener" href="http://hadoop2:7180/%EF%BC%8C%E8%83%BD%E6%AD%A3%E5%B8%B8%E7%99%BB%E9%99%86%EF%BC%8C%E6%9F%A5%E7%9C%8B%E5%90%84%E4%B8%AA%E9%A1%B5%E9%9D%A2%E5%8A%9F%E8%83%BD%E5%9D%87%E6%AD%A3%E5%B8%B8%EF%BC%8C%E5%8D%B3%E8%A1%A8%E6%98%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB%E6%88%90%E5%8A%9F%E3%80%82">http://hadoop2:7180/，能正常登陆，查看各个页面功能均正常，即表明数据库迁移成功。</a></p>
+<ol start="6">
+<li>Mysql高可用测试<br>停止hadoop3上的Mysql实例，查看在hadoop4登录Mysql客户端，查看group members;<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mysql<span class="token operator">></span> <span class="token keyword">select</span> * from performance_schema.replication_group_members<span class="token punctuation">;</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> CHANNEL_NAME              <span class="token operator">|</span> MEMBER_ID                            <span class="token operator">|</span> MEMBER_HOST <span class="token operator">|</span> MEMBER_PORT <span class="token operator">|</span> MEMBER_STATE <span class="token operator">|</span> MEMBER_ROLE <span class="token operator">|</span> MEMBER_VERSION <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7b4faa2d-1862-11e9-bfae-c81fbea4d979 <span class="token operator">|</span> hadoop4     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> PRIMARY     <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7e32e66b-1862-11e9-9cf0-c81fbea4da25 <span class="token operator">|</span> hadoop5     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> SECONDARY   <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token number">2</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.23</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+发现hadoop4成为了新的主节点，修改hadoop2上&#x2F;opt&#x2F;cm-5.14.2&#x2F;etc&#x2F;cloudera-scm-server&#x2F;db.properties中的数据库地址、用户名、密码，重启CM Server，正常启动即说明Mysql高可用配置成功。</li>
+</ol>
 <h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><table>
 <thead>
 <tr>

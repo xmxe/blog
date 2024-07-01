@@ -936,6 +936,11 @@ client<span class="token punctuation">.</span><span class="token function">close
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/n8WxaUtkXkDOju5QkTASOQ">synchronized的8种用法,你会几种？</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tM4mncQwIkt9zBR1W_dBcA">synchronized的用法,你知道多少？</a></td>
 </tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LPKg5xq6xFSwnEAQo1-7-g">Synchronized的锁升级过程是什么样的</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
 </tbody></table>
 <h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><h4 id="ReentrantLock是什么？"><a href="#ReentrantLock是什么？" class="headerlink" title="ReentrantLock是什么？"></a>ReentrantLock是什么？</h4><p>ReentrantLock实现了Lock接口，是一个可重入且独占式的锁，和synchronized关键字类似。不过，ReentrantLock更灵活、更强大，增加了轮询、超时、中断、公平锁和非公平锁等高级功能。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ReentrantLock</span> <span class="token keyword">implements</span> <span class="token class-name">Lock</span><span class="token punctuation">,</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>Serializable</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>

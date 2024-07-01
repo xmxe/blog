@@ -563,6 +563,429 @@ done
 echo "Import completed."
 ```
 
+## 主从同步
+
+**MySQL5.6数据库主从（Master/Slave）同步安装与配置详解,两台服务器-Master主:192.168.159.28、Slave从:192.168.159.30**
+
+### Master的配置
+在Linux环境下MySQL的配置文件的位置是在/etc/my.cnf,在该文件下指定Master的配置如下：
+```ini
+[mysqld]
+log-bin=mysql-bin
+# server-id用于标识唯一的数据库，这里设置为2，在设置从库的时候就需要设置为其他值。
+server-id=2
+# binlog-ignore-db：表示同步的时候ignore的数据库 
+binlog-ignore-db=information_schema
+binlog-ignore-db=cluster
+binlog-ignore-db=mysql
+# binlog-do-db：指定需要同步的数据库
+binlog-do-db=ufind_db
+```
+完整配置如下：
+```ini
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+# Disabling symbolic-links is recommended to prevent symbolic-links=0
+# Settings user and group are ignored when systemd is If you need to run mysqld under a different user or customize your systemd unit file for mariadb accord instructions in http://fedoraproject.org/wiki/Syste
+log-bin=mysql-bin
+server-id=2
+binlog-ignore-db=information_schema
+binlog-ignore-db=cluster
+binlog-ignore-db=mysql
+binlog-do-db=ufind_db
+wait_timeout=31536000
+interactive_timeout=31536000
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+
+[client]
+default-character-set=utf8mb4
+
+[mysgl]
+default-character-set=utf8mb4
+
+[mysqld_safe]
+log-error=/var/log/mariadb/mariadb.log
+pid-file=/var/run/mariadb/mariadb.pid
+#include all files from the config directory
+!includedir /etc/my.cnf.d
+```
+
+然后重启mysql：`service mysqld restart`。进入mysql：`./bin/mysql –h127.0.0.1 –uroot -proot`赋予从库权限帐号，允许用户在主库上读取日志，赋予192.168.159.130也就是Slave机器有File权限，只赋予Slave机器有File权限还不行，还要给它REPLICATION SLAVE的权限才可以。命令如下：
+```shell
+GRANT FILE ON *.* TO 'root'@'192.168.159.130' IDENTIFIED BY 'root';
+GRANT  REPLICATION SLAVE ON *.* TO 'root'@'192.168.159.130' IDENTIFIED BY 'root';
+FLUSH  PRIVILEGES
+```
+这里使用的仍是root用户作为同步的时候使用到的用户，可以自己设定。重启mysql，登录mysql，显示主库信息`show master status;`这里的File、Position是在配置Salve的时候要使用到的，Binlog_Do_DB表示要同步的数据库，Binlog_Ignore_DB表示Ignore的数据库，这些都是在配置的时候进行指定的。另外：如果执行这个步骤始终为Empty set(0.00 sec)，那说明前面的my.cnf没配置对。
+
+### Slave的配置
+从库的配置，首先也是修改配置文件：/etc/my.cnf如下：
+```ini
+log-bin=mysql-bin
+server-id=3
+binlog-ignore-db=information_schema
+binlog-ignore-db=cluster
+binlog-ignore-db=mysql
+replicate-do-db=ufind_db
+replicate-ignore-db=mysql
+log-slave-updates
+slave-skip-errors=all
+slave-net-timeout=60
+```
+完整配置如下
+```ini
+[mysqld]
+
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+# Disabling symbolic-links is recommended to prevent assorted security risks symbolic-links=0
+
+# Settings user and group are ignored when systemd is used. # If you need to run mysgld under a different user or group, customize your systemd unit file for mariadb according to the instructions in http://fedoraproject.org/wiki/Systemd
+
+log-bin=mysql-bin
+server-id=3
+
+binlog-ignore-db=information schema
+binlog-ignore-db=cluster
+binlog-ignore-db=mysgl
+replicate-do-db=uf ind db
+replicate-ignore-db=mysql
+log-slave-updates
+
+slave-skip-errors=all
+slave-net-timeout=60
+
+[mysqld_safe]
+
+log-error=/var/log/mariadb/mariadb.log
+pid-file=/var/run/mariadb/mariadb.pid
+
+# include all files from the config directory
+!includedir /etc/my.cnf.d
+```
+
+修改完/etc/my.cnf文件之后，重启一下MySQL`service mysqld restart`,进入Slave mysql控制台，执行：
+```shell
+stop slave;  #关闭Slave
+change master to master_host='192.168.159.128',master_user='root',master_password='root',master_log_file='mysql-bin.000001', master_log_pos=610;
+
+start slave; #开启Slave
+```
+在这里指定Master的信息，master_log_file是在配置Master的时候的File选项，master_log_pos是在配置Master的Position选项，这里要进行对应。然后可以通过`show slave status;`查看配置的信息：完成！
+
+[MySQL5.6数据库主从（Master/Slave）同步安装与配置详解](https://blog.csdn.net/xlgen157387/article/details/51331244/)
+
+---
+
+一、实验目标
+搭建两台MySQL服务器，一台作为主服务器，一台作为从服务器，主服务器进行写操作，从服务器进行读操作。
+
+二、测试环境
+主数据库： CentOS7， MySQL15.1 ， 192.168.1.233
+从数据库： CentOS7， MySQL15.1 ， 192.168.1.234
+
+三、主从配置步骤
+
+1. 确保主数据库与从数据库里的数据一样
+例如：主数据库里的a的数据库里有b，c，d表，那从数据库里的就应该有一个模子刻出来的a的数据库和b，c，d表
+我这里在两台MySQL上都创建了个名为“test”的数据库来测试
+
+2. 在主数据库里创建一个同步账号
+
+1）每个从数据库会使用一个MySQL账号来连接主数据库，所以我们要在主数据库里创建一个账号，并且该账号要授予 REPLICATION SLAVE权限，你可以为每个从数据库分别创建账号，当然也可以用同一个！）
+
+2）你可以用原来的账号不一定要新创账号，但你应该注意，这个账号和密码会被明文存放在master.info文件中，因此建议单独创一个只拥有相关权限的账号，以减少对其它账号的危害！）
+
+3）创建新账号使用“CREATE USER”，给账号授权使用“GRANT”命令，如果你仅仅为了主从复制创建账号，只需要授予REPLICATION SLAVE权限。
+
+4）下面来创建一个账号，账号名：repl，密码：repl123，只允许192.168.1.的IP段登录，如下：
+```sql
+CREATE USER 'repl'@'192.168.1.%' IDENTIFIED BY 'repl123';
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'192.168.1.%';
+```
+5）如果开发防火墙，可能要配置下端口，如下：
+```shell
+firewall-cmd --zone=public --add-port=3306/tcp --permanent
+firewall-cmd --reload
+```
+
+3. 配置主数据库
+
+1）要主数据库，你必须要启用二进制日志（binary logging），并且创建一个唯一的Server ID，这步骤可能要重启MySQL。
+2）主服务器发送变更记录到从服务器依赖的是二进制日志，如果没启用二进制日志，复制操作不能实现（主库复制到从库）。
+3）复制组中的每台服务器都要配置唯一的Server ID，取值范围是1到(232)−1，你自己决定取值。
+4）配置二进制日志和Server ID，你需要关闭MySQL和编辑my.cnf或者my.ini文件，在[mysqld]节点下添加配置。
+5）下面是启用二进制日志，日志文件名以“mysql-bin”作为前缀，Server ID配置为1，如下：
+```ini
+[mysqld]
+log-bin=mysql-bin
+server-id=1
+#网络上还有如下配置
+#binlog-do-db=mstest //要同步的mstest数据库,要同步多个数据库，就多加几个replicate-db-db=数据库名
+#binlog-ignore-db=mysql //要忽略的数据库
+#提示1：如果你不配置server-id或者配置值为0，那么主服务器将拒绝所有从服务器的连接。
+#提示2：在使用InnoDB的事务复制，为了尽可能持久和数据一致，你应该在my.cnf里配置innodb_flush_log_at_trx_commit=1和 sync_binlog=1；
+#For the greatest possible durability and consistency in a replication setup using InnoDB with transactions, you should useinnodb_flush_log_at_trx_commit=1 and sync_binlog=1 in the master my.cnf file.
+#提示3：确保主服务器里的skip-networking选项未启用，如果网络被禁用，你的从服务器将不能与主服务器通信并且复制失败。
+```
+注意：实际操作发现/etc/my.cnf文件和教材说的不一样，可能我装的是MariaDB,目测文件被放到了/etc/my.cnf.d目录里，在/etc/my.cnf.d/server.cnf增加相关配置
+```ini
+log-bin=mysql-bin
+server-id=1
+```
+
+重启MySQL,查看主服务器状态，`show master status;`
+4. 配置从数据库
+
+1）从服务器，同理，要分配一个唯一的Server ID，需要关闭MySQL，修改好后再重启，如下：
+
+```ini
+[mysqld]
+server-id=2
+#可以指定要复制的库
+replicate-do-db = test #在master端不指定binlog-do-db，在slave端用replication-do-db来过滤
+replicate-ignore-db = mysql #忽略的库
+#网上还有下面配置
+#relay-log=mysqld-relay-bin
+#提示1：如果有多个从服务器，每个服务器的server-id不能重复，跟IP一样是唯一标识，如果你没设置server-id或者设置为0，则从服务器不会连接到主服务器。
+#提示2：一般你不需要在从服务器上启用二进制日志，如果你在从服务器上启用二进制日志，那你可用它来做数据备份和崩溃恢复，或者做更复杂的事情（比如这个从服务器用来当作其它从服务器的主服务器）。
+```
+2）配置连接主服务器的信息
+```sql
+ stop slave;
+CHANGE MASTER TO
+-> MASTER_HOST='192.168.1.233',
+-> MASTER_USER='repl',
+-> MASTER_PASSWORD='repl123',
+-> MASTER_LOG_FILE='mysql-bin.000002',
+-> MASTER_LOG_POS=313;
+start slave;
+```
+3）查看从服务器状态
+```sql
+show slave status;
+```
+5. 测试数据同步
+
+测试，连接主服务器192.168.1.233，添加了表stu_user，然后再连接上192.168.1.234，发现也自己同步创建了表stu_user，然后在主数据库添加一条记录，从数据库也自动添加了记录，至此，主从的配置已经完成了， 目前是在从库里面配置复制“test”这个库，
+如果要添加其它库，可以在主服务器中添加“binlog-do-db”配置，或者在从服务器中添加“replicate-do-db”配置。
+
+四、读写分离实现
+主从配置是读写分离的前提，现在前提已经配置好了，读写分离就看具体项目的实现，读写分离，就是“写”的操作都在主数据库，“读”的操作都在从数据库！
+（完）
+
+
+## MySQL高可用
+
+1. 卸载系统原有的Mysql,查看系统是否已安装Mysql，命令如下：`rpm -qa | grep mysql`,查看系统是否已启动Mysql，命令如下：`ps -ef | grep mysql`.如果已启动，则将相应进程杀死，命令如下：`kill -9 进程号`,卸载已安装的Mysql，命令如下：
+`rpm -ev mysql-5.1.71-1.el6.x86_64 mysql-libs-5.1.71-1.el6.x86_64 mysql-devel-5.1.71-1.el6.x86_64 --nodeps`.查看是否残留Mysql安装文件`find / -name mysql`
+2. 安装Mysql
+```shell
+# 创建Mysql安装目录
+mkdir /home/mysqlapp
+# 创建临时目录
+mkdir /home/mysqlapp/tmp
+# 创建数据目录
+mkdir /home/mysqlapp/data
+# 创建用户与用户组，命令如下：
+groupadd mysql
+useradd -r -g mysql -s /bin/false mysql
+# 修改临时目录、数据目录所有者和权限
+chown mysql:mysql /home/mysqlapp/data/
+chmod 750 /home/mysqlapp/data/
+chown mysql:mysql /home/mysqlapp/tmp/
+chmod 750 /home/mysqlapp/tmp/
+# 上传mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz至/home/mysqlapp目录下，解压
+tar xvf mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz
+# 创建软连接，命令如下：
+ln -s mysql-8.0.12-linux-glibc2.12-x86_64 mysql
+```
+编辑/etc/profile文件，末尾增加如下两行：
+```shell
+export MYSQL_HOME=/home/mysqlapp/mysql
+export PATH=$PATH:$MYSQL_HOME/bin
+```
+保存后，执行`source /etc/profile`，使配置立即生效,在/etc目录创建文件my.cnf,文件内容如下：
+```ini
+[client]
+port=3306
+socket=/home/mysqlapp/tmp/mysql.sock
+[mysqld]
+port=3306
+socket=/home/mysqlapp/tmp/mysql.sock
+basedir=/home/mysqlapp/mysql
+datadir=/home/mysqlapp/data
+key_buffer_size=16M
+max_allowed_packet=128M
+character_set_server=UTF8MB4
+```
+初始化数据目录，命令如下：`mysqld --initialize --user=mysql`,执行后打印如下内容，则表示初始化成功：
+```bash
+[System] [MY-013169] [Server] mysqld (mysqld 8.0.12) initializing of server in progress as process 23352
+[Note] [MY-010454] [Server] A temporary password is generated for root@localhost: qq4>Vrw*oF2+
+[System] [MY-013170] [Server] mysqld (mysqld 8.0.12) initializing of server has completed
+```
+启动Mysql，命令如下：`mysqld_safe --user=mysql &`查看Mysql进程是否存在：`ps -ef | grep mysql`
+修改root用户密码（初始化数据目录时，生成了随机的root用户密码，且被标记为已过期，使用随机密码登录后，需要修改root密码）`mysql -u root -p`输入密码进入mysql控制台`ALTER USER 'root'@'localhost' IDENTIFIED BY 'lnsoft';`停止数据库`mysqladmin -u root -p shutdown`
+
+按照以上步骤在hadoop3、4、5上安装Mysql
+
+3. 配置Group Replication,安装group_replication插件：
+```
+install PLUGIN group_replication SONAME 'group_replication.so';
+```
+修改/etc/my.cnf配置文件，增加以下配置：
+```ini
+server_id=1
+gtid_mode=ON
+enforce_gtid_consistency=ON
+binlog_checksum=NONE
+
+log_bin=binlog
+log_slave_updates=ON
+binlog_format=ROW
+master_info_repository=TABLE
+relay_log_info_repository=TABLE
+
+transaction_write_set_extraction=XXHASH64
+loose-group_replication_group_name="33f5efc0-186f-11e9-9c97-c81fbe536994"
+loose-group_replication_start_on_boot=OFF
+loose-group_replication_local_address="10.37.169.62:33081"
+loose-group_replication_group_seeds="10.37.169.62:33081,10.37.169.63:33081,10.37.169.64:33081"
+loose-group_replication_bootstrap_group=OFF
+loose-group_replication_single_primary_mode=ON
+loose-group_replication_enforce_update_everywhere_checks=OFF
+server_id #必须唯一
+gtid_mode #必须开启
+enforce_gtid_consistency #强制GTID的一致性
+binlog_checksum #binlog校验规则，MGR要求使用NONE
+binlog_format #binlog格式，MGR要求必须是ROW
+master_info_repository #MGR集群要求复制模式要改成slave记录到表中，否则报错
+transaction_write_set_extraction #记录事物的算法
+group_replication_group_name #Group名称，UUID值
+group_replication_start_on_boot #是否随服务器启动而自动启动组复制
+group_replication_single_primary_mode #是否单主模式
+group_replication_enforce_update_everywhere_checks #是否强制检查每个实例是否允许该操作，多主模式下必须开启
+```
+4. 启动MGR集群,启动MGR要注意顺序，需要指定其中一台数据库做引导，其它数据库才可以顺利加入进来。如果是单主模式，那么主库一定要先启动并做引导。这里使用hadoop3作为主库。在hadoop3上登录msql服务端
+```bash
+#启动引导，hadoop4、hadoop5略过此步
+mysql> set GLOBAL group_replication_bootstrap_group=ON;
+#创建一个用户用来做同步，并授权
+mysql> create user 'rpl_user'@'%' identified with 'mysql_native_password' by 'lnsoft';
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'rpl_user'@'%' with grant option;
+mysql> FLUSH PRIVILEGES;
+
+mysql> show variables like 'SQL_LOG_BIN%';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| sql_log_bin   | ON    |
++---------------+-------+
+# 如果是OFF，执行
+mysql> set SQL_LOG_BIN=1;
+#清空所有旧的GTID信息，避免冲突
+mysql> reset master;
+#创建同步规则认证信息，配置和改变slave服务器用于连接master服务器的参数
+mysql> CHANGE MASTER TO MASTER_USER='rpl_user', MASTER_PASSWORD='lnsoft' FOR  CHANNEL 'group_replication_recovery';
+#启动MGR
+mysql> start group_replication;
+#查看是否启动成功，状态为ONLINE即表示启动成功
+mysql> select * from performance_schema.replication_group_members;
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+| CHANNEL_NAME              | MEMBER_ID                            | MEMBER_HOST | MEMBER_PORT | MEMBER_STATE | MEMBER_ROLE | MEMBER_VERSION |
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+| group_replication_applier | 314051b4-17d1-11e9-8d1f-c81fbe536994 | hadoop3     |        3306 | ONLINE       | PRIMARY     | 8.0.12         |
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+# 关闭引导
+mysql> set GLOBAL group_replication_bootstrap_group=OFF;
+```
+hadoop4、hadoop5上执行除了启动引导和关闭引导以外的语句，加入复制组。hadoop4、hadoop5加入成功后，查看复制组成员：
+
+```bash
+mysql> select * from performance_schema.replication_group_members;
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+| CHANNEL_NAME              | MEMBER_ID                            | MEMBER_HOST | MEMBER_PORT | MEMBER_STATE | MEMBER_ROLE | MEMBER_VERSION |
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+| group_replication_applier | 314051b4-17d1-11e9-8d1f-c81fbe536994 | hadoop3     |        3306 | ONLINE       | PRIMARY     | 8.0.12         |
+| group_replication_applier | 7b4faa2d-1862-11e9-bfae-c81fbea4d979 | hadoop4     |        3306 | ONLINE       | SECONDARY   | 8.0.12         |
+| group_replication_applier | 7e32e66b-1862-11e9-9cf0-c81fbea4da25 | hadoop5     |        3306 | ONLINE       | SECONDARY   | 8.0.12         |
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+```
+至此，MGR集群搭建成功。
+
+5. CM Server元数据迁移
+
+5.1 备份hadoop2上原有mysql数据库的数据，命令如下：
+
+```sql
+mysqldump -u root -plnsoft amon >amon.sql
+mysqldump -u root -plnsoft cm >cm.sql
+mysqldump -u root -plnsoft hive >hive.sql
+mysqldump -u root -plnsoft hue >hue.sql
+mysqldump -u root -plnsoft oozie >oozie.sql
+```
+5.2 在主节点（hadoop3）上创建数据库：
+```sql
+create database cm;
+create database amon;
+create database hive;
+create database hue;
+create database oozie;
+```
+导入sql数据文件
+```bash
+set names utf8;
+use cm;
+source /root/cm.sql
+use amon;
+source /root/amon.sql
+use hive;
+set names utf8;
+source /root/hive.sql
+use hue;
+source /root/hue.sql
+use oozie;
+source /root/oozie.sql
+```
+导入数据过程中可能会出现缺少主键的报错，这是因为MGR要求每个表必须有主键，只需要根据报错行数，找到对应的表，为其添加上主键。
+
+5.3 在hadoop3、hadoop4、hadoop5上新建用户scm,重启hadoop3、hadoop4、hadoop5上的mysql，先不启动MGR,在每个节点上新建scm用户并授权，此过程需要关闭binlog，否则会导致MGR从节点报错
+```
+set SQL_LOG_BIN=0;
+create user 'scm'@'%' identified with 'mysql_native_password' by 'lnsoft';
+grant all privileges on cm.* to 'scm'@'%';
+FLUSH PRIVILEGES;
+set SQL_LOG_BIN=1;
+```
+新建用户后重启启用binlog
+5.4 将CM Server访问的数据库指向MGR集群的主节点（hadoop3）,修改/opt/cm-5.14.2/etc/cloudera-scm-server/db.properties中的数据库地址、用户名、密码
+部署新版Mysql JDBC驱动 mysql-connector-java-5.1.47.jar，将其上传至hadoop2的
+/opt/cm-5.14.2/share/cmf/lib目录下,重启CM Server
+```shell
+/opt/cm-5.14.2/etc/init.d/cloudera-scm-server stop
+/opt/cm-5.14.2/etc/init.d/cloudera-scm-server start
+```
+启动完毕后访问http://hadoop2:7180/，能正常登陆，查看各个页面功能均正常，即表明数据库迁移成功。
+
+6. Mysql高可用测试
+停止hadoop3上的Mysql实例，查看在hadoop4登录Mysql客户端，查看group members;
+```bash
+mysql> select * from performance_schema.replication_group_members;
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+| CHANNEL_NAME              | MEMBER_ID                            | MEMBER_HOST | MEMBER_PORT | MEMBER_STATE | MEMBER_ROLE | MEMBER_VERSION |
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+| group_replication_applier | 7b4faa2d-1862-11e9-bfae-c81fbea4d979 | hadoop4     |        3306 | ONLINE       | PRIMARY     | 8.0.12         |
+| group_replication_applier | 7e32e66b-1862-11e9-9cf0-c81fbea4da25 | hadoop5     |        3306 | ONLINE       | SECONDARY   | 8.0.12         |
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+2 rows in set (0.23 sec)
+```
+发现hadoop4成为了新的主节点，修改hadoop2上/opt/cm-5.14.2/etc/cloudera-scm-server/db.properties中的数据库地址、用户名、密码，重启CM Server，正常启动即说明Mysql高可用配置成功。
+
+
 ## 相关文章
 
 | [一文教你在CentOS7下安装MySQL及搭建主从复制](https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect) | [手把手教大家搭建MySQL主从复制](https://mp.weixin.qq.com/s/R89aCCFvCvudLp6FUn2JjQ) | [Linux系统安装MySQL8.0版本详细教程](https://blog.csdn.net/cst522445906/article/details/129165658) |

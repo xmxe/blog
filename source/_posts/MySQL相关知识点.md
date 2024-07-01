@@ -2860,4 +2860,4 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 | [MySQL模糊查询再也用不着like+%了！](https://mp.weixin.qq.com/s/ZAzRtRnYGhvie8MDZvy1Gg) | [MySQL最大建议行数2000w,靠谱吗？](https://mp.weixin.qq.com/s/PeZ8Py3NNb4CU2BUtxpygg) | [图解MVCC！](https://mp.weixin.qq.com/s/1XmvVNYqt5KycmD8pJanug) |
 | [再有人问你什么是MVCC，就把这篇文章发给他！](https://mp.weixin.qq.com/s/WZa5UKYgU-pYKbvovLt1YQ) | [MySQL最朴素的监控方式](https://mp.weixin.qq.com/s/meS5Au1o9qdrSv7505mIcA) | [1亿条数据批量插入MySQL，哪种方式最快](https://mp.weixin.qq.com/s/c71ATJLT6_KXtb_iiUlMjg) |
 | [6种MySQL数据库平滑扩容方案剖析](https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing) | [什么是插入意向锁？](https://mp.weixin.qq.com/s/rDdUBw803tvjHkJALY5P2w) | [从MySQL读取100w数据进行处理，应该怎么做](https://mp.weixin.qq.com/s/XbSADUXIz1aw0kqp7p5urQ) |
-| [MySQL误删数据不用跑路了，快速恢复指南来了](https://mp.weixin.qq.com/s/vyrLOH1NRXXQd0oEnv0M1Q) | [MySQL单表数据最大不要超过多少行？为什么](https://mp.weixin.qq.com/s/ZCM2FYzKw24Fk8yv4a9b0w) |                                                              |
+| [MySQL误删数据不用跑路了，快速恢复指南来了](https://mp.weixin.qq.com/s/vyrLOH1NRXXQd0oEnv0M1Q) | [MySQL单表数据最大不要超过多少行？为什么](https://mp.weixin.qq.com/s/ZCM2FYzKw24Fk8yv4a9b0w) | [Mysql如何做表分区](https://mp.weixin.qq.com/s/w2wrccywJWM-zXceCR_JXw) |

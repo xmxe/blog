@@ -533,11 +533,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="类文件结构详解"><a href="#类文件结构详解" class="headerlink" title="类文件结构详解"></a>类文件结构详解</h2><h3 id="回顾一下字节码"><a href="#回顾一下字节码" class="headerlink" title="回顾一下字节码"></a>回顾一下字节码</h3><p>在Java中，JVM可以理解的代码就叫做字节码（即扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。Java语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留了解释型语言可移植的特点。所以Java程序运行时比较高效，而且，由于字节码并不针对一种特定的机器，因此，Java程序无须重新编译便可在多种不同操作系统的计算机上运行。</p>
+                <h2 id="类文件结构详解"><a href="#类文件结构详解" class="headerlink" title="类文件结构详解"></a>类文件结构详解</h2><p><strong>回顾一下字节码</strong></p>
+<p>在Java中，JVM可以理解的代码就叫做字节码（即扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。Java语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留了解释型语言可移植的特点。所以Java程序运行时比较高效，而且，由于字节码并不针对一种特定的机器，因此，Java程序无须重新编译便可在多种不同操作系统的计算机上运行。</p>
 <p>Clojure（Lisp语言的一种方言）、Groovy、Scala等语言都是运行在Java虚拟机之上。下图展示了不同的语言被不同的编译器编译成.class文件最终运行在Java虚拟机之上。.class文件的二进制格式可以使用<a target="_blank" rel="noopener" href="https://www.x-ways.net/winhex/">WinHex</a>查看。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/bg/desktop%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%A6%82%E8%A7%88.png" alt="java虚拟机"></p>
 <p>可以说.class文件是不同的语言在Java虚拟机之间的重要桥梁，同时也是支持Java跨平台很重要的一个原因。</p>
-<h3 id="Class文件结构总结"><a href="#Class文件结构总结" class="headerlink" title="Class文件结构总结"></a>Class文件结构总结</h3><p>根据Java虚拟机规范，Class文件通过ClassFile定义，有点类似C语言的结构体。ClassFile的结构如下：</p>
+<p><strong>Class文件结构总结</strong></p>
+<p>根据Java虚拟机规范，Class文件通过ClassFile定义，有点类似C语言的结构体。ClassFile的结构如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ClassFile</span> <span class="token punctuation">&#123;</span>
     u4             magic<span class="token punctuation">;</span> <span class="token comment">//Class文件的标志</span>
     u2             minor_version<span class="token punctuation">;</span><span class="token comment">//Class的小版本号</span>
@@ -562,19 +564,20 @@
 <p>下面这张图是通过IDEA插件jclasslib查看的，你可以更直观看到Class文件结构。</p>
 <p><img src="https://oss.javaguide.cn/java-guide-blog/image-20210401170711475.png" alt="img"></p>
 <p>使用jclasslib不光可以直观地查看某个类对应的字节码文件，还可以查看类的基本信息、常量池、接口、属性、函数等信息。下面详细介绍一下Class文件结构涉及到的一些组件。</p>
-<h4 id="魔数（MagicNumber）"><a href="#魔数（MagicNumber）" class="headerlink" title="魔数（MagicNumber）"></a>魔数（MagicNumber）</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u4             magic<span class="token punctuation">;</span> <span class="token comment">//Class文件的标志</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>魔数（MagicNumber）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u4             magic<span class="token punctuation">;</span> <span class="token comment">//Class文件的标志</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>每个Class文件的头4个字节称为魔数（MagicNumber）,它的唯一作用是<strong>确定这个文件是否为一个能被虚拟机接收的Class文件</strong>。</p>
-<p>程序设计者很多时候都喜欢用一些特殊的数字表示固定的文件类型或者其它特殊的含义。</p>
-<h4 id="Class文件版本号（Minor-amp-MajorVersion）"><a href="#Class文件版本号（Minor-amp-MajorVersion）" class="headerlink" title="Class文件版本号（Minor&amp;MajorVersion）"></a>Class文件版本号（Minor&amp;MajorVersion）</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             minor_version<span class="token punctuation">;</span><span class="token comment">//Class的小版本号</span>
+<p>每个Class文件的头4个字节称为魔数（MagicNumber）,它的唯一作用是<strong>确定这个文件是否为一个能被虚拟机接收的Class文件</strong>。程序设计者很多时候都喜欢用一些特殊的数字表示固定的文件类型或者其它特殊的含义。</p>
+<p><strong>Class文件版本号（Minor&amp;MajorVersion）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             minor_version<span class="token punctuation">;</span><span class="token comment">//Class的小版本号</span>
 u2             major_version<span class="token punctuation">;</span><span class="token comment">//Class的大版本号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>紧接着魔数的四个字节存储的是Class文件的版本号：第5和第6位是次版本号，第7和第8位是主版本号。每当Java发布大版本（比如Java8，Java9）的时候，主版本号都会加1。你可以使用<code>javap -v</code>命令来快速查看Class文件的版本号信息。高版本的Java虚拟机可以执行低版本编译器生成的Class文件，但是低版本的Java虚拟机不能执行高版本编译器生成的Class文件。所以，我们在实际开发的时候要确保开发的的JDK版本和生产环境的JDK版本保持一致。</p>
-<h4 id="常量池（Constant-Pool）"><a href="#常量池（Constant-Pool）" class="headerlink" title="常量池（Constant Pool）"></a>常量池（Constant Pool）</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             constant_pool_count<span class="token punctuation">;</span><span class="token comment">//常量池的数量</span>
+<p><strong>常量池（Constant Pool）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             constant_pool_count<span class="token punctuation">;</span><span class="token comment">//常量池的数量</span>
 cp_info        constant_pool<span class="token punctuation">[</span>constant_pool_count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//常量池</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>紧接着主次版本号之后的是常量池，常量池的数量是<code>constant_pool_count-1</code>（常量池计数器是从1开始计数的，将第0项常量空出来是有特殊考虑的，索引值为0代表“不引用任何一个常量池项”）。</p>
-<p>常量池主要存放两大常量：字面量和符号引用。字面量比较接近于Java语言层面的的常量概念，如文本字符串、声明为final的常量值等。而符号引用则属于编译原理方面的概念，包括下面三类常量：</p>
+<p>紧接着主次版本号之后的是常量池，常量池的数量是<code>constant_pool_count-1</code>（常量池计数器是从1开始计数的，将第0项常量空出来是有特殊考虑的，索引值为0代表“不引用任何一个常量池项”）。常量池主要存放两大常量：字面量和符号引用。字面量比较接近于Java语言层面的的常量概念，如文本字符串、声明为final的常量值等。而符号引用则属于编译原理方面的概念，包括下面三类常量：</p>
 <ul>
 <li>类和接口的全限定名</li>
 <li>字段的名称和描述符</li>
@@ -661,7 +664,8 @@ cp_info        constant_pool<span class="token punctuation">[</span>constant_poo
 </tr>
 </tbody></table>
 <p>.class文件可以通过javap -v class类名指令来看一下其常量池中的信息(javap -v class类名 -&gt; temp.txt：将结果输出到temp.txt文件)。</p>
-<h4 id="访问标志-Access-Flags"><a href="#访问标志-Access-Flags" class="headerlink" title="访问标志(Access Flags)"></a>访问标志(Access Flags)</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             access_flags<span class="token punctuation">;</span><span class="token comment">//Class的访问标记</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>访问标志(Access Flags)</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             access_flags<span class="token punctuation">;</span><span class="token comment">//Class的访问标记</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>在常量池结束之后，紧接着的两个字节代表访问标志，这个标志用于识别一些类或者接口层次的访问信息，包括：这个Class是类还是接口，是否为public或者abstract类型，如果是类的话是否声明为final等等。</p>
 <p>类访问和属性修饰符:</p>
@@ -674,13 +678,15 @@ cp_info        constant_pool<span class="token punctuation">[</span>constant_poo
 
 <p>通过<code>javap -v class类名</code>指令来看一下类的访问标志。</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%A0%87%E5%BF%97.png" alt="查看类的访问标志"></p>
-<h4 id="当前类（This-Class）、父类（Super-Class）、接口（Interfaces）索引集合"><a href="#当前类（This-Class）、父类（Super-Class）、接口（Interfaces）索引集合" class="headerlink" title="当前类（This Class）、父类（Super Class）、接口（Interfaces）索引集合"></a>当前类（This Class）、父类（Super Class）、接口（Interfaces）索引集合</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             this_class<span class="token punctuation">;</span><span class="token comment">//当前类</span>
+<p><strong>当前类（This Class）、父类（Super Class）、接口（Interfaces）索引集合</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             this_class<span class="token punctuation">;</span><span class="token comment">//当前类</span>
 u2             super_class<span class="token punctuation">;</span><span class="token comment">//父类</span>
 u2             interfaces_count<span class="token punctuation">;</span><span class="token comment">//接口</span>
 u2             interfaces<span class="token punctuation">[</span>interfaces_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类可以实现多个接口</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>Java类的继承关系由类索引、父类索引和接口索引集合三项确定。类索引、父类索引和接口索引集合按照顺序排在访问标志之后，类索引用于确定这个类的全限定名，父类索引用于确定这个类的父类的全限定名，由于Java语言的单继承，所以父类索引只有一个，除了<code>java.lang.Object</code>之外，所有的Java类都有父类，因此除了<code>java.lang.Object</code>外，所有Java类的父类索引都不为0。接口索引集合用来描述这个类实现了那些接口，这些被实现的接口将按<code>implements</code>(如果这个类本身是接口的话则是<code>extends</code>)后的接口顺序从左到右排列在接口索引集合中。</p>
-<h4 id="字段表集合（Fields）"><a href="#字段表集合（Fields）" class="headerlink" title="字段表集合（Fields）"></a>字段表集合（Fields）</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             fields_count<span class="token punctuation">;</span><span class="token comment">//Class文件的字段的个数</span>
+<p><strong>字段表集合（Fields）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             fields_count<span class="token punctuation">;</span><span class="token comment">//Class文件的字段的个数</span>
 field_info     fields<span class="token punctuation">[</span>fields_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类会可以有个字段</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>字段表（field info）用于描述接口或类中声明的变量。字段包括类级变量以及实例变量，但不包括在方法内部声明的局部变量。</p>
@@ -696,7 +702,8 @@ field_info     fields<span class="token punctuation">[</span>fields_count<span c
 <p>上述这些信息中，各个修饰符都是布尔值，要么有某个修饰符，要么没有，很适合使用标志位来表示。而字段叫什么名字、字段被定义为什么数据类型这些都是无法固定的，只能引用常量池中常量来描述。</p>
 <p><strong>字段的access_flag的取值:</strong></p>
 <p><img src="https://oss.javaguide.cn/JVM/image-20201031084342859.png" alt="字段的access_flag的取值"></p>
-<h4 id="方法表集合（Methods）"><a href="#方法表集合（Methods）" class="headerlink" title="方法表集合（Methods）"></a>方法表集合（Methods）</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             methods_count<span class="token punctuation">;</span><span class="token comment">//Class文件的方法的数量</span>
+<p><strong>方法表集合（Methods）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             methods_count<span class="token punctuation">;</span><span class="token comment">//Class文件的方法的数量</span>
 method_info    methods<span class="token punctuation">[</span>methods_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类可以有个多个方法</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>methods_count表示方法的数量，而method_info表示方法表。</p>
@@ -706,7 +713,8 @@ method_info    methods<span class="token punctuation">[</span>methods_count<span
 <p><strong>方法表的access_flag取值：</strong></p>
 <p><img src="https://oss.javaguide.cn/JVM/image-20201031084248965.png" alt="方法表的access_flag取值"></p>
 <p>注意：因为volatile修饰符和transient修饰符不可以修饰方法，所以方法表的访问标志中没有这两个对应的标志，但是增加了synchronized、native、abstract等关键字修饰方法，所以也就多了这些关键字对应的标志。</p>
-<h4 id="属性表集合（Attributes）"><a href="#属性表集合（Attributes）" class="headerlink" title="属性表集合（Attributes）"></a>属性表集合（Attributes）</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             attributes_count<span class="token punctuation">;</span><span class="token comment">//此类的属性表中的属性数</span>
+<p><strong>属性表集合（Attributes）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             attributes_count<span class="token punctuation">;</span><span class="token comment">//此类的属性表中的属性数</span>
 attribute_info attributes<span class="token punctuation">[</span>attributes_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//属性表集合</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>在Class文件，字段表，方法表中都可以携带自己的属性表集合，以用于描述某些场景专有的信息。与Class文件中其它的数据项目要求的顺序、长度和内容不同，属性表集合的限制稍微宽松一些，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写入自己定义的属性信息，Java虚拟机运行时会忽略掉它不认识的属性</p>
@@ -794,7 +802,8 @@ attribute_info attributes<span class="token punctuation">[</span>attributes_coun
 <li>MethodHandle和VarHandle可以看作是轻量级的反射调用机制，而要想使用这2个调用，就必须先使用findStaticVarHandle来初始化要调用的类。</li>
 <li>补充，来自<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/745">issue745</a> 当一个接口中定义了JDK8新加入的默认方法（被default关键字修饰的接口方法）时，如果有这个接口的实现类发生了初始化，那该接口要在其之前被初始化。</li>
 </ol>
-<h5 id="类的引用（主动引用，一定会初始化）"><a href="#类的引用（主动引用，一定会初始化）" class="headerlink" title="类的引用（主动引用，一定会初始化）"></a>类的引用（主动引用，一定会初始化）</h5><ol>
+<p><strong>类的引用（主动引用，一定会初始化）</strong></p>
+<ol>
 <li>创建类的实例（new操作、反射、cloning，反序列化）</li>
 <li>访问某个类或接口的静态变量，或者对该静态变量赋值</li>
 <li>调用类的静态方法</li>
@@ -802,22 +811,24 @@ attribute_info attributes<span class="token punctuation">[</span>attributes_coun
 <li>初始化一个类的子类（会首先初始化子类的父类）</li>
 <li>JVM启动时标明的启动类，即文件名和类名相同的那个类</li>
 </ol>
-<h5 id="类的引用（被动引用）"><a href="#类的引用（被动引用）" class="headerlink" title="类的引用（被动引用）"></a>类的引用（被动引用）</h5><ol>
+<p><strong>类的引用（被动引用）</strong></p>
+<ol>
 <li>当访问一个静态域时，只有真正声明这个域的类才会被初始化。例如：通过子类引用父类的静态变量，不会导致子类初始化。</li>
 <li>通过数组定义类引用，不会触发此类的初始化。</li>
 <li>引用常量不会触发此类的初始化（常量在编译阶段就存入调用类的常量池中了）</li>
 </ol>
-<h5 id="类加载的顺序"><a href="#类加载的顺序" class="headerlink" title="类加载的顺序"></a>类加载的顺序</h5><ol>
+<p><strong>类加载的顺序</strong></p>
+<ol>
 <li>类初始化顺序：静态字段-&gt;静态代码块,按顺序自上而下全部执行-&gt;成员变量-&gt;非静态代码块-&gt;构造器</li>
 <li>带有继承关系的，实例化子类时，加载顺序如下：<br>父类的静态字段-&gt;父类静态代码块,按顺序自上而下全部执行-&gt;子类静态字段-&gt;子类静态代码块,按顺序自上而下全部执行-&gt;父类成员变量（非静态字段）-&gt;父类非静态代码块-&gt;父类构造器-&gt;子类成员变量-&gt;子类非静态代码块-&gt;子类构造器</li>
 </ol>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Java在new一个对象的时候，会先查看对象所属的类有没有被加载到内存，如果没有的话，就会先通过类的全限定名（包名+类名）来加载。加载并初始化类完成后，再进行对象的创建工作。<br>类加载的生命周期：加载(loading)-连接(Linking)-初始化(initialization)</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Java在new一个对象的时候，会先查看对象所属的类有没有被加载到内存，如果没有的话，就会先通过类的全限定名（包名+类名）来加载。加载并初始化类完成后，再进行对象的创建工作。<br>类加载的生命周期：加载(loading)-连接(Linking)-初始化(initialization)</p>
 <ol>
 <li>loading:使用类加载器对类进行加载（双亲委派机制）。使用双亲委托机制的好处是：能够有效确保一个类的全局唯一性，当程序中出现多个限定名相同的类时，类加载器在执行加载时，始终只会加载其中的某一个类。通过委派的方式，可以避免类的重复加载，当父加载器已经加载过某一个类时，子加载器就不会再重新加载这个类</li>
 <li>linking:连接分为验证-准备-解析三个阶段，验证的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求。准备阶段是正式为类中定义的变量（即静态变量，被static修饰的变量）分配内存并设置类变量初始值的阶段，当类变量被final修饰时，在准备阶段就直接会被复制，不是使用初始值。解析阶段是Java虚拟机将常量池内的符号引用替换为直接引用的过程</li>
 <li>initialization:初始化，真正开始执行Java代码的阶段(比如给类属性赋真实的值)执行&lt;clinit&gt;方法的过程</li>
 </ol>
-<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><table>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
 <thead>
 <tr>
 <th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/23nIQlguz0-jaEEyTwR16g">在Java中new一个对象的流程是怎样的？</a></th>
@@ -846,7 +857,7 @@ attribute_info attributes<span class="token punctuation">[</span>attributes_coun
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h3 id="类卸载"><a href="#类卸载" class="headerlink" title="类卸载"></a>类卸载</h3><blockquote>
+<h2 id="类卸载"><a href="#类卸载" class="headerlink" title="类卸载"></a>类卸载</h2><blockquote>
 <p>卸载这部分内容来自<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/662">issue#662</a>由 <strong><a target="_blank" rel="noopener" href="https://github.com/guang19">guang19</a></strong> 补充完善。</p>
 </blockquote>
 <p><strong>卸载类即该类的Class对象被GC。</strong></p>
@@ -861,7 +872,8 @@ attribute_info attributes<span class="token punctuation">[</span>attributes_coun
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/class-loading-process.html">原文链接</a></p>
 </blockquote>
-<h2 id="类加载器详解"><a href="#类加载器详解" class="headerlink" title="类加载器详解"></a>类加载器详解</h2><h3 id="回顾一下类加载过程"><a href="#回顾一下类加载过程" class="headerlink" title="回顾一下类加载过程"></a>回顾一下类加载过程</h3><p>开始介绍类加载器和双亲委派模型之前，简单回顾一下类加载过程。</p>
+<h2 id="类加载器详解"><a href="#类加载器详解" class="headerlink" title="类加载器详解"></a>类加载器详解</h2><p><strong>回顾一下类加载过程</strong></p>
+<p>开始介绍类加载器和双亲委派模型之前，简单回顾一下类加载过程。</p>
 <ul>
 <li>类加载过程：<strong>加载-&gt;连接-&gt;初始化</strong>。</li>
 <li>连接过程又可分为三步：<strong>验证-&gt;准备-&gt;解析</strong>。</li>

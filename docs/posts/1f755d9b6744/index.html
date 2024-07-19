@@ -779,7 +779,8 @@ extent management <span class="token keyword">local</span><span class="token pun
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 查询当前系统时间之后的第一个星期一</span>
 <span class="token keyword">select</span> sysdate<span class="token punctuation">,</span>next_day<span class="token punctuation">(</span>sysdate<span class="token punctuation">,</span><span class="token string">'星期四'</span><span class="token punctuation">)</span> <span class="token keyword">from</span> dual<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="转换函数"><a href="#转换函数" class="headerlink" title="转换函数"></a>转换函数</h4><ul>
+<p><strong>转换函数</strong></p>
+<ul>
 <li>to_date(c1,c2)</li>
 <li>to_timestamp(c1,c2)<br>c1: 字符类型的日期<br>c2:日期格式<br>能够根据c2指定的格式将c1字符类型的日期转变为日期类型</li>
 </ul>

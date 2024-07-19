@@ -758,14 +758,16 @@
 <p>与之比较类似的中文版本:</p>
 <p><img src="https://images.xiaozhuanlan.com/photo/2019/b5d264565657a5395c2781081a7483e1.jpg" alt="Spring Bean生命周期"></p>
 <h3 id="一、获取Bean"><a href="#一、获取Bean" class="headerlink" title="一、获取Bean"></a>一、获取Bean</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPYhVDaaP8cNKOLWfufL5rQXaMa7xPp4N8NAI2162lm2Rrwvl8sibVCjg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
-<h4 id="第一阶段获取Bean"><a href="#第一阶段获取Bean" class="headerlink" title="第一阶段获取Bean"></a>第一阶段获取Bean</h4><p>这里的流程图的入口在AbstractBeanFactory类的doGetBean方法，这里可以配合前面的getBean方法分析文章进行阅读。主要流程就是</p>
+<p><strong>第一阶段获取Bean</strong></p>
+<p>这里的流程图的入口在AbstractBeanFactory类的doGetBean方法，这里可以配合前面的getBean方法分析文章进行阅读。主要流程就是</p>
 <ol>
 <li>先处理Bean的名称，因为如果以“&amp;”开头的Bean名称表示获取的是对应的FactoryBean对象</li>
 <li>从缓存中获取单例Bean，有则进一步判断这个Bean是不是在创建中，如果是的就等待创建完毕，否则直接返回这个Bean对象</li>
 <li>如果不存在单例Bean缓存，则先进行循环依赖的解析</li>
 <li>解析完毕之后先获取父类BeanFactory，获取到了则调用父类的getBean方法，不存在则先合并然后创建Bean</li>
 </ol>
-<h3 id="二、创建Bean"><a href="#二、创建Bean" class="headerlink" title="二、创建Bean"></a>二、创建Bean</h3><h4 id="2-1-创建Bean之前"><a href="#2-1-创建Bean之前" class="headerlink" title="2.1 创建Bean之前"></a>2.1 创建Bean之前</h4><p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPicgybuOPvUicWBAxrM1rT0PhJeZ1ftRibJGWGYM7P0f5XMga9QCrSlFFQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<h3 id="二、创建Bean"><a href="#二、创建Bean" class="headerlink" title="二、创建Bean"></a>二、创建Bean</h3><p><strong>2.1 创建Bean之前</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPicgybuOPvUicWBAxrM1rT0PhJeZ1ftRibJGWGYM7P0f5XMga9QCrSlFFQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
 <p><strong>在真正创建Bean之前逻辑</strong><br>这个流程图对应的代码在AbstractAutowireCapableBeanFactory类的createBean方法中。</p>
 <p>(1)这里会先获取RootBeanDefinition对象中的Class对象并确保已经关联了要创建的Bean的Class。<br>(2)这里会检查3个条件：</p>
 <ul>
@@ -797,7 +799,8 @@
     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>(3)如果上面3个条件其中一个不满足就不会调用实现的方法。默认这里都不会调用的这些BeanPostProcessors的实现方法。然后继续执行后面的doCreateBean方法。</p>
-<h4 id="2-2-真正的创建Bean，doCreateBean"><a href="#2-2-真正的创建Bean，doCreateBean" class="headerlink" title="2.2 真正的创建Bean，doCreateBean"></a>2.2 真正的创建Bean，doCreateBean</h4><p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPIhTibribNrjwS7O5fH8doMAibkvl5icWLeq16ibP52JcxspfB8nDtyMhKQA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1"></p>
+<p><strong>2.2 真正的创建Bean，doCreateBean</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPIhTibribNrjwS7O5fH8doMAibkvl5icWLeq16ibP52JcxspfB8nDtyMhKQA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1"></p>
 <p><strong>doCreateBean方法逻辑</strong><br>这个代码的实现还是在AbstractAutowireCapableBeanFactory方法中。流程是</p>
 <ol>
 <li>先检查instanceWrapper变量是不是null，这里一般是null，除非当前正在创建的Bean在factoryBeanInstanceCache中存在这个是保存还没创建完成的FactoryBean的集合。</li>
@@ -807,7 +810,8 @@
 <li>调用populateBean方法进行属性填充，这里后面会讲解</li>
 <li>调用initializeBean方法对Bean进行初始化，这里后面会讲解</li>
 </ol>
-<h5 id="2-2-1-实例化Bean，createBeanInstance"><a href="#2-2-1-实例化Bean，createBeanInstance" class="headerlink" title="2.2.1 实例化Bean，createBeanInstance"></a>2.2.1 实例化Bean，createBeanInstance</h5><p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpP4WkTkskaiaq1XKqJAEKWhLeNicuTJSsicuK7licC9doicxAbdr01YF0taQg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p><strong>2.2.1 实例化Bean，createBeanInstance</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpP4WkTkskaiaq1XKqJAEKWhLeNicuTJSsicuK7licC9doicxAbdr01YF0taQg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
 <p><strong>实例化Bean</strong></p>
 <p>这里的逻辑稍微有一点复杂，这个流程图已经是简化过后的了。简要根据代码说明一下流程</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">BeanWrapper</span> <span class="token function">createBeanInstance</span><span class="token punctuation">(</span><span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token class-name">RootBeanDefinition</span> mbd<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -868,7 +872,8 @@
 <li>根据getBean时候是否传入构造参数进行处理<br>4.1如果没有传入构造参数，则检查是否存在已经缓存的无参构造器，有则使用构造器直接创建，没有就会调用instantiateBean方法先获取实例化的策略默认是CglibSubclassingInstantiationStrategy，然后实例化Bean。最后返回<br>4.2如果传入了构造参数，则会先检查是否实现了SmartInstantiationAwareBeanPostProcessor接口，如果实现了会调用determineCandidateConstructors获取返回的候选构造器。<br>4.3检查4个条件是否满足一个<br>（1）构造器不为null，<br>（2）从RootBeanDefinition中获取到的关联的注入方式是构造器注入（没有构造参数就是setter注入，有则是构造器注入）<br>（3）含有构造参数<br>（4）getBean方法传入构造参数不是空<br>满足其中一个则会调用返回的候选构造器实例化Bean并返回，如果都不满足，则会根据构造参数选则合适的有参构造器然后实例化Bean并返回</li>
 <li>如果上面都没有合适的构造器，则直接使用无参构造器创建并返回Bean。</li>
 </ol>
-<h5 id="2-2-2-填充Bean，populateBean"><a href="#2-2-2-填充Bean，populateBean" class="headerlink" title="2.2.2 填充Bean，populateBean"></a>2.2.2 填充Bean，populateBean</h5><p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPRaNrWofKRqgPdvMFQn03uicb2NmqJCHcRzncyuoobJ7alPiaOpVPGR8g/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p><strong>2.2.2 填充Bean，populateBean</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPRaNrWofKRqgPdvMFQn03uicb2NmqJCHcRzncyuoobJ7alPiaOpVPGR8g/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
 <p><strong>填充Bean</strong><br>这里还是根据代码来说一下流程</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">populateBean</span><span class="token punctuation">(</span><span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token class-name">RootBeanDefinition</span> mbd<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> <span class="token class-name">BeanWrapper</span> bw<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>bw <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -959,7 +964,8 @@
 <li>如果实现了InstantiationAwareBeanPostProcessor类的postProcessProperties则调用这个方法并获取返回值，如果返回值是null，则有可能是实现了过期的postProcessPropertyValues方法，这里需要进一步调用postProcessPropertyValues方法</li>
 <li>进行参数填充</li>
 </ol>
-<h5 id="2-2-3-初始化Bean，initializeBean"><a href="#2-2-3-初始化Bean，initializeBean" class="headerlink" title="2.2.3 初始化Bean，initializeBean"></a>2.2.3 初始化Bean，initializeBean</h5><p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPZjJibwdUibfEibHoFzlWI6yFbIlaG2EvckACOCY5mneiaibpOZfZrtQICibw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p><strong>2.2.3 初始化Bean，initializeBean</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPZjJibwdUibfEibHoFzlWI6yFbIlaG2EvckACOCY5mneiaibpOZfZrtQICibw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
 <p><strong>初始化Bean</strong><br>同时这里根据代码跟流程图来说明</p>
 <ul>
 <li>如果Bean实现了BeanNameAware,BeanClassLoaderAware,BeanFactoryAware则调用对应实现的方法。</li>
@@ -1066,12 +1072,14 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="四、Bean的初始化和销毁的几种方式"><a href="#四、Bean的初始化和销毁的几种方式" class="headerlink" title="四、Bean的初始化和销毁的几种方式"></a>四、Bean的初始化和销毁的几种方式</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><ul>
+<h3 id="四、Bean的初始化和销毁的几种方式"><a href="#四、Bean的初始化和销毁的几种方式" class="headerlink" title="四、Bean的初始化和销毁的几种方式"></a>四、Bean的初始化和销毁的几种方式</h3><p><strong>初始化</strong></p>
+<ul>
 <li>实现InitializingBean接口,覆盖其中的afterPropertiesSet()方法</li>
 <li>增加@PostConstruct注解</li>
 <li>自定义init方法(@Bean(initMethod &#x3D; “initMethod”))<br>执行的顺序依次是postConstruct,afterPropertiesSet,initMethod</li>
 </ul>
-<h4 id="销毁"><a href="#销毁" class="headerlink" title="销毁"></a>销毁</h4><ul>
+<p><strong>销毁</strong></p>
+<ul>
 <li>实现org.springframework.beans.factory.DisposableBean接口，覆盖destroy()方法</li>
 <li>自定义一个方法，在方法上面增加@PreDestroy注解</li>
 <li>在InitServiceImpl中增加一个自定义销毁方法，然后在配置类中增加Bean的destoryMethod<br>执行的顺序依次是preDestroy,destroy,destroyMethod</li>
@@ -1154,7 +1162,7 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA">Spring Boot启动扩展点超详细总结，再也不怕面试官问了</a></p>
 </blockquote>
-<h4 id="BeanFactoryPostProcessor、BeanPostProcessor区别"><a href="#BeanFactoryPostProcessor、BeanPostProcessor区别" class="headerlink" title="BeanFactoryPostProcessor、BeanPostProcessor区别"></a>BeanFactoryPostProcessor、BeanPostProcessor区别</h4><p>BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.<br>BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：</p>
+<h2 id="各个Factory工厂比较"><a href="#各个Factory工厂比较" class="headerlink" title="各个Factory工厂比较"></a>各个Factory工厂比较</h2><h3 id="BeanFactoryPostProcessor、BeanPostProcessor区别"><a href="#BeanFactoryPostProcessor、BeanPostProcessor区别" class="headerlink" title="BeanFactoryPostProcessor、BeanPostProcessor区别"></a>BeanFactoryPostProcessor、BeanPostProcessor区别</h3><p>BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.<br>BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：</p>
 <ol>
 <li>实现InitializingBean接口的bean，对应方法为afterPropertiesSet</li>
 <li>xml定义中，通过init-method设置的方法,BeanPostProcessor是BeanFactoryPostProcessor之后执行的。</li>
@@ -1162,7 +1170,7 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZjN1XPamDaYZmvFbyI1KTQ">BeanFactoryPostProcessor和BeanPostProcessor有什么区别？</a></p>
 </blockquote>
-<h4 id="BeanFactroy、ApplicationContext区别"><a href="#BeanFactroy、ApplicationContext区别" class="headerlink" title="BeanFactroy、ApplicationContext区别"></a>BeanFactroy、ApplicationContext区别</h4><ol>
+<h3 id="BeanFactroy、ApplicationContext区别"><a href="#BeanFactroy、ApplicationContext区别" class="headerlink" title="BeanFactroy、ApplicationContext区别"></a>BeanFactroy、ApplicationContext区别</h3><ol>
 <li>BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化，这样，我们就不能发现一些存在的Spring的配置问题。而ApplicationContext则相反，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误。相对于基本的BeanFactory，ApplicationContext唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。BeanFacotry延迟加载,如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常；而ApplicationContext则在初始化自身是检验，这样有利于检查所依赖属性是否注入；所以通常情况下我们选择使用ApplicationContext。应用上下文则会在上下文启动后预载入所有的单实例Bean。通过预载入单实例bean,确保当你需要的时候，你就不用等待，因为它们已经创建好了。</li>
 <li>BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。（Applicationcontext比beanFactory加入了一些更好使用的功能。而且beanFactory的许多功能需要通过编程实现而Applicationcontext可以通过配置实现。比如后处理bean，Applicationcontext直接配置在配置文件即可而beanFactory这要在代码中显示的写出来才可以被容器识别。）</li>
 <li>beanFactory主要是面对与spring框架的基础设施，面对spring自己。而Applicationcontex主要面对与spring使用的开发者。基本都会使用Applicationcontex并非beanFactory。</li>
@@ -1170,8 +1178,9 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493943&idx=1&sn=9eaa46ed730874fce003c66f76fe9c7f&source=41#wechat_redirect">Spring系列之beanFactory与ApplicationContext</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aOOQiBmBmNy4ZjHtv1phdQ">简单把Spring容器分为了两大类！</a></p>
 </blockquote>
-<h4 id="BeanFactory和FactoryBean的区别"><a href="#BeanFactory和FactoryBean的区别" class="headerlink" title="BeanFactory和FactoryBean的区别"></a>BeanFactory和FactoryBean的区别</h4><p>BeanFactory是Spring容器的顶级接口，给具体的IOC容器的实现提供了规范。<br>FactoryBean也是接口，为IOC容器中Bean的实现提供了更加灵活的方式，FactoryBean在IOC容器的基础上给Bean的实现加上了⼀个简单工厂模式和装饰模式,我们可以在getObject()方法中灵活配置。其实在Spring源码中有很多FactoryBean的实现类。<br>区别：BeanFactory是个Factory，也就是IOC容器或对象工厂，FactoryBean是个Bean。在Spring中，所有的Bean都是由BeanFactory(也就是IOC容器)来进行管理的。但对FactoryBean而言，这个Bean不是简单的Bean，而是⼀个能生产或者修饰对象生成的工厂Bean,它的实现与设计模式中的工厂模式和修饰器模式类似。</p>
-<h5 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h5><p>BeanFactory，以Factory结尾，表示它是⼀个工厂类(接口)，它负责生产和管理bean的⼀个工厂。在Spring中，BeanFactory是IOC容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。BeanFactory只是个接口，并不是IOC容器的具体实现，但是Spring容器给出了很多种实现，如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等，其中XmlBeanFactory就是常用的⼀个，该实现将以XML方式描述组成应用的对象及对象间的依赖关系。XmlBeanFactory类将持有此XML配置元数据，并用它来构建⼀个完全可配置的系统或应用。都是附加了某种功能的实现。它为其他具体的IOC容器提供了最基本的规范，例如DefaultListableBeanFactory,XmlBeanFactory,ApplicationContext等具体的容器都是实现了BeanFactory，再在其基础之上附加了其他的功能。BeanFactory和ApplicationContext就是Spring框架的两个IOC容器，现在⼀般使用ApplicationnContext，其不但包含了BeanFactory的作用，同时还进行更多的扩展。BeanFacotry是Spring中比较原始的Factory。如XMLBeanFactory就是⼀种典型的BeanFactory。原始的BeanFactory无法⽀持Spring的许多插件，如AOP功能、Web应用等。ApplicationContext接口,它由BeanFactory接口派生而来，ApplicationContext包含BeanFactory的所有功能，通常建议比BeanFactory优先，ApplicationContext以⼀种更面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：MessageSource,提供国际化的消息访问<br>资源访问，如URL和⽂件，事件传播，载入多个（有继承关系）上下文，使得每⼀个上下文都专注于⼀个特定的层次，比如应⽤的web层;</p>
+<h3 id="BeanFactory和FactoryBean的区别"><a href="#BeanFactory和FactoryBean的区别" class="headerlink" title="BeanFactory和FactoryBean的区别"></a>BeanFactory和FactoryBean的区别</h3><p>BeanFactory是Spring容器的顶级接口，给具体的IOC容器的实现提供了规范。<br>FactoryBean也是接口，为IOC容器中Bean的实现提供了更加灵活的方式，FactoryBean在IOC容器的基础上给Bean的实现加上了⼀个简单工厂模式和装饰模式,我们可以在getObject()方法中灵活配置。其实在Spring源码中有很多FactoryBean的实现类。<br>区别：BeanFactory是个Factory，也就是IOC容器或对象工厂，FactoryBean是个Bean。在Spring中，所有的Bean都是由BeanFactory(也就是IOC容器)来进行管理的。但对FactoryBean而言，这个Bean不是简单的Bean，而是⼀个能生产或者修饰对象生成的工厂Bean,它的实现与设计模式中的工厂模式和修饰器模式类似。</p>
+<p><strong>BeanFactory</strong></p>
+<p>BeanFactory，以Factory结尾，表示它是⼀个工厂类(接口)，它负责生产和管理bean的⼀个工厂。在Spring中，BeanFactory是IOC容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。BeanFactory只是个接口，并不是IOC容器的具体实现，但是Spring容器给出了很多种实现，如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等，其中XmlBeanFactory就是常用的⼀个，该实现将以XML方式描述组成应用的对象及对象间的依赖关系。XmlBeanFactory类将持有此XML配置元数据，并用它来构建⼀个完全可配置的系统或应用。都是附加了某种功能的实现。它为其他具体的IOC容器提供了最基本的规范，例如DefaultListableBeanFactory,XmlBeanFactory,ApplicationContext等具体的容器都是实现了BeanFactory，再在其基础之上附加了其他的功能。BeanFactory和ApplicationContext就是Spring框架的两个IOC容器，现在⼀般使用ApplicationnContext，其不但包含了BeanFactory的作用，同时还进行更多的扩展。BeanFacotry是Spring中比较原始的Factory。如XMLBeanFactory就是⼀种典型的BeanFactory。原始的BeanFactory无法⽀持Spring的许多插件，如AOP功能、Web应用等。ApplicationContext接口,它由BeanFactory接口派生而来，ApplicationContext包含BeanFactory的所有功能，通常建议比BeanFactory优先，ApplicationContext以⼀种更面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：MessageSource,提供国际化的消息访问<br>资源访问，如URL和⽂件，事件传播，载入多个（有继承关系）上下文，使得每⼀个上下文都专注于⼀个特定的层次，比如应⽤的web层;</p>
 <p>BeanFactory提供的方法及其简单，仅提供了六种方法供客户调用：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 判断⼯⼚中是否包含给定名称的bean定义，若有则返回true</span>
 <span class="token keyword">boolean</span> <span class="token function">containsBean</span><span class="token punctuation">(</span><span class="token class-name">String</span> beanName<span class="token punctuation">)</span>
@@ -1185,7 +1194,8 @@
 <span class="token keyword">boolean</span> <span class="token function">isSingleton</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span>
 <span class="token comment">// 返回给定bean名称的所有别名</span>
 <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getAliases</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="FactoryBean"><a href="#FactoryBean" class="headerlink" title="FactoryBean"></a>FactoryBean</h5><p>⼀般情况下，Spring通过反射机制利用&lt;bean&gt;&lt;bean&gt;的class属性指定实现类实例化Bean，在某些情况下，实例化Bean过程比较复杂，如果按照传统的方式，则需要在&lt;bean&gt;&lt;bean&gt;中提供大量的配置信息。配置⽅式的灵活性是受限的，这时采用编码的方式可能会得到⼀个简单的方案。Spring为此提供了⼀个org.springframework.bean.factory.FactoryBean的工厂类接口，用户可以通过实现该接⼝定制实例化Bean的逻辑。FactoryBean接口对于Spring框架来说占重要的地位，Spring自身就提供了70多个FactoryBean的实现。它们隐藏了实例化⼀些复杂Bean的细节，给上层应用带来了便利。从Spring3.0开始，FactoryBean开始⽀持泛型，即接口声明改为FactoryBean&lt;T&gt;的形式,以Bean结尾，表示它是⼀个Bean，不同于普通Bean的是：它是实现了FactoryBean&lt;T&gt;接口的Bean，根据该Bean的ID从BeanFactory中获取的实际上是FactoryBean的getObject()返回的对象，而不是FactoryBean本身，如果要获取FactoryBean对象，请在id前面加⼀个&amp;符号来获取。例如自己实现⼀个FactoryBean，功能：用来代理⼀个对象，对该对象的所有方法做⼀个拦截，在调用前后都输出⼀行LOG，模仿ProxyFactoryBean的功能。FactoryBean是⼀个接口，当在IOC容器中的Bean实现了FactoryBean后，通过getBean(StringBeanName)获取到的Bean对象并不是FactoryBean的实现类对象，而是这个实现类中的getObject()方法返回的对象。要想获取FactoryBean的实现类，就要getBean(&amp;BeanName)，在BeanName之前加上&amp;。<br>在该接口中还定义了以下3个⽅法：</p>
+<p><strong>FactoryBean</strong></p>
+<p>⼀般情况下，Spring通过反射机制利用&lt;bean&gt;&lt;bean&gt;的class属性指定实现类实例化Bean，在某些情况下，实例化Bean过程比较复杂，如果按照传统的方式，则需要在&lt;bean&gt;&lt;bean&gt;中提供大量的配置信息。配置⽅式的灵活性是受限的，这时采用编码的方式可能会得到⼀个简单的方案。Spring为此提供了⼀个org.springframework.bean.factory.FactoryBean的工厂类接口，用户可以通过实现该接⼝定制实例化Bean的逻辑。FactoryBean接口对于Spring框架来说占重要的地位，Spring自身就提供了70多个FactoryBean的实现。它们隐藏了实例化⼀些复杂Bean的细节，给上层应用带来了便利。从Spring3.0开始，FactoryBean开始⽀持泛型，即接口声明改为FactoryBean&lt;T&gt;的形式,以Bean结尾，表示它是⼀个Bean，不同于普通Bean的是：它是实现了FactoryBean&lt;T&gt;接口的Bean，根据该Bean的ID从BeanFactory中获取的实际上是FactoryBean的getObject()返回的对象，而不是FactoryBean本身，如果要获取FactoryBean对象，请在id前面加⼀个&amp;符号来获取。例如自己实现⼀个FactoryBean，功能：用来代理⼀个对象，对该对象的所有方法做⼀个拦截，在调用前后都输出⼀行LOG，模仿ProxyFactoryBean的功能。FactoryBean是⼀个接口，当在IOC容器中的Bean实现了FactoryBean后，通过getBean(StringBeanName)获取到的Bean对象并不是FactoryBean的实现类对象，而是这个实现类中的getObject()方法返回的对象。要想获取FactoryBean的实现类，就要getBean(&amp;BeanName)，在BeanName之前加上&amp;。<br>在该接口中还定义了以下3个⽅法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 返回由FactoryBean创建的Bean实例，如果isSingleton()返回true，则该实例会放到Spring容器中单实例缓存池中；</span>
 <span class="token class-name">T</span> <span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token class-name">Exception</span><span class="token punctuation">;</span>
 <span class="token comment">// 返回由FactoryBean创建的Bean实例的作⽤域是singleton还是prototype；</span>
@@ -1497,10 +1507,10 @@ bw<span class="token punctuation">.</span><span class="token function">setProper
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            序列化和反序列化什么是序列化?什么是反序列化?如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：
+                            什么是序列化、反序列化?如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：
 
 序列化：将数据结构或对象转换成二进制字节流的过程
-反序列化：将在
+反序列化：将在序列化过程中所生成的二
                         
 
                     </div>

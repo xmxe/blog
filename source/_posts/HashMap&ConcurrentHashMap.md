@@ -227,7 +227,7 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
 
 ### HashMap源码分析
 
-#### 构造方法
+**构造方法**
 
 HashMap中有四个构造方法，它们分别如下：
 ```java
@@ -288,7 +288,7 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
 }
 ```
 
-#### put方法
+**put方法**
 
 HashMap只提供了put用于添加元素，putVal方法只是给put方法调用的一个方法，并没有提供给用户使用。
 
@@ -408,7 +408,7 @@ public V put(K key, V value)
 }
 ```
 
-#### get方法
+**get方法**
 
 ```java
 public V get(Object key) {
@@ -441,7 +441,7 @@ final Node<K,V> getNode(int hash, Object key) {
 }
 ```
 
-#### resize方法
+**resize方法**
 
 进行扩容，会伴随着一次重新hash分配，并且会遍历hash表中所有的元素，是非常耗时的。在编写程序中，要尽量避免resize。
 
@@ -661,13 +661,13 @@ JDK1.8对HashMap做了改造，当冲突链表长度大于8时，会将链表转
 
 #### ConcurrentHashMap 1.7
 
-##### 1.存储结构
+**1. 存储结构**
 
 ![Java7 ConcurrentHashMap存储结构](https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java7_concurrenthashmap.png)
 
 Java7中ConcurrentHashMap的存储结构如上图，ConcurrnetHashMap由很多个Segment组合，而每一个Segment是一个类似于HashMap的结构，所以每一个HashMap的内部可以进行扩容。但是Segment的个数一旦**初始化就不能改变**，默认Segment的个数是16个，你也可以认为ConcurrentHashMap默认支持最多16个线程并发。
 
-##### 2.初始化
+**2. 初始化**
 
 通过ConcurrentHashMap的无参构造探寻ConcurrentHashMap的初始化流程。
 
@@ -754,7 +754,7 @@ public ConcurrentHashMap(int initialCapacity,float loadFactor, int concurrencyLe
 5. 记录segmentMask，默认是ssize-1=16-1=15.
 6. **初始化segments[0]**，**默认大小为2**，**负载因子0.75**，**扩容阀值是2\*0.75=1.5**，插入第二个值时才会进行扩容。
 
-##### 3.put
+**3. put**
 
 接着上面的初始化参数继续查看put方法源码。
 
@@ -949,7 +949,7 @@ private HashEntry<K,V> scanAndLockForPut(K key, int hash, V value) {
 }
 ```
 
-##### 4.扩容rehash
+**4. 扩容rehash**
 
 ConcurrentHashMap的扩容只会扩容到原来的两倍。老数组里的数据移动到新的数组时，位置要么不变，要么变为index+oldSize，参数里的node会在扩容之后使用链表**头插法**插入到指定位置。
 
@@ -1013,7 +1013,7 @@ private void rehash(HashEntry<K,V> node) {
 
 有些同学可能会对最后的两个for循环有疑惑，这里第一个for是为了寻找这样一个节点，这个节点后面的所有next节点的新位置都是相同的。然后把这个作为一个链表赋值到新位置。第二个for循环是为了把剩余的元素通过头插法插入到指定位置链表。这样实现的原因可能是基于概率统计，有深入研究的同学可以发表下意见。
 
-##### 5.get
+**5. get**
 
 到这里就很简单了，get方法只需要两步即可。
 
@@ -1044,13 +1044,13 @@ public V get(Object key) {
 
 #### ConcurrentHashMap 1.8
 
-##### 1.存储结构
+**1. 存储结构**
 
 ![Java8 ConcurrentHashMap存储结构（图片来自javadoop）](https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java8_concurrenthashmap.png)
 
 可以发现Java8的ConcurrentHashMap相对于Java7来说变化比较大，不再是之前的**Segment数组+HashEntry数组+链表**，而是**Node数组+链表/红黑树**。当冲突链表达到一定长度时，链表会转换成红黑树。
 
-##### 2.初始化initTable
+**2. 初始化initTable**
 
 
 ```java
@@ -1090,7 +1090,7 @@ private final Node<K,V>[] initTable() {
 3. 0表示table初始化大小，如果table没有初始化
 4. \>0表示table扩容的阈值，如果table已经初始化。
 
-##### 3.put
+**3. put**
 
 直接过一遍put源码。
 
@@ -1179,7 +1179,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 5. 如果都不满足，则利用synchronized锁写入数据。
 6. 如果数量大于TREEIFY_THRESHOLD则要执行树化方法，在treeifyBin中会首先判断当前数组长度≥64时才会将链表转换为红黑树。
 
-##### 4.get
+**4. get**
 
 get流程比较简单，直接过一遍源码。
 
@@ -1219,7 +1219,7 @@ public V get(Object key) {
 
 总的来说ConcurrentHashMap在Java8中相对于Java7来说变化还是挺大的。
 
-#### 总结
+**总结**
 
 Java7中ConcurrentHashMap使用的分段锁，也就是每一个Segment上同时只有一个线程可以操作，每一个Segment都是一个类似HashMap数组的结构，它可以扩容，它的冲突会转化为链表。但是Segment的个数一但初始化就不能改变。
 

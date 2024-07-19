@@ -328,7 +328,7 @@ c2:字符或整数: 周期值,从c1日期来时,查找c2指定的周期的日期
 select sysdate,next_day(sysdate,'星期四') from dual;
 ```
 
-#### 转换函数
+**转换函数**
 
 - to_date(c1,c2)
 - to_timestamp(c1,c2)

@@ -528,7 +528,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载nginx:</span>
+                <h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><p><strong>下载</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载nginx:</span>
 <span class="token function">wget</span> http://nginx.org/download/nginx-1.8.1.tar.gz
 <span class="token comment"># 下载openssl:</span>
 <span class="token function">wget</span> https://www.openssl.org/source/openssl-fips-2.0.16.tar.gz
@@ -538,7 +539,8 @@
 <span class="token function">wget</span> ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
 <span class="token comment"># 如果没有安装c++编译环境，还得安装，通过```yum install gcc-c++```完成安装</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># openssl：</span>
+<p><strong>编译安装</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># openssl：</span>
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> <span class="token function">tar</span> zxvf openssl-fips-2.0.16.tar.gz
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> <span class="token builtin class-name">cd</span> openssl-fips-2.0.16
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> ./config <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span>
@@ -558,14 +560,16 @@
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span> <span class="token builtin class-name">cd</span> nginx-1.8.1
 <span class="token punctuation">[</span>root@localhost<span class="token punctuation">]</span>  ./configure <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx
+<p><strong>启动nginx</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> stop <span class="token comment"># 立即停止nginx，不保存相关信息</span>
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> quit  <span class="token comment"># 正常退出nginx，保存相关信息</span>
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> reload <span class="token comment"># 重启</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lovexinyi8/p/5845017.html">Linux安装Nginx详细图解教程</a></p>
 </blockquote>
-<h4 id="将nginx做成系统服务并且开机自启动"><a href="#将nginx做成系统服务并且开机自启动" class="headerlink" title="将nginx做成系统服务并且开机自启动"></a>将nginx做成系统服务并且开机自启动</h4><p>由于是源码安装，需要手动创建nginx.service服务</p>
+<p><strong>将nginx做成系统服务并且开机自启动</strong></p>
+<p>由于是源码安装，需要手动创建nginx.service服务</p>
 <blockquote>
 <p>不止nginx，其他源码安装的想要实现开机自启动就在&#x2F;lib&#x2F;systemd&#x2F;system目录下自定义服务即可</p>
 </blockquote>
@@ -612,7 +616,37 @@ systemctl restart nginx.service　
 <span class="token comment"># 查看所有已启动的服务</span>
 systemctl list-units <span class="token parameter variable">--type</span><span class="token operator">=</span>service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="Nginx安装手册"><a href="#Nginx安装手册" class="headerlink" title="Nginx安装手册"></a>Nginx安装手册</h3><h4 id="nginx安装环境"><a href="#nginx安装环境" class="headerlink" title="nginx安装环境"></a>nginx安装环境</h4><p>nginx是C语言开发，建议在linux上运行，本教程使用Centos6.5作为安装环境。</p>
+<h3 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h3><p><strong>下载</strong></p>
+<p><a target="_blank" rel="noopener" href="https://nginx.org/">官网地址</a></p>
+<p><strong>安装依赖</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> gcc zlib zlib-devel pcre-devel openssl openssl-devel<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>安装</strong></p>
+<ul>
+<li><p>创建一个文件夹,上传本地提供的nginx包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> <span class="token parameter variable">-d</span> <span class="token string">"/root/software"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /root/software
+<span class="token keyword">fi</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> /root/software <span class="token operator">&amp;&amp;</span> rz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>解压</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> nginx-1.18.0.tar.gz <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> nginx-1.18.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>配置、编译、安装</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>检查是否安装成功</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">whereis</span> nginx
+<span class="token builtin class-name">cd</span> /usr/local/nginx/sbin <span class="token operator">&amp;&amp;</span> ./nginx
+<span class="token function">ps</span> <span class="token parameter variable">-ef</span> <span class="token operator">|</span> <span class="token function">grep</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>启动代码格式：nginx安装目录地址 -c nginx配置文件地址</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx <span class="token parameter variable">-c</span> /usr/local/nginx/conf/nginx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>热加载</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> reload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h3 id="Nginx安装手册"><a href="#Nginx安装手册" class="headerlink" title="Nginx安装手册"></a>Nginx安装手册</h3><p><strong>nginx安装环境</strong></p>
+<p>nginx是C语言开发，建议在linux上运行，本教程使用Centos6.5作为安装环境。</p>
 <ul>
 <li><p>gcc。安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：<code>yum install gcc-c++</code></p>
 </li>
@@ -626,7 +660,8 @@ systemctl list-units <span class="token parameter variable">--type</span><span c
 <li><p>openssl<br>OpenSSL是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。<code>yum install -y openssl openssl-devel</code></p>
 </li>
 </ul>
-<h4 id="编译安装-1"><a href="#编译安装-1" class="headerlink" title="编译安装"></a>编译安装</h4><p>将nginx-1.8.0.tar.gz拷贝至linux服务器。</p>
+<p><strong>编译安装</strong></p>
+<p>将nginx-1.8.0.tar.gz拷贝至linux服务器。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 解压</span>
 <span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> nginx-1.8.0.tar.gz
 <span class="token builtin class-name">cd</span> nginx-1.8.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -757,32 +792,6 @@ status<span class="token punctuation">)</span>
 <p>这样在控制台就很容易的操作nginx了：查看Nginx当前状态、启动Nginx、停止Nginx、重启Nginx…如果修改了nginx的配置文件nginx.conf，也可以使用上面的命令重新加载新的配置文件并运行，可以将此命令加入到rc.local文件中，这样开机的时候nginx就默认启动了<br><strong>加入到rc.local文件中</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> /etc/rc.local<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>加入一行<code>/etc/init.d/nginx start</code>保存并退出，下次重启会生效。</p>
-<h3 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h3><h4 id="下载-1"><a href="#下载-1" class="headerlink" title="下载"></a>下载</h4><p><a target="_blank" rel="noopener" href="https://nginx.org/">官网地址</a></p>
-<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> gcc zlib zlib-devel pcre-devel openssl openssl-devel<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><ul>
-<li><p>创建一个文件夹,上传本地提供的nginx包</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> <span class="token parameter variable">-d</span> <span class="token string">"/root/software"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /root/software
-<span class="token keyword">fi</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> /root/software <span class="token operator">&amp;&amp;</span> rz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>解压</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> nginx-1.18.0.tar.gz <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> nginx-1.18.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>配置、编译、安装</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>检查是否安装成功</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">whereis</span> nginx
-<span class="token builtin class-name">cd</span> /usr/local/nginx/sbin <span class="token operator">&amp;&amp;</span> ./nginx
-<span class="token function">ps</span> <span class="token parameter variable">-ef</span> <span class="token operator">|</span> <span class="token function">grep</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>启动代码格式：nginx安装目录地址 -c nginx配置文件地址</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx <span class="token parameter variable">-c</span> /usr/local/nginx/conf/nginx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>热加载</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx <span class="token parameter variable">-s</span> reload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
 <h2 id="Nginx知识点"><a href="#Nginx知识点" class="headerlink" title="Nginx知识点"></a>Nginx知识点</h2><h3 id="nginx判断"><a href="#nginx判断" class="headerlink" title="nginx判断"></a>nginx判断</h3><p>1、正则表达式匹配：</p>
 <p>&#x3D;&#x3D;：等值比较;<br>~：与指定正则表达式模式匹配时返回“真”，判断匹配与否时区分字符大小写；<br>~*：与指定正则表达式模式匹配时返回“真”，判断匹配与否时不区分字符大小写；<br>!~：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时区分字符大小写；<br>!~*：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时不区分字符大小写；</p>
 <p>2、文件及目录匹配判断：</p>

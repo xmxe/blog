@@ -197,7 +197,7 @@ client_secret=
 
 ### access_token VS refresh_token
 
-#### 介绍
+**介绍**
 
 Token作为用户获取受保护资源的凭证，必须设置一个过期时间，否则一次登录便可永久使用，认证功能就失去了意义。但是矛盾在于：过期时间设置得太长，用户数据的安全性将大打折扣，过期时间设置得太短，用户就必须每隔一段时间重新登录，以获取新的凭证，这会极大挫伤用户的积极性。针对这一问题，我们可以利用Access / Refresh Token这一概念来平衡Token安全性和用户体验。
 
@@ -223,7 +223,7 @@ Token作为用户获取受保护资源的凭证，必须设置一个过期时间
 
 所以得出的结论是,refresh_token是一个很巧妙地设计,提升了用户体验的同时,又保证了安全性。另外,在OAuth 2.0安全最佳实践中,推荐refresh_token是一次性的,什么意思呢?使用refresh_token获取access_token时,同时会返回一个新的refresh_token,之前的refresh_token就会失效,但是两个refresh_token的绝对过期时间是一样的,所以不会存在refresh_token快过期就获取一个新的,然后重复,永不过期的情况。
 
-#### Access / Refresh Token如何使用？
+**Access / Refresh Token如何使用**？
 
 1. 用户提供身份信息（一般是用户名密码），利用客户端向认证服务器换取Refresh Token和Access Token；
 

@@ -236,7 +236,7 @@ docker -v
 
 ## 卸载
 
-### CentOS
+**CentOS上卸载**
 
 ```shell
 # 停止所有运行的容器
@@ -711,7 +711,7 @@ docker system reset
 ```
 ### docker prune
 
-#### docker system prune
+**docker system prune**
 
 官网描述：删除所有未使用的容器、网络、映像（包括悬挂的和未引用的），以及卷（可选）。
 > **名词解释**：
@@ -769,22 +769,22 @@ docker system prune --filter "label=com.docker.compose.service=jpom"
 docker system prune --filter "label=com.docker.compose.version=1.29.2"
 ```
 
-#### docker image prune
+**docker image prune**
 
 修剪镜像,清理none镜像(虚悬镜像),默认情况下，`docker image prune`命令只会清理虚无镜像（没被标记且没被其它任何镜像或容器引用的镜像）。当添加`-a`或`--all`选项时，`docker image prune`的行为会发生变化。这个命令不仅会删除未使用的镜像，还会删除所有没有标签（即dangling或者说悬挂的）的镜像，即使这些镜像被其他标记了的镜像所引用。换句话说，`docker image prune -a` 会清理所有不带有标签且不在使用中的镜像，以及所有未被任何容器引用的镜像。默认情况下，系统会提示是否继续。要绕过提示，请使用-f或--force标志。可以使用--filter标志使用过滤表达式来限制修剪哪些镜像。例如，只考虑24小时前创建的镜像：
 ```shell
 docker image prune -a --filter "until=24h"
 ```
 
-#### docker container prune
+**docker container prune**
 
 修剪容器,停止容器后不会自动删除这个容器，除非在启动容器的时候指定了–rm标志。使用`docker ps -a`命令查看Docker主机上包含停止的容器在内的所有容器。要清理掉这些，可以使用`docker container prune`命令。默认情况下，系统会提示是否继续。要绕过提示，请使用-f或--force标志。默认情况下，所有停止状态的容器会被删除。可以使用--filter标志来限制范围。例如，可以只删除24小时之前创建的停止状态的容器：
 
-#### docker volume prune
+**docker volume prune**
 
 修剪卷。卷可以被一个或多个容器使用，并占用Docker主机上的空间。卷永远不会被自动删除，因为这么做会破坏数据。
 
-#### docker network prune
+**docker network prune**
 
 修剪网络。Docker网络不会占用太多磁盘空间，但是它们会创建iptables规则，桥接网络设备和路由表条目。要清理这些东西，可以使用`docker network prune`来清理没有被容器未使用的网络。
 
@@ -1430,12 +1430,11 @@ sudo systemctl restart docker
 
 ### 可视化界面-Portainer
 
-#### 什么是Portainer
+**什么是Portainer**
 
 Portainer社区版2.0拥有超过50万的普通用户，是功能强大的开源工具集，可让您轻松地在Docker，Swarm，Kubernetes和Azure ACI中构建和管理容器。 Portainer的工作原理是在易于使用的GUI后面隐藏使管理容器变得困难的复杂性。通过消除用户使用CLI，编写YAML或理解清单的需求，Portainer使部署应用程序和解决问题变得如此简单，任何人都可以做到。 Portainer开发团队在这里为您的Docker之旅提供帮助；
 
-
-#### 安装
+**安装**
 
 服务端部署
 ```shell

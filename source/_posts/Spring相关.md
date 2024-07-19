@@ -289,7 +289,7 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。
 
-#### Spring AOP和AspectJ AOP有什么区别?
+**Spring AOP和AspectJ AOP有什么区别**?
 
 **Spring AOP属于运行时增强，而AspectJ是编译时增强**。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。
 
@@ -335,7 +335,7 @@ Spring中JdbcTemplate、HibernateTemplate等以Template结尾的对数据库操�
 
 观察者模式是一种对象行为型模式。它表示的是一种对象与对象之间具有依赖关系，当一个对象发生改变的时候，这个对象所依赖的对象也会做出反应。Spring事件驱动模型就是观察者模式很经典的一个应用。Spring事件驱动模型非常有用，在很多场景都可以解耦我们的代码。比如我们每次添加商品的时候都需要重新更新商品索引，这个时候就可以利用观察者模式来解决这个问题。
 
-#### Spring事件驱动模型中的三种角色
+**Spring事件驱动模型中的三种角色**
 
 ##### 事件角色
 
@@ -380,7 +380,7 @@ public interface ApplicationEventPublisher {
 
 `ApplicationEventPublisher`接口的`publishEvent()`这个方法在`AbstractApplicationContext`类中被实现，阅读这个方法的实现，你会发现实际上事件真正是通过`ApplicationEventMulticaster`来广播出去的。具体内容过多，就不在这里分析了，后面可能会单独写一篇文章提到。
 
-#### Spring的事件流程总结
+**Spring的事件流程总结**
 
 1. 定义一个事件:实现一个继承自ApplicationEvent，并且写相应的构造函数；
 2. 定义一个事件监听者：实现ApplicationListener接口，重写onApplicationEvent()方法；

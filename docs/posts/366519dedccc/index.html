@@ -709,7 +709,8 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="HashMap源码分析"><a href="#HashMap源码分析" class="headerlink" title="HashMap源码分析"></a>HashMap源码分析</h3><h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><p>HashMap中有四个构造方法，它们分别如下：</p>
+<h3 id="HashMap源码分析"><a href="#HashMap源码分析" class="headerlink" title="HashMap源码分析"></a>HashMap源码分析</h3><p><strong>构造方法</strong></p>
+<p>HashMap中有四个构造方法，它们分别如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 默认构造函数。</span>
 <span class="token keyword">public</span> <span class="token class-name">HashMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span>loadFactor <span class="token operator">=</span> <span class="token constant">DEFAULT_LOAD_FACTOR</span><span class="token punctuation">;</span> <span class="token comment">// all   other fields defaulted</span>
@@ -764,7 +765,8 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h4><p>HashMap只提供了put用于添加元素，putVal方法只是给put方法调用的一个方法，并没有提供给用户使用。</p>
+<p><strong>put方法</strong></p>
+<p>HashMap只提供了put用于添加元素，putVal方法只是给put方法调用的一个方法，并没有提供给用户使用。</p>
 <p><strong>对putVal方法添加元素的分析如下</strong>：</p>
 <ol>
 <li>如果定位到的数组位置没有元素就直接插入。</li>
@@ -873,7 +875,8 @@
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">V</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p><strong>get方法</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">V</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">Node</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span> e<span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token punctuation">(</span>e <span class="token operator">=</span> <span class="token function">getNode</span><span class="token punctuation">(</span><span class="token function">hash</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">?</span> <span class="token keyword">null</span> <span class="token operator">:</span> e<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
@@ -902,7 +905,8 @@
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="resize方法"><a href="#resize方法" class="headerlink" title="resize方法"></a>resize方法</h4><p>进行扩容，会伴随着一次重新hash分配，并且会遍历hash表中所有的元素，是非常耗时的。在编写程序中，要尽量避免resize。</p>
+<p><strong>resize方法</strong></p>
+<p>进行扩容，会伴随着一次重新hash分配，并且会遍历hash表中所有的元素，是非常耗时的。在编写程序中，要尽量避免resize。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">final</span> <span class="token class-name">Node</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">resize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">Node</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> oldTab <span class="token operator">=</span> table<span class="token punctuation">;</span>
     <span class="token keyword">int</span> oldCap <span class="token operator">=</span> <span class="token punctuation">(</span>oldTab <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> oldTab<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
@@ -1103,9 +1107,11 @@
 </table>
 <h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>jdk1.7 ConcurrentHashMap类所采用的是分段锁的思想，将HashMap进行切割，把HashMap中的哈希数组切分成小数组，这个小数组名叫Segment,每个Segment有n个HashEntry组成，其中Segment继承自ReentrantLock（可重入锁）,在操作的时候给Segment赋予了一个对象锁，从而保证多线程环境下并发操作安全。</p>
 <p>JDK1.8对HashMap做了改造，当冲突链表长度大于8时，会将链表转变成红黑树结构,JDK1.8中ConcurrentHashMap类取消了Segment分段锁，采用CAS+synchronized来保证并发安全，数据结构跟jdk1.8中HashMap结构类似，都是数组+链表（当链表长度大于8时，链表结构转为红黑二叉树）结构。ConcurrentHashMap中synchronized只锁定当前链表或红黑二叉树的首节点，只要节点hash不冲突，就不会产生并发，相比JDK1.7的ConcurrentHashMap效率又提升了N倍！</p>
-<h3 id="ConcurrentHashMap源码-amp-底层数据结构分析"><a href="#ConcurrentHashMap源码-amp-底层数据结构分析" class="headerlink" title="ConcurrentHashMap源码&amp;底层数据结构分析"></a>ConcurrentHashMap源码&amp;底层数据结构分析</h3><h4 id="ConcurrentHashMap-1-7"><a href="#ConcurrentHashMap-1-7" class="headerlink" title="ConcurrentHashMap 1.7"></a>ConcurrentHashMap 1.7</h4><h5 id="1-存储结构"><a href="#1-存储结构" class="headerlink" title="1.存储结构"></a>1.存储结构</h5><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java7_concurrenthashmap.png" alt="Java7 ConcurrentHashMap存储结构"></p>
+<h3 id="ConcurrentHashMap源码-amp-底层数据结构分析"><a href="#ConcurrentHashMap源码-amp-底层数据结构分析" class="headerlink" title="ConcurrentHashMap源码&amp;底层数据结构分析"></a>ConcurrentHashMap源码&amp;底层数据结构分析</h3><h4 id="ConcurrentHashMap-1-7"><a href="#ConcurrentHashMap-1-7" class="headerlink" title="ConcurrentHashMap 1.7"></a>ConcurrentHashMap 1.7</h4><p><strong>1. 存储结构</strong></p>
+<p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java7_concurrenthashmap.png" alt="Java7 ConcurrentHashMap存储结构"></p>
 <p>Java7中ConcurrentHashMap的存储结构如上图，ConcurrnetHashMap由很多个Segment组合，而每一个Segment是一个类似于HashMap的结构，所以每一个HashMap的内部可以进行扩容。但是Segment的个数一旦<strong>初始化就不能改变</strong>，默认Segment的个数是16个，你也可以认为ConcurrentHashMap默认支持最多16个线程并发。</p>
-<h5 id="2-初始化"><a href="#2-初始化" class="headerlink" title="2.初始化"></a>2.初始化</h5><p>通过ConcurrentHashMap的无参构造探寻ConcurrentHashMap的初始化流程。</p>
+<p><strong>2. 初始化</strong></p>
+<p>通过ConcurrentHashMap的无参构造探寻ConcurrentHashMap的初始化流程。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
   * Creates a new, empty map with a default initial capacity (16),
   * load factor (0.75) and concurrencyLevel (16).
@@ -1181,7 +1187,8 @@
 <li>记录segmentMask，默认是ssize-1&#x3D;16-1&#x3D;15.</li>
 <li><strong>初始化segments[0]<strong>，</strong>默认大小为2</strong>，<strong>负载因子0.75</strong>，<strong>扩容阀值是2*0.75&#x3D;1.5</strong>，插入第二个值时才会进行扩容。</li>
 </ol>
-<h5 id="3-put"><a href="#3-put" class="headerlink" title="3.put"></a>3.put</h5><p>接着上面的初始化参数继续查看put方法源码。</p>
+<p><strong>3. put</strong></p>
+<p>接着上面的初始化参数继续查看put方法源码。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Maps the specified key to the specified value in this table.
  * Neither the key nor the value can be null.
@@ -1373,7 +1380,8 @@
     <span class="token keyword">return</span> node<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="4-扩容rehash"><a href="#4-扩容rehash" class="headerlink" title="4.扩容rehash"></a>4.扩容rehash</h5><p>ConcurrentHashMap的扩容只会扩容到原来的两倍。老数组里的数据移动到新的数组时，位置要么不变，要么变为index+oldSize，参数里的node会在扩容之后使用链表<strong>头插法</strong>插入到指定位置。</p>
+<p><strong>4. 扩容rehash</strong></p>
+<p>ConcurrentHashMap的扩容只会扩容到原来的两倍。老数组里的数据移动到新的数组时，位置要么不变，要么变为index+oldSize，参数里的node会在扩容之后使用链表<strong>头插法</strong>插入到指定位置。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">rehash</span><span class="token punctuation">(</span><span class="token class-name">HashEntry</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span> node<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">HashEntry</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> oldTable <span class="token operator">=</span> table<span class="token punctuation">;</span>
     <span class="token comment">// 老容量</span>
@@ -1431,7 +1439,8 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>有些同学可能会对最后的两个for循环有疑惑，这里第一个for是为了寻找这样一个节点，这个节点后面的所有next节点的新位置都是相同的。然后把这个作为一个链表赋值到新位置。第二个for循环是为了把剩余的元素通过头插法插入到指定位置链表。这样实现的原因可能是基于概率统计，有深入研究的同学可以发表下意见。</p>
-<h5 id="5-get"><a href="#5-get" class="headerlink" title="5.get"></a>5.get</h5><p>到这里就很简单了，get方法只需要两步即可。</p>
+<p><strong>5. get</strong></p>
+<p>到这里就很简单了，get方法只需要两步即可。</p>
 <ol>
 <li>计算得到key的存放位置。</li>
 <li>遍历指定位置查找相同key的value值。</li>
@@ -1456,9 +1465,11 @@
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="ConcurrentHashMap-1-8"><a href="#ConcurrentHashMap-1-8" class="headerlink" title="ConcurrentHashMap 1.8"></a>ConcurrentHashMap 1.8</h4><h5 id="1-存储结构-1"><a href="#1-存储结构-1" class="headerlink" title="1.存储结构"></a>1.存储结构</h5><p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java8_concurrenthashmap.png" alt="Java8 ConcurrentHashMap存储结构（图片来自javadoop）"></p>
+<h4 id="ConcurrentHashMap-1-8"><a href="#ConcurrentHashMap-1-8" class="headerlink" title="ConcurrentHashMap 1.8"></a>ConcurrentHashMap 1.8</h4><p><strong>1. 存储结构</strong></p>
+<p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/collection/java8_concurrenthashmap.png" alt="Java8 ConcurrentHashMap存储结构（图片来自javadoop）"></p>
 <p>可以发现Java8的ConcurrentHashMap相对于Java7来说变化比较大，不再是之前的<strong>Segment数组+HashEntry数组+链表</strong>，而是<strong>Node数组+链表&#x2F;红黑树</strong>。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
-<h5 id="2-初始化initTable"><a href="#2-初始化initTable" class="headerlink" title="2.初始化initTable"></a>2.初始化initTable</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<p><strong>2. 初始化initTable</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Initializes table, using the size recorded in sizeCtl.
  */</span>
 <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Node</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">initTable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1493,7 +1504,8 @@
 <li>0表示table初始化大小，如果table没有初始化</li>
 <li>&gt;0表示table扩容的阈值，如果table已经初始化。</li>
 </ol>
-<h5 id="3-put-1"><a href="#3-put-1" class="headerlink" title="3.put"></a>3.put</h5><p>直接过一遍put源码。</p>
+<p><strong>3. put</strong></p>
+<p>直接过一遍put源码。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">V</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">K</span> key<span class="token punctuation">,</span> <span class="token class-name">V</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> <span class="token function">putVal</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
@@ -1578,7 +1590,8 @@
 <li>如果都不满足，则利用synchronized锁写入数据。</li>
 <li>如果数量大于TREEIFY_THRESHOLD则要执行树化方法，在treeifyBin中会首先判断当前数组长度≥64时才会将链表转换为红黑树。</li>
 </ol>
-<h5 id="4-get"><a href="#4-get" class="headerlink" title="4.get"></a>4.get</h5><p>get流程比较简单，直接过一遍源码。</p>
+<p><strong>4. get</strong></p>
+<p>get流程比较简单，直接过一遍源码。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">V</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">Node</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> tab<span class="token punctuation">;</span> <span class="token class-name">Node</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">></span></span> e<span class="token punctuation">,</span> p<span class="token punctuation">;</span> <span class="token keyword">int</span> n<span class="token punctuation">,</span> eh<span class="token punctuation">;</span> <span class="token class-name">K</span> ek<span class="token punctuation">;</span>
     <span class="token comment">// key所在的hash位置</span>
@@ -1612,7 +1625,8 @@
 <li>如果是链表，遍历查找之。</li>
 </ol>
 <p>总的来说ConcurrentHashMap在Java8中相对于Java7来说变化还是挺大的。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Java7中ConcurrentHashMap使用的分段锁，也就是每一个Segment上同时只有一个线程可以操作，每一个Segment都是一个类似HashMap数组的结构，它可以扩容，它的冲突会转化为链表。但是Segment的个数一但初始化就不能改变。</p>
+<p><strong>总结</strong></p>
+<p>Java7中ConcurrentHashMap使用的分段锁，也就是每一个Segment上同时只有一个线程可以操作，每一个Segment都是一个类似HashMap数组的结构，它可以扩容，它的冲突会转化为链表。但是Segment的个数一但初始化就不能改变。</p>
 <p>Java8中的ConcurrentHashMap使用的Synchronized锁加CAS的机制。结构也由Java7中的<strong>Segment数组+HashEntry数组+链表</strong>进化成了<strong>Node数组+链表&#x2F;红黑树</strong>，Node是类似于一个HashEntry的结构。它的冲突再达到一定大小时会转化成红黑树，在冲突小于一定数量时又退回链表。</p>
 <p>有些同学可能对Synchronized的性能存在疑问，其实Synchronized锁自从引入锁升级策略后，性能不再是问题，有兴趣的同学可以自己了解下Synchronized的锁升级。</p>
 <h3 id="ConcurrentHashMap和Hashtable的区别"><a href="#ConcurrentHashMap和Hashtable的区别" class="headerlink" title="ConcurrentHashMap和Hashtable的区别"></a>ConcurrentHashMap和Hashtable的区别</h3><p>ConcurrentHashMap和Hashtable的区别主要体现在实现线程安全的方式上不同。</p>
@@ -2118,7 +2132,7 @@ person3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            什么是事务？事务是逻辑上的一组操作，要么都执行，要么都不执行。我们系统的每个业务方法可能包括了多个原子性的数据库操作，比如下面的savePerson()方法中就有两个原子性的数据库操作。这些原子性的数据库操作是有依赖的，它们要么都执行，要不
+                            什么是事务事务是逻辑上的一组操作，要么都执行，要么都不执行。我们系统的每个业务方法可能包括了多个原子性的数据库操作，比如下面的savePerson()方法中就有两个原子性的数据库操作。这些原子性的数据库操作是有依赖的，它们要么都执行，要不就
                         
                         
                     </div>

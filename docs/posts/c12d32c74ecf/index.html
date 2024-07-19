@@ -1760,9 +1760,11 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 </ol>
 <p>二级索引:</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/open-source-project/no-cluster-index.png" alt="img"></p>
-<h3 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h3><h4 id="聚簇索引（聚集索引）"><a href="#聚簇索引（聚集索引）" class="headerlink" title="聚簇索引（聚集索引）"></a>聚簇索引（聚集索引）</h4><h5 id="聚簇索引介绍"><a href="#聚簇索引介绍" class="headerlink" title="聚簇索引介绍"></a>聚簇索引介绍</h5><p><strong>聚簇索引（ClusteredIndex）即索引结构和数据一起存放的索引，并不是一种单独的索引类型。InnoDB中的主键索引就属于聚簇索引</strong>。</p>
+<h3 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h3><h4 id="聚簇索引（聚集索引）"><a href="#聚簇索引（聚集索引）" class="headerlink" title="聚簇索引（聚集索引）"></a>聚簇索引（聚集索引）</h4><p><strong>聚簇索引介绍</strong></p>
+<p><strong>聚簇索引（ClusteredIndex）即索引结构和数据一起存放的索引，并不是一种单独的索引类型。InnoDB中的主键索引就属于聚簇索引</strong>。</p>
 <p>在MySQL中，InnoDB引擎的表的<code>.ibd</code>文件就包含了该表的索引和数据，对于InnoDB引擎表来说，该表的索引(B+树)的每个非叶子节点存储索引，叶子节点存储索引和索引对应的数据。</p>
-<h5 id="聚簇索引的优缺点"><a href="#聚簇索引的优缺点" class="headerlink" title="聚簇索引的优缺点"></a>聚簇索引的优缺点</h5><p><strong>优点</strong>：</p>
+<p><strong>聚簇索引的优缺点</strong></p>
+<p><strong>优点</strong>：</p>
 <ul>
 <li><strong>查询速度非常快</strong>：聚簇索引的查询速度非常的快，因为整个B+树本身就是一颗多叉平衡树，叶子节点也都是有序的，定位到索引的节点，就相当于定位到了数据。相比于非聚簇索引，聚簇索引少了一次读取数据的IO操作。</li>
 <li><strong>对排序查找和范围查找优化</strong>：聚簇索引对于主键的排序查找和范围查找速度非常快。</li>
@@ -1772,9 +1774,11 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <li><strong>依赖于有序的数据</strong>：因为B+树是多路平衡树，如果索引的数据不是有序的，那么就需要在插入时排序，如果数据是整型还好，否则类似于字符串或UUID这种又长又难比较的数据，插入或查找的速度肯定比较慢。</li>
 <li><strong>更新代价大</strong>：如果对索引列的数据被修改时，那么对应的索引也将会被修改，而且聚簇索引的叶子节点还存放着数据，修改代价肯定是较大的，所以对于主键索引来说，主键一般都是不可被修改的。</li>
 </ul>
-<h4 id="非聚簇索引（非聚集索引）"><a href="#非聚簇索引（非聚集索引）" class="headerlink" title="非聚簇索引（非聚集索引）"></a>非聚簇索引（非聚集索引）</h4><h5 id="非聚簇索引介绍"><a href="#非聚簇索引介绍" class="headerlink" title="非聚簇索引介绍"></a>非聚簇索引介绍</h5><p>非聚簇索引(Non-ClusteredIndex)即索引结构和数据分开存放的索引，并不是一种单独的索引类型。二级索引(辅助索引)就属于非聚簇索引。MySQL的MyISAM引擎，不管主键还是非主键，使用的都是非聚簇索引。</p>
+<h4 id="非聚簇索引（非聚集索引）"><a href="#非聚簇索引（非聚集索引）" class="headerlink" title="非聚簇索引（非聚集索引）"></a>非聚簇索引（非聚集索引）</h4><p><strong>非聚簇索引介绍</strong></p>
+<p>非聚簇索引(Non-ClusteredIndex)即索引结构和数据分开存放的索引，并不是一种单独的索引类型。二级索引(辅助索引)就属于非聚簇索引。MySQL的MyISAM引擎，不管主键还是非主键，使用的都是非聚簇索引。</p>
 <p>非聚簇索引的叶子节点并不一定存放数据的指针，因为二级索引的叶子节点就存放的是主键，根据主键再回表查数据。</p>
-<h5 id="非聚簇索引的优缺点"><a href="#非聚簇索引的优缺点" class="headerlink" title="非聚簇索引的优缺点"></a>非聚簇索引的优缺点</h5><p><strong>优点</strong>：</p>
+<p><strong>非聚簇索引的优缺点</strong></p>
+<p><strong>优点</strong>：</p>
 <p>更新代价比聚簇索引要小。非聚簇索引的更新代价就没有聚簇索引那么大了，非聚簇索引的叶子节点是不存放数据的</p>
 <p><strong>缺点</strong>：</p>
 <ul>
@@ -1785,7 +1789,7 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <p><img src="https://oss.javaguide.cn/github/javaguide/database/mysql20210420165311654.png" alt="img"></p>
 <p>聚簇索引和非聚簇索引:</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/database/mysql20210420165326946.png" alt="img"></p>
-<h5 id="非聚簇索引一定回表查询吗-覆盖索引"><a href="#非聚簇索引一定回表查询吗-覆盖索引" class="headerlink" title="非聚簇索引一定回表查询吗(覆盖索引)?"></a>非聚簇索引一定回表查询吗(覆盖索引)?</h5><p><strong>非聚簇索引不一定回表查询</strong>。试想一种情况，用户准备使用SQL查询用户名，而用户名字段正好建立了索引。</p>
+<p><strong>非聚簇索引一定回表查询吗(覆盖索引)?非聚簇索引不一定回表查询</strong>。试想一种情况，用户准备使用SQL查询用户名，而用户名字段正好建立了索引。</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> name <span class="token keyword">FROM</span> <span class="token keyword">table</span> <span class="token keyword">WHERE</span> name<span class="token operator">=</span><span class="token string">'guang19'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>那么这个索引的key本身就是name，查到对应的name直接返回就行了，无需回表查询。即使是MYISAM也是这样，虽然MYISAM的主键索引确实需要回表，因为它的主键索引的叶子节点存放的是指针。但是！<strong>如果SQL查的就是主键呢</strong>？</p>
@@ -1850,19 +1854,26 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <p>相关阅读：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8qemhRg5MgXs1So5YCv0fQ">联合索引的最左匹配原则,全网都在说的一个错误结论</a>。</p>
 </blockquote>
 <h3 id="索引下推"><a href="#索引下推" class="headerlink" title="索引下推"></a>索引下推</h3><p>索引下推（IndexConditionPushdown）是MySQL5.6版本中提供的一项索引优化功能，可以在非聚簇索引遍历过程中，对索引中包含的字段先做判断，过滤掉不符合条件的记录，减少回表次数。</p>
-<h3 id="正确使用索引的一些建议"><a href="#正确使用索引的一些建议" class="headerlink" title="正确使用索引的一些建议"></a>正确使用索引的一些建议</h3><h4 id="选择合适的字段创建索引"><a href="#选择合适的字段创建索引" class="headerlink" title="选择合适的字段创建索引"></a>选择合适的字段创建索引</h4><ul>
+<h3 id="正确使用索引的一些建议"><a href="#正确使用索引的一些建议" class="headerlink" title="正确使用索引的一些建议"></a>正确使用索引的一些建议</h3><p><strong>选择合适的字段创建索引</strong></p>
+<ul>
 <li><strong>不为NULL的字段</strong>：索引字段的数据应该尽量不为NULL，因为对于数据为NULL的字段，数据库较难优化。如果字段频繁被查询，但又避免不了为NULL，建议使用0,1,true,false这样语义较为清晰的短值或短字符作为替代。</li>
 <li><strong>被频繁查询的字段</strong>：我们创建索引的字段应该是查询操作非常频繁的字段。</li>
 <li><strong>被作为条件查询的字段</strong>：被作为WHERE条件查询的字段，应该被考虑建立索引。</li>
 <li><strong>频繁需要排序的字段</strong>：索引已经排序，这样查询可以利用索引的排序，加快排序查询时间。</li>
 <li><strong>被经常频繁用于连接的字段</strong>：经常用于连接的字段可能是一些外键列，对于外键列并不一定要建立外键，只是说该列涉及到表与表的关系。对于频繁被连接查询的字段，可以考虑建立索引，提高多表连接查询的效率。</li>
 </ul>
-<h4 id="被频繁更新的字段应该慎重建立索引"><a href="#被频繁更新的字段应该慎重建立索引" class="headerlink" title="被频繁更新的字段应该慎重建立索引"></a>被频繁更新的字段应该慎重建立索引</h4><p>虽然索引能带来查询上的效率，但是维护索引的成本也是不小的。如果一个字段不被经常查询，反而被经常修改，那么就更不应该在这种字段上建立索引了。</p>
-<h4 id="限制每张表上的索引数量"><a href="#限制每张表上的索引数量" class="headerlink" title="限制每张表上的索引数量"></a>限制每张表上的索引数量</h4><p>索引并不是越多越好，建议单张表索引不超过5个！索引可以提高效率同样可以降低效率。索引可以增加查询效率，但同样也会降低插入和更新的效率，甚至有些情况下会降低查询效率。因为MySQL优化器在选择如何优化查询时，会根据统一信息，对每一个可以用到的索引来进行评估，以生成出一个最好的执行计划，如果同时有很多个索引都可以用于查询，就会增加MySQL优化器生成执行计划的时间，同样会降低查询性能。</p>
-<h4 id="尽可能的考虑建立联合索引而不是单列索引"><a href="#尽可能的考虑建立联合索引而不是单列索引" class="headerlink" title="尽可能的考虑建立联合索引而不是单列索引"></a>尽可能的考虑建立联合索引而不是单列索引</h4><p>因为索引是需要占用磁盘空间的，可以简单理解为每个索引都对应着一颗B+树。如果一个表的字段过多，索引过多，那么当这个表的数据达到一个体量后，索引占用的空间也是很多的，且修改索引时，耗费的时间也是较多的。如果是联合索引，多个字段在一个索引上，那么将会节约很大磁盘空间，且修改数据的操作效率也会提升。</p>
-<h4 id="注意避免冗余索引"><a href="#注意避免冗余索引" class="headerlink" title="注意避免冗余索引"></a>注意避免冗余索引</h4><p>冗余索引指的是索引的功能相同，能够命中索引(a,b)就肯定能命中索引(a)，那么索引(a)就是冗余索引。如（name,city）和（name）这两个索引就是冗余索引，能够命中前者的查询肯定是能够命中后者的在大多数情况下，都应该尽量扩展已有的索引而不是创建新索引。</p>
-<h4 id="字符串类型的字段使用前缀索引代替普通索引"><a href="#字符串类型的字段使用前缀索引代替普通索引" class="headerlink" title="字符串类型的字段使用前缀索引代替普通索引"></a>字符串类型的字段使用前缀索引代替普通索引</h4><p>前缀索引仅限于字符串类型，较普通索引会占用更小的空间，所以可以考虑使用前缀索引带替普通索引。</p>
-<h4 id="避免索引失效"><a href="#避免索引失效" class="headerlink" title="避免索引失效"></a>避免索引失效</h4><p>索引失效也是慢查询的主要原因之一，常见的导致索引失效的情况有下面这些：</p>
+<p><strong>被频繁更新的字段应该慎重建立索引</strong></p>
+<p>虽然索引能带来查询上的效率，但是维护索引的成本也是不小的。如果一个字段不被经常查询，反而被经常修改，那么就更不应该在这种字段上建立索引了。</p>
+<p><strong>限制每张表上的索引数量</strong></p>
+<p>索引并不是越多越好，建议单张表索引不超过5个！索引可以提高效率同样可以降低效率。索引可以增加查询效率，但同样也会降低插入和更新的效率，甚至有些情况下会降低查询效率。因为MySQL优化器在选择如何优化查询时，会根据统一信息，对每一个可以用到的索引来进行评估，以生成出一个最好的执行计划，如果同时有很多个索引都可以用于查询，就会增加MySQL优化器生成执行计划的时间，同样会降低查询性能。</p>
+<p><strong>尽可能的考虑建立联合索引而不是单列索引</strong></p>
+<p>因为索引是需要占用磁盘空间的，可以简单理解为每个索引都对应着一颗B+树。如果一个表的字段过多，索引过多，那么当这个表的数据达到一个体量后，索引占用的空间也是很多的，且修改索引时，耗费的时间也是较多的。如果是联合索引，多个字段在一个索引上，那么将会节约很大磁盘空间，且修改数据的操作效率也会提升。</p>
+<p><strong>注意避免冗余索引</strong></p>
+<p>冗余索引指的是索引的功能相同，能够命中索引(a,b)就肯定能命中索引(a)，那么索引(a)就是冗余索引。如（name,city）和（name）这两个索引就是冗余索引，能够命中前者的查询肯定是能够命中后者的在大多数情况下，都应该尽量扩展已有的索引而不是创建新索引。</p>
+<p><strong>字符串类型的字段使用前缀索引代替普通索引</strong></p>
+<p>前缀索引仅限于字符串类型，较普通索引会占用更小的空间，所以可以考虑使用前缀索引带替普通索引。</p>
+<p><strong>避免索引失效</strong></p>
+<p>索引失效也是慢查询的主要原因之一，常见的导致索引失效的情况有下面这些：</p>
 <ul>
 <li>使用SELECT*进行查询;</li>
 <li>创建了组合索引，但查询条件未遵守最左匹配原则;</li>
@@ -1872,8 +1883,10 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <li>发生<a target="_blank" rel="noopener" href="https://javaguide.cn/database/mysql/index-invalidation-caused-by-implicit-conversion.html">隐式转换</a>;</li>
 <li>……</li>
 </ul>
-<h4 id="删除长期未使用的索引"><a href="#删除长期未使用的索引" class="headerlink" title="删除长期未使用的索引"></a>删除长期未使用的索引</h4><p>删除长期未使用的索引，不用的索引的存在会造成不必要的性能损耗。MySQL5.7可以通过查询sys库的schema_unused_indexes视图来查询哪些索引从未被使用。</p>
-<h4 id="知道如何分析语句是否走索引查询"><a href="#知道如何分析语句是否走索引查询" class="headerlink" title="知道如何分析语句是否走索引查询"></a>知道如何分析语句是否走索引查询</h4><p>我们可以使用EXPLAIN命令来分析SQL的执行计划，这样就知道语句是否命中索引了。执行计划是指一条SQL语句在经过MySQL查询优化器的优化会后，具体的执行方式。EXPLAIN并不会真的去执行相关的语句，而是通过查询优化器对语句进行分析，找出最优的查询方案，并显示对应的信息。EXPLAIN的输出格式如下：</p>
+<p><strong>删除长期未使用的索引</strong></p>
+<p>删除长期未使用的索引，不用的索引的存在会造成不必要的性能损耗。MySQL5.7可以通过查询sys库的schema_unused_indexes视图来查询哪些索引从未被使用。</p>
+<p><strong>知道如何分析语句是否走索引查询</strong></p>
+<p>我们可以使用EXPLAIN命令来分析SQL的执行计划，这样就知道语句是否命中索引了。执行计划是指一条SQL语句在经过MySQL查询优化器的优化会后，具体的执行方式。EXPLAIN并不会真的去执行相关的语句，而是通过查询优化器对语句进行分析，找出最优的查询方案，并显示对应的信息。EXPLAIN的输出格式如下：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span> <span class="token identifier"><span class="token punctuation">`</span>score<span class="token punctuation">`</span></span><span class="token punctuation">,</span><span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">FROM</span> <span class="token identifier"><span class="token punctuation">`</span>cus_order<span class="token punctuation">`</span></span> <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> <span class="token identifier"><span class="token punctuation">`</span>score<span class="token punctuation">`</span></span> <span class="token keyword">DESC</span><span class="token punctuation">;</span>
 <span class="token operator">+</span><span class="token comment">----+-------------+-----------+------------+------+---------------+------+---------+------+--------+----------+----------------+</span>
 <span class="token operator">|</span> id <span class="token operator">|</span> select_type <span class="token operator">|</span> <span class="token keyword">table</span>     <span class="token operator">|</span> partitions <span class="token operator">|</span> <span class="token keyword">type</span> <span class="token operator">|</span> possible_keys <span class="token operator">|</span> <span class="token keyword">key</span>  <span class="token operator">|</span> key_len <span class="token operator">|</span> ref  <span class="token operator">|</span> <span class="token keyword">rows</span>   <span class="token operator">|</span> filtered <span class="token operator">|</span> Extra          <span class="token operator">|</span>
@@ -2041,11 +2054,14 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <p>因为在事务执行过程redo log记录是会写入redo log buffer中，这些redo log记录会被后台线程刷盘。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/05.png" alt="img"></p>
 <p>除了后台线程每秒1次的轮询操作，还有一种情况，当redo log buffer占用的空间即将达到innodb_log_buffer_size一半的时候，后台线程会主动刷盘。下面是不同刷盘策略的流程图。</p>
-<h5 id="innodb-flush-log-at-trx-commit-x3D-0"><a href="#innodb-flush-log-at-trx-commit-x3D-0" class="headerlink" title="innodb_flush_log_at_trx_commit&#x3D;0"></a>innodb_flush_log_at_trx_commit&#x3D;0</h5><p><img src="https://oss.javaguide.cn/github/javaguide/06.png" alt="img"></p>
+<p><strong>innodb_flush_log_at_trx_commit&#x3D;0</strong></p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/06.png" alt="img"></p>
 <p>为0时，如果MySQL挂了或宕机可能会有1秒数据的丢失。</p>
-<h5 id="innodb-flush-log-at-trx-commit-x3D-1"><a href="#innodb-flush-log-at-trx-commit-x3D-1" class="headerlink" title="innodb_flush_log_at_trx_commit&#x3D;1"></a>innodb_flush_log_at_trx_commit&#x3D;1</h5><p><img src="https://oss.javaguide.cn/github/javaguide/07.png" alt="img"></p>
+<p><strong>innodb_flush_log_at_trx_commit&#x3D;1</strong></p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/07.png" alt="img"></p>
 <p>为1时，只要事务提交成功，redo log记录就一定在硬盘里，不会有任何数据丢失。如果事务执行期间MySQL挂了或宕机，这部分日志丢了，但是事务并没有提交，所以日志丢了也不会有损失。</p>
-<h5 id="innodb-flush-log-at-trx-commit-x3D-2"><a href="#innodb-flush-log-at-trx-commit-x3D-2" class="headerlink" title="innodb_flush_log_at_trx_commit&#x3D;2"></a>innodb_flush_log_at_trx_commit&#x3D;2</h5><p><img src="https://oss.javaguide.cn/github/javaguide/09.png" alt="img"></p>
+<p><strong>innodb_flush_log_at_trx_commit&#x3D;2</strong></p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/09.png" alt="img"></p>
 <p>为2时，只要事务提交成功，redo log buffer中的内容只写入文件系统缓存（page cache）。如果仅仅只是MySQL挂了不会有任何数据丢失，但是宕机可能会有1秒数据的丢失。</p>
 <h4 id="日志文件组"><a href="#日志文件组" class="headerlink" title="日志文件组"></a>日志文件组</h4><p>硬盘上存储的redo log日志文件不只一个，而是以一个<strong>日志文件组</strong>的形式出现的，每个的redo日志文件大小都是一样的。比如可以配置为一组4个文件，每个文件的大小是1GB，整个redo log日志文件组可以记录4G的内容。它采用的是环形数组形式，从头开始写，写到末尾又回到头循环写，如下图所示。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/10.png" alt="img"></p>
@@ -2113,10 +2129,10 @@ index <span class="token operator">=</span> hash <span class="token operator">%<
 <p>我们知道如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行回滚，在MySQL中，恢复机制是通过回滚日志（undo log）实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。如果执行过程中遇到异常的话，我们直接利用回滚日志中的信息将数据回滚到修改之前的样子即可！并且，回滚日志会先于数据持久化到磁盘上。这样就保证了即使遇到数据库突然宕机等情况，当用户再次启动数据库的时候，数据库还能够通过查询回滚日志来回滚将之前未完成的事务。</p>
 </blockquote>
 <p>另外，MVCC的实现依赖于：<strong>隐藏字段、ReadView、undolog</strong>。在内部实现中，InnoDB通过数据行的DB_TRX_ID和ReadView来判断数据的可见性，如不可见，则通过数据行的DB_ROLL_PTR找到undo log中的历史版本。每个事务读到的数据版本可能是不一样的，在同一个事务中，用户只能看到该事务创建ReadView之前已经提交的修改和该事务本身做的修改</p>
-<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<h3 id="总结三大日志"><a href="#总结三大日志" class="headerlink" title="总结三大日志"></a>总结三大日志</h3><blockquote>
 <p>MySQLInnoDB引擎使用redo log(重做日志)保证事务的持久性，使用undolog(回滚日志)来保证事务的原子性。<br>MySQL数据库的数据备份、主备、主主、主从都离不开bin log，需要依靠bin log来同步数据，保证数据一致性。<br><a target="_blank" rel="noopener" href="https://javaguide.cn/database/mysql/mysql-logs.html">原文链接</a></p>
 </blockquote>
-<h4 id="三大日志"><a href="#三大日志" class="headerlink" title="三大日志"></a>三大日志</h4><p>bin log,redo log,undo log</p>
+<p>bin log,redo log,undo log</p>
 <p><strong>bin log</strong><br>主要使用场景有两个，分别是主从复制和数据恢复<br>bin log记录了数据库表结构和表数据变更，比如update&#x2F;delete&#x2F;insert&#x2F;truncate&#x2F;create。它不会记录select（因为这没有对表没有进行变更）</p>
 <p><strong>redo log</strong><br>包括两部分：一个是内存中的日志缓冲(redo log buffer)，另一个是磁盘上的日志文件(redo log file)。Mysql的基本存储结构是页(记录都存在页里边)，所以MySQL是先把这条记录所在的页找到，然后把该页加载到内存中，将对应记录进行修改。现在就可能存在一个问题：如果在内存中把数据改了，还没来得及落磁盘，而此时的数据库挂了怎么办？显然这次更改就丢了。所以引入redo log解决。MySQL每执行一条DML语句，先将记录写入redo log buffer（缓冲），后续某个时间点再一次性将多个操作记录写到redo log file（磁盘）。这种先写日志，再写磁盘的技术就是MySQL里经常说到的WAL(Write-Ahead Logging)技术。redo log也是写到磁盘，不过是顺序IO所以速度很快。</p>
 <p><strong>bin log和 redo log区别</strong></p>
@@ -2352,7 +2368,7 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <li>如果redo log只是预提交但不是commit状态，这个时候就会去判断bin log是否完整，如果完整就提交redo log,不完整就回滚事务。</li>
 </ul>
 <p>这样就解决了数据一致性的问题。</p>
-<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><ul>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>MySQL主要分为Server层和引擎层，Server层主要包括连接器、查询缓存、分析器、优化器、执行器，同时还有一个日志模块（bin log），这个日志模块所有执行引擎都可以共用，redo log只有InnoDB有。</li>
 <li>引擎层是插件式的，目前主要包括，MyISAM,InnoDB,Memory等。</li>
 <li>查询语句的执行流程如下：权限校验（如果命中缓存）—&gt;查询缓存—&gt;分析器—&gt;优化器—&gt;权限校验—&gt;执行器—&gt;引擎</li>
@@ -2450,7 +2466,8 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <li>reset query cache;：从查询缓存中移除所有查询。</li>
 <li>flush tables；关闭所有打开的表，同时该操作会清空查询缓存中的内容。</li>
 </ul>
-<h3 id="MySQL缓存机制"><a href="#MySQL缓存机制" class="headerlink" title="MySQL缓存机制"></a>MySQL缓存机制</h3><h4 id="缓存规则"><a href="#缓存规则" class="headerlink" title="缓存规则"></a>缓存规则</h4><ul>
+<h3 id="MySQL缓存机制"><a href="#MySQL缓存机制" class="headerlink" title="MySQL缓存机制"></a>MySQL缓存机制</h3><p><strong>缓存规则</strong></p>
+<ul>
 <li>查询缓存会将查询语句和结果集保存到内存（一般是key-value的形式，key是查询语句，value是查询的结果集），下次再查直接从内存中取。</li>
 <li>缓存的结果是通过sessions共享的，所以一个client查询的缓存结果，另一个client也可以使用。</li>
 <li>SQL必须完全一致才会导致查询缓存命中（大小写、空格、使用的数据库、协议版本、字符集等必须一致）。检查查询缓存时，MySQL Server不会对SQL做任何处理，它精确的使用客户端传来的查询。</li>
@@ -2470,7 +2487,8 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <span class="token comment">-- 不会缓存</span>
 <span class="token keyword">SELECT</span> SQL_NO_CACHE id<span class="token punctuation">,</span> name <span class="token keyword">FROM</span> customer<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="缓存机制中的内存管理"><a href="#缓存机制中的内存管理" class="headerlink" title="缓存机制中的内存管理"></a>缓存机制中的内存管理</h4><p>查询缓存是完全存储在内存中的，所以在配置和使用它之前，我们需要先了解它是如何使用内存的。MySQL查询缓存使用内存池技术，自己管理内存释放和分配，而不是通过操作系统。内存池使用的基本单位是变长的block,用来存储类型、大小、数据等信息。一个结果集的缓存通过链表把这些block串起来。block最短长度为<code>query_cache_min_res_unit</code>。当服务器启动的时候，会初始化缓存需要的内存，是一个完整的空闲块。当查询结果需要缓存的时候，先从空闲块中申请一个数据块为参数<code>query_cache_min_res_unit</code>配置的空间，即使缓存数据很小，申请数据块也是这个，因为查询开始返回结果的时候就分配空间，此时无法预知结果多大。分配内存块需要先锁住空间块，所以操作很慢，MySQL会尽量避免这个操作，选择尽可能小的内存块，如果不够，继续申请，如果存储完时有空余则释放多余的。但是如果并发的操作，余下的需要回收的空间很小，小于<code>query_cache_min_res_unit</code>，不能再次被使用，就会产生碎片。</p>
+<p><strong>缓存机制中的内存管理</strong></p>
+<p>查询缓存是完全存储在内存中的，所以在配置和使用它之前，我们需要先了解它是如何使用内存的。MySQL查询缓存使用内存池技术，自己管理内存释放和分配，而不是通过操作系统。内存池使用的基本单位是变长的block,用来存储类型、大小、数据等信息。一个结果集的缓存通过链表把这些block串起来。block最短长度为<code>query_cache_min_res_unit</code>。当服务器启动的时候，会初始化缓存需要的内存，是一个完整的空闲块。当查询结果需要缓存的时候，先从空闲块中申请一个数据块为参数<code>query_cache_min_res_unit</code>配置的空间，即使缓存数据很小，申请数据块也是这个，因为查询开始返回结果的时候就分配空间，此时无法预知结果多大。分配内存块需要先锁住空间块，所以操作很慢，MySQL会尽量避免这个操作，选择尽可能小的内存块，如果不够，继续申请，如果存储完时有空余则释放多余的。但是如果并发的操作，余下的需要回收的空间很小，小于<code>query_cache_min_res_unit</code>，不能再次被使用，就会产生碎片。</p>
 <h3 id="MySQL查询缓存的优缺点"><a href="#MySQL查询缓存的优缺点" class="headerlink" title="MySQL查询缓存的优缺点"></a>MySQL查询缓存的优缺点</h3><p><strong>优点</strong></p>
 <ul>
 <li>查询缓存的查询，发生在MySQL接收到客户端的查询请求、查询权限验证之后和查询SQL解析之前。也就是说，当MySQL接收到客户端的查询SQL之后，仅仅只需要对其进行相应的权限验证之后，就会通过查询缓存来查找结果，甚至都不需要经过Optimizer模块进行执行计划的分析优化，更不需要发生任何存储引擎的交互。</li>
@@ -2490,7 +2508,7 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <li>当向某个表写入数据的时候，必须将这个表所有的缓存设置为失效，如果缓存空间很大，则消耗也会很大，可能使系统僵死一段时间，因为这个操作是靠全局锁操作来保护的。</li>
 <li>对InnoDB表，当修改一个表时，设置了缓存失效，但是多版本特性会暂时将这修改对其他事务屏蔽，在这个事务提交之前，所有查询都无法使用缓存，直到这个事务被提交，所以长时间的事务，会大大降低查询缓存的命中。</li>
 </ul>
-<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><p>MySQL中的查询缓存虽然能够提升数据库的查询性能，但是查询同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。查询缓存是一个适用较少情况的缓存机制。如果你的应用对数据库的更新很少，那么查询缓存将会作用显著。比较典型的如博客系统，一般博客更新相对较慢，数据表相对稳定不变，这时候查询缓存的作用会比较明显。简单总结一下查询缓存的适用场景：</p>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>MySQL中的查询缓存虽然能够提升数据库的查询性能，但是查询同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。查询缓存是一个适用较少情况的缓存机制。如果你的应用对数据库的更新很少，那么查询缓存将会作用显著。比较典型的如博客系统，一般博客更新相对较慢，数据表相对稳定不变，这时候查询缓存的作用会比较明显。简单总结一下查询缓存的适用场景：</p>
 <ul>
 <li>表数据修改不频繁、数据较静态。</li>
 <li>查询（Select）重复度高。</li>
@@ -2627,7 +2645,7 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/database/mysql/mysql-query-execution-plan.html">原文链接</a></p>
 </blockquote>
-<h3 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h3><ol>
+<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><ol>
 <li>id: 是用来顺序标识整个查询中select语句的，在嵌套查询中id越大的语句越先执</li>
 <li>select_type:查询的类型</li>
 </ol>

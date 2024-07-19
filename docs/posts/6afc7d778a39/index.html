@@ -533,7 +533,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h2><h3 id="什么是序列化-什么是反序列化"><a href="#什么是序列化-什么是反序列化" class="headerlink" title="什么是序列化?什么是反序列化?"></a>什么是序列化?什么是反序列化?</h3><p>如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：</p>
+                <h2 id="什么是序列化、反序列化"><a href="#什么是序列化、反序列化" class="headerlink" title="什么是序列化、反序列化?"></a>什么是序列化、反序列化?</h2><p>如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：</p>
 <ul>
 <li><strong>序列化</strong>：将数据结构或对象转换成二进制字节流的过程</li>
 <li><strong>反序列化</strong>：将在序列化过程中所生成的二进制字节流转换成数据结构或者对象的过程</li>
@@ -561,7 +561,7 @@
 </ol>
 <p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-ip-4-model.png" alt="TCP/IP四层模型"></p>
 <p>如上图所示，OSI七层协议模型中，表示层做的事情主要就是对应用层的用户数据进行处理转换为二进制流。反过来的话，就是将二进制流转换成应用层的用户数据。这不就对应的是序列化和反序列化么？OSI七层协议模型中的应用层、表示层和会话层对应的都是TCP&#x2F;IP四层模型中的应用层，所以序列化协议属于TCP&#x2F;IP协议应用层的一部分。</p>
-<h3 id="如果有些字段不想进行序列化怎么办？-transient"><a href="#如果有些字段不想进行序列化怎么办？-transient" class="headerlink" title="如果有些字段不想进行序列化怎么办？(transient)"></a>如果有些字段不想进行序列化怎么办？(transient)</h3><p>对于不想进行序列化的变量，使用<strong>transient</strong>关键字修饰。</p>
+<h2 id="如果有些字段不想进行序列化怎么办？-transient"><a href="#如果有些字段不想进行序列化怎么办？-transient" class="headerlink" title="如果有些字段不想进行序列化怎么办？(transient)"></a>如果有些字段不想进行序列化怎么办？(transient)</h2><p>对于不想进行序列化的变量，使用<strong>transient</strong>关键字修饰。</p>
 <p>transient关键字的作用是：阻止实例中那些用此关键字修饰的的变量序列化；当对象被反序列化时，被transient修饰的变量值不会被持久化和恢复。关于transient还有几点注意：</p>
 <ul>
 <li>transient只能修饰变量，不能修饰类和方法。</li>

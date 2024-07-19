@@ -284,7 +284,7 @@ void createMap(Thread t, T firstValue) {
 
 主要的核心逻辑还是在ThreadLocalMap中的，一步步往下看，后面还有更详细的剖析。
 
-##### ThreadLocalMapHash算法
+**ThreadLocalMapHash算法**
 
 既然是Map结构，那么ThreadLocalMap当然也要实现自己的hash算法来解决散列表数组冲突问题。
 
@@ -324,13 +324,13 @@ public class ThreadLocal<T> {
 
 每当创建一个ThreadLocal对象，这个ThreadLocal.nextHashCode这个值就会增长0x61c88647。这个值很特殊，它是斐波那契数也叫黄金分割数。hash增量为这个数字，带来的好处就是hash分布非常均匀。
 
-##### ThreadLocalMapHash冲突
+**ThreadLocalMapHash冲突**
 
 > **注明**：下面所有示例图中，绿色块Entry代表正常数据，灰色块代表Entry的key值为null，已被垃圾回收。白色块表示Entry为null。
 
 虽然ThreadLocalMap中使用了黄金分割数来作为hash计算因子，大大减少了Hash冲突的概率，但是仍然会存在冲突。HashMap中解决冲突的方法是在数组上构造一个链表结构，冲突的数据挂载到链表上，如果链表长度超过一定数量则会转化成红黑树。而ThreadLocalMap中并没有链表结构，所以这里不能使用HashMap解决冲突的方式了。如果我们插入一个value=27的数据，通过hash计算后应该落入槽位4中，而槽位4已经有了Entry数据。此时就会线性向后查找，一直找到Entry为null的槽位才会停止查找，将当前元素放入此槽位中。当然迭代过程中还有其他的情况，比如遇到了Entry不为null且key值相等的情况，还有Entry中的key值为null的情况等等都会有不同的处理，后面会一一详细讲解。这里还画了一个Entry中的key为null的数据（Entry=2的灰色块数据），因为key值是弱引用类型，所以会有这种数据存在。在set过程中，如果遇到了key过期的Entry数据，实际上是会进行一轮探测式清理操作的，具体操作方式后面会讲到。
 
-##### ThreadLocalMap.set()原理
+**ThreadLocalMap.set()原理**
 
 看完了ThreadLocalhash算法后，我们再来看set是如何实现的。往ThreadLocalMap中set数据（新增或者更新数据）分为好几种情况。
 
@@ -344,7 +344,7 @@ public class ThreadLocal<T> {
 
 ![img](https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/java-guide-blog/view.png)向后遍历过程中，如果没有找到相同key值的Entry数据，从当前节点staleSlot向后查找key值相等的Entry元素，直到Entry为null则停止寻找。通过上图可知，此时table中没有key值相同的Entry。创建新的Entry，替换table[stableSlot]位置：替换完成后也是进行过期元素清理工作，清理工作主要是有两个方法：expungeStaleEntry()和cleanSomeSlots()，具体细节后面会讲到，请继续往后看。
 
-##### ThreadLocalMap.set()源码详解
+**ThreadLocalMap.set()源码详解**
 
 上面已经用图的方式解析了set()实现的原理，其实已经很清晰了，我们接着再看下源码：
 
@@ -584,7 +584,7 @@ if (h != i) {
 
 这里是处理正常的产生Hash冲突的数据，经过迭代后，有过Hash冲突数据的Entry位置会更靠近正确位置，这样的话，查询的时候效率才会更高。
 
-##### ThreadLocalMap扩容机制
+#### ThreadLocalMap扩容机制
 
 在ThreadLocalMap.set()方法的最后，如果执行完启发式清理工作后，未清理到任何数据，且当前散列数组中Entry的数量已经达到了列表的扩容阈值(len*2/3)，就开始执行rehash()逻辑：
 
@@ -646,17 +646,17 @@ private void resize() {
 }
 ```
 
-##### ThreadLocalMap.get()详解
+#### ThreadLocalMap.get()详解
 
 上面已经看完了set()方法的源码，其中包括set数据、清理数据、优化数据桶的位置等操作，接着看看get()操作的原理。
 
-###### ThreadLocalMap.get()图解
+**ThreadLocalMap.get()图解**
 
 **第一种情况**:通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回。
 
 **第二种情况**:slot位置中的Entry.key和要查找的key不一致，我们以get(ThreadLocal1)为例，通过hash计算后，正确的slot位置应该是4，而index=4的槽位已经有了数据，且key值不等于ThreadLocal1，所以需要继续往后迭代查找。迭代到index=5的数据时，此时Entry.key=null，触发一次探测式数据回收操作，执行expungeStaleEntry()方法，执行完后，index 5,8的数据都会被回收，而index 6,7的数据都会前移。index 6,7前移之后，继续从index=5往后迭代，于是就在index=5找到了key值相等的Entry数据。
 
-###### ThreadLocalMap.get()源码详解
+**ThreadLocalMap.get()源码详解**
 
 java.lang.ThreadLocal.ThreadLocalMap.getEntry():
 
@@ -688,7 +688,7 @@ private Entry getEntryAfterMiss(ThreadLocal<?> key, int i, Entry e) {
 }
 ```
 
-##### ThreadLocalMap过期key的启发式清理流程
+#### ThreadLocalMap过期key的启发式清理流程
 
 上面多次提及到ThreadLocalMap过期key的两种清理方式：探测式清理(expungeStaleEntry())、启发式清理(cleanSomeSlots())。探测式清理是以当前Entry往后清理，遇到值为null则结束清理，属于线性探测清理。而启发式清理被作者定义为：Heuristically scan some cells looking for stale entries.
 
@@ -712,7 +712,7 @@ private boolean cleanSomeSlots(int i, int n) {
 }
 ```
 
-##### InheritableThreadLocal
+#### InheritableThreadLocal
 
 我们使用ThreadLocal的时候，在异步场景下是无法给子线程共享父线程中创建的线程副本数据的。为了解决这个问题，JDK中还有一个InheritableThreadLocal类，我们来看一个例子：
 
@@ -763,13 +763,13 @@ private void init(ThreadGroup g, Runnable target, String name,
 
 但InheritableThreadLocal仍然有缺陷，一般我们做异步化处理都是使用的线程池，而InheritableThreadLocal是在new Thread中的init()方法给赋值的，而线程池是线程复用的逻辑，所以这里会存在问题。当然，有问题出现就会有解决问题的方案，阿里巴巴开源了一个TransmittableThreadLocal组件就可以解决这个问题，这里就不再延伸，感兴趣的可自行查阅资料。
 
-##### ThreadLocal项目中使用实战
+#### ThreadLocal项目中使用实战
 
-###### ThreadLocal使用场景
+**ThreadLocal使用场景**
 
 我们现在项目中日志记录用的是ELK+Logstash，最后在Kibana中进行展示和检索。现在都是分布式系统统一对外提供服务，项目间调用的关系可以通过traceId来关联，但是不同项目之间如何传递traceId呢？这里我们使用org.slf4j.MDC来实现此功能，内部就是通过ThreadLocal来实现的，具体实现如下：当前端发送请求到服务A时，服务A会生成一个类似UUID的traceId字符串，将此字符串放入当前线程的ThreadLocal中，在调用服务B的时候，将traceId写入到请求的Header中，服务B在接收请求时会先判断请求的Header中是否有traceId，如果存在则写入自己线程的ThreadLocal中。
 
-###### Feign远程调用解决方案
+**Feign远程调用解决方案**
 
 **服务发送请求：**
 
@@ -818,7 +818,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 }
 ```
 
-###### 线程池异步调用，requestId传递
+**线程池异步调用，requestId传递**
 
 因为MDC是基于ThreadLocal去实现的，异步过程中，子线程并没有办法获取到父线程ThreadLocal存储的数据，所以这里可以自定义线程池执行器，修改其中的run()方法：
 
@@ -845,7 +845,7 @@ public class MyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 }
 ```
 
-###### 使用MQ发送消息给第三方系统
+**使用MQ发送消息给第三方系统**
 
 在MQ发送的消息体中自定义属性requestId，接收方消费消息后，自己解析requestId使用即可
 

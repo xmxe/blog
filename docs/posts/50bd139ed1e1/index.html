@@ -529,8 +529,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="分布式ID介绍"><a href="#分布式ID介绍" class="headerlink" title="分布式ID介绍"></a>分布式ID介绍</h2><h3 id="什么是ID？"><a href="#什么是ID？" class="headerlink" title="什么是ID？"></a>什么是ID？</h3><p>日常开发中，我们需要对系统中的各种数据使用ID唯一表示，比如用户ID对应且仅对应一个人，商品ID对应且仅对应一件商品，订单ID对应且仅对应一个订单。我们现实生活中也有各种ID，比如身份证ID对应且仅对应一个人、地址ID对应且仅对应一个地址。简单来说，ID就是数据的唯一标识。</p>
-<h3 id="什么是分布式ID？"><a href="#什么是分布式ID？" class="headerlink" title="什么是分布式ID？"></a>什么是分布式ID？</h3><p>分布式ID是分布式系统下的ID。分布式ID不存在与现实生活中，属于计算机系统中的一个概念。简单举一个分库分表的例子。</p>
-<p>我司的一个项目，使用的是单机MySQL。但是，没想到的是，项目上线一个月之后，随着使用人数越来越多，整个系统的数据量将越来越大。单机MySQL已经没办法支撑了，需要进行分库分表（推荐Sharding-JDBC）。在分库之后，数据遍布在不同服务器上的数据库，数据库的自增主键已经没办法满足生成的主键唯一了。我们如何为不同的数据节点生成全局唯一主键呢？这个时候就需要生成分布式ID了。</p>
+<h3 id="什么是分布式ID？"><a href="#什么是分布式ID？" class="headerlink" title="什么是分布式ID？"></a>什么是分布式ID？</h3><p>分布式ID是分布式系统下的ID。分布式ID不存在与现实生活中，属于计算机系统中的一个概念。简单举一个分库分表的例子。我司的一个项目，使用的是单机MySQL。但是，没想到的是，项目上线一个月之后，随着使用人数越来越多，整个系统的数据量将越来越大。单机MySQL已经没办法支撑了，需要进行分库分表（推荐Sharding-JDBC）。在分库之后，数据遍布在不同服务器上的数据库，数据库的自增主键已经没办法满足生成的主键唯一了。我们如何为不同的数据节点生成全局唯一主键呢？这个时候就需要生成分布式ID了。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/id-after-the-sub-table-not-conflict.png" alt="img"></p>
 <h3 id="分布式ID需要满足哪些要求"><a href="#分布式ID需要满足哪些要求" class="headerlink" title="分布式ID需要满足哪些要求?"></a>分布式ID需要满足哪些要求?</h3><p><img src="https://oss.javaguide.cn/github/javaguide/system-design/distributed-system/distributed-id-requirements.png" alt="img"></p>
 <p>分布式ID作为分布式系统中必不可少的一环，很多地方都要用到分布式ID。一个最基本的分布式ID需要满足下面这些要求：</p>
@@ -690,7 +689,8 @@ OK
 <li><strong>优点</strong>：生成速度比较快、生成的ID有序递增、比较灵活（可以对Snowflake算法进行简单的改造比如加入业务ID）</li>
 <li><strong>缺点</strong>：需要解决重复ID问题（依赖时间，当机器时间不对的情况下，可能导致会产生重复ID）。</li>
 </ul>
-<h5 id="雪花算法生成分布式ID"><a href="#雪花算法生成分布式ID" class="headerlink" title="雪花算法生成分布式ID"></a>雪花算法生成分布式ID</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SnowFlake</span> <span class="token punctuation">&#123;</span>
+<p><strong>雪花算法生成分布式ID</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SnowFlake</span> <span class="token punctuation">&#123;</span>
 
     <span class="token comment">/**
      * 起始的时间戳
@@ -1249,7 +1249,8 @@ OK
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            类文件结构详解回顾一下字节码在Java中，JVM可以理解的代码就叫做字节码（即扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。Java语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留了
+                            类文件结构详解回顾一下字节码
+在Java中，JVM可以理解的代码就叫做字节码（即扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。Java语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留
                         
                         
                     </div>

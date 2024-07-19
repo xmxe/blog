@@ -697,7 +697,8 @@ client_secret&#x3D;<span aria-hidden="true" class="line-numbers-rows"><span></sp
     <span class="token property">"scope"</span><span class="token operator">:</span> <span class="token string">"all"</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="access-token-VS-refresh-token"><a href="#access-token-VS-refresh-token" class="headerlink" title="access_token VS refresh_token"></a>access_token VS refresh_token</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>Token作为用户获取受保护资源的凭证，必须设置一个过期时间，否则一次登录便可永久使用，认证功能就失去了意义。但是矛盾在于：过期时间设置得太长，用户数据的安全性将大打折扣，过期时间设置得太短，用户就必须每隔一段时间重新登录，以获取新的凭证，这会极大挫伤用户的积极性。针对这一问题，我们可以利用Access &#x2F; Refresh Token这一概念来平衡Token安全性和用户体验。</p>
+<h3 id="access-token-VS-refresh-token"><a href="#access-token-VS-refresh-token" class="headerlink" title="access_token VS refresh_token"></a>access_token VS refresh_token</h3><p><strong>介绍</strong></p>
+<p>Token作为用户获取受保护资源的凭证，必须设置一个过期时间，否则一次登录便可永久使用，认证功能就失去了意义。但是矛盾在于：过期时间设置得太长，用户数据的安全性将大打折扣，过期时间设置得太短，用户就必须每隔一段时间重新登录，以获取新的凭证，这会极大挫伤用户的积极性。针对这一问题，我们可以利用Access &#x2F; Refresh Token这一概念来平衡Token安全性和用户体验。</p>
 <p>众所周知,在OAuth 2.0授权协议中,有两个令牌token,分别是access_token和refresh_token。我们先看下面两者的介绍：access_token-访问令牌,它是一个用来访问受保护资源的凭证。refresh_token-刷新令牌,它是一个用来获取access token的凭证。这两个令牌的主要区别如下:</p>
 <ul>
 <li>access_token时效短,refresh_token时效长,比如access_token有效期1个小时,refresh_token有效期1天。</li>
@@ -719,7 +720,8 @@ client_secret&#x3D;<span aria-hidden="true" class="line-numbers-rows"><span></sp
 </li>
 </ol>
 <p>所以得出的结论是,refresh_token是一个很巧妙地设计,提升了用户体验的同时,又保证了安全性。另外,在OAuth 2.0安全最佳实践中,推荐refresh_token是一次性的,什么意思呢?使用refresh_token获取access_token时,同时会返回一个新的refresh_token,之前的refresh_token就会失效,但是两个refresh_token的绝对过期时间是一样的,所以不会存在refresh_token快过期就获取一个新的,然后重复,永不过期的情况。</p>
-<h4 id="Access-x2F-Refresh-Token如何使用？"><a href="#Access-x2F-Refresh-Token如何使用？" class="headerlink" title="Access &#x2F; Refresh Token如何使用？"></a>Access &#x2F; Refresh Token如何使用？</h4><ol>
+<p><strong>Access &#x2F; Refresh Token如何使用</strong>？</p>
+<ol>
 <li><p>用户提供身份信息（一般是用户名密码），利用客户端向认证服务器换取Refresh Token和Access Token；</p>
 </li>
 <li><p>客户端携带Access Token访问资源服务器，资源服务器识别Access Token并返回资源；</p>

@@ -745,7 +745,8 @@ size<span class="token operator">:</span> <span class="token number">0</span><sp
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>主要的核心逻辑还是在ThreadLocalMap中的，一步步往下看，后面还有更详细的剖析。</p>
-<h5 id="ThreadLocalMapHash算法"><a href="#ThreadLocalMapHash算法" class="headerlink" title="ThreadLocalMapHash算法"></a>ThreadLocalMapHash算法</h5><p>既然是Map结构，那么ThreadLocalMap当然也要实现自己的hash算法来解决散列表数组冲突问题。</p>
+<p><strong>ThreadLocalMapHash算法</strong></p>
+<p>既然是Map结构，那么ThreadLocalMap当然也要实现自己的hash算法来解决散列表数组冲突问题。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> i <span class="token operator">=</span> key<span class="token punctuation">.</span>threadLocalHashCode <span class="token operator">&amp;</span> <span class="token punctuation">(</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>ThreadLocalMap中hash算法很简单，这里i就是当前key在散列表中对应的数组下标位置。</p>
@@ -774,17 +775,20 @@ size<span class="token operator">:</span> <span class="token number">0</span><sp
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>每当创建一个ThreadLocal对象，这个ThreadLocal.nextHashCode这个值就会增长0x61c88647。这个值很特殊，它是斐波那契数也叫黄金分割数。hash增量为这个数字，带来的好处就是hash分布非常均匀。</p>
-<h5 id="ThreadLocalMapHash冲突"><a href="#ThreadLocalMapHash冲突" class="headerlink" title="ThreadLocalMapHash冲突"></a>ThreadLocalMapHash冲突</h5><blockquote>
+<p><strong>ThreadLocalMapHash冲突</strong></p>
+<blockquote>
 <p><strong>注明</strong>：下面所有示例图中，绿色块Entry代表正常数据，灰色块代表Entry的key值为null，已被垃圾回收。白色块表示Entry为null。</p>
 </blockquote>
 <p>虽然ThreadLocalMap中使用了黄金分割数来作为hash计算因子，大大减少了Hash冲突的概率，但是仍然会存在冲突。HashMap中解决冲突的方法是在数组上构造一个链表结构，冲突的数据挂载到链表上，如果链表长度超过一定数量则会转化成红黑树。而ThreadLocalMap中并没有链表结构，所以这里不能使用HashMap解决冲突的方式了。如果我们插入一个value&#x3D;27的数据，通过hash计算后应该落入槽位4中，而槽位4已经有了Entry数据。此时就会线性向后查找，一直找到Entry为null的槽位才会停止查找，将当前元素放入此槽位中。当然迭代过程中还有其他的情况，比如遇到了Entry不为null且key值相等的情况，还有Entry中的key值为null的情况等等都会有不同的处理，后面会一一详细讲解。这里还画了一个Entry中的key为null的数据（Entry&#x3D;2的灰色块数据），因为key值是弱引用类型，所以会有这种数据存在。在set过程中，如果遇到了key过期的Entry数据，实际上是会进行一轮探测式清理操作的，具体操作方式后面会讲到。</p>
-<h5 id="ThreadLocalMap-set-原理"><a href="#ThreadLocalMap-set-原理" class="headerlink" title="ThreadLocalMap.set()原理"></a>ThreadLocalMap.set()原理</h5><p>看完了ThreadLocalhash算法后，我们再来看set是如何实现的。往ThreadLocalMap中set数据（新增或者更新数据）分为好几种情况。</p>
+<p><strong>ThreadLocalMap.set()原理</strong></p>
+<p>看完了ThreadLocalhash算法后，我们再来看set是如何实现的。往ThreadLocalMap中set数据（新增或者更新数据）分为好几种情况。</p>
 <p><strong>第一种情况</strong>：通过hash计算后的槽位对应的Entry数据为空：这里直接将数据放到该槽位即可。</p>
 <p><strong>第二种情况</strong>：槽位数据不为空，key值与当前ThreadLocal通过hash计算获取的key值一致：这里直接更新该槽位的数据。</p>
 <p><strong>第三种情况</strong>：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，没有遇到key过期的Entry，遍历散列数组，线性往后查找，如果找到Entry为null的槽位，则将数据放入该槽位中，或者往后遍历过程中，遇到了key值相等的数据，直接更新即可。</p>
 <p><strong>第四种情况</strong>：槽位数据不为空，往后遍历过程中，在找到Entry为null的槽位之前，遇到key过期的Entry，如下图，往后遍历过程中，遇到了index&#x3D;7的槽位数据Entry的key&#x3D;null，散列数组下标为7位置对应的Entry数据key为null，表明此数据key值已经被垃圾回收掉了，此时就会执行replaceStaleEntry()方法，该方法含义是替换过期数据的逻辑，以index&#x3D;7位起点开始遍历，进行探测式数据清理工作。初始化探测式清理过期数据扫描的开始位置：slotToExpunge&#x3D;staleSlot&#x3D;7。以当前staleSlot开始向前迭代查找，找其他过期的数据，然后更新过期数据起始扫描下标slotToExpunge。for循环迭代，直到碰到Entry为null结束。如果找到了过期的数据，继续向前迭代，直到遇到Entry&#x3D;null的槽位才停止迭代，如下图所示，slotToExpunge被更新为0，以当前节点(index&#x3D;7)向前迭代，检测是否有过期的Entry数据，如果有则更新slotToExpunge值。碰到null则结束探测。以上图为例slotToExpunge被更新为0。上面向前迭代的操作是为了更新探测清理过期数据的起始下标slotToExpunge的值，这个值在后面会讲解，它是用来判断当前过期槽位staleSlot之前是否还有过期元素。接着开始以staleSlot位置(index&#x3D;7)向后迭代，如果找到了相同key值的Entry数据：从当前节点staleSlot向后查找key值相等的Entry元素，找到后更新Entry的值并交换staleSlot元素的位置(staleSlot位置为过期元素)，更新Entry数据，然后开始进行过期Entry的清理工作，如下图所示：</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/java-guide-blog/view.png" alt="img">向后遍历过程中，如果没有找到相同key值的Entry数据，从当前节点staleSlot向后查找key值相等的Entry元素，直到Entry为null则停止寻找。通过上图可知，此时table中没有key值相同的Entry。创建新的Entry，替换table[stableSlot]位置：替换完成后也是进行过期元素清理工作，清理工作主要是有两个方法：expungeStaleEntry()和cleanSomeSlots()，具体细节后面会讲到，请继续往后看。</p>
-<h5 id="ThreadLocalMap-set-源码详解"><a href="#ThreadLocalMap-set-源码详解" class="headerlink" title="ThreadLocalMap.set()源码详解"></a>ThreadLocalMap.set()源码详解</h5><p>上面已经用图的方式解析了set()实现的原理，其实已经很清晰了，我们接着再看下源码：</p>
+<p><strong>ThreadLocalMap.set()源码详解</strong></p>
+<p>上面已经用图的方式解析了set()实现的原理，其实已经很清晰了，我们接着再看下源码：</p>
 <p>java.lang.ThreadLocal.ThreadLocalMap.set():</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> key<span class="token punctuation">,</span> <span class="token class-name">Object</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">Entry</span><span class="token punctuation">[</span><span class="token punctuation">]</span> tab <span class="token operator">=</span> table<span class="token punctuation">;</span>
@@ -975,7 +979,7 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里是处理正常的产生Hash冲突的数据，经过迭代后，有过Hash冲突数据的Entry位置会更靠近正确位置，这样的话，查询的时候效率才会更高。</p>
-<h5 id="ThreadLocalMap扩容机制"><a href="#ThreadLocalMap扩容机制" class="headerlink" title="ThreadLocalMap扩容机制"></a>ThreadLocalMap扩容机制</h5><p>在ThreadLocalMap.set()方法的最后，如果执行完启发式清理工作后，未清理到任何数据，且当前散列数组中Entry的数量已经达到了列表的扩容阈值(len*2&#x2F;3)，就开始执行rehash()逻辑：</p>
+<h4 id="ThreadLocalMap扩容机制"><a href="#ThreadLocalMap扩容机制" class="headerlink" title="ThreadLocalMap扩容机制"></a>ThreadLocalMap扩容机制</h4><p>在ThreadLocalMap.set()方法的最后，如果执行完启发式清理工作后，未清理到任何数据，且当前散列数组中Entry的数量已经达到了列表的扩容阈值(len*2&#x2F;3)，就开始执行rehash()逻辑：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">cleanSomeSlots</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> sz<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> sz <span class="token operator">>=</span> threshold<span class="token punctuation">)</span>
     <span class="token function">rehash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -1026,10 +1030,12 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
     table <span class="token operator">=</span> newTab<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="ThreadLocalMap-get-详解"><a href="#ThreadLocalMap-get-详解" class="headerlink" title="ThreadLocalMap.get()详解"></a>ThreadLocalMap.get()详解</h5><p>上面已经看完了set()方法的源码，其中包括set数据、清理数据、优化数据桶的位置等操作，接着看看get()操作的原理。</p>
-<h6 id="ThreadLocalMap-get-图解"><a href="#ThreadLocalMap-get-图解" class="headerlink" title="ThreadLocalMap.get()图解"></a>ThreadLocalMap.get()图解</h6><p><strong>第一种情况</strong>:通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回。</p>
+<h4 id="ThreadLocalMap-get-详解"><a href="#ThreadLocalMap-get-详解" class="headerlink" title="ThreadLocalMap.get()详解"></a>ThreadLocalMap.get()详解</h4><p>上面已经看完了set()方法的源码，其中包括set数据、清理数据、优化数据桶的位置等操作，接着看看get()操作的原理。</p>
+<p><strong>ThreadLocalMap.get()图解</strong></p>
+<p><strong>第一种情况</strong>:通过查找key值计算出散列表中slot位置，然后该slot位置中的Entry.key和查找的key一致，则直接返回。</p>
 <p><strong>第二种情况</strong>:slot位置中的Entry.key和要查找的key不一致，我们以get(ThreadLocal1)为例，通过hash计算后，正确的slot位置应该是4，而index&#x3D;4的槽位已经有了数据，且key值不等于ThreadLocal1，所以需要继续往后迭代查找。迭代到index&#x3D;5的数据时，此时Entry.key&#x3D;null，触发一次探测式数据回收操作，执行expungeStaleEntry()方法，执行完后，index 5,8的数据都会被回收，而index 6,7的数据都会前移。index 6,7前移之后，继续从index&#x3D;5往后迭代，于是就在index&#x3D;5找到了key值相等的Entry数据。</p>
-<h6 id="ThreadLocalMap-get-源码详解"><a href="#ThreadLocalMap-get-源码详解" class="headerlink" title="ThreadLocalMap.get()源码详解"></a>ThreadLocalMap.get()源码详解</h6><p>java.lang.ThreadLocal.ThreadLocalMap.getEntry():</p>
+<p><strong>ThreadLocalMap.get()源码详解</strong></p>
+<p>java.lang.ThreadLocal.ThreadLocalMap.getEntry():</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Entry</span> <span class="token function">getEntry</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> i <span class="token operator">=</span> key<span class="token punctuation">.</span>threadLocalHashCode <span class="token operator">&amp;</span> <span class="token punctuation">(</span>table<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token class-name">Entry</span> e <span class="token operator">=</span> table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -1056,7 +1062,7 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="ThreadLocalMap过期key的启发式清理流程"><a href="#ThreadLocalMap过期key的启发式清理流程" class="headerlink" title="ThreadLocalMap过期key的启发式清理流程"></a>ThreadLocalMap过期key的启发式清理流程</h5><p>上面多次提及到ThreadLocalMap过期key的两种清理方式：探测式清理(expungeStaleEntry())、启发式清理(cleanSomeSlots())。探测式清理是以当前Entry往后清理，遇到值为null则结束清理，属于线性探测清理。而启发式清理被作者定义为：Heuristically scan some cells looking for stale entries.</p>
+<h4 id="ThreadLocalMap过期key的启发式清理流程"><a href="#ThreadLocalMap过期key的启发式清理流程" class="headerlink" title="ThreadLocalMap过期key的启发式清理流程"></a>ThreadLocalMap过期key的启发式清理流程</h4><p>上面多次提及到ThreadLocalMap过期key的两种清理方式：探测式清理(expungeStaleEntry())、启发式清理(cleanSomeSlots())。探测式清理是以当前Entry往后清理，遇到值为null则结束清理，属于线性探测清理。而启发式清理被作者定义为：Heuristically scan some cells looking for stale entries.</p>
 <p>具体代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">cleanSomeSlots</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">boolean</span> removed <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
@@ -1074,7 +1080,7 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
     <span class="token keyword">return</span> removed<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="InheritableThreadLocal"><a href="#InheritableThreadLocal" class="headerlink" title="InheritableThreadLocal"></a>InheritableThreadLocal</h5><p>我们使用ThreadLocal的时候，在异步场景下是无法给子线程共享父线程中创建的线程副本数据的。为了解决这个问题，JDK中还有一个InheritableThreadLocal类，我们来看一个例子：</p>
+<h4 id="InheritableThreadLocal"><a href="#InheritableThreadLocal" class="headerlink" title="InheritableThreadLocal"></a>InheritableThreadLocal</h4><p>我们使用ThreadLocal的时候，在异步场景下是无法给子线程共享父线程中创建的线程副本数据的。为了解决这个问题，JDK中还有一个InheritableThreadLocal类，我们来看一个例子：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">InheritableThreadLocalDemo</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token class-name">ThreadLocal</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1112,8 +1118,10 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>但InheritableThreadLocal仍然有缺陷，一般我们做异步化处理都是使用的线程池，而InheritableThreadLocal是在new Thread中的init()方法给赋值的，而线程池是线程复用的逻辑，所以这里会存在问题。当然，有问题出现就会有解决问题的方案，阿里巴巴开源了一个TransmittableThreadLocal组件就可以解决这个问题，这里就不再延伸，感兴趣的可自行查阅资料。</p>
-<h5 id="ThreadLocal项目中使用实战"><a href="#ThreadLocal项目中使用实战" class="headerlink" title="ThreadLocal项目中使用实战"></a>ThreadLocal项目中使用实战</h5><h6 id="ThreadLocal使用场景"><a href="#ThreadLocal使用场景" class="headerlink" title="ThreadLocal使用场景"></a>ThreadLocal使用场景</h6><p>我们现在项目中日志记录用的是ELK+Logstash，最后在Kibana中进行展示和检索。现在都是分布式系统统一对外提供服务，项目间调用的关系可以通过traceId来关联，但是不同项目之间如何传递traceId呢？这里我们使用org.slf4j.MDC来实现此功能，内部就是通过ThreadLocal来实现的，具体实现如下：当前端发送请求到服务A时，服务A会生成一个类似UUID的traceId字符串，将此字符串放入当前线程的ThreadLocal中，在调用服务B的时候，将traceId写入到请求的Header中，服务B在接收请求时会先判断请求的Header中是否有traceId，如果存在则写入自己线程的ThreadLocal中。</p>
-<h6 id="Feign远程调用解决方案"><a href="#Feign远程调用解决方案" class="headerlink" title="Feign远程调用解决方案"></a>Feign远程调用解决方案</h6><p><strong>服务发送请求：</strong></p>
+<h4 id="ThreadLocal项目中使用实战"><a href="#ThreadLocal项目中使用实战" class="headerlink" title="ThreadLocal项目中使用实战"></a>ThreadLocal项目中使用实战</h4><p><strong>ThreadLocal使用场景</strong></p>
+<p>我们现在项目中日志记录用的是ELK+Logstash，最后在Kibana中进行展示和检索。现在都是分布式系统统一对外提供服务，项目间调用的关系可以通过traceId来关联，但是不同项目之间如何传递traceId呢？这里我们使用org.slf4j.MDC来实现此功能，内部就是通过ThreadLocal来实现的，具体实现如下：当前端发送请求到服务A时，服务A会生成一个类似UUID的traceId字符串，将此字符串放入当前线程的ThreadLocal中，在调用服务B的时候，将traceId写入到请求的Header中，服务B在接收请求时会先判断请求的Header中是否有traceId，如果存在则写入自己线程的ThreadLocal中。</p>
+<p><strong>Feign远程调用解决方案</strong></p>
+<p><strong>服务发送请求：</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
 <span class="token annotation punctuation">@Slf4j</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FeignInvokeInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">RequestInterceptor</span> <span class="token punctuation">&#123;</span>
@@ -1153,7 +1161,8 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h6 id="线程池异步调用，requestId传递"><a href="#线程池异步调用，requestId传递" class="headerlink" title="线程池异步调用，requestId传递"></a>线程池异步调用，requestId传递</h6><p>因为MDC是基于ThreadLocal去实现的，异步过程中，子线程并没有办法获取到父线程ThreadLocal存储的数据，所以这里可以自定义线程池执行器，修改其中的run()方法：</p>
+<p><strong>线程池异步调用，requestId传递</strong></p>
+<p>因为MDC是基于ThreadLocal去实现的，异步过程中，子线程并没有办法获取到父线程ThreadLocal存储的数据，所以这里可以自定义线程池执行器，修改其中的run()方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyThreadPoolTaskExecutor</span> <span class="token keyword">extends</span> <span class="token class-name">ThreadPoolTaskExecutor</span> <span class="token punctuation">&#123;</span>
 
     <span class="token annotation punctuation">@Override</span>
@@ -1175,7 +1184,8 @@ tab<span class="token punctuation">[</span>staleSlot<span class="token punctuati
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h6 id="使用MQ发送消息给第三方系统"><a href="#使用MQ发送消息给第三方系统" class="headerlink" title="使用MQ发送消息给第三方系统"></a>使用MQ发送消息给第三方系统</h6><p>在MQ发送的消息体中自定义属性requestId，接收方消费消息后，自己解析requestId使用即可</p>
+<p><strong>使用MQ发送消息给第三方系统</strong></p>
+<p>在MQ发送的消息体中自定义属性requestId，接收方消费消息后，自己解析requestId使用即可</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/concurrent/threadlocal.html">原文链接</a></p>
 </blockquote>

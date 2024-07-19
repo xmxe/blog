@@ -20,7 +20,7 @@ Java IO流的40多个类都是从如下4个抽象类基类中派生出来的。
 
 #### 字节流
 
-##### InputStream（字节输入流）
+**InputStream（字节输入流）**
 
 InputStream用于从源头（通常是文件）读取数据（字节信息）到内存中，java.io.InputStream抽象类是所有字节输入流的父类。InputStream常用方法：
 
@@ -112,7 +112,7 @@ input.close();
 
 另外，用于序列化和反序列化的类必须实现Serializable接口，对象中如果有属性不想被序列化，使用transient修饰。
 
-##### OutputStream（字节输出流）
+**OutputStream（字节输出流）**
 
 OutputStream用于将数据（字节信息）写入到目的地（通常是文件），java.io.OutputStream抽象类是所有字节输出流的父类。OutputStream常用方法：
 
@@ -194,7 +194,7 @@ The content read from file:§å®¶å¥½
 
 可以很明显地看到读取出来的内容已经变成了乱码。因此，I/O流就干脆提供了一个直接操作字符的接口，方便我们平时对字符进行流操作。如果音频文件、图片等媒体文件用字节流比较好，如果涉及到字符的话使用字符流比较好。字符流默认采用的是Unicode编码，我们可以通过构造方法自定义编码。顺便分享一下之前遇到的笔试题：常用字符编码所占字节数？utf8:英文占1字节，中文占3字节，unicode：任何字符都占2个字节，gbk：英文占1字节，中文占2字节。
 
-##### Reader（字符输入流）
+**Reader（字符输入流）**
 
 Reader用于从源头（通常是文件）读取数据（字符信息）到内存中，java.io.Reader抽象类是所有字符输入流的父类。
 
@@ -252,7 +252,7 @@ The actual number of bytes skipped:3
 The content read from file:我是Guide。
 ```
 
-##### Writer（字符输出流）
+**Writer（字符输出流）**
 
 Writer用于将数据（字符信息）写入到目的地（通常是文件），java.io.Writer抽象类是所有字符输出流的父类。Writer常用方法：
 
@@ -411,7 +411,7 @@ void copy_pdf_to_another_pdf_with_byte_array_stream() {
 }
 ```
 
-##### BufferedInputStream（字节缓冲输入流）
+**BufferedInputStream（字节缓冲输入流）**
 
 BufferedInputStream从源头（通常是文件）读取数据（字节信息）到内存的过程中不会一个字节一个字节的读取，而是会先将读取到的字节存放在缓存区，并从内部缓冲区中单独读取字节。这样大幅减少了IO次数，提高了读取效率。BufferedInputStream内部维护了一个缓冲区，这个缓冲区实际就是一个字节数组，通过阅读BufferedInputStream源码即可得到这个结论。
 
@@ -438,7 +438,7 @@ public class BufferedInputStream extends FilterInputStream {
 
 缓冲区的大小默认为**8192**字节，当然了，你也可以通过BufferedInputStream(InputStream in, int size)这个构造方法来指定缓冲区的大小。
 
-##### BufferedOutputStream（字节缓冲输出流）
+**BufferedOutputStream（字节缓冲输出流）**
 
 BufferedOutputStream将数据（字节信息）写入到目的地（通常是文件）的过程中不会一个字节一个字节的写入，而是会先将要写入的字节存放在缓存区，并从内部缓冲区中单独写入字节。这样大幅减少了IO次数，提高了读取效率
 
@@ -965,7 +965,8 @@ public void mappedByteBuffer(){
 - mark(标记，调用mark()来设置mark=position，再调用reset()可以让position恢复到标记的位置)
 mark <= position <= limit <= capacity。position和limit的含义取决于Buffer处在读模式还是写模式。不管Buffer处在什么模式，capacity的含义总是一样的。
 
-#### Buffer常用方法
+**Buffer常用方法**
+
 ```java
 allocate(int capacity)//从堆空间中分配一个容量大小为capacity的byte数组作为缓冲区的byte数据存储器
 allocateDirect(int capacity)//是不使用JVM堆栈而是通过操作系统来创建内存块用作缓冲区，它与当前操作系统能够更好的耦合，因此能进一步提高I/O操作速度。但是分配直接缓冲区的系统开销很大，因此只有在缓冲区较大并长期存在，或者需要经常重用时，才使用这种缓冲区
@@ -1231,7 +1232,7 @@ NIO中的Channel的主要实现有：FileChannel(从文件中读写数据) 、Da
     }
 ```
 
-#### Channel常用方法 
+**Channel常用方法 **
 
 ```java
 int read(ByteBuffer dst) //从Channel到中读取数据到ByteBuffer 
@@ -1309,7 +1310,7 @@ key.readyOps(); //返回一个bit mask，代表在相应channel上可以进行�
 ```
 通过Selector选择通道一旦向Selector注册了一或多个通道，就可以调用几个重载的select()方法。这些方法返回你所感兴趣的事件（如连接、接受、读或写）已经准备就绪的那些通道。
 
-#### select()方法
+**select()方法**
 
 ```java
 int select() //阻塞到至少有一个通道在你注册的事件上就绪了

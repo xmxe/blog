@@ -676,7 +676,9 @@ start slave; #开启Slave
 ```
 在这里指定Master的信息，master_log_file是在配置Master的时候的File选项，master_log_pos是在配置Master的Position选项，这里要进行对应。然后可以通过`show slave status;`查看配置的信息：完成！
 
-[MySQL5.6数据库主从（Master/Slave）同步安装与配置详解](https://blog.csdn.net/xlgen157387/article/details/51331244/)
+| [MySQL5.6数据库主从（Master/Slave）同步安装与配置详解](https://blog.csdn.net/xlgen157387/article/details/51331244/) | [说说MySQL主从复制原理？](https://mp.weixin.qq.com/s/CNu4uVZrpAkDt5UCIlCBSA) |      |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :--: |
+
 
 ---
 

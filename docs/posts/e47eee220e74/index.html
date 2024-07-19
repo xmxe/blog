@@ -766,7 +766,8 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <p><strong>AOP(Aspect-Oriented Programming，面向切面编程)</strong>,能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。<strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDKProxy</strong>去创建代理对象，而对于没有实现接口的对象，就无法使用JDKProxy去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong>生成一个被代理对象的子类来作为代理，如下图所示：</p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg" alt="SpringAOPProcess"></p>
 <p>当然，你也可以使用AspectJ,SpringAOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了AOP。</p>
-<h4 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别?"></a>Spring AOP和AspectJ AOP有什么区别?</h4><p><strong>Spring AOP属于运行时增强，而AspectJ是编译时增强</strong>。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。</p>
+<p><strong>Spring AOP和AspectJ AOP有什么区别</strong>?</p>
+<p><strong>Spring AOP属于运行时增强，而AspectJ是编译时增强</strong>。Spring AOP基于代理(Proxying)，而AspectJ基于字节码操作(Bytecode Manipulation)。Spring AOP已经集成了AspectJ，AspectJ应该算的上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单，如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比Spring AOP快很多。</p>
 <h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><p>模板方法模式是一种行为设计模式，它定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤的实现方式。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Template</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">//这是我们的模板方法</span>
@@ -800,7 +801,8 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 
 <p>Spring中JdbcTemplate、HibernateTemplate等以Template结尾的对数据库操作的类，它们就使用到了模板模式。一般情况下，我们都是使用继承的方式来实现模板模式，但是Spring并没有使用这种方式，而是使用Callback模式与模板方法模式配合，既达到了代码复用的效果，同时增加了灵活性。</p>
 <h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>观察者模式是一种对象行为型模式。它表示的是一种对象与对象之间具有依赖关系，当一个对象发生改变的时候，这个对象所依赖的对象也会做出反应。Spring事件驱动模型就是观察者模式很经典的一个应用。Spring事件驱动模型非常有用，在很多场景都可以解耦我们的代码。比如我们每次添加商品的时候都需要重新更新商品索引，这个时候就可以利用观察者模式来解决这个问题。</p>
-<h4 id="Spring事件驱动模型中的三种角色"><a href="#Spring事件驱动模型中的三种角色" class="headerlink" title="Spring事件驱动模型中的三种角色"></a>Spring事件驱动模型中的三种角色</h4><h5 id="事件角色"><a href="#事件角色" class="headerlink" title="事件角色"></a>事件角色</h5><p><code>ApplicationEvent</code>(<code>org.springframework.context</code>包下)充当事件的角色,这是一个抽象类，它继承了<code>java.util.EventObject</code>并实现了<code>java.io.Serializable</code>接口。</p>
+<p><strong>Spring事件驱动模型中的三种角色</strong></p>
+<h5 id="事件角色"><a href="#事件角色" class="headerlink" title="事件角色"></a>事件角色</h5><p><code>ApplicationEvent</code>(<code>org.springframework.context</code>包下)充当事件的角色,这是一个抽象类，它继承了<code>java.util.EventObject</code>并实现了<code>java.io.Serializable</code>接口。</p>
 <p>Spring中默认存在以下事件，他们都是对<code>ApplicationContextEvent</code>的实现(继承自<code>ApplicationContextEvent</code>)：</p>
 <ul>
 <li>ContextStartedEvent：ApplicationContext启动后触发的事件;</li>
@@ -828,7 +830,8 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>ApplicationEventPublisher</code>接口的<code>publishEvent()</code>这个方法在<code>AbstractApplicationContext</code>类中被实现，阅读这个方法的实现，你会发现实际上事件真正是通过<code>ApplicationEventMulticaster</code>来广播出去的。具体内容过多，就不在这里分析了，后面可能会单独写一篇文章提到。</p>
-<h4 id="Spring的事件流程总结"><a href="#Spring的事件流程总结" class="headerlink" title="Spring的事件流程总结"></a>Spring的事件流程总结</h4><ol>
+<p><strong>Spring的事件流程总结</strong></p>
+<ol>
 <li>定义一个事件:实现一个继承自ApplicationEvent，并且写相应的构造函数；</li>
 <li>定义一个事件监听者：实现ApplicationListener接口，重写onApplicationEvent()方法；</li>
 <li>使用事件发布者发布消息:可以通过ApplicationEventPublisher的publishEvent()方法发布消息。</li>

@@ -587,7 +587,9 @@
 <li><strong>TCP用于对传输准确性要求特别高的场景</strong>，比如文件传输、发送和接收邮件、远程登录等等。</li>
 </ul>
 <h3 id="HTTP基于TCP还是UDP？"><a href="#HTTP基于TCP还是UDP？" class="headerlink" title="HTTP基于TCP还是UDP？"></a>HTTP基于TCP还是UDP？</h3><p><strong>HTTP协议是基于TCP协议的</strong>，所以发送HTTP请求之前首先要建立TCP连接也就是要经历3次握手。</p>
+<blockquote>
 <p>🐛修正（参见<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/1915">issue#1915</a>）：HTTP3.0之前是基于TCP协议的，而HTTP3.0将弃用TCP，改用基于UDP的QUIC协议。此变化主要为了解决HTTP&#x2F;2中存在的队头阻塞问题。由于HTTP&#x2F;2在单个TCP连接上使用了多路复用，受到TCP拥塞控制的影响，少量的丢包就可能导致整个TCP连接上的所有流被阻塞。</p>
+</blockquote>
 <h3 id="使用TCP的协议有哪些-使用UDP的协议有哪些"><a href="#使用TCP的协议有哪些-使用UDP的协议有哪些" class="headerlink" title="使用TCP的协议有哪些?使用UDP的协议有哪些?"></a>使用TCP的协议有哪些?使用UDP的协议有哪些?</h3><p><strong>运行于TCP协议之上的协议</strong>：</p>
 <ol>
 <li><strong>HTTP协议</strong>：超文本传输协议(HTTP，HyperTextTransferProtocol)主要是为Web浏览器与Web服务器之间的通信而设计的。当我们使用浏览器浏览网页的时候，我们网页就是通过HTTP请求进行加载的。</li>
@@ -743,11 +745,23 @@
 <li>关闭TCP连接。</li>
 </ol>
 <h4 id="HTTP协议优点"><a href="#HTTP协议优点" class="headerlink" title="HTTP协议优点"></a>HTTP协议优点</h4><p>扩展性强、速度快、跨平台支持性好。</p>
-<h3 id="HTTPS协议"><a href="#HTTPS协议" class="headerlink" title="HTTPS协议"></a>HTTPS协议</h3><h4 id="HTTPS协议介绍"><a href="#HTTPS协议介绍" class="headerlink" title="HTTPS协议介绍"></a>HTTPS协议介绍</h4><p>HTTPS协议（HyperTextTransferProtocolSecure），是HTTP的加强安全版本。HTTPS是基于HTTP的，也是用TCP作为底层协议，并额外使用SSL&#x2F;TLS协议用作加密和安全认证。默认端口号是443.</p>
-<p>HTTPS协议中，SSL通道通常使用基于密钥的加密算法，密钥长度通常是40比特或128比特。</p>
+<h3 id="HTTPS协议"><a href="#HTTPS协议" class="headerlink" title="HTTPS协议"></a>HTTPS协议</h3><h4 id="HTTPS协议介绍"><a href="#HTTPS协议介绍" class="headerlink" title="HTTPS协议介绍"></a>HTTPS协议介绍</h4><p>HTTPS协议（HyperTextTransferProtocolSecure），是HTTP的加强安全版本。HTTPS是基于HTTP的，也是用TCP作为底层协议，并额外使用SSL&#x2F;TLS协议用作加密和安全认证。默认端口号是443。HTTPS协议中，SSL通道通常使用基于密钥的加密算法，密钥长度通常是40比特或128比特。</p>
 <h4 id="HTTPS协议优点"><a href="#HTTPS协议优点" class="headerlink" title="HTTPS协议优点"></a>HTTPS协议优点</h4><p>保密性好、信任度高。</p>
+<h4 id="https原理"><a href="#https原理" class="headerlink" title="https原理"></a>https原理</h4><p><strong>https加密过程</strong></p>
+<p><strong>服务器A</strong>、<strong>客户端B</strong>、<strong>授权机构CA</strong><br>A向CA申请证书，同时A把网址、签名等摘要发给CA，CA用自己的私钥加密A的摘要信息生成证书，将证书返回给A。客户端B访问服务器A，A返回证书(包含A的公钥)，B使用CA的公钥验证CA的签名，判断证书合法性。如果证书合法提取A的公钥，B随机生成一个对称密钥，B使用A的公钥对B的对称密钥加密，将加密后的对称密钥发送给A，A使用自己的私钥解密得到B的对称密钥，通过密钥对称加密或解密要传输的数据<br><strong>使用数字签名确保消息不可否认，使用数字证书对用户身份进行认证</strong></p>
+<p>那为啥要用第三方权威机构（Certificate Authority，简称 CA）私钥对摘要加密呢？</p>
+<p>因为摘要算法是公开的，中间人可以替换掉证书明文，再根据证书上的摘要算法计算出摘要后把证书上的摘要也给替换掉！这样client拿到证书后计算摘要发现一样，误以为此证书是合法就中招了。</p>
+<p><strong>为啥要先生成摘要再加密呢，不能直接加密？</strong></p>
+<p>因为使用非对称加密是非常耗时的。如果把整个证书内容都加密生成签名的话，客户端验验签也需要把签名解密，证书明文较长，客户端验签就需要很长的时间，而用摘要的话，会把内容很长的明文压缩成小得多的定长字符串，客户端验签的话就会快得多。</p>
+<blockquote>
+<ul>
+<li><strong>端口号</strong>：HTTP默认是80，HTTPS默认是443。</li>
+<li><strong>URL前缀</strong>：HTTP的URL前缀是<code>http://</code>，HTTPS的URL前缀是<code>https://</code>。</li>
+<li><strong>安全性和资源消耗</strong>：HTTP协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份。HTTPS是运行在SSL&#x2F;TLS之上的HTTP协议，SSL&#x2F;TLS运行在TCP之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。所以说，HTTP安全性没有HTTPS高，但是HTTPS比HTTP耗费更多服务器资源。</li>
+</ul>
+</blockquote>
 <h3 id="HTTPS的核心—SSL-x2F-TLS协议"><a href="#HTTPS的核心—SSL-x2F-TLS协议" class="headerlink" title="HTTPS的核心—SSL&#x2F;TLS协议"></a>HTTPS的核心—SSL&#x2F;TLS协议</h3><p>HTTPS之所以能达到较高的安全性要求，就是结合了SSL&#x2F;TLS和TCP协议，对通信数据进行加密，解决了HTTP数据透明的问题。接下来重点介绍一下SSL&#x2F;TLS的工作原理。</p>
-<h4 id="SSL和TLS的区别？"><a href="#SSL和TLS的区别？" class="headerlink" title="SSL和TLS的区别？"></a>SSL和TLS的区别？</h4><p><strong>SSL和TLS没有太大的区别</strong>,SSL指安全套接字协议（SecureSocketsLayer），首次发布与1996年。SSL的首次发布其实已经是他的3.0版本，SSL1.0从未面世，SSL2.0则具有较大的缺陷（DROWN缺陷——DecryptingRSAwithObsoleteandWeakenedeNcryption）。很快，在1999年，SSL3.0进一步升级，新版本被命名为TLS1.0。因此，TLS是基于SSL之上的，但由于习惯叫法，通常把HTTPS中的核心加密协议混称为SSL&#x2F;TLS。</p>
+<h4 id="SSL和TLS的区别？"><a href="#SSL和TLS的区别？" class="headerlink" title="SSL和TLS的区别？"></a>SSL和TLS的区别？</h4><p>SSL和TLS没有太大的区别,SSL指安全套接字协议（SecureSocketsLayer），首次发布与1996年。SSL的首次发布其实已经是他的3.0版本，SSL1.0从未面世，SSL2.0则具有较大的缺陷（DROWN缺陷——DecryptingRSAwithObsoleteandWeakenedeNcryption）。很快，在1999年，SSL3.0进一步升级，新版本被命名为TLS1.0。因此，TLS是基于SSL之上的，但由于习惯叫法，通常把HTTPS中的核心加密协议混称为SSL&#x2F;TLS。</p>
 <h4 id="SSL-x2F-TLS的工作原理"><a href="#SSL-x2F-TLS的工作原理" class="headerlink" title="SSL&#x2F;TLS的工作原理"></a>SSL&#x2F;TLS的工作原理</h4><h5 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h5><p>SSL&#x2F;TLS的核心要素是非对称加密。非对称加密采用两个密钥——一个公钥，一个私钥。在通信时，私钥仅由解密者保存，公钥由任何一个想与解密者通信的发送者（加密者）所知。</p>
 <blockquote>
 <p>可以设想一个场景，在某个自助邮局，每个通信信道都是一个邮箱，每一个邮箱所有者都在旁边立了一个牌子，上面挂着一把钥匙：这是我的公钥，发送者请将信件放入我的邮箱，并用公钥锁好。</p>
@@ -778,8 +792,7 @@
 </blockquote>
 <p>为了公钥传输的信赖性问题，第三方机构应运而生——证书颁发机构（CA，CertificateAuthority）。CA默认是受信任的第三方。CA会给各个服务器颁发证书，证书存储在服务器上，并附有CA的电子签名（见下节）。</p>
 <p>当客户端（浏览器）向服务器发送HTTPS请求时，一定要先获取目标服务器的证书，并根据证书上的信息，检验证书的合法性。一旦客户端检测到证书非法，就会发生错误。客户端获取了服务器的证书后，由于证书的信任性是由第三方信赖机构认证的，而证书上又包含着服务器的公钥信息，客户端就可以放心的信任证书上的公钥就是目标服务器的公钥。</p>
-<h5 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h5><p>好，到这一小节，已经是SSL&#x2F;TLS的尾声了。上一小节提到了数字签名，数字签名要解决的问题，是防止证书被伪造。第三方信赖机构CA之所以能被信赖，就是靠数字签名技术。</p>
-<p>数字签名，是CA在给服务器颁发证书时，使用散列+加密的组合技术，在证书上盖个章，以此来提供验伪的功能。具体行为如下：</p>
+<h5 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h5><p>数字签名要解决的问题，是防止证书被伪造。第三方信赖机构CA之所以能被信赖，就是靠数字签名技术。数字签名，是CA在给服务器颁发证书时，使用散列+加密的组合技术，在证书上盖个章，以此来提供验伪的功能。具体行为如下：</p>
 <blockquote>
 <p>CA知道服务器的公钥，对证书采用散列技术生成一个摘要。CA使用CA私钥对该摘要进行加密，并附在证书下方，发送给服务器。</p>
 <p>现在服务器将该证书发送给客户端，客户端需要验证该证书的身份。客户端找到第三方机构CA，获知CA的公钥，并用CA公钥对证书的签名进行解密，获得了CA生成的摘要。</p>
@@ -793,20 +806,8 @@
 <li>C获得S的证书，信任CA并知晓CA公钥，使用CA公钥对S证书上的签名解密，同时对消息进行散列处理，得到摘要。比较摘要，验证S证书的真实性。</li>
 <li>如果C验证S证书是真实的，则信任S的公钥（在S证书中）。</li>
 </ol>
-<p>对于数字签名，我这里讲的比较简单，如果你没有搞清楚的话，强烈推荐你看看<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18N411X7ty/">数字签名及数字证书原理</a>这个视频，这是我看过最清晰的讲解。</p>
+<p>对于数字签名，强烈推荐看看<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18N411X7ty/">数字签名及数字证书原理</a>这个视频，这是我看过最清晰的讲解。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/image-20220321121814946.png" alt="img"></p>
-<h4 id="总结https"><a href="#总结https" class="headerlink" title="总结https"></a>总结https</h4><h5 id="https加密过程"><a href="#https加密过程" class="headerlink" title="https加密过程"></a>https加密过程</h5><p>服务器A、客户端B、授权机构CA<br>A向CA申请证书，A把网址、签名等摘要发给CA，CA用自己的私钥加密A的摘要信息（公钥）生成证书，返回证书给A。客户端B访问服务器A，A返回证书(包含A的公钥)，B使用CA的公钥验证CA的签名，判断证书合法性。之后B使用A的公钥加密B的（随机数&#x2F;密钥）发送给A，A使用自己的私钥解密得到B的（随机数&#x2F;密钥），通过密钥对称加密要传输的数据<br><strong>使用数字签名确保消息不可否认，使用数字证书对用户身份进行认证</strong></p>
-<p>那为啥要用第三方权威机构（Certificate Authority，简称 CA）私钥对摘要加密呢？</p>
-<p>因为摘要算法是公开的，中间人可以替换掉证书明文，再根据证书上的摘要算法计算出摘要后把证书上的摘要也给替换掉！这样client拿到证书后计算摘要发现一样，误以为此证书是合法就中招了。</p>
-<p><strong>为啥要先生成摘要再加密呢，不能直接加密？</strong></p>
-<p>因为使用非对称加密是非常耗时的。如果把整个证书内容都加密生成签名的话，客户端验验签也需要把签名解密，证书明文较长，客户端验签就需要很长的时间，而用摘要的话，会把内容很长的明文压缩成小得多的定长字符串，客户端验签的话就会快得多。</p>
-<blockquote>
-<ul>
-<li><strong>端口号</strong>：HTTP默认是80，HTTPS默认是443。</li>
-<li><strong>URL前缀</strong>：HTTP的URL前缀是<code>http://</code>，HTTPS的URL前缀是<code>https://</code>。</li>
-<li><strong>安全性和资源消耗</strong>：HTTP协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份。HTTPS是运行在SSL&#x2F;TLS之上的HTTP协议，SSL&#x2F;TLS运行在TCP之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。所以说，HTTP安全性没有HTTPS高，但是HTTPS比HTTP耗费更多服务器资源。</li>
-</ul>
-</blockquote>
 <h5 id="https相关文章"><a href="#https相关文章" class="headerlink" title="https相关文章"></a>https相关文章</h5><table>
 <thead>
 <tr>

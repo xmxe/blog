@@ -562,9 +562,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 > [ArrayList的扩容机制](https://mp.weixin.qq.com/s/GY7RLE-yIF7jPAjqu5V9Cg)
 
-#### 先从ArrayList的构造函数说起
-
-**（JDK8）ArrayList有三种方式来初始化，构造方法源码如下**：
+**先从ArrayList的构造函数说起，（JDK8）ArrayList有三种方式来初始化，构造方法源码如下**：
 
 ```java
 /**
@@ -617,11 +615,11 @@ public ArrayList(Collection<? extends E> c) {
 
 > 补充：JDK6 new无参构造的ArrayList对象时，直接创建了长度是10的Object[]数组elementData。
 
-#### 一步一步分析ArrayList扩容机制
+**一步一步分析ArrayList扩容机制**
 
 这里以无参构造函数创建的ArrayList为例分析
 
-##### add()方法
+**add()方法**
 
 ```java
 /**
@@ -648,7 +646,7 @@ length //要复制的源数组中数组元素的数量
 ```
 举个例子，我们想要在index = 5的位置插入元素(数组大小为10)，首先，我们会复制一遍源数组elementData，然后把源数组中从index = 5的位置开始到数组末尾的元素，放到新数组的index + 1 = 6的位置上,于是，这就给我们要新增的元素腾出了位置，然后在新数组index = 5的位置放入元素element就完成了添加的操作,显然ArrayList的将数据插入到指定位置的操作性能非常低下，因为要开辟新数组复制元素，要是涉及到扩容那就更慢了。另外，ArrayList还内置了一个直接在末尾添加元素的add方法，不用复制数组，直接size++就好，这个方法应该是我们最常使用的，即直接add(element);
 
-##### ensureCapacityInternal()方法
+**ensureCapacityInternal()方法**
 
 （JDK7）可以看到add方法首先调用了ensureCapacityInternal(size + 1)
 
@@ -667,7 +665,7 @@ private void ensureCapacityInternal(int minCapacity) {
 
 > 此处和后续JDK8代码格式化略有不同，核心代码基本一样。
 
-##### ensureExplicitCapacity()方法
+**ensureExplicitCapacity()方法**
 
 如果调用ensureCapacityInternal()方法就一定会进入（执行）这个方法，下面我们来研究一下这个方法的源码！
 
@@ -691,7 +689,7 @@ private void ensureExplicitCapacity(int minCapacity) {
 
 直到添加第11个元素，minCapacity(为11)比elementData.length（为10）要大。进入grow方法进行扩容。
 
-##### grow()方法
+**grow()方法**
 
 ```java
 /**
@@ -736,7 +734,7 @@ private void grow(int minCapacity) {
 - java中的length()方法是针对字符串说的,如果想看这个字符串的长度则用到length()这个方法。
 - java中的size()方法是针对泛型集合说的,如果想看这个泛型有多少个元素,就调用此方法来查看。
 
-##### hugeCapacity()方法。
+**hugeCapacity()方法**
 
 从上面grow()方法源码我们知道：如果新容量大于MAX_ARRAY_SIZE,进入(执行)hugeCapacity()方法来比较minCapacity和MAX_ARRAY_SIZE，如果minCapacity大于最大容量，则新容量则为Integer.MAX_VALUE，否则，新容量大小则为MAX_ARRAY_SIZE即为Integer.MAX_VALUE - 8。
 
@@ -754,11 +752,11 @@ private static int hugeCapacity(int minCapacity) {
 }
 ```
 
-#### System.arraycopy()和Arrays.copyOf()方法
+**System.arraycopy()和Arrays.copyOf()方法**
 
 阅读源码的话，我们就会发现ArrayList中大量调用了这两个方法。比如：我们上面讲的扩容操作以及add(int index, E element)、toArray()等方法中都用到了该方法
 
-##### System.arraycopy()方法
+**System.arraycopy()方法**
 
 源码：
 
@@ -818,7 +816,8 @@ public class ArraycopyTest {
 ```
 
 结果：0 1 99 2 3 0 0 0 0 0
-##### Arrays.copyOf()方法
+
+**Arrays.copyOf()方法**
 
 源码：
 ```java
@@ -860,7 +859,7 @@ public class ArrayscopyOfTest {
 
 结果：10
 
-##### 两者联系和区别
+**两者联系和区别**
 
 **联系**：
 看两者源代码可以发现`copyOf()`内部实际调用了`System.arraycopy()`方法
@@ -868,7 +867,7 @@ public class ArrayscopyOfTest {
 **区别**：
 `arraycopy()`需要目标数组，将原数组拷贝到你自己定义的数组里或者原数组，而且可以选择拷贝的起点和长度以及放入新数组中的位置,`copyOf()`是系统自动在内部新建一个数组，并返回该数组。
 
-#### ensureCapacity()方法
+**ensureCapacity()方法**
 
 ArrayList源码中有一个ensureCapacity方法，这个方法ArrayList内部没有被调用过，所以很显然是提供给用户调用的，那么这个方法有什么作用呢？
 
@@ -934,11 +933,17 @@ public class EnsureCapacityTest {
 ```
 通过运行结果，我们可以看出向ArrayList添加大量元素之前使用ensureCapacity方法可以提升性能。不过，这个性能差距几乎可以忽略不计。而且，实际项目根本也不可能往ArrayList里面添加这么多元素。
 
-#### remove()方法
+**remove()方法**
 
 假设我们要删除数组的index = 5的元素，首先，我们会复制一遍源数组，然后把源数组中从 index + 1 = 6的位置开始到数组末尾的元素，放到新数组的index = 5的位置上,也就是说 index = 5的元素直接被覆盖掉了，给了你被删除的感觉。同样的，它的效率自然也是十分低下的
 
 > [原文链接](https://javaguide.cn/java/collection/arraylist-source-code.html)
+
+**总结扩容**
+
+- 默认容量：ArrayList的默认初始容量是10。这意味着当你创建一个新的ArrayList实例而不指定初始容量时，它将能够存储最多10个元素，而不需要进行扩容。
+- 扩容规则：当需要扩容时，ArrayList会将当前数组的大小增加到“旧容量 + (旧容量 / 2)”，也就是说，新的容量将是旧容量的1.5倍。这个计算方式确保了ArrayList的容量以指数级的速度增长，但每次扩容的成本（即复制元素到新数组）也会相应增加。
+- 最大容量：ArrayList有一个MAX_ARRAY_SIZE的常量，这个常量限制了ArrayList可以扩容到的最大容量。在JDK 8中，这个值通常是`Integer.MAX_VALUE - 8`，因为数组还需要一些额外的空间来存储元数据（如数组长度等）。这意味着在大多数情况下，ArrayList可以扩展到非常大的容量，但实际上受限于JVM的堆内存大小。
 
 ## CopyOnWriteArrayList
 
@@ -959,7 +964,7 @@ CopyOnWriteArrayList类的所有可变操作（add，set等等）都是通过创
 
 ### CopyOnWriteArrayList读取和写入源码简单分析
 
-#### CopyOnWriteArrayList读取操作的实现
+**CopyOnWriteArrayList读取操作的实现**
 
 读取操作没有任何同步控制和锁操作，理由就是内部数组array不会发生修改，只会被另外一个array替换，因此可以保证数据安全。
 
@@ -979,7 +984,7 @@ final Object[] getArray() {
 }
 ```
 
-#### CopyOnWriteArrayList写入操作的实现
+**CopyOnWriteArrayList写入操作的实现**
 
 CopyOnWriteArrayList写入操作add()方法在添加集合的时候加了锁，保证了同步，避免了多线程写的时候会copy出多个副本出来。
 
@@ -1008,7 +1013,7 @@ public boolean add(E e) {
 
 ### 常用方法
 
-#### add()
+**add()**
 
 add()方法是CopyOnWriteArrayList的添加元素的入口,CopyOnWriteArrayList之所以能保证多线程下安全操作，add()方法功不可没,操作步骤如下：
 - 获得对象锁
@@ -1019,7 +1024,7 @@ add()方法是CopyOnWriteArrayList的添加元素的入口,CopyOnWriteArrayList�
 - 释放对象锁
 CopyOnWriteArrayList使用了ReentrantLock这种可重入锁，保证了线程操作安全，同时数组变量array使用volatile保证多线程下数据的可见性
 
-#### remove()
+**remove()**
 
 remove()方法是CopyOnWriteArrayList的移除元素的入口
 操作类似添加方法，步骤如下：
@@ -1031,7 +1036,7 @@ remove()方法是CopyOnWriteArrayList的移除元素的入口
 - 释放对象锁
 当然，移除的方法还有基于对象的remove(Object o)，原理也是一样的，先找到元素的下标，然后执行移除操作。
 
-#### get()
+**get()**
 
 get()方法是CopyOnWriteArrayList的查询元素的入口,源码如下：
 
@@ -1043,7 +1048,7 @@ public E get(int index) {
 ```
 查询因为不涉及到数据操作，所以无需使用锁进行处理！
 
-#### iterator()
+**iterator()**
 
 CopyOnWriteArrayList在使用迭代器遍历的时候，操作的都是原数组，没有像上面那样进行修改次数判断，所以不会抛异常,当然，从源码上也可以得出，使用CopyOnWriteArrayList的迭代器进行遍历元素的时候，不能调用remove()方法移除元素，因为不支持此操作,如果想要移除元素，只能使用CopyOnWriteArrayList提供的remove()方法，而不是迭代器的remove()方法，这个需要注意一下
 

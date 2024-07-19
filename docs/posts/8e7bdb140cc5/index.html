@@ -743,7 +743,7 @@ mvn package <span class="token parameter variable">-Dmaven.test.skip</span><span
 
 <span class="token class-name">String</span> a <span class="token operator">=</span> <span class="token string">"a"</span><span class="token punctuation">;</span>
 <span class="token class-name">String</span> b <span class="token operator">=</span> a<span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">pringln</span><span class="token punctuation">(</span><span class="token string">"a == b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">pringln</span><span class="token punctuation">(</span>a <span class="token operator">==</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>String字符串有长度限制，在编译期，要求字符串常量池中的常量不能超过65535，并且在javac执行过程中控制了最大值为65534。<br>在运行期，长度不能超过Int的范围，否则会抛异常。</p>
 </li>
@@ -923,6 +923,63 @@ listA<span class="token punctuation">.</span><span class="token function">remove
 resultList1<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>sublist1<span class="token punctuation">)</span><span class="token punctuation">;</span>
 resultList2<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>sublist2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><ul>
+<li>通过json化</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">com<span class="token punctuation">.</span>fasterxml<span class="token punctuation">.</span>jackson<span class="token punctuation">.</span>databind<span class="token punctuation">.</span></span><span class="token class-name">ObjectMapper</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token class-name">T</span> <span class="token function">deepCopy</span><span class="token punctuation">(</span><span class="token class-name">T</span> source<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">JsonProcessingException</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">ObjectMapper</span> objectMapper <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> json <span class="token operator">=</span> objectMapper<span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">T</span> deepCopyTarget <span class="token operator">=</span> objectMapper<span class="token punctuation">.</span><span class="token function">readValue</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">TypeReference</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> deepCopyTarget<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// --延申--</span>
+<span class="token comment">//泛型方法,在方法名前指定类型参数（用尖括号&lt;>括起来）</span>
+<span class="token keyword">public</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">void</span> <span class="token function">methodName</span><span class="token punctuation">(</span><span class="token class-name">T</span> input<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  
+    <span class="token comment">// 方法体  </span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//不加'&lt;>'的话T会被当做一个package里面的java类</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>通过序列化</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token operator">*</span></span><span class="token punctuation">;</span>  
+  
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DeepCopyViaSerialization</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>  
+    <span class="token comment">// 成员变量  </span>
+  
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword">extends</span> <span class="token class-name">Serializable</span><span class="token punctuation">></span></span> <span class="token class-name">T</span> <span class="token function">deepCopy</span><span class="token punctuation">(</span><span class="token class-name">T</span> object<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>  
+            <span class="token comment">// 序列化到字节数组  </span>
+            <span class="token class-name">ByteArrayOutputStream</span> bos <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayOutputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token class-name">ObjectOutputStream</span> out <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectOutputStream</span><span class="token punctuation">(</span>bos<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            out<span class="token punctuation">.</span><span class="token function">writeObject</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+            <span class="token comment">// 反序列化到新对象  </span>
+            <span class="token class-name">ByteArrayInputStream</span> bis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayInputStream</span><span class="token punctuation">(</span>bos<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token class-name">ObjectInputStream</span> in <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectInputStream</span><span class="token punctuation">(</span>bis<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+            <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>  
+            <span class="token class-name">T</span> copiedObj <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span> in<span class="token punctuation">.</span><span class="token function">readObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token keyword">return</span> copiedObj<span class="token punctuation">;</span>  
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> <span class="token operator">|</span> <span class="token class-name">ClassNotFoundException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">&#125;</span>  
+    <span class="token punctuation">&#125;</span>  
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>使用三方库<br>一些第三方库如Apache Commons Lang的SerializationUtils也提供了序列化和反序列化的深拷贝方法，使用这些库可以简化深拷贝的实现。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>lang3<span class="token punctuation">.</span></span><span class="token class-name">SerializationUtils</span></span><span class="token punctuation">;</span>  
+  
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DeepCopyWithApacheCommons</span> <span class="token punctuation">&#123;</span>  
+    <span class="token comment">// 假设有一个类  </span>
+  
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword">extends</span> <span class="token class-name">Serializable</span><span class="token punctuation">></span></span> <span class="token class-name">T</span> <span class="token function">deepCopy</span><span class="token punctuation">(</span><span class="token class-name">T</span> object<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  
+        <span class="token keyword">return</span> <span class="token class-name">SerializationUtils</span><span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">&#125;</span>  
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
 <h4 id="代码分页"><a href="#代码分页" class="headerlink" title="代码分页"></a>代码分页</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Integer</span> page <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"page"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Integer</span> limit <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"rows"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Integer</span> start <span class="token operator">=</span> <span class="token punctuation">(</span>page<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span>limit<span class="token punctuation">;</span>
@@ -1287,13 +1344,15 @@ taskkill /? <span class="token comment"># 查看相关用法</span>
 tasklist <span class="token comment"># 查看所有进程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="cron表达式"><a href="#cron表达式" class="headerlink" title="cron表达式"></a>cron表达式</h4><p>3&#x2F;12 第三分钟开始,每12分钟触发<br>12,15,17 第12分钟、15分钟、17分钟触发<br>3-19 看使用在哪个域 如果在minute域则表示在第3分钟到第19分钟每分钟触发一次 在second域则表示从第3秒到第19秒每秒触发一次<br>24 43 2 ? 1-12 3 * 每周三2点43分24秒触发一次</p>
-<h4 id="PS相关操作"><a href="#PS相关操作" class="headerlink" title="PS相关操作"></a>PS相关操作</h4><h5 id="换证件照底色"><a href="#换证件照底色" class="headerlink" title="换证件照底色"></a>换证件照底色</h5><p>打开图片-选择主体-选择并遮住-调整下细节-输出带有蒙版图层-新建图层(不是(ctrl+j)复制图层)- ctrl+del或者alt+del填充前景色或者背景色-调整图层位置-完成</p>
+<h4 id="PS相关操作"><a href="#PS相关操作" class="headerlink" title="PS相关操作"></a>PS相关操作</h4><p><strong>换证件照底色</strong></p>
+<p>打开图片-选择主体-选择并遮住-调整下细节-输出带有蒙版图层-新建图层(不是(ctrl+j)复制图层)- ctrl+del或者alt+del填充前景色或者背景色-调整图层位置-完成</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1709949846668174480&wfr=spider&for=pc">3种PS更改证件照底色的方法</a></p>
 </blockquote>
-<h5 id="更换大小眼"><a href="#更换大小眼" class="headerlink" title="更换大小眼"></a>更换大小眼</h5><p>打开图片-ctrl+j复制图层-套索工具选中眼睛-移到小眼睛位置-右键水平翻转-调整-右上角对号应用</p>
-<h5 id="瘦脸"><a href="#瘦脸" class="headerlink" title="瘦脸"></a>瘦脸</h5><p>滤镜-液化</p>
-<h5 id="去水印"><a href="#去水印" class="headerlink" title="去水印"></a>去水印</h5><ol>
+<p><strong>更换大小眼</strong><br>打开图片-ctrl+j复制图层-套索工具选中眼睛-移到小眼睛位置-右键水平翻转-调整-右上角对号应用</p>
+<p><strong>瘦脸</strong><br>滤镜-液化</p>
+<p><strong>去水印</strong></p>
+<ol>
 <li>矩形选框工具选中水印选择“编辑”-“填充”（快捷键：Shift+F5），属性选“内容识别”点击“确定”，取消选区。</li>
 <li>选择“污点修复画笔工具”</li>
 </ol>
@@ -1302,23 +1361,29 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <p>6&#x2F;2&#x3D;3余0，3&#x2F;2&#x3D;1余1，所以6的2进制是110</p>
 <h3 id="二进制转换十进制"><a href="#二进制转换十进制" class="headerlink" title="二进制转换十进制"></a>二进制转换十进制</h3><p>1         0          1</p>
 <p>1* 2的2次方 + 0 * 2的1次方 + 1 * 2 的0次方 &#x3D; 5</p>
-<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><h4 id="“-lt-lt-”左移运算符"><a href="#“-lt-lt-”左移运算符" class="headerlink" title="“&lt;&lt;”左移运算符"></a>“&lt;&lt;”左移运算符</h4><p><strong>转换为二进制后左移 例:2&lt;&lt;3 即2的二进制左移三位</strong></p>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><p><strong>“&lt;&lt;”左移运算符</strong></p>
+<p><strong>转换为二进制后左移 例:2&lt;&lt;3 即2的二进制左移三位</strong></p>
 <p>2的二进制为2&#x2F;2&#x3D;1余0 ， 10左移三位后补0 （00000010）（00010000）</p>
 <p>n&lt;&lt;3 可以转换为 n * 2 ^ 3</p>
-<h4 id="“-gt-gt-”右移运算符"><a href="#“-gt-gt-”右移运算符" class="headerlink" title="“&gt;&gt;”右移运算符"></a>“&gt;&gt;”右移运算符</h4><p><strong>转换为二进制后右移 例:8&gt;&gt;3 即8的二进制右移三位</strong></p>
+<p><strong>“&gt;&gt;”右移运算符</strong></p>
+<p><strong>转换为二进制后右移 例:8&gt;&gt;3 即8的二进制右移三位</strong></p>
 <p>8的二进制为8&#x2F;2&#x3D;4余0 ,4&#x2F;2&#x3D;2余0, 2&#x2F;2&#x3D;1余0, 1000右移三位（删除后三位） （0000001000）（000000001）为1</p>
 <p>n&gt;&gt;3 可以转换为 n&#x2F;2^3</p>
-<h4 id="amp-运算符"><a href="#amp-运算符" class="headerlink" title="&amp; 运算符"></a>&amp; 运算符</h4><p>如果相对应位都是1，则结果为1，否则为0</p>
-<h4 id="运算符-1"><a href="#运算符-1" class="headerlink" title="| 运算符"></a>| 运算符</h4><p>如果相对应位都是0，则结果为0，否则为1</p>
-<h4 id="运算符-2"><a href="#运算符-2" class="headerlink" title="^ 运算符"></a>^ 运算符</h4><p>如果相对应位值相同，则结果为0，否则为1</p>
-<h4 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h4><p>^: 可以不借助第三块空间的方式交换两个变量的值<br>&amp;: 在某些情况下可以取代%的运算</p>
+<p><strong>&amp; 运算符</strong></p>
+<p>如果相对应位都是1，则结果为1，否则为0</p>
+<p><strong>| 运算符</strong></p>
+<p>如果相对应位都是0，则结果为0，否则为1</p>
+<p>** ^ 运算符**</p>
+<p>如果相对应位值相同，则结果为0，否则为1</p>
+<p><strong>比较</strong></p>
+<p>^: 可以不借助第三块空间的方式交换两个变量的值<br>&amp;: 在某些情况下可以取代%的运算</p>
 <p>某些情况：当我们拿着一个正数去%上2的n次方数的时候,其实结果等价于我们拿着这个正数&amp;上2的n次方数-1的结果</p>
 <p>x % 2(n) &#x3D;&#x3D; x &amp; 2(n)-1</p>
 <p>17 % 4 &#x3D;&#x3D; 17 &amp; 3</p>
 <p>99 % 64 &#x3D;&#x3D; 99 &amp; 63</p>
-<h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/INYjYfwhPU7uZcNmzBTpNQ">你可能不知道的位运算技巧</a></li>
-</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/INYjYfwhPU7uZcNmzBTpNQ">你可能不知道的位运算技巧</a></p>
+</blockquote>
 <h2 id="数据库相关知识点"><a href="#数据库相关知识点" class="headerlink" title="数据库相关知识点"></a>数据库相关知识点</h2><h3 id="SQL查询慢的原因"><a href="#SQL查询慢的原因" class="headerlink" title="SQL查询慢的原因"></a>SQL查询慢的原因</h3><ol>
 <li>sql没加索引</li>
 <li>sql索引不生效:<ul>
@@ -1469,7 +1534,8 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <li><strong>主键（主码）</strong>：主键用于唯一标识一个元组，不能有重复，不允许为空。一个表只能有一个主键。</li>
 <li><strong>外键（外码）</strong>：外键用来和其他表建立联系用，外键是另一表的主键，外键是可以有重复的，可以是空值。一个表可以有多个外键。</li>
 </ul>
-<h4 id="为什么不推荐使用外键与级联？"><a href="#为什么不推荐使用外键与级联？" class="headerlink" title="为什么不推荐使用外键与级联？"></a>为什么不推荐使用外键与级联？</h4><p>对于外键和级联，阿里巴巴开发手册这样说到：</p>
+<p><strong>为什么不推荐使用外键与级联？</strong></p>
+<p>对于外键和级联，阿里巴巴开发手册这样说到：</p>
 <blockquote>
 <p>【强制】不得使用外键与级联，一切外键概念必须在应用层解决。</p>
 <p>说明:以学生和成绩的关系为例，学生表中的student_id是主键，那么成绩表中的student_id则为外键。如果更新学生表中的student_id，同时触发成绩表中的student_id更新，即为级联更新。外键与级联更新适用于单机低并发，不适合分布式、高并发集群;级联更新是强阻塞，存在数据库更新风暴的风险;外键影响数据库的插入速度</p>
@@ -1488,15 +1554,18 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <li>……</li>
 </ol>
 <p>所以说，不要一股脑的就抛弃了外键这个概念，既然它存在就有它存在的道理，如果系统不涉及分库分表，并发量不是很高的情况还是可以考虑使用外键的。</p>
-<h4 id="关于数据库外键是否应该使用"><a href="#关于数据库外键是否应该使用" class="headerlink" title="关于数据库外键是否应该使用"></a>关于数据库外键是否应该使用</h4><p>外键提供的几种在更新和删除时的不同行为都可以帮助我们保证数据库中数据的一致性和引用合法性，但是外键的使用也需要数据库承担额外的开销，在大多数服务都可以水平扩容的今天，高并发场景中使用外键确实会影响服务的吞吐量上限。在数据库之外手动实现外键的功能是可能的，但是却会带来很多维护上的成本或者需要我们在数据一致性上做出一些妥协。我们可以从可用性、一致性几个方面分析使用外键、模拟外键以及不使用外键的差异：不使用外键牺牲了数据库中数据的一致性，但是却能够减少数据库的负载；模拟外键将一部分工作移到了数据库之外，我们可能需要放弃一部分一致性以获得更高的可用性，但是为了这部分可用性，我们会付出更多的研发与维护成本，也增加了与数据库之间的网络通信次数；使用外键保证了数据库中数据的一致性，也将全部的计算任务全部交给了数据库；在大多数不需要高并发或者对一致性有较强要求的系统中，我们可以直接使用数据库提供的外键帮助我们对数据进行校验，但是在对一致性要求不高的、复杂的场景或者大规模的团队中，不使用外键也确实可以为数据库减负，而大团队也有更多的时间和精力去设计其他的方案，例如：分布式的关系型数据库。当我们考虑应不应该在数据库中使用外键时，需要关注的核心我们的数据库承担这部分计算任务后会不会影响系统的可用性，在使用时也不应该一刀切的决定用或者不用外键，应该根据具体的场景做决策，我们在这里介绍了两个使用外键时可能遇到的问题：RESTRICT外键会在更新和删除关系表中的数据时对外键约束的合法性进行检查，保证外键不会引用到不存在的记录；CASCADE外键会在更新和删除关系表中的数据时触发对关联记录的更新和删除，在数据量较大的数据库中可能会有数量级的放大效果</p>
+<p><strong>关于数据库外键是否应该使用</strong></p>
+<p>外键提供的几种在更新和删除时的不同行为都可以帮助我们保证数据库中数据的一致性和引用合法性，但是外键的使用也需要数据库承担额外的开销，在大多数服务都可以水平扩容的今天，高并发场景中使用外键确实会影响服务的吞吐量上限。在数据库之外手动实现外键的功能是可能的，但是却会带来很多维护上的成本或者需要我们在数据一致性上做出一些妥协。我们可以从可用性、一致性几个方面分析使用外键、模拟外键以及不使用外键的差异：不使用外键牺牲了数据库中数据的一致性，但是却能够减少数据库的负载；模拟外键将一部分工作移到了数据库之外，我们可能需要放弃一部分一致性以获得更高的可用性，但是为了这部分可用性，我们会付出更多的研发与维护成本，也增加了与数据库之间的网络通信次数；使用外键保证了数据库中数据的一致性，也将全部的计算任务全部交给了数据库；在大多数不需要高并发或者对一致性有较强要求的系统中，我们可以直接使用数据库提供的外键帮助我们对数据进行校验，但是在对一致性要求不高的、复杂的场景或者大规模的团队中，不使用外键也确实可以为数据库减负，而大团队也有更多的时间和精力去设计其他的方案，例如：分布式的关系型数据库。当我们考虑应不应该在数据库中使用外键时，需要关注的核心我们的数据库承担这部分计算任务后会不会影响系统的可用性，在使用时也不应该一刀切的决定用或者不用外键，应该根据具体的场景做决策，我们在这里介绍了两个使用外键时可能遇到的问题：RESTRICT外键会在更新和删除关系表中的数据时对外键约束的合法性进行检查，保证外键不会引用到不存在的记录；CASCADE外键会在更新和删除关系表中的数据时触发对关联记录的更新和删除，在数据量较大的数据库中可能会有数量级的放大效果</p>
 <h3 id="数据库三大范式"><a href="#数据库三大范式" class="headerlink" title="数据库三大范式"></a>数据库三大范式</h3><p>数据库范式有3种：</p>
 <ul>
 <li>1NF(第一范式)：属性不可再分。</li>
 <li>2NF(第二范式)：1NF的基础之上，消除了非主属性对于码的部分函数依赖。</li>
 <li>3NF(第三范式)：3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。</li>
 </ul>
-<h4 id="1NF-第一范式"><a href="#1NF-第一范式" class="headerlink" title="1NF(第一范式)"></a>1NF(第一范式)</h4><p>属性（对应于表中的字段）不能再被分割，也就是这个字段只能是一个值，不能再分为多个其他的字段了。<strong>1NF是所有关系型数据库的最基本要求</strong>，也就是说关系型数据库中创建的表一定满足第一范式。</p>
-<h4 id="2NF-第二范式"><a href="#2NF-第二范式" class="headerlink" title="2NF(第二范式)"></a>2NF(第二范式)</h4><p>2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。如下图所示，展示了第一范式到第二范式的过渡。第二范式在第一范式的基础上增加了一个列，这个列称为主键，非主属性都依赖于主键。</p>
+<p><strong>1NF(第一范式)</strong></p>
+<p>属性（对应于表中的字段）不能再被分割，也就是这个字段只能是一个值，不能再分为多个其他的字段了。<strong>1NF是所有关系型数据库的最基本要求</strong>，也就是说关系型数据库中创建的表一定满足第一范式。</p>
+<p><strong>2NF(第二范式)</strong></p>
+<p>2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。如下图所示，展示了第一范式到第二范式的过渡。第二范式在第一范式的基础上增加了一个列，这个列称为主键，非主属性都依赖于主键。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/csdn/bd1d31be3779342427fc9e462bf7f05c.png" alt="第二范式"></p>
 <p>一些重要的概念：</p>
 <ul>
@@ -1505,8 +1574,10 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <li><strong>完全函数依赖（Fullfunctionaldependency）</strong>：在一个关系中，若某个非主属性数据项依赖于全部关键字称之为完全函数依赖。比如学生基本信息表R（学号，班级，姓名）假设不同的班级学号有相同的，班级内学号不能相同，在R关系中，（学号，班级）-&gt;（姓名），但是（学号）-&gt;(姓名)不成立，（班级）-&gt;(姓名)不成立，所以姓名完全函数依赖与（学号，班级）；</li>
 <li><strong>传递函数依赖</strong>：在关系模式R(U)中，设X，Y，Z是U的不同的属性子集，如果X确定Y、Y确定Z，且有X不包含Y，Y不确定X，（X∪Y）∩Z&#x3D;空集合，则称Z传递函数依赖(transitivefunctionaldependency)于X。传递函数依赖会导致数据冗余和异常。传递函数依赖的Y和Z子集往往同属于某一个事物，因此可将其合并放到一个表中。比如在关系R(学号,姓名,系名，系主任)中，学号→系名，系名→系主任，所以存在非主属性系主任对于学号的传递函数依赖。。</li>
 </ul>
-<h4 id="3NF-第三范式"><a href="#3NF-第三范式" class="headerlink" title="3NF(第三范式)"></a>3NF(第三范式)</h4><p>3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。符合3NF要求的数据库设计，基本上解决了数据冗余过大，插入异常，修改异常，删除异常的问题。比如在关系R(学号,姓名,系名，系主任)中，学号→系名，系名→系主任，所以存在非主属性系主任对于学号的传递函数依赖，所以该表的设计，不符合3NF的要求。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<p><strong>3NF(第三范式)</strong></p>
+<p>3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。符合3NF要求的数据库设计，基本上解决了数据冗余过大，插入异常，修改异常，删除异常的问题。比如在关系R(学号,姓名,系名，系主任)中，学号→系名，系名→系主任，所以存在非主属性系主任对于学号的传递函数依赖，所以该表的设计，不符合3NF的要求。</p>
+<p><strong>总结</strong></p>
+<ul>
 <li>1NF：数据库表的每一列都是不可分割的基本数据项，同一列中不能有多个值，不能在一列中存放多个属性。例如员工信息表，不能在信息一列中放入电话，住址等信息，应该单独设计成电话、住址各一列</li>
 <li>2NF：每个表必须有主键(Primary key),其他数据元素与主键一一对应。通常称这种关系为函数依赖(Functional dependence)关系，即表中其他数据元素都依赖于主键,或称该数据元素惟一地被主键所标识,例如学生表（学生id，姓名，成绩，合格状态），其中合格状态这一列不依赖于学生信息，而依赖于成绩，所以不符合第二范式</li>
 <li>3NF:要求一个数据库表中不包含已在其它表中已包含的非主关键字信息,例如学生表（学生id，姓名，班级id，班级位置）班级表(班级id，班级名，班级位置)，学生表里已经有了班级的id，可以推断出班级位置，无需在学生表里存入班级位置信息<br>BCNF:所有非主属性对每一个候选键都是完全函数依赖；所有的主属性对每一个不包含它的候选键，也是完全函数依赖；没有任何属性完全函数依赖于非候选键的任何一组属性</li>
@@ -2095,9 +2166,9 @@ var str2 = &#123;name:"cxh",sex
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            什么是消息队列？我们可以把消息队列看作是一个存放消息的容器，当我们需要使用消息的时候，直接从容器中取出消息供自己使用即可。由于队列Queue是一种先进先出的数据结构，所以消费消息时也是按照顺序来消费的。
+                            什么是消息队列我们可以把消息队列看作是一个存放消息的容器，当我们需要使用消息的时候，直接从容器中取出消息供自己使用即可。由于队列Queue是一种先进先出的数据结构，所以消费消息时也是按照顺序来消费的。
 
-参与消息传递的双方称为生产者和消费
+参与消息传递的双方称为生产者和消费者
                         
                         
                     </div>

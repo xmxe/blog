@@ -1400,7 +1400,8 @@ QUEUED
 <li><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/491">Issue491:关于redis没有事务回滚？</a></li>
 </ul>
 </blockquote>
-<h4 id="如何解决Redis事务的缺陷？"><a href="#如何解决Redis事务的缺陷？" class="headerlink" title="如何解决Redis事务的缺陷？"></a>如何解决Redis事务的缺陷？</h4><p>Redis从2.6版本开始支持执行Lua脚本，它的功能和事务非常类似。我们可以利用Lua脚本来批量执行多条Redis命令，这些Redis命令会被提交到Redis服务器一次性执行完成，大幅减小了网络开销。一段Lua脚本可以视作一条命令执行，一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰。不过，如果Lua脚本运行时出错并中途结束，出错之后的命令是不会被执行的。并且，出错之前执行的命令是无法被撤销的，无法实现类似关系型数据库执行失败可以回滚的那种原子性效果。因此，<strong>严格来说的话，通过Lua脚本来批量执行Redis命令实际也是不完全满足原子性的</strong>。如果想要让Lua脚本中的命令全部执行，必须保证语句语法和命令都是对的。另外，Redis7.0新增了<a target="_blank" rel="noopener" href="https://redis.io/docs/manual/programmability/functions-intro/">Redis functions</a>特性，你可以将Redis functions看作是比Lua更强大的脚本。</p>
+<p><strong>如何解决Redis事务的缺陷</strong>？</p>
+<p>Redis从2.6版本开始支持执行Lua脚本，它的功能和事务非常类似。我们可以利用Lua脚本来批量执行多条Redis命令，这些Redis命令会被提交到Redis服务器一次性执行完成，大幅减小了网络开销。一段Lua脚本可以视作一条命令执行，一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰。不过，如果Lua脚本运行时出错并中途结束，出错之后的命令是不会被执行的。并且，出错之前执行的命令是无法被撤销的，无法实现类似关系型数据库执行失败可以回滚的那种原子性效果。因此，<strong>严格来说的话，通过Lua脚本来批量执行Redis命令实际也是不完全满足原子性的</strong>。如果想要让Lua脚本中的命令全部执行，必须保证语句语法和命令都是对的。另外，Redis7.0新增了<a target="_blank" rel="noopener" href="https://redis.io/docs/manual/programmability/functions-intro/">Redis functions</a>特性，你可以将Redis functions看作是比Lua更强大的脚本。</p>
 <h2 id="Redis性能优化"><a href="#Redis性能优化" class="headerlink" title="Redis性能优化"></a>Redis性能优化</h2><h3 id="使用批量操作减少网络传输"><a href="#使用批量操作减少网络传输" class="headerlink" title="使用批量操作减少网络传输"></a>使用批量操作减少网络传输</h3><p>一个Redis命令的执行可以简化为以下4步：</p>
 <ol>
 <li>发送命令</li>
@@ -1409,7 +1410,8 @@ QUEUED
 <li>返回结果</li>
 </ol>
 <p>其中，第1步和第4步耗费时间之和称为<strong>Round Trip Time（RTT,往返时间）</strong>，也就是数据在网络上传输的时间。使用批量操作可以减少网络传输次数，进而有效减小网络开销，大幅减少RTT。</p>
-<h4 id="原生批量操作命令"><a href="#原生批量操作命令" class="headerlink" title="原生批量操作命令"></a>原生批量操作命令</h4><p>Redis中有一些原生支持批量操作的命令，比如：</p>
+<p><strong>原生批量操作命令</strong></p>
+<p>Redis中有一些原生支持批量操作的命令，比如：</p>
 <ul>
 <li>mget(获取一个或多个指定key的值)、mset(设置一个或多个指定key的值)、</li>
 <li>hmget(获取指定哈希表中一个或者多个指定字段的值)、hmset(同时将一个或多个field-value对设置到指定哈希表中)、</li>
@@ -1426,14 +1428,16 @@ QUEUED
 <blockquote>
 <p>Redis Cluster并没有使用一致性哈希，采用的是<strong>哈希槽分区</strong>，每一个键值对都属于一个<strong>hash slot</strong>（哈希槽）。当客户端发送命令请求的时候，需要先根据key通过上面的计算公示找到的对应的哈希槽，然后再查询哈希槽和节点的映射关系，即可找到目标Redis节点。</p>
 </blockquote>
-<h4 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline</h4><p>对于不支持批量操作的命令，我们可以利用pipeline(流水线)将一批Redis命令封装成一组，这些Redis命令会被一次性提交到Redis服务器，只需要一次网络传输。不过，需要注意控制一次批量操作的元素个数(例如500以内，实际也和元素字节数有关)，避免网络传输的数据量过大。与mget、mset等原生批量操作命令一样，pipeline同样在Redis Cluster上使用会存在一些小问题。原因类似，无法保证所有的key都在同一个hash slot（哈希槽）上。如果想要使用的话，客户端需要自己维护key与slot的关系。原生批量操作命令和pipeline的是有区别的，使用的时候需要注意：</p>
+<p><strong>pipeline</strong></p>
+<p>对于不支持批量操作的命令，我们可以利用pipeline(流水线)将一批Redis命令封装成一组，这些Redis命令会被一次性提交到Redis服务器，只需要一次网络传输。不过，需要注意控制一次批量操作的元素个数(例如500以内，实际也和元素字节数有关)，避免网络传输的数据量过大。与mget、mset等原生批量操作命令一样，pipeline同样在Redis Cluster上使用会存在一些小问题。原因类似，无法保证所有的key都在同一个hash slot（哈希槽）上。如果想要使用的话，客户端需要自己维护key与slot的关系。原生批量操作命令和pipeline的是有区别的，使用的时候需要注意：</p>
 <ul>
 <li>原生批量操作命令是原子操作，pipeline是非原子操作；</li>
 <li>pipeline可以打包不同的命令，原生批量操作命令不可以；</li>
 <li>原生批量操作命令是Redis服务端支持实现的，而pipeline需要服务端和客户端的共同实现。</li>
 </ul>
 <p>另外，pipeline不适用于执行顺序有依赖关系的一批命令。就比如说，你需要将前一个命令的结果给后续的命令使用，pipeline就没办法满足你的需求了。对于这种需求，我们可以使用Lua脚本。</p>
-<h4 id="Lua脚本"><a href="#Lua脚本" class="headerlink" title="Lua脚本"></a>Lua脚本</h4><p>Lua脚本同样支持批量操作多条命令。一段Lua脚本可以视作一条命令执行，可以看作是原子操作。一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰，这是pipeline所不具备的。并且，Lua脚本中支持一些简单的逻辑处理比如使用命令读取值并在Lua脚本中进行处理，这同样是pipeline所不具备的。不过，Redis Cluster下Lua脚本的原子操作也无法保证了，原因同样是无法保证所有的key都在同一个hashslot（哈希槽）上。</p>
+<p><strong>Lua脚本</strong></p>
+<p>Lua脚本同样支持批量操作多条命令。一段Lua脚本可以视作一条命令执行，可以看作是原子操作。一段Lua脚本执行过程中不会有其他脚本或Redis命令同时执行，保证了操作不会被其他指令插入或打扰，这是pipeline所不具备的。并且，Lua脚本中支持一些简单的逻辑处理比如使用命令读取值并在Lua脚本中进行处理，这同样是pipeline所不具备的。不过，Redis Cluster下Lua脚本的原子操作也无法保证了，原因同样是无法保证所有的key都在同一个hashslot（哈希槽）上。</p>
 <h3 id="大量key集中过期问题"><a href="#大量key集中过期问题" class="headerlink" title="大量key集中过期问题"></a>大量key集中过期问题</h3><p>我在前面提到过：对于过期key，Redis采用的是<strong>定期删除+惰性&#x2F;懒汉式删除</strong>策略。</p>
 <p>定期删除执行过程中，如果突然遇到大量过期key的话，客户端请求必须等待定期清理过期key任务线程执行完成，因为这个这个定期任务线程是在Redis主线程中执行的。这就导致客户端请求没办法被及时处理，响应速度会比较慢。如何解决呢？下面是两种常见的方法：</p>
 <ol>
@@ -1441,9 +1445,12 @@ QUEUED
 <li>开启lazy-free（惰性删除&#x2F;延迟释放）。lazy-free特性是Redis4.0开始引入的，指的是让Redis采用异步方式延迟释放key使用的内存，将该操作交给单独的子线程处理，避免阻塞主线程。</li>
 </ol>
 <p>个人建议不管是否开启lazy-free，我们都尽量给key设置随机过期时间。</p>
-<h3 id="Redis-bigkey"><a href="#Redis-bigkey" class="headerlink" title="Redis bigkey"></a>Redis bigkey</h3><h4 id="什么是bigkey？"><a href="#什么是bigkey？" class="headerlink" title="什么是bigkey？"></a>什么是bigkey？</h4><p>简单来说，如果一个key对应的value所占用的内存比较大，那这个key就可以看作是bigkey。具体多大才算大呢？有一个不是特别精确的参考标准：string类型的value超过10kb，复合类型的value包含的元素超过5000个（对于复合类型的value来说，不一定包含的元素越多，占用的内存就越多）。</p>
-<h4 id="bigkey有什么危害？"><a href="#bigkey有什么危害？" class="headerlink" title="bigkey有什么危害？"></a>bigkey有什么危害？</h4><p>除了会消耗更多的内存空间，bigkey对性能也会有比较大的影响。因此，我们应该尽量避免写入bigkey！</p>
-<h4 id="如何发现bigkey？"><a href="#如何发现bigkey？" class="headerlink" title="如何发现bigkey？"></a>如何发现bigkey？</h4><p><strong>1、使用Redis自带的 –bigkeys参数来查找。</strong></p>
+<h3 id="Redis-bigkey"><a href="#Redis-bigkey" class="headerlink" title="Redis bigkey"></a>Redis bigkey</h3><p><strong>什么是bigkey？</strong></p>
+<p>简单来说，如果一个key对应的value所占用的内存比较大，那这个key就可以看作是bigkey。具体多大才算大呢？有一个不是特别精确的参考标准：string类型的value超过10kb，复合类型的value包含的元素超过5000个（对于复合类型的value来说，不一定包含的元素越多，占用的内存就越多）。</p>
+<p><strong>bigkey有什么危害</strong>？</p>
+<p>除了会消耗更多的内存空间，bigkey对性能也会有比较大的影响。因此，我们应该尽量避免写入bigkey！</p>
+<p><strong>如何发现bigkey</strong>？</p>
+<p><strong>1、使用Redis自带的 –bigkeys参数来查找。</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># redis-cli -p 6379 --bigkeys</span>
 
 <span class="token comment"># Scanning the entire keyspace to find biggest keys as well as</span>
@@ -1599,7 +1606,8 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <blockquote>
 <p>相关文章推荐：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIyOTYxNDI5OA==&mid=2247487312&idx=1&sn=fa19566f5729d6598155b5c676eee62d&chksm=e8beb8e5dfc931f3e35655da9da0b61c79f2843101c130cf38996446975014f958a6481aacf1&scene=178&cur_album_id=1699766580538032128#rd">缓存和数据库一致性问题，看这篇就够了-水滴与银弹</a></p>
 </blockquote>
-<h4 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h4><p>读的时候先读缓存，缓存中没有数据的话就去数据库读取，然后再存入缓存中，同时返回响应。更新的时候，先更新数据库，然后再删除缓存。</p>
+<p><strong>总结</strong></p>
+<p>读的时候先读缓存，缓存中没有数据的话就去数据库读取，然后再存入缓存中，同时返回响应。更新的时候，先更新数据库，然后再删除缓存。</p>
 <p><strong>双写一致方案</strong><br>先删除缓存，后更新数据库：解决了缓存删除失败导致库与缓存不一致的问题，适用于并发量不高的业务场景。</p>
 <p><strong>缓存延时双删策略</strong><br>在写库前后都进行Redis的删除操作，并且第二次删除通过延迟的方式进行,第一步：先删除缓存,第二步：再写入数据库,第三步：休眠xxx毫秒（根据具体的业务时间来定）,第四步：再次删除缓存。这种方案解决了高并发情况下，同时有读请求与写请求时导致的不一致问题。读取速度快，如果二次删除失败了，还是会导致缓存脏数据存在的；二次删除前面涉及到休眠，可能导致系统性能降低，可以采用异步的方式，再起一个线程来进行异步删除。在分布式系统中，缓存和数据库同时存在时，如果有写操作的时候，先操作数据库，再操作缓存。如下：</p>
 <ol>
@@ -1611,7 +1619,8 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>如果是主从数据库，binglog取自于从库</li>
 <li>如果是一主多从，每个从库都要采集binlog，然后消费端收到最后一台binlog数据才删除缓存</li>
 </ol>
-<h4 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h4><table>
+<p><strong>相关文章</strong></p>
+<table>
 <thead>
 <tr>
 <th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FldS8ynxoK8fD1QPVocnjA">如何保证缓存与数据库的双写一致性？</a></th>
@@ -1639,7 +1648,7 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <h3 id="定时过期"><a href="#定时过期" class="headerlink" title="定时过期"></a>定时过期</h3><p>每个设置过期时间的key都需要创建一个定时器，到过期时间就会立即对key进行清除。该策略可以立即清除过期的数据，对内存很友好；但是会占用大量的CPU资源去处理过期的数据，从而影响缓存的响应时间和吞吐量。</p>
 <h3 id="惰性过期"><a href="#惰性过期" class="headerlink" title="惰性过期"></a>惰性过期</h3><p>只有当访问一个key时，才会判断该key是否已过期，过期则清除。该策略可以最大化地节省CPU资源，却对内存非常不友好。极端情况可能出现大量的过期key没有再次被访问，从而不会被清除，占用大量内存。</p>
 <h3 id="定期过期"><a href="#定期过期" class="headerlink" title="定期过期"></a>定期过期</h3><p>每隔一定的时间，会扫描一定数量的数据库的expires字典中一定数量的key，并清除其中已过期的key。该策略是前两者的一个折中方案。通过调整定时扫描的时间间隔和每次扫描的限定耗时，可以在不同情况下使得CPU和内存资源达到最优的平衡效果。expires字典会保存所有设置了过期时间的key的过期时间数据，其中，key是指向键空间中的某个键的指针，value是该键的毫秒精度的UNIX时间戳表示的过期时间。键空间是指该Redis集群中保存的所有键。</p>
-<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><p>Redis中同时使用了惰性过期和定期过期两种过期策略。假设Redis当前存放30万个key，并且都设置了过期时间，如果你每隔100ms就去检查这全部的key，CPU负载会特别高，最后可能会挂掉。因此，redis采取的是定期过期，每隔100ms就随机抽取一定数量的key来检查和删除的。但是呢，最后可能会有很多已经过期的key没被删除。这时候，redis采用惰性删除。在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间并且已经过期了，此时就会删除。但是，如果定期删除漏掉了很多过期的key，然后也没走惰性删除。就会有很多过期key积在内存内存，直接会导致内存爆的。或者有些时候，业务量大起来了，redis的key被大量使用，内存直接不够了，运维也忘记加大内存了。难道redis直接这样挂掉？不会的！Redis用8种内存淘汰策略保护自己~</p>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>Redis中同时使用了惰性过期和定期过期两种过期策略。假设Redis当前存放30万个key，并且都设置了过期时间，如果你每隔100ms就去检查这全部的key，CPU负载会特别高，最后可能会挂掉。因此，redis采取的是定期过期，每隔100ms就随机抽取一定数量的key来检查和删除的。但是呢，最后可能会有很多已经过期的key没被删除。这时候，redis采用惰性删除。在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间并且已经过期了，此时就会删除。但是，如果定期删除漏掉了很多过期的key，然后也没走惰性删除。就会有很多过期key积在内存内存，直接会导致内存爆的。或者有些时候，业务量大起来了，redis的key被大量使用，内存直接不够了，运维也忘记加大内存了。难道redis直接这样挂掉？不会的！Redis用8种内存淘汰策略保护自己~</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iR8EgI9-p-BXjJEfTs3G7Q">Redis过期key删除，那些不得不说的事情</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qJt0B9p0GeUkekK15xL-jw">Redis的过期数据会被立马删除么？</a></p>
 </blockquote>
@@ -1659,15 +1668,18 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-kKe_ss01CkLMRERyyjt1Q">Redis内存满了怎么办？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YqkVmIaDRV31-WrcW8K26g">内存耗尽后Redis会发生什么？</a></p>
 </blockquote>
-<h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h3 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h3><p><strong>AOF（append only file）</strong> 持久化，采用日志的形式来记录每个写操作，追加到AOF文件的末尾。Redis默认情况是不开启AOF的。重启时再重新执行AOF文件中的命令来恢复数据。它主要解决数据持久化的实时性问题。AOF是执行完命令后才记录日志的。为什么不先记录日志再执行命令呢？这是因为Redis在向AOF记录日志时，不会先对这些命令进行语法检查，如果先记录日志再执行命令，日志中可能记录了错误的命令，Redis使用日志回复数据时，可能会出错。正是因为执行完命令后才记录日志，所以不会阻塞当前的写操作。但是会存在两个风险：更执行完命令还没记录日志时，宕机了会导致数据丢失,AOF不会阻塞当前命令，但是可能会阻塞下一个操作。这两个风险最好的解决方案是折中</p>
-<h4 id="妙用AOF机制的三种写回策略-appendfsync-："><a href="#妙用AOF机制的三种写回策略-appendfsync-：" class="headerlink" title="妙用AOF机制的三种写回策略(appendfsync)："></a>妙用AOF机制的三种写回策略(appendfsync)：</h4><ul>
+<h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p><strong>AOF（append only file）</strong> 持久化，采用日志的形式来记录每个写操作，追加到AOF文件的末尾。Redis默认情况是不开启AOF的。重启时再重新执行AOF文件中的命令来恢复数据。它主要解决数据持久化的实时性问题。AOF是执行完命令后才记录日志的。为什么不先记录日志再执行命令呢？这是因为Redis在向AOF记录日志时，不会先对这些命令进行语法检查，如果先记录日志再执行命令，日志中可能记录了错误的命令，Redis使用日志回复数据时，可能会出错。正是因为执行完命令后才记录日志，所以不会阻塞当前的写操作。但是会存在两个风险：更执行完命令还没记录日志时，宕机了会导致数据丢失,AOF不会阻塞当前命令，但是可能会阻塞下一个操作。这两个风险最好的解决方案是折中</p>
+<p>**妙用AOF机制的三种写回策略(appendfsync)**：</p>
+<ul>
 <li>always:同步写回，每个子命令执行完，都立即将日志写回磁盘。</li>
 <li>everysec:每个命令执行完，只是先把日志写到AOF内存缓冲区，每隔一秒同步到磁盘。</li>
 <li>no:只是先把日志写到AOF内存缓冲区，有操作系统去决定何时写入磁盘。</li>
 </ul>
 <p>always同步写回，可以基本保证数据不丢失，no策略则性能高但是数据可能会丢失，一般可以考虑折中选择everysec。如果接受的命令越来越多，AOF文件也会越来越大，文件过大还是会带来性能问题。日志文件过大怎么办呢？AOF重写机制！就是随着时间推移，AOF文件会有一些冗余的命令如：无效命令、过期数据的命令等等，AOF重写机制就是把它们合并为一个命令（类似批处理命令），从而达到精简压缩空间的目的。</p>
-<h4 id="AOF重写会阻塞嘛？"><a href="#AOF重写会阻塞嘛？" class="headerlink" title="AOF重写会阻塞嘛？"></a>AOF重写会阻塞嘛？</h4><p>AOF日志是由主线程会写的，而重写则不一样，重写过程是由后台子进程bgrewriteaof完成。</p>
-<h4 id="AOF优缺点"><a href="#AOF优缺点" class="headerlink" title="AOF优缺点"></a>AOF优缺点</h4><ul>
+<p><strong>AOF重写会阻塞嘛</strong>？</p>
+<p>AOF日志是由主线程会写的，而重写则不一样，重写过程是由后台子进程bgrewriteaof完成。</p>
+<p><strong>AOF优缺点</strong></p>
+<ul>
 <li>AOF的优点：数据的一致性和完整性更高，秒级数据丢失。</li>
 <li>AOF的缺点：相同的数据集，AOF文件体积大于RDB文件。数据恢复也比较慢。</li>
 </ul>
@@ -1677,18 +1689,20 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>自动触发：(save m n)m秒内数据集存在n次修改时，自动触发bgsave</li>
 </ol>
 <p>RDB通过bgsave命令的执行全量快照，可以避免阻塞主线程。basave命令会fork一个子进程，然后该子进程会负责创建RDB文件，而服务器进程会继续处理命令。请求快照时，数据能修改嘛？Redis接入操作系统的写时复制技术（copy-on-write，COW）,在执行快照的同时，正常处理写操作。虽然bgsave执行不会阻塞主线程，但是频繁执行全量快照也会带来性能开销。比如bgsave子进程需要通过fork操作从主线程创建出来，创建后不会阻塞主线程，但是创建过程是会阻塞主线程的。可以做增量快照。</p>
-<h4 id="RDB优缺点"><a href="#RDB优缺点" class="headerlink" title="RDB优缺点"></a>RDB优缺点</h4><ul>
+<p><strong>RDB优缺点</strong></p>
+<ul>
 <li>RDB的优点：与AOF相比，恢复大数据集的时候会更快，它适合大规模的数据恢复场景，如备份，全量复制等</li>
 <li>RDB的缺点：没办法做到实时持久化&#x2F;秒级持久化。</li>
 </ul>
 <p>Redis4.0开始支持RDB和AOF的混合持久化，就是内存快照以一定频率执行，两次快照之间，再使用AOF记录这期间的所有命令操作。</p>
-<h3 id="如何选择RDB和AOF"><a href="#如何选择RDB和AOF" class="headerlink" title="如何选择RDB和AOF"></a>如何选择RDB和AOF</h3><p>如果数据不能丢失，RDB和AOF混用。如果只作为缓存使用，可以承受几分钟的数据丢失的话，可以只使用RDB。如果只使用AOF，优先使用everysec的写回策略。</p>
-<h4 id="混合持久化"><a href="#混合持久化" class="headerlink" title="混合持久化"></a>混合持久化</h4><p>既然RDB与AOF持久化都存在各自的缺点，那么有没有一种更好的持久化方式？接下来要介绍的是混合持久化。其实就是RDB与AOF的混合模式，这是Redis4之后新增的。</p>
+<p><strong>如何选择RDB和AOF</strong></p>
+<p>如果数据不能丢失，RDB和AOF混用。如果只作为缓存使用，可以承受几分钟的数据丢失的话，可以只使用RDB。如果只使用AOF，优先使用everysec的写回策略。</p>
+<h3 id="混合持久化"><a href="#混合持久化" class="headerlink" title="混合持久化"></a>混合持久化</h3><p>既然RDB与AOF持久化都存在各自的缺点，那么有没有一种更好的持久化方式？接下来要介绍的是混合持久化。其实就是RDB与AOF的混合模式，这是Redis4之后新增的。</p>
 <ol>
 <li>持久化方式<br>混合持久化是通过aof-use-rdb-preamble参数来开启的。它的操作方式是这样的，在写入的时候先把数据以RDB的形式写入文件的开头，再将后续的写命令以AOF的格式追加到文件中。这样既能保证数据恢复时的速度，同时又能减少数据丢失的风险。</li>
 <li>文件恢复<br>那么混合持久化中是如何来进行数据恢复的呢？在Redis重启时，先加载RDB的内容，然后再重放增量AOF格式命令。这样就避免了AOF持久化时的全量加载，从而使加载速率得到大幅提升。</li>
 </ol>
-<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
 <thead>
 <tr>
 <th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SVbVwHOAwL1RX0fa-rYGxg">同样是持久化，竟然有这么大的差别！</a></th>
@@ -1708,9 +1722,10 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li>哨兵监测到主节点宕机，会自动将从节点切换成主节点，然后通过发布订阅模式通知其他的从节点，修改配置文件，让它们切换主机；</li>
 <li>哨兵之间还会相互监控，从而达到高可用。</li>
 </ul>
-<h4 id="故障切换的过程是怎样的呢"><a href="#故障切换的过程是怎样的呢" class="headerlink" title="故障切换的过程是怎样的呢"></a>故障切换的过程是怎样的呢</h4><p>假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为主观下线。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为客观下线。这样对于客户端而言，一切都是透明的。哨兵的工作模式如下：每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他Sentinel实例发送一个PING命令。如果一个实例（instance）距离最后一次有效回复PING命令的时间超过down-after-milliseconds选项所指定的值，则这个实例会被Sentinel标记为主观下线。如果一个Master被标记为主观下线，则正在监视这个Master的所有Sentinel要以每秒一次的频率确认Master的确进入了主观下线状态。当有足够数量的Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态，则Master会被标记为客观下线。在一般情况下，每个Sentinel会以每10秒一次的频率向它已知的所有Master，Slave发送INFO命令。当Master被Sentinel标记为客观下线时，Sentinel向下线的Master的所有Slave发送INFO命令的频率会从10秒一次改为每秒一次，若没有足够数量的Sentinel同意Master已经下线，Master的客观下线状态就会被移除；若Master重新向Sentinel的PING命令返回有效回复，Master的主观下线状态就会被移除。</p>
+<p><strong>故障切换的过程是怎样的呢</strong></p>
+<p>假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为主观下线。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为客观下线。这样对于客户端而言，一切都是透明的。哨兵的工作模式如下：每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他Sentinel实例发送一个PING命令。如果一个实例（instance）距离最后一次有效回复PING命令的时间超过down-after-milliseconds选项所指定的值，则这个实例会被Sentinel标记为主观下线。如果一个Master被标记为主观下线，则正在监视这个Master的所有Sentinel要以每秒一次的频率确认Master的确进入了主观下线状态。当有足够数量的Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态，则Master会被标记为客观下线。在一般情况下，每个Sentinel会以每10秒一次的频率向它已知的所有Master，Slave发送INFO命令。当Master被Sentinel标记为客观下线时，Sentinel向下线的Master的所有Slave发送INFO命令的频率会从10秒一次改为每秒一次，若没有足够数量的Sentinel同意Master已经下线，Master的客观下线状态就会被移除；若Master重新向Sentinel的PING命令返回有效回复，Master的主观下线状态就会被移除。</p>
 <h3 id="Cluster集群"><a href="#Cluster集群" class="headerlink" title="Cluster集群"></a>Cluster集群</h3><p>哨兵解决和主从不能自动故障恢复的问题，但是同时也存在难以扩容以及单机存储、读写能力受限的问题，并且集群之前都是一台redis都是全量的数据，这样所有的redis都冗余一份，就会大大消耗内存空间。集群模式实现了Redis数据的分布式存储，实现数据的分片，每个redis节点存储不同的内容，并且解决了在线的节点收缩（下线）和扩容（上线）问题。集群模式真正意义上实现了系统的高可用和高性能，但是集群同时进一步使系统变得越来越复杂，接下来我们来详细的了解集群的运作原理。</p>
-<h3 id="相关文章-2"><a href="#相关文章-2" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<h3 id="相关文章-1"><a href="#相关文章-1" class="headerlink" title="相关文章"></a>相关文章</h3><table>
 <thead>
 <tr>
 <th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PA31mNTzlQ2EGYEXfWagXQ">Redis主库宕机如何快速恢复</a></th>

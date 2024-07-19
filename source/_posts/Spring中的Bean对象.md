@@ -281,7 +281,7 @@ public Person personPrototype() {
 
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPYhVDaaP8cNKOLWfufL5rQXaMa7xPp4N8NAI2162lm2Rrwvl8sibVCjg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
-#### 第一阶段获取Bean
+**第一阶段获取Bean**
 
 这里的流程图的入口在AbstractBeanFactory类的doGetBean方法，这里可以配合前面的getBean方法分析文章进行阅读。主要流程就是
 1. 先处理Bean的名称，因为如果以“&”开头的Bean名称表示获取的是对应的FactoryBean对象
@@ -291,7 +291,7 @@ public Person personPrototype() {
 
 ### 二、创建Bean
 
-#### 2.1 创建Bean之前
+**2.1 创建Bean之前**
 
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPicgybuOPvUicWBAxrM1rT0PhJeZ1ftRibJGWGYM7P0f5XMga9QCrSlFFQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
@@ -333,7 +333,7 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
 
 (3)如果上面3个条件其中一个不满足就不会调用实现的方法。默认这里都不会调用的这些BeanPostProcessors的实现方法。然后继续执行后面的doCreateBean方法。
 
-#### 2.2 真正的创建Bean，doCreateBean
+**2.2 真正的创建Bean，doCreateBean**
 
 ![](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPIhTibribNrjwS7O5fH8doMAibkvl5icWLeq16ibP52JcxspfB8nDtyMhKQA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
@@ -350,7 +350,7 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
 5. 调用populateBean方法进行属性填充，这里后面会讲解
 6. 调用initializeBean方法对Bean进行初始化，这里后面会讲解
 
-##### 2.2.1 实例化Bean，createBeanInstance
+**2.2.1 实例化Bean，createBeanInstance**
 
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpP4WkTkskaiaq1XKqJAEKWhLeNicuTJSsicuK7licC9doicxAbdr01YF0taQg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
@@ -425,7 +425,7 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
 满足其中一个则会调用返回的候选构造器实例化Bean并返回，如果都不满足，则会根据构造参数选则合适的有参构造器然后实例化Bean并返回
 5. 如果上面都没有合适的构造器，则直接使用无参构造器创建并返回Bean。
 
-##### 2.2.2 填充Bean，populateBean
+**2.2.2 填充Bean，populateBean**
 
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPRaNrWofKRqgPdvMFQn03uicb2NmqJCHcRzncyuoobJ7alPiaOpVPGR8g/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
@@ -522,7 +522,7 @@ protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition 
 3. 如果实现了InstantiationAwareBeanPostProcessor类的postProcessProperties则调用这个方法并获取返回值，如果返回值是null，则有可能是实现了过期的postProcessPropertyValues方法，这里需要进一步调用postProcessPropertyValues方法
 4. 进行参数填充
 
-##### 2.2.3 初始化Bean，initializeBean
+**2.2.3 初始化Bean，initializeBean**
 
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/SJm51egHPPGPI5JCBzTotEAS720l5YpPZjJibwdUibfEibHoFzlWI6yFbIlaG2EvckACOCY5mneiaibpOZfZrtQICibw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
@@ -648,14 +648,14 @@ public DisposableBeanAdapter(Object bean, String beanName, RootBeanDefinition be
 
 ### 四、Bean的初始化和销毁的几种方式
 
-#### 初始化
+**初始化**
 
 - 实现InitializingBean接口,覆盖其中的afterPropertiesSet()方法
 - 增加@PostConstruct注解
 - 自定义init方法(@Bean(initMethod = "initMethod"))
 执行的顺序依次是postConstruct,afterPropertiesSet,initMethod
 
-#### 销毁
+**销毁**
 
 - 实现org.springframework.beans.factory.DisposableBean接口，覆盖destroy()方法
 - 自定义一个方法，在方法上面增加@PreDestroy注解
@@ -800,7 +800,9 @@ ioc容器中如果有bean实现了接口，那所有的bean在初始化之后都
 
 > [Spring Boot启动扩展点超详细总结，再也不怕面试官问了](https://mp.weixin.qq.com/s/l0O3C_UiO3CdfNE2V73qmA)
 
-#### BeanFactoryPostProcessor、BeanPostProcessor区别
+## 各个Factory工厂比较
+
+### BeanFactoryPostProcessor、BeanPostProcessor区别
 
 BeanFactoryPostProcessor：针对bean工厂，BeanFactory后置处理器，是对BeanDefinition对象进行修改，可以修改BeanDefinition对象中的属性。（BeanDefinition：存储bean标签的信息，用来生成bean实例）,BeanFactoryPostProcessor的实现类可以在当前BeanFactory初始化（spring容器加载bean定义文件）后，bean实例化之前修改bean的定义属性，达到影响之后实例化bean的效果。也就是说，Spring允许BeanFactoryPostProcessor在容器实例化任何其它bean之前读取配置元数据，并可以根据需要进行修改，例如可以把bean的scope从singleton改为prototype，也可以把property的值给修改掉。可以同时配置多个BeanFactoryPostProcessor，并通过设置’order’属性来控制各个BeanFactoryPostProcessor的执行次序.
 BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象进行修改。BeanPostProcessor能在spring容器实例化bean之后，在执行bean的初始化方法前后，添加一些自己的处理逻辑。初始化方法包括以下两种：
@@ -809,7 +811,7 @@ BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象�
 
 > [BeanFactoryPostProcessor和BeanPostProcessor有什么区别？](https://mp.weixin.qq.com/s/ZjN1XPamDaYZmvFbyI1KTQ)
 
-#### BeanFactroy、ApplicationContext区别
+### BeanFactroy、ApplicationContext区别
 
 1. BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化，这样，我们就不能发现一些存在的Spring的配置问题。而ApplicationContext则相反，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误。相对于基本的BeanFactory，ApplicationContext唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。BeanFacotry延迟加载,如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常；而ApplicationContext则在初始化自身是检验，这样有利于检查所依赖属性是否注入；所以通常情况下我们选择使用ApplicationContext。应用上下文则会在上下文启动后预载入所有的单实例Bean。通过预载入单实例bean,确保当你需要的时候，你就不用等待，因为它们已经创建好了。
 2. BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。（Applicationcontext比beanFactory加入了一些更好使用的功能。而且beanFactory的许多功能需要通过编程实现而Applicationcontext可以通过配置实现。比如后处理bean，Applicationcontext直接配置在配置文件即可而beanFactory这要在代码中显示的写出来才可以被容器识别。）
@@ -818,13 +820,13 @@ BeanPostProcessor：针对bean,Bean后置处理器，是对生成的Bean对象�
 > [Spring系列之beanFactory与ApplicationContext](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493943&idx=1&sn=9eaa46ed730874fce003c66f76fe9c7f&source=41#wechat_redirect)
 > [简单把Spring容器分为了两大类！](https://mp.weixin.qq.com/s/aOOQiBmBmNy4ZjHtv1phdQ)
 
-#### BeanFactory和FactoryBean的区别
+### BeanFactory和FactoryBean的区别
 
 BeanFactory是Spring容器的顶级接口，给具体的IOC容器的实现提供了规范。
 FactoryBean也是接口，为IOC容器中Bean的实现提供了更加灵活的方式，FactoryBean在IOC容器的基础上给Bean的实现加上了⼀个简单工厂模式和装饰模式,我们可以在getObject()方法中灵活配置。其实在Spring源码中有很多FactoryBean的实现类。
 区别：BeanFactory是个Factory，也就是IOC容器或对象工厂，FactoryBean是个Bean。在Spring中，所有的Bean都是由BeanFactory(也就是IOC容器)来进行管理的。但对FactoryBean而言，这个Bean不是简单的Bean，而是⼀个能生产或者修饰对象生成的工厂Bean,它的实现与设计模式中的工厂模式和修饰器模式类似。
 
-##### BeanFactory
+**BeanFactory**
 
 BeanFactory，以Factory结尾，表示它是⼀个工厂类(接口)，它负责生产和管理bean的⼀个工厂。在Spring中，BeanFactory是IOC容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。BeanFactory只是个接口，并不是IOC容器的具体实现，但是Spring容器给出了很多种实现，如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等，其中XmlBeanFactory就是常用的⼀个，该实现将以XML方式描述组成应用的对象及对象间的依赖关系。XmlBeanFactory类将持有此XML配置元数据，并用它来构建⼀个完全可配置的系统或应用。都是附加了某种功能的实现。它为其他具体的IOC容器提供了最基本的规范，例如DefaultListableBeanFactory,XmlBeanFactory,ApplicationContext等具体的容器都是实现了BeanFactory，再在其基础之上附加了其他的功能。BeanFactory和ApplicationContext就是Spring框架的两个IOC容器，现在⼀般使用ApplicationnContext，其不但包含了BeanFactory的作用，同时还进行更多的扩展。BeanFacotry是Spring中比较原始的Factory。如XMLBeanFactory就是⼀种典型的BeanFactory。原始的BeanFactory无法⽀持Spring的许多插件，如AOP功能、Web应用等。ApplicationContext接口,它由BeanFactory接口派生而来，ApplicationContext包含BeanFactory的所有功能，通常建议比BeanFactory优先，ApplicationContext以⼀种更面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：MessageSource,提供国际化的消息访问
 资源访问，如URL和⽂件，事件传播，载入多个（有继承关系）上下文，使得每⼀个上下文都专注于⼀个特定的层次，比如应⽤的web层;
@@ -845,7 +847,7 @@ boolean isSingleton(String)
 // 返回给定bean名称的所有别名
 String[] getAliases(String name)
 ```
-##### FactoryBean
+**FactoryBean**
 
 ⼀般情况下，Spring通过反射机制利用<bean\><bean\>的class属性指定实现类实例化Bean，在某些情况下，实例化Bean过程比较复杂，如果按照传统的方式，则需要在<bean\><bean\>中提供大量的配置信息。配置⽅式的灵活性是受限的，这时采用编码的方式可能会得到⼀个简单的方案。Spring为此提供了⼀个org.springframework.bean.factory.FactoryBean的工厂类接口，用户可以通过实现该接⼝定制实例化Bean的逻辑。FactoryBean接口对于Spring框架来说占重要的地位，Spring自身就提供了70多个FactoryBean的实现。它们隐藏了实例化⼀些复杂Bean的细节，给上层应用带来了便利。从Spring3.0开始，FactoryBean开始⽀持泛型，即接口声明改为FactoryBean<T\>的形式,以Bean结尾，表示它是⼀个Bean，不同于普通Bean的是：它是实现了FactoryBean<T\>接口的Bean，根据该Bean的ID从BeanFactory中获取的实际上是FactoryBean的getObject()返回的对象，而不是FactoryBean本身，如果要获取FactoryBean对象，请在id前面加⼀个&符号来获取。例如自己实现⼀个FactoryBean，功能：用来代理⼀个对象，对该对象的所有方法做⼀个拦截，在调用前后都输出⼀行LOG，模仿ProxyFactoryBean的功能。FactoryBean是⼀个接口，当在IOC容器中的Bean实现了FactoryBean后，通过getBean(StringBeanName)获取到的Bean对象并不是FactoryBean的实现类对象，而是这个实现类中的getObject()方法返回的对象。要想获取FactoryBean的实现类，就要getBean(&BeanName)，在BeanName之前加上&。
 在该接口中还定义了以下3个⽅法：

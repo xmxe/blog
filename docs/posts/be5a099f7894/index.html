@@ -753,7 +753,8 @@ foo<span class="token punctuation">.</span><span class="token function">f</span>
 <blockquote>
 <p>关于堆空间结构更详细的介绍，可以回过头看看<a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/memory-area.html">Java内存区域详解</a>这篇文章。</p>
 </blockquote>
-<h3 id="内存分配和回收原则"><a href="#内存分配和回收原则" class="headerlink" title="内存分配和回收原则"></a>内存分配和回收原则</h3><h4 id="对象优先在Eden区分配"><a href="#对象优先在Eden区分配" class="headerlink" title="对象优先在Eden区分配"></a>对象优先在Eden区分配</h4><p>大多数情况下，对象在新生代中Eden区分配。当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。下面我们来进行实际测试以下。</p>
+<h3 id="内存分配和回收原则"><a href="#内存分配和回收原则" class="headerlink" title="内存分配和回收原则"></a>内存分配和回收原则</h3><p><strong>对象优先在Eden区分配</strong></p>
+<p>大多数情况下，对象在新生代中Eden区分配。当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。下面我们来进行实际测试以下。</p>
 <p>测试代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GCTest</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -782,8 +783,10 @@ foo<span class="token punctuation">.</span><span class="token function">f</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h4><p>大对象就是需要大量连续内存空间的对象（比如：字符串、数组）。大对象直接进入老年代主要是为了避免为大对象分配内存时由于分配担保机制带来的复制而降低效率。</p>
-<h4 id="长期存活的对象将进入老年代"><a href="#长期存活的对象将进入老年代" class="headerlink" title="长期存活的对象将进入老年代"></a>长期存活的对象将进入老年代</h4><p>既然虚拟机采用了分代收集的思想来管理内存，那么内存回收时就必须能识别哪些对象应放在新生代，哪些对象应放在老年代中。为了做到这一点，虚拟机给每个对象一个对象年龄（Age）计数器。</p>
+<p><strong>大对象直接进入老年代</strong></p>
+<p>大对象就是需要大量连续内存空间的对象（比如：字符串、数组）。大对象直接进入老年代主要是为了避免为大对象分配内存时由于分配担保机制带来的复制而降低效率。</p>
+<p><strong>长期存活的对象将进入老年代</strong></p>
+<p>既然虚拟机采用了分代收集的思想来管理内存，那么内存回收时就必须能识别哪些对象应放在新生代，哪些对象应放在老年代中。为了做到这一点，虚拟机给每个对象一个对象年龄（Age）计数器。</p>
 <p>大部分情况，对象都会首先在Eden区域分配。如果对象在Eden出生并经过第一次Minor GC后仍然能够存活，并且能被Survivor容纳的话，将被移动到Survivor空间（s0或者s1）中，并将对象年龄设为1(Eden区-&gt;Survivor区后对象的初始年龄变为1)。</p>
 <p>对象在Survivor中每熬过一次MinorGC,年龄就增加1岁，当它的年龄增加到一定程度（默认为15岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数<code>-XX:MaxTenuringThreshold</code>来设置。</p>
 <blockquote>
@@ -811,7 +814,8 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <p>额外补充说明(<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/672">issue672</a>)：<strong>关于默认的晋升年龄是15，这个说法的来源大部分都是《深入理解Java虚拟机》这本书</strong>。如果你去Oracle的官网阅读<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">相关的虚拟机参数</a>，你会发现<code>-XX:MaxTenuringThreshold=threshold</code>这里有个说明</p>
 <p><strong>Sets the maximum tenuring threshold for use in adaptive GC sizing. The largest value is 15. The default value is 15 for the parallel (throughput) collector, and 6 for the CMS collector.默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.</strong></p>
 </blockquote>
-<h4 id="主要进行gc的区域"><a href="#主要进行gc的区域" class="headerlink" title="主要进行gc的区域"></a>主要进行gc的区域</h4><p>周志明先生在《深入理解Java虚拟机》第二版中P92如是写道：</p>
+<p><strong>主要进行gc的区域</strong></p>
+<p>周志明先生在《深入理解Java虚拟机》第二版中P92如是写道：</p>
 <blockquote>
 <p><del><em>“老年代GC（Major GC&#x2F;Full GC），指发生在老年代的GC……”</em></del><br>上面的说法已经在《深入理解Java虚拟机》第三版中被改正过来了。</p>
 </blockquote>
@@ -824,7 +828,8 @@ uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;
 <li>混合收集（Mixed GC）：对整个新生代和部分老年代进行垃圾收集。</li>
 </ul>
 <p>整堆收集(Full GC)：收集整个Java堆和方法区。</p>
-<h4 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h4><p>空间分配担保是为了确保在Minor GC之前老年代本身还有容纳新生代所有对象的剩余空间。《深入理解Java虚拟机》第三章对于空间分配担保的描述如下：</p>
+<p><strong>空间分配担保</strong></p>
+<p>空间分配担保是为了确保在Minor GC之前老年代本身还有容纳新生代所有对象的剩余空间。《深入理解Java虚拟机》第三章对于空间分配担保的描述如下：</p>
 <blockquote>
 <p>JDK6 Update 24之前，在发生Minor GC之前，虚拟机必须先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果这个条件成立，那这一次Minor GC可以确保是安全的。如果不成立，则虚拟机会先查看<code>-XX:HandlePromotionFailure</code>参数的设置值是否允许担保失败(Handle Promotion Failure);如果允许，那会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次Minor GC，尽管这次Minor GC是有风险的;如果小于，或者<code>-XX:HandlePromotionFailure</code>设置不允许冒险，那这时就要改为进行一次Full GC。</p>
 <p>JDK6 Update 24之后的规则变为只要老年代的连续空间大于新生代对象总大小或者历次晋升的平均大小，就会进行Minor GC，否则将进行Full GC。</p>
@@ -1061,8 +1066,10 @@ Java HotSpot<span class="token punctuation">(</span>TM<span class="token punctua
 <blockquote>
 <p>tips：如果堆空间没有用完也抛出了OOM，有可能是永久区导致的。堆空间实际占用非常少，但是永久区溢出一样抛出OOM。</p>
 </blockquote>
-<h3 id="JVM的栈参数调优"><a href="#JVM的栈参数调优" class="headerlink" title="JVM的栈参数调优"></a>JVM的栈参数调优</h3><h4 id="调整每个线程栈空间的大小"><a href="#调整每个线程栈空间的大小" class="headerlink" title="调整每个线程栈空间的大小"></a>调整每个线程栈空间的大小</h4><p>可以通过-Xss：调整每个线程栈空间的大小，JDK5.0以后每个线程堆栈大小为1M，以前每个线程堆栈大小为256K。在相同物理内存下,减小这个值能生成更多的线程。但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右</p>
-<h4 id="设置线程栈的大小"><a href="#设置线程栈的大小" class="headerlink" title="设置线程栈的大小"></a>设置线程栈的大小</h4><pre class="line-numbers language-none"><code class="language-none">-XXThreadStackSize： 设置线程栈的大小(0 means use default stack size)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="JVM的栈参数调优"><a href="#JVM的栈参数调优" class="headerlink" title="JVM的栈参数调优"></a>JVM的栈参数调优</h3><p><strong>调整每个线程栈空间的大小</strong></p>
+<p>可以通过-Xss：调整每个线程栈空间的大小，JDK5.0以后每个线程堆栈大小为1M，以前每个线程堆栈大小为256K。在相同物理内存下,减小这个值能生成更多的线程。但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右</p>
+<p><strong>设置线程栈的大小</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">-XXThreadStackSize： 设置线程栈的大小(0 means use default stack size)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>这些参数都是可以通过自己编写程序去简单测试的，这里碍于篇幅问题就不再提供demo了</p>
 <h3 id="JVM其他参数介绍"><a href="#JVM其他参数介绍" class="headerlink" title="JVM其他参数介绍"></a>JVM其他参数介绍</h3><h4 id="设置内存页的大小"><a href="#设置内存页的大小" class="headerlink" title="设置内存页的大小"></a>设置内存页的大小</h4><pre class="line-numbers language-none"><code class="language-none">-XXThreadStackSize：
@@ -1306,8 +1313,10 @@ Java stack information <span class="token keyword">for</span> the threads listed
 Found 1 deadlock<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以看到jstack命令已经帮我们找到发生死锁的线程的具体信息。</p>
-<h3 id="JDK可视化分析工具"><a href="#JDK可视化分析工具" class="headerlink" title="JDK可视化分析工具"></a>JDK可视化分析工具</h3><h3 id="JConsole-Java监视与管理控制台"><a href="#JConsole-Java监视与管理控制台" class="headerlink" title="JConsole:Java监视与管理控制台"></a>JConsole:Java监视与管理控制台</h3><p>JConsole是基于JMX的可视化监视、管理工具。可以很方便的监视本地及远程服务器的java进程的内存使用情况。你可以在控制台输出<code>console</code>命令启动或者在JDK目录下的bin目录找到<code>jconsole.exe</code>然后双击启动。</p>
-<h4 id="连接Jconsole"><a href="#连接Jconsole" class="headerlink" title="连接Jconsole"></a>连接Jconsole</h4><p>如果需要使用JConsole连接远程进程，可以在远程Java程序启动时加上下面这些参数:</p>
+<h3 id="JDK可视化分析工具"><a href="#JDK可视化分析工具" class="headerlink" title="JDK可视化分析工具"></a>JDK可视化分析工具</h3><p><strong>JConsole:Java监视与管理控制台</strong></p>
+<p>JConsole是基于JMX的可视化监视、管理工具。可以很方便的监视本地及远程服务器的java进程的内存使用情况。你可以在控制台输出<code>console</code>命令启动或者在JDK目录下的bin目录找到<code>jconsole.exe</code>然后双击启动。</p>
+<p><strong>连接Jconsole</strong></p>
+<p>如果需要使用JConsole连接远程进程，可以在远程Java程序启动时加上下面这些参数:</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">-Djava.rmi.server.hostname</span><span class="token punctuation">=</span><span class="token value attr-value">外网访问ip地址</span>
 <span class="token key attr-name">-Dcom.sun.management.jmxremote.port</span><span class="token punctuation">=</span><span class="token value attr-value">60001 //监控的端口号</span>
 <span class="token key attr-name">-Dcom.sun.management.jmxremote.authenticate</span><span class="token punctuation">=</span><span class="token value attr-value">false //关闭认证</span>
@@ -1316,14 +1325,16 @@ Found 1 deadlock<span class="token punctuation">.</span><span aria-hidden="true"
 <p>在使用JConsole连接时，远程进程地址如下：</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">外网访问ip地址:60001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="内存监控"><a href="#内存监控" class="headerlink" title="内存监控"></a>内存监控</h4><p>JConsole可以显示当前内存的详细信息。不仅包括堆内存&#x2F;非堆内存的整体信息，还可以细化到eden区、survivor区等的使用情况，如下图所示。点击右边的“执行GC(G)”按钮可以强制应用程序执行一个FullGC。</p>
+<p><strong>内存监控</strong></p>
+<p>JConsole可以显示当前内存的详细信息。不仅包括堆内存&#x2F;非堆内存的整体信息，还可以细化到eden区、survivor区等的使用情况，如下图所示。点击右边的“执行GC(G)”按钮可以强制应用程序执行一个FullGC。</p>
 <blockquote>
 <ul>
 <li><strong>新生代 GC（Minor GC）</strong>:指发生新生代的的垃圾收集动作，Minor GC非常频繁，回收速度一般也比较快。</li>
 <li><strong>老年代 GC（Major GC&#x2F;Full GC）</strong>:指发生在老年代的GC，出现了Major GC经常会伴随至少一次的Minor GC（并非绝对），Major GC的速度一般会比Minor GC的慢10倍以上。</li>
 </ul>
 </blockquote>
-<h4 id="线程监控"><a href="#线程监控" class="headerlink" title="线程监控"></a>线程监控</h4><p>类似我们前面讲的<code>jstack</code>命令，不过这个是可视化的。最下面有一个”检测死锁(D)”按钮，点击这个按钮可以自动为你找到发生死锁的线程以及它们的详细信息。</p>
+<p><strong>线程监控</strong></p>
+<p>类似我们前面讲的<code>jstack</code>命令，不过这个是可视化的。最下面有一个”检测死锁(D)”按钮，点击这个按钮可以自动为你找到发生死锁的线程以及它们的详细信息。</p>
 <h3 id="Visual-VM-多合一故障处理工具"><a href="#Visual-VM-多合一故障处理工具" class="headerlink" title="Visual VM:多合一故障处理工具"></a>Visual VM:多合一故障处理工具</h3><p>VisualVM提供在Java虚拟机(Java Virutal Machine,JVM)上运行的Java应用程序的详细信息。在VisualVM的图形用户界面中，您可以方便、快捷地查看多个Java应用程序的相关信息。<a target="_blank" rel="noopener" href="https://visualvm.github.io/">VisualVM官网</a>、<a target="_blank" rel="noopener" href="https://visualvm.github.io/documentation.html">VisualVM中文文档</a>。</p>
 <p>下面这段话摘自《深入理解Java虚拟机》。</p>
 <blockquote>
@@ -1436,7 +1447,8 @@ JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.
 <h3 id="堆内存相关"><a href="#堆内存相关" class="headerlink" title="堆内存相关"></a>堆内存相关</h3><blockquote>
 <p>Java虚拟机所管理的内存中最大的一块，Java堆是所有线程共享的一块内存区域，在虚拟机启动时创建。<strong>此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存</strong>。</p>
 </blockquote>
-<h4 id="显式指定堆内存–Xms和-Xmx"><a href="#显式指定堆内存–Xms和-Xmx" class="headerlink" title="显式指定堆内存–Xms和-Xmx"></a>显式指定堆内存–Xms和-Xmx</h4><p>与性能有关的最常见实践之一是根据应用程序要求初始化堆内存。如果我们需要指定最小和最大堆大小（推荐显示指定大小），以下参数可以帮助你实现：</p>
+<p><strong>显式指定堆内存–Xms和-Xmx</strong></p>
+<p>与性能有关的最常见实践之一是根据应用程序要求初始化堆内存。如果我们需要指定最小和最大堆大小（推荐显示指定大小），以下参数可以帮助你实现：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">-Xms<span class="token operator">&lt;</span>heap size<span class="token operator">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span>
 -Xmx<span class="token operator">&lt;</span>heap size<span class="token operator">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -1447,7 +1459,8 @@ JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.
 <p>举个栗子🌰，如果我们要为JVM分配最小2GB和最大5GB的堆内存大小，我们的参数应该这样来写：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">-Xms2G</span> <span class="token parameter variable">-Xmx5G</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="显式新生代内存-Young-Generation"><a href="#显式新生代内存-Young-Generation" class="headerlink" title="显式新生代内存(Young Generation)"></a>显式新生代内存(Young Generation)</h4><p>根据<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html">Oracle官方文档</a>，在堆总可用内存配置完成之后，第二大影响因素是为Young Generation在堆内存所占的比例。默认情况下，YG的最小大小为1310<em>MB</em>，最大大小为无限制。</p>
+<p><strong>显式新生代内存(Young Generation)</strong></p>
+<p>根据<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html">Oracle官方文档</a>，在堆总可用内存配置完成之后，第二大影响因素是为Young Generation在堆内存所占的比例。默认情况下，YG的最小大小为1310<em>MB</em>，最大大小为无限制。</p>
 <p>一共有两种指定新生代内存(Young Ceneration)大小的方法：</p>
 <p>1.通过-XX:NewSize和-XX:MaxNewSize指定</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">-XX:NewSize</span><span class="token operator">=</span><span class="token operator">&lt;</span>young size<span class="token operator">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span>
@@ -1469,7 +1482,8 @@ JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.
 <p>比如下面的参数就是设置老年代与新生代内存的比值为1。也就是说老年代和新生代所占比值为1：1，新生代占整个堆栈的1&#x2F;2。</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">-XX:NewRatio=1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="显式指定永久代-x2F-元空间的大小"><a href="#显式指定永久代-x2F-元空间的大小" class="headerlink" title="显式指定永久代&#x2F;元空间的大小"></a>显式指定永久代&#x2F;元空间的大小</h4><p><strong>从Java8开始，如果我们没有指定Metaspace的大小，随着更多类的创建，虚拟机会耗尽所有可用的系统内存（永久代并不会出现这种情况）</strong>。</p>
+<p><strong>显式指定永久代&#x2F;元空间的大小</strong></p>
+<p><strong>从Java8开始，如果我们没有指定Metaspace的大小，随着更多类的创建，虚拟机会耗尽所有可用的系统内存（永久代并不会出现这种情况）</strong>。</p>
 <p>JDK1.8之前永久代还没被彻底移除的时候通常通过下面这些参数来调节方法区大小</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方法区(永久代)初始大小</span>
 <span class="token parameter variable">-XX:PermSize</span><span class="token operator">=</span>N
@@ -1483,7 +1497,8 @@ JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.
 <span class="token comment"># 设置Metaspace的最大大小，如果不指定大小的话，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。</span>
 <span class="token parameter variable">-XX:MaxMetaspaceSize</span><span class="token operator">=</span>N<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="垃圾收集相关"><a href="#垃圾收集相关" class="headerlink" title="垃圾收集相关"></a>垃圾收集相关</h3><h4 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h4><p>为了提高应用程序的稳定性，选择正确的<a target="_blank" rel="noopener" href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html">垃圾收集</a>算法至关重要。</p>
+<h3 id="垃圾收集相关"><a href="#垃圾收集相关" class="headerlink" title="垃圾收集相关"></a>垃圾收集相关</h3><p><strong>垃圾回收器</strong></p>
+<p>为了提高应用程序的稳定性，选择正确的<a target="_blank" rel="noopener" href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html">垃圾收集</a>算法至关重要。</p>
 <p>JVM具有四种类型的GC实现：</p>
 <ul>
 <li>串行垃圾收集器</li>
@@ -1500,7 +1515,8 @@ JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.
 <blockquote>
 <p>有关<em>垃圾回收</em>实施的更多详细信息，请参见<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/jvm/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6.md">此处</a>。</p>
 </blockquote>
-<h4 id="GC日志记录"><a href="#GC日志记录" class="headerlink" title="GC日志记录"></a>GC日志记录</h4><p>生产环境上，或者其他要测试GC问题的环境上，一定会配置上打印GC日志的参数，便于分析GC相关的问题。</p>
+<p><strong>GC日志记录</strong></p>
+<p>生产环境上，或者其他要测试GC问题的环境上，一定会配置上打印GC日志的参数，便于分析GC相关的问题。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 必选</span>
 <span class="token comment"># 打印基本GC信息</span>
 <span class="token parameter variable">-XX:+PrintGCDetails</span>

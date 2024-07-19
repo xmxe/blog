@@ -354,6 +354,7 @@ new Thread(futureTask).start();// executor.submit(futureTask);
 String result = futureTask.get(2000,TimeUnit.MILLISECONDS)// 如果在指定时间内，还没获取到结果，就直接返回null
 ```
 > [线程池中的线程抛出了异常，该如何处理](https://mp.weixin.qq.com/s/LVAv7PKVvg7prW9ayD1eZA)
+> [3分钟带你秒懂线程池设计机制](https://mp.weixin.qq.com/s/nKzjIOR_rMrPFw6PB7WUdA)
 
 
 ### 虚拟线程

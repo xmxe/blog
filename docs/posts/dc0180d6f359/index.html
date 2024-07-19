@@ -542,14 +542,16 @@
 </blockquote>
 <h2 id="Zookeeper基本原理"><a href="#Zookeeper基本原理" class="headerlink" title="Zookeeper基本原理"></a>Zookeeper基本原理</h2><h3 id="ZooKeeper重要概念解读"><a href="#ZooKeeper重要概念解读" class="headerlink" title="ZooKeeper重要概念解读"></a>ZooKeeper重要概念解读</h3><h4 id="Data-model（数据模型）"><a href="#Data-model（数据模型）" class="headerlink" title="Data model（数据模型）"></a>Data model（数据模型）</h4><p>ZooKeeper数据模型采用层次化的多叉树形结构，每个节点上都可以存储数据，这些数据可以是数字、字符串或者是二级制序列。并且。每个节点还可以拥有N个子节点，最上层是根节点以“&#x2F;”来代表。每个数据节点在ZooKeeper中被称为znode，它是ZooKeeper中数据的最小单元。并且，每个znode都一个唯一的路径标识。强调一句：<strong>ZooKeeper主要是用来协调服务的，而不是用来存储业务数据的，所以不要放比较大的数据在znode上，ZooKeeper给出的上限是每个结点的数据大小最大是1M</strong>。ZooKeeper节点路径标识方式和Unix文件系统路径非常相似，都是由一系列使用斜杠”&#x2F;“进行分割的路径表示，开发人员可以向这个节点中写入数据，也可以在节点下面创建子节点。</p>
 <h4 id="znode（数据节点）"><a href="#znode（数据节点）" class="headerlink" title="znode（数据节点）"></a>znode（数据节点）</h4><p>介绍了ZooKeeper树形数据模型之后，我们知道每个数据节点在ZooKeeper中被称为znode，它是ZooKeeper中数据的最小单元。你要存放的数据就放在上面，是你使用ZooKeeper过程中经常需要接触到的一个概念。</p>
-<h5 id="znode4种类型"><a href="#znode4种类型" class="headerlink" title="znode4种类型"></a>znode4种类型</h5><p>我们通常是将znode分为4大类：</p>
+<p><strong>znode4种类型</strong></p>
+<p>我们通常是将znode分为4大类：</p>
 <ul>
 <li><strong>持久（PERSISTENT）节点</strong>：一旦创建就一直存在即使ZooKeeper集群宕机，直到将其删除。</li>
 <li><strong>临时（EPHEMERAL）节点</strong>：临时节点的生命周期是与客户端会话（session）绑定的，会话消失则节点消失。并且，临时节点只能做叶子节点，不能创建子节点。</li>
 <li><strong>持久顺序（PERSISTENT_SEQUENTIAL）节点</strong>：除了具有持久（PERSISTENT）节点的特性之外，子节点的名称还具有顺序性。比如<code>/node1/app0000000001</code>、<code>/node1/app0000000002</code>。</li>
 <li><strong>临时顺序（EPHEMERAL_SEQUENTIAL）节点</strong>：除了具备临时（EPHEMERAL）节点的特性之外，子节点的名称还具有顺序性。</li>
 </ul>
-<h5 id="znode数据结构"><a href="#znode数据结构" class="headerlink" title="znode数据结构"></a>znode数据结构</h5><p>每个znode由2部分组成:</p>
+<p><strong>znode数据结构</strong></p>
+<p>每个znode由2部分组成:</p>
 <ul>
 <li><strong>stat</strong>：状态信息</li>
 <li><strong>data</strong>：节点存放的数据的具体内容</li>
@@ -719,17 +721,20 @@ numChildren <span class="token operator">=</span> <span class="token number">1</
 <li>学习者（Learner）或跟随者（Follower）:Follower用于接收客户请求并向客户端返回结果，在选主过程中参与投票。Follower可以接收client请求，如果是写请求将转发给leader来更新系统状态。</li>
 <li>观察者（ObServer）:ObServer可以接收客户端连接，将写请求转发给leader节点。但Observer不参加投票过程，只同步leader的状态，ObServer的目的是为了扩展系统，提高德取谏度。</li>
 </ul>
-<h4 id="为什么需要server"><a href="#为什么需要server" class="headerlink" title="为什么需要server?"></a>为什么需要server?</h4><ul>
+<p><strong>为什么需要server?</strong></p>
+<ul>
 <li>ZooKeeper需保证高可用和强一致性;</li>
 <li>为了支持更多的客户端，需要增加更多的Server;</li>
 <li>Follower增多会导致投票阶段延迟增大，影响性能</li>
 </ul>
-<h4 id="在Zookeeper中ObServer起到什么作用？"><a href="#在Zookeeper中ObServer起到什么作用？" class="headerlink" title="在Zookeeper中ObServer起到什么作用？"></a>在Zookeeper中ObServer起到什么作用？</h4><ul>
+<p><strong>在Zookeeper中ObServer起到什么作用？</strong></p>
+<ul>
 <li>ObServer不参与投票过程，只同步leader的状态</li>
 <li>Observers接受客户端的连接，并将写请求转发给leader节点</li>
 <li>加入更多ObServer节点，提高伸缩性，同时还不影响吞吐率</li>
 </ul>
-<h4 id="为什么在Zookeeper中Server数目一般为奇数？"><a href="#为什么在Zookeeper中Server数目一般为奇数？" class="headerlink" title="为什么在Zookeeper中Server数目一般为奇数？"></a>为什么在Zookeeper中Server数目一般为奇数？</h4><p>我们知道在Zookeeper中Leader选举算法采用了Zab协议。Zab核心思想是当多数Server写成功，则任务数据写成功。</p>
+<p><strong>为什么在Zookeeper中Server数目一般为奇数？</strong></p>
+<p>我们知道在Zookeeper中Leader选举算法采用了Zab协议。Zab核心思想是当多数Server写成功，则任务数据写成功。</p>
 <p>①如果有3个Server，则最多允许1个Server挂掉。</p>
 <p>②如果有4个Server，则同样最多允许1个Server挂掉。既然3个或者4个Server，同样最多允许1个Server挂掉，那么它们的可靠性是一样的，所以选择奇数个ZooKeeper Server即可，这里选择3个Server。</p>
 <h3 id="ZooKeeper的写数据流程"><a href="#ZooKeeper的写数据流程" class="headerlink" title="ZooKeeper的写数据流程"></a>ZooKeeper的写数据流程</h3><ol>
@@ -771,17 +776,20 @@ numChildren <span class="token operator">=</span> <span class="token number">1</
 </blockquote>
 <p>总之，3PC通过一系列的超时机制很好的缓解了阻塞问题，但是最重要的一致性并没有得到根本的解决，比如在PreCommit阶段，当一个参与者收到了请求之后其他参与者和协调者挂了或者出现了网络分区，这个时候收到消息的参与者都会进行事务提交，这就会出现数据不一致性问题。所以，要解决一致性问题还需要靠Paxos算法⭐️⭐️⭐️。</p>
 <h4 id="Paxos算法"><a href="#Paxos算法" class="headerlink" title="Paxos算法"></a>Paxos算法</h4><p>Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效的算法之一，其解决的问题就是在分布式系统中如何就某个值（决议）达成一致。在Paxos中主要有三个角色，分别为Proposer提案者、Acceptor表决者、Learner学习者。Paxos算法和2PC一样，也有两个阶段，分别为Prepare和accept阶段。</p>
-<h5 id="prepare阶段"><a href="#prepare阶段" class="headerlink" title="prepare阶段"></a>prepare阶段</h5><ul>
+<p><strong>prepare阶段</strong></p>
+<ul>
 <li>Proposer提案者：负责提出proposal，每个提案者在提出提案时都会首先获取到一个具有全局唯一性的、递增的提案编号N，即在整个集群中是唯一的编号N，然后将该编号赋予其要提出的提案，在第一阶段是只将提案编号发送给所有的表决者。</li>
 <li>Acceptor表决者：每个表决者在accept某提案后，会将该提案编号N记录在本地，这样每个表决者中保存的已经被accept的提案中会存在一个编号最大的提案，其编号假设为maxN。每个表决者仅会accept编号大于自己本地maxN的提案，在批准提案时表决者会将以前接受过的最大编号的提案作为响应反馈给Proposer。</li>
 </ul>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cd1e5f78875b4ad6b54013738f570943~tplv-k3u1fbpfcp-zoom-1.image" alt="paxos第一阶段"></p>
-<h5 id="accept阶段"><a href="#accept阶段" class="headerlink" title="accept阶段"></a>accept阶段</h5><p>当一个提案被Proposer提出后，如果Proposer收到了超过半数的Acceptor的批准（Proposer本身同意），那么此时Proposer会给所有的Acceptor发送真正的提案（你可以理解为第一阶段为试探），这个时候Proposer就会发送提案的内容和提案编号。表决者收到提案请求后会再次比较本身已经批准过的最大提案编号和该提案编号，如果该提案编号大于等于已经批准过的最大提案编号，那么就accept该提案（此时执行提案内容但不提交），随后将情况返回给Proposer。如果不满足则不回应或者返回NO。</p>
+<p><strong>accept阶段</strong></p>
+<p>当一个提案被Proposer提出后，如果Proposer收到了超过半数的Acceptor的批准（Proposer本身同意），那么此时Proposer会给所有的Acceptor发送真正的提案（你可以理解为第一阶段为试探），这个时候Proposer就会发送提案的内容和提案编号。表决者收到提案请求后会再次比较本身已经批准过的最大提案编号和该提案编号，如果该提案编号大于等于已经批准过的最大提案编号，那么就accept该提案（此时执行提案内容但不提交），随后将情况返回给Proposer。如果不满足则不回应或者返回NO。</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dad7f51d58b24a72b249278502ec04bd~tplv-k3u1fbpfcp-zoom-1.image" alt="paxos第二阶段1"></p>
 <p>当Proposer收到超过半数的accept，那么它这个时候会向所有的acceptor发送提案的提交请求。需要注意的是，因为上述仅仅是超过半数的acceptor批准执行了该提案内容，其他没有批准的并没有执行该提案内容，所以这个时候需要向未批准的acceptor发送提案内容和提案编号并让它无条件执行和提交，而对于前面已经批准过该提案的acceptor来说仅仅需要发送该提案的编号，让acceptor执行提交就行了。</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9359bbabb511472e8de04d0826967996~tplv-k3u1fbpfcp-zoom-1.image" alt="paxos第二阶段2"></p>
 <p>而如果Proposer如果没有收到超过半数的accept那么它将会将递增该Proposal的编号，然后重新进入Prepare阶段。</p>
-<h5 id="paxos算法的死循环问题"><a href="#paxos算法的死循环问题" class="headerlink" title="paxos算法的死循环问题"></a>paxos算法的死循环问题</h5><p>其实就有点类似于两个人吵架，小明说我是对的，小红说我才是对的，两个人据理力争的谁也不让谁🤬🤬。比如说，此时提案者P1提出一个方案M1，完成了Prepare阶段的工作，这个时候acceptor则批准了M1，但是此时提案者P2同时也提出了一个方案M2，它也完成了Prepare阶段的工作。然后P1的方案已经不能在第二阶段被批准了（因为acceptor已经批准了比M1更大的M2），所以P1自增方案变为M3重新进入Prepare阶段，然后acceptor，又批准了新的M3方案，它又不能批准M2了，这个时候M2又自增进入Prepare阶段。。。就这样无休无止的永远提案下去，这就是paxos算法的死循环问题。那么如何解决呢？很简单，人多了容易吵架，我现在就允许一个能提案就行了。</p>
+<p><strong>paxos算法的死循环问题</strong></p>
+<p>其实就有点类似于两个人吵架，小明说我是对的，小红说我才是对的，两个人据理力争的谁也不让谁🤬🤬。比如说，此时提案者P1提出一个方案M1，完成了Prepare阶段的工作，这个时候acceptor则批准了M1，但是此时提案者P2同时也提出了一个方案M2，它也完成了Prepare阶段的工作。然后P1的方案已经不能在第二阶段被批准了（因为acceptor已经批准了比M1更大的M2），所以P1自增方案变为M3重新进入Prepare阶段，然后acceptor，又批准了新的M3方案，它又不能批准M2了，这个时候M2又自增进入Prepare阶段。。。就这样无休无止的永远提案下去，这就是paxos算法的死循环问题。那么如何解决呢？很简单，人多了容易吵架，我现在就允许一个能提案就行了。</p>
 <h3 id="引出ZAB"><a href="#引出ZAB" class="headerlink" title="引出ZAB"></a>引出ZAB</h3><h4 id="Zookeeper架构"><a href="#Zookeeper架构" class="headerlink" title="Zookeeper架构"></a>Zookeeper架构</h4><p>作为一个优秀高效且可靠的分布式协调框架，ZooKeeper在解决分布式数据一致性问题时并没有直接使用Paxos，而是专门定制了一致性协议叫做ZAB(ZooKeeperAtomicBroadcast)原子广播协议，该协议能够很好地支持崩溃恢复。</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/07bf6c1e10f84fc58a2453766ca6bd18~tplv-k3u1fbpfcp-zoom-1.image" alt="Zookeeper架构"></p>
 <h4 id="ZAB中的三个角色"><a href="#ZAB中的三个角色" class="headerlink" title="ZAB中的三个角色"></a>ZAB中的三个角色</h4><p>和介绍Paxos一样，在介绍ZAB协议之前，我们首先来了解一下在ZAB中三个主要的角色，Leader领导者、Follower跟随者、Observer观察者。</p>
@@ -1042,13 +1050,15 @@ numChildren <span class="token operator">=</span> <span class="token number">1</
 <td>权重信息，表明哪个结点的权重是多少，例如weight．1＝1weight．2＝1weight.3&#x3D;1</td>
 </tr>
 </tbody></table>
-<h3 id="ZooKeeper安装和使用"><a href="#ZooKeeper安装和使用" class="headerlink" title="ZooKeeper安装和使用"></a>ZooKeeper安装和使用</h3><h4 id="使用Docker安装zookeeper"><a href="#使用Docker安装zookeeper" class="headerlink" title="使用Docker安装zookeeper"></a>使用Docker安装zookeeper</h4><p><strong>a.使用Docker下载ZooKeeper</strong></p>
+<h3 id="ZooKeeper安装和使用"><a href="#ZooKeeper安装和使用" class="headerlink" title="ZooKeeper安装和使用"></a>ZooKeeper安装和使用</h3><p><strong>使用Docker安装zookeeper</strong></p>
+<p><strong>a.使用Docker下载ZooKeeper</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull zookeeper:3.5.8<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><strong>b.运行ZooKeeper</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> zookeeper <span class="token parameter variable">-p</span> <span class="token number">2181</span>:2181 zookeeper:3.5.8<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="连接ZooKeeper服务"><a href="#连接ZooKeeper服务" class="headerlink" title="连接ZooKeeper服务"></a>连接ZooKeeper服务</h4><p><strong>a.进入ZooKeeper容器中</strong></p>
+<p><strong>连接ZooKeeper服务</strong></p>
+<p><strong>a.进入ZooKeeper容器中</strong></p>
 <p>先使用<code>docker ps</code>查看ZooKeeper的ContainerID，然后使用<code>docker exec -it ContainerID /bin/bash</code>命令进入容器中。</p>
 <p><strong>b.先进入bin目录,然后通过<code>./zkCli.sh -server 127.0.0.1:2181</code>命令连接ZooKeeper服务</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@eaf70fc620cb:/apache-zookeeper-3.5.8-bin<span class="token comment"># cd bin</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>

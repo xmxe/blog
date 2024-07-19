@@ -689,7 +689,7 @@ smsService<span class="token punctuation">.</span><span class="token function">s
 send message:java
 after method send<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="CGLIB动态代理机制"><a href="#CGLIB动态代理机制" class="headerlink" title="CGLIB动态代理机制"></a>CGLIB动态代理机制</h4><h5 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h5><p><strong>JDK动态代理有一个最致命的问题是其只能代理实现了接口的类。为了解决这个问题，我们可以用CGLIB动态代理机制来避免</strong>。<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(<em>Code Generation Library</em>)是一个基于<a target="_blank" rel="noopener" href="http://www.baeldung.com/java-asm">ASM</a>的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB通过继承方式实现代理。很多知名的开源框架都使用到了<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>，例如Spring中的AOP模块中：如果目标对象实现了接口，则默认采用JDK动态代理，否则采用CGLIB动态代理。<strong>在CGLIB动态代理机制中MethodInterceptor接口和Enhancer类是核心</strong>。你需要自定义MethodInterceptor并重写intercept方法，intercept用于拦截增强被代理类的方法。</p>
+<h4 id="CGLIB动态代理机制"><a href="#CGLIB动态代理机制" class="headerlink" title="CGLIB动态代理机制"></a>CGLIB动态代理机制</h4><h5 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h5><p><strong>JDK动态代理有一个最致命的问题是其只能代理实现了接口的类。为了解决这个问题，我们可以用CGLIB动态代理机制来避免</strong>。<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(Code Generation Library)是一个基于<a target="_blank" rel="noopener" href="http://www.baeldung.com/java-asm">ASM</a>的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB通过继承方式实现代理。很多知名的开源框架都使用到了<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>，例如Spring中的AOP模块中：如果目标对象实现了接口，则默认采用JDK动态代理，否则采用CGLIB动态代理。<strong>在CGLIB动态代理机制中MethodInterceptor接口和Enhancer类是核心</strong>。你需要自定义MethodInterceptor并重写intercept方法，intercept用于拦截增强被代理类的方法。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">MethodInterceptor</span> <span class="token keyword">extends</span> <span class="token class-name">Callback</span><span class="token punctuation">&#123;</span>
     <span class="token comment">// 拦截被代理类中的方法</span>
     <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">intercept</span><span class="token punctuation">(</span><span class="token class-name">Object</span> obj<span class="token punctuation">,</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">,</span><span class="token class-name">MethodProxy</span> proxy<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span><span class="token punctuation">;</span>
@@ -706,9 +706,8 @@ after method send<span aria-hidden="true" class="line-numbers-rows"><span></span
 <li>自定义MethodInterceptor并重写intercept方法，intercept用于拦截增强被代理类的方法，和JDK动态代理中的invoke方法类似；</li>
 <li>通过Enhancer类的create()创建代理类；</li>
 </ol>
-<h5 id="CGLIB动态代理原理-生成子类"><a href="#CGLIB动态代理原理-生成子类" class="headerlink" title="CGLIB动态代理原理(生成子类)"></a>CGLIB动态代理原理(生成子类)</h5><p>利用ASM框架，对代理对象类生成的class文件加载进来，通过修改其字节码生成子类来处理。举个例子，现在有一个类A，A没有接口，现在想给A生成一个代理对象，那么实际上是自动给A生成了一个子类，在这个子类中覆盖了A中的方法，所以要注意，A类以及它里边的方法不能是final类型的，否则无法生成代理。CGLib必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理；</p>
-<p>如果被代理的对象有接口，则可以使用JDK动态代理，没有接口就可以使用CGLIB动态代理。</p>
-<h5 id="代码示例-1"><a href="#代码示例-1" class="headerlink" title="代码示例"></a>代码示例</h5><p>不同于JDK动态代理不需要额外的依赖。<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(<em>Code Generation Library</em>)实际是属于一个开源项目，如果你要使用它的话，需要手动添加相关依赖。</p>
+<h5 id="CGLIB动态代理原理-生成子类"><a href="#CGLIB动态代理原理-生成子类" class="headerlink" title="CGLIB动态代理原理(生成子类)"></a>CGLIB动态代理原理(生成子类)</h5><p>利用ASM框架，对代理对象类生成的class文件加载进来，通过修改其字节码生成子类来处理。举个例子，现在有一个类A，A没有接口，现在想给A生成一个代理对象，那么实际上是自动给A生成了一个子类，在这个子类中覆盖了A中的方法，所以要注意，A类以及它里边的方法不能是final类型的，否则无法生成代理。CGLib必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理。<strong>如果被代理的对象有接口，则可以使用JDK动态代理，没有接口就可以使用CGLIB动态代理</strong>。</p>
+<h5 id="代码示例-1"><a href="#代码示例-1" class="headerlink" title="代码示例"></a>代码示例</h5><p>不同于JDK动态代理不需要额外的依赖。<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(Code Generation Library)实际是属于一个开源项目，如果你要使用它的话，需要手动添加相关依赖。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>cglib<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>cglib<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
@@ -1118,10 +1117,10 @@ Java双刃剑之Unsafe类详解-码农参上-2021
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            序列化和反序列化什么是序列化?什么是反序列化?如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：
+                            什么是序列化、反序列化?如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：
 
 序列化：将数据结构或对象转换成二进制字节流的过程
-反序列化：将在
+反序列化：将在序列化过程中所生成的二
                         
                         
                     </div>

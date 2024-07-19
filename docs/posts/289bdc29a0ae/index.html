@@ -1065,7 +1065,7 @@ size <span class="token operator">=</span> size <span class="token operator">+</
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GY7RLE-yIF7jPAjqu5V9Cg">ArrayList的扩容机制</a></p>
 </blockquote>
-<h4 id="先从ArrayList的构造函数说起"><a href="#先从ArrayList的构造函数说起" class="headerlink" title="先从ArrayList的构造函数说起"></a>先从ArrayList的构造函数说起</h4><p><strong>（JDK8）ArrayList有三种方式来初始化，构造方法源码如下</strong>：</p>
+<p><strong>先从ArrayList的构造函数说起，（JDK8）ArrayList有三种方式来初始化，构造方法源码如下</strong>：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
   * 默认初始容量大小
   */</span>
@@ -1115,8 +1115,10 @@ size <span class="token operator">=</span> size <span class="token operator">+</
 <blockquote>
 <p>补充：JDK6 new无参构造的ArrayList对象时，直接创建了长度是10的Object[]数组elementData。</p>
 </blockquote>
-<h4 id="一步一步分析ArrayList扩容机制"><a href="#一步一步分析ArrayList扩容机制" class="headerlink" title="一步一步分析ArrayList扩容机制"></a>一步一步分析ArrayList扩容机制</h4><p>这里以无参构造函数创建的ArrayList为例分析</p>
-<h5 id="add-方法"><a href="#add-方法" class="headerlink" title="add()方法"></a>add()方法</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<p><strong>一步一步分析ArrayList扩容机制</strong></p>
+<p>这里以无参构造函数创建的ArrayList为例分析</p>
+<p><strong>add()方法</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
   * 将指定的元素追加到此列表的末尾。
   */</span>
 <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">E</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1137,7 +1139,8 @@ elementData <span class="token comment">//目标数组</span>
 toIndex <span class="token comment">//复制到目标数组中的哪个位置</span>
 length <span class="token comment">//要复制的源数组中数组元素的数量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>举个例子，我们想要在index &#x3D; 5的位置插入元素(数组大小为10)，首先，我们会复制一遍源数组elementData，然后把源数组中从index &#x3D; 5的位置开始到数组末尾的元素，放到新数组的index + 1 &#x3D; 6的位置上,于是，这就给我们要新增的元素腾出了位置，然后在新数组index &#x3D; 5的位置放入元素element就完成了添加的操作,显然ArrayList的将数据插入到指定位置的操作性能非常低下，因为要开辟新数组复制元素，要是涉及到扩容那就更慢了。另外，ArrayList还内置了一个直接在末尾添加元素的add方法，不用复制数组，直接size++就好，这个方法应该是我们最常使用的，即直接add(element);</p>
-<h5 id="ensureCapacityInternal-方法"><a href="#ensureCapacityInternal-方法" class="headerlink" title="ensureCapacityInternal()方法"></a>ensureCapacityInternal()方法</h5><p>（JDK7）可以看到add方法首先调用了ensureCapacityInternal(size + 1)</p>
+<p><strong>ensureCapacityInternal()方法</strong></p>
+<p>（JDK7）可以看到add方法首先调用了ensureCapacityInternal(size + 1)</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 得到最小扩容量</span>
 <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">ensureCapacityInternal</span><span class="token punctuation">(</span><span class="token keyword">int</span> minCapacity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>elementData <span class="token operator">==</span> <span class="token constant">DEFAULTCAPACITY_EMPTY_ELEMENTDATA</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1151,7 +1154,8 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <blockquote>
 <p>此处和后续JDK8代码格式化略有不同，核心代码基本一样。</p>
 </blockquote>
-<h5 id="ensureExplicitCapacity-方法"><a href="#ensureExplicitCapacity-方法" class="headerlink" title="ensureExplicitCapacity()方法"></a>ensureExplicitCapacity()方法</h5><p>如果调用ensureCapacityInternal()方法就一定会进入（执行）这个方法，下面我们来研究一下这个方法的源码！</p>
+<p><strong>ensureExplicitCapacity()方法</strong></p>
+<p>如果调用ensureCapacityInternal()方法就一定会进入（执行）这个方法，下面我们来研究一下这个方法的源码！</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 判断是否需要扩容</span>
 <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">ensureExplicitCapacity</span><span class="token punctuation">(</span><span class="token keyword">int</span> minCapacity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     modCount<span class="token operator">++</span><span class="token punctuation">;</span>
@@ -1169,7 +1173,8 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <li>添加第3、4···到第10个元素时，依然不会执行grow方法，数组容量都为10。</li>
 </ul>
 <p>直到添加第11个元素，minCapacity(为11)比elementData.length（为10）要大。进入grow方法进行扩容。</p>
-<h5 id="grow-方法"><a href="#grow-方法" class="headerlink" title="grow()方法"></a>grow()方法</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<p><strong>grow()方法</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
   * 要分配的最大数组大小
   */</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">MAX_ARRAY_SIZE</span> <span class="token operator">=</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span> <span class="token operator">-</span> <span class="token number">8</span><span class="token punctuation">;</span>
@@ -1210,7 +1215,8 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <li>java中的length()方法是针对字符串说的,如果想看这个字符串的长度则用到length()这个方法。</li>
 <li>java中的size()方法是针对泛型集合说的,如果想看这个泛型有多少个元素,就调用此方法来查看。</li>
 </ul>
-<h5 id="hugeCapacity-方法。"><a href="#hugeCapacity-方法。" class="headerlink" title="hugeCapacity()方法。"></a>hugeCapacity()方法。</h5><p>从上面grow()方法源码我们知道：如果新容量大于MAX_ARRAY_SIZE,进入(执行)hugeCapacity()方法来比较minCapacity和MAX_ARRAY_SIZE，如果minCapacity大于最大容量，则新容量则为Integer.MAX_VALUE，否则，新容量大小则为MAX_ARRAY_SIZE即为Integer.MAX_VALUE - 8。</p>
+<p><strong>hugeCapacity()方法</strong></p>
+<p>从上面grow()方法源码我们知道：如果新容量大于MAX_ARRAY_SIZE,进入(执行)hugeCapacity()方法来比较minCapacity和MAX_ARRAY_SIZE，如果minCapacity大于最大容量，则新容量则为Integer.MAX_VALUE，否则，新容量大小则为MAX_ARRAY_SIZE即为Integer.MAX_VALUE - 8。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">hugeCapacity</span><span class="token punctuation">(</span><span class="token keyword">int</span> minCapacity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>minCapacity <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment">// overflow</span>
         <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">OutOfMemoryError</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1223,8 +1229,10 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
     <span class="token constant">MAX_ARRAY_SIZE</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="System-arraycopy-和Arrays-copyOf-方法"><a href="#System-arraycopy-和Arrays-copyOf-方法" class="headerlink" title="System.arraycopy()和Arrays.copyOf()方法"></a>System.arraycopy()和Arrays.copyOf()方法</h4><p>阅读源码的话，我们就会发现ArrayList中大量调用了这两个方法。比如：我们上面讲的扩容操作以及add(int index, E element)、toArray()等方法中都用到了该方法</p>
-<h5 id="System-arraycopy-方法"><a href="#System-arraycopy-方法" class="headerlink" title="System.arraycopy()方法"></a>System.arraycopy()方法</h5><p>源码：</p>
+<p><strong>System.arraycopy()和Arrays.copyOf()方法</strong></p>
+<p>阅读源码的话，我们就会发现ArrayList中大量调用了这两个方法。比如：我们上面讲的扩容操作以及add(int index, E element)、toArray()等方法中都用到了该方法</p>
+<p><strong>System.arraycopy()方法</strong></p>
+<p>源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 我们发现arraycopy是一个native方法,接下来我们解释一下各个参数的具体意义</span>
 <span class="token comment">/**
   * 复制数组
@@ -1273,7 +1281,8 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果：0 1 99 2 3 0 0 0 0 0</p>
-<h5 id="Arrays-copyOf-方法"><a href="#Arrays-copyOf-方法" class="headerlink" title="Arrays.copyOf()方法"></a>Arrays.copyOf()方法</h5><p>源码：</p>
+<p><strong>Arrays.copyOf()方法</strong></p>
+<p>源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">copyOf</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> original<span class="token punctuation">,</span> <span class="token keyword">int</span> newLength<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 申请一个新的数组</span>
     <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> copy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>newLength<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -1305,9 +1314,11 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果：10</p>
-<h5 id="两者联系和区别"><a href="#两者联系和区别" class="headerlink" title="两者联系和区别"></a>两者联系和区别</h5><p><strong>联系</strong>：<br>看两者源代码可以发现<code>copyOf()</code>内部实际调用了<code>System.arraycopy()</code>方法</p>
+<p><strong>两者联系和区别</strong></p>
+<p><strong>联系</strong>：<br>看两者源代码可以发现<code>copyOf()</code>内部实际调用了<code>System.arraycopy()</code>方法</p>
 <p><strong>区别</strong>：<br><code>arraycopy()</code>需要目标数组，将原数组拷贝到你自己定义的数组里或者原数组，而且可以选择拷贝的起点和长度以及放入新数组中的位置,<code>copyOf()</code>是系统自动在内部新建一个数组，并返回该数组。</p>
-<h4 id="ensureCapacity-方法"><a href="#ensureCapacity-方法" class="headerlink" title="ensureCapacity()方法"></a>ensureCapacity()方法</h4><p>ArrayList源码中有一个ensureCapacity方法，这个方法ArrayList内部没有被调用过，所以很显然是提供给用户调用的，那么这个方法有什么作用呢？</p>
+<p><strong>ensureCapacity()方法</strong></p>
+<p>ArrayList源码中有一个ensureCapacity方法，这个方法ArrayList内部没有被调用过，所以很显然是提供给用户调用的，那么这个方法有什么作用呢？</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
   * 如有必要，增加此ArrayList实例的容量，以确保它至少可以容纳由minimum capacity参数指定的元素数。
   * @param   minCapacity   所需的最小容量
@@ -1358,16 +1369,24 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <p>运行结果：</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">使用ensureCapacity方法后：1773<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>通过运行结果，我们可以看出向ArrayList添加大量元素之前使用ensureCapacity方法可以提升性能。不过，这个性能差距几乎可以忽略不计。而且，实际项目根本也不可能往ArrayList里面添加这么多元素。</p>
-<h4 id="remove-方法"><a href="#remove-方法" class="headerlink" title="remove()方法"></a>remove()方法</h4><p>假设我们要删除数组的index &#x3D; 5的元素，首先，我们会复制一遍源数组，然后把源数组中从 index + 1 &#x3D; 6的位置开始到数组末尾的元素，放到新数组的index &#x3D; 5的位置上,也就是说 index &#x3D; 5的元素直接被覆盖掉了，给了你被删除的感觉。同样的，它的效率自然也是十分低下的</p>
+<p><strong>remove()方法</strong></p>
+<p>假设我们要删除数组的index &#x3D; 5的元素，首先，我们会复制一遍源数组，然后把源数组中从 index + 1 &#x3D; 6的位置开始到数组末尾的元素，放到新数组的index &#x3D; 5的位置上,也就是说 index &#x3D; 5的元素直接被覆盖掉了，给了你被删除的感觉。同样的，它的效率自然也是十分低下的</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/collection/arraylist-source-code.html">原文链接</a></p>
 </blockquote>
+<p><strong>总结扩容</strong></p>
+<ul>
+<li>默认容量：ArrayList的默认初始容量是10。这意味着当你创建一个新的ArrayList实例而不指定初始容量时，它将能够存储最多10个元素，而不需要进行扩容。</li>
+<li>扩容规则：当需要扩容时，ArrayList会将当前数组的大小增加到“旧容量 + (旧容量 &#x2F; 2)”，也就是说，新的容量将是旧容量的1.5倍。这个计算方式确保了ArrayList的容量以指数级的速度增长，但每次扩容的成本（即复制元素到新数组）也会相应增加。</li>
+<li>最大容量：ArrayList有一个MAX_ARRAY_SIZE的常量，这个常量限制了ArrayList可以扩容到的最大容量。在JDK 8中，这个值通常是<code>Integer.MAX_VALUE - 8</code>，因为数组还需要一些额外的空间来存储元数据（如数组长度等）。这意味着在大多数情况下，ArrayList可以扩展到非常大的容量，但实际上受限于JVM的堆内存大小。</li>
+</ul>
 <h2 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h2><h3 id="CopyOnWriteArrayList简介"><a href="#CopyOnWriteArrayList简介" class="headerlink" title="CopyOnWriteArrayList简介"></a>CopyOnWriteArrayList简介</h3><p>CopyOnWriteArrayList实际上是ArrayList一个线程安全的操作类,是一个典型的读写分离的动态数组操作类.从它的名字可以看出，CopyOnWrite是在写入的时候，不修改原内容，而是将原来的内容复制一份到新的数组，然后向新数组写完数据之后，再移动内存指针，将目标指向最新的位置。CopyOnWriteArraySet主要针对集，CopyOnWriteArraySet可以理解为HashSet线程安全的操作类，我们都知道HashSet基于散列表HashMap实现，但是CopyOnWriteArraySet并不是基于散列表实现，而是基于CopyOnWriteArrayList动态数组实现。两者最大的不同点是，CopyOnWriteArrayList可以允许元素重复，而CopyOnWriteArraySet不允许有重复的元素。CopyOnWriteArrayList在写入数据的时候，将旧数组内容复制一份出来，然后向新的数组写入数据，最后将新的数组内存地址返回给数组变量；移除操作也类似，只是方式是移除元素而不是添加元素；而查询方法，因为不涉及线程操作，所以并没有加锁出来！因为CopyOnWriteArrayList读取内容没有加锁，在写入数据的时候同时也可以进行读取数据操作，因此性能得到很大的提升，但是也有缺陷，<strong>对于边读边写的情况，不一定能实时的读到最新的数据,因此CopyOnWriteArrayList很适合读多写少的应用场景</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CopyOnWriteArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">></span></span> <span class="token keyword">extends</span> <span class="token class-name">Object</span> <span class="token keyword">implements</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">></span></span><span class="token punctuation">,</span> <span class="token class-name">RandomAccess</span><span class="token punctuation">,</span> <span class="token class-name">Cloneable</span><span class="token punctuation">,</span> <span class="token class-name">Serializable</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>在很多应用场景中，读操作可能会远远大于写操作。由于读操作根本不会修改原有的数据，因此对于每次读取都进行加锁其实是一种资源浪费。我们应该允许多个线程同时访问List的内部数据，毕竟读取操作是安全的。这和我们之前提到过的ReentrantReadWriteLock读写锁的思想非常类似，也就是读读共享、写写互斥、读写互斥、写读互斥。JDK中提供了CopyOnWriteArrayList类比相比于在读写锁的思想又更进一步。为了将读取的性能发挥到极致，CopyOnWriteArrayList读取是完全不用加锁的，并且更厉害的是：写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。这样一来，读操作的性能就会大幅度提升。</p>
 <h3 id="CopyOnWriteArrayList是如何做到的？"><a href="#CopyOnWriteArrayList是如何做到的？" class="headerlink" title="CopyOnWriteArrayList是如何做到的？"></a>CopyOnWriteArrayList是如何做到的？</h3><p>CopyOnWriteArrayList类的所有可变操作（add，set等等）都是通过创建底层数组的新副本来实现的。当List需要被修改的时候，我并不修改原有内容，而是对原有数据进行一次复制，将修改的内容写入副本。写完之后，再将修改完的副本替换原来的数据，这样就可以保证写操作不会影响读操作了。从CopyOnWriteArrayList的名字就能看出CopyOnWriteArrayList是满足CopyOnWrite的。所谓CopyOnWrite也就是说：在计算机，如果你想要对一块内存进行修改时，我们不在原有内存块中进行写操作，而是将内存拷贝一份，在新的内存中进行写操作，写完之后呢，就将指向原来内存指针指向新的内存，原来的内存就可以被回收掉了。</p>
-<h3 id="CopyOnWriteArrayList读取和写入源码简单分析"><a href="#CopyOnWriteArrayList读取和写入源码简单分析" class="headerlink" title="CopyOnWriteArrayList读取和写入源码简单分析"></a>CopyOnWriteArrayList读取和写入源码简单分析</h3><h4 id="CopyOnWriteArrayList读取操作的实现"><a href="#CopyOnWriteArrayList读取操作的实现" class="headerlink" title="CopyOnWriteArrayList读取操作的实现"></a>CopyOnWriteArrayList读取操作的实现</h4><p>读取操作没有任何同步控制和锁操作，理由就是内部数组array不会发生修改，只会被另外一个array替换，因此可以保证数据安全。</p>
+<h3 id="CopyOnWriteArrayList读取和写入源码简单分析"><a href="#CopyOnWriteArrayList读取和写入源码简单分析" class="headerlink" title="CopyOnWriteArrayList读取和写入源码简单分析"></a>CopyOnWriteArrayList读取和写入源码简单分析</h3><p><strong>CopyOnWriteArrayList读取操作的实现</strong></p>
+<p>读取操作没有任何同步控制和锁操作，理由就是内部数组array不会发生修改，只会被另外一个array替换，因此可以保证数据安全。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/** The array, accessed only via getArray/setArray. */</span>
 <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token class-name">E</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1381,7 +1400,8 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
     <span class="token keyword">return</span> array<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="CopyOnWriteArrayList写入操作的实现"><a href="#CopyOnWriteArrayList写入操作的实现" class="headerlink" title="CopyOnWriteArrayList写入操作的实现"></a>CopyOnWriteArrayList写入操作的实现</h4><p>CopyOnWriteArrayList写入操作add()方法在添加集合的时候加了锁，保证了同步，避免了多线程写的时候会copy出多个副本出来。</p>
+<p><strong>CopyOnWriteArrayList写入操作的实现</strong></p>
+<p>CopyOnWriteArrayList写入操作add()方法在添加集合的时候加了锁，保证了同步，避免了多线程写的时候会copy出多个副本出来。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
   * Appends the specified element to the end of this list.
   * @param e element to be appended to this list
@@ -1402,7 +1422,8 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><h4 id="add"><a href="#add" class="headerlink" title="add()"></a>add()</h4><p>add()方法是CopyOnWriteArrayList的添加元素的入口,CopyOnWriteArrayList之所以能保证多线程下安全操作，add()方法功不可没,操作步骤如下：</p>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p><strong>add()</strong></p>
+<p>add()方法是CopyOnWriteArrayList的添加元素的入口,CopyOnWriteArrayList之所以能保证多线程下安全操作，add()方法功不可没,操作步骤如下：</p>
 <ul>
 <li>获得对象锁</li>
 <li>获取数组内容</li>
@@ -1411,7 +1432,8 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <li>将array数组变量地址指向新数组</li>
 <li>释放对象锁<br>CopyOnWriteArrayList使用了ReentrantLock这种可重入锁，保证了线程操作安全，同时数组变量array使用volatile保证多线程下数据的可见性</li>
 </ul>
-<h4 id="remove"><a href="#remove" class="headerlink" title="remove()"></a>remove()</h4><p>remove()方法是CopyOnWriteArrayList的移除元素的入口<br>操作类似添加方法，步骤如下：</p>
+<p><strong>remove()</strong></p>
+<p>remove()方法是CopyOnWriteArrayList的移除元素的入口<br>操作类似添加方法，步骤如下：</p>
 <ul>
 <li>获得对象锁</li>
 <li>获取数组内容</li>
@@ -1420,13 +1442,15 @@ length <span class="token comment">//要复制的源数组中数组元素的数�
 <li>将array数组变量地址指向新数组</li>
 <li>释放对象锁<br>当然，移除的方法还有基于对象的remove(Object o)，原理也是一样的，先找到元素的下标，然后执行移除操作。</li>
 </ul>
-<h4 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h4><p>get()方法是CopyOnWriteArrayList的查询元素的入口,源码如下：</p>
+<p><strong>get()</strong></p>
+<p>get()方法是CopyOnWriteArrayList的查询元素的入口,源码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">E</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">//获取数组内容，通过下标直接获取</span>
     <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>查询因为不涉及到数据操作，所以无需使用锁进行处理！</p>
-<h4 id="iterator"><a href="#iterator" class="headerlink" title="iterator()"></a>iterator()</h4><p>CopyOnWriteArrayList在使用迭代器遍历的时候，操作的都是原数组，没有像上面那样进行修改次数判断，所以不会抛异常,当然，从源码上也可以得出，使用CopyOnWriteArrayList的迭代器进行遍历元素的时候，不能调用remove()方法移除元素，因为不支持此操作,如果想要移除元素，只能使用CopyOnWriteArrayList提供的remove()方法，而不是迭代器的remove()方法，这个需要注意一下</p>
+<p><strong>iterator()</strong></p>
+<p>CopyOnWriteArrayList在使用迭代器遍历的时候，操作的都是原数组，没有像上面那样进行修改次数判断，所以不会抛异常,当然，从源码上也可以得出，使用CopyOnWriteArrayList的迭代器进行遍历元素的时候，不能调用remove()方法移除元素，因为不支持此操作,如果想要移除元素，只能使用CopyOnWriteArrayList提供的remove()方法，而不是迭代器的remove()方法，这个需要注意一下</p>
 
                 
             </div>

@@ -21,7 +21,7 @@ ZooKeeper数据模型采用层次化的多叉树形结构，每个节点上都�
 
 介绍了ZooKeeper树形数据模型之后，我们知道每个数据节点在ZooKeeper中被称为znode，它是ZooKeeper中数据的最小单元。你要存放的数据就放在上面，是你使用ZooKeeper过程中经常需要接触到的一个概念。
 
-##### znode4种类型
+**znode4种类型**
 
 我们通常是将znode分为4大类：
 
@@ -30,7 +30,7 @@ ZooKeeper数据模型采用层次化的多叉树形结构，每个节点上都�
 - **持久顺序（PERSISTENT_SEQUENTIAL）节点**：除了具有持久（PERSISTENT）节点的特性之外，子节点的名称还具有顺序性。比如`/node1/app0000000001`、`/node1/app0000000002`。
 - **临时顺序（EPHEMERAL_SEQUENTIAL）节点**：除了具备临时（EPHEMERAL）节点的特性之外，子节点的名称还具有顺序性。
 
-##### znode数据结构
+**znode数据结构**
 
 每个znode由2部分组成:
 
@@ -195,18 +195,20 @@ ZAB协议包括两种基本的模式，分别是
 - 学习者（Learner）或跟随者（Follower）:Follower用于接收客户请求并向客户端返回结果，在选主过程中参与投票。Follower可以接收client请求，如果是写请求将转发给leader来更新系统状态。
 - 观察者（ObServer）:ObServer可以接收客户端连接，将写请求转发给leader节点。但Observer不参加投票过程，只同步leader的状态，ObServer的目的是为了扩展系统，提高德取谏度。
 
-#### 为什么需要server?
+**为什么需要server?**
 
 - ZooKeeper需保证高可用和强一致性;
 - 为了支持更多的客户端，需要增加更多的Server;
 - Follower增多会导致投票阶段延迟增大，影响性能
 
-#### 在Zookeeper中ObServer起到什么作用？
+**在Zookeeper中ObServer起到什么作用？**
+
 - ObServer不参与投票过程，只同步leader的状态
 - Observers接受客户端的连接，并将写请求转发给leader节点
 - 加入更多ObServer节点，提高伸缩性，同时还不影响吞吐率
 
-#### 为什么在Zookeeper中Server数目一般为奇数？
+**为什么在Zookeeper中Server数目一般为奇数？**
+
 我们知道在Zookeeper中Leader选举算法采用了Zab协议。Zab核心思想是当多数Server写成功，则任务数据写成功。
 
 ①如果有3个Server，则最多允许1个Server挂掉。
@@ -276,14 +278,14 @@ ZAB协议包括两种基本的模式，分别是
 
 Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效的算法之一，其解决的问题就是在分布式系统中如何就某个值（决议）达成一致。在Paxos中主要有三个角色，分别为Proposer提案者、Acceptor表决者、Learner学习者。Paxos算法和2PC一样，也有两个阶段，分别为Prepare和accept阶段。
 
-##### prepare阶段
+**prepare阶段**
 
 - Proposer提案者：负责提出proposal，每个提案者在提出提案时都会首先获取到一个具有全局唯一性的、递增的提案编号N，即在整个集群中是唯一的编号N，然后将该编号赋予其要提出的提案，在第一阶段是只将提案编号发送给所有的表决者。
 - Acceptor表决者：每个表决者在accept某提案后，会将该提案编号N记录在本地，这样每个表决者中保存的已经被accept的提案中会存在一个编号最大的提案，其编号假设为maxN。每个表决者仅会accept编号大于自己本地maxN的提案，在批准提案时表决者会将以前接受过的最大编号的提案作为响应反馈给Proposer。
 
 ![paxos第一阶段](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cd1e5f78875b4ad6b54013738f570943~tplv-k3u1fbpfcp-zoom-1.image)
 
-##### accept阶段
+**accept阶段**
 
 当一个提案被Proposer提出后，如果Proposer收到了超过半数的Acceptor的批准（Proposer本身同意），那么此时Proposer会给所有的Acceptor发送真正的提案（你可以理解为第一阶段为试探），这个时候Proposer就会发送提案的内容和提案编号。表决者收到提案请求后会再次比较本身已经批准过的最大提案编号和该提案编号，如果该提案编号大于等于已经批准过的最大提案编号，那么就accept该提案（此时执行提案内容但不提交），随后将情况返回给Proposer。如果不满足则不回应或者返回NO。
 
@@ -295,7 +297,7 @@ Paxos算法是基于消息传递且具有高度容错特性的一致性算法，
 
 而如果Proposer如果没有收到超过半数的accept那么它将会将递增该Proposal的编号，然后重新进入Prepare阶段。
 
-##### paxos算法的死循环问题
+**paxos算法的死循环问题**
 
 其实就有点类似于两个人吵架，小明说我是对的，小红说我才是对的，两个人据理力争的谁也不让谁🤬🤬。比如说，此时提案者P1提出一个方案M1，完成了Prepare阶段的工作，这个时候acceptor则批准了M1，但是此时提案者P2同时也提出了一个方案M2，它也完成了Prepare阶段的工作。然后P1的方案已经不能在第二阶段被批准了（因为acceptor已经批准了比M1更大的M2），所以P1自增方案变为M3重新进入Prepare阶段，然后acceptor，又批准了新的M3方案，它又不能批准M2了，这个时候M2又自增进入Prepare阶段。。。就这样无休无止的永远提案下去，这就是paxos算法的死循环问题。那么如何解决呢？很简单，人多了容易吵架，我现在就允许一个能提案就行了。
 
@@ -538,7 +540,7 @@ server.3=192.168.236.130:2888:3888
 
 ### ZooKeeper安装和使用
 
-#### 使用Docker安装zookeeper
+**使用Docker安装zookeeper**
 
 **a.使用Docker下载ZooKeeper**
 
@@ -552,7 +554,7 @@ docker pull zookeeper:3.5.8
 docker run -d --name zookeeper -p 2181:2181 zookeeper:3.5.8
 ```
 
-#### 连接ZooKeeper服务
+**连接ZooKeeper服务**
 
 **a.进入ZooKeeper容器中**
 

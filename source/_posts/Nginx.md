@@ -10,7 +10,7 @@ img: https://picx1.zhimg.com/v2-e68d524210343613129267bd2cb75a0d_1440w.jpg
 
 ### 离线安装
 
-#### 下载
+**下载**
 
 ```shell
 # 下载nginx:
@@ -24,7 +24,7 @@ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
 # 如果没有安装c++编译环境，还得安装，通过```yum install gcc-c++```完成安装
 ```
 
-#### 编译安装
+**编译安装**
 
 ```shell
 # openssl：
@@ -48,7 +48,7 @@ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
 [root@localhost]  ./configure && make && make install
 ```
 
-#### 启动nginx
+**启动nginx**
 
 ```shell
 /usr/local/nginx/sbin/nginx
@@ -58,7 +58,7 @@ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
 ```
 > [Linux安装Nginx详细图解教程](https://www.cnblogs.com/lovexinyi8/p/5845017.html)
 
-#### 将nginx做成系统服务并且开机自启动
+**将nginx做成系统服务并且开机自启动**
 
 由于是源码安装，需要手动创建nginx.service服务
 > 不止nginx，其他源码安装的想要实现开机自启动就在/lib/systemd/system目录下自定义服务即可
@@ -109,8 +109,57 @@ systemctl restart nginx.service　
 systemctl list-units --type=service
 ```
 
+### 在线安装
+
+**下载**
+
+[官网地址](https://nginx.org)
+
+**安装依赖**
+
+```shell
+yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
+```
+
+**安装**
+
+- 创建一个文件夹,上传本地提供的nginx包
+```shell
+if [ ! -d "/root/software" ]; then
+mkdir -p /root/software
+fi && cd /root/software && rz
+```
+
+- 解压
+```shell
+tar -zxvf nginx-1.18.0.tar.gz && cd nginx-1.18.0
+```
+
+- 配置、编译、安装
+```shell
+./configure && make && make install
+```
+
+- 检查是否安装成功
+```shell
+whereis nginx
+cd /usr/local/nginx/sbin && ./nginx
+ps -ef | grep nginx
+```
+
+- 启动代码格式：nginx安装目录地址 -c nginx配置文件地址
+```shell
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+```
+
+- 热加载
+```shell
+/usr/local/nginx/sbin/nginx -s reload
+```
+
 ### Nginx安装手册
-#### nginx安装环境
+**nginx安装环境**
+
 nginx是C语言开发，建议在linux上运行，本教程使用Centos6.5作为安装环境。
 
 - gcc。安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：`yum install gcc-c++`
@@ -124,7 +173,8 @@ zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包
 - openssl
 OpenSSL是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。`yum install -y openssl openssl-devel`
 
-#### 编译安装
+**编译安装**
+
 将nginx-1.8.0.tar.gz拷贝至linux服务器。
 ```shell
 # 解压
@@ -280,56 +330,6 @@ chmod a+x /etc/init.d/nginx #(a+x ==> all user can execute 所有用户可执行
 vi /etc/rc.local
 ```
 加入一行`/etc/init.d/nginx start`保存并退出，下次重启会生效。
-
-
-### 在线安装
-
-#### 下载
-
-[官网地址](https://nginx.org)
-
-#### 安装依赖
-
-```shell
-yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
-```
-
-#### 安装
-
-- 创建一个文件夹,上传本地提供的nginx包
-```shell
-if [ ! -d "/root/software" ]; then
-mkdir -p /root/software
-fi && cd /root/software && rz
-```
-
-- 解压
-```shell
-tar -zxvf nginx-1.18.0.tar.gz && cd nginx-1.18.0
-```
-
-- 配置、编译、安装
-```shell
-./configure && make && make install
-```
-
-- 检查是否安装成功
-```shell
-whereis nginx
-cd /usr/local/nginx/sbin && ./nginx
-ps -ef | grep nginx
-```
-
-- 启动代码格式：nginx安装目录地址 -c nginx配置文件地址
-```shell
-/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-```
-
-- 热加载
-```shell
-/usr/local/nginx/sbin/nginx -s reload
-```
-
 
 ## Nginx知识点
 

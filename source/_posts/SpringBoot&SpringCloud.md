@@ -72,7 +72,7 @@ img: https://picx.zhimg.com/70/v2-ba4a778fbecaa7d0169b8c379cf1f392_1440w.avis
 | [SpringBoot+Filter实现Gzip压缩超大json对象，传输耗时大大减少](https://mp.weixin.qq.com/s/zBeHyIzR1b4I2x3LU40ceQ) | [SpringBoot玩一玩代码混淆，防止反编译代码泄露](https://mp.weixin.qq.com/s/v26j08vCqpH-O9jZaNKPDA) | [优雅的实现Spring Boot异步线程间数据传递](https://mp.weixin.qq.com/s/vWZu_pjJIrqHzCyBcM70rg) |
 | [Spring Boot + Canal实现数据库变化的实时监控](https://mp.weixin.qq.com/s/2Pjjj-_bkLLAO-IkWfoPcg) | [你绝对不知道的SpringBoot的外部化配置特性！](https://mp.weixin.qq.com/s/9zSrUGMmXbU6rW1LaoUFvQ) | [Spring Boot如何实现插件化开发模式](https://mp.weixin.qq.com/s/x3NMF8AdyJ0Bf15B4yS5Kw) |
 | [Spring Boot业务组件化开发，维护起来很香](https://mp.weixin.qq.com/s/bpmT30Nymm5Iz5Gt-EbX9w) | [Spring Boot + Spring Batch实现批处理任务](https://mp.weixin.qq.com/s/3pjRUugA56Yqwfm4geeadg) | [Spring Boot别再用Date作为入参了，LocalDateTime、LocalDate真香！](https://mp.weixin.qq.com/s/nEeStkLgSvFdwCt56WNvcg) |
-| [try-catch这样写才足够优雅](https://mp.weixin.qq.com/s/j1LSUJiYFvj9VxLn3hFcww) |                                                              |                                                              |
+| [try-catch这样写才足够优雅](https://mp.weixin.qq.com/s/j1LSUJiYFvj9VxLn3hFcww) | [SpringBoot 优雅停机的正确姿势](https://mp.weixin.qq.com/s/vknu8fy7JXxectA2zcW_mQ) |                                                              |
 
 **模式**
 

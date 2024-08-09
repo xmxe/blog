@@ -18,9 +18,7 @@ top: true
 1. 如果是原型bean的循环依赖，Spring无法解决
 2. 如果是构造参数注入的循环依赖，Spring无法解决
 
-容器为了缓存这些单例的Bean需要一个数据结构来存储，比如Map {k:name; v:bean}。
-而我们创建一个Bean就可以往Map中存入一个Bean。这时候我们仅需要一个Map就可以满足创建+缓存的需求。
-但是创建Bean过程中可能会遇到循环依赖问题，比如A对象依赖了一个B对象，而B对象内部又依赖了一个A:
+容器为了缓存这些单例的Bean需要一个数据结构来存储，比如Map {k:name; v:bean}。而我们创建一个Bean就可以往Map中存入一个Bean。这时候我们仅需要一个Map就可以满足创建+缓存的需求。但是创建Bean过程中可能会遇到循环依赖问题，比如A对象依赖了一个B对象，而B对象内部又依赖了一个A:
 
 ```java
 public class A {
@@ -73,17 +71,24 @@ public class B {
 从上面的流程中我们可以看到使用两级缓存可以完美解决循环依赖的问题，但是Spring中还有另外一个问题需要解决，这就是初始化过程中的AOP实现。AOP是Spring的重要功能，实现方式就是使用代理模式动态增强类的功能。动态单例目前有两种技术可以实现，一种是JDK自带的基于接口的动态Proxy技术，一种是CGlib基于字节码动态生成的Proxy技术，这两种技术都是需要原始对象创建完毕，之后基于原始对象生成代理对象的。那么我们发现，在二级缓存的设计下，我们需要在放入缓存Map之前将代理对象生成好。
 将流程改为：
 
-1. 实例化Bean对象，为Bean对象在内存中分配空间，各属性赋值为默认值
-2. 如果有动态代理，生成Bean对象的代理Proxy对象
-3. 初始化Proxy对象，为Bean对象填充属性
-4. 将Proxy放入缓存
-这样虽然也可以解决，AOP的问题，但是我们知道Spring中AOP的实现是通过后置处理器BeanPostProcessor机制来实现的，而后置处理器是在填充属性结束后才执行的。流程如下：
-1. 实例化对象
-2. 对象填充属性
-3. BeanPostProcessor doBefore
-4. init-method
-5. BeanPostProcessor doAfter --AOP是在这个阶段实现的
-所以要实现上面的方案，势必需要将BeanPostProcessor阶段提前或者侵入到填充属性的流程中，那么从程序设计上来说，这样做肯定是不美的
+- 实例化Bean对象，为Bean对象在内存中分配空间，各属性赋值为默认值
+
+- 如果有动态代理，生成Bean对象的代理Proxy对象
+
+- 初始化Proxy对象，为Bean对象填充属性
+
+- 将Proxy放入缓存。这样虽然也可以解决AOP的问题，但是我们知道Spring中AOP的实现是通过后置处理器BeanPostProcessor机制来实现的，而后置处理器是在填充属性结束后才执行的。流程如下：
+
+- 实例化对象
+
+- 对象填充属性
+
+- BeanPostProcessor doBefore
+
+- init-method
+
+- BeanPostProcessor doAfter --AOP是在这个阶段实现的
+  所以要实现上面的方案，势必需要将BeanPostProcessor阶段提前或者侵入到填充属性的流程中，那么从程序设计上来说，这样做肯定是不美的
 
 > 面试官会问：为什么要使用三级缓存呢？二级缓存能解决循环依赖吗？
 > 答：如果要使用二级缓存解决循环依赖，意味着所有Bean在实例化后就要完成AOP代理，这样违背了Spring设计的原则，Spring在设计之初就是通过AnnotationAwareAspectJAutoProxyCreator这个后置处理器来在Bean生命周期的最后一步来完成AOP代理，而不是在实例化后就立马进行AOP代理
@@ -150,7 +155,7 @@ public class UserService {
 | [终于有人把Spring循环依赖讲清楚了！](https://mp.weixin.qq.com/s/L1PJ-cikoS8sOORszEYnfw) | [烂大街的Spring循环依赖该如何回答？](https://mp.weixin.qq.com/s/5VHU2qRQMPL0IOZuEOPmQA) | [spring：我是如何解决循环依赖的？](https://mp.weixin.qq.com/s/7S9wVOVJyoHiC_RnhZrJTw) |
 | [Spring为何需要三级缓存解决循环依赖，而不是二级缓存？](https://mp.weixin.qq.com/s/BaRlMNo0HlPP9Vz4x9bUaA) | [图解Spring循环依赖，写得太好了！](https://mp.weixin.qq.com/s/JuS6aewMXSp22zjwWCKt6g) | [Spring是如何解决循环依赖的](https://mp.weixin.qq.com/s/e7e-Pct5CcMrHBCsdjsLSQ) |
 | [Spring面试题之循环依赖的理解](https://mp.weixin.qq.com/s/amgsB3MMvcA2pw9N2wECDw) | [Spring的循环依赖，到底是什么样的](https://mp.weixin.qq.com/s/qWWjWpIbghj5v6-KCd8xxA) | [面试官:SpringBoot循环依赖，如何解决？](https://mp.weixin.qq.com/s/YSXfAn8n313TMFIKM92LPw) |
-| [透过源码，捋清楚循环依赖到底是如何解决的！](https://mp.weixin.qq.com/s/YIokfCvLKLhcsEpO734Qtg) |                                                              |                                                              |
+| [透过源码，捋清楚循环依赖到底是如何解决的！](https://mp.weixin.qq.com/s/YIokfCvLKLhcsEpO734Qtg) | [Spring为何需要三级缓存解决循环依赖，而不是二级缓存](https://mp.weixin.qq.com/s/M_FVE8vcxBcInWWSkYatDg) |                                                              |
 
 ## Spring相关注解
 

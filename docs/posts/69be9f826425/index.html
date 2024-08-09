@@ -746,11 +746,11 @@ isolation.level
 <blockquote>
 <p>消息在被追加到Partition(分区)的时候都会分配一个特定的偏移量（offset）。Kafka通过偏移量（offset）来保证消息在分区内的顺序性。</p>
 </blockquote>
-<p>所以，我们就有一种很简单的保证消息消费顺序的方法：<strong>1个Topic只对应一个Partition</strong>。这样当然可以解决问题，但是破坏了Kafka的设计初衷。Kafka中发送1条消息的时候，可以指定topic,partition,key,data（数据）4个参数。如果你发送消息的时候指定了Partition的话，所有消息都会被发送到指定的Partition。并且，同一个key的消息可以保证只发送到同一个partition，这个我们可以采用表&#x2F;对象的id来作为key。</p>
+<p>所以，我们就有一种很简单的保证消息消费顺序的方法：<strong>1个Topic只对应一个Partition</strong>。这样当然可以解决问题，但是破坏了Kafka的设计初衷。Kafka中发送1条消息的时候，可以指定topic,partition,key,data（数据）4个参数。如果你发送消息的时候指定了Partition的话，所有消息都会被发送到指定的Partition。并且，同一个key的消息可以保证只发送到同一个partition，这个我们可以采用表&#x2F;对象的id来作为key。生产者发送消息时，可以指定分区键。具有相同分区键的消息会被发送到同一个分区，从而保证这些消息的顺序性。</p>
 <p>总结一下，对于如何保证Kafka中消息消费的顺序，有了下面两种方法：</p>
 <ol>
-<li>1个Topic只对应一个Partition。</li>
-<li>（推荐）发送消息的时候指定key&#x2F;Partition。</li>
+<li><strong>1个Topic只对应一个Partition</strong>。</li>
+<li><strong>（推荐）发送消息的时候指定key&#x2F;Partition</strong>。</li>
 </ol>
 <h4 id="Kafka如何保证消息不丢失"><a href="#Kafka如何保证消息不丢失" class="headerlink" title="Kafka如何保证消息不丢失"></a>Kafka如何保证消息不丢失</h4><p><strong>生产者丢失消息的情况</strong></p>
 <p>生产者(Producer)调用<code>send</code>方法发送消息之后，消息可能因为网络问题并没有发送过去。所以，我们不能默认在调用<code>send</code>方法发送消息之后消息发送成功了。为了确定消息是发送成功，我们要判断消息发送的结果。但是要注意的是Kafka生产者(Producer)使用<code>send</code>方法发送消息实际上是异步的操作，我们可以通过<code>get()</code>方法获取调用结果，但是这样也让它变为了同步操作，示例代码如下：</p>

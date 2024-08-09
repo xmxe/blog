@@ -715,33 +715,31 @@ public DisposableBeanAdapter(Object bean, String beanName, RootBeanDefinition be
 
 **顺序一**
 
-- Bean容器找到配置文件中Spring Bean的定义。
-- Bean容器利用Java Reflection API创建一个Bean的实例。
-- 如果涉及到一些属性值利用set()方法设置一些属性值。
+- Bean容器找到配置文件中Spring Bean的定义,Bean容器利用Java Reflection API创建一个Bean的实例(**实例化Bean**)。
+- 如果涉及到一些属性值利用set()方法设置Bean一些属性值(**设置属性值**)。
 - 如果Bean实现了BeanNameAware接口，调用setBeanName()方法，传入Bean的名字。
 - 如果Bean实现了BeanClassLoaderAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。
 - 如果Bean实现了BeanFactoryAware接口，调用setBeanFactory()方法，传入BeanFactory对象的实例。
-- 与上面的类似，如果实现了其他\*.Aware接口，就调用相应的方法。
-- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessBeforeInitialization()方法
+- 与上面的类似，如果实现了其他\*.Aware接口，就调用相应的方法(**在Bean的前置方法前面执行调用**)。
+- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessBeforeInitialization()方法(**前置方法**)。
 - 如果Bean实现了InitializingBean接口，执行afterPropertiesSet()方法。
 - 如果Bean在配置文件中的定义包含init-method属性，执行指定的方法。
-- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessAfterInitialization()方法
+- 如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessAfterInitialization()方法(**后置方法**)。
 - 当要销毁Bean的时候，如果Bean实现了DisposableBean接口，执行destroy()方法。
 - 当要销毁Bean的时候，如果Bean在配置文件中的定义包含destroy-method属性，执行指定的方法。
 
 **顺序二**
 
-- spring启动，加载类路径下配置文件，解析为BeanDefinition并装配到对应容器中
-- 查找并加载spring管理的bean，进行bean的实例化
-- Bean实例化后对Bean的引用和值进行属性注入
-- 若Bean实现接口BeanNameAware，则执行setBeanName()方法，获取bean的名字
-- 若Bean实现接口BeanFactoryAware，则执行setBeanFactory()方法，获取BeanFactory
-- 若Bean实现接口ApplicationContextAware，则执行setApplicationContext()方法，获取应用上下文
-- 若Bean实现BeanPostProcessor接口，则先执行postProcessBeforeInitialization()方法
-- 若Bean实现InitializingBean接口，则执行afterPropertiesSet()方法
-- 若Bean配置了init-method方法，则执行自定义方法
-- 若Bean实现BeanPostProcessor接口，则先执行postProcessAfterInitialization()方法
-- 如Bean实现了DisposableBean接口，则容器销毁时则执行destory()方法
+- spring启动，加载类路径下配置文件，解析为BeanDefinition并装配到对应容器中，查找并加载spring管理的bean，进行**bean的实例化**。
+- Bean实例化后对Bean的引用和值进行属性注入(**属性设置**)。
+- 若Bean实现接口BeanNameAware，则执行setBeanName()方法，获取bean的名字。
+- 若Bean实现接口BeanFactoryAware，则执行setBeanFactory()方法，获取BeanFactory。
+- 若Bean实现接口ApplicationContextAware，则执行setApplicationContext()方法，获取应用上下文。
+- 若Bean实现BeanPostProcessor接口，则先执行postProcessBeforeInitialization()方法(**前置方法**)。
+- 若Bean实现InitializingBean接口，则执行afterPropertiesSet()方法。
+- 若Bean配置了init-method方法，则执行自定义方法。
+- 若Bean实现BeanPostProcessor接口，则先执行postProcessAfterInitialization()方法(**后置方法**)。
+- 如Bean实现了DisposableBean接口，则容器销毁时则执行destory()方法。
 - 如果Bean配置了destory-method，则容器销毁时则执行自定义方法。
 
 **顺序三(自己测试的结果)**
@@ -897,3 +895,4 @@ System.out.println(hw.getMsg());
 | [Spring官方为什么建议构造器注入？](https://mp.weixin.qq.com/s/fVV6dYh0DQOoDiXwLR5miw) | [Bean放入Spring容器，你知道几种方式？](https://mp.weixin.qq.com/s/g9iRu1slTMx0dwYJiy2m7w) | [Spring注入Bean的7种方式，还有谁不会？？](https://mp.weixin.qq.com/s/i0Y-p7mda5FJCWCMJ8msdg) |
 | [Spring注解@Bean和@Component的区别,你知道吗？](https://mp.weixin.qq.com/s/6CwABJAePAT6hzTmfk7Jjg) | [@Bean与@Component用在同一个类上，会怎么样？](https://mp.weixin.qq.com/s/lyH72PRAGcR2-aQvMZ1jPA) | [Bean异步初始化，让你的应用启动飞起来](https://mp.weixin.qq.com/s/aZCgJS3Uaj28UiKTtUFcmw) |
 | [Spring中的父子容器是咋回事？](https://mp.weixin.qq.com/s/06Mmgnhhu98lQtQ8X13QBA) | [Spring容器原始Bean是如何创建的？](https://mp.weixin.qq.com/s/jB9Vzt-uAj6njg2ADVFmyw) | [Spring Bean实例化过程](https://mp.weixin.qq.com/s/TIeAVipENXik8yGzFfKeeA) |
+| [除了反射，还有其他方式初始化Bean吗？](https://mp.weixin.qq.com/s/yKFqDTLwOSIQ2OOzbgSO6w) |                                                              |                                                              |

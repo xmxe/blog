@@ -55,14 +55,14 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
 ```
 ```css
 .image-container {
-    display: flex; /* 使用 Flexbox 布局 */
+    display: flex; /* 使用Flexbox布局 */
     flex-wrap: wrap; /* 等比例图片自动换行到下一行 */
     justify-content: space-between; /* 图片之间间距相等 */
 }
 img {
-    width: 25%; /* 将每个图片的宽度设置为 25% 使其等比例放缩 */
-    height: auto; /* 高度设置为 auto，使其自适应宽度 */
-    margin-bottom: 1rem; /* 使用 margin 来设置图片之间的间距 */
+    width: 25%; /* 将每个图片的宽度设置为25%使其等比例放缩 */
+    height: auto; /* 高度设置为auto，使其自适应宽度 */
+    margin-bottom: 1rem; /* 使用margin来设置图片之间的间距 */
     object-fit: cover; /* 自适应填充图片容器，保持图片比例 */
 }
 ```

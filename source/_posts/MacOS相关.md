@@ -136,6 +136,8 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 - 打开任何来源命令: `sudo spctl --master-disable`
 - 关闭任何来源命令: `sudo spctl --master-enable`
 
+> [MacOS15 spctl命令被禁用怎么办](https://www.macat.vip/42320.html)
+
 ### 移除应用的安全隔离属性
 
 **sudo xattr -rd com.apple.quarantine /Applications/\*.app**

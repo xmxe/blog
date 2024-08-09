@@ -1026,7 +1026,7 @@ client<span class="token punctuation">.</span><span class="token function">close
 <li>一般锁进行并发控制的规则：读读互斥、读写互斥、写写互斥。</li>
 <li>读写锁进行并发控制的规则：读读不互斥、读写互斥、写写互斥（只有读读不互斥）。</li>
 </ul>
-<p>ReentrantReadWriteLock其实是两把锁，一把是WriteLock(写锁)，一把是ReadLock&#96;（读锁）。读锁是共享锁，写锁是独占锁。读锁可以被同时读，可以同时被多个线程持有，而写锁最多只能同时被一个线程持有。和ReentrantLock一样，ReentrantReadWriteLock底层也是基于AQS实现的。</p>
+<p>ReentrantReadWriteLock其实是两把锁，一把是WriteLock(写锁)，一把是ReadLock（读锁）。读锁是共享锁，写锁是独占锁。读锁可以被同时读，可以同时被多个线程持有，而写锁最多只能同时被一个线程持有。和ReentrantLock一样，ReentrantReadWriteLock底层也是基于AQS实现的。</p>
 <p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/concurrent/reentrantreadwritelock-class-diagram.png" alt="img"></p>
 <p>ReentrantReadWriteLock也支持公平锁和非公平锁，默认使用非公平锁，可以通过构造器来显示的指定。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 传入一个boolean值，true时为公平锁，false时为非公平锁</span>
@@ -1132,7 +1132,7 @@ client<span class="token punctuation">.</span><span class="token function">close
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YCI5cTxA1QPe16azDVQVMQ">被问到可重入锁条件队列，看这一篇就够了</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KrTn6WQZOdcVfhCCEwGgPg">3分钟带你搞懂AQS原理设计</a></td>
-<td align="center"></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JwdhlkJh0rWkbD1BDk4-Hw">3分钟秒懂死锁产生原因！</a></td>
 </tr>
 </tbody></table>
 

@@ -686,6 +686,9 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <li>打开任何来源命令: <code>sudo spctl --master-disable</code></li>
 <li>关闭任何来源命令: <code>sudo spctl --master-enable</code></li>
 </ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.macat.vip/42320.html">MacOS15 spctl命令被禁用怎么办</a></p>
+</blockquote>
 <h3 id="移除应用的安全隔离属性"><a href="#移除应用的安全隔离属性" class="headerlink" title="移除应用的安全隔离属性"></a>移除应用的安全隔离属性</h3><p><strong>sudo xattr -rd com.apple.quarantine &#x2F;Applications&#x2F;*.app</strong></p>
 <blockquote>
 <p>命令用于递归删除指定目录中的全部文件的“quarantine”扩展属性。在macOS系统中，当你从网络或其他未知来源下载并打开文件时，系统会将该文件标记为“quarantine”，以防止其潜在的安全风险。然而有时候，这种标记可能会对某些文件操作造成限制，例如某些脚本文件不能被执行。因此，当使用<code>xattr -r -d com.apple.quarantine</code>命令时，系统会删除指定目录中所有文件的“quarantine”扩展属性，以便您可以自由地使用这些文件。该命令的具体含义如下：</p>

@@ -574,14 +574,14 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>image4.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Image 4<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.image-container</span> <span class="token punctuation">&#123;</span>
-    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span> <span class="token comment">/* 使用 Flexbox 布局 */</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span> <span class="token comment">/* 使用Flexbox布局 */</span>
     <span class="token property">flex-wrap</span><span class="token punctuation">:</span> wrap<span class="token punctuation">;</span> <span class="token comment">/* 等比例图片自动换行到下一行 */</span>
     <span class="token property">justify-content</span><span class="token punctuation">:</span> space-between<span class="token punctuation">;</span> <span class="token comment">/* 图片之间间距相等 */</span>
 <span class="token punctuation">&#125;</span>
 <span class="token selector">img</span> <span class="token punctuation">&#123;</span>
-    <span class="token property">width</span><span class="token punctuation">:</span> 25%<span class="token punctuation">;</span> <span class="token comment">/* 将每个图片的宽度设置为 25% 使其等比例放缩 */</span>
-    <span class="token property">height</span><span class="token punctuation">:</span> auto<span class="token punctuation">;</span> <span class="token comment">/* 高度设置为 auto，使其自适应宽度 */</span>
-    <span class="token property">margin-bottom</span><span class="token punctuation">:</span> 1rem<span class="token punctuation">;</span> <span class="token comment">/* 使用 margin 来设置图片之间的间距 */</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> 25%<span class="token punctuation">;</span> <span class="token comment">/* 将每个图片的宽度设置为25%使其等比例放缩 */</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> auto<span class="token punctuation">;</span> <span class="token comment">/* 高度设置为auto，使其自适应宽度 */</span>
+    <span class="token property">margin-bottom</span><span class="token punctuation">:</span> 1rem<span class="token punctuation">;</span> <span class="token comment">/* 使用margin来设置图片之间的间距 */</span>
     <span class="token property">object-fit</span><span class="token punctuation">:</span> cover<span class="token punctuation">;</span> <span class="token comment">/* 自适应填充图片容器，保持图片比例 */</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>

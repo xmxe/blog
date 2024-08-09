@@ -42,7 +42,7 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 |          [clashN](https://github.com/2dust/clashN)           | [Clash for Android](https://clashforandroid.org/) / [github](https://github.com/Kr328/ClashForAndroid) | [Clash Verge](https://clashverge.org/) / [github](https://github.com/zzzgydi/clash-verge) |
 | [Clash下载](https://clash.top/download/) / [github](https://github.com/clashdownload) |         [Stash(Clash iOS)](https://clashstash.org/)          |         [v2rayNG](https://github.com/2dust/v2rayNG)          |
 |          [v2rayN](https://github.com/2dust/v2rayN)           |          [V2rayU](https://github.com/yanue/V2rayU)           | [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android) |
-| [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows) |    [FakeLocation](https://github.com/Lerist/FakeLocation)    | [surfboard(cfa替代品)](https://apkpure.com/surfboard/com.getsurfboard) |
+| [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows) |    [FakeLocation](https://github.com/Lerist/FakeLocation)    | [surfboard(cfa替代品)](https://apkpure.com/surfboard/com.getsurfboard) / [github](https://github.com/getsurfboard/surfboard) |
 |              [surge](https://www.nssurge.com/)               |                                                              |                                                              |
 
 ## 工具

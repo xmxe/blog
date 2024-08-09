@@ -291,6 +291,7 @@ foo.f();
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [深入理解堆外内存Metaspace](https://mp.weixin.qq.com/s/xB-uiqy4eVsNovEknO9_5w) | [求你了，别再说Java对象都是在堆内存上分配空间的了](https://mp.weixin.qq.com/s/Owlhu5IFpDAyu0WYcK1EhQ) | [终于搞懂了Java 8的内存结构，再也不纠结方法区和常量池了！！](https://mp.weixin.qq.com/s/8uGOt1OJloZMHQl43vrbyQ) |
 | [个人笔记，深入理解JVM，很全！](https://mp.weixin.qq.com/s/1rxmi3lg02I7nHwWbldvLA) | [JVM内存布局详解，图文并茂，写得太好了！](https://mp.weixin.qq.com/s/RySwVg9SYvSM-ONdB9cOVw) | [虚拟机的内存结构有哪些](https://mp.weixin.qq.com/s/mY6Il7S104jun54tEE_WJw) |
+| [图解JVM内存布局！](https://mp.weixin.qq.com/s/il9xIkXOMhYAf1-q53TY-w) |                                                              |                                                              |
 
 ## JVM垃圾回收
 

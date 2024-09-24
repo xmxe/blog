@@ -52,7 +52,7 @@ img: https://picx.zhimg.com/70/v2-ba4a778fbecaa7d0169b8c379cf1f392_1440w.avis
 
 | [SpringBoot多种读取配置文件中参数的方式](https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493953&idx=1&sn=f042ddbfafcea9d4e0bbb2b2522974b4&source=41#wechat_redirect) | [SpringBoot的@Value注解，高级特性，真心强大！](https://mp.weixin.qq.com/s/qm4VrNF61mIpVHr0laLwDw) | [Spring Boot中yaml文件：定义list集合、数组及注意事项](https://mp.weixin.qq.com/s/EqgFtVtKPTmTUGTZJ-RBtg) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| [6种方式读取SpringBoot的配置，老鸟都这么玩（原理+实战）](https://mp.weixin.qq.com/s/wzqVJ5qb_eN6Nkz4ouAE-w) |                                                              |                                                              |
+| [6种方式读取SpringBoot的配置，老鸟都这么玩（原理+实战）](https://mp.weixin.qq.com/s/wzqVJ5qb_eN6Nkz4ouAE-w) | [Spring Boot优雅加载配置文件的几种姿势！](https://mp.weixin.qq.com/s/PqxST5qMTl4ImPYb67uYWA) | [如何不重新编译让Spring Boot配置文件生效](https://mp.weixin.qq.com/s/pNAU_w6RQIjzxfaadjV_pA) |
 
 **druid**
 
@@ -72,7 +72,8 @@ img: https://picx.zhimg.com/70/v2-ba4a778fbecaa7d0169b8c379cf1f392_1440w.avis
 | [SpringBoot+Filter实现Gzip压缩超大json对象，传输耗时大大减少](https://mp.weixin.qq.com/s/zBeHyIzR1b4I2x3LU40ceQ) | [SpringBoot玩一玩代码混淆，防止反编译代码泄露](https://mp.weixin.qq.com/s/v26j08vCqpH-O9jZaNKPDA) | [优雅的实现Spring Boot异步线程间数据传递](https://mp.weixin.qq.com/s/vWZu_pjJIrqHzCyBcM70rg) |
 | [Spring Boot + Canal实现数据库变化的实时监控](https://mp.weixin.qq.com/s/2Pjjj-_bkLLAO-IkWfoPcg) | [你绝对不知道的SpringBoot的外部化配置特性！](https://mp.weixin.qq.com/s/9zSrUGMmXbU6rW1LaoUFvQ) | [Spring Boot如何实现插件化开发模式](https://mp.weixin.qq.com/s/x3NMF8AdyJ0Bf15B4yS5Kw) |
 | [Spring Boot业务组件化开发，维护起来很香](https://mp.weixin.qq.com/s/bpmT30Nymm5Iz5Gt-EbX9w) | [Spring Boot + Spring Batch实现批处理任务](https://mp.weixin.qq.com/s/3pjRUugA56Yqwfm4geeadg) | [Spring Boot别再用Date作为入参了，LocalDateTime、LocalDate真香！](https://mp.weixin.qq.com/s/nEeStkLgSvFdwCt56WNvcg) |
-| [try-catch这样写才足够优雅](https://mp.weixin.qq.com/s/j1LSUJiYFvj9VxLn3hFcww) | [SpringBoot 优雅停机的正确姿势](https://mp.weixin.qq.com/s/vknu8fy7JXxectA2zcW_mQ) |                                                              |
+| [try-catch这样写才足够优雅](https://mp.weixin.qq.com/s/j1LSUJiYFvj9VxLn3hFcww) | [SpringBoot 优雅停机的正确姿势](https://mp.weixin.qq.com/s/vknu8fy7JXxectA2zcW_mQ) | [Spring Boot配置日志输出的正确姿势！](https://mp.weixin.qq.com/s/Ai23Q6BsBqE12yT3wg6M7w) |
+| [Spring Boot实现服务热部署的正确姿势](https://mp.weixin.qq.com/s/xjPdcTST-UxnNb8yNw1isQ) | [请不要自己写，Spring Boot非常实用的内置功能](https://mp.weixin.qq.com/s/mNMYLKLLtvYlwpKD9XdKcQ) |                                                              |
 
 **模式**
 
@@ -88,6 +89,7 @@ img: https://picx.zhimg.com/70/v2-ba4a778fbecaa7d0169b8c379cf1f392_1440w.avis
 | [SpringBoot+Vue实现微信扫码支付、退款功能](https://mp.weixin.qq.com/s/9rs-2khxngoojE_0Y6G3cA) | [Spring Boot应用该如何预防XSS攻击 ？](https://mp.weixin.qq.com/s/hBRcsLN_u6ciW1tgBp7a5A) | [Spring Boot整合Canal+RabbitMQ监听数据变更](https://mp.weixin.qq.com/s/ze6JYUCQ75jOIUz9OoCfXA) |
 | [SpringBoot整合RocketMQ，尝尝几大高级特性！](https://mp.weixin.qq.com/s/Kwp3CTAhF2ewW-cFoROPrQ) | [Spring Boot实现MySQL百万级数据量导出并避免OOM的解决方案](https://mp.weixin.qq.com/s/97sSiT3kVvJFQ0aCW_Blxg) | [SpringBoot整合MinIO实现视频的分片上传/断点续传](https://mp.weixin.qq.com/s/R4ZXK_FRNuFpl0d6hOD_Zg) |
 | [Spring Boot项目Jar包加密，防止反编译](https://mp.weixin.qq.com/s/HWO0263J3p097Odr63s9zA) | [Spring Boot接口防抖(防重复提交)，轻松搞定](https://mp.weixin.qq.com/s/6V-_nEqAUhZxREQp6ZNdQw) | [SpringBoot+mail轻松实现各类邮件自动推送](https://mp.weixin.qq.com/s/bKniveockhmRgts89RNu4Q) |
+| [SpringBoot + AOP编程，轻松搞定审计日志](https://mp.weixin.qq.com/s/Wf0-9jXnkKfyEYdKuMvL-w) |                                                              |                                                              |
 
 **retry**
 

@@ -311,6 +311,8 @@ img:hover {
 
 ```
 
+> [12个强大而实用的JavaScript动画库](https://mp.weixin.qq.com/s/8uV6yJznXe-dnCmJQ5VSLw)
+
 ## transition
 
 ```css

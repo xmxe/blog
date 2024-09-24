@@ -1940,6 +1940,7 @@ mysql> EXPLAIN SELECT `score`,`name` FROM `cus_order` ORDER BY `score` DESC;
 | [一文讲清，MySQL中的二级索引](https://mp.weixin.qq.com/s/0_4Jq06LLaTEfjetLQP0iA) | [明明加了唯一索引，为什么还是产生重复数据？](https://mp.weixin.qq.com/s/_hdGKhB-A4ZOFZ42POmgjQ) | [面试官提问：什么是前缀索引？](https://mp.weixin.qq.com/s/4XfSv004Vy7hyvZsjlQXwQ) |
 | [MySQL遵循最左前缀匹配原则！面试官：回去等通知吧](https://mp.weixin.qq.com/s/IYRTE00_3bXD6y3YBW9P6Q) | [MySQL索引15连问](https://mp.weixin.qq.com/s/N95kMxVduiA6ZA3TSexAtA) | [MySQL索引数据结构入门](https://mp.weixin.qq.com/s/QLQvMT2sPmmjVE_pXj5FIA) |
 | [前缀索引，在性能和空间中寻找平衡](https://mp.weixin.qq.com/s/mqi7MyF183FUmgy2FXi3Tw) | [聊聊mysql优化神器：前缀索引！](https://mp.weixin.qq.com/s/bhlzlILDSpLkiRBfVyZj0w) | [全文索引](https://mp.weixin.qq.com/s/SLIrSYnrNYkTyioE4syhFA) |
+| [MySQL模糊查询再也不用like+%了(全文索引)](https://mp.weixin.qq.com/s/L68fygoNmvmRuYSmOkHROA) |                                                              |                                                              |
 
 ## MySQL三大日志
 
@@ -2857,3 +2858,4 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 | [再有人问你什么是MVCC，就把这篇文章发给他！](https://mp.weixin.qq.com/s/WZa5UKYgU-pYKbvovLt1YQ) | [MySQL最朴素的监控方式](https://mp.weixin.qq.com/s/meS5Au1o9qdrSv7505mIcA) | [1亿条数据批量插入MySQL，哪种方式最快](https://mp.weixin.qq.com/s/c71ATJLT6_KXtb_iiUlMjg) |
 | [6种MySQL数据库平滑扩容方案剖析](https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing) | [什么是插入意向锁？](https://mp.weixin.qq.com/s/rDdUBw803tvjHkJALY5P2w) | [从MySQL读取100w数据进行处理，应该怎么做](https://mp.weixin.qq.com/s/XbSADUXIz1aw0kqp7p5urQ) |
 | [MySQL误删数据不用跑路了，快速恢复指南来了](https://mp.weixin.qq.com/s/vyrLOH1NRXXQd0oEnv0M1Q) | [MySQL单表数据最大不要超过多少行？为什么](https://mp.weixin.qq.com/s/ZCM2FYzKw24Fk8yv4a9b0w) | [Mysql如何做表分区](https://mp.weixin.qq.com/s/w2wrccywJWM-zXceCR_JXw) |
+| [大白话讲解Mysql中SQL语句的执行流程](https://mp.weixin.qq.com/s/wSnniPaj5s1-cJp_VICXzw) | [盘点Mysql对SQL语句的一些隐式优化技术！](https://mp.weixin.qq.com/s/iCZA97Vm-lxDKEcR4EJPRQ) | [一文带你快速入门Mysql基础知识](https://mp.weixin.qq.com/s/ZwdcTNXKhOEA-T1qUjw-8w) |

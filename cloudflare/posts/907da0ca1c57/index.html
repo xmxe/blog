@@ -1,0 +1,2165 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="MySQL安装, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>MySQL安装 | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ 'MySQL安装' ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+        max-height: 480px;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%AE%89%E8%A3%85/">
+                                <span class="chip bg-color">安装</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="Linux安装MySQL"><a href="#Linux安装MySQL" class="headerlink" title="Linux安装MySQL"></a>Linux安装MySQL</h2><h3 id="压缩包安装"><a href="#压缩包安装" class="headerlink" title="压缩包安装"></a>压缩包安装</h3><h4 id="1-下载"><a href="#1-下载" class="headerlink" title="1. 下载"></a>1. 下载</h4><p><del><a target="_blank" rel="noopener" href="https://downloads.mysql.com/archives/community/">MySQL下载地址</a></del>,<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/">MySQL下载地址</a>下载后将安装包上传usr&#x2F;local</p>
+<h4 id="2-解压"><a href="#2-解压" class="headerlink" title="2. 解压"></a>2. 解压</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
+<p>解压后位置usr&#x2F;local&#x2F;mysql</p>
+</blockquote>
+<h4 id="3-创建用户及用户组"><a href="#3-创建用户及用户组" class="headerlink" title="3. 创建用户及用户组"></a>3. 创建用户及用户组</h4><p>先检查是否有mysql用户组和mysql用户,没有就添加</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看所有用户</span>
+<span class="token comment">#cat /etc/passwd</span>
+<span class="token comment"># 查看用户组</span>
+<span class="token comment">#groups mysql</span>
+<span class="token comment"># 添加用户组</span>
+<span class="token function">groupadd</span> mysql
+<span class="token comment"># 删除用户组 groupdel</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>添加用户mysql然后将mysql用户添加到到用户组mysql</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># -r建立系统帐号 -g&lt;群组>指定用户所属的群组。</span>
+<span class="token function">useradd</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-g</span> mysql mysql
+<span class="token comment"># userdel删除</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-操作"><a href="#4-操作" class="headerlink" title="4. 操作"></a>4. 操作</h4><p>修改配置文件vim &#x2F;etc&#x2F;my.cnf（没有就新建）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
+<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
+<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+<span class="token comment"># *	接收所有的IPv4或IPv6连接请求</span>
+<span class="token comment"># 0.0.0.0接受所有的IPv4地址</span>
+<span class="token comment"># ::接受所有的IPv4或IPv6地址</span>
+<span class="token comment"># IPv4-mapped接受所有的IPv4地址或IPv4邦定格式的地址（例 ::ffff:127.0.0.1）</span>
+<span class="token comment"># IPv4（IPv6）只接受对应的IPv4（IPv6）地址</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+<span class="token comment"># port=3306</span>
+<span class="token comment"># 指定安装用户</span>
+<span class="token assign-left variable">user</span><span class="token operator">=</span>mysql
+<span class="token assign-left variable">basedir</span><span class="token operator">=</span>/usr/local/mysql
+<span class="token assign-left variable">datadir</span><span class="token operator">=</span>/usr/local/mysql/data
+<span class="token assign-left variable">socket</span><span class="token operator">=</span>/tmp/mysql.sock
+log-error<span class="token operator">=</span>/usr/local/mysql/mysql.err
+pid-file<span class="token operator">=</span>/usr/local/mysql/data/mysql/mysql.pid
+<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4
+<span class="token comment"># 符号连接,如果设置为1,则mysql数据库和表里的数据支持储存在datadir目录之外的路径下,默认都是0</span>
+symbolic-links<span class="token operator">=</span><span class="token number">0</span>
+<span class="token comment"># 默认情况下，timestamp类型字段所在数据行被更新时，该字段会自动更新为当前时间，而参数explicit_defaults_for_timestamp控制这一种行为。</span>
+<span class="token comment"># 数据行更新时，timestamp类型字段更新为当前时间</span>
+<span class="token comment"># explicit_defaults_for_timestamp=off</span>
+<span class="token comment"># 数据行更新时，timestamp类型字段不更新为当前时间。</span>
+<span class="token comment"># explicit_defaults_for_timestamp=on</span>
+<span class="token comment"># 允许最大连接数</span>
+<span class="token assign-left variable">max_connections</span><span class="token operator">=</span><span class="token number">200</span>
+default-storage-engine<span class="token operator">=</span>INNODB
+<span class="token comment"># 连接层默认字符集</span>
+collation-server<span class="token operator">=</span>utf8mb4_unicode_ci
+<span class="token assign-left variable">wait_timeout</span><span class="token operator">=</span><span class="token number">31536000</span>
+<span class="token assign-left variable">interactive_timeout</span><span class="token operator">=</span><span class="token number">31536000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>进入安装mysql软件目录<code>cd mysql/</code>,修改目录拥有者为mysql用户<code>chown -R mysql:mysql ./</code>，或者单独修改MySQL的data目录<code>chown -R mysql:mysql data/</code></strong></p>
+<h5 id="5-6版本"><a href="#5-6版本" class="headerlink" title="5.6版本"></a>5.6版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># --defaults-file指定配置文件 --basedir指定Mysql安装目录 --datadir指定数据目录 --user所属用户</span>
+./scripts/mysql_install_db <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>此处可能出现错误</p>
+<p><strong>错误1</strong>：命令报错<code>-bash: ./scripts/mysql_install_db: /usr/bin/perl: bad interpreter: No such file or directory.</code>貌似提示注释器错误，没有&#x2F;usr&#x2F;bin&#x2F;perl文件或者档案<br><strong>解决办法</strong>:（安装perl跟perl-devel即可）：执行<strong>yum -y install perl perl-devel</strong>后在初始化数据库即可。</p>
+<p><strong>错误2</strong>：<code>FATAL ERROR: please install the following Perl modules before executing * Data::Dumper</code><br><strong>解决办法:yum install -y perl-Data-Dumper</strong></p>
+<p>修改当前目录拥有者为root用户</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chown</span> <span class="token parameter variable">-R</span> root:root ./<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>再次运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./scripts/mysql_install_db <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>修改当前data目录拥有者为mysql用户</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chown</span> <span class="token parameter variable">-R</span> mysql:mysql data<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</blockquote>
+<h5 id="5-7版本"><a href="#5-7版本" class="headerlink" title="5.7版本"></a>5.7版本</h5><p>执行命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./mysqld --defaults-file<span class="token operator">=</span>/etc/my.cnf <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql/ <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data/ <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--initialize</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>查看初始密码,控制台查看或者<code>cat /usr/local/mysql/mysql.err</code>localhost:后面的一串字符就是初始密码</p>
+<h5 id="8-0版本"><a href="#8-0版本" class="headerlink" title="8.0版本"></a>8.0版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./mysqld --defaults-file<span class="token operator">=</span>/etc/my.cnf <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql/ <span class="token parameter variable">--initialize</span> <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>root@localhost之后的一串字符就是初始密码</p>
+<blockquote>
+<p><strong>错误1</strong>：服务未成功启动查看data目录下的localhost.localdomain.err错误日志<br>遇到<code>Can&#39;t start server : Bind on unix socket: Address already in use Do you already have another mysqld server running on socket: /tmp/mysql.sock ?</code>解决方法是删除 rm -rf &#x2F;tmp&#x2F;mysql.sock(由于以前安装过mysql的原因)</p>
+<p><strong>错误2</strong>：.&#x2F;mysqld: error while loading shared libraries: libnuma.so.1: cannot open shared object file: No such file or directory就执行下<code>yum install -y libaio</code>、<code> yum -y install numactl</code>后再执行初始化</p>
+<p><strong>错误3</strong>：mysql -uroot -proot无法连接的话,报错Can’t connect to local MySQL server through socket ‘&#x2F;tmp&#x2F;mysql.sock<br>创建软连接<code>ln -s /data/mysql/mysql.sock /tmp/mysql.sock</code>,注意查看&#x2F;etc&#x2F;my.cnf中socket配置的mysql.sock的位置,<br>mysql.sock默认位置是<code>ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock</code></p>
+</blockquote>
+<h4 id="5-启动mysql"><a href="#5-启动mysql" class="headerlink" title="5. 启动mysql"></a>5. 启动mysql</h4><p>添加开机启动，把启动脚本放到开机初始化目录。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>赋予可执行权限</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x /etc/init.d/mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>启动mysql服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">service</span> mysql start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>延申<br>如果想要将<code>service mysql start</code>启动替换成<code>systemctl start mysql</code>的话,步骤如下</p>
+</blockquote>
+<ol>
+<li>创建mysql.service <code>vim /etc/systemd/system/mysql.service</code></li>
+</ol>
+<pre class="line-numbers language-makefile" data-language="makefile"><code class="language-makefile">[Unit]
+Description<span class="token operator">=</span>MySQL Community Server
+After<span class="token operator">=</span>network.target
+
+[Service]
+Type<span class="token operator">=</span>forking
+<span class="token comment"># Set the path to the MySQL binary</span>
+ExecStart<span class="token operator">=</span>/usr/local/mysql/support-files/mysql.server start
+ExecStop<span class="token operator">=</span>/usr/local/mysql/support-files/mysql.server stop
+ExecReload<span class="token operator">=</span>/usr/local/mysql/support-files/mysql.server reload
+<span class="token comment"># Set user and group to run the service as</span>
+User<span class="token operator">=</span>mysql
+Group<span class="token operator">=</span>mysql
+
+[Install]
+WantedBy<span class="token operator">=</span>multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>执行</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x /etc/systemd/system/docker.service
+systemctl daemon-reload
+systemctl start mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="6-修改密码"><a href="#6-修改密码" class="headerlink" title="6. 修改密码"></a>6. 修改密码</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 测试进入mysql(注意端口为默认的3306,如果修改过默认端口,使用-P来指定端口)</span>
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-proot</span>
+
+<span class="token comment"># UPDATE直接编辑user表,旧版本中密码字段是password,而不是authentication_string.注意加上user和host的查询条件,因为有可能host不一样,比如user表里查询user='root'有两条记录,一个host为'localhost',一个为'%',意味着相同用户本地登录是一个密码，远程登陆是一个密码</span>
+<span class="token comment">#update mysql.user set password=password('新密码') where host='localhost' and user='root';</span>
+update mysql.user <span class="token builtin class-name">set</span> <span class="token assign-left variable">authentication_string</span><span class="token operator">=</span>password<span class="token punctuation">(</span><span class="token string">'password'</span><span class="token punctuation">)</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'hostname'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 使用SET PASSWORD命令修改当前用户密码</span>
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">password</span><span class="token operator">=</span>password<span class="token punctuation">(</span><span class="token string">"new-password"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># 使用SET PASSWORD命令修改其他用户密码</span>
+<span class="token builtin class-name">set</span> password <span class="token keyword">for</span> <span class="token string">'user'</span>@<span class="token string">'hostname'</span> <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'新密码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 使用mysqladmin修改密码</span>
+./bin/mysqladmin <span class="token parameter variable">-hlocalhost.localdomain</span> <span class="token parameter variable">-uroot</span> -p旧密码 password <span class="token string">'新密码'</span>
+
+<span class="token comment"># 修改当前用户密码(USER()为获取当前连接用户的函数)</span>
+ALTER user <span class="token environment constant">USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span> IDENTIFIED BY <span class="token string">'root'</span><span class="token punctuation">;</span>
+<span class="token comment"># 修改其他用户的密码,使用user表中的user,host匹配,如:'root'@'%',mysql8默认WITH mysql_native_password</span>
+ALTER user <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'新密码'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 使密码生效</span>
+flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="7-修改远程连接"><a href="#7-修改远程连接" class="headerlink" title="7. 修改远程连接"></a>7. 修改远程连接</h4><p>改表法</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">use</span> mysql
+<span class="token keyword">update</span> <span class="token keyword">user</span> <span class="token keyword">set</span> host<span class="token operator">=</span><span class="token string">'%'</span> <span class="token keyword">where</span> <span class="token keyword">user</span><span class="token operator">=</span><span class="token string">'root'</span><span class="token punctuation">;</span>
+flush <span class="token keyword">privileges</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>授权法</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'密码'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+<span class="token comment"># 如果你想允许用户myuser从ip为192.168.1.6的主机连接到mysql服务器，并使用mypassword作为密码</span>
+GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'myuser'</span>@<span class="token string">'192.168.1.3'</span> IDENTIFIED BY <span class="token string">'mypassword'</span> WITH GRANT OPTION<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="8-创建用户"><a href="#8-创建用户" class="headerlink" title="8.创建用户"></a>8.创建用户</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 创建用户</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'username'</span><span class="token variable">@'host'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'password'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 授权</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> my_database<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'username'</span><span class="token variable">@'host'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 只授予部分权限</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">SELECT</span><span class="token punctuation">,</span> <span class="token keyword">INSERT</span> <span class="token keyword">ON</span> my_database<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'username'</span><span class="token variable">@'host'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 刷新权限</span>
+flush <span class="token keyword">privileges</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="9-其他"><a href="#9-其他" class="headerlink" title="9. 其他"></a>9. 其他</h4><p>添加服务自启动</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chkconfig</span> <span class="token parameter variable">--add</span> mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>显示服务列表</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chkconfig</span> <span class="token parameter variable">--list</span>
+<span class="token comment"># 如果看到mysql的服务，并且3,4,5都是on的话则成功，如果是off，则执行</span>
+<span class="token function">chkconfig</span> <span class="token parameter variable">--level</span> <span class="token number">345</span> mysql on<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>假如服务未成功启动<a target="_blank" rel="noopener" href="http://blog.csdn.net/duyuanhai/article/details/78604894">log-error set to ‘&#x2F;var&#x2F;log&#x2F;mariadb&#x2F;mariadb.log’, however file don’t exists</a><strong>报错的情况下执行以下操作</strong>:需要创建报错中缺失的文件夹<code>mkdir z/var/log/mariadb，touch /var/log/mariadb/mariadb.log</code></p>
+</blockquote>
+<p>创建软连接</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ln</span> <span class="token parameter variable">-s</span> /usr/local/mysql/bin/mysql /usr/local/bin/mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>默认配置文件路径如下</p>
+<pre class="line-numbers language-none"><code class="language-none">配置文件：&#x2F;etc&#x2F;my.cnf
+日志文件：&#x2F;var&#x2F;log&#x2F;var&#x2F;log&#x2F;mysqld.log
+服务启动脚本：&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;mysqld.service
+socket文件：&#x2F;var&#x2F;run&#x2F;mysqld&#x2F;mysqld.pid<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h3><h4 id="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"><a href="#一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包" class="headerlink" title="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"></a>一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包</h4><p>(1) 把上面的rpm文件下载下来放到服务器上,或者在linux系统中通过wget命令下载</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(2) 下载完成后使用yum命令本地安装yum源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum localinstall mysql80-community-release-el7-1.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(3) 执行完毕后使用下面的命令检查是否安装成功</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum repolist enabled <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">"mysql.*-community.*"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(4) 安装服务器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token parameter variable">-y</span> mysql-community-server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="二、配置MySQL"><a href="#二、配置MySQL" class="headerlink" title="二、配置MySQL"></a>二、配置MySQL</h4><p>服务命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动MySQL服务</span>
+systemctl start mysqld
+<span class="token comment"># 查看服务启动状态</span>
+systemctl status mysqld
+<span class="token comment"># 开机启动</span>
+systemctl <span class="token builtin class-name">enable</span> mysqld
+<span class="token comment"># 重新加载开机启动配置</span>
+systemctl daemon-reload
+
+<span class="token comment"># 修改root默认密码</span>
+<span class="token comment"># 查询默认密码</span>
+<span class="token function">cat</span> /var/log/mysqld.log <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">'temporary password'</span>
+<span class="token comment"># 登录mysql,用刚才从文件中找到的密码</span>
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
+<span class="token comment"># 尝试修改密码,使用下面的命令修改root用户的密码</span>
+ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'你的密码'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 添加远程登陆</span>
+<span class="token comment"># 创建一个能全局访问的用户root</span>
+<span class="token comment"># CREATE USER 'root'@'%' IDENTIFIED BY 你的密码'';</span>
+<span class="token comment"># 给用户授权任何远程主机都可以访问数据库 </span>
+GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span>WITH GRANT OPTION<span class="token punctuation">;</span>
+<span class="token comment"># 输入刷新命令使修改生效</span>
+FLUSH PRIVILEGES<span class="token punctuation">;</span>
+<span class="token comment"># 修改密码的加密方式</span>
+<span class="token comment"># 找到mysql的配置文件vim /etc/my.cnf，把密码的加密方式改成之前版本的,8.0版本更换了密码的加密方式,我们就先用旧的</span>
+<span class="token comment"># 找到default-authentication-plugin，将其注释取消</span>
+default-authentication-plugin<span class="token operator">=</span>mysql_native_password
+<span class="token comment"># 修改完my.cnf后重启服务，使其生效</span>
+systemctl restart mysqld
+
+<span class="token comment"># sql_mode=only_full_group_by问题</span>
+<span class="token comment"># 查看sql_mode</span>
+<span class="token keyword">select</span> @@global.sql_mode<span class="token punctuation">;</span>
+<span class="token comment"># 查询出来的值为：</span>
+ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+
+<span class="token comment"># 修改my.cnf，在[mysqld]栏下新增sql_mode，将ONLY_FULL_GROUP_BY去掉</span>
+<span class="token function">vim</span> /etc/my.cnf
+<span class="token assign-left variable">sql_mode</span><span class="token operator">=</span><span class="token string">'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'</span>
+<span class="token comment"># 重启服务</span>
+systemctl restart mysqld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="rpm安装"><a href="#rpm安装" class="headerlink" title="rpm安装"></a>rpm安装</h3><p>(1) 需要通过rpm相关指令，来查询当前系统中是否存在已安装的mysql软件包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查询当前系统中安装的所有软件</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-qa</span>
+<span class="token comment"># 查询当前系统中安装的名称带mysql的软件</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> mysql
+<span class="token comment"># 查询当前系统中安装的名称带mariadb的软件</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> mariadb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(2) 卸载</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">-ev</span> <span class="token parameter variable">--nodeps</span> 软件名称
+<span class="token comment"># 卸载之前请先关闭mysql服务，命令如下</span>
+systemctl stop mysqld
+<span class="token comment"># 依次卸载相关服务</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> mysql-community-server
+<span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> mysql-community-client
+<span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> mysql-community-libs
+<span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> mysql-community-common
+<span class="token comment">#卸载mariadb</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> mariadb-libs-5.5.64-1.el7.x86_64
+<span class="token comment"># 删除数据库配置文件</span>
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> /etc/my.cnf
+<span class="token comment"># 删除数据库数据文件</span>
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> /var/lib/mysql
+<span class="token comment"># 删除日志临时文件</span>
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> /var/log/mysqld.log<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(3) 下载rpm</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/7ec61ebdc9103cd70f3dd52efbd4ea19.png" alt="下载"><br>或者使用wget</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载server包</span>
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-server-5.7.38-1.el7.x86_64.rpm
+<span class="token comment"># 下载client包</span>
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-client-5.7.38-1.el7.x86_64.rpm
+<span class="token comment"># 下载common包</span>
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-common-5.7.38-1.el7.x86_64.rpm
+<span class="token comment"># 下载libs包</span>
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-libs-5.7.38-1.el7.x86_64.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(4) 安装</p>
+<blockquote>
+<p>包之间相互依赖，所以必须注意安装顺序</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 相关依赖</span>
+yum <span class="token function">install</span> libaio <span class="token parameter variable">-y</span>
+yum <span class="token function">install</span> net-tools <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<p>先装common,再装libs（确保mariadb已卸载，centos7默认支持mariadb，不支持mysql，不卸载会出现冲突）,再装client,最后装server</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># i表示install安装；v表示verbose进度条；h表示hash哈希校验。</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mysql-community-common-8.0.11-1.el7.x86_64.rpm
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mysql-community-libs-8.0.11-1.el7.x86_64.rpm
+<span class="token comment"># rpm -ivh mysql-community-devel-5.7.25-1.el7.x86_64.rpm</span>
+<span class="token comment"># rpm -ivh mysql-community-libs-compat-5.7.25-1.el7.x86_64.rpm</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mysql-community-client-8.0.11-1.el7.x86_64.rpm
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mysql-community-server-8.0.11-1.el7.x86_64.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(5) 查看密码</p>
+<p>对于rpm安装的mysql，在mysql第一次启动时，会自动帮我们生成root用户的访问密码，并且输出在mysql的日志文件&#x2F;var&#x2F;log&#x2F;mysqld.log中，我们可以查看这份日志文件，从而获取到访问密码</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">grep</span> <span class="token string">'temporary password'</span> /var/log/mysqld.log
+<span class="token comment"># 或者</span>
+<span class="token function">cat</span> /var/log/mysqld.log <span class="token operator">|</span> <span class="token function">grep</span> password<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>(6) 配置其他内容如编码则新建<code>/etc/my.cnf</code></p>
+<h2 id="Windows安装MySQL"><a href="#Windows安装MySQL" class="headerlink" title="Windows安装MySQL"></a>Windows安装MySQL</h2><h3 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h3><pre class="line-numbers language-none"><code class="language-none">关闭mysql服务:net stop mysql
+删除mysql服务:mysqld -remove
+删除mysql相关文件夹，如想保留数据可保留data文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>(1) 解压mysql压缩包后进入mysql目录，新建my.ini文件并编辑</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+<span class="token comment"># 设置3306端口</span>
+port <span class="token operator">=</span> <span class="token number">3306</span>
+<span class="token comment"># 设置mysql的安装目录</span>
+<span class="token assign-left variable">basedir</span><span class="token operator">=</span>D:<span class="token punctuation">\</span>mysql<span class="token punctuation">\</span>mysql-5.8.11-winx64
+<span class="token comment"># 设置mysql数据库的数据的存放目录</span>
+<span class="token assign-left variable">datadir</span><span class="token operator">=</span>D:<span class="token punctuation">\</span>mysql<span class="token punctuation">\</span>mysql-5.8.11-winx64<span class="token punctuation">\</span>data
+<span class="token comment"># 允许最大连接数</span>
+<span class="token assign-left variable">max_connections</span><span class="token operator">=</span><span class="token number">200</span>
+<span class="token comment"># 创建新表时将使用的默认存储引擎</span>
+default-storage-engine<span class="token operator">=</span>INNODB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(2) 将mysql加入环境变量</p>
+<p>(3) 管理员打开cmd切换到mysql bin目录下(一定要切换),执行<strong>mysqld install</strong>安装mysql服务，成功打印<strong>service successfully installed</strong>后执行<strong>mysqld –initialize –console</strong>会对数据库做初始化并打印相应日志：可以找到root@localhost之后的一串字符就是初始密码，然后执行net start mysql开启服务</p>
+<blockquote>
+<p>或者配置root用户不设置密码: <strong>mysqld –initialize-insecure –console</strong>。此命令是一个用于初始化MySQL服务器的命令。该命令的作用是在指定的目录中创建MySQL数据文件，并生成一个没有密码的root用户账号，以及默认的匿名用户账号和测试数据库。以下是该命令的各个选项的具体含义：</p>
+<blockquote>
+<p>mysqld: MySQL的服务器程序，用于处理MySQL的请求。<br>–initialize-insecure: 初始化MySQL服务器时不设置任何安全措施，包括不设置root用户的密码。<br>–console: 将初始化过程的输出重定向到标准输出设备（如终端窗口），以便可以查看执行结果。</p>
+</blockquote>
+</blockquote>
+<p>(4) 修改密码（5.7版本以前）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># mysql -uroot -p输入密码后</span>
+<span class="token builtin class-name">set</span> password <span class="token keyword">for</span> root@localhost <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'123456'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># 8.0修改密码</span>
+<span class="token builtin class-name">set</span> password <span class="token operator">=</span> <span class="token string">'123456'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="8-0连接navicat"><a href="#8-0连接navicat" class="headerlink" title="8.0连接navicat"></a>8.0连接navicat</h3><p>navicat连接8.0需要把mysql用户登录密码加密规则还原成mysql_native_password</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'root'</span> PASSWORD EXPIRE NEVER<span class="token punctuation">;</span> <span class="token comment">#修改加密规则</span>
+ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'root'</span><span class="token punctuation">;</span> <span class="token comment">#更新一下用户的密码</span>
+FLUSH PRIVILEGES<span class="token punctuation">;</span> <span class="token comment">#刷新权限</span>
+<span class="token comment"># 然后use mysql;</span>
+update user <span class="token builtin class-name">set</span> <span class="token function">host</span> <span class="token operator">=</span> <span class="token string">'%'</span> where user <span class="token operator">=</span> <span class="token string">'root'</span><span class="token punctuation">;</span>
+ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'新密码'</span>
+FLUSH PRIVILEGES<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="批量迁移-ibd文件脚本-AI生成"><a href="#批量迁移-ibd文件脚本-AI生成" class="headerlink" title="批量迁移.ibd文件脚本(AI生成)"></a>批量迁移.ibd文件脚本(AI生成)</h2><h3 id="ChatGPT-3-5-已测试"><a href="#ChatGPT-3-5-已测试" class="headerlink" title="ChatGPT 3.5(已测试)"></a>ChatGPT 3.5(已测试)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># 定义目标数据库信息</span>
+<span class="token assign-left variable">database</span><span class="token operator">=</span><span class="token string">"your_database"</span>
+<span class="token assign-left variable">tablespace_directory</span><span class="token operator">=</span><span class="token string">"/path/to/tablespace_directory"</span>
+
+<span class="token comment"># 遍历目录中的所有IDB文件</span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">file</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">find</span> <span class="token string">"<span class="token variable">$tablespace_directory</span>"</span> <span class="token parameter variable">-type</span> f <span class="token parameter variable">-name</span> <span class="token string">"*.ibd"</span><span class="token variable">)</span></span>
+<span class="token keyword">do</span>
+    <span class="token comment"># 提取表名</span>
+    <span class="token assign-left variable">tablename</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> <span class="token string">"<span class="token variable">$file</span>"</span> .ibd<span class="token variable">)</span></span>
+    
+    <span class="token comment"># 执行导入表空间操作</span>
+    <span class="token comment"># 注意:`ALTER TABLE $tablename DISCARD TABLESPACE`将删除与该表关联的.ibd文件。所以如果手动将原.idb删除后将目标的.ibd文件复制到mysql的data目录后不要执行下面的命令,因为先删掉.ibd后`ALTER TABLE $tablename IMPORT TABLESPACE`就无法执行了,当拷贝的.ibd文件不在data目录下而在其他目录时可以使用下面命令</span>
+    <span class="token comment"># mysql -uroot -proot -e "USE $database; ALTER TABLE $tablename DISCARD TABLESPACE; ALTER TABLE $tablename IMPORT TABLESPACE;"</span>
+    
+    mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-proot</span> <span class="token parameter variable">-e</span> <span class="token string">"USE <span class="token variable">$database</span>; ALTER TABLE <span class="token variable">$tablename</span> IMPORT TABLESPACE;"</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$?</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"成功导入表 <span class="token variable">$tablename</span> 的表空间"</span>
+    <span class="token keyword">else</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"导入表 <span class="token variable">$tablename</span> 的表空间时出现错误"</span>
+    <span class="token keyword">fi</span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>问题1: 如果遇到报错试下授予文件读写权限: <strong>chmod -R 777 mysql&#x2F;data&#x2F;databasename&#x2F;</strong><br>问题2: 执行脚本时报错: <strong>Can’t connect to local MySQL server through socket ‘&#x2F;tmp&#x2F;mysql.sock</strong>。<br>解决方法为更改&#x2F;etc&#x2F;my.cnf文件<strong>socket &#x3D; &#x2F;home&#x2F;mysql&#x2F;mysql.sock</strong>后创建软连接<strong>ln -s &#x2F;home&#x2F;mysql&#x2F;mysql.sock &#x2F;tmp&#x2F;mysql.sock</strong>。归结到底还是文件目录读写权限问题，一劳永逸方法<strong>chmod -R 777 mysql安装目录</strong></p>
+</blockquote>
+<h3 id="文心一言"><a href="#文心一言" class="headerlink" title="文心一言"></a>文心一言</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash  </span>
+  
+<span class="token comment"># 目标数据库连接信息  </span>
+<span class="token assign-left variable">DB_USER</span><span class="token operator">=</span><span class="token string">"your_username"</span>  
+<span class="token assign-left variable">DB_PASSWORD</span><span class="token operator">=</span><span class="token string">"your_password"</span>  
+<span class="token assign-left variable">DB_NAME</span><span class="token operator">=</span><span class="token string">"your_database"</span>  
+  
+<span class="token comment"># IDB文件目录路径  </span>
+<span class="token assign-left variable">IDB_DIR</span><span class="token operator">=</span><span class="token string">"/path/to/idb/files"</span>  
+  
+<span class="token comment"># 遍历IDB文件目录  </span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">file</span> <span class="token keyword">in</span> <span class="token variable">$IDB_DIR</span>/*.idb<span class="token punctuation">;</span> <span class="token keyword">do</span>  
+    <span class="token comment"># 提取表名  </span>
+    <span class="token assign-left variable">table_name</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> <span class="token string">"<span class="token variable">$file</span>"</span> .idb<span class="token variable">)</span></span>
+    <span class="token comment"># 导入表空间  </span>
+    mysql <span class="token parameter variable">-u</span> <span class="token variable">$DB_USER</span> -p<span class="token variable">$DB_PASSWORD</span> <span class="token parameter variable">-e</span> <span class="token string">"ALTER TABLE <span class="token variable">$table_name</span> IMPORT TABLESPACE <span class="token variable">$file</span>;"</span> <span class="token variable">$DB_NAME</span>  
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="通义千问"><a href="#通义千问" class="headerlink" title="通义千问"></a>通义千问</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># 指定要导入的目录</span>
+<span class="token assign-left variable">IMPORT_DIR</span><span class="token operator">=</span><span class="token string">"/path/to/import/directory"</span>
+
+<span class="token comment"># 指定目标数据库名</span>
+<span class="token assign-left variable">DATABASE_NAME</span><span class="token operator">=</span><span class="token string">"your_database_name"</span>
+
+<span class="token comment"># 获取目录中所有.ibd文件的列表</span>
+<span class="token assign-left variable">IBD_FILES</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">find</span> <span class="token string">"<span class="token variable">$IMPORT_DIR</span>"</span> <span class="token parameter variable">-name</span> <span class="token string">"*.ibd"</span><span class="token variable">)</span></span>
+
+<span class="token comment"># 遍历所有.ibd文件</span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">IBDFILE</span> <span class="token keyword">in</span> <span class="token variable">$IBD_FILES</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+    <span class="token comment"># 提取表名</span>
+    <span class="token assign-left variable">TABLE_NAME</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> <span class="token string">"<span class="token variable">$IBDFILE</span>"</span> .ibd<span class="token variable">)</span></span>
+    <span class="token comment"># 执行ALTER TABLE IMPORT TABLESPACE语句</span>
+    mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-proot</span> <span class="token variable">$DATABASE_NAME</span> <span class="token parameter variable">-e</span> <span class="token string">"ALTER TABLE \<span class="token variable"><span class="token variable">`</span>$TABLE_NAME<span class="token punctuation">\</span><span class="token variable">`</span></span> IMPORT TABLESPACE;"</span>
+<span class="token keyword">done</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">"Import completed."</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="主从同步"><a href="#主从同步" class="headerlink" title="主从同步"></a>主从同步</h2><p><strong>MySQL5.6数据库主从（Master&#x2F;Slave）同步安装与配置详解,两台服务器-Master主:192.168.159.28、Slave从:192.168.159.30</strong></p>
+<h3 id="Master的配置"><a href="#Master的配置" class="headerlink" title="Master的配置"></a>Master的配置</h3><p>在Linux环境下MySQL的配置文件的位置是在&#x2F;etc&#x2F;my.cnf,在该文件下指定Master的配置如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token comment"># server-id用于标识唯一的数据库，这里设置为2，在设置从库的时候就需要设置为其他值。</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">2</span>
+<span class="token comment"># binlog-ignore-db：表示同步的时候ignore的数据库 </span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information_schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+<span class="token comment"># binlog-do-db：指定需要同步的数据库</span>
+<span class="token key attr-name">binlog-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">ufind_db</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>完整配置如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">datadir</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql/mysql.sock</span>
+<span class="token comment"># Disabling symbolic-links is recommended to prevent symbolic-links=0</span>
+<span class="token comment"># Settings user and group are ignored when systemd is If you need to run mysqld under a different user or customize your systemd unit file for mariadb accord instructions in http://fedoraproject.org/wiki/Syste</span>
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">2</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information_schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+<span class="token key attr-name">binlog-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">ufind_db</span>
+<span class="token key attr-name">wait_timeout</span><span class="token punctuation">=</span><span class="token value attr-value">31536000</span>
+<span class="token key attr-name">interactive_timeout</span><span class="token punctuation">=</span><span class="token value attr-value">31536000</span>
+<span class="token key attr-name">character-set-server</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4</span>
+<span class="token key attr-name">collation-server</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4_unicode_ci</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">client</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">default-character-set</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysgl</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">default-character-set</span><span class="token punctuation">=</span><span class="token value attr-value">utf8mb4</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld_safe</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">log-error</span><span class="token punctuation">=</span><span class="token value attr-value">/var/log/mariadb/mariadb.log</span>
+<span class="token key attr-name">pid-file</span><span class="token punctuation">=</span><span class="token value attr-value">/var/run/mariadb/mariadb.pid</span>
+<span class="token comment">#include all files from the config directory</span>
+!includedir /etc/my.cnf.d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后重启mysql：<code>service mysqld restart</code>。进入mysql：<code>./bin/mysql –h127.0.0.1 –uroot -proot</code>赋予从库权限帐号，允许用户在主库上读取日志，赋予192.168.159.130也就是Slave机器有File权限，只赋予Slave机器有File权限还不行，还要给它REPLICATION SLAVE的权限才可以。命令如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">GRANT FILE ON *.* TO <span class="token string">'root'</span>@<span class="token string">'192.168.159.130'</span> IDENTIFIED BY <span class="token string">'root'</span><span class="token punctuation">;</span>
+GRANT  REPLICATION SLAVE ON *.* TO <span class="token string">'root'</span>@<span class="token string">'192.168.159.130'</span> IDENTIFIED BY <span class="token string">'root'</span><span class="token punctuation">;</span>
+FLUSH  PRIVILEGES<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这里使用的仍是root用户作为同步的时候使用到的用户，可以自己设定。重启mysql，登录mysql，显示主库信息<code>show master status;</code>这里的File、Position是在配置Salve的时候要使用到的，Binlog_Do_DB表示要同步的数据库，Binlog_Ignore_DB表示Ignore的数据库，这些都是在配置的时候进行指定的。另外：如果执行这个步骤始终为Empty set(0.00 sec)，那说明前面的my.cnf没配置对。</p>
+<h3 id="Slave的配置"><a href="#Slave的配置" class="headerlink" title="Slave的配置"></a>Slave的配置</h3><p>从库的配置，首先也是修改配置文件：&#x2F;etc&#x2F;my.cnf如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">3</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information_schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+<span class="token key attr-name">replicate-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">ufind_db</span>
+<span class="token key attr-name">replicate-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+log-slave-updates
+<span class="token key attr-name">slave-skip-errors</span><span class="token punctuation">=</span><span class="token value attr-value">all</span>
+<span class="token key attr-name">slave-net-timeout</span><span class="token punctuation">=</span><span class="token value attr-value">60</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>完整配置如下</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+
+<span class="token key attr-name">datadir</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/var/lib/mysql/mysql.sock</span>
+
+<span class="token comment"># Disabling symbolic-links is recommended to prevent assorted security risks symbolic-links=0</span>
+
+<span class="token comment"># Settings user and group are ignored when systemd is used. # If you need to run mysgld under a different user or group, customize your systemd unit file for mariadb according to the instructions in http://fedoraproject.org/wiki/Systemd</span>
+
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">3</span>
+
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">information schema</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">cluster</span>
+<span class="token key attr-name">binlog-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysgl</span>
+<span class="token key attr-name">replicate-do-db</span><span class="token punctuation">=</span><span class="token value attr-value">uf ind db</span>
+<span class="token key attr-name">replicate-ignore-db</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
+log-slave-updates
+
+<span class="token key attr-name">slave-skip-errors</span><span class="token punctuation">=</span><span class="token value attr-value">all</span>
+<span class="token key attr-name">slave-net-timeout</span><span class="token punctuation">=</span><span class="token value attr-value">60</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld_safe</span><span class="token punctuation">]</span></span>
+
+<span class="token key attr-name">log-error</span><span class="token punctuation">=</span><span class="token value attr-value">/var/log/mariadb/mariadb.log</span>
+<span class="token key attr-name">pid-file</span><span class="token punctuation">=</span><span class="token value attr-value">/var/run/mariadb/mariadb.pid</span>
+
+<span class="token comment"># include all files from the config directory</span>
+!includedir /etc/my.cnf.d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>修改完&#x2F;etc&#x2F;my.cnf文件之后，重启一下MySQL<code>service mysqld restart</code>,进入Slave mysql控制台，执行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">stop slave<span class="token punctuation">;</span>  <span class="token comment">#关闭Slave</span>
+change master to <span class="token assign-left variable">master_host</span><span class="token operator">=</span><span class="token string">'192.168.159.128'</span>,master_user<span class="token operator">=</span><span class="token string">'root'</span>,master_password<span class="token operator">=</span><span class="token string">'root'</span>,master_log_file<span class="token operator">=</span><span class="token string">'mysql-bin.000001'</span>, <span class="token assign-left variable">master_log_pos</span><span class="token operator">=</span><span class="token number">610</span><span class="token punctuation">;</span>
+
+start slave<span class="token punctuation">;</span> <span class="token comment">#开启Slave</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在这里指定Master的信息，master_log_file是在配置Master的时候的File选项，master_log_pos是在配置Master的Position选项，这里要进行对应。然后可以通过<code>show slave status;</code>查看配置的信息：完成！</p>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://blog.csdn.net/xlgen157387/article/details/51331244/">MySQL5.6数据库主从（Master&#x2F;Slave）同步安装与配置详解</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CNu4uVZrpAkDt5UCIlCBSA">说说MySQL主从复制原理？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YKhnF1g9BB3JhJq7fjHO-Q">如何处理MySQL主从延迟？</a></th>
+</tr>
+</thead>
+</table>
+<hr>
+<p>一、实验目标<br>搭建两台MySQL服务器，一台作为主服务器，一台作为从服务器，主服务器进行写操作，从服务器进行读操作。</p>
+<p>二、测试环境<br>主数据库： CentOS7， MySQL15.1 ， 192.168.1.233<br>从数据库： CentOS7， MySQL15.1 ， 192.168.1.234</p>
+<p>三、主从配置步骤</p>
+<ol>
+<li><p>确保主数据库与从数据库里的数据一样<br>例如：主数据库里的a的数据库里有b，c，d表，那从数据库里的就应该有一个模子刻出来的a的数据库和b，c，d表<br>我这里在两台MySQL上都创建了个名为“test”的数据库来测试</p>
+</li>
+<li><p>在主数据库里创建一个同步账号</p>
+</li>
+</ol>
+<p>1）每个从数据库会使用一个MySQL账号来连接主数据库，所以我们要在主数据库里创建一个账号，并且该账号要授予 REPLICATION SLAVE权限，你可以为每个从数据库分别创建账号，当然也可以用同一个！）</p>
+<p>2）你可以用原来的账号不一定要新创账号，但你应该注意，这个账号和密码会被明文存放在master.info文件中，因此建议单独创一个只拥有相关权限的账号，以减少对其它账号的危害！）</p>
+<p>3）创建新账号使用“CREATE USER”，给账号授权使用“GRANT”命令，如果你仅仅为了主从复制创建账号，只需要授予REPLICATION SLAVE权限。</p>
+<p>4）下面来创建一个账号，账号名：repl，密码：repl123，只允许192.168.1.的IP段登录，如下：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'repl'</span><span class="token variable">@'192.168.1.%'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'repl123'</span><span class="token punctuation">;</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">REPLICATION</span> SLAVE <span class="token keyword">ON</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'repl'</span><span class="token variable">@'192.168.1.%'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>5）如果开发防火墙，可能要配置下端口，如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">3306</span>/tcp <span class="token parameter variable">--permanent</span>
+firewall-cmd <span class="token parameter variable">--reload</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>配置主数据库</li>
+</ol>
+<p>1）要主数据库，你必须要启用二进制日志（binary logging），并且创建一个唯一的Server ID，这步骤可能要重启MySQL。<br>2）主服务器发送变更记录到从服务器依赖的是二进制日志，如果没启用二进制日志，复制操作不能实现（主库复制到从库）。<br>3）复制组中的每台服务器都要配置唯一的Server ID，取值范围是1到(232)−1，你自己决定取值。<br>4）配置二进制日志和Server ID，你需要关闭MySQL和编辑my.cnf或者my.ini文件，在[mysqld]节点下添加配置。<br>5）下面是启用二进制日志，日志文件名以“mysql-bin”作为前缀，Server ID配置为1，如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">1</span>
+<span class="token comment">#网络上还有如下配置</span>
+<span class="token comment">#binlog-do-db=mstest //要同步的mstest数据库,要同步多个数据库，就多加几个replicate-db-db=数据库名</span>
+<span class="token comment">#binlog-ignore-db=mysql //要忽略的数据库</span>
+<span class="token comment">#提示1：如果你不配置server-id或者配置值为0，那么主服务器将拒绝所有从服务器的连接。</span>
+<span class="token comment">#提示2：在使用InnoDB的事务复制，为了尽可能持久和数据一致，你应该在my.cnf里配置innodb_flush_log_at_trx_commit=1和 sync_binlog=1；</span>
+<span class="token comment">#For the greatest possible durability and consistency in a replication setup using InnoDB with transactions, you should useinnodb_flush_log_at_trx_commit=1 and sync_binlog=1 in the master my.cnf file.</span>
+<span class="token comment">#提示3：确保主服务器里的skip-networking选项未启用，如果网络被禁用，你的从服务器将不能与主服务器通信并且复制失败。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意：实际操作发现&#x2F;etc&#x2F;my.cnf文件和教材说的不一样，可能我装的是MariaDB,目测文件被放到了&#x2F;etc&#x2F;my.cnf.d目录里，在&#x2F;etc&#x2F;my.cnf.d&#x2F;server.cnf增加相关配置</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">mysql-bin</span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>重启MySQL,查看主服务器状态，<code>show master status;</code><br>4. 配置从数据库</p>
+<p>1）从服务器，同理，要分配一个唯一的Server ID，需要关闭MySQL，修改好后再重启，如下：</p>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">server-id</span><span class="token punctuation">=</span><span class="token value attr-value">2</span>
+<span class="token comment">#可以指定要复制的库</span>
+<span class="token key attr-name">replicate-do-db</span> <span class="token punctuation">=</span> <span class="token value attr-value">test #在master端不指定binlog-do-db，在slave端用replication-do-db来过滤</span>
+<span class="token key attr-name">replicate-ignore-db</span> <span class="token punctuation">=</span> <span class="token value attr-value">mysql #忽略的库</span>
+<span class="token comment">#网上还有下面配置</span>
+<span class="token comment">#relay-log=mysqld-relay-bin</span>
+<span class="token comment">#提示1：如果有多个从服务器，每个服务器的server-id不能重复，跟IP一样是唯一标识，如果你没设置server-id或者设置为0，则从服务器不会连接到主服务器。</span>
+<span class="token comment">#提示2：一般你不需要在从服务器上启用二进制日志，如果你在从服务器上启用二进制日志，那你可用它来做数据备份和崩溃恢复，或者做更复杂的事情（比如这个从服务器用来当作其它从服务器的主服务器）。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2）配置连接主服务器的信息</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"> stop slave<span class="token punctuation">;</span>
+CHANGE MASTER <span class="token keyword">TO</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_HOST<span class="token operator">=</span><span class="token string">'192.168.1.233'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_USER<span class="token operator">=</span><span class="token string">'repl'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_PASSWORD<span class="token operator">=</span><span class="token string">'repl123'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_LOG_FILE<span class="token operator">=</span><span class="token string">'mysql-bin.000002'</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> MASTER_LOG_POS<span class="token operator">=</span><span class="token number">313</span><span class="token punctuation">;</span>
+<span class="token keyword">start</span> slave<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3）查看从服务器状态</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">show</span> slave <span class="token keyword">status</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ol start="5">
+<li>测试数据同步</li>
+</ol>
+<p>测试，连接主服务器192.168.1.233，添加了表stu_user，然后再连接上192.168.1.234，发现也自己同步创建了表stu_user，然后在主数据库添加一条记录，从数据库也自动添加了记录，至此，主从的配置已经完成了， 目前是在从库里面配置复制“test”这个库，<br>如果要添加其它库，可以在主服务器中添加“binlog-do-db”配置，或者在从服务器中添加“replicate-do-db”配置。</p>
+<p>四、读写分离实现<br>主从配置是读写分离的前提，现在前提已经配置好了，读写分离就看具体项目的实现，读写分离，就是“写”的操作都在主数据库，“读”的操作都在从数据库！<br>（完）</p>
+<h2 id="MySQL高可用"><a href="#MySQL高可用" class="headerlink" title="MySQL高可用"></a>MySQL高可用</h2><ol>
+<li>卸载系统原有的Mysql,查看系统是否已安装Mysql，命令如下：<code>rpm -qa | grep mysql</code>,查看系统是否已启动Mysql，命令如下：<code>ps -ef | grep mysql</code>.如果已启动，则将相应进程杀死，命令如下：<code>kill -9 进程号</code>,卸载已安装的Mysql，命令如下：<br><code>rpm -ev mysql-5.1.71-1.el6.x86_64 mysql-libs-5.1.71-1.el6.x86_64 mysql-devel-5.1.71-1.el6.x86_64 --nodeps</code>.查看是否残留Mysql安装文件<code>find / -name mysql</code></li>
+<li>安装Mysql<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建Mysql安装目录</span>
+<span class="token function">mkdir</span> /home/mysqlapp
+<span class="token comment"># 创建临时目录</span>
+<span class="token function">mkdir</span> /home/mysqlapp/tmp
+<span class="token comment"># 创建数据目录</span>
+<span class="token function">mkdir</span> /home/mysqlapp/data
+<span class="token comment"># 创建用户与用户组，命令如下：</span>
+<span class="token function">groupadd</span> mysql
+<span class="token function">useradd</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-g</span> mysql <span class="token parameter variable">-s</span> /bin/false mysql
+<span class="token comment"># 修改临时目录、数据目录所有者和权限</span>
+<span class="token function">chown</span> mysql:mysql /home/mysqlapp/data/
+<span class="token function">chmod</span> <span class="token number">750</span> /home/mysqlapp/data/
+<span class="token function">chown</span> mysql:mysql /home/mysqlapp/tmp/
+<span class="token function">chmod</span> <span class="token number">750</span> /home/mysqlapp/tmp/
+<span class="token comment"># 上传mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz至/home/mysqlapp目录下，解压</span>
+<span class="token function">tar</span> xvf mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz
+<span class="token comment"># 创建软连接，命令如下：</span>
+<span class="token function">ln</span> <span class="token parameter variable">-s</span> mysql-8.0.12-linux-glibc2.12-x86_64 mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+编辑&#x2F;etc&#x2F;profile文件，末尾增加如下两行：<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">MYSQL_HOME</span><span class="token operator">=</span>/home/mysqlapp/mysql
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$MYSQL_HOME</span>/bin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+保存后，执行<code>source /etc/profile</code>，使配置立即生效,在&#x2F;etc目录创建文件my.cnf,文件内容如下：<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">client</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">port</span><span class="token punctuation">=</span><span class="token value attr-value">3306</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/tmp/mysql.sock</span>
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">port</span><span class="token punctuation">=</span><span class="token value attr-value">3306</span>
+<span class="token key attr-name">socket</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/tmp/mysql.sock</span>
+<span class="token key attr-name">basedir</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/mysql</span>
+<span class="token key attr-name">datadir</span><span class="token punctuation">=</span><span class="token value attr-value">/home/mysqlapp/data</span>
+<span class="token key attr-name">key_buffer_size</span><span class="token punctuation">=</span><span class="token value attr-value">16M</span>
+<span class="token key attr-name">max_allowed_packet</span><span class="token punctuation">=</span><span class="token value attr-value">128M</span>
+<span class="token key attr-name">character_set_server</span><span class="token punctuation">=</span><span class="token value attr-value">UTF8MB4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+初始化数据目录，命令如下：<code>mysqld --initialize --user=mysql</code>,执行后打印如下内容，则表示初始化成功：<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>System<span class="token punctuation">]</span> <span class="token punctuation">[</span>MY-013169<span class="token punctuation">]</span> <span class="token punctuation">[</span>Server<span class="token punctuation">]</span> mysqld <span class="token punctuation">(</span>mysqld <span class="token number">8.0</span>.12<span class="token punctuation">)</span> initializing of server <span class="token keyword">in</span> progress as process <span class="token number">23352</span>
+<span class="token punctuation">[</span>Note<span class="token punctuation">]</span> <span class="token punctuation">[</span>MY-010454<span class="token punctuation">]</span> <span class="token punctuation">[</span>Server<span class="token punctuation">]</span> A temporary password is generated <span class="token keyword">for</span> root@localhost: qq<span class="token operator"><span class="token file-descriptor important">4</span>></span>Vrw*oF2+
+<span class="token punctuation">[</span>System<span class="token punctuation">]</span> <span class="token punctuation">[</span>MY-013170<span class="token punctuation">]</span> <span class="token punctuation">[</span>Server<span class="token punctuation">]</span> mysqld <span class="token punctuation">(</span>mysqld <span class="token number">8.0</span>.12<span class="token punctuation">)</span> initializing of server has completed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+启动Mysql，命令如下：<code>mysqld_safe --user=mysql &amp;</code>查看Mysql进程是否存在：<code>ps -ef | grep mysql</code><br>修改root用户密码（初始化数据目录时，生成了随机的root用户密码，且被标记为已过期，使用随机密码登录后，需要修改root密码）<code>mysql -u root -p</code>输入密码进入mysql控制台<code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;lnsoft&#39;;</code>停止数据库<code>mysqladmin -u root -p shutdown</code></li>
+</ol>
+<p>按照以上步骤在hadoop3、4、5上安装Mysql</p>
+<ol start="3">
+<li>配置Group Replication,安装group_replication插件：<pre class="line-numbers language-none"><code class="language-none">install PLUGIN group_replication SONAME &#39;group_replication.so&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+修改&#x2F;etc&#x2F;my.cnf配置文件，增加以下配置：<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token key attr-name">server_id</span><span class="token punctuation">=</span><span class="token value attr-value">1</span>
+<span class="token key attr-name">gtid_mode</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">enforce_gtid_consistency</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">binlog_checksum</span><span class="token punctuation">=</span><span class="token value attr-value">NONE</span>
+
+<span class="token key attr-name">log_bin</span><span class="token punctuation">=</span><span class="token value attr-value">binlog</span>
+<span class="token key attr-name">log_slave_updates</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">binlog_format</span><span class="token punctuation">=</span><span class="token value attr-value">ROW</span>
+<span class="token key attr-name">master_info_repository</span><span class="token punctuation">=</span><span class="token value attr-value">TABLE</span>
+<span class="token key attr-name">relay_log_info_repository</span><span class="token punctuation">=</span><span class="token value attr-value">TABLE</span>
+
+<span class="token key attr-name">transaction_write_set_extraction</span><span class="token punctuation">=</span><span class="token value attr-value">XXHASH64</span>
+<span class="token key attr-name">loose-group_replication_group_name</span><span class="token punctuation">=</span><span class="token value attr-value">"<span class="token inner-value">33f5efc0-186f-11e9-9c97-c81fbe536994</span>"</span>
+<span class="token key attr-name">loose-group_replication_start_on_boot</span><span class="token punctuation">=</span><span class="token value attr-value">OFF</span>
+<span class="token key attr-name">loose-group_replication_local_address</span><span class="token punctuation">=</span><span class="token value attr-value">"<span class="token inner-value">10.37.169.62:33081</span>"</span>
+<span class="token key attr-name">loose-group_replication_group_seeds</span><span class="token punctuation">=</span><span class="token value attr-value">"<span class="token inner-value">10.37.169.62:33081,10.37.169.63:33081,10.37.169.64:33081</span>"</span>
+<span class="token key attr-name">loose-group_replication_bootstrap_group</span><span class="token punctuation">=</span><span class="token value attr-value">OFF</span>
+<span class="token key attr-name">loose-group_replication_single_primary_mode</span><span class="token punctuation">=</span><span class="token value attr-value">ON</span>
+<span class="token key attr-name">loose-group_replication_enforce_update_everywhere_checks</span><span class="token punctuation">=</span><span class="token value attr-value">OFF</span>
+server_id #必须唯一
+gtid_mode #必须开启
+enforce_gtid_consistency #强制GTID的一致性
+binlog_checksum #binlog校验规则，MGR要求使用NONE
+binlog_format #binlog格式，MGR要求必须是ROW
+master_info_repository #MGR集群要求复制模式要改成slave记录到表中，否则报错
+transaction_write_set_extraction #记录事物的算法
+group_replication_group_name #Group名称，UUID值
+group_replication_start_on_boot #是否随服务器启动而自动启动组复制
+group_replication_single_primary_mode #是否单主模式
+group_replication_enforce_update_everywhere_checks #是否强制检查每个实例是否允许该操作，多主模式下必须开启<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>启动MGR集群,启动MGR要注意顺序，需要指定其中一台数据库做引导，其它数据库才可以顺利加入进来。如果是单主模式，那么主库一定要先启动并做引导。这里使用hadoop3作为主库。在hadoop3上登录msql服务端<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#启动引导，hadoop4、hadoop5略过此步</span>
+mysql<span class="token operator">></span> <span class="token builtin class-name">set</span> GLOBAL <span class="token assign-left variable">group_replication_bootstrap_group</span><span class="token operator">=</span>ON<span class="token punctuation">;</span>
+<span class="token comment">#创建一个用户用来做同步，并授权</span>
+mysql<span class="token operator">></span> create user <span class="token string">'rpl_user'</span>@<span class="token string">'%'</span> identified with <span class="token string">'mysql_native_password'</span> by <span class="token string">'lnsoft'</span><span class="token punctuation">;</span>
+mysql<span class="token operator">></span> GRANT REPLICATION SLAVE ON *.* TO <span class="token string">'rpl_user'</span>@<span class="token string">'%'</span> with grant option<span class="token punctuation">;</span>
+mysql<span class="token operator">></span> FLUSH PRIVILEGES<span class="token punctuation">;</span>
+
+mysql<span class="token operator">></span> show variables like <span class="token string">'SQL_LOG_BIN%'</span><span class="token punctuation">;</span>
++---------------+-------+
+<span class="token operator">|</span> Variable_name <span class="token operator">|</span> Value <span class="token operator">|</span>
++---------------+-------+
+<span class="token operator">|</span> sql_log_bin   <span class="token operator">|</span> ON    <span class="token operator">|</span>
++---------------+-------+
+<span class="token comment"># 如果是OFF，执行</span>
+mysql<span class="token operator">></span> <span class="token builtin class-name">set</span> <span class="token assign-left variable">SQL_LOG_BIN</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment">#清空所有旧的GTID信息，避免冲突</span>
+mysql<span class="token operator">></span> reset master<span class="token punctuation">;</span>
+<span class="token comment">#创建同步规则认证信息，配置和改变slave服务器用于连接master服务器的参数</span>
+mysql<span class="token operator">></span> CHANGE MASTER TO <span class="token assign-left variable">MASTER_USER</span><span class="token operator">=</span><span class="token string">'rpl_user'</span>, <span class="token assign-left variable">MASTER_PASSWORD</span><span class="token operator">=</span><span class="token string">'lnsoft'</span> FOR  CHANNEL <span class="token string">'group_replication_recovery'</span><span class="token punctuation">;</span>
+<span class="token comment">#启动MGR</span>
+mysql<span class="token operator">></span> start group_replication<span class="token punctuation">;</span>
+<span class="token comment">#查看是否启动成功，状态为ONLINE即表示启动成功</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> * from performance_schema.replication_group_members<span class="token punctuation">;</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> CHANNEL_NAME              <span class="token operator">|</span> MEMBER_ID                            <span class="token operator">|</span> MEMBER_HOST <span class="token operator">|</span> MEMBER_PORT <span class="token operator">|</span> MEMBER_STATE <span class="token operator">|</span> MEMBER_ROLE <span class="token operator">|</span> MEMBER_VERSION <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 314051b4-17d1-11e9-8d1f-c81fbe536994 <span class="token operator">|</span> hadoop3     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> PRIMARY     <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token comment"># 关闭引导</span>
+mysql<span class="token operator">></span> <span class="token builtin class-name">set</span> GLOBAL <span class="token assign-left variable">group_replication_bootstrap_group</span><span class="token operator">=</span>OFF<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+hadoop4、hadoop5上执行除了启动引导和关闭引导以外的语句，加入复制组。hadoop4、hadoop5加入成功后，查看复制组成员：</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mysql<span class="token operator">></span> <span class="token keyword">select</span> * from performance_schema.replication_group_members<span class="token punctuation">;</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> CHANNEL_NAME              <span class="token operator">|</span> MEMBER_ID                            <span class="token operator">|</span> MEMBER_HOST <span class="token operator">|</span> MEMBER_PORT <span class="token operator">|</span> MEMBER_STATE <span class="token operator">|</span> MEMBER_ROLE <span class="token operator">|</span> MEMBER_VERSION <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 314051b4-17d1-11e9-8d1f-c81fbe536994 <span class="token operator">|</span> hadoop3     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> PRIMARY     <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7b4faa2d-1862-11e9-bfae-c81fbea4d979 <span class="token operator">|</span> hadoop4     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> SECONDARY   <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7e32e66b-1862-11e9-9cf0-c81fbea4da25 <span class="token operator">|</span> hadoop5     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> SECONDARY   <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>至此，MGR集群搭建成功。</p>
+<ol start="5">
+<li>CM Server元数据迁移</li>
+</ol>
+<p>5.1 备份hadoop2上原有mysql数据库的数据，命令如下：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft amon <span class="token operator">></span>amon<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft cm <span class="token operator">></span>cm<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft hive <span class="token operator">></span>hive<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft hue <span class="token operator">></span>hue<span class="token punctuation">.</span><span class="token keyword">sql</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>plnsoft oozie <span class="token operator">></span>oozie<span class="token punctuation">.</span><span class="token keyword">sql</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>5.2 在主节点（hadoop3）上创建数据库：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">database</span> cm<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> amon<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> hive<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> hue<span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> oozie<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>导入sql数据文件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">set</span> names utf8<span class="token punctuation">;</span>
+use cm<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/cm.sql
+use amon<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/amon.sql
+use hive<span class="token punctuation">;</span>
+<span class="token builtin class-name">set</span> names utf8<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/hive.sql
+use hue<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/hue.sql
+use oozie<span class="token punctuation">;</span>
+<span class="token builtin class-name">source</span> /root/oozie.sql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>导入数据过程中可能会出现缺少主键的报错，这是因为MGR要求每个表必须有主键，只需要根据报错行数，找到对应的表，为其添加上主键。</p>
+<p>5.3 在hadoop3、hadoop4、hadoop5上新建用户scm,重启hadoop3、hadoop4、hadoop5上的mysql，先不启动MGR,在每个节点上新建scm用户并授权，此过程需要关闭binlog，否则会导致MGR从节点报错</p>
+<pre class="line-numbers language-none"><code class="language-none">set SQL_LOG_BIN&#x3D;0;
+create user &#39;scm&#39;@&#39;%&#39; identified with &#39;mysql_native_password&#39; by &#39;lnsoft&#39;;
+grant all privileges on cm.* to &#39;scm&#39;@&#39;%&#39;;
+FLUSH PRIVILEGES;
+set SQL_LOG_BIN&#x3D;1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>新建用户后重启启用binlog<br>5.4 将CM Server访问的数据库指向MGR集群的主节点（hadoop3）,修改&#x2F;opt&#x2F;cm-5.14.2&#x2F;etc&#x2F;cloudera-scm-server&#x2F;db.properties中的数据库地址、用户名、密码<br>部署新版Mysql JDBC驱动 mysql-connector-java-5.1.47.jar，将其上传至hadoop2的<br>&#x2F;opt&#x2F;cm-5.14.2&#x2F;share&#x2F;cmf&#x2F;lib目录下,重启CM Server</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/opt/cm-5.14.2/etc/init.d/cloudera-scm-server stop
+/opt/cm-5.14.2/etc/init.d/cloudera-scm-server start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>启动完毕后访问<a target="_blank" rel="noopener" href="http://hadoop2:7180/%EF%BC%8C%E8%83%BD%E6%AD%A3%E5%B8%B8%E7%99%BB%E9%99%86%EF%BC%8C%E6%9F%A5%E7%9C%8B%E5%90%84%E4%B8%AA%E9%A1%B5%E9%9D%A2%E5%8A%9F%E8%83%BD%E5%9D%87%E6%AD%A3%E5%B8%B8%EF%BC%8C%E5%8D%B3%E8%A1%A8%E6%98%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB%E6%88%90%E5%8A%9F%E3%80%82">http://hadoop2:7180/，能正常登陆，查看各个页面功能均正常，即表明数据库迁移成功。</a></p>
+<ol start="6">
+<li>Mysql高可用测试<br>停止hadoop3上的Mysql实例，查看在hadoop4登录Mysql客户端，查看group members;<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mysql<span class="token operator">></span> <span class="token keyword">select</span> * from performance_schema.replication_group_members<span class="token punctuation">;</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> CHANNEL_NAME              <span class="token operator">|</span> MEMBER_ID                            <span class="token operator">|</span> MEMBER_HOST <span class="token operator">|</span> MEMBER_PORT <span class="token operator">|</span> MEMBER_STATE <span class="token operator">|</span> MEMBER_ROLE <span class="token operator">|</span> MEMBER_VERSION <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7b4faa2d-1862-11e9-bfae-c81fbea4d979 <span class="token operator">|</span> hadoop4     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> PRIMARY     <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
+<span class="token operator">|</span> group_replication_applier <span class="token operator">|</span> 7e32e66b-1862-11e9-9cf0-c81fbea4da25 <span class="token operator">|</span> hadoop5     <span class="token operator">|</span>        <span class="token number">3306</span> <span class="token operator">|</span> ONLINE       <span class="token operator">|</span> SECONDARY   <span class="token operator">|</span> <span class="token number">8.0</span>.12         <span class="token operator">|</span>
++---------------------------+--------------------------------------+-------------+-------------+--------------+-------------+----------------+
+<span class="token number">2</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.23</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+发现hadoop4成为了新的主节点，修改hadoop2上&#x2F;opt&#x2F;cm-5.14.2&#x2F;etc&#x2F;cloudera-scm-server&#x2F;db.properties中的数据库地址、用户名、密码，重启CM Server，正常启动即说明Mysql高可用配置成功。</li>
+</ol>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&mid=2247491190&idx=1&sn=6e6ed61a51e2f214d19e304038bde8b4&source=41#wechat_redirect">一文教你在CentOS7下安装MySQL及搭建主从复制</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/R89aCCFvCvudLp6FUn2JjQ">手把手教大家搭建MySQL主从复制</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://blog.csdn.net/cst522445906/article/details/129165658">Linux系统安装MySQL8.0版本详细教程</a></th>
+</tr>
+</thead>
+</table>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">xmxe</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog-aok.pages.dev/posts/907da0ca1c57/">https://blog-aok.pages.dev/posts/907da0ca1c57/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">xmxe</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%AE%89%E8%A3%85/">
+                                    <span class="chip bg-color">安装</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        
+                            <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        
+                    </div>
+                    <div id="wechat">
+                        
+                            <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/2eaa11f9c3b9/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic2.zhimg.com/v2-98bbd70b053dd779240634a00c7f0950_1440w.jpg" class="responsive-img" alt="Docker">
+                        
+                        <span class="card-title">Docker</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基本概念Docker架构Docker架构包括以下几个核心组件：
+
+Docker客户端(Client):用户与Docker交互的命令行工具或API。
+
+Docker服务器(Server):负责管理镜像、容器、网络等资源的后台服务。
+
+Dock
+                        
+
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-28
+                            -->
+
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                        技术栈
+                                    </a>
+                                
+                            
+                                
+                                
+                                <a href="/tags/%E5%AE%89%E8%A3%85/">
+                                    <span class="chip bg-color">安装</span>
+                                </a>
+                                
+                                
+                            
+
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/be5a099f7894/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic1.zhimg.com/v2-716588f96320420369eb5a5734852aa5_1440w.jpg" class="responsive-img" alt="JVM知识点">
+                        
+                        <span class="card-title">JVM知识点</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            JVM内存区域、垃圾回收、调优、JVM工具、参数等相关命令
+                        
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                            -->
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/categories/Java/" class="post-category">
+                                        Java
+                                    </a>
+                                
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5, h6'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5, h6').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2024
+                </span>
+            
+            
+
+            <a href="/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/medias/xcx.png");
+    zoom:40%;
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 430px;
+    height: 430px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

@@ -810,6 +810,9 @@ OK
 <p><strong>消息队列</strong></p>
 <p>Redis List数据结构可以用来做消息队列，只是功能过于简单且存在很多缺陷，不建议这样做。</p>
 <p>相对来说，Redis5.0新增加的一个数据结构Stream更适合做消息队列一些，只是功能依然非常简陋。和专业的消息队列相比，还是有很多欠缺的地方比如消息丢失和堆积问题不好解决。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vE-rrahZSBatYnZNFhGdpA">List 底层是啥</a></p>
+</blockquote>
 <h3 id="Hash（哈希）"><a href="#Hash（哈希）" class="headerlink" title="Hash（哈希）"></a>Hash（哈希）</h3><h4 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h4><p>Redis中的Hash是一个String类型的field-value（键值对）的映射表，特别适合用于存储对象，后续操作的时候，你可以直接修改这个对象中的某些字段的值。Hash类似于JDK1.8前的HashMap，内部实现也差不多(数组+链表)。不过，Redis的Hash做了更多优化。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/database/redis/image-20220719124421703.png" alt="img"></p>
 <h4 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h4><table>
@@ -1665,9 +1668,15 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <li><strong>volatile-lfu（least frequently used）</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选最不经常使用的数据淘汰(当内存不足以容纳新写入数据时，在过期的key中，使用LFU（最少访问算法）进行删除key。)</li>
 <li><strong>allkeys-lfu（least frequently used）</strong>：当内存不足以容纳新写入数据时，在键空间中，移除最不经常使用的key(当内存不足以容纳新写入数据时，从所有key中使用LFU算法进行淘汰)</li>
 </ol>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-kKe_ss01CkLMRERyyjt1Q">Redis内存满了怎么办？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YqkVmIaDRV31-WrcW8K26g">内存耗尽后Redis会发生什么？</a></p>
-</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P2phWbm7l6q2cPs4ymTh5A">Redis内存碎片怎么解决？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-kKe_ss01CkLMRERyyjt1Q">Redis内存满了怎么办？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YqkVmIaDRV31-WrcW8K26g">内存耗尽后Redis会发生什么？</a></th>
+</tr>
+</thead>
+</table>
 <h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p><strong>AOF（append only file）</strong> 持久化，采用日志的形式来记录每个写操作，追加到AOF文件的末尾。Redis默认情况是不开启AOF的。重启时再重新执行AOF文件中的命令来恢复数据。它主要解决数据持久化的实时性问题。AOF是执行完命令后才记录日志的。为什么不先记录日志再执行命令呢？这是因为Redis在向AOF记录日志时，不会先对这些命令进行语法检查，如果先记录日志再执行命令，日志中可能记录了错误的命令，Redis使用日志回复数据时，可能会出错。正是因为执行完命令后才记录日志，所以不会阻塞当前的写操作。但是会存在两个风险：更执行完命令还没记录日志时，宕机了会导致数据丢失,AOF不会阻塞当前命令，但是可能会阻塞下一个操作。这两个风险最好的解决方案是折中</p>
 <p>**妙用AOF机制的三种写回策略(appendfsync)**：</p>
 <ul>

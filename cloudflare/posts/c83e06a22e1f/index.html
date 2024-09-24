@@ -1,0 +1,2024 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Java类加载, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Java类加载 | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ 'Java类加载' ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+        max-height: 480px;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java/" class="post-category">
+                                Java
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="类文件结构详解"><a href="#类文件结构详解" class="headerlink" title="类文件结构详解"></a>类文件结构详解</h2><p><strong>回顾一下字节码</strong></p>
+<p>在Java中，JVM可以理解的代码就叫做字节码（即扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。Java语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留了解释型语言可移植的特点。所以Java程序运行时比较高效，而且，由于字节码并不针对一种特定的机器，因此，Java程序无须重新编译便可在多种不同操作系统的计算机上运行。</p>
+<p>Clojure（Lisp语言的一种方言）、Groovy、Scala等语言都是运行在Java虚拟机之上。下图展示了不同的语言被不同的编译器编译成.class文件最终运行在Java虚拟机之上。.class文件的二进制格式可以使用<a target="_blank" rel="noopener" href="https://www.x-ways.net/winhex/">WinHex</a>查看。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/bg/desktop%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%A6%82%E8%A7%88.png" alt="java虚拟机"></p>
+<p>可以说.class文件是不同的语言在Java虚拟机之间的重要桥梁，同时也是支持Java跨平台很重要的一个原因。</p>
+<p><strong>Class文件结构总结</strong></p>
+<p>根据Java虚拟机规范，Class文件通过ClassFile定义，有点类似C语言的结构体。ClassFile的结构如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ClassFile</span> <span class="token punctuation">&#123;</span>
+    u4             magic<span class="token punctuation">;</span> <span class="token comment">//Class文件的标志</span>
+    u2             minor_version<span class="token punctuation">;</span><span class="token comment">//Class的小版本号</span>
+    u2             major_version<span class="token punctuation">;</span><span class="token comment">//Class的大版本号</span>
+    u2             constant_pool_count<span class="token punctuation">;</span><span class="token comment">//常量池的数量</span>
+    cp_info        constant_pool<span class="token punctuation">[</span>constant_pool_count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//常量池</span>
+    u2             access_flags<span class="token punctuation">;</span><span class="token comment">//Class的访问标记</span>
+    u2             this_class<span class="token punctuation">;</span><span class="token comment">//当前类</span>
+    u2             super_class<span class="token punctuation">;</span><span class="token comment">//父类</span>
+    u2             interfaces_count<span class="token punctuation">;</span><span class="token comment">//接口</span>
+    u2             interfaces<span class="token punctuation">[</span>interfaces_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类可以实现多个接口</span>
+    u2             fields_count<span class="token punctuation">;</span><span class="token comment">//Class文件的字段属性</span>
+    field_info     fields<span class="token punctuation">[</span>fields_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类可以有多个字段</span>
+    u2             methods_count<span class="token punctuation">;</span><span class="token comment">//Class文件的方法数量</span>
+    method_info    methods<span class="token punctuation">[</span>methods_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类可以有个多个方法</span>
+    u2             attributes_count<span class="token punctuation">;</span><span class="token comment">//此类的属性表中的属性数</span>
+    attribute_info attributes<span class="token punctuation">[</span>attributes_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//属性表集合</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过分析ClassFile的内容，我们便可以知道class文件的组成。</p>
+<p><img src="https://oss.javaguide.cn/java-guide-blog/16d5ec47609818fc.jpeg" alt="ClassFile内容分析"></p>
+<p>下面这张图是通过IDEA插件jclasslib查看的，你可以更直观看到Class文件结构。</p>
+<p><img src="https://oss.javaguide.cn/java-guide-blog/image-20210401170711475.png" alt="img"></p>
+<p>使用jclasslib不光可以直观地查看某个类对应的字节码文件，还可以查看类的基本信息、常量池、接口、属性、函数等信息。下面详细介绍一下Class文件结构涉及到的一些组件。</p>
+<p><strong>魔数（MagicNumber）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u4             magic<span class="token punctuation">;</span> <span class="token comment">//Class文件的标志</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>每个Class文件的头4个字节称为魔数（MagicNumber）,它的唯一作用是<strong>确定这个文件是否为一个能被虚拟机接收的Class文件</strong>。程序设计者很多时候都喜欢用一些特殊的数字表示固定的文件类型或者其它特殊的含义。</p>
+<p><strong>Class文件版本号（Minor&amp;MajorVersion）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             minor_version<span class="token punctuation">;</span><span class="token comment">//Class的小版本号</span>
+u2             major_version<span class="token punctuation">;</span><span class="token comment">//Class的大版本号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>紧接着魔数的四个字节存储的是Class文件的版本号：第5和第6位是次版本号，第7和第8位是主版本号。每当Java发布大版本（比如Java8，Java9）的时候，主版本号都会加1。你可以使用<code>javap -v</code>命令来快速查看Class文件的版本号信息。高版本的Java虚拟机可以执行低版本编译器生成的Class文件，但是低版本的Java虚拟机不能执行高版本编译器生成的Class文件。所以，我们在实际开发的时候要确保开发的的JDK版本和生产环境的JDK版本保持一致。</p>
+<p><strong>常量池（Constant Pool）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             constant_pool_count<span class="token punctuation">;</span><span class="token comment">//常量池的数量</span>
+cp_info        constant_pool<span class="token punctuation">[</span>constant_pool_count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//常量池</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>紧接着主次版本号之后的是常量池，常量池的数量是<code>constant_pool_count-1</code>（常量池计数器是从1开始计数的，将第0项常量空出来是有特殊考虑的，索引值为0代表“不引用任何一个常量池项”）。常量池主要存放两大常量：字面量和符号引用。字面量比较接近于Java语言层面的的常量概念，如文本字符串、声明为final的常量值等。而符号引用则属于编译原理方面的概念，包括下面三类常量：</p>
+<ul>
+<li>类和接口的全限定名</li>
+<li>字段的名称和描述符</li>
+<li>方法的名称和描述符</li>
+</ul>
+<p>常量池中每一项常量都是一个表，这14种表有一个共同的特点：开始的第一位是一个u1类型的标志位-tag来标识常量的类型，代表当前这个常量属于哪种常量类型。</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">标志（tag）</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">CONSTANT_utf8_info</td>
+<td align="center">1</td>
+<td align="center">UTF-8 编码的字符串</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_Integer_info</td>
+<td align="center">3</td>
+<td align="center">整形字面量</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_Float_info</td>
+<td align="center">4</td>
+<td align="center">浮点型字面量</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_Long_info</td>
+<td align="center">５</td>
+<td align="center">长整型字面量</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_Double_info</td>
+<td align="center">６</td>
+<td align="center">双精度浮点型字面量</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_Class_info</td>
+<td align="center">７</td>
+<td align="center">类或接口的符号引用</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_String_info</td>
+<td align="center">８</td>
+<td align="center">字符串类型字面量</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_Fieldref_info</td>
+<td align="center">９</td>
+<td align="center">字段的符号引用</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_Methodref_info</td>
+<td align="center">10</td>
+<td align="center">类中方法的符号引用</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_InterfaceMethodref_info</td>
+<td align="center">11</td>
+<td align="center">接口中方法的符号引用</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_NameAndType_info</td>
+<td align="center">12</td>
+<td align="center">字段或方法的符号引用</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_MothodType_info</td>
+<td align="center">16</td>
+<td align="center">标志方法类型</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_MethodHandle_info</td>
+<td align="center">15</td>
+<td align="center">表示方法句柄</td>
+</tr>
+<tr>
+<td align="center">CONSTANT_InvokeDynamic_info</td>
+<td align="center">18</td>
+<td align="center">表示一个动态方法调用点</td>
+</tr>
+</tbody></table>
+<p>.class文件可以通过javap -v class类名指令来看一下其常量池中的信息(javap -v class类名 -&gt; temp.txt：将结果输出到temp.txt文件)。</p>
+<p><strong>访问标志(Access Flags)</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             access_flags<span class="token punctuation">;</span><span class="token comment">//Class的访问标记</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在常量池结束之后，紧接着的两个字节代表访问标志，这个标志用于识别一些类或者接口层次的访问信息，包括：这个Class是类还是接口，是否为public或者abstract类型，如果是类的话是否声明为final等等。</p>
+<p>类访问和属性修饰符:</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E8%AE%BF%E9%97%AE%E6%A0%87%E5%BF%97.png" alt="类访问和属性修饰符"></p>
+<p>我们定义了一个Employee类</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">top<span class="token punctuation">.</span>snailclimb<span class="token punctuation">.</span>bean</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">&#123;</span>
+   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过<code>javap -v class类名</code>指令来看一下类的访问标志。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%A0%87%E5%BF%97.png" alt="查看类的访问标志"></p>
+<p><strong>当前类（This Class）、父类（Super Class）、接口（Interfaces）索引集合</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             this_class<span class="token punctuation">;</span><span class="token comment">//当前类</span>
+u2             super_class<span class="token punctuation">;</span><span class="token comment">//父类</span>
+u2             interfaces_count<span class="token punctuation">;</span><span class="token comment">//接口</span>
+u2             interfaces<span class="token punctuation">[</span>interfaces_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类可以实现多个接口</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Java类的继承关系由类索引、父类索引和接口索引集合三项确定。类索引、父类索引和接口索引集合按照顺序排在访问标志之后，类索引用于确定这个类的全限定名，父类索引用于确定这个类的父类的全限定名，由于Java语言的单继承，所以父类索引只有一个，除了<code>java.lang.Object</code>之外，所有的Java类都有父类，因此除了<code>java.lang.Object</code>外，所有Java类的父类索引都不为0。接口索引集合用来描述这个类实现了那些接口，这些被实现的接口将按<code>implements</code>(如果这个类本身是接口的话则是<code>extends</code>)后的接口顺序从左到右排列在接口索引集合中。</p>
+<p><strong>字段表集合（Fields）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             fields_count<span class="token punctuation">;</span><span class="token comment">//Class文件的字段的个数</span>
+field_info     fields<span class="token punctuation">[</span>fields_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类会可以有个字段</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>字段表（field info）用于描述接口或类中声明的变量。字段包括类级变量以及实例变量，但不包括在方法内部声明的局部变量。</p>
+<p><strong>field info(字段表)的结构:</strong></p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E5%AD%97%E6%AE%B5%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84.png" alt="字段表的结构"></p>
+<ul>
+<li><strong>access_flags</strong>:字段的作用域（public,private,protected修饰符），是实例变量还是类变量（static修饰符）,可否被序列化（transient修饰符）,可变性（final）,可见性（volatile修饰符，是否强制从主内存读写）。</li>
+<li><strong>name_index</strong>:对常量池的引用，表示的字段的名称；</li>
+<li><strong>descriptor_index</strong>:对常量池的引用，表示字段和方法的描述符；</li>
+<li><strong>attributes_count</strong>:一个字段还会拥有一些额外的属性，attributes_count存放属性的个数；</li>
+<li><strong>attributes[attributes_count]</strong>:存放具体属性具体内容。</li>
+</ul>
+<p>上述这些信息中，各个修饰符都是布尔值，要么有某个修饰符，要么没有，很适合使用标志位来表示。而字段叫什么名字、字段被定义为什么数据类型这些都是无法固定的，只能引用常量池中常量来描述。</p>
+<p><strong>字段的access_flag的取值:</strong></p>
+<p><img src="https://oss.javaguide.cn/JVM/image-20201031084342859.png" alt="字段的access_flag的取值"></p>
+<p><strong>方法表集合（Methods）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             methods_count<span class="token punctuation">;</span><span class="token comment">//Class文件的方法的数量</span>
+method_info    methods<span class="token punctuation">[</span>methods_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//一个类可以有个多个方法</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>methods_count表示方法的数量，而method_info表示方法表。</p>
+<p>Class文件存储格式中对方法的描述与对字段的描述几乎采用了完全一致的方式。方法表的结构如同字段表一样，依次包括了访问标志、名称索引、描述符索引、属性表集合几项。</p>
+<p><strong>method_info(方法表的)结构:</strong></p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E6%96%B9%E6%B3%95%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84.png" alt="方法表的结构"></p>
+<p><strong>方法表的access_flag取值：</strong></p>
+<p><img src="https://oss.javaguide.cn/JVM/image-20201031084248965.png" alt="方法表的access_flag取值"></p>
+<p>注意：因为volatile修饰符和transient修饰符不可以修饰方法，所以方法表的访问标志中没有这两个对应的标志，但是增加了synchronized、native、abstract等关键字修饰方法，所以也就多了这些关键字对应的标志。</p>
+<p><strong>属性表集合（Attributes）</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">u2             attributes_count<span class="token punctuation">;</span><span class="token comment">//此类的属性表中的属性数</span>
+attribute_info attributes<span class="token punctuation">[</span>attributes_count<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//属性表集合</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>在Class文件，字段表，方法表中都可以携带自己的属性表集合，以用于描述某些场景专有的信息。与Class文件中其它的数据项目要求的顺序、长度和内容不同，属性表集合的限制稍微宽松一些，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写入自己定义的属性信息，Java虚拟机运行时会忽略掉它不认识的属性</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/class-file-structure.html">原文链接</a></p>
+</blockquote>
+<h2 id="类加载过程详解"><a href="#类加载过程详解" class="headerlink" title="类加载过程详解"></a>类加载过程详解</h2><h3 id="类的生命周期"><a href="#类的生命周期" class="headerlink" title="类的生命周期"></a>类的生命周期</h3><p>类从被加载到虚拟机内存中开始到卸载出内存为止，它的整个生命周期可以简单概括为7个阶段：加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）。其中，前三个阶段可以统称为连接（Linking）。这7个阶段的顺序如下图所示：</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/lifecycle-of-a-class.png" alt="一个类的完整生命周期"></p>
+<h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><p>Class文件需要加载到虚拟机中之后才能运行和使用，那么虚拟机是如何加载这些Class文件呢？</p>
+<p>系统加载Class类型的文件主要三步：<strong>加载-&gt;连接-&gt;初始化</strong>。连接过程又可分为三步：<strong>验证-&gt;准备-&gt;解析</strong>。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/class-loading-procedure.png" alt="类加载过程"></p>
+<blockquote>
+<p>详见<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.3">Java Virtual Machine Specification - 5.3. Creation and Loading</a>。</p>
+</blockquote>
+<h4 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h4><p>类加载过程的第一步，主要完成下面3件事情：</p>
+<ol>
+<li>通过全类名获取定义此类的二进制字节流。</li>
+<li>将字节流所代表的静态存储结构转换为方法区的运行时数据结构。</li>
+<li>在内存中生成一个代表该类的Class对象，作为方法区这些数据的访问入口。</li>
+</ol>
+<p>虚拟机规范上面这3点并不具体，因此是非常灵活的。比如：”通过全类名获取定义此类的二进制字节流”并没有指明具体从哪里获取（ZIP、JAR、EAR、WAR、网络、动态代理技术运行时动态生成、其他文件生成比如JSP…）、怎样获取。加载这一步主要是通过我们后面要讲到的<strong>类加载器</strong>完成的。类加载器有很多种，当我们想要加载一个类的时候，具体是哪个类加载器加载由<strong>双亲委派模型</strong>决定（不过，我们也能打破由双亲委派模型）。</p>
+<blockquote>
+<p>类加载器、双亲委派模型也是非常重要的知识点，这部分内容在<a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/classloader.html">类加载器详解</a>这篇文章中有详细介绍到</p>
+</blockquote>
+<p>每个Java类都有一个引用指向加载它的ClassLoader。不过，数组类不是通过ClassLoader创建的，而是JVM在需要的时候自动创建的，数组类通过getClassLoader()方法获取ClassLoader的时候和该数组的元素类型的ClassLoader是一致的。一个非数组类的加载阶段（加载阶段获取类的二进制字节流的动作）是可控性最强的阶段，这一步我们可以去完成还可以自定义类加载器去控制字节流的获取方式（重写一个类加载器的loadClass()方法）。加载阶段与连接阶段的部分动作(如一部分字节码文件格式验证动作)是交叉进行的，加载阶段尚未结束，连接阶段可能就已经开始了。</p>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p><strong>验证是连接阶段的第一步，这一阶段的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求，保证这些信息被当作代码运行后不会危害虚拟机自身的安全。</strong></p>
+<p>验证阶段这一步在整个类加载过程中耗费的资源还是相对较多的，但很有必要，可以有效防止恶意代码的执行。任何时候，程序安全都是第一位。不过，验证阶段也不是必须要执行的阶段。如果程序运行的全部代码(包括自己编写的、第三方包中的、从外部加载的、动态生成的等所有代码)都已经被反复使用和验证过，在生产环境的实施阶段就可以考虑使用<code>-Xverify:none</code>参数来关闭大部分的类验证措施，以缩短虚拟机类加载的时间。验证阶段主要由四个检验阶段组成：</p>
+<ol>
+<li>文件格式验证（Class文件格式检查）</li>
+<li>元数据验证（字节码语义检查）</li>
+<li>字节码验证（程序语义检查）</li>
+<li>符号引用验证（类的正确性检查）</li>
+</ol>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/class-loading-process-verification.png" alt="验证阶段示意图"></p>
+<p>文件格式验证这一阶段是基于该类的二进制字节流进行的，主要目的是保证输入的字节流能正确地解析并存储于方法区之内，格式上符合描述一个Java类型信息的要求。除了这一阶段之外，其余三个验证阶段都是基于方法区的存储结构上进行的，不会再直接读取、操作字节流了。</p>
+<blockquote>
+<p>方法区属于是JVM运行时数据区域的一块逻辑区域，是各个线程共享的内存区域。当虚拟机要使用一个类时，它需要读取并解析Class文件获取相关信息，再将信息存入到方法区。方法区会存储已被虚拟机加载的<strong>类信息、字段信息、方法信息、常量、静态变量、即时编译器编译后的代码缓存等数据</strong>。</p>
+<p>关于方法区的详细介绍，推荐阅读<a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/memory-area.html">Java内存区域详解</a>这篇文章。</p>
+</blockquote>
+<p>符号引用验证发生在类加载过程中的解析阶段，具体点说是JVM将符号引用转化为直接引用的时候（解析阶段会介绍符号引用和直接引用）。符号引用验证的主要目的是确保解析阶段能正常执行，如果无法通过符号引用验证，JVM会抛出异常，比如：</p>
+<ul>
+<li>java.lang.IllegalAccessError：当类试图访问或修改它没有权限访问的字段，或调用它没有权限访问的方法时，抛出该异常。</li>
+<li>java.lang.NoSuchFieldError：当类试图访问或修改一个指定的对象字段，而该对象不再包含该字段时，抛出该异常。</li>
+<li>java.lang.NoSuchMethodError：当类试图访问一个指定的方法，而该方法不存在时，抛出该异常。</li>
+<li>……</li>
+</ul>
+<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p><strong>准备阶段是正式为类变量分配内存并设置类变量初始值的阶段</strong>，这些内存都将在方法区中分配。对于该阶段有以下几点需要注意：</p>
+<ol>
+<li><p>这时候进行内存分配的仅包括类变量（ClassVariables，即静态变量，被static关键字修饰的变量，只与类相关，因此被称为类变量），而不包括实例变量。实例变量会在对象实例化时随着对象一块分配在Java堆中。</p>
+</li>
+<li><p>从概念上讲，类变量所使用的内存都应当在<strong>方法区</strong>中进行分配。不过有一点需要注意的是：JDK7之前，HotSpot使用永久代来实现方法区的时候，实现是完全符合这种逻辑概念的。而在JDK7及之后，HotSpot已经把原本放在永久代的字符串常量池、静态变量等移动到堆中，这个时候类变量则会随着Class对象一起存放在Java堆中。</p>
+<blockquote>
+<p>相关阅读：<a target="_blank" rel="noopener" href="https://github.com/fenixsoft/jvm_book/issues/75">《深入理解Java虚拟机（第3版）》勘误#75</a></p>
+</blockquote>
+</li>
+<li><p>这里所设置的初始值”通常情况”下是数据类型默认的零值（如0、0L、null、false等），比如我们定义了publicstaticintvalue&#x3D;111，那么value变量在准备阶段的初始值就是0而不是111（初始化阶段才会赋值）。特殊情况：比如给value变量加上了final关键字<code>public static final int value=111</code>，那么准备阶段value的值就被赋值为111。</p>
+</li>
+</ol>
+<p><strong>基本数据类型的零值</strong>：(图片来自《深入理解Java虚拟机》第3版7.33)</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9B%B6%E5%80%BC.png" alt="基本数据类型的零值"></p>
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p><strong>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程</strong>。解析动作主要针对类或接口、字段、类方法、接口方法、方法类型、方法句柄和调用限定符7类符号引用进行。</p>
+<p>《深入理解Java虚拟机》7.34节第三版对符号引用和直接引用的解释如下：</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/symbol-reference-and-direct-reference.png" alt="符号引用和直接引用"></p>
+<p>举个例子：在程序执行方法时，系统需要明确知道这个方法所在的位置。Java虚拟机为每个类都准备了一张方法表来存放类中所有的方法。当需要调用一个类的方法的时候，只要知道这个方法在方法表中的偏移量就可以直接调用该方法了。通过解析操作符号引用就可以直接转变为目标方法在类中方法表的位置，从而使得方法可以被调用。</p>
+<p>综上，解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程，也就是得到类或者字段、方法在内存中的指针或者偏移量。</p>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>初始化阶段是执行初始化方法&lt;clinit&gt;()方法的过程，是类加载的最后一步，这一步JVM才开始真正执行类中定义的Java程序代码(字节码)。</p>
+<blockquote>
+<p>说明：&lt;clinit&gt;()方法是编译之后自动生成的。</p>
+</blockquote>
+<p>对于&lt;clinit&gt;()方法的调用，虚拟机会自己确保其在多线程环境中的安全性。因为&lt;clinit&gt;()方法是带锁线程安全，所以在多线程环境下进行类初始化的话可能会引起多个线程阻塞，并且这种阻塞很难被发现。</p>
+<p>对于初始化阶段，虚拟机严格规范了有且只有5种情况下，必须对类进行初始化(只有主动去使用类才会初始化类)：</p>
+<ol>
+<li>当遇到<code>new</code>、<code>getstatic</code>、<code>putstatic</code>或<code>invokestatic</code>这4条直接码指令时，比如new一个类，读取一个静态字段(未被final修饰)、或调用一个类的静态方法时。</li>
+</ol>
+<ul>
+<li>当jvm执行<code>new</code>指令时会初始化类。即当程序创建一个类的实例对象。</li>
+<li>当jvm执行<code>getstatic</code>指令时会初始化类。即程序访问类的静态变量(不是静态常量，常量会被加载到运行时常量池)。</li>
+<li>当jvm执行<code>putstatic</code>指令时会初始化类。即程序给类的静态变量赋值。</li>
+<li>当jvm执行<code>invokestatic</code>指令时会初始化类。即程序调用类的静态方法。</li>
+</ul>
+<ol start="2">
+<li>使用java.lang.reflect包的方法对类进行反射调用时如Class.forname(“…”),newInstance()等等。如果类没初始化，需要触发其初始化。</li>
+<li>初始化一个类，如果其父类还未初始化，则先触发该父类的初始化。</li>
+<li>当虚拟机启动时，用户需要定义一个要执行的主类(包含main方法的那个类)，虚拟机会先初始化这个类。</li>
+<li>MethodHandle和VarHandle可以看作是轻量级的反射调用机制，而要想使用这2个调用，就必须先使用findStaticVarHandle来初始化要调用的类。</li>
+<li>补充，来自<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/745">issue745</a> 当一个接口中定义了JDK8新加入的默认方法（被default关键字修饰的接口方法）时，如果有这个接口的实现类发生了初始化，那该接口要在其之前被初始化。</li>
+</ol>
+<p><strong>类的引用（主动引用，一定会初始化）</strong></p>
+<ol>
+<li>创建类的实例（new操作、反射、cloning，反序列化）</li>
+<li>访问某个类或接口的静态变量，或者对该静态变量赋值</li>
+<li>调用类的静态方法</li>
+<li>反射（Class.forName(“com.lyj.load”)）</li>
+<li>初始化一个类的子类（会首先初始化子类的父类）</li>
+<li>JVM启动时标明的启动类，即文件名和类名相同的那个类</li>
+</ol>
+<p><strong>类的引用（被动引用）</strong></p>
+<ol>
+<li>当访问一个静态域时，只有真正声明这个域的类才会被初始化。例如：通过子类引用父类的静态变量，不会导致子类初始化。</li>
+<li>通过数组定义类引用，不会触发此类的初始化。</li>
+<li>引用常量不会触发此类的初始化（常量在编译阶段就存入调用类的常量池中了）</li>
+</ol>
+<p><strong>类加载的顺序</strong></p>
+<ol>
+<li>类初始化顺序：静态字段-&gt;静态代码块,按顺序自上而下全部执行-&gt;成员变量-&gt;非静态代码块-&gt;构造器</li>
+<li>带有继承关系的，实例化子类时，加载顺序如下：<br>父类的静态字段-&gt;父类静态代码块,按顺序自上而下全部执行-&gt;子类静态字段-&gt;子类静态代码块,按顺序自上而下全部执行-&gt;父类成员变量（非静态字段）-&gt;父类非静态代码块-&gt;父类构造器-&gt;子类成员变量-&gt;子类非静态代码块-&gt;子类构造器</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Java在new一个对象的时候，会先查看对象所属的类有没有被加载到内存，如果没有的话，就会先通过类的全限定名（包名+类名）来加载。加载并初始化类完成后，再进行对象的创建工作。<br>类加载的生命周期：加载(loading)-连接(Linking)-初始化(initialization)</p>
+<ol>
+<li>loading:使用类加载器对类进行加载（双亲委派机制）。使用双亲委托机制的好处是：能够有效确保一个类的全局唯一性，当程序中出现多个限定名相同的类时，类加载器在执行加载时，始终只会加载其中的某一个类。通过委派的方式，可以避免类的重复加载，当父加载器已经加载过某一个类时，子加载器就不会再重新加载这个类</li>
+<li>linking:连接分为验证-准备-解析三个阶段，验证的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求。准备阶段是正式为类中定义的变量（即静态变量，被static修饰的变量）分配内存并设置类变量初始值的阶段，当类变量被final修饰时，在准备阶段就直接会被复制，不是使用初始值。解析阶段是Java虚拟机将常量池内的符号引用替换为直接引用的过程</li>
+<li>initialization:初始化，真正开始执行Java代码的阶段(比如给类属性赋真实的值)执行&lt;clinit&gt;方法的过程</li>
+</ol>
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/23nIQlguz0-jaEEyTwR16g">在Java中new一个对象的流程是怎样的？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X-LuMvirhSQkZahFHsRl8g">Java new一个对象时发生了什么？</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i52wFjkksaAosUorPqT-1A">JVM的类初始化机制</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4yPyhMc1MW2np0sjmuilog">Java类加载器解析及常见类加载问题</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VKu6U58F4vo6OCzKMF2zxA">深入理解JVM-类加载机制</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dZA3UJqfqK76zwJdhMa14g">自己手写一个热加载</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2ZDNDvJeB-WG5t3uWXvn4Q">六种方法创建Java对象</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1AXWlNXz6OG3OCyZiFU2yA">JVM是如何加载Java类的？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JIt5WCBtdHHORjeOmX5KaA">IDEA的debug调试为什么这么强？我挖出了背后的技术。</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&amp;mid=2247494349&amp;idx=1&amp;sn=3a297393ea4a38af4fd277f4fc83c284&amp;source=41#wechat_redirect">Class类文件的结构</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mNDWN2P1mOBL8C5qLtXG8A">一把小刀，直插class文件的小心脏</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hV65V_fDoaBMA7xqcwy2TA">面试官：说说类加载的几个阶段</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Xxp6rcnrEuJvQNfjiFe46Q">3分钟带你了解对象的创建过程</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="类卸载"><a href="#类卸载" class="headerlink" title="类卸载"></a>类卸载</h2><blockquote>
+<p>卸载这部分内容来自<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/662">issue#662</a>由 <strong><a target="_blank" rel="noopener" href="https://github.com/guang19">guang19</a></strong> 补充完善。</p>
+</blockquote>
+<p><strong>卸载类即该类的Class对象被GC。</strong></p>
+<p>卸载类需要满足3个要求:</p>
+<ol>
+<li>该类的所有的实例对象都已被GC，也就是说堆不存在该类的实例对象。</li>
+<li>该类没有在其他任何地方被引用</li>
+<li>该类的类加载器的实例已被GC</li>
+</ol>
+<p>所以，在JVM生命周期内，由jvm自带的类加载器加载的类是不会被卸载的。但是由我们自定义的类加载器加载的类是可能被卸载的。</p>
+<p>只要想通一点就好了，JDK自带的BootstrapClassLoader,ExtClassLoader,AppClassLoader负责加载JDK提供的类，所以它们(类加载器的实例)肯定不会被回收。而我们自定义的类加载器的实例是可以被回收的，所以使用我们自定义加载器加载的类是可以被卸载掉的</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/class-loading-process.html">原文链接</a></p>
+</blockquote>
+<h2 id="类加载器详解"><a href="#类加载器详解" class="headerlink" title="类加载器详解"></a>类加载器详解</h2><p><strong>回顾一下类加载过程</strong></p>
+<p>开始介绍类加载器和双亲委派模型之前，简单回顾一下类加载过程。</p>
+<ul>
+<li>类加载过程：<strong>加载-&gt;连接-&gt;初始化</strong>。</li>
+<li>连接过程又可分为三步：<strong>验证-&gt;准备-&gt;解析</strong>。</li>
+</ul>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/class-loading-procedure.png" alt="类加载过程"></p>
+<p>加载是类加载过程的第一步，主要完成下面3件事情：</p>
+<ol>
+<li>通过全类名获取定义此类的二进制字节流</li>
+<li>将字节流所代表的静态存储结构转换为方法区的运行时数据结构</li>
+<li>在内存中生成一个代表该类的Class对象，作为方法区这些数据的访问入口</li>
+</ol>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><h4 id="类加载器介绍"><a href="#类加载器介绍" class="headerlink" title="类加载器介绍"></a>类加载器介绍</h4><p>类加载器从JDK1.0就出现了，最初只是为了满足Java Applet（已经被淘汰）的需要。后来，慢慢成为Java程序中的一个重要组成部分，赋予了Java类可以被动态加载到JVM中并执行的能力。</p>
+<p>根据官方API文档的介绍：</p>
+<blockquote>
+<p>A class loader is an object that is responsible for loading classes. The class ClassLoader is an abstract class. Given the binary name of a class, a class loader should attempt to locate or generate data that constitutes a definition for the class. A typical strategy is to transform the name into a file name and then read a “class file” of that name from a file system.</p>
+<p>Every Class object contains a reference to the ClassLoader that defined it.</p>
+<p>Class objects for array classes are not created by class loaders, but are created automatically as required by the Java runtime. The class loader for an array class, as returned by Class.getClassLoader() is the same as the class loader for its element type; if the element type is a primitive type, then the array class has no class loader.</p>
+</blockquote>
+<p>翻译过来大概的意思是：</p>
+<blockquote>
+<p>类加载器是一个负责加载类的对象。ClassLoader是一个抽象类。给定类的二进制名称，类加载器应尝试定位或生成构成类定义的数据。典型的策略是将名称转换为文件名，然后从文件系统中读取该名称的“类文件”。</p>
+<p>每个Java类都有一个引用指向加载它的ClassLoader。不过，数组类不是通过ClassLoader创建的，而是JVM在需要的时候自动创建的，数组类通过getClassLoader()方法获取ClassLoader的时候和该数组的元素类型的ClassLoader是一致的。</p>
+</blockquote>
+<p>从上面的介绍可以看出:</p>
+<ul>
+<li>类加载器是一个负责加载类的对象，用于实现类加载过程中的加载这一步。</li>
+<li>每个Java类都有一个引用指向加载它的ClassLoader。</li>
+<li>数组类不是通过ClassLoader创建的（数组类没有对应的二进制字节流），是由JVM直接生成的。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ClassLoader</span> classLoader<span class="token punctuation">;</span>
+  <span class="token annotation punctuation">@CallerSensitive</span>
+  <span class="token keyword">public</span> <span class="token class-name">ClassLoader</span> <span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+     <span class="token comment">//...</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>简单来说，<strong>类加载器的主要作用就是加载Java类的字节码（.class文件）到JVM中（在内存中生成一个代表该类的Class对象）</strong>。字节码可以是Java源程序（.java文件）经过javac编译得来，也可以是通过工具动态生成或者通过网络下载得来。其实除了加载类之外，类加载器还可以加载Java应用所需的资源如文本、图像、配置文件、视频等等文件资源。本文只讨论其核心功能：加载类。</p>
+<h4 id="类加载器加载规则"><a href="#类加载器加载规则" class="headerlink" title="类加载器加载规则"></a>类加载器加载规则</h4><p>JVM启动的时候，并不会一次性加载所有的类，而是根据需要去动态加载。也就是说，大部分类在具体用到的时候才会去加载，这样对内存更加友好。对于已经加载的类会被放在ClassLoader中。在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。也就是说，对于一个类加载器来说，相同二进制名称的类只会被加载一次。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ClassLoader</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ClassLoader</span> parent<span class="token punctuation">;</span>
+  <span class="token comment">// 由这个类加载器加载的类。</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Vector</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Class</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span><span class="token punctuation">></span></span> classes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vector</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 由VM调用，用此类加载器记录每个已加载类。</span>
+  <span class="token keyword">void</span> <span class="token function">addClass</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> c<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        classes<span class="token punctuation">.</span><span class="token function">addElement</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="类加载器总结"><a href="#类加载器总结" class="headerlink" title="类加载器总结"></a>类加载器总结</h4><p>JVM中内置了三个重要的ClassLoader：</p>
+<ol>
+<li><strong>BootstrapClassLoader（启动类加载器）</strong>：最顶层的加载类，由C++实现，通常表示为null，并且没有父级，主要用来加载JDK内部的核心类库（%JAVA_HOME%&#x2F;lib目录下的rt.jar、resources.jar、charsets.jar等jar包和类）以及被-Xbootclasspath参数指定的路径下的所有类。</li>
+<li><strong>ExtensionClassLoader（扩展类加载器）</strong>：主要负责加载%JRE_HOME%&#x2F;lib&#x2F;ext目录下的jar包和类以及被java.ext.dirs系统变量所指定的路径下的所有类。</li>
+<li><strong>AppClassLoader（应用程序类加载器）</strong>：面向我们用户的加载器，负责加载当前应用classpath下的所有jar包和类。</li>
+</ol>
+<blockquote>
+<p>🌈拓展一下：</p>
+<ul>
+<li>rt.jar：rt代表“RunTime”，rt.jar是Java基础类库，包含Javadoc里面看到的所有的类的类文件。也就是说，我们常用内置库java.xxx.*都在里面，比如java.util.*、java.io.*、java.nio.*、java.lang.*、java.sql.*、java.math.*。</li>
+<li>Java9引入了模块系统，并且略微更改了上述的类加载器。扩展类加载器被改名为平台类加载器（platformclassloader）。JavaSE中除了少数几个关键模块，比如说java.base是由启动类加载器加载之外，其他的模块均由平台类加载器所加载。</li>
+</ul>
+</blockquote>
+<p>除了这三种类加载器之外，用户还可以加入自定义的类加载器来进行拓展，以满足自己的特殊需求。就比如说，我们可以对Java类的字节码（.class文件）进行加密，加载时再利用自定义的类加载器对其解密。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/class-loader-parents-delegation-model.png" alt="类加载器层次关系图"></p>
+<p>除了BootstrapClassLoader是JVM自身的一部分之外，其他所有的类加载器都是在JVM外部实现的，并且全都继承自ClassLoader抽象类。这样做的好处是用户可以自定义类加载器，以便让应用程序自己决定如何去获取所需的类。每个ClassLoader可以通过getParent()获取其父ClassLoader，如果获取到ClassLoader为null的话，那么该类是通过BootstrapClassLoader加载的。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ClassLoader</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token comment">// 父加载器</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ClassLoader</span> parent<span class="token punctuation">;</span>
+  <span class="token annotation punctuation">@CallerSensitive</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token class-name">ClassLoader</span> <span class="token function">getParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+     <span class="token comment">//...</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>为什么获取到ClassLoader为null就是BootstrapClassLoader加载的呢</strong>？这是因为BootstrapClassLoader由C++实现，由于这个C++实现的类加载器在Java中是没有与之对应的类的，所以拿到的结果是null。</p>
+<p>下面我们来看一个获取ClassLoader的小案例：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PrintClassLoaderTree</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token class-name">ClassLoader</span> classLoader <span class="token operator">=</span> <span class="token class-name">PrintClassLoaderTree</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">StringBuilder</span> split <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token string">"|--"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">boolean</span> needContinue <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>needContinue<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>split<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> classLoader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>classLoader <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                needContinue <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+                classLoader <span class="token operator">=</span> classLoader<span class="token punctuation">.</span><span class="token function">getParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                split<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"\t"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>输出结果(JDK 8)：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">|--sun.misc.Launcher$AppClassLoader@18b4aac2
+    |--sun.misc.Launcher$ExtClassLoader@53bd815b
+        |--null<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>从输出结果可以看出：</p>
+<ul>
+<li>我们编写的Java类PrintClassLoaderTree的ClassLoader是AppClassLoader；</li>
+<li>AppClassLoader的父ClassLoader是ExtClassLoader；</li>
+<li>ExtClassLoader的父ClassLoader是BootstrapClassLoader，因此输出结果为null。</li>
+</ul>
+<h4 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><p>我们前面也说说了，除了BootstrapClassLoader其他类加载器均由Java实现且全部继承自java.lang.ClassLoader。如果我们要自定义自己的类加载器，很明显需要继承ClassLoader抽象类。ClassLoader类有两个关键的方法：</p>
+<ul>
+<li>protectedClassloadClass(String name,boolean resolve)：加载指定二进制名称的类，实现了双亲委派机制。name为类的二进制名称，resove如果为true，在加载时调用<code>resolveClass(Class&lt;?&gt;c)</code>方法解析该类。</li>
+<li>protectedClassfindClass(String name)：根据类的二进制名称来查找类，默认实现是空方法。</li>
+</ul>
+<p>官方API文档中写到：</p>
+<blockquote>
+<p>Subclasses of <code>ClassLoader</code> are encouraged to override <code>findClass(String name)</code>, rather than this method.</p>
+<p>建议<code>ClassLoader</code>的子类重写<code>findClass(String name)</code>方法而不是<code>loadClass(String name, boolean resolve)</code>方法。</p>
+</blockquote>
+<p>如果我们不想打破双亲委派模型，就重写ClassLoader类中的findClass()方法即可，无法被父类加载器加载的类最终会通过这个方法被加载。但是，如果想打破双亲委派模型则需要重写loadClass()方法。</p>
+<h4 id="ClassLoader-loadClass-、Class-forName-区别"><a href="#ClassLoader-loadClass-、Class-forName-区别" class="headerlink" title="ClassLoader.loadClass()、Class.forName()区别"></a>ClassLoader.loadClass()、Class.forName()区别</h4><p>ClassLoader.loadClass()和Class.forName()都是用于加载Java类的方法，但它们之间存在一些关键的区别：</p>
+<ol>
+<li><p>初始化行为：</p>
+<ul>
+<li>Class.forName(className)会初始化加载的类。这意味着如果类中包含静态初始化块或静态字段，这些静态内容会在加载时被初始化。</li>
+<li>ClassLoader.loadClass(className)只是加载类，不会执行任何初始化操作。除非你随后通过反射调用<code>.newInstance()</code>、访问静态字段或方法，或者调用<code>Class.forName(className, true, classLoader)</code>（第二个参数为<code>true</code>）来显式地初始化类。</li>
+</ul>
+</li>
+<li><p>类加载器的使用：</p>
+<ul>
+<li>Class.forName(className)默认使用当前线程的上下文类加载器来加载类。</li>
+<li>ClassLoader.loadClass(className)需要你提供一个具体的类加载器实例来加载类。这提供了更多的灵活性，允许你控制使用哪个类加载器来加载类。<blockquote>
+<p>Class.forName(className)默认使用当前线程的上下文类加载器来加载类。如果你的当前线程的上下文类加载器能够找到并加载这个类，那么这个方法就能正常工作。而ClassLoader.getSystemClassLoader().loadClass(className)则明确使用系统类加载器来加载类。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>异常处理：</p>
+<ul>
+<li>Class.forName(className)会抛出ClassNotFoundException或LinkageError的子类。</li>
+<li>ClassLoader.loadClass(className)除了抛出上述异常外，还可能抛出SecurityException，因为该方法涉及到安全相关的类加载。</li>
+</ul>
+</li>
+<li><p>双亲委派模型：</p>
+<ul>
+<li>Class.forName(className)和Thread.currentThread().getContextClassLoader().loadClass(className)通常遵循双亲委派模型，即先委托给父类加载器加载，只有当父类加载器无法加载时才由当前类加载器尝试加载。</li>
+<li>ClassLoader.getSystemClassLoader().loadClass(className)直接使用系统类加载器加载，可能会跳过一些类加载器，这在某些情况下可能导致类找不到。<blockquote>
+<p>Class.forName(className)和Thread.currentThread().getContextClassLoader().loadClass(className)通常会遵循双亲委托机制，而直接使用ClassLoader.getSystemClassLoader().loadClass(className)可能会跳过一些类加载器，导致类找不到。因此，如果你的类是通过系统类加载器以外的其他类加载器加载的（比如自定义类加载器或者应用类加载器），那么直接使用ClassLoader.getSystemClassLoader().loadClass(className)可能无法找到这个类，而Class.forName(className)或者Thread.currentThread().getContextClassLoader().loadClass(className)可能能够正确加载。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>功能和使用场景：</p>
+<ul>
+<li>Class.forName()常用于需要触发类初始化的场景，比如在JDBC编程中加载数据库驱动类。</li>
+<li>ClassLoader.loadClass()则更多地用于更精细的类加载控制，特别是在涉及自定义类加载器或者需要避免类初始化的场景。</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，选择使用哪个方法取决于你的具体需求，包括是否需要初始化类、希望使用哪个类加载器以及是否需要遵循双亲委派模型等。</p>
+<p>为了更好地控制类加载过程和解决你的问题(<strong>使用ClassLoad加载spring boot jar包提示ClassNotFoundException</strong>)，你可以尝试以下方法：</p>
+<ul>
+<li>使用Thread.currentThread().getContextClassLoader().loadClass(className)代替ClassLoader.getSystemClassLoader().loadClass(className)。</li>
+<li>如果你在使用自定义类加载器，确保你的类加载器遵循双亲委派模型，并且正确地委托给父类加载器。</li>
+<li>检查你的类路径和类名是否正确，确保类文件可以被正确的类加载器找到。</li>
+</ul>
+<h3 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h3><h4 id="双亲委派模型介绍"><a href="#双亲委派模型介绍" class="headerlink" title="双亲委派模型介绍"></a>双亲委派模型介绍</h4><p>类加载器有很多种，当我们想要加载一个类的时候，具体是哪个类加载器加载呢？这就需要提到双亲委派模型了。</p>
+<p>根据官网介绍：</p>
+<blockquote>
+<p>The ClassLoader class uses a delegation model to search for classes and resources. Each instance of ClassLoader has an associated parent class loader. When requested to find a class or resource, a ClassLoader instance will delegate the search for the class or resource to its parent class loader before attempting to find the class or resource itself. The virtual machine’s built-in class loader, called the “bootstrap class loader”, does not itself have a parent but may serve as the parent of a ClassLoader instance.</p>
+</blockquote>
+<p>翻译过来大概的意思是：</p>
+<blockquote>
+<p>ClassLoader类使用委托模型来搜索类和资源。每个ClassLoader实例都有一个相关的父类加载器。需要查找类或资源时，ClassLoader实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。虚拟机中被称为”bootstrapclassloader”的内置类加载器本身没有父类加载器，但是可以作为ClassLoader实例的父类加载器。</p>
+</blockquote>
+<p>从上面的介绍可以看出：</p>
+<ul>
+<li>ClassLoader类使用委托模型来搜索类和资源。</li>
+<li>双亲委派模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器。</li>
+<li>ClassLoader实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。</li>
+</ul>
+<p>下图展示的各种类加载器之间的层次关系被称为类加载器的<strong>双亲委派模型（ParentsDelegationModel）</strong>。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/class-loader-parents-delegation-model.png" alt="类加载器层次关系图"></p>
+<p>注意⚠️：双亲委派模型并不是一种强制性的约束，只是JDK官方推荐的一种方式。如果我们因为某些特殊需求想要打破双亲委派模型，也是可以的，后文会介绍具体的方法。</p>
+<p>其实这个双亲翻译的容易让别人误解，我们一般理解的双亲都是父母，这里的双亲更多地表达的是“父母这一辈”的人而已，并不是说真的有一个MotherClassLoader和一个FatherClassLoader。个人觉得翻译成单亲委派模型更好一些，不过，国内既然翻译成了双亲委派模型并流传了，按照这个来也没问题，不要被误解了就好。</p>
+<p>另外，类加载器之间的父子关系一般不是以继承的关系来实现的，而是通常使用组合关系来复用父加载器的代码。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ClassLoader</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token comment">// 组合</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ClassLoader</span> parent<span class="token punctuation">;</span>
+  <span class="token keyword">protected</span> <span class="token class-name">ClassLoader</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span> parent<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+       <span class="token keyword">this</span><span class="token punctuation">(</span><span class="token function">checkCreateClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在面向对象编程中，有一条非常经典的设计原则：<strong>组合优于继承，多用组合少用继承</strong>。</p>
+<h4 id="双亲委派模型的执行流程"><a href="#双亲委派模型的执行流程" class="headerlink" title="双亲委派模型的执行流程"></a>双亲委派模型的执行流程</h4><p>双亲委派模型的实现代码非常简单，逻辑非常清晰，都集中在java.lang.ClassLoader的loadClass()中，相关代码如下所示。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> <span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token keyword">boolean</span> resolve<span class="token punctuation">)</span>
+    <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token function">getClassLoadingLock</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//首先，检查该类是否已经加载过</span>
+        <span class="token class-name">Class</span> c <span class="token operator">=</span> <span class="token function">findLoadedClass</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">//如果c为null，则说明该类没有被加载过</span>
+            <span class="token keyword">long</span> t0 <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>parent <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token comment">//当父类的加载器不为空，则通过父类的loadClass来加载该类</span>
+                    c <span class="token operator">=</span> parent<span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                    <span class="token comment">//当父类的加载器为空，则调用启动类加载器来加载该类</span>
+                    c <span class="token operator">=</span> <span class="token function">findBootstrapClassOrNull</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ClassNotFoundException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">//非空父类的类加载器无法找到相应的类，则抛出异常</span>
+            <span class="token punctuation">&#125;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">//当父类加载器无法加载时，则调用findClass方法来加载该类</span>
+                <span class="token comment">//用户可通过覆写该方法，来自定义类加载器</span>
+                <span class="token keyword">long</span> t1 <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                c <span class="token operator">=</span> <span class="token function">findClass</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">//用于统计类加载器相关的信息</span>
+                <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>PerfCounter</span><span class="token punctuation">.</span><span class="token function">getParentDelegationTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addTime</span><span class="token punctuation">(</span>t1 <span class="token operator">-</span> t0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>PerfCounter</span><span class="token punctuation">.</span><span class="token function">getFindClassTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addElapsedTimeFrom</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>PerfCounter</span><span class="token punctuation">.</span><span class="token function">getFindClasses</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>resolve<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">//对类进行link操作</span>
+            <span class="token function">resolveClass</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> c<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>每当一个类加载器接收到加载请求时，它会先将请求转发给父类加载器。在父类加载器没有找到所请求的类的情况下，该类加载器才会尝试去加载。结合上面的源码，简单总结一下双亲委派模型的执行流程：</p>
+<ul>
+<li>在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载（每个父类加载器都会走一遍这个流程）。</li>
+<li>类加载器在进行类加载的时候，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成（调用父加载器loadClass()方法来加载类）。这样的话，所有的请求最终都会传送到顶层的启动类加载器BootstrapClassLoader中。</li>
+<li>只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去加载（调用自己的findClass()方法来加载类）。</li>
+</ul>
+<p>🌈拓展一下：</p>
+<p><strong>JVM判定两个Java类是否相同的具体规则</strong>：JVM不仅要看类的全名是否相同，还要看加载此类的类加载器是否一样。只有两者都相同的情况，才认为两个类是相同的。即使两个类来源于同一个Class文件，被同一个虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相同。</p>
+<h4 id="双亲委派模型的好处"><a href="#双亲委派模型的好处" class="headerlink" title="双亲委派模型的好处"></a>双亲委派模型的好处</h4><p>双亲委派模型保证了Java程序的稳定运行，可以避免类的重复加载（JVM区分不同类的方式不仅仅根据类名，相同的类文件被不同的类加载器加载产生的是两个不同的类），也保证了Java的核心API不被篡改。如果没有使用双亲委派模型，而是每个类加载器加载自己的话就会出现一些问题，比如我们编写一个称为java.lang.Object类的话，那么程序运行的时候，系统就会出现两个不同的Object类。双亲委派模型可以保证加载的是JRE里的那个Object类，而不是你写的Object类。这是因为AppClassLoader在加载你的Object类时，会委托给ExtClassLoader去加载，而ExtClassLoader又会委托给BootstrapClassLoader，BootstrapClassLoader发现自己已经加载过了Object类，会直接返回，不会去加载你写的Object类。</p>
+<h4 id="打破双亲委派模型方法"><a href="#打破双亲委派模型方法" class="headerlink" title="打破双亲委派模型方法"></a>打破双亲委派模型方法</h4><p>为了避免双亲委托机制，我们可以自己定义一个类加载器，然后重写loadClass()即可。</p>
+<blockquote>
+<p><strong>🐛修正（参见：<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/871">issue871</a>）</strong>：自定义加载器的话，需要继承ClassLoader。如果我们不想打破双亲委派模型，就重写ClassLoader类中的findClass()方法即可，无法被父类加载器加载的类最终会通过这个方法被加载。但是，如果想打破双亲委派模型则需要重写loadClass()方法。</p>
+</blockquote>
+<p>为什么是重写loadClass()方法打破双亲委派模型呢？双亲委派模型的执行流程已经解释了：</p>
+<blockquote>
+<p>类加载器在进行类加载的时候，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成（调用父加载器loadClass()方法来加载类）。</p>
+</blockquote>
+<p>我们比较熟悉的Tomcat服务器为了能够优先加载Web应用目录下的类，然后再加载其他目录下的类，就自定义了类加载器WebAppClassLoader来打破双亲委托机制。这也是Tomcat下Web应用之间的类实现隔离的具体原理。Tomcat的类加载器的层次结构如下：</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/java/jvm/tomcat-class-loader-parents-delegation-model.png" alt="Tomcat的类加载器的层次结构"></p>
+<p>感兴趣的小伙伴可以自行研究一下Tomcat类加载器的层次结构，这有助于我们搞懂Tomcat隔离Web应用的原理，推荐资料是<a target="_blank" rel="noopener" href="http://gk.link/a/10Egr">《深入拆解Tomcat&amp;Jetty》</a>。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/classloader.html">原文链接</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Q0MqcvbeI7gAcJH5ZaQWgA">我竟然被“双亲委派”给虐了</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IGV4-y1cWWOUWOETZI2hsw">Tomcat为什么要破坏Java双亲委派机制？</a></p>
+</blockquote>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">xmxe</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog-aok.pages.dev/posts/c83e06a22e1f/">https://blog-aok.pages.dev/posts/c83e06a22e1f/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">xmxe</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        
+                            <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        
+                    </div>
+                    <div id="wechat">
+                        
+                            <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/50bd139ed1e1/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic1.zhimg.com/v2-a813d6ce08aea23e86f1f269a1760810_1440w.jpg" class="responsive-img" alt="分布式ID">
+                        
+                        <span class="card-title">分布式ID</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            分布式ID介绍什么是ID？日常开发中，我们需要对系统中的各种数据使用ID唯一表示，比如用户ID对应且仅对应一个人，商品ID对应且仅对应一件商品，订单ID对应且仅对应一个订单。我们现实生活中也有各种ID，比如身份证ID对应且仅对应一个人、地址
+                        
+
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-24
+                            -->
+
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                
+                                
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98/">
+                                    <span class="chip bg-color">代码实战</span>
+                                </a>
+                                
+                                
+                            
+
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/e688a15ee155/">
+                    <div class="card-image">
+                        
+                        <img src="https://picx.zhimg.com/v2-bf0795e2b893bbc6bc2dce1e25a34bd4_1440w.jpg" class="responsive-img" alt="Java中的Unsafe类">
+                        
+                        <span class="card-title">Java中的Unsafe类</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+本文整理完善自下面这两篇优秀的文章：
+
+Java魔法类：Unsafe应用解析-美团技术团队-2019
+Java双刃剑之Unsafe类详解-码农参上-2021
+
+
+阅读过JUC源码的同学，一定会发现很多并发工具类都调用了一个叫做Unsafe
+                        
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
+                            -->
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/categories/Java/" class="post-category">
+                                        Java
+                                    </a>
+                                
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5, h6'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5, h6').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2024
+                </span>
+            
+            
+
+            <a href="/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/medias/xcx.png");
+    zoom:40%;
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 430px;
+    height: 430px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

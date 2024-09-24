@@ -1,0 +1,1851 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="分类: Java, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>分类: Java | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                    
+                
+            </div>
+
+            <div class="description center-align">
+                
+                
+                <!-- 一言 -->
+                
+                    <span id="hitokoto" style="font-size: 2rem;"></span>
+                    <!-- 打字机 -->
+                    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
+                    <script>
+                        var hitokotoContent = ''
+                        function typed(hitokotoContent) {
+                            var typed = new Typed("#hitokoto", {
+                                strings: [
+                                    hitokotoContent
+                                ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        }
+                        async function hitokoto() {
+                            hitokotoContent = await fetch('https://v1.hitokoto.cn')
+                                .then(function (res) {
+                                    return res.json();
+                                })
+                                .then(function (data) {
+                                    return (data.hitokoto);
+                                })
+                                .catch(function (err) {
+                                    console.error(err);
+                                })
+                            await typed(hitokotoContent)
+                        }
+                        hitokoto()
+                    </script>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    // 每天切换banner图.
+    // var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
+
+    // 随机切换banner图
+    var randomNum = Math.floor(Math.random() * 15 + 1) - 1
+    var randomUrl = 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/7.jpg,medias/featureimages/6.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg'.split(',')[randomNum]
+    if(!false){
+        randomUrl =  '/' + 'medias/featureimages/0.jpg,medias/featureimages/1.jpg,medias/featureimages/2.jpg,medias/featureimages/3.jpg,medias/featureimages/4.jpg,medias/featureimages/5.jpg,medias/featureimages/7.jpg,medias/featureimages/6.jpg,medias/featureimages/8.jpg,medias/featureimages/9.jpg,medias/featureimages/10.jpg,medias/featureimages/11.jpg,medias/featureimages/12.jpg,medias/featureimages/13.jpg,medias/featureimages/14.jpg'.split(',')[randomNum]
+    }
+    
+    $('.bg-cover').css('background-image', 'url(' + randomUrl + ')');
+</script>
+
+
+    </div>
+</div>
+
+<main class="content">
+
+    <style>
+    /* 文章分类书本样式 */
+    .chip-container .tag-chips {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .chip-container .tag-chips a {
+        margin: 0 7px 10px;
+    }
+
+    .chip-container .chip {
+        max-width: calc(100% / 4);
+        min-width: 10em;
+        height: 200px;
+        position: relative;
+        transition: .5s linear;
+        padding: 19px 0;
+        line-height: 20px;
+        z-index: 990;
+        border-radius: 5px 15px 15px 5px;
+        transform-origin: left center 0;
+    }
+
+    .chip-container .notebook-cover::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: calc(100% + 2px);
+        top: -1px;
+        z-index: 100;
+        border-radius: 2px;
+        right: 25px;
+        transition: 2s ease;
+        background: linear-gradient(to right, #1e606e 0, #2e95aa 12%, #1e606e 25%, #2e95aa 37%, #1e606e 50%, #2e95aa 62%, #1e606e 75%, #2e95aa 87%, #1e606e 100%);
+    }
+
+    .chip .notebook-skin {
+        height: 50px;
+        width: 100%;
+        background: #e8e8e0;
+        margin-top: 42px;
+        padding: 10px 32px 64px 10px;
+        font-size: 19px;
+        position: relative;
+        z-index: 10;
+        color: #222;
+        text-align: left;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    }
+
+    .chip .notebook-skin:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 15px;
+        left: 0;
+        bottom: 0;
+        background: #cddc39;
+    }
+
+    .notebook-cover {
+        background: #cc4b48;
+        height: 200px;
+        width: 140px;
+        position: absolute;
+        border-radius: 5px 15px 15px 5px;
+        z-index: 10;
+        transition: .5s linear;
+        transform-style: preserve-3d;
+        transform-origin: left center 0;
+    }
+
+    .moleskine-wrapper {
+        max-width: calc(100% / 4);
+        min-width: 10em;
+    }
+
+    .moleskine-notebook:hover .notebook-cover {
+        transform: rotateY(-50deg);
+        z-index: 99;
+        box-shadow: 20px 10px 50px rgba(0, 0, 0, .2);
+    }
+
+    .moleskine-notebook {
+        height: 200px;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        transition: .5s linear;
+        border-radius: 5px 15px 15px 5px;
+        transform-origin: left center 0;
+    }
+
+    .moleskine-notebook:hover {
+        transform: rotateZ(-10deg);
+    }
+
+    .notebook-page.dotted {
+        background: linear-gradient(to bottom, #fbfae8 9px, #e4e4e4 1px);
+        background-size: 100% 10px;
+    }
+
+    .chip-container .chip:hover {
+        filter: invert(.1);
+    }
+
+    .notebook-page {
+        height: 100%;
+        width: 140px;
+        position: absolute;
+        top: 10px;
+        background-color: #fbfae8;
+        z-index: 0;
+        border-radius: 5px 16px 16px 5px;
+        overflow: hidden;
+    }
+</style>
+
+
+
+<div id="category-cloud" class="container chip-container">
+    <div class="card">
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
+            </div>
+            <div class="tag-chips">
+                
+                
+                
+                <a href="/categories/Java/" title="Java: 15">
+                    <!--<span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            style="background-color: #F9EBEA;">Java
+                        <span class="tag-length">15</span>
+                    </span>-->
+
+                    <div class="moleskine-wrapper">
+                        <div class="moleskine-notebook">
+                            <div class="chip notebook-cover center-align waves-effect waves-light
+                               chip-active "
+                                style="background-color: #F9EBEA;">
+                                <div
+                                    class="notebook-skin
+                                       chip-active ">
+                                    Java
+                                </div>
+                            </div>
+                            <div class="notebook-page dotted"></div>
+                        </div>
+                    </div>
+                </a>
+
+                
+                
+                <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" title="技术栈: 10">
+                    <!--<span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F5EEF8;">技术栈
+                        <span class="tag-length">10</span>
+                    </span>-->
+
+                    <div class="moleskine-wrapper">
+                        <div class="moleskine-notebook">
+                            <div class="chip notebook-cover center-align waves-effect waves-light
+                               chip-default "
+                                style="background-color: #F5EEF8;">
+                                <div
+                                    class="notebook-skin
+                                       chip-default ">
+                                    技术栈
+                                </div>
+                            </div>
+                            <div class="notebook-page dotted"></div>
+                        </div>
+                    </div>
+                </a>
+
+                
+                
+                <a href="/categories/CSS/" title="CSS: 1">
+                    <!--<span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #D5F5E3;">CSS
+                        <span class="tag-length">1</span>
+                    </span>-->
+
+                    <div class="moleskine-wrapper">
+                        <div class="moleskine-notebook">
+                            <div class="chip notebook-cover center-align waves-effect waves-light
+                               chip-default "
+                                style="background-color: #D5F5E3;">
+                                <div
+                                    class="notebook-skin
+                                       chip-default ">
+                                    CSS
+                                </div>
+                            </div>
+                            <div class="notebook-page dotted"></div>
+                        </div>
+                    </div>
+                </a>
+
+                
+                
+                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库: 7">
+                    <!--<span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #E8F8F5;">数据库
+                        <span class="tag-length">7</span>
+                    </span>-->
+
+                    <div class="moleskine-wrapper">
+                        <div class="moleskine-notebook">
+                            <div class="chip notebook-cover center-align waves-effect waves-light
+                               chip-default "
+                                style="background-color: #E8F8F5;">
+                                <div
+                                    class="notebook-skin
+                                       chip-default ">
+                                    数据库
+                                </div>
+                            </div>
+                            <div class="notebook-page dotted"></div>
+                        </div>
+                    </div>
+                </a>
+
+                
+                
+                <a href="/categories/JS/" title="JS: 3">
+                    <!--<span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #FEF9E7;">JS
+                        <span class="tag-length">3</span>
+                    </span>-->
+
+                    <div class="moleskine-wrapper">
+                        <div class="moleskine-notebook">
+                            <div class="chip notebook-cover center-align waves-effect waves-light
+                               chip-default "
+                                style="background-color: #FEF9E7;">
+                                <div
+                                    class="notebook-skin
+                                       chip-default ">
+                                    JS
+                                </div>
+                            </div>
+                            <div class="notebook-page dotted"></div>
+                        </div>
+                    </div>
+                </a>
+
+                
+                
+                <a href="/categories/Spring/" title="Spring: 5">
+                    <!--<span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F8F9F9;">Spring
+                        <span class="tag-length">5</span>
+                    </span>-->
+
+                    <div class="moleskine-wrapper">
+                        <div class="moleskine-notebook">
+                            <div class="chip notebook-cover center-align waves-effect waves-light
+                               chip-default "
+                                style="background-color: #F8F9F9;">
+                                <div
+                                    class="notebook-skin
+                                       chip-default ">
+                                    Spring
+                                </div>
+                            </div>
+                            <div class="notebook-page dotted"></div>
+                        </div>
+                    </div>
+                </a>
+
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/5dd8d96c7458/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-b581c1513e4d3f51a7f281a2243de302.jpg" class="responsive-img" alt="MyBatis相关">
+                            
+                            <span class="card-title">MyBatis相关</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                缓存一级缓存是默认开启的，它在一个sqlSession会话里面的所有查询操作都会保存到缓存中，一般来说一个请求中的所有增删改查操作都是在同一个sqlSession里面的，所以我们可以认为每个请求都有自己的一级缓存，如果同一个sqlSessi
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-30
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/c83e06a22e1f/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-2bc1a9883960ccf43a0f4c643178c4c3_1440w.jpg" class="responsive-img" alt="Java类加载">
+                            
+                            <span class="card-title">Java类加载</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                类文件结构详解回顾一下字节码
+在Java中，JVM可以理解的代码就叫做字节码（即扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。Java语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/e688a15ee155/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://picx.zhimg.com/v2-bf0795e2b893bbc6bc2dce1e25a34bd4_1440w.jpg" class="responsive-img" alt="Java中的Unsafe类">
+                            
+                            <span class="card-title">Java中的Unsafe类</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+本文整理完善自下面这两篇优秀的文章：
+
+Java魔法类：Unsafe应用解析-美团技术团队-2019
+Java双刃剑之Unsafe类详解-码农参上-2021
+
+
+阅读过JUC源码的同学，一定会发现很多并发工具类都调用了一个叫做Unsafe
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/5c9c6aec0510/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://picx.zhimg.com/v2-cbe2b915fe3b3f67b76224043807f576_1440w.jpg" class="responsive-img" alt="代理">
+                            
+                            <span class="card-title">代理</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                代理模式代理模式是一种比较好理解的设计模式。简单来说就是我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能。代理模式的主要作用是扩展目标对象的功能，
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/6afc7d778a39/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pica.zhimg.com/v2-67884d8a1020d53d82736b030e1d6b1d_1440w.jpg" class="responsive-img" alt="序列化和反序列化">
+                            
+                            <span class="card-title">序列化和反序列化</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                什么是序列化、反序列化?如果我们需要持久化Java对象比如将Java对象保存在文件中，或者在网络传输Java对象，这些场景都需要用到序列化。简单来说：
+
+序列化：将数据结构或对象转换成二进制字节流的过程
+反序列化：将在序列化过程中所生成的二
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/d791cb4f9835/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://picx.zhimg.com/v2-741deff4ee4a1e227d223afd5abf9cf9_1440w.jpg" class="responsive-img" alt="阿里巴巴Java开发手册(泰山版)">
+                            
+                            <span class="card-title">阿里巴巴Java开发手册(泰山版)</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                一、编程规约(一) 命名风格
+【强制】 代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。反例：_name&#x2F;__name&#x2F;$name&#x2F;name_&#x2F;name$&#x2F;name_
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-01
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/c98fd7c2aa89/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-9cd48539cd2c998fd21c6b24086b78de_1440w.jpg" class="responsive-img" alt="IO&amp;NIO">
+                            
+                            <span class="card-title">IO&amp;NIO</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                IOIO基础知识总结IO流简介IO即Input&#x2F;Output，输入和输出。数据输入到计算机内存的过程即输入，反之输出到外部存储（比如数据库，文件，远程主机）的过程即输出。数据传输过程类似于水流，因此称为IO流。IO流在Java中分
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-11
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/35e64501a595/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic4.zhimg.com/v2-8afc54b4ff671ec44ec51cf703119479_r.jpg" class="responsive-img" alt="锁">
+                            
+                            <span class="card-title">锁</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                悲观锁悲观锁总是假设最坏的情况，认为共享资源每次被访问的时候就会出现问题(比如共享数据被修改)，所以每次在获取资源操作的时候都会上锁，这样其他线程想拿到这个资源就会阻塞直到锁被上一个持有者释放。也就是说，共享资源每次只给一个线程使用，其它线
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/75fb1533e3f4/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic2.zhimg.com/v2-1858f3d5d46af69688092c4c0a10285a_1440w.jpg" class="responsive-img" alt="Java中的volatile关键字">
+                            
+                            <span class="card-title">Java中的volatile关键字</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+VolatileTest.java
+
+如何保证变量的可见性？在Java中，volatile关键字可以保证变量的可见性，如果我们将变量声明为volatile，这就指示JVM，这个变量是共享且不稳定的，每次使用它都到主存中进行读取。
+
+
+vo
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/7b1b83ae7caa/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://picx1.zhimg.com/v2-109f36bf1cbff1d1d78c10052be77af5_r.jpg" class="responsive-img" alt="ThreadLocal">
+                            
+                            <span class="card-title">ThreadLocal</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+ThreadLocalTest.java
+
+ThreadLocal有什么用？通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。如果想实现每一个线程都有自己的专属本地变量该如何解决呢？JDK中自带的ThreadLocal类正是为了
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/50718223d917/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic1.zhimg.com/06a1751875c26f6409149f9380a7899c_r.jpg" class="responsive-img" alt="Java中的线程">
+                            
+                            <span class="card-title">Java中的线程</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                线程+线程池+虚拟线程
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/289bdc29a0ae/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic2.zhimg.com/v2-afbb5fb285f0775146b89fe018dbbc93_r.jpg" class="responsive-img" alt="ArrayList&amp;CopyOnWriteArrayList">
+                            
+                            <span class="card-title">ArrayList&amp;CopyOnWriteArrayList</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                ArrayListArrayList的底层实现是一个Object数组,ArrayList的无参构造函数为底层的Object数组也就是elementData赋值了一个默认的空数组DEFAULTCAPACITY_EMPTY_ELEMENTDAT
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/366519dedccc/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pica.zhimg.com/v2-617196c5dc7927460c726d1477174464_1440w.jpg" class="responsive-img" alt="HashMap&amp;ConcurrentHashMap">
+                            
+                            <span class="card-title">HashMap&amp;ConcurrentHashMap</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                HashMapHashMap简介HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一，是非线程安全的。HashMap可以存储null的key和value，但null作为键只能有一个，null作为值可以有多
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/be5a099f7894/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-716588f96320420369eb5a5734852aa5_1440w.jpg" class="responsive-img" alt="JVM知识点">
+                            
+                            <span class="card-title">JVM知识点</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                JVM内存区域、垃圾回收、调优、JVM工具、参数等相关命令
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/posts/d1707b62ed37/" >
+                        <div class="card-image tag-image">
+                            
+                                <img src="https://pic1.zhimg.com/v2-ec5f66df043491179552104505cfdcda.jpg" class="responsive-img" alt="Java各类技术栈架构图汇总">
+                            
+                            <span class="card-title">Java各类技术栈架构图汇总</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Java各类技术栈架构图汇总1. java类加载器架构
+2. JVM架构
+
+
+3. Java技术体系
+4. 线程运行架构
+5. Java体系(编译与运行)结构
+6. JMS技术架构
+
+7. JMX技术架构
+
+8. J2EE
+框架1. Spr
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <!-- 
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-23
+                                -->
+
+                                
+                                    <i class="fas fa-user fa-fw"></i>
+                                    <a href="/about" >
+                                        xmxe
+                                    </a>
+                                
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Java/" class="post-category" >
+                                            Java
+                                        </a>
+                                    
+                                
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </article>
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2024
+                </span>
+            
+            
+
+            <a href="/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/medias/xcx.png");
+    zoom:40%;
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 430px;
+    height: 430px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

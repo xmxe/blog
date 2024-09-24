@@ -1,0 +1,1997 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Linux相关, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Linux相关 | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ 'Linux相关' ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+        max-height: 480px;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                <span class="chip bg-color">计算机</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h2><h3 id="nohup-command-amp"><a href="#nohup-command-amp" class="headerlink" title="nohup command &amp;"></a>nohup command &amp;</h3><p><code>nohup command &amp;</code>意思是在关闭ssh情况下不会退出进程。command参数表示要执行的命令行。但是这种方式启动项目会默认生成一个nohup.out的文件来记录日志，而且会越来越大，不生成日志使用<code>&gt;/dev/null 2&gt;&amp;1</code>追加，这条命令的作用是将标准输出1重定向到&#x2F;dev&#x2F;null中。&#x2F;dev&#x2F;null代表linux的空设备文件，所有往这个文件里面写入的内容都会丢失，俗称“黑洞”。那么执行了&gt;&#x2F;dev&#x2F;null之后，标准输出就会不再存在，没有任何地方能够找到输出的内容。</p>
+<blockquote>
+<p><code>1&gt;/dev/null 2&gt;&amp;1 &amp;</code>详解：</p>
+<blockquote>
+<p>0：表示标准输入stdin (键盘输入)<br>1：表示标准输出stdout，系统默认为1，可省略(即1&gt;&#x2F;dev&#x2F;null等价于&gt;&#x2F;dev&#x2F;null)<br>2：表示标准错误stderr<br>&gt;：表示重定向（即将输出定向到指定路径文件，&gt;&#x2F;dev&#x2F;null表示Linux的空设备文件，即将标准输出重定向到空设备文件，即不输出任何信息到终端，即不显示任何信息。）<br>2&gt;&amp;1：其中的&amp;表示等同于的意思，即2(标准错误stderr)的重定向等同于1<br>&amp;表示后台运行</p>
+</blockquote>
+</blockquote>
+<p>最终命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> <span class="token builtin class-name">command</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span>
+<span class="token comment"># 后台执行abc.jar即便关闭终端也继续运行，不输出任何日志</span>
+<span class="token function">nohup</span> <span class="token function">java</span> <span class="token parameter variable">-jar</span> abc.jar <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span>
+
+<span class="token comment"># command >/dev/null 2>&amp;1 &amp; == command 1>/dev/null 2>&amp;1 &amp;</span>
+<span class="token comment"># 1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。2>&amp;1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.所以可以看出">/dev/null 2>&amp;1 &amp;"常用来避免shell命令或者程序等运行中有内容输出</span>
+<span class="token comment"># 将错误日志输出到文件</span>
+<span class="token function">nohup</span> <span class="token builtin class-name">command</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>error.log <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="安装ifconfig"><a href="#安装ifconfig" class="headerlink" title="安装ifconfig"></a>安装ifconfig</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># centos</span>
+yum <span class="token parameter variable">-y</span> <span class="token function">install</span> net-tools
+<span class="token comment"># ubuntu</span>
+<span class="token function">apt</span> <span class="token function">install</span> net-tools<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p><strong>apt与apt-get的区别</strong>: apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt<br><a target="_blank" rel="noopener" href="https://mirrors.cnnic.cn/help/centos/">centos7更换yum源</a></p>
+</blockquote>
+<h3 id="配置jdk环境变量"><a href="#配置jdk环境变量" class="headerlink" title="配置jdk环境变量"></a>配置jdk环境变量</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/usr/jdk1.8.0_121
+<span class="token comment"># export JRE_HOME=$&#123;JAVA_HOME&#125;/jre  </span>
+<span class="token comment"># export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib  </span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">CLASSPATH</span><span class="token operator">=</span>.:<span class="token variable">$JAVA_HOME</span>/jre/lib/rt.jar:<span class="token variable">$JAVA_HOME</span>/lib/dt.jar:<span class="token variable">$JAVA_HOME</span>/lib/tools.jar
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$JAVA_HOME</span>/bin
+<span class="token builtin class-name">source</span> /etc/profile <span class="token comment"># 使环境变量生效</span>
+<span class="token builtin class-name">echo</span> <span class="token environment constant">$PATH</span> <span class="token comment"># 查看环境变量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>ubuntu按照上面的步骤在&#x2F;etc&#x2F;environment再配置一遍，配置完成后</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> /etc/environment<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</blockquote>
+<h3 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动</span>
+systemctl start firewalld.service
+<span class="token comment"># 关闭</span>
+systemctl stop firewalld.service
+<span class="token comment"># 查看状态</span>
+systemctl status firewalld.service
+<span class="token comment"># 开机禁用 </span>
+systemctl disable firewalld.service
+<span class="token comment"># 开机启用</span>
+systemctl <span class="token builtin class-name">enable</span> firewalld.service
+<span class="token comment"># 查看系统服务列表</span>
+systemctl list-unit-files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>安装iptables</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 停止服务</span>
+systemctl stop firewalld.service
+<span class="token comment"># 屏蔽服务</span>
+systemctl mask firewalld.service
+<span class="token comment"># 安装iptables服务</span>
+yum <span class="token parameter variable">-y</span> <span class="token function">install</span> iptables-services
+<span class="token comment"># 开机启动iptables</span>
+systemctl <span class="token builtin class-name">enable</span> iptables
+<span class="token comment"># 启动iptables</span>
+systemctl start iptables
+<span class="token comment"># 保存防火墙规则</span>
+<span class="token function">service</span> iptables save<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>iptables和firewalld都是用于管理防火墙的工具，但它们在操作方式、规则设置、安全级别以及和内核的关系方面存在一些区别。</p>
+<blockquote>
+<p><strong>操作方式</strong>：iptables需要通过编辑配置文件来设置规则，每次修改规则后需要全部刷新才能生效。而firewalld提供了动态修改单条规则和管理规则集的特性，允许在不破坏现有会话和连接的情况下更新规则。<br><strong>规则设置</strong>：iptables主要基于接口来设置规则，判断网络的安全性。而firewalld则是基于区域，根据不同的区域来设置不同的规则，保证网络的安全。<br><strong>安全级别</strong>：iptables默认是允许的，需要设置以后才能放行，而firewalld默认是拒绝的，需要设置以后才能放行。<br>和内核的关系：iptables和firewalld都通过内核的netfilter来实现防火墙功能。但firewalld自身并不具备防火墙的功能，而是作为一个封装，使得管理iptables规则更加容易。<br>此外，firewalld还提供了支持网络区域所定义的网络连接以及接口安全等级的动态防火墙管理工具，支持IPv4、IPv6防火墙设置以及以太网桥（在某些高级服务可能会用到，比如云计算），并且拥有两种配置模式∶ 运行时配置与永久配置。</p>
+</blockquote>
+</blockquote>
+<h3 id="查看开机启动的服务列表"><a href="#查看开机启动的服务列表" class="headerlink" title="查看开机启动的服务列表"></a>查看开机启动的服务列表</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看某个服务是否开机启动</span>
+systemctl list-unit-files<span class="token operator">|</span><span class="token function">grep</span> enabled
+<span class="token comment"># 查看启动失败的服务列表：systemctl --failed</span>
+systemctl is-enabled firewalld.service
+
+<span class="token comment"># 端口开放</span>
+<span class="token comment">#（--permanent永久生效，没有此参数重启后失效）</span>
+<span class="token comment"># --zone=public:指定了要查询的防火墙区域。防火墙区域是网络连接的一个逻辑分组，每个区域都有自己的规则集来控制进入和离开该区域的数据包。公共区域（public）通常用于外部网络连接，例如Internet连接。可不加</span>
+firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">80</span>/tcp <span class="token parameter variable">--permanent</span>
+<span class="token comment"># 删除</span>
+firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --remove-port<span class="token operator">=</span><span class="token number">80</span>/tcp <span class="token parameter variable">--permanent</span>
+<span class="token comment"># 重新载入</span>
+firewall-cmd <span class="token parameter variable">--reload</span>
+<span class="token comment"># 查看</span>
+firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span> public --query-port<span class="token operator">=</span><span class="token number">80</span>/tcp
+<span class="token comment"># 查看开放的端口</span>
+firewall-cmd --list-ports
+
+<span class="token comment"># ubuntu</span>
+<span class="token comment">#查看防火墙当前状态</span>
+<span class="token function">sudo</span> ufw status
+<span class="token comment"># 开启防火墙</span>
+<span class="token function">sudo</span> ufw <span class="token builtin class-name">enable</span>
+<span class="token comment"># 关闭防火墙</span>
+<span class="token function">sudo</span> ufw disable
+<span class="token comment"># 查看防火墙版本</span>
+<span class="token function">sudo</span> ufw version
+<span class="token comment"># 默认允许外部访问本机</span>
+<span class="token function">sudo</span> ufw default allow
+<span class="token comment"># 默认拒绝外部访问主机</span>
+<span class="token function">sudo</span> ufw default deny
+<span class="token comment"># 允许外部访问53端口</span>
+<span class="token function">sudo</span> ufw allow <span class="token number">53</span>
+<span class="token comment"># 拒绝外部访问53端口</span>
+<span class="token function">sudo</span> ufw deny <span class="token number">53</span>
+<span class="token comment"># 允许某个IP地址访问本机所有端口</span>
+<span class="token function">sudo</span> ufw allow from <span class="token number">192.168</span>.0.1
+<span class="token comment"># 重启防火墙</span>
+<span class="token function">sudo</span> ufw reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><p><code>&gt;</code>直接把内容生成到指定文件，会覆盖源文件中的内容，还有一种用途是直接生成一个空白文件，相当于touch命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> a.txt 输出1
+<span class="token comment"># >>尾部追加，不会覆盖掉文件中原有的内容</span>
+<span class="token builtin class-name">echo</span> <span class="token number">2</span> <span class="token operator">>></span> a.txt 输出1 <span class="token number">2</span>
+
+<span class="token function">cat</span> file1 <span class="token operator">>></span> file2 <span class="token comment"># 把file1的文档内容输入file2这个文档里</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果你希望在同一个操作中同时向屏幕和文件输出信息，可以使用管道（|）和tee命令。tee会复制其标准输入，并将其写入标准输出和指定的文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># 输出一条消息到屏幕上，并同时将其写入一个名为output.txt的文件 -a选项告诉tee命令追加输出到文件，而不是覆盖它。</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"This is a message"</span> <span class="token operator">|</span> <span class="token function">tee</span> <span class="token parameter variable">-a</span> output.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>tee命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tee</span> file.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在运行这个命令后，你可以开始在命令行输入文本。当你按下Ctrl+D（EOF）时，你的输入会被写入file.txt并显示在屏幕上。</p>
+<h3 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># "hello"过滤掉特定字符串,效率低，因为有管道</span>
+<span class="token function">cat</span> h.txt <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-v</span>
+<span class="token comment"># 可以直接跟文件名，效率快</span>
+<span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token string">"hello"</span> h.txt
+
+<span class="token function">head</span> <span class="token parameter variable">-n</span> k <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-n</span> +k <span class="token operator">=</span> <span class="token function">head</span> k
+<span class="token comment"># k为指定行数</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> k <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-k</span> <span class="token operator">=</span> <span class="token function">tail</span> k
+<span class="token comment"># 显示文件前3行</span>
+<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token number">3</span> <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-n</span> +3 <span class="token operator">=</span> <span class="token function">head</span> <span class="token parameter variable">-3</span>
+<span class="token comment"># 显示文件最后3行</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token number">3</span> <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-3</span> <span class="token operator">=</span> <span class="token function">tail</span> <span class="token parameter variable">-3</span>
+<span class="token comment"># 其中-k的意义是除了最后k行的所有行</span>
+<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-k</span>
+<span class="token comment"># 查看filename除了最后3行的所有行</span>
+<span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token parameter variable">-3</span> filename
+<span class="token comment"># 是从第k行开始，输出所有行</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> +k
+<span class="token comment"># 从第三行开始输出所有行</span>
+<span class="token function">tail</span> <span class="token parameter variable">-n</span> +3
+<span class="token comment"># 实时跟踪文件，如果文件不存在，则终止</span>
+<span class="token function">tail</span> <span class="token parameter variable">-f</span> finename
+<span class="token comment"># 如果文件不存在，会继续尝试</span>
+<span class="token function">tail</span> <span class="token parameter variable">-F</span> filename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="用户-x2F-用户组"><a href="#用户-x2F-用户组" class="headerlink" title="用户&#x2F;用户组"></a>用户&#x2F;用户组</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看linux所有用户</span>
+<span class="token function">cut</span> <span class="token parameter variable">-d</span> <span class="token builtin class-name">:</span> <span class="token parameter variable">-f</span> <span class="token number">1</span> /etc/passwd
+<span class="token comment"># 查看linux所有用户组</span>
+<span class="token comment"># -d:以“：”为分割符进行分割 -f 1展示第一列</span>
+<span class="token function">cut</span> <span class="token parameter variable">-d</span> <span class="token builtin class-name">:</span> <span class="token parameter variable">-f</span> <span class="token number">1</span> /etc/group
+<span class="token comment"># 用户名：查看用户所在用户组</span>
+<span class="token function">groups</span>
+
+<span class="token comment"># 修改文件所属用户和用户组(`chown`)</span>
+<span class="token comment"># 修改a.txt文件所属用户为jay，所属用户组为fefjay</span>
+<span class="token function">chown</span> jay:fefjay a.txt
+<span class="token comment"># 递归修改文件夹my及包含的所有子文件（夹）的所属用户和用户组</span>
+<span class="token function">chown</span> <span class="token parameter variable">-R</span> jay:fefjay my<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="定时任务-crontab"><a href="#定时任务-crontab" class="headerlink" title="定时任务(crontab)"></a>定时任务(crontab)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装crontab</span>
+yum <span class="token function">install</span> vixie-cron
+yum <span class="token function">install</span> crontabs
+<span class="token comment"># 开启crontab服务</span>
+<span class="token comment"># 启动服务</span>
+<span class="token function">service</span> crond start
+<span class="token comment"># 关闭服务</span>
+<span class="token function">service</span> crond stop
+<span class="token comment"># 重新启动服务</span>
+<span class="token function">service</span> crond restart
+<span class="token comment"># 又一次加载配置</span>
+<span class="token function">service</span> crond reload
+<span class="token comment"># 添加任务(两种方式)</span>
+<span class="token comment"># 1.crontab -e  * * * * * /usr/local/a.sh</span>
+<span class="token comment"># 列出当前的全部调度任务</span>
+<span class="token function">crontab</span> <span class="token parameter variable">-l</span>
+<span class="token comment"># 列出用户jp的全部调度任务</span>
+<span class="token function">crontab</span> <span class="token parameter variable">-l</span> <span class="token parameter variable">-u</span> jp
+<span class="token comment"># 删除全部任务调度工作</span>
+<span class="token function">crontab</span> <span class="token parameter variable">-r</span>
+<span class="token comment"># 2.直接编辑 vim /etc/crontab</span>
+<span class="token comment"># 添加* * * * * root /usr/local/a.sh 注意要使用绝对路径</span>
+
+<span class="token comment"># 查看邮件</span>
+<span class="token function">cat</span> /var/spool/mail/root
+<span class="token comment"># 查看日志</span>
+<span class="token builtin class-name">cd</span> /var/log
+<span class="token function">ls</span> <span class="token function">cron</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c91XWEQvr9Axcf0hjvuKgg">Linux定时任务调度(crontab)，太实用了！</a></p>
+</blockquote>
+<h3 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-d</span> <span class="token string">'login=emma&amp;password=123'</span><span class="token parameter variable">-X</span> POST URL
+<span class="token function">curl</span> <span class="token parameter variable">-d</span> <span class="token string">'login=emma'</span> <span class="token parameter variable">-d</span> <span class="token string">'password=123'</span> <span class="token parameter variable">-X</span> POST URL
+<span class="token parameter variable">-X</span> <span class="token comment"># POST可以省略</span>
+
+<span class="token function">curl</span> <span class="token parameter variable">-L</span> <span class="token parameter variable">-X</span> POST URL <span class="token parameter variable">-d</span> <span class="token string">'id=3&amp;pwd=jae_123'</span>
+<span class="token function">curl</span> <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token parameter variable">-X</span> POST <span class="token parameter variable">-d</span> <span class="token string">'&#123;"abc":123,"bcd":"nihao"&#125;'</span> URL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/angle_chen123/article/details/120675472">Linux curl命令最全详解</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fan-gx/p/12321351.html">curl其他参数介绍</a></p>
+</blockquote>
+<h3 id="Linux系统服务"><a href="#Linux系统服务" class="headerlink" title="Linux系统服务"></a>Linux系统服务</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 添加自定义系统服务的目录</span>
+<span class="token comment"># lib/systemd/system真实地址是/usr/lib/system/system地址</span>
+/lib/systemd/system
+<span class="token comment"># 软件包安装的单元</span>
+/usr/lib/systemd/system/
+<span class="token comment"># 系统管理员安装的单元,优先级更高</span>
+/etc/systemd/system/
+<span class="token comment"># 优先级为 /etc/systemd/system->/run/systemd/system->/lib/systemd/system</span>
+<span class="token comment"># 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。</span>
+
+<span class="token comment"># 开机启动执行命令：编辑/etc/rc.d/rc.local</span>
+<span class="token comment"># 添加要执行的命令或者脚本,并且赋予执行权限</span>
+<span class="token function">chmod</span> +x /etc/rc.d/rc.local<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 递归复制</span>
+<span class="token function">cp</span> <span class="token parameter variable">-r</span>
+<span class="token comment"># 查看隐藏目录</span>
+<span class="token function">ls</span> <span class="token parameter variable">-a</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="图形化页面卡死重启"><a href="#图形化页面卡死重启" class="headerlink" title="图形化页面卡死重启"></a>图形化页面卡死重启</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">kill</span> <span class="token parameter variable">-9</span> gnome-shell pid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="查看centos版本"><a href="#查看centos版本" class="headerlink" title="查看centos版本"></a>查看centos版本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> /etc/redhat-release<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="重命名文件"><a href="#重命名文件" class="headerlink" title="重命名文件"></a>重命名文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 例:把a替换为xxx</span>
+<span class="token function">rename</span> “a” “xxx” *.txt
+<span class="token comment"># 或者使用mv命令</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看端口"><a href="#查看端口" class="headerlink" title="查看端口"></a>查看端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 可以查看所有tcp、udp端口开放情况</span>
+<span class="token function">netstat</span> <span class="token parameter variable">-antu</span>
+<span class="token comment"># 查看正在运行的端口(t代表tcp 加u查看udp)</span>
+<span class="token function">netstat</span> <span class="token parameter variable">-ntlp</span>
+<span class="token comment"># 查看某一端口运行的程序</span>
+<span class="token function">lsof</span> -i: <span class="token number">9090</span>
+<span class="token comment"># 端口号 查看指定端口被哪个进程占用的情况</span>
+<span class="token function">netstat</span> -ntulp<span class="token operator">|</span><span class="token function">grep</span>
+<span class="token comment"># 查找abc进程</span>
+<span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> abc
+<span class="token comment"># 显示所有进程</span>
+<span class="token function">ps</span> <span class="token parameter variable">-aux</span>
+<span class="token comment"># 发现A进程占用该端口号</span>
+<span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> A<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="设置静态ip后无法连接外网的问题"><a href="#设置静态ip后无法连接外网的问题" class="headerlink" title="设置静态ip后无法连接外网的问题"></a>设置静态ip后无法连接外网的问题</h3><p>因为动态ip会自动分配DNS，而静态ip需要手动配置DNS。centos7在&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 写入DNS1&#x3D;114.114.114.114。ubuntu在&#x2F;etc&#x2F;resolv.conf写入nameserver 114.114.114.114</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/adforce/p/3363681.html">Linux配置IP地址</a></p>
+</blockquote>
+<h3 id="命令行更改MAC地址"><a href="#命令行更改MAC地址" class="headerlink" title="命令行更改MAC地址"></a>命令行更改MAC地址</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/sbin/ifconfig eth0 down
+/sbin/ifconfig eth0 hw ether 00:50:56:94:16:a8
+/sbin/ifconfig eth0 up
+<span class="token function">service</span> network restart<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="源码安装配置-configure-、编译-make-、安装-make-install"><a href="#源码安装配置-configure-、编译-make-、安装-make-install" class="headerlink" title="源码安装配置(configure)、编译(make)、安装(make install)"></a>源码安装配置(configure)、编译(make)、安装(make install)</h3><ul>
+<li><strong>.&#x2F;configure</strong></li>
+</ul>
+<p><code>./configure</code>是一个脚本文件，通常用于Unix-like系统上的源代码安装。它的主要作用是根据系统的特性和用户提供的选项来配置软件的构建环境，并生成Makefile文件。<code>./configure</code>脚本会检测系统的各种参数，如操作系统类型、编译器版本、库文件的位置等，并确定这些参数是否满足软件的构建要求。同时，它还会检查软件所需的依赖项是否已安装，并确定是否需要额外的配置选项。一旦<code>./configure</code>脚本执行完成，它会生成一个适合当前系统的Makefile文件。这个Makefile文件将用于后续的make命令，指导如何编译和安装软件。</p>
+<p><code>./configure</code>是一个在源代码安装过程中常见的脚本命令，主要用于准备软件的构建环境。它的主要作用包括：</p>
+<ul>
+<li>检测环境：<code>./configure</code>会检测你的安装平台的目标特征，包括操作系统的类型、版本，以及系统中已安装的库和工具链等。</li>
+<li>检查依赖：该脚本会检查即将安装的软件所需要的依赖是否已满足。例如，对于使用C语言编写的Unix程序，<code>./configure</code>会确保系统中有C编译器，并确定其名称和路径。</li>
+<li>生成Makefile：根据给定的参数和系统环境，<code>./configure</code>会生成一个Makefile文件。这个Makefile文件定义了软件构建和安装过程中需要执行的一系列任务。</li>
+</ul>
+<p>需要注意的是，<code>./configure</code>只是源代码安装的第一步。一旦配置完成并生成了Makefile，你可以使用<code>make</code>命令来执行实际的构建过程，将源代码编译成可执行文件。随后，使用<code>make install</code>命令将编译好的文件安装到指定的目录。</p>
+<p>此外，<code>./configure</code>脚本通常支持各种选项，通过<code>./configure --help</code>命令可以查看详细的选项列表。其中一个常见的选项是<code>--prefix</code>，它用于配置安装目录。如果不配置该选项，安装后的文件可能会分散到系统的默认目录中。通过指定<code>--prefix</code>选项，你可以将所有资源文件集中放置在一个目录下，便于管理和维护。</p>
+<p>最后，如果在<code>./configure</code>过程中报错，可以尝试删除生成的config.cache相关文件，然后重新运行<code>./configure</code>。如果问题依旧存在，可能需要检查系统环境或依赖是否完全满足软件安装的要求。</p>
+<ul>
+<li><strong>make</strong></li>
+</ul>
+<p>make是一个自动化构建工具，它根据Makefile文件中定义的规则来编译和链接源代码，生成可执行文件或库文件。Makefile文件中包含了构建项目所需的各种指令和依赖关系，<code>make</code>会根据这些指令自动执行相应的编译和链接操作。使用<code>make</code>的主要好处在于自动化和效率。它可以根据源代码文件的修改情况，只重新编译那些自上次编译以来已经更改过的文件，避免了不必要的重复编译。此外，<code>make</code>还支持并行编译，可以显著提高编译速度。</p>
+<p>在<code>make</code>命令的上下文中，prefix通常是一个变量，用于指定软件安装的目标目录。当执行<code>make install</code>时，这个prefix变量决定了可执行文件、库文件、头文件等应该被安装到哪个目录下。默认情况下，prefix通常被设置为&#x2F;usr&#x2F;local，这意味着如果不指定其他值，软件将被安装到&#x2F;usr&#x2F;local目录下。但是，开发者或用户经常需要改变这个默认的安装位置，尤其是在多用户系统或特定的软件部署环境中。你可以在命令行中通过以下方式设置prefix变量的值：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> <span class="token assign-left variable">prefix</span><span class="token operator">=</span>/path/to/install <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>或者，在Makefile中直接设置这个变量的值：</p>
+<pre class="line-numbers language-makefile" data-language="makefile"><code class="language-makefile">prefix<span class="token operator">=</span>/path/to/install<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后，当执行<code>make install</code>时，Makefile中的安装规则会使用这个prefix变量的值来确定安装路径。例如，如果prefix被设置为&#x2F;opt&#x2F;myapp，那么可执行文件可能会被安装到&#x2F;opt&#x2F;myapp&#x2F;bin，库文件到&#x2F;opt&#x2F;myapp&#x2F;lib，头文件到&#x2F;opt&#x2F;myapp&#x2F;include等。这样的设计使得<code>make</code>和<code>make install</code>命令更加灵活，可以根据不同的需求和环境来定制软件的安装位置。</p>
+<p><strong>make和make install区别</strong></p>
+<p><code>make</code>和<code>make install</code>在Linux系统中是构建和安装软件的两个重要步骤，它们的主要区别如下：</p>
+<ul>
+<li><p>功能与作用：<br>make：主要用于编译源代码。它根据Makefile文件中的指令，自动确定大型程序中哪一部分需要重新编译，并调用相应的命令进行编译。通过自动化这一过程，可以大大提高项目开发的效率。<br>make install：主要用于安装软件。当源代码经过make命令编译后，生成的可执行文件或库文件需要进行安装，以便系统或用户能够正常使用。make install命令会读取Makefile中定义的安装指令，将编译好的文件安装到指定的目录。</p>
+</li>
+<li><p>执行时机：<br>make：通常在源代码下载并解压后，配置好编译环境（如通过.&#x2F;configure脚本）后执行，用于生成可执行文件或库文件。<br>make install：在make命令成功执行，生成了所需的文件后执行，用于将这些文件安装到系统中。</p>
+</li>
+<li><p>所需权限：<br>make：通常不需要特殊权限，除非编译过程中需要访问系统级别的资源或文件。<br>make install：由于需要将文件安装到系统目录中，因此通常需要root权限（或使用sudo命令）来执行。</p>
+</li>
+<li><p>依赖文件：<br>这两个命令都依赖于Makefile文件，该文件描述了编译和安装的规则和步骤。</p>
+</li>
+</ul>
+<p>总结来说，make和make install是软件构建和安装过程中的两个关键步骤。make负责编译源代码，而make install则负责将编译好的文件安装到系统中。在开发或安装软件时，通常需要按照这两个步骤来操作。</p>
+<p><strong>使用.&#x2F;configure –prefix后还需要make prefix指定吗</strong></p>
+<p>在使用<code>./configure --prefix</code>来指定安装目录后，通常不需要在后续的make命令中再次指定prefix。<code>./configure --prefix</code>的作用是在配置软件安装环境时设定一个基础目录，该目录将用于后续的<code>make install</code>过程中，决定可执行文件、库文件、配置文件等应被安装到哪个具体的子目录中。一旦<code>./configure</code>脚本运行并生成了Makefile，这个prefix的值就已经被Makefile所记录。接下来的make命令会根据Makefile中的指示进行编译，但并不需要（也不应该）再次指定prefix。make会按照Makefile中已经设置好的规则和路径进行工作。最后，当执行make install时，它会依据Makefile中记录的prefix值，将编译好的文件安装到先前通过<code>./configure --prefix</code>指定的目录中。因此，简而言之，你不需要在make命令中再次指定prefix，只需要在.&#x2F;configure时设定好即可。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure <span class="token parameter variable">--prefix</span><span class="token operator">=</span>/usr/local/test
+<span class="token comment"># 编译出错时，清除编译生成的文件</span>
+<span class="token function">make</span> distclean
+<span class="token comment"># 编译安装到指定目录下</span>
+<span class="token function">make</span> <span class="token assign-left variable">prefix</span><span class="token operator">=</span>/usr/local/redis <span class="token function">install</span>
+<span class="token comment"># 卸载</span>
+<span class="token function">make</span> uninstall<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="设置keepalived服务开机启动"><a href="#设置keepalived服务开机启动" class="headerlink" title="设置keepalived服务开机启动"></a>设置keepalived服务开机启动</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chkconfig</span> keepalived on
+<span class="token function">chkconfig</span> <span class="token parameter variable">--add</span> name
+          <span class="token parameter variable">--del</span> name
+          <span class="token parameter variable">--list</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Ubuntu图形界面允许root登陆"><a href="#Ubuntu图形界面允许root登陆" class="headerlink" title="Ubuntu图形界面允许root登陆"></a>Ubuntu图形界面允许root登陆</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置root密码，终端会先验证密码 然后在设置root密码</span>
+<span class="token function">sudo</span> <span class="token function">passwd</span> root
+<span class="token function">vi</span> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+<span class="token comment"># 增加两行</span>
+<span class="token comment"># greeter-show-manual-login=true</span>
+<span class="token comment"># all-guest=false #不允许guest用户登陆</span>
+<span class="token builtin class-name">cd</span> /etc/pam.d  <span class="token comment"># 编辑gdm-autologin和gdm-password文件 注释掉auth required pam_succeed_if.so user != root quiet_success</span>
+<span class="token function">vi</span> /root/.profile <span class="token comment"># 将mesg n || true 修改为 tty -s &amp;&amp; mesg n || true</span>
+<span class="token function">reboot</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yixius/articles/6971054.html">解决Ubuntu的root账号无法登录SSH问题</a></p>
+</blockquote>
+<h3 id="查看指定目录大小"><a href="#查看指定目录大小" class="headerlink" title="查看指定目录大小"></a>查看指定目录大小</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token parameter variable">-h</span> --max-depth<span class="token operator">=</span><span class="token number">1</span> /usr
+<span class="token comment"># 查看指定文件大小</span>
+<span class="token function">du</span> <span class="token parameter variable">-sh</span> 文件名
+<span class="token comment"># -a或--all: 显示所有文件和目录的使用情况，而不仅仅是目录。</span>
+<span class="token comment"># -b或--bytes: 以字节为单位显示磁盘使用量。</span>
+<span class="token comment"># -c: 在结果中添加总计。</span>
+<span class="token comment"># -h或--human-readable: 以人类可读的格式（KB, MB, GB）显示磁盘使用量。</span>
+<span class="token comment"># -H或--si: 与-h选项类似，但以1000为换算单位而不是1024。</span>
+<span class="token comment"># -k: 以千字节（KB）为单位显示磁盘使用量。</span>
+<span class="token comment"># -m: 以兆字节（MB）为单位显示磁盘使用量。</span>
+<span class="token comment"># -s或--summarize: 只显示总计，不列出每个文件和目录的使用情况。</span>
+<span class="token comment"># -L: 跟随符号链接。</span>
+<span class="token comment"># -x: 仅在当前文件系统中查找。</span>
+
+<span class="token comment"># 查看整个磁盘空间</span>
+<span class="token function">df</span> <span class="token parameter variable">-h</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看内存"><a href="#查看内存" class="headerlink" title="查看内存"></a>查看内存</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">free</span> <span class="token parameter variable">-h</span>
+
+<span class="token function">top</span> <span class="token parameter variable">-n</span> <span class="token number">2</span> <span class="token comment"># 表示更新两次后终止更新显示并退出</span>
+<span class="token function">top</span> <span class="token parameter variable">-d</span> <span class="token number">3</span> <span class="token comment"># 表示更新周期为3秒</span>
+<span class="token comment"># top命令进入展示信息后按大写M表示按照内存大小排序展示 按大写P表示按照CPU使用率进行排序</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="读、写、运行"><a href="#读、写、运行" class="headerlink" title="读、写、运行"></a>读、写、运行</h3><p>三项权限可以用数字表示，r&#x3D;4,w&#x3D;2,x&#x3D;1 rw-r–r–用数字表示成644</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> <span class="token number">754</span> filename
+<span class="token comment"># 将filename文件的读写运行权限赋予文件所有者，把读和运行的权限赋予群组用户，把读的权限赋予其他用户。</span>
+<span class="token comment"># chmod +x是将文件状态改为可执行，而chmod 777是改变文件读写权限。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="centos7卸载openjdk"><a href="#centos7卸载openjdk" class="headerlink" title="centos7卸载openjdk"></a>centos7卸载openjdk</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> -qa<span class="token operator">|</span><span class="token function">grep</span> jdk  <span class="token comment"># 查看已有的openjdk -q(query) -a(all)</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ev</span> <span class="token parameter variable">--nodeps</span> <span class="token variable"><span class="token variable">$(</span>上条命令的查询结果<span class="token variable">)</span></span> <span class="token comment"># 卸载</span>
+
+<span class="token comment"># ubuntu </span>
+<span class="token function">apt-get</span> remove openjdk*<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="rpm参数"><a href="#rpm参数" class="headerlink" title="rpm参数"></a>rpm参数</h3><pre class="line-numbers language-none"><code class="language-none">-a　查询所有套件。
+-b&lt;完成阶段&gt;&lt;套件档&gt;+或-t&lt;完成阶段&gt;&lt;套件档&gt;+　设置包装套件的完成阶段，并指定套件档的文件名称。
+-c　只列出组态配置文件，本参数需配合&quot;-l&quot;参数使用。
+-d　只列出文本文件，本参数需配合&quot;-l&quot;参数使用。
+-e&lt;套件档&gt;或--erase&lt;套件档&gt;　删除指定的套件。
+-f&lt;文件&gt;+　查询拥有指定文件的套件。
+-h或--hash　套件安装时列出标记。
+-i　显示套件的相关信息。
+-i&lt;套件档&gt;或--install&lt;套件档&gt;　安装指定的套件档。
+-l　显示套件的文件列表。
+-p&lt;套件档&gt;+　查询指定的RPM套件档。
+-q　使用询问模式，当遇到任何问题时，rpm指令会先询问用户。
+-R　显示套件的关联性信息。
+-s　显示文件状态，本参数需配合&quot;-l&quot;参数使用。
+-U&lt;套件档&gt;或--upgrade&lt;套件档&gt;升级指定的套件档。
+-v　显示指令执行过程。
+-vv　详细显示指令执行过程，便于排错。
+-addsign&lt;套件档&gt;+　在指定的套件里加上新的签名认证。
+--allfiles　安装所有文件。
+--allmatches　删除符合指定的套件所包含的文件。
+--badreloc　发生错误时，重新配置文件。
+--buildroot&lt;根目录&gt;　设置产生套件时，欲当作根目录的目录。
+--changelog　显示套件的更改记录。
+--checksig&lt;套件档&gt;+　检验该套件的签名认证。
+--clean　完成套件的包装后，删除包装过程中所建立的目录。
+--dbpath&lt;数据库目录&gt;　设置欲存放RPM数据库的目录。
+--dump　显示每个文件的验证信息。本参数需配合&quot;-l&quot;参数使用。
+--excludedocs　安装套件时，不要安装文件。
+--excludepath&lt;排除目录&gt;　忽略在指定目录里的所有文件。
+--force　强行置换套件或文件。
+--ftpproxy&lt;主机名称或IP地址&gt;　指定FTP代理服务器。
+--ftpport&lt;通信端口&gt;　设置FTP服务器或代理服务器使用的通信端口。
+--help　在线帮助。
+--httpproxy&lt;主机名称或IP地址&gt;　指定HTTP代理服务器。
+--httpport&lt;通信端口&gt;　设置HTTP服务器或代理服务器使用的通信端口。
+--ignorearch　不验证套件档的结构正确性。
+--ignoreos　不验证套件档的结构正确性。
+--ignoresize　安装前不检查磁盘空间是否足够。
+--includedocs　安装套件时，一并安装文件。
+--initdb　确认有正确的数据库可以使用。
+--justdb　更新数据库，当不变动任何文件。
+--nobulid　不执行任何完成阶段。
+--nodeps　不验证套件档的相互关联性。
+--nofiles　不验证文件的属性。
+--nogpg　略过所有GPG的签名认证。
+--nomd5　不使用MD5编码演算确认文件的大小与正确性。
+--nopgp　略过所有PGP的签名认证。
+--noorder　不重新编排套件的安装顺序，以便满足其彼此间的关联性。
+--noscripts　不执行任何安装Script文件。
+--notriggers　不执行该套件包装内的任何Script文件。
+--oldpackage　升级成旧版本的套件。
+--percent　安装套件时显示完成度百分比。
+--pipe&lt;执行指令&gt;　建立管道，把输出结果转为该执行指令的输入数据。
+--prefix&lt;目的目录&gt;　若重新配置文件，就把文件放到指定的目录下。
+--provides　查询该套件所提供的兼容度。
+--queryformat&lt;档头格式&gt;　设置档头的表示方式。
+--querytags　列出可用于档头格式的标签。
+--rcfile&lt;配置文件&gt;　使用指定的配置文件。
+--rebulid&lt;套件档&gt;　安装原始代码套件，重新产生二进制文件的套件。
+--rebuliddb　以现有的数据库为主，重建一份数据库。
+--recompile&lt;套件档&gt;　此参数的效果和指定&quot;--rebulid&quot;参数类似，当不产生套件档。
+--relocate&lt;原目录&gt;&#x3D;&lt;新目录&gt;　把本来会放到原目录下的文件改放到新目录。
+--replacefiles　强行置换文件。
+--replacepkgs　强行置换套件。
+--requires　查询该套件所需要的兼容度。
+--resing&lt;套件档&gt;+　删除现有认证，重新产生签名认证。
+--rmsource　完成套件的包装后，删除原始代码。
+--rmsource&lt;文件&gt;　删除原始代码和指定的文件。
+--root&lt;根目录&gt;　设置欲当作根目录的目录。
+--scripts　列出安装套件的Script的变量。
+--setperms　设置文件的权限。
+--setugids　设置文件的拥有者和所属群组。
+--short-circuit　直接略过指定完成阶段的步骤。
+--sign　产生PGP或GPG的签名认证。
+--target&#x3D;&lt;安装平台&gt;+　设置产生的套件的安装平台。
+--test　仅作测试，并不真的安装套件。
+--timecheck&lt;检查秒数&gt;　设置检查时间的计时秒数。
+--triggeredby&lt;套件档&gt;　查询该套件的包装者。
+--triggers　展示套件档内的包装Script。
+--verify　此参数的效果和指定&quot;-q&quot;参数相同。
+--version　显示版本信息。
+--whatprovides&lt;功能特性&gt;　查询该套件对指定的功能特性所提供的兼容度。
+--whatrequires&lt;功能特性&gt;　查询该套件对指定的功能特性所需要的兼容度。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="从服务器复制文件到本地"><a href="#从服务器复制文件到本地" class="headerlink" title="从服务器复制文件到本地"></a>从服务器复制文件到本地</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 从服务器复制文件到本地</span>
+<span class="token function">scp</span> root@192.168.1.100:/data/test.txt /home/myfile/
+<span class="token comment"># 从服务器复制文件夹到本地</span>
+<span class="token function">scp</span> <span class="token parameter variable">-r</span> root@192.168.1.100:/data/ /home/myfile/
+<span class="token comment"># 从本地复制文件到服务器</span>
+<span class="token function">scp</span> /home/myfile/test.txt root@192.168.1.100:/data/
+<span class="token comment"># 从本地复制文件夹到服务器</span>
+<span class="token function">scp</span> <span class="token parameter variable">-r</span> /home/myfile/ root@192.168.1.100:/data/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="ssh双向免密登录服务器A、B"><a href="#ssh双向免密登录服务器A、B" class="headerlink" title="ssh双向免密登录服务器A、B"></a>ssh双向免密登录服务器A、B</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 生成密钥</span>
+ssh-keygen <span class="token parameter variable">-t</span> rsa
+<span class="token comment"># 生成密钥的位置</span>
+<span class="token builtin class-name">cd</span> /root/.ssh/
+<span class="token comment"># 此命令在A机器执行，目的将A的公钥发送至B机器</span>
+<span class="token function">scp</span> id_rsa.pub root@BIP地址:/root/.ssh/id_rsa_A.pub
+<span class="token comment"># 此命令在B机器执行，目的将B的公钥发送至A机器</span>
+<span class="token function">scp</span> id_rsa.pub root@AIP地址:/root/.ssh/id_rsa_B.pub
+
+<span class="token comment"># 如果发送文件夹 使用scp -r /test root@B:/root/test</span>
+
+<span class="token comment"># 查看远程复制是否成功 写入密钥</span>
+<span class="token function">cat</span> id_rsa_A<span class="token punctuation">(</span>或者B<span class="token punctuation">)</span>.pub <span class="token operator">>></span> authorized_keys
+<span class="token comment"># 如果出现agent admitted failure to sign using the key</span>
+ssh-add ~/.ssh/id_rsa 
+<span class="token comment"># ssh A和ssh B测试ssh本机和远程是否已经免密登录（第一次免密登录需要输入密码，以后不需要）</span>
+ssh登陆 <span class="token function">ssh</span> root@ip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1e4aGp_cx0E_qCHVuS3GMg">科普：什么是SSH？</a></p>
+</blockquote>
+<h3 id="centos7-x2F-ubuntu通用"><a href="#centos7-x2F-ubuntu通用" class="headerlink" title="centos7&#x2F;ubuntu通用"></a>centos7&#x2F;ubuntu通用</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认命令行</span>
+systemctl set-default multi-user.target  （init <span class="token number">3</span>）
+<span class="token comment"># 默认图形页面</span>
+systemctl set-default graphical.target  <span class="token punctuation">(</span>init <span class="token number">5</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看系统内核-uname-r"><a href="#查看系统内核-uname-r" class="headerlink" title="查看系统内核 uname -r"></a>查看系统内核 uname -r</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 全部内核</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> kernel
+yum list installed <span class="token operator">|</span> <span class="token function">grep</span> kernel
+<span class="token comment">#删除多余内核</span>
+yum remove kernel-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="测试端口是否开通"><a href="#测试端口是否开通" class="headerlink" title="测试端口是否开通"></a>测试端口是否开通</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ssh</span> <span class="token parameter variable">-v</span> <span class="token parameter variable">-p</span> port username@ip
+<span class="token comment"># -v 调试模式(会打印日志) -p 指定端口 username可以随意</span>
+
+<span class="token comment"># 使用 telnet 命令</span>
+telnet <span class="token function">ip</span> 端口
+
+<span class="token comment"># 使用nc命令</span>
+<span class="token function">nc</span> <span class="token parameter variable">-vu</span> <span class="token function">ip</span> 端口
+<span class="token comment"># -v 输出交互或出错信息，新手调试时尤为有用,-u指定nc使用UDP协议，默认为TCP</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Linux交换空间-swap-space"><a href="#Linux交换空间-swap-space" class="headerlink" title="Linux交换空间(swap space)"></a>Linux交换空间(swap space)</h3><p>交换空间是磁盘上的一块区域，可以是一个分区，也可以是一个文件，或者是他们的组合。简单点说，当系统物理内存吃紧时，Linux会将内存中不常访问的数据保存到swap上，这样系统就有更多的物理内存为各个进程服务，而当系统需要访问swap上存储的内容时，再将swap上的数据加载到内存中，这就是我们常说的swap out和swap in</p>
+<p><strong>设置交换空间</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 在Home目录创建一个大小为16G的swap文件，块大小为1MByte，总共1K个块，也就是总共1GB</span>
+<span class="token function">dd</span> <span class="token assign-left variable">if</span><span class="token operator">=</span>/dev/zero <span class="token assign-left variable">of</span><span class="token operator">=~</span>/swapfile <span class="token assign-left variable">bs</span><span class="token operator">=</span>1M <span class="token assign-left variable">count</span><span class="token operator">=</span>1k
+<span class="token comment"># 2. 格式化新增的swap文件</span>
+<span class="token function">mkswap</span> ～/swapfile
+<span class="token comment"># 3. 启动新增的swap文件</span>
+<span class="token function">swapon</span> ～/swapfile
+<span class="token comment"># 4. 查看swap空间大小，发现增加了16G</span>
+<span class="token function">free</span>
+<span class="token comment"># 5. 关闭新增的swap文件</span>
+swapoff ～/swapfile
+<span class="token comment"># 6. 设置开机自启动，开机后自动启动新增的swap文件，在/etc/fstab中新增如下命令</span>
+/swapfile none swap sw <span class="token number">0</span> <span class="token number">3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 一、查看磁盘挂载目录</span>
+<span class="token function">df</span> -h（查看分区情况及数据盘名称）
+<span class="token function">mkdir</span> /usr（如果没有就创建，否则此步跳过）
+<span class="token comment"># 二、卸载磁盘</span>
+<span class="token function">umount</span> /data（卸载硬盘已挂载的data目录）
+<span class="token comment"># 三、挂载到新目录</span>
+<span class="token function">mount</span> /dev/vdb1 /usr（挂载到usr目录）
+<span class="token comment"># 四、修改 /etc/fstab</span>
+<span class="token function">vi</span> /etc/fstab （编辑fstab文件修改或添加，使重启后可以自动挂载）
+/dev/vdb1 /usr ext3 auto <span class="token number">0</span> <span class="token number">0</span>
+<span class="token comment"># 五、重新挂载所有分区</span>
+<span class="token function">mount</span> <span class="token parameter variable">-a</span>
+<span class="token comment"># 六、验证</span>
+<span class="token function">df</span> <span class="token parameter variable">-h</span> /usr/
+<span class="token comment"># 七、重启服务器</span>
+<span class="token function">reboot</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>需要注意的是：在实际操作过程中，挂载的目录会覆盖掉原目录的文件信息。可以先进行旧目录备份，挂载完成后在恢复数据。</p>
+<h3 id="source-filename与sh-filename及-x2F-filename执行脚本的区别"><a href="#source-filename与sh-filename及-x2F-filename执行脚本的区别" class="headerlink" title="source filename与sh filename及.&#x2F;filename执行脚本的区别"></a>source filename与sh filename及.&#x2F;filename执行脚本的区别</h3><ol>
+<li>当shell脚本具有可执行权限时，用<code>sh filename</code>与<code>./filename</code>执行脚本是没有区别的。<code>./filename</code>是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。</li>
+<li><code>sh filename</code>重新建立⼀个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。</li>
+<li><code>source filename</code>这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面</li>
+</ol>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="环境变量文件"><a href="#环境变量文件" class="headerlink" title="环境变量文件"></a>环境变量文件</h3><ul>
+<li>&#x2F;etc&#x2F;profile：此文件为系统的每个用户设置环境信息，当用户第一次登录时，该文件被执行，并从&#x2F;etc&#x2F;profile.d目录的配置文件中收集shell的设置</li>
+<li>&#x2F;etc&#x2F;bashrc：为每一个运行bash shell的用户执行此文件，当bash shell被打开时，该文件被读取也就是说，当用户shell执行了bash时，运行这个文件；</li>
+<li>~&#x2F;.bash_profile：每个用户都可使用该文件输入专用于自己使用的shell信息，当用户登录时，该文件仅仅执行一次！默认情况下，它设置一些环境变量，执行用户的.bashrc文件</li>
+<li>~&#x2F;.bashrc：该文件包含用于你的bash shell的bash信息，当登录时以及每次打开新的shell时，该文件被读取。该文件存储的是专属于个人bash shell的信息，当登录时以及每次打开一个新的shell时，执行这个文件。在这个文件里可以自定义用户专属的个人信息。</li>
+<li>~&#x2F;.bash_logout：当每次退出系统(退出bash shell)时，执行该文件；另外，&#x2F;etc&#x2F;profile中设定的变量(全局)的可以作用于任何用户，而~&#x2F;.bashrc等中设定的变量(局部)只能继承&#x2F;etc&#x2F;profile中的变量，他们是“父子”关系；</li>
+</ul>
+<h3 id="Ubuntu下bash的几个初始化文件"><a href="#Ubuntu下bash的几个初始化文件" class="headerlink" title="Ubuntu下bash的几个初始化文件"></a>Ubuntu下bash的几个初始化文件</h3><ul>
+<li>&#x2F;etc&#x2F;profile 全局(公有)配置，不管是哪个用户，登录时都会读取该文件；</li>
+<li>&#x2F;etc&#x2F;bashrc Ubuntu下没有此文件，与之对应的是&#x2F;etc&#x2F;bash.bashrc，它也是全局的；bash执行时，不管是何种方式，都会读取此文件；</li>
+<li>~&#x2F;.profile 若bash是以login方式执行时，读取~&#x2F;.bash_profile，若它不存在，则读取~&#x2F;.bash_login，若前两者不存在，读取~&#x2F;.profile；另外，图形模式登录时，此文件将被读取，即使存在~&#x2F;.bash_profile和~&#x2F;.bash_login；</li>
+<li>~&#x2F;.bash_login 若bash是以login方式执行时，读取~&#x2F;.bash_profile，若它不存在，则读取~&#x2F;.bash_login，若前两者都不存在，则读取~&#x2F;.profile；</li>
+<li>~&#x2F;.bash_profile Ubuntu默认没有此文件，可新建。只有bash是以login形式执行时，才会读取此文件。通常该配置文件还会配置成去读取~&#x2F;.bashrc；</li>
+<li>~&#x2F;.bashrc当bash是以non-login形式执行时，读取此文件。若是以login形式执行，则不会读取此文件；</li>
+<li>~&#x2F;.bash_logout注销时，且是login形式，此文件才会读取。也就是说，在文本模式注销时，此文件会被读取，图形模式注销时，此文件不会被读取。</li>
+<li>&#x2F;etc&#x2F;environment系统的环境变量，系统应用程序的执行与用户环境可以是无关的，但与系统环境是相关的</li>
+</ul>
+<ol>
+<li>在登录时,操作系统定制用户环境时使用的第一个文件就是&#x2F;etc&#x2F;profile,此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行。</li>
+<li>在登录时操作系统使用的第二个文件是&#x2F;etc&#x2F;environment，系统在读取你自己的profile前,设置环境文件的环境变量。</li>
+<li>在登录时用到的第三个文件是.profile文件,每个用户都可使用该文件输入专用于自己使用的shell信息,,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件。&#x2F;etc&#x2F;bashrc:为每一个运行bash shell的用户执行此文件。当bash shell被打开时,该文件被读取。</li>
+<li>&#x2F;etc&#x2F;environment是设置整个系统的环境，而&#x2F;etc&#x2F;profile是设置所有用户的环境，前者与登录用户无关，后者与登录用户有关。<br>先执行&#x2F;etc&#x2F;enviroment，后执行&#x2F;etc&#x2F;profile</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D32FE4CS2pT89czVUv0SOg">Linux环境变量配置的6种方法</a></p>
+</blockquote>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://javaguide.cn/cs-basics/operating-system/linux-intro.html">Linux基础知识总结</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wejhjmbtS16AdlDo0JiLMA">程序员必备的150个Linux命令！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TvUcd7mLkHxD_botoo7BQg">新人必备的Linux命令！</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/43JCaDehv0nbzDKbe0S8Kg">1000+常用的Linux命令来袭</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/319076999/answer/672319588?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline">作为一名Java开发人员，应该从多大程度上掌握Linux？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2FDa8fOm6x4-1MP9l9N7vA">30个实例详解TOP命令</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/liiz58PC1JlfPaEW81wUpg">ping命令的7大用法,看完秒变大神！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4pPdcSak3YLyqiz4Ns8htQ">听说你ping用的很6,给我图解一下ping的工作原理</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fLY3JH5_4_h4vABV7B-4uw">ping命令还能这么玩？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247494347&idx=1&sn=2f6bfe4a5716d4b0aba6d8b5348f7033&source=41#wechat_redirect">后端线上问题排查常用命令收藏</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jlmPjqFTfP4JNmbhpGoHsA">Java开发常用的Linux命令知识积累</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F_0kiOWgQS4BINx2t2Rqtw">这篇Linux总结的真棒！</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UT3RYrUGP2E5JQbf1Z8c8w">Linux远程桌面管理工具！功能真心强大</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kxvc95RJoSKqcXwwmyrPKg">在Linux上保护SSH服务器连接的8种方法</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zmfCC083VBrA8P6uWHL2DQ">发现谁用kill -9关闭程序就开除！</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hXDAZD0LUJ9g85t6fkBR-Q">万字详解Linux常用指令</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KN9OPZMhmuA6rhx5YTjwDA">最强Linux命令总结（特别推荐版）</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/jaywcjlove/linux-command">Linux命令大全搜索工具，内容包含Linux命令手册、详解、学习、搜集</a></td>
+</tr>
+</tbody></table>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">xmxe</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog-aok.pages.dev/posts/a8a3d9e9be38/">https://blog-aok.pages.dev/posts/a8a3d9e9be38/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">xmxe</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                    <span class="chip bg-color">计算机</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        
+                            <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        
+                    </div>
+                    <div id="wechat">
+                        
+                            <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/2ab37fc4e673/">
+                    <div class="card-image">
+                        
+                        <img src="https://picx1.zhimg.com/v2-e68d524210343613129267bd2cb75a0d_1440w.jpg" class="responsive-img" alt="Nginx">
+                        
+                        <span class="card-title">Nginx</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Nginx安装离线安装下载
+# 下载nginx:
+wget http://nginx.org/download/nginx-1.8.1.tar.gz
+# 下载openssl:
+wget https://www.openssl.org/sou
+                        
+
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                            -->
+
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                
+                                
+                                <a href="/tags/%E5%AE%89%E8%A3%85/">
+                                    <span class="chip bg-color">安装</span>
+                                </a>
+                                
+                                
+                            
+
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/e3cef6238a63/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic1.zhimg.com/v2-c35c3cd265fdcbb1fa7adbea81378c7a.jpg" class="responsive-img" alt="启动命令">
+                        
+                        <span class="card-title">启动命令</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            redis./redis-server /usr/local/redis/redis.conf
+./redis-cli -h 127.0.0.1 -p 6379 -a 123456
+./redis-cli -h 127.0.0.1 -p 6
+                        
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                            -->
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                
+                                <a href="/tags/%E9%9A%8F%E7%AC%94/">
+                                    <span class="chip bg-color">随笔</span>
+                                </a>
+                                
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5, h6'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5, h6').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2024
+                </span>
+            
+            
+
+            <a href="/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/medias/xcx.png");
+    zoom:40%;
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 430px;
+    height: 430px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

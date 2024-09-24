@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>download page</title>
+    <link rel="stylesheet" href="css/space.css" />
+    <link rel="stylesheet" href="css/dock.css" />
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/blog/favicon.ico"/>
+  </head>
+
+  <body>
+
+    <!-- space -->
+    <div class="solar-syst active">
+      <div class="sun"></div>
+      <div class="mercury"></div>
+      <div class="venus"></div>
+      <div class="earth"></div>
+      <div class="mars"></div>
+      <div class="jupiter"></div>
+      <div class="saturn"></div>
+      <div class="uranus"></div>
+      <div class="neptune"></div>
+      <div class="pluto"></div>
+      <div class="asteroids-belt"></div>
+    </div>
+
+    <!-- dock栏 -->
+    <div id="container">
+      <div id="dock">
+        <ul></ul>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            // 在这里处理加载的JSON数据
+            var str = '';
+            for (var i = 0; i < data.length; i++) {
+              var obj = data[i];
+              if(obj.appId.indexOf('http') != -1)
+                str += '<li><span>' + obj.text + '</span><a href="' + obj.appId + '"><img src="' + obj.src + '"></a></li>';
+            }
+            document.querySelector("#dock ul").innerHTML = str;
+          } else {
+            console.log("Failed to load JSON file.");
+          }
+        }
+      };
+      xhr.open("GET", "assert/friends.json");
+      xhr.send();
+    </script>
+  </body>
+</html>

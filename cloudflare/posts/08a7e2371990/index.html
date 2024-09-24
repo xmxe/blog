@@ -1,0 +1,1679 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="JWT-Json Web Token, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>JWT-Json Web Token | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ 'JWT-Json Web Token' ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+        max-height: 480px;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                技术栈
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="什么是JWT"><a href="#什么是JWT" class="headerlink" title="什么是JWT"></a>什么是JWT</h2><p>JWT(JSON Web Token)是目前最流行的跨域认证解决方案，是一种基于Token的认证授权机制。从JWT的全称可以看出，JWT本身也是Token，一种规范化之后的JSON结构的Token。JWT自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储Session信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。可以看出，JWT更符合设计RESTful API时的「Stateless（无状态）」原则。并且使用JWT认证可以有效避免CSRF攻击，因为JWT一般是存在在localStorage中，使用JWT进行身份验证的过程中是不会涉及到Cookie的。下面是<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7519">RFC7519</a>对JWT做的较为正式的定义。</p>
+<blockquote>
+<p>JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and&#x2F;or encrypted. ——<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7519">JSON Web Token (JWT)</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://jwt.io/">JWT</a>是Token的一种具体实现方式。通俗地说，JWT的本质就是一个字符串，它是将用户信息保存到一个Json字符串中，然后进行编码后得到一个JWT token，并且这个JWT token带有签名信息，接收后可以校验是否被篡改，所以可以用于在各方之间安全地将信息作为Json对象传输。JWT的认证流程如下：</p>
+<ol>
+<li>首先，前端通过Web表单将自己的用户名和密码发送到后端的接口，这个过程一般是一个POST请求。建议的方式是通过SSL加密的传输(HTTPS)，从而避免敏感信息被嗅探</li>
+<li>后端核对用户名和密码成功后，将包含用户信息的数据作为JWT的Payload，将其与JWT Header分别进行Base64编码拼接后签名，形成一个JWT Token，形成的JWT Token就是一个如同lll.zzz.xxx的字符串</li>
+<li>后端将JWT Token字符串作为登录成功的结果返回给前端。前端可以将返回的结果保存在浏览器中，退出登录时删除保存的JWT Token即可</li>
+<li>前端在每次请求时将JWT Token放入HTTP请求头中的Authorization属性中(解决XSS和XSRF问题)</li>
+<li>后端检查前端传过来的JWT Token，验证其有效性，比如检查签名是否正确、是否过期、token的接收方是否是自己等等</li>
+<li>验证通过后，后端解析出JWT Token中包含的用户信息，进行其他逻辑操作(一般是根据用户信息得到权限等)，返回结果<br><img src="https://img-blog.csdnimg.cn/img_convert/900b3e81f832b2f08c2e8aabb540536a.png"></li>
+</ol>
+<h2 id="为什么要用JWT"><a href="#为什么要用JWT" class="headerlink" title="为什么要用JWT"></a>为什么要用JWT</h2><p><strong>传统Session认证的弊端</strong></p>
+<p>我们知道HTTP本身是一种无状态的协议，这就意味着如果用户向我们的应用提供了用户名和密码来进行用户认证，认证通过后HTTP协议不会记录下认证后的状态，那么下一次请求时，用户还要再一次进行认证，因为根据HTTP协议，我们并不知道是哪个用户发出的请求，所以为了让我们的应用能识别是哪个用户发出的请求，我们只能在用户首次登录成功后，在服务器存储一份用户登录的信息，这份登录信息会在响应时传递给浏览器，告诉其保存为cookie，以便下次请求时发送给我们的应用，这样我们的应用就能识别请求来自哪个用户了，这是传统的基于session认证的过程。然而，传统的session认证有如下的问题：</p>
+<ul>
+<li>每个用户的登录信息都会保存到服务器的session中，随着用户的增多，服务器开销会明显增大</li>
+<li>由于session是存在与服务器的物理内存中，所以在分布式系统中，这种方式将会失效。虽然可以将session统一保存到Redis中，但是这样做无疑增加了系统的复杂性，对于不需要redis的应用也会白白多引入一个缓存中间件</li>
+<li>对于非浏览器的客户端、手机移动端等不适用，因为session依赖于cookie，而移动端经常没有cookie</li>
+<li>因为session认证本质基于cookie，所以如果cookie被截获，用户很容易收到跨站请求伪造攻击。并且如果浏览器禁用了cookie，这种方式也会失效</li>
+<li>前后端分离系统中更加不适用，后端部署复杂，前端发送的请求往往经过多个中间件到达后端，cookie中关于session的信息会转发多次</li>
+<li>由于基于Cookie，而cookie无法跨域，所以session的认证也无法跨域，对单点登录不适用</li>
+</ul>
+<p><strong>对比传统的session认证方式，JWT的优势</strong></p>
+<ul>
+<li>简洁：JWT Token数据量小，传输速度也很快</li>
+<li>因为JWT Token是以JSON加密形式保存在客户端的，所以JWT是跨语言的，原则上任何web形式都支持</li>
+<li>不需要在服务端保存会话信息，也就是说不依赖于cookie和session，所以没有了传统session认证的弊端，特别适用于分布式微服务</li>
+<li>单点登录友好：使用Session进行身份认证的话，由于cookie无法跨域，难以实现单点登录。但是，使用token进行认证的话，token可以被保存在客户端的任意位置的内存中，不一定是cookie，所以不依赖cookie，不会存在这些问题</li>
+<li>适合移动端应用：使用Session进行身份认证的话，需要保存一份信息在服务器端，而且这种方式会依赖到Cookie（需要Cookie保存SessionId），所以不适合移动端</li>
+</ul>
+<p>因为这些优势，目前无论单体应用还是分布式应用，都更加推荐用JWT token的方式进行用户认证。我们回顾一下利用token进行用户身份验证的流程：</p>
+<ol>
+<li>客户端使用用户名和密码请求登录</li>
+<li>服务端收到请求，验证用户名和密码</li>
+<li>验证成功后，服务端会签发一个token，再把这个token返回给客户端</li>
+<li>客户端收到token后可以把它存储起来，比如放到cookie中</li>
+<li>客户端每次向服务端请求资源时需要携带服务端签发的token，可以在cookie或者header中携带</li>
+<li>服务端收到请求，然后去验证客户端请求里面带着的token，如果验证成功，就向客户端返回请求数据</li>
+</ol>
+<p>这种基于token的认证方式相比传统的session认证方式更节约服务器资源，并且对移动端和分布式更加友好。其优点如下：</p>
+<ul>
+<li>支持跨域访问：cookie是无法跨域的，而token由于没有用到cookie(前提是将token放到请求头中)，所以跨域后不会存在信息丢失问题</li>
+<li>无状态：token机制在服务端不需要存储session信息，因为token自身包含了所有登录用户的信息，所以可以减轻服务端压力</li>
+<li>更适用CDN：可以通过内容分发网络请求服务端的所有资料</li>
+<li>更适用于移动端：当客户端是非浏览器平台时，cookie是不被支持的，此时采用token认证方式会简单很多</li>
+<li>无需考虑CSRF：由于不再依赖cookie，所以采用token认证方式不会发生CSRF，所以也就无需考虑CSRF的防御</li>
+</ul>
+<h2 id="JWT的优势"><a href="#JWT的优势" class="headerlink" title="JWT的优势"></a>JWT的优势</h2><p>相比于Session认证的方式来说，使用JWT进行身份认证主要有下面4个优势。</p>
+<p><strong>无状态</strong></p>
+<p>JWT自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储Session信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。不过，也正是由于JWT的无状态，也导致了它最大的缺点：不可控！就比如说，我们想要在JWT有效期内废弃一个JWT或者更改它的权限的话，并不会立即生效，通常需要等到有效期过后才可以。再比如说，当用户Log out的话，JWT也还有效。除非，我们在后端增加额外的处理逻辑比如将失效的JWT存储起来，后端先验证JWT是否有效再进行处理。具体的解决办法，我们会在后面的内容中详细介绍到，这里只是简单提一下。</p>
+<p><strong>有效避免了CSRF攻击</strong></p>
+<p>CSRF（CrossSiteRequestForgery）一般被翻译为跨站请求伪造，属于网络攻击领域范围。相比于SQL脚本注入、XSS等安全攻击方式，CSRF的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆Google的产品Gmail也曾在2007年的时候爆出过CSRF漏洞，这给Gmail的用户造成了很大的损失。那么究竟什么是跨站请求伪造呢？简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。举个简单的例子：小壮登录了某网上银行，他来到了网上银行的帖子区，看到一个帖子下面有一个链接写着“科学理财，年盈利率过万”，小壮好奇的点开了这个链接，结果发现自己的账户少了10000元。这是这么回事呢？原来黑客在链接中藏了一个请求，这个请求直接利用小壮的身份给银行发送了一个转账请求，也就是通过你的Cookie向银行发出请求。</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.mybank.com/Transfer?bankId=11&amp;money=10000<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>科学理财，年盈利率过万<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>CSRF攻击需要依赖Cookie，Session认证中Cookie中的SessionID是由浏览器发送到服务端的，只要发出请求，Cookie就会被携带。借助这个特性，即使黑客无法获取你的SessionID，只要让你误点攻击链接，就可以达到攻击效果。另外，并不是必须点击链接才可以达到攻击效果，很多时候，只要你打开了某个页面，CSRF攻击就会发生。</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.mybank.com/Transfer?bankId=11&amp;money=10000<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>那为什么JWT不会存在这种问题呢？</strong></p>
+<p>一般情况下我们使用JWT的话，在我们登录成功获得JWT之后，一般会选择存放在localStorage中。前端的每一个请求后续都会附带上这个JWT，整个过程压根不会涉及到Cookie。因此，即使你点击了非法链接发送了请求到服务端，这个非法请求也是不会携带JWT的，所以这个请求将是非法的。总结来说就一句话：<strong>使用JWT进行身份验证不需要依赖Cookie，因此可以避免CSRF攻击</strong>。不过，这样也会存在XSS攻击的风险。为了避免XSS攻击，你可以选择将JWT存储在标记为httpOnly的Cookie中。但是，这样又导致了你必须自己提供CSRF保护，因此，实际项目中我们通常也不会这么做。常见的避免XSS攻击的方式是过滤掉请求中存在XSS攻击风险的可疑字符串。在Spring项目中，我们一般是通过创建XSS过滤器来实现的。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@Order</span><span class="token punctuation">(</span><span class="token class-name">Ordered</span><span class="token punctuation">.</span><span class="token constant">HIGHEST_PRECEDENCE</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">XSSFilter</span> <span class="token keyword">implements</span> <span class="token class-name">Filter</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doFilter</span><span class="token punctuation">(</span><span class="token class-name">ServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">ServletResponse</span> response<span class="token punctuation">,</span>
+      <span class="token class-name">FilterChain</span> chain<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">XSSRequestWrapper</span> wrappedRequest <span class="token operator">=</span>
+          <span class="token keyword">new</span> <span class="token class-name">XSSRequestWrapper</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span><span class="token punctuation">)</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        chain<span class="token punctuation">.</span><span class="token function">doFilter</span><span class="token punctuation">(</span>wrappedRequest<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// other methods</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>适合移动端应用</strong></p>
+<p>使用Session进行身份认证的话，需要保存一份信息在服务器端，而且这种方式会依赖到Cookie（需要Cookie保存SessionId），所以不适合移动端。但是，使用JWT进行身份认证就不会存在这种问题，因为只要JWT可以被客户端存储就能够使用，而且JWT还可以跨语言使用。</p>
+<p><strong>单点登录友好</strong></p>
+<p>使用Session进行身份认证的话，实现单点登录，需要我们把用户的Session信息保存在一台电脑上，并且还会遇到常见的Cookie跨域的问题。但是，使用JWT进行认证的话，JWT被保存在客户端，不会存在这些问题。</p>
+<h2 id="JWT结构"><a href="#JWT结构" class="headerlink" title="JWT结构"></a>JWT结构</h2><p>JWT由3部分组成：标头(Header)、有效载荷(Payload)和签名(Signature)。在传输的时候，会将JWT的3部分分别进行Base64编码后用.进行连接形成最终传输的字符串</p>
+<pre class="line-numbers language-none"><code class="language-none">JWT String &#x3D; Base64(Header).Base64(Payload).HMACSHA256(base64UrlEncode(header)+&quot;.&quot;+base64UrlEncode(payload),secret)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://oss.javaguide.cn/javaguide/system-design/jwt/jwt-composition.png" alt="此图片来源于：https://supertokens.com/blog/oauth-vs-jwt"></p>
+<p>JWT本质上就是一组字串，通过（<code>.</code>）切分成三个为Base64编码的部分：</p>
+<ul>
+<li><strong>Header</strong>：描述JWT的元数据，定义了生成签名的算法以及Token的类型。</li>
+<li><strong>Payload</strong>：用来存放JWT需要传递的数据，如过期时间等相关信息</li>
+<li><strong>Signature（签名）</strong>：服务器通过Payload、Header和一个密钥(Secret)使用Header里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
+</ul>
+<p>JWT通常是这样的：<code>xxxxx.yyyyy.zzzzz</code>。示例：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.
+SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>你可以在<a target="_blank" rel="noopener" href="https://jwt.io/">jwt.io</a>这个网站上对其JWT进行解码，解码之后得到的就是Header、Payload、Signature这三部分。Header和Payload都是JSON格式的数据，Signature由Payload、Header和Secret(密钥)通过特定的计算公式和加密算法得到。</p>
+<p><img src="https://oss.javaguide.cn/javaguide/system-design/jwt/jwt.io.png" alt="img"></p>
+<p><strong>Header</strong></p>
+<p>Header通常由两部分组成：</p>
+<ul>
+<li>typ（Type）：令牌类型，也就是JWT。</li>
+<li>alg（Algorithm）：签名算法，比如HS256。</li>
+</ul>
+<p>JSON形式的Header被转换成Base64编码，成为JWT的第一部分。JWT头是一个描述JWT元数据的JSON对象，alg属性表示签名使用的算法，默认为HMAC SHA256（写为HS256）,typ属性表示令牌的类型，JWT令牌统一写为JWT。最后，使用Base64 URL算法将上述JSON对象转换为字符串保存</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+<span class="token property">"alg"</span><span class="token operator">:</span> <span class="token string">"HS256"</span><span class="token punctuation">,</span>
+<span class="token property">"typ"</span><span class="token operator">:</span> <span class="token string">"JWT"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>Payload</strong></p>
+<p>Payload也是JSON格式数据，其中包含了Claims(声明，包含JWT的相关信息)。Claims分为三种类型：</p>
+<ul>
+<li><strong>Registered Claims（注册声明）</strong>：预定义的一些声明，建议使用，但不是强制性的。</li>
+<li><strong>Public Claims（公有声明）</strong>：JWT签发方可以自定义的声明，但是为了避免冲突，应该在<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/jwt/jwt.xhtml">IANA JSON Web Token Registry</a>中定义它们。</li>
+<li><strong>PrivateClaims（私有声明）</strong>：JWT签发方因为项目需要而自定义的声明，更符合实际项目场景使用。</li>
+</ul>
+<p>下面是一些常见的注册声明：</p>
+<ul>
+<li>iss（issuer）：JWT签发方。</li>
+<li>iat（issuedattime）：JWT签发时间。</li>
+<li>sub（subject）：JWT主题。</li>
+<li>aud（audience）：JWT接收方。</li>
+<li>exp（expirationtime）：JWT的过期时间。</li>
+<li>nbf（notbeforetime）：JWT生效时间，早于该定义的时间的JWT不能被接受处理。</li>
+<li>jti（JWTID）：JWT唯一标识。</li>
+</ul>
+<p>示例：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"uid"</span><span class="token operator">:</span> <span class="token string">"ff1212f5-d8d1-4496-bf41-d2dda73de19a"</span><span class="token punctuation">,</span>
+  <span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"1234567890"</span><span class="token punctuation">,</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"John Doe"</span><span class="token punctuation">,</span>
+  <span class="token property">"exp"</span><span class="token operator">:</span> <span class="token number">15323232</span><span class="token punctuation">,</span>
+  <span class="token property">"iat"</span><span class="token operator">:</span> <span class="token number">1516239022</span><span class="token punctuation">,</span>
+  <span class="token property">"scope"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"admin"</span><span class="token punctuation">,</span><span class="token string">"user"</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Payload部分默认是不加密的，<strong>一定不要将隐私信息存放在Payload当中</strong>！！！JSON形式的Payload被转换成Base64编码，成为JWT的第二部分。</p>
+<pre class="line-numbers language-none"><code class="language-none">iss：发行人
+exp：到期时间
+sub：主题
+aud：用户
+nbf：在此之前不可用
+iat：发布时间
+jti：JWT ID用于标识该JWT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这些预定义的字段并不要求强制使用。除以上默认字段外，我们还可以自定义私有字段，一般会把包含用户信息的数据放到payload中，如下例：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+<span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"1234567890"</span><span class="token punctuation">,</span>
+<span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Helen"</span><span class="token punctuation">,</span>
+<span class="token property">"admin"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>请注意，默认情况下JWT是未加密的，因为只是采用base64算法，拿到JWT字符串后可以转换回原本的JSON数据，任何人都可以解读其内容，因此不要构建隐私信息字段，比如用户的密码一定不能保存到JWT中，以防止信息泄露。JWT只是适合在网络中传输一些非敏感的信息</p>
+<p><strong>Signature</strong></p>
+<p>签名哈希部分是对上面两部分数据签名，需要使用base64编码后的header和payload数据，通过指定的算法生成哈希，以确保数据不会被篡改。首先，需要指定一个密钥（secret）。该密钥仅仅保存在服务器中，并且不能向用户公开。然后，使用header中指定的签名算法（默认情况下为HMAC SHA256）根据以下公式生成签名</p>
+<pre class="line-numbers language-none"><code class="language-none">HMACSHA256(base64UrlEncode(header)+&quot;.&quot;+base64UrlEncode(payload),secret)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在计算出签名哈希后，JWT头，有效载荷和签名哈希的三个部分组合成一个字符串，每个部分用.分隔，就构成整个JWT对象</p>
+<blockquote>
+<p>注意JWT每部分的作用，在服务端接收到客户端发送过来的JWT token之后：</p>
+<ul>
+<li>header和payload可以直接利用base64解码出原文，从header中获取哈希签名的算法，从payload中获取有效数据</li>
+<li>signature由于使用了不可逆的加密算法，无法解码出原文，它的作用是校验token有没有被篡改。服务端获取header中的加密算法之后，利用该算法加上secretKey对header、payload进行加密，比对加密后的数据和客户端发送过来的是否一致。注意secretKey只能保存在服务端，而且对于不同的加密算法其含义有所不同，一般对于MD5类型的摘要加密算法，secretKey实际上代表的是盐值</li>
+</ul>
+</blockquote>
+<p>Signature部分是对前两部分的签名，作用是防止JWT（主要是payload）被篡改。这个签名的生成需要用到：</p>
+<ul>
+<li>Header+Payload。</li>
+<li>存放在服务端的密钥(一定不要泄露出去)。</li>
+<li>签名算法。</li>
+</ul>
+<p>签名的计算公式如下：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>算出签名以后，把Header、Payload、Signature三个部分拼成一个字符串，每个部分之间用”点”（<code>.</code>）分隔，这个字符串就是JWT。</p>
+<h2 id="如何基于JWT进行身份验证"><a href="#如何基于JWT进行身份验证" class="headerlink" title="如何基于JWT进行身份验证"></a>如何基于JWT进行身份验证</h2><p>在基于JWT进行身份验证的的应用程序中，服务器通过Payload、Header和Secret(密钥)创建JWT并将JWT发送给客户端。客户端接收到JWT之后，会将其保存在Cookie或者localStorage里面，以后客户端发出的所有请求都会携带这个令牌。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/system-design/jwt/jwt-authentication%20process.png" alt="JWT身份验证示意图"></p>
+<p>简化后的步骤如下：</p>
+<ol>
+<li>用户向服务器发送用户名、密码以及验证码用于登陆系统。</li>
+<li>如果用户用户名、密码以及验证码校验正确的话，服务端会返回已经签名的Token，也就是JWT。</li>
+<li>用户以后每次向后端发请求都在Header中带上这个JWT。</li>
+<li>服务端检查JWT并从中获取用户相关信息。</li>
+</ol>
+<p>两点建议：</p>
+<ol>
+<li>建议将JWT存放在localStorage中，放在Cookie中会有CSRF风险。</li>
+<li>请求服务端并携带JWT的常见做法是将其放在HTTP Header的<code>Authorization</code>字段中（<code>Authorization:BearerToken</code>）。</li>
+</ol>
+<blockquote>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/Snailclimb/spring-security-jwt-guide">spring-security-jwt-guide</a></strong> 就是一个基于JWT来做身份认证的简单案例，感兴趣的可以看看。</p>
+</blockquote>
+<h2 id="如何防止JWT被篡改"><a href="#如何防止JWT被篡改" class="headerlink" title="如何防止JWT被篡改"></a>如何防止JWT被篡改</h2><p>有了签名之后，即使JWT被泄露或者截获，黑客也没办法同时篡改Signature、Header、Payload。这是为什么呢？因为服务端拿到JWT之后，会解析出其中包含的Header、Payload以及Signature。服务端会根据Header、Payload、密钥再次生成一个Signature。拿新生成的Signature和JWT中的Signature作对比，如果一样就说明Header和Payload没有被修改。不过，如果服务端的秘钥也被泄露的话，黑客就可以同时篡改Signature、Header、Payload了。黑客直接修改了Header和Payload之后，再重新生成一个Signature就可以了。<strong>密钥一定保管好，一定不要泄露出去。JWT安全的核心在于签名，签名安全的核心在密钥</strong>。</p>
+<h2 id="如何加强JWT的安全性？"><a href="#如何加强JWT的安全性？" class="headerlink" title="如何加强JWT的安全性？"></a>如何加强JWT的安全性？</h2><ol>
+<li>使用安全系数高的加密算法。</li>
+<li>使用成熟的开源库，没必要造轮子。</li>
+<li>JWT存放在localStorage中而不是Cookie中，避免CSRF风险。</li>
+<li>一定不要将隐私信息存放在Payload当中。</li>
+<li>密钥一定保管好，一定不要泄露出去。JWT安全的核心在于签名，签名安全的核心在密钥。</li>
+<li>Payload要加入<code>exp</code>（JWT的过期时间），永久有效的JWT不合理。并且，JWT的过期时间不易过长。</li>
+<li>……</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://javaguide.cn/system-design/security/jwt-intro.html">原文链接</a></p>
+</blockquote>
+<h2 id="JWT身份认证常见问题及解决办法"><a href="#JWT身份认证常见问题及解决办法" class="headerlink" title="JWT身份认证常见问题及解决办法"></a>JWT身份认证常见问题及解决办法</h2><p><strong>注销登录等场景下JWT还有效</strong></p>
+<p>与之类似的具体相关场景有：</p>
+<ul>
+<li>退出登录;</li>
+<li>修改密码;</li>
+<li>服务端修改了某个用户具有的权限或者角色；</li>
+<li>用户的帐户被封禁&#x2F;删除；</li>
+<li>用户被服务端强制注销；</li>
+<li>用户被踢下线；</li>
+<li>……</li>
+</ul>
+<p>这个问题不存在于Session认证方式中，因为在Session认证方式中，遇到这种情况的话服务端删除对应的Session记录即可。但是，使用JWT认证的方式就不好解决了。我们也说过了，JWT一旦派发出去，如果后端不增加其他逻辑的话，它在失效之前都是有效的。那我们如何解决这个问题呢？查阅了很多资料，我简单总结了下面4种方案：</p>
+<p><strong>1、将JWT存入内存数据库</strong></p>
+<p>将JWT存入DB中，Redis内存数据库在这里是不错的选择。如果需要让某个JWT失效就直接从Redis中删除这个JWT即可。但是，这样会导致每次使用JWT发送请求都要先从DB中查询JWT是否存在的步骤，而且违背了JWT的无状态原则。</p>
+<p><strong>2、黑名单机制</strong></p>
+<p>和上面的方式类似，使用内存数据库比如Redis维护一个黑名单，如果想让某个JWT失效的话就直接将这个JWT加入到黑名单即可。然后，每次使用JWT进行请求的话都会先判断这个JWT是否存在于黑名单中。</p>
+<p>前两种方案的核心在于将有效的JWT存储起来或者将指定的JWT拉入黑名单。虽然这两种方案都违背了JWT的无状态原则，但是一般实际项目中我们通常还是会使用这两种方案。</p>
+<p><strong>3、修改密钥(Secret)</strong></p>
+<p>我们为每个用户都创建一个专属密钥，如果我们想让某个JWT失效，我们直接修改对应用户的密钥即可。但是，这样相比于前两种引入内存数据库带来了危害更大：</p>
+<ul>
+<li>如果服务是分布式的，则每次发出新的JWT时都必须在多台机器同步密钥。为此，你需要将密钥存储在数据库或其他外部服务中，这样和Session认证就没太大区别了。</li>
+<li>如果用户同时在两个浏览器打开系统，或者在手机端也打开了系统，如果它从一个地方将账号退出，那么其他地方都要重新进行登录，这是不可取的。</li>
+</ul>
+<p><strong>4、保持令牌的有效期限短并经常轮换</strong></p>
+<p>很简单的一种方式。但是，会导致用户登录状态不会被持久记录，而且需要用户经常登录。另外，对于修改密码后JWT还有效问题的解决还是比较容易的。说一种我觉得比较好的方式：<strong>使用用户的密码的哈希值对JWT进行签名。因此，如果密码更改，则任何先前的令牌将自动无法验证</strong>。</p>
+<h3 id="JWT的续签问题"><a href="#JWT的续签问题" class="headerlink" title="JWT的续签问题"></a>JWT的续签问题</h3><p>JWT有效期一般都建议设置的不太长(防止令牌泄露后的长期影响)，那么JWT过期后如何认证，如何实现动态刷新JWT，避免用户经常需要重新登录？我们先来看看在Session认证中一般的做法：假如Session的有效期30分钟，如果30分钟内用户有访问，就把Session有效期延长30分钟。JWT认证的话，我们应该如何解决续签问题呢？查阅了很多资料，我简单总结了下面4种方案：</p>
+<p><strong>1、类似于Session认证中的做法</strong></p>
+<p>这种方案满足于大部分场景。假设服务端给的JWT有效期设置为30分钟，服务端每次进行校验时，如果发现JWT的有效期马上快过期了，服务端就重新生成JWT给客户端。客户端每次请求都检查新旧JWT，如果不一致，则更新本地的JWT。这种做法的问题是仅仅在快过期的时候请求才会更新JWT,对客户端不是很友好。</p>
+<p><strong>2、每次请求都返回新JWT</strong></p>
+<p>这种方案的的思路很简单，但是，开销会比较大，尤其是在服务端要存储维护JWT的情况下。</p>
+<p><strong>3、JWT有效期设置到半夜</strong></p>
+<p>这种方案是一种折衷的方案，保证了大部分用户白天可以正常登录，适用于对安全性要求不高的系统。</p>
+<p><strong>4、用户登录返回两个JWT(access_token、refresh_token)</strong></p>
+<p>第一个是access_token，它的过期时间比较短如半个小时，另外一个是refresh_token它的过期时间更长一点比如为1天。客户端登录后，将access_token和refresh_token保存在本地，每次访问将access_token传给服务端(或者access_token和refresh_token同时传给服务端)，服务端校验access_token的有效性，如果过期的话，客户端就将refresh_token传给服务端，如果有效，服务端就生成新的access_token给客户端。否则，客户端就重新登录。这种方案的不足是：</p>
+<ul>
+<li>需要客户端来配合</li>
+<li>用户注销的时候需要同时保证两个JWT都无效</li>
+<li>重新请求获取JWT的过程中会有短暂JWT不可用的情况（可以通过在客户端设置定时器，当access_token快过期的时候，提前去通过refresh_token获取新的access_token）;</li>
+<li>存在安全问题，只要拿到了未过期的refresh_token就一直可以获取到access_token。</li>
+</ul>
+<p>众所周知, 在OAuth 2.0授权协议中, 有两个令牌token,分别是access_token和refresh_token,为什么已经有了access_token,还需要refresh_token呢?我们先看下面两者的介绍,access_token:访问令牌, 它是一个用来访问受保护资源的凭证,refresh_token:刷新令牌, 它是一个用来获取access token的凭证,接下来, 我们继续看两个令牌在下面场景的应用, 假设有一个用户需要在后台管理界面上操作6个小时。</p>
+<ol>
+<li>颁发一个有效性很长的access_token, 比如6个小时, 或者可以更长, 这样用户只需要刚开始登录一次,access_token可以一直使用, 直到access_token过期, 然后重复, 这种是不安全的,access_token的时效太长, 也就失去了本身的意义。</li>
+<li>颁发一个1小时有效期的access_token,过期后重新登录授权, 这样用户需要登录6次, 安全倒是有了, 但是用户体验极差</li>
+<li>颁发1小时有效期的access_token和6小时有效期的refresh_token,当access_token过期后（或者快要过期的时候）,使用refresh_token获取一个新的access_token, 直到refresh_token过期, 用户重新登录, 这样整个过程中，用户只需要登录一次, 用户体验好。access_token泄露了怎么办? 没关系, 它很快就会过期。refresh_token泄露了怎么办? 没关系, 使用refresh_token是需要客户端秘钥client_secret的。</li>
+</ol>
+<p><strong>RefreshToken有效期那么长，和直接将AccessToken的有效期延长有什么区别</strong><br>安全性更高。RefreshToken不像AccessToken那样在大多数请求中都被使用，主要是本地检测accessToken快过期的时候才使用，它的使用频率较低，主要作为刷新凭证，不直接用于请求受保护资源。由于其不直接用于请求资源，且使用频率低，因此即使泄露，攻击者也无法直接利用它访问受保护资源。除非access_token和refresh_token一块泄露，否则服务端首先检测access_token有没有过期,如果过期的话再根据refresh_token去生成新的access_token,只泄露refresh_token是无法在服务端通过refresh_token去生成新的access_token的。通过在AccessToken过期后自动刷新，减少了用户需要重新登录的频率，提高了用户体验。一般本地存储的时候，也不叫refreshToken,前端可以取个别名，混淆代码让攻击者不能直接识别这个就是刷新令牌</p>
+<ol start="4">
+<li>用户登录后, 在后台管理页面上操作1个小时后, 离开了一段时间, 然后5个小时后, 回到管理页面继续操作, 此时refresh_token有效期6个小时, 一直没有过期, 也就可以换取新的access_token,用户在这个过程中, 可以不用重复登录。但是在一些安全要求较高的系统中, 第二次操作是需要重新登录的, 即使refresh_token没有过期, 因为中间有几个小时, 用户是没有操作的, 系统猜测用户已离开, 并关闭会话。</li>
+<li>另外, 在OAuth 2.0安全最佳实践中, 推荐refresh_token是一次性的, 什么意思呢? 使用refresh_token获取access_token时, 同时会返回一个新的refresh_token,之前的refresh_token就会失效, 但是两个refresh_token的绝对过期时间是一样的, 所以不会存在refresh_token快过期就获取一个新的, 然后重复，永不过期的情况。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>JWT其中一个很重要的优势是无状态，但实际上，我们想要在实际项目中合理使用JWT的话，也还是需要保存JWT信息。JWT也不是银弹，也有很多缺陷，具体是选择JWT还是Session方案还是要看项目的具体需求。万万不可尬吹JWT，而看不起其他身份认证方案。另外，不用JWT直接使用普通的Token(随机生成，不包含具体的信息)结合Redis来做身份认证也是可以的。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://javaguide.cn/system-design/security/advantages&disadvantages-of-jwt.html">原文链接</a></p>
+</blockquote>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/skZL7RR3SftrB4SNZx59ZA">还分不清Cookie、Session、Token、JWT？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i73E4zbTh_JCuRCqH_NoVQ">JWT实现登录认证+Token自动续期方案</a></li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">xmxe</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog-aok.pages.dev/posts/08a7e2371990/">https://blog-aok.pages.dev/posts/08a7e2371990/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">xmxe</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        
+                            <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        
+                    </div>
+                    <div id="wechat">
+                        
+                            <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/566ad91076fb/">
+                    <div class="card-image">
+                        
+                        <img src="https://picd.zhimg.com/v2-5f6b4a9d35a1add123ac6b3f444b2291_1440w.jpg" class="responsive-img" alt="Dubbo">
+                        
+                        <span class="card-title">Dubbo</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Dubbo基础什么是Dubbo?
+Apache Dubbo|ˈdʌbəʊ|是一款高性能、轻量级的开源Java RPC框架。根据 Dubbo官方文档的介绍，Dubbo提供了六大核心能力
+
+面向接口代理的高性能RPC调用。
+智能容错和负载均衡。
+                        
+
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-15
+                            -->
+
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                        技术栈
+                                    </a>
+                                
+                            
+
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/f55fdb8ec84c/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic1.zhimg.com/v2-e69bde8250c0acfa3082076b373d6998_1440w.jpg" class="responsive-img" alt="常见的限流算法">
+                        
+                        <span class="card-title">常见的限流算法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            常见限流算法有哪些？简单介绍4种非常好理解并且容易实现的限流算法！
+
+图片来源于InfoQ的一篇文章《分布式服务限流实战，已经为你排好坑了》。
+
+固定窗口计数器算法固定窗口其实就是时间窗口。固定窗口计数器算法规定了我们单位时间处理的请求数量
+                        
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-15
+                            -->
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98/">
+                                    <span class="chip bg-color">代码实战</span>
+                                </a>
+                                
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5, h6'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5, h6').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2024
+                </span>
+            
+            
+
+            <a href="/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/medias/xcx.png");
+    zoom:40%;
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 430px;
+    height: 430px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

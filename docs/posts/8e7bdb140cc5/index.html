@@ -1599,6 +1599,7 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <p>主键字段：加行锁。<br>唯一索引字段：加行锁。<br>普通索引字段：加间隙锁。<br>主键范围：加多个行锁。<br>唯一索引范围，加多个行锁。<br>普通字段：加间隙锁，看着像表锁。。<br>查询空数据：加间隙锁。<br>如果事务1加了行锁，一直没有释放锁，事务2操作相同行的数据时，会一直等待直到超时。<br>如果事务1加了表锁，一直没有释放锁，事务2不管操作的是哪一行数据，都会一直等待直到超时。</p>
 <p>此外，有些小伙伴，可能会好奇，直接执行update语句，也会加行锁，为什么还需要使用for update关键字加行锁呢？<br>答：for update关键字是加在select语句中的，它从查到那行数据开始，直到事务提交，整个过程中都会加锁。</p>
 <p>而直接执行update语句，是在更新数据的时候加锁，二者有本质的区别。</p>
+<h3 id="MySQL中的distinct和group-by哪个效率更高？"><a href="#MySQL中的distinct和group-by哪个效率更高？" class="headerlink" title="MySQL中的distinct和group by哪个效率更高？"></a>MySQL中的distinct和group by哪个效率更高？</h3><p>在语义相同，有索引的情况下：group by和distinct都能使用索引，效率相同。<br>在语义相同，无索引的情况下：distinct效率高于group by。原因是distinct和group by都会进行分组操作，但group by可能会进行排序，触发filesort，导致sql执行效率低下。</p>
 <h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
 <thead>
 <tr>

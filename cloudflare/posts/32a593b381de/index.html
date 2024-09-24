@@ -1,0 +1,1818 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="计算机网络, 博客 blog">
+    <meta name="description" content="熊猫小二的博客  xmxe&#39;s blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 为了引用qq空间图床文件 -->
+    <meta name="referrer" content="no-referrer">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>计算机网络 | 熊猫小二</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+   
+<style>
+    body{
+       background-image: url(/medias/cover.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    
+  <div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="configure-border-1">
+        <div class="configure-core"></div>
+      </div>
+      <div class="configure-border-2">
+        <div class="configure-core"></div>
+      </div>
+      <div class="loading-word">加载中...</div>
+    </div>
+  </div>
+  <!-- 页面加载动画 -->
+  <script>
+    $(document).ready(function () {
+      // document.body.style.overflow = 'auto';
+      document.getElementById('loading-box').classList.add("loaded")
+    })
+  </script>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">熊猫小二</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-book" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>分类</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="#" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-star-of-david" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>主页</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/gallery">
+          
+          <i class="fas fa-images" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>相册</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  
+    <li>
+      <a class="waves-effect waves-light" onclick="switchNightMode()">
+        <i id="sum-moon-icon" class="fas fa-sun" style="zoom:0.65;" title="切换主题"></i>
+      </a>
+    </li>
+  
+  
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+          <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">熊猫小二</div>
+        <div class="logo-desc">
+            
+            熊猫小二的博客  xmxe&#39;s blog
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-book"></i>
+			
+			归档
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>分类</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-star-of-david" style="position: absolute;left:50px" ></i>
+			      
+		          <span>主页</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/gallery " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-images" style="position: absolute;left:50px" ></i>
+			      
+		          <span>相册</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 id="post-title" class="description center-align post-title"></h1>
+
+                    
+                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <script>
+                            var typedObj = new Typed("#post-title", {
+                                strings: [ '计算机网络' ],
+                                startDelay: 300,
+                                typeSpeed: 70,
+                                loop: false,
+                                backSpeed: 50,
+                                showCursor: true
+                            });
+                        </script>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+        max-height: 480px;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                <span class="chip bg-color">计算机</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="TCP与UDP"><a href="#TCP与UDP" class="headerlink" title="TCP与UDP"></a>TCP与UDP</h2><h3 id="TCP与UDP的区别"><a href="#TCP与UDP的区别" class="headerlink" title="TCP与UDP的区别"></a>TCP与UDP的区别</h3><ol>
+<li><strong>是否面向连接</strong>：UDP在传送数据之前不需要先建立连接。而TCP提供面向连接的服务，在传送数据之前必须先建立连接，数据传送结束后要释放连接。</li>
+<li><strong>是否是可靠传输</strong>：远地主机在收到UDP报文后，不需要给出任何确认，并且不保证数据不丢失，不保证是否顺序到达。TCP提供可靠的传输服务，TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制。通过TCP连接传输的数据，无差错、不丢失、不重复、并且按序到达。</li>
+<li><strong>是否有状态</strong>：这个和上面的“是否可靠传输”相对应。TCP传输是有状态的，这个有状态说的是TCP会去记录自己发送消息的状态比如消息是否发送了、是否被接收了等等。为此，TCP需要维持复杂的连接状态表。而UDP是无状态服务，简单来说就是不管发出去之后的事情了</li>
+<li><strong>传输效率</strong>：由于使用TCP进行传输的时候多了连接、确认、重传等机制，所以TCP的传输效率要比UDP低很多。</li>
+<li><strong>传输形式</strong>：TCP是面向字节流的，UDP是面向报文的。</li>
+<li><strong>首部开销</strong>：TCP首部开销（20～60字节）比UDP首部开销（8字节）要大。</li>
+<li><strong>是否提供广播或多播服务</strong>：TCP只支持点对点通信，UDP支持一对一、一对多、多对一、多对多；</li>
+<li>……</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">区别</th>
+<th align="center">TCP</th>
+<th align="center">UDP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">是否面向连接</td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">是否可靠</td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">是否有状态</td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">传输效率</td>
+<td align="center">较慢</td>
+<td align="center">较快</td>
+</tr>
+<tr>
+<td align="center">传输形式</td>
+<td align="center">字节流</td>
+<td align="center">数据报文段</td>
+</tr>
+<tr>
+<td align="center">首部开销</td>
+<td align="center">20 ～ 60 bytes</td>
+<td align="center">8 bytes</td>
+</tr>
+<tr>
+<td align="center">是否提供广播或多播服务</td>
+<td align="center">否</td>
+<td align="center">是</td>
+</tr>
+</tbody></table>
+<h3 id="什么时候选择TCP-什么时候选UDP"><a href="#什么时候选择TCP-什么时候选UDP" class="headerlink" title="什么时候选择TCP,什么时候选UDP?"></a>什么时候选择TCP,什么时候选UDP?</h3><ul>
+<li><strong>UDP一般用于即时通信</strong>，比如：语音、视频、直播等等。这些场景对传输数据的准确性要求不是特别高，比如你看视频即使少个一两帧，实际给人的感觉区别也不大。</li>
+<li><strong>TCP用于对传输准确性要求特别高的场景</strong>，比如文件传输、发送和接收邮件、远程登录等等。</li>
+</ul>
+<h3 id="HTTP基于TCP还是UDP？"><a href="#HTTP基于TCP还是UDP？" class="headerlink" title="HTTP基于TCP还是UDP？"></a>HTTP基于TCP还是UDP？</h3><p><strong>HTTP协议是基于TCP协议的</strong>，所以发送HTTP请求之前首先要建立TCP连接也就是要经历3次握手。</p>
+<blockquote>
+<p>🐛修正（参见<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/issues/1915">issue#1915</a>）：HTTP3.0之前是基于TCP协议的，而HTTP3.0将弃用TCP，改用基于UDP的QUIC协议。此变化主要为了解决HTTP&#x2F;2中存在的队头阻塞问题。由于HTTP&#x2F;2在单个TCP连接上使用了多路复用，受到TCP拥塞控制的影响，少量的丢包就可能导致整个TCP连接上的所有流被阻塞。</p>
+</blockquote>
+<h3 id="使用TCP的协议有哪些-使用UDP的协议有哪些"><a href="#使用TCP的协议有哪些-使用UDP的协议有哪些" class="headerlink" title="使用TCP的协议有哪些?使用UDP的协议有哪些?"></a>使用TCP的协议有哪些?使用UDP的协议有哪些?</h3><p><strong>运行于TCP协议之上的协议</strong>：</p>
+<ol>
+<li><strong>HTTP协议</strong>：超文本传输协议(HTTP，HyperTextTransferProtocol)主要是为Web浏览器与Web服务器之间的通信而设计的。当我们使用浏览器浏览网页的时候，我们网页就是通过HTTP请求进行加载的。</li>
+<li><strong>HTTPS协议</strong>：更安全的超文本传输协议(HTTPS,HypertextTransferProtocolSecure)，身披SSL外衣的HTTP协议</li>
+<li><strong>FTP协议</strong>：文件传输协议FTP（FileTransferProtocol），提供文件传输服务，基于TCP实现可靠的传输。使用FTP传输文件的好处是可以屏蔽操作系统和文件存储方式。</li>
+<li><strong>SMTP协议</strong>：简单邮件传输协议（SMTP，SimpleMailTransferProtocol）的缩写，基于TCP协议，用来发送电子邮件。注意⚠️：接受邮件的协议不是SMTP而是POP3协议。</li>
+<li><strong>POP3&#x2F;IMAP协议</strong>：POP3和IMAP两者都是负责邮件接收的协议。</li>
+<li><strong>Telnet协议</strong>：远程登陆协议，通过一个终端登陆到其他服务器。被一种称为SSH的非常安全的协议所取代。</li>
+<li><strong>SSH协议</strong>:SSH（SecureShell）是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用SSH协议可以有效防止远程管理过程中的信息泄露问题。SSH建立在可靠的传输协议TCP之上。</li>
+<li>……</li>
+</ol>
+<p><strong>运行于UDP协议之上的协议</strong>：</p>
+<ol>
+<li><strong>DHCP协议</strong>：动态主机配置协议，动态配置IP地址</li>
+<li><strong>DNS</strong>：域名系统（DNS，DomainNameSystem）将人类可读的域名(例如，<a target="_blank" rel="noopener" href="http://www.baidu.com)转换为机器可读的ip地址(例如,220.181.38.148).我们可以将其理解为专为互联网设计的电话薄.实际上dns同时支持udp和tcp协议./">www.baidu.com)转换为机器可读的IP地址(例如，220.181.38.148)。我们可以将其理解为专为互联网设计的电话薄。实际上DNS同时支持UDP和TCP协议。</a></li>
+</ol>
+<h2 id="TCP三次握手与四次挥手"><a href="#TCP三次握手与四次挥手" class="headerlink" title="TCP三次握手与四次挥手"></a>TCP三次握手与四次挥手</h2><h3 id="建立连接-TCP三次握手"><a href="#建立连接-TCP三次握手" class="headerlink" title="建立连接-TCP三次握手"></a>建立连接-TCP三次握手</h3><p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png" alt="TCP三次握手图解"></p>
+<p>建立一个TCP连接需要“三次握手”，缺一不可：</p>
+<ul>
+<li><strong>一次握手</strong>:客户端发送带有SYN（SEQ&#x3D;x）标志的数据包-&gt;服务端，然后客户端进入<strong>SYN_SEND</strong>状态，等待服务器的确认；</li>
+<li><strong>二次握手</strong>:服务端发送带有SYN+ACK(SEQ&#x3D;y,ACK&#x3D;x+1)标志的数据包–&gt;客户端,然后服务端进入<strong>SYN_RECV</strong>状态</li>
+<li><strong>三次握手</strong>:客户端发送带有ACK(ACK&#x3D;y+1)标志的数据包–&gt;服务端，然后客户端和服务器端都进入<strong>ESTABLISHED</strong>状态，完成TCP三次握手。</li>
+</ul>
+<p>当建立了3次握手之后，客户端和服务端就可以传输数据啦！</p>
+<h4 id="为什么要三次握手"><a href="#为什么要三次握手" class="headerlink" title="为什么要三次握手?"></a>为什么要三次握手?</h4><p>三次握手的目的是建立可靠的通信信道，说到通讯，简单来说就是数据的发送与接收，而三次握手最主要的目的就是双方确认自己与对方的发送与接收是正常的。</p>
+<ol>
+<li><strong>第一次握手</strong>：Client什么都不能确认；Server确认了对方发送正常，自己接收正常</li>
+<li><strong>第二次握手</strong>：Client确认了：自己发送、接收正常，对方发送、接收正常；Server确认了：对方发送正常，自己接收正常</li>
+<li><strong>第三次握手</strong>：Client确认了：自己发送、接收正常，对方发送、接收正常；Server确认了：自己发送、接收正常，对方发送、接收正常</li>
+</ol>
+<p>三次握手就能确认双方收发功能都正常，缺一不可。</p>
+<blockquote>
+<p>更详细的解答可以看这个：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/24853633/answer/115173386">TCP为什么是三次握手，而不是两次或四次？-车小胖的回答-知乎</a>。</p>
+</blockquote>
+<h4 id="第2次握手传回了ACK，为什么还要传回SYN？"><a href="#第2次握手传回了ACK，为什么还要传回SYN？" class="headerlink" title="第2次握手传回了ACK，为什么还要传回SYN？"></a>第2次握手传回了ACK，为什么还要传回SYN？</h4><p>服务端传回发送端所发送的ACK是为了告诉客户端：“我接收到的信息确实就是你所发送的信号了”，这表明从客户端到服务端的通信是正常的。回传SYN则是为了建立并确认从服务端到客户端的通信。</p>
+<blockquote>
+<p>SYN同步序列编号(SynchronizeSequenceNumbers)是TCP&#x2F;IP建立连接时使用的握手信号。在客户机和服务器之间建立正常的TCP网络连接时，客户机首先发出一个SYN消息，服务器使用SYN-ACK应答表示接收到了这个消息，最后客户机再以ACK(Acknowledgement)消息响应。这样在客户机和服务器之间才能建立起可靠的TCP连接，数据才可以在客户机和服务器之间传递。</p>
+</blockquote>
+<h3 id="断开连接-TCP四次挥手"><a href="#断开连接-TCP四次挥手" class="headerlink" title="断开连接-TCP四次挥手"></a>断开连接-TCP四次挥手</h3><p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png" alt="TCP四次挥手图解"></p>
+<p>断开一个TCP连接则需要“四次挥手”，缺一不可：</p>
+<ol>
+<li><strong>第一次挥手</strong>：客户端发送一个FIN（SEQ&#x3D;X）标志的数据包-&gt;服务端，用来关闭客户端到服务器的数据传送。然后，客户端进入<strong>FIN-WAIT-1</strong>状态。</li>
+<li><strong>第二次挥手</strong>：服务器收到这个FIN（SEQ&#x3D;X）标志的数据包，它发送一个ACK（SEQ&#x3D;X+1）标志的数据包-&gt;客户端。然后，此时服务端进入<strong>CLOSE-WAIT</strong>状态，客户端进入<strong>FIN-WAIT-2</strong>状态。</li>
+<li><strong>第三次挥手</strong>：服务端关闭与客户端的连接并发送一个FIN(SEQ&#x3D;y)标志的数据包-&gt;客户端请求关闭连接，然后，服务端进入<strong>LAST-ACK</strong>状态。</li>
+<li><strong>第四次挥手</strong>：客户端发送ACK(SEQ&#x3D;y+1)标志的数据包-&gt;服务端并且进入<strong>TIME-WAIT</strong>状态，服务端在收到ACK(SEQ&#x3D;y+1)标志的数据包后进入<strong>CLOSE</strong>状态。此时，如果客户端等待2MSL后依然没有收到回复，就证明服务端已正常关闭，随后，客户端也可以关闭连接了。</li>
+</ol>
+<p>只要四次挥手没有结束，客户端和服务端就可以继续传输数据！</p>
+<h4 id="为什么要四次挥手？"><a href="#为什么要四次挥手？" class="headerlink" title="为什么要四次挥手？"></a>为什么要四次挥手？</h4><p>TCP是全双工通信，可以双向传输数据。任何一方都可以在数据传送结束后发出连接释放的通知，待对方确认后进入半关闭状态。当另一方也没有数据再发送的时候，则发出连接释放通知，对方确认后就完全关闭了TCP连接。</p>
+<p>举个例子：A和B打电话，通话即将结束后。</p>
+<ol>
+<li><strong>第一次挥手</strong>：A说“我没啥要说的了”</li>
+<li><strong>第二次挥手</strong>：B回答“我知道了”，但是B可能还会有要说的话，A不能要求B跟着自己的节奏结束通话</li>
+<li><strong>第三次挥手</strong>：于是B可能又巴拉巴拉说了一通，最后B说“我说完了”</li>
+<li><strong>第四次挥手</strong>：A回答“知道了”，这样通话才算结束。</li>
+</ol>
+<h4 id="为什么不能把服务器发送的ACK和FIN合并起来，变成三次挥手？"><a href="#为什么不能把服务器发送的ACK和FIN合并起来，变成三次挥手？" class="headerlink" title="为什么不能把服务器发送的ACK和FIN合并起来，变成三次挥手？"></a>为什么不能把服务器发送的ACK和FIN合并起来，变成三次挥手？</h4><p>因为服务器收到客户端断开连接的请求时，可能还有一些数据没有发完，这时先回复ACK，表示接收到了断开连接的请求。等到数据发完之后再发FIN，断开服务器到客户端的数据传送。</p>
+<h4 id="如果第二次挥手时服务器的ACK没有送达客户端，会怎样？"><a href="#如果第二次挥手时服务器的ACK没有送达客户端，会怎样？" class="headerlink" title="如果第二次挥手时服务器的ACK没有送达客户端，会怎样？"></a>如果第二次挥手时服务器的ACK没有送达客户端，会怎样？</h4><p>客户端没有收到ACK确认，会重新发送FIN请求。</p>
+<h4 id="为什么第四次挥手客户端需要等待2-MSL（报文段最长寿命）时间后才进入CLOSED状态？"><a href="#为什么第四次挥手客户端需要等待2-MSL（报文段最长寿命）时间后才进入CLOSED状态？" class="headerlink" title="为什么第四次挥手客户端需要等待2*MSL（报文段最长寿命）时间后才进入CLOSED状态？"></a>为什么第四次挥手客户端需要等待2*MSL（报文段最长寿命）时间后才进入CLOSED状态？</h4><p>第四次挥手时，客户端发送给服务器的ACK有可能丢失，如果服务端因为某些原因而没有收到ACK的话，服务端就会重发FIN，如果客户端在2*MSL的时间内收到了FIN，就会重新发送ACK并再次等待2MSL，防止Server没有收到ACK而不断重发FIN。</p>
+<blockquote>
+<p><strong>MSL(MaximumSegmentLifetime)</strong>:一个片段在网络中最大的存活时间，2MSL就是一个发送和一个回复所需的最大时间。如果直到2MSL，Client都没有再次收到FIN，那么Client推断ACK已经被成功接收，则结束TCP连接。</p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h4 id="TCP协议三次握手"><a href="#TCP协议三次握手" class="headerlink" title="TCP协议三次握手"></a>TCP协议三次握手</h4><p><strong>第一次握手</strong>：客户端先向服务端发送一个请求连接的报文段，这个报文段SYN位设置为1,序列号Seq(Sequence Number)设置为某一值，假设为X，发送出去之后客户端进入SYN_SEND状态，等待服务器的确认<br><strong>第二次握手</strong>：服务器收到SYN报文段。服务器收到客户端的SYN报文段，需要对这个SYN报文段进行确认，设置Acknowledgment Number为x+1(Sequence Number+1)；同时，自己自己还要发送SYN请求信息，将SYN位置为1，Sequence Number为y。服务器端将上述所有信息放到一个报文段（即SYN+ACK报文段）中，一并发送给客户端，此时服务器进入SYN_RECV状态<br><strong>第三次握手</strong>：客户端收到服务器的SYN+ACK报文段。然后将Acknowledgment Number设置为y+1，向服务器发送ACK报文段，这个报文段发送完毕以后，客户端和服务器端都进入ESTABLISHED状态，完成TCP三次握手。</p>
+<h4 id="为什么要三次握手而不是两次"><a href="#为什么要三次握手而不是两次" class="headerlink" title="为什么要三次握手而不是两次?"></a>为什么要三次握手而不是两次?</h4><p>为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误。如下：</p>
+<blockquote>
+<p>“已失效的连接请求报文段”的产生在这样一种情况下：client发出的第一个连接请求报文段并没有丢失，而是在某个网络结点长时间的滞留了，以致延误到连接释放以后的某个时间才到达server。本来这是一个早已失效的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。</p>
+<p>假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
+<p>采用“三次握手”的办法可以防止上述现象发生。例如刚才那种情况，client不会向server的确认发出确认。server由于收不到确认，就知道client并没有要求建立连接。”，防止了服务器端的一直等待而浪费资源。<br>完成了三次握手，客户端和服务器端就可以开始传送数据</p>
+</blockquote>
+<h4 id="第三次握手失败了怎么办"><a href="#第三次握手失败了怎么办" class="headerlink" title="第三次握手失败了怎么办?"></a>第三次握手失败了怎么办?</h4><p>在tcp三次握手中,第二次握手完成后connect,就成功返回了.如果第三次握手的ack包丢了,此时客户端已认为连接是成功的,如果没有应用层的心跳包,客户端会一直维护这个连接,请问如何避免这种情况？<br>第二次握手服务器收到SYN包,然后发出SYN+ACK数据包确认收到并且请求建立连接，服务器进入SYN_RECV状态。而这个时候第三次握手时客户端发送ACK给服务器失败了，服务器没办法进入ESTABLISH状态，这个时候肯定不能传输数据的，不论客户端主动发送数据与否，服务器都会有定时器发送第二步SYN+ACK数据包，如果客户端再次发送ACK成功，建立连接。<br>如果一直不成功，服务器肯定会有超时（大概64s）设置，超时之后会给客户端发「RTS报文」(连接重置)，进入CLOSED状态，防止SYN洪泛攻击，这个时候客户端应该也会关闭连接</p>
+<blockquote>
+<p>SYN洪泛攻击:<br>SYN攻击利用的是TCP的三次握手机制，攻击端利用伪造的IP地址向被攻击端发出请求，而被攻击端发出的响应报文将永远发送不到目的地，那么「被攻击端在等待关闭这个连接的过程中消耗了资源」，如果有成千上万的这种连接，主机资源将被耗尽，从而达到攻击的目的。</p>
+</blockquote>
+<h4 id="TCP协议四次分手"><a href="#TCP协议四次分手" class="headerlink" title="TCP协议四次分手"></a>TCP协议四次分手</h4><p><strong>第一次分手</strong>：主机1，设置序列号Seq(Sequence Number)和确认包ACK(Acknowledgment Number)，假设seq为x+2,ACK&#x3D;y+1,再将FIN标志位设置为1,向主机2发送FIN报文段；之后主机1进入FIN_WAIT_1状态；这表示主机1没有数据要发送给主机2了；<br><strong>第二次分手</strong>：主机2收到了主机1发送的FIN报文段，向主机1回一个ACK报文段(其值为接收到的FIN报文的seq值+1)；主机1进入FIN_WAIT_2状态,等待主机二的断开请求包FIN；<br><strong>第三次分手</strong>：主机2向主机1发送FIN报文段，意思是我可以断开连接了,请求关闭连接，同时主机2进入CLOSE_WAIT状态；<br><strong>第四次分手</strong>：主机1收到主机2发送的FIN报文段，向主机2发送ACK报文段,值为刚刚接收到的FIN包Seq值+1，然后主机1进入TIME_WAIT状态；主机2收到主机1的ACK报文段以后，就关闭连接；此时，主机1等待2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，主机1也可以关闭连接了。</p>
+<h4 id="为什么要四次挥手"><a href="#为什么要四次挥手" class="headerlink" title="为什么要四次挥手"></a>为什么要四次挥手</h4><p>TCP是全双工模式，这就意味着，当主机1发出FIN报文段时，只是表示主机1已经没有数据要发送了，主机1告诉主机2，它的数据已经全部发送完毕了；但是，这个时候主机1还是可以接受来自主机2的数据；当主机2返回ACK报文段时，表示它已经知道主机1没有数据发送了，但是主机2还是可以发送数据到主机1的；当主机2也发送了FIN报文段时，这个时候就表示主机2也没有数据要发送了，就会告诉主机1，我也没有数据要发送了，之后彼此就会愉快的中断这次TCP连接。如果要正确的理解四次分手的原理，就需要了解四次分手过程中的状态变化。</p>
+<h4 id="四次挥手状态解释"><a href="#四次挥手状态解释" class="headerlink" title="四次挥手状态解释"></a>四次挥手状态解释</h4><p>FIN_WAIT_1:这个状态要好好解释一下，其实FIN_WAIT_1和FIN_WAIT_2状态的真正含义都是表示等待对方的FIN报文。而这两种状态的区别是：FIN_WAIT_1状态实际上是当SOCKET在ESTABLISHED状态时，它想主动关闭连接，向对方发送了FIN报文，此时该SOCKET即进入到FIN_WAIT_1状态。「也就是,发出FIN包之后进入FIN_WAIT_1状态」</p>
+<p>而当对方回应ACK报文后，则进入到FIN_WAIT_2状态，当然在实际的正常情况下，无论对方何种情况下，都应该马上回应ACK报文，所以FIN_WAIT_1状态一般是比较难见到的，而FIN_WAIT_2状态还有时常常可以用netstat看到。「也就是,发出ACK报文之后进入FIN_WAIT_2状态」最新面试题整理好了，大家可以在Java面试库小程序在线刷题。</p>
+<p>主动方FIN_WAIT_2：上面已经详细解释了这种状态，实际上FIN_WAIT_2状态下的SOCKET，表示半连接，也即有一方要求close连接，但另外还告诉对方，我暂时还有点数据需要传送给你(ACK信息)，稍后再关闭连接。</p>
+<p>主动方CLOSE_WAIT：这种状态的含义其实是表示在等待关闭。怎么理解呢？当对方close一个SOCKET后发送FIN报文给自己，你系统毫无疑问地会回应一个ACK报文给对方，此时则进入到CLOSE_WAIT状态。接下来呢，实际上你真正需要考虑的事情是察看你是否还有数据发送给对方，如果没有的话，那么你也就可以close这个SOCKET，发送FIN报文给对方，也即关闭连接。所以你在CLOSE_WAIT状态下，需要完成的事情是等待你去关闭连接。</p>
+<p>被动方LAST_ACK:这个状态还是比较容易好理解的，它是被动关闭一方在发送FIN报文后，最后等待对方的ACK报文。当收到ACK报文后，也即可以进入到CLOSED可用状态了。「也就是接收到了对方的FIN包,自己发出了ACK以及FIN包之后的状态」</p>
+<p>被动方TIME_WAIT:表示收到了对方的FIN报文，并发送出了ACK报文，就等2MSL后即可回到CLOSED可用状态了。如果FIN_WAIT1状态下，收到了对方同时带FIN标志和ACK标志的报文时，可以直接进入到TIME_WAIT状态，而无须经过FIN_WAIT_2状态。想成为架构师，这份架构师图谱建议看看，少走弯路。</p>
+<p>主动方CLOSED:表示连接中断。</p>
+<h2 id="TCP如何保证传输的可靠性？"><a href="#TCP如何保证传输的可靠性？" class="headerlink" title="TCP如何保证传输的可靠性？"></a>TCP如何保证传输的可靠性？</h2><ol>
+<li><strong>基于数据块传输</strong>：应用数据被分割成TCP认为最适合发送的数据块，再传输给网络层，数据块被称为报文段或段。</li>
+<li><strong>对失序数据包重新排序以及去重</strong>：TCP为了保证不发生丢包，就给每个包一个序列号，有了序列号能够将接收到的数据根据序列号排序，并且去掉重复序列号的数据就可以实现数据包去重。</li>
+<li><strong>校验和</strong>:TCP将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP将丢弃这个报文段和不确认收到此报文段。</li>
+<li><strong>超时重传</strong>:当发送方发送数据之后，它启动一个定时器，等待目的端确认收到这个报文段。接收端实体对已成功收到的包发回一个相应的确认信息（ACK）。如果发送端实体在合理的往返时延（RTT）内未收到确认消息，那么对应的数据包就被假设为<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%B8%A2%E5%8C%85">已丢失</a>并进行重传。</li>
+<li><strong>流量控制</strong>:TCP连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP使用的流量控制协议是可变大小的滑动窗口协议（TCP利用滑动窗口实现流量控制）。</li>
+<li><strong>拥塞控制</strong>:当网络拥塞时，减少数据的发送。</li>
+</ol>
+<h2 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h2><p>TCP利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为0，则发送方不能发送数据。</p>
+<p>为什么需要流量控制?这是因为双方在通信的时候，发送方的速率与接收方的速率是不一定相等，如果发送方的发送速率太快，会导致接收方处理不过来。如果接收方处理不过来的话，就只能把处理不过来的数据存在接收缓冲区(ReceivingBuffers)里（失序的数据包也会被存放在缓存区里）。如果缓存区满了发送方还在狂发数据的话，接收方只能把收到的数据包丢掉。出现丢包问题的同时又疯狂浪费着珍贵的网络资源。因此，我们需要控制发送方的发送速率，让接收方与发送方处于一种动态平衡才好。这里需要注意的是（常见误区）：</p>
+<ul>
+<li>发送端不等同于客户端</li>
+<li>接收端不等同于服务端</li>
+</ul>
+<p>TCP为全双工(Full-Duplex,FDX)通信，双方可以进行双向通信，客户端和服务端既可能是发送端又可能是服务端。因此，两端各有一个发送缓冲区与接收缓冲区，两端都各自维护一个发送窗口和一个接收窗口。接收窗口大小取决于应用、系统、硬件的限制（TCP传输速率不能大于应用的数据处理速率）。通信双方的发送窗口和接收窗口的要求相同</p>
+<p><strong>TCP发送窗口可以划分成四个部分</strong>：</p>
+<ol>
+<li>已经发送并且确认的TCP段（已经发送并确认）；</li>
+<li>已经发送但是没有确认的TCP段（已经发送未确认）；</li>
+<li>未发送但是接收方准备接收的TCP段（可以发送）；</li>
+<li>未发送并且接收方也并未准备接受的TCP段（不可发送）。</li>
+</ol>
+<p><strong>TCP发送窗口结构图示</strong>：</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-send-window.png" alt="TCP发送窗口结构"></p>
+<ul>
+<li><strong>SND.WND</strong>：发送窗口。</li>
+<li><strong>SND.UNA</strong>：SendUnacknowledged指针，指向发送窗口的第一个字节。</li>
+<li><strong>SND.NXT</strong>：SendNext指针，指向可用窗口的第一个字节。</li>
+</ul>
+<p><strong>可用窗口大小&#x3D;SND.UNA+SND.WND-SND.NXT</strong>。</p>
+<p><strong>TCP接收窗口可以划分成三个部分</strong>：</p>
+<ol>
+<li>已经接收并且已经确认的TCP段（已经接收并确认）；</li>
+<li>等待接收且允许发送方发送TCP段（可以接收未确认）；</li>
+<li>不可接收且不允许发送方发送TCP段（不可接收）。</li>
+</ol>
+<p><strong>TCP接收窗口结构图示</strong>：</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-receive-window.png" alt="TCP接收窗口结构"></p>
+<p>接收窗口的大小是根据接收端处理数据的速度动态调整的。如果接收端读取数据快，接收窗口可能会扩大。否则，它可能会缩小。另外，这里的滑动窗口大小只是为了演示使用，实际窗口大小通常会远远大于这个值。</p>
+<h2 id="TCP的拥塞控制是怎么实现的？"><a href="#TCP的拥塞控制是怎么实现的？" class="headerlink" title="TCP的拥塞控制是怎么实现的？"></a>TCP的拥塞控制是怎么实现的？</h2><p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏。这种情况就叫拥塞。拥塞控制就是为了防止过多的数据注入到网络中，这样就可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机，所有的路由器，以及与降低网络传输性能有关的所有因素。相反，流量控制往往是点对点通信量的控制，是个端到端的问题。流量控制所要做到的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-congestion-control.png" alt="TCP的拥塞控制"></p>
+<p>为了进行拥塞控制，TCP发送方要维持一个拥塞窗口(cwnd) 的状态变量。拥塞控制窗口的大小取决于网络的拥塞程度，并且动态变化。发送方让自己的发送窗口取为拥塞窗口和接收方的接受窗口中较小的一个。</p>
+<p>TCP的拥塞控制采用了四种算法，即慢开始、拥塞避免、快重传和快恢复。在网络层也可以使路由器采用适当的分组丢弃策略（如主动队列管理AQM），以减少网络拥塞的发生。</p>
+<ul>
+<li><strong>慢开始</strong>： 慢开始算法的思路是当主机开始发送数据时，如果立即把大量数据字节注入到网络，那么可能会引起网络阻塞，因为现在还不知道网络的符合情况。经验表明，较好的方法是先探测一下，即由小到大逐渐增大发送窗口，也就是由小到大逐渐增大拥塞窗口数值。cwnd初始值为1，每经过一个传播轮次，cwnd加倍。</li>
+<li><strong>拥塞避免</strong>： 拥塞避免算法的思路是让拥塞窗口cwnd缓慢增大，即每经过一个往返时间RTT就把发送方的cwnd加1.</li>
+<li><strong>快重传与快恢复</strong>： 在TCP&#x2F;IP中，快速重传和恢复（fastretransmitandrecovery，FRR）是一种拥塞控制算法，它能快速恢复丢失的数据包。没有FRR，如果数据包丢失了，TCP将会使用定时器来要求传输暂停。在暂停的这段时间内，没有新的或复制的数据包被发送。有了FRR，如果接收机接收到一个不按顺序的数据段，它会立即给发送机发送一个重复确认。如果发送机接收到三个重复确认，它会假定确认件指出的数据段丢失了，并立即重传这些丢失的数据段。有了FRR，就不会因为重传时要求的暂停被耽误。　当有单独的数据包丢失时，快速重传和恢复（FRR）能最有效地工作。当有多个数据信息包在某一段很短的时间内丢失时，它则不能很有效地工作。</li>
+</ul>
+<h2 id="ARQ协议了解吗"><a href="#ARQ协议了解吗" class="headerlink" title="ARQ协议了解吗?"></a>ARQ协议了解吗?</h2><p><strong>自动重传请求</strong>（AutomaticRepeat-reQuest，ARQ）是OSI模型中数据链路层和传输层的错误纠正协议之一。它通过使用确认和超时这两个机制，在不可靠服务的基础上实现可靠的信息传输。如果发送方在发送后一段时间之内没有收到确认信息（Acknowledgements，就是我们常说的ACK），它通常会重新发送，直到收到确认或者重试超过一定的次数。</p>
+<p>ARQ包括停止等待ARQ协议和连续ARQ协议。</p>
+<h3 id="停止等待ARQ协议"><a href="#停止等待ARQ协议" class="headerlink" title="停止等待ARQ协议"></a>停止等待ARQ协议</h3><p>停止等待协议是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认（回复ACK）。如果过了一段时间（超时时间后），还是没有收到ACK确认，说明没有发送成功，需要重新发送，直到收到确认后再发下一个分组；</p>
+<p>在停止等待协议中，若接收方收到重复分组，就丢弃该分组，但同时还要发送确认。</p>
+<p><strong>1)无差错情况:</strong></p>
+<p>发送方发送分组,接收方在规定时间内收到,并且回复确认.发送方再次发送。</p>
+<p><strong>2)出现差错情况（超时重传）:</strong></p>
+<p>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为自动重传请求ARQ。另外在停止等待协议中若收到重复分组，就丢弃该分组，但同时还要发送确认。</p>
+<p><strong>3)确认丢失和确认迟到</strong></p>
+<ul>
+<li><strong>确认丢失</strong>：确认消息在传输过程丢失。当A发送M1消息，B收到后，B向A发送了一个M1确认消息，但却在传输过程中丢失。而A并不知道，在超时计时过后，A重传M1消息，B再次收到该消息后采取以下两点措施：1.丢弃这个重复的M1消息，不向上层交付。2.向A发送确认消息。（不会认为已经发送过了，就不再发送。A能重传，就证明B的确认消息丢失）。</li>
+<li><strong>确认迟到</strong>：确认消息在传输过程中迟到。A发送M1消息，B收到并发送确认。在超时时间内没有收到确认消息，A重传M1消息，B仍然收到并继续发送确认消息（B收到了2份M1）。此时A收到了B第二次发送的确认消息。接着发送其他数据。过了一会，A收到了B第一次发送的对M1的确认消息（A也收到了2份确认消息）。处理如下：1.A收到重复的确认后，直接丢弃。2.B收到重复的M1后，也直接丢弃重复的M1。</li>
+</ul>
+<h3 id="连续ARQ协议"><a href="#连续ARQ协议" class="headerlink" title="连续ARQ协议"></a>连续ARQ协议</h3><p>连续ARQ协议可提高信道利用率。发送方维持一个发送窗口，凡位于发送窗口内的分组可以连续发送出去，而不需要等待对方确认。接收方一般采用累计确认，对按序到达的最后一个分组发送确认，表明到这个分组为止的所有分组都已经正确收到了。</p>
+<p><strong>优点</strong>：信道利用率高，容易实现，即使确认丢失，也不必重传。</p>
+<p><strong>缺点</strong>：不能向发送方反映出接收方已经正确收到的所有分组的信息。比如：发送方发送了5条消息，中间第三条丢失（3号），这时接收方只能对前两个发送确认。发送方无法知道后三个分组的下落，而只好把后三个全部重传一次。这也叫Go-Back-N（回退N），表示需要退回来重传已经发送过的N个消息</p>
+<h2 id="Http、Https"><a href="#Http、Https" class="headerlink" title="Http、Https"></a>Http、Https</h2><h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><h4 id="HTTP协议介绍"><a href="#HTTP协议介绍" class="headerlink" title="HTTP协议介绍"></a>HTTP协议介绍</h4><p>HTTP协议，全称超文本传输协议（HypertextTransferProtocol）。顾名思义，HTTP协议就是用来规范超文本的传输，超文本，也就是网络上的包括文本在内的各式各样的消息，具体来说，主要是来规范浏览器和服务器端的行为的。并且，HTTP是一个无状态（stateless）协议，也就是说服务器不维护任何有关客户端过去所发请求的消息。这其实是一种懒政，有状态协议会更加复杂，需要维护状态（历史信息），而且如果客户或服务器失效，会产生状态的不一致，解决这种不一致的代价更高。</p>
+<h4 id="HTTP协议通信过程"><a href="#HTTP协议通信过程" class="headerlink" title="HTTP协议通信过程"></a>HTTP协议通信过程</h4><p>HTTP是应用层协议，它以TCP（传输层）作为底层协议，默认端口为80.通信过程主要如下：</p>
+<ol>
+<li>服务器在80端口等待客户的请求。</li>
+<li>浏览器发起到服务器的TCP连接（创建套接字Socket）。</li>
+<li>服务器接收来自浏览器的TCP连接。</li>
+<li>浏览器（HTTP客户端）与Web服务器（HTTP服务器）交换HTTP消息。</li>
+<li>关闭TCP连接。</li>
+</ol>
+<h4 id="HTTP协议优点"><a href="#HTTP协议优点" class="headerlink" title="HTTP协议优点"></a>HTTP协议优点</h4><p>扩展性强、速度快、跨平台支持性好。</p>
+<h3 id="HTTPS协议"><a href="#HTTPS协议" class="headerlink" title="HTTPS协议"></a>HTTPS协议</h3><h4 id="HTTPS协议介绍"><a href="#HTTPS协议介绍" class="headerlink" title="HTTPS协议介绍"></a>HTTPS协议介绍</h4><p>HTTPS协议（HyperTextTransferProtocolSecure），是HTTP的加强安全版本。HTTPS是基于HTTP的，也是用TCP作为底层协议，并额外使用SSL&#x2F;TLS协议用作加密和安全认证。默认端口号是443。HTTPS协议中，SSL通道通常使用基于密钥的加密算法，密钥长度通常是40比特或128比特。</p>
+<h4 id="HTTPS协议优点"><a href="#HTTPS协议优点" class="headerlink" title="HTTPS协议优点"></a>HTTPS协议优点</h4><p>保密性好、信任度高。</p>
+<h4 id="https原理"><a href="#https原理" class="headerlink" title="https原理"></a>https原理</h4><p><strong>https加密过程</strong></p>
+<p><strong>服务器A</strong>、<strong>客户端B</strong>、<strong>授权机构CA</strong><br>A向CA申请证书，同时A把网址、签名等摘要发给CA，CA用自己的私钥加密A的摘要信息生成证书，将证书返回给A。客户端B访问服务器A，A返回证书(包含A的公钥)，B使用CA的公钥验证CA的签名，判断证书合法性。如果证书合法提取A的公钥，B随机生成一个对称密钥，B使用A的公钥对B的对称密钥加密，将加密后的对称密钥发送给A，A使用自己的私钥解密得到B的对称密钥，通过密钥对称加密或解密要传输的数据<br><strong>使用数字签名确保消息不可否认，使用数字证书对用户身份进行认证</strong></p>
+<p>那为啥要用第三方权威机构（Certificate Authority，简称 CA）私钥对摘要加密呢？</p>
+<p>因为摘要算法是公开的，中间人可以替换掉证书明文，再根据证书上的摘要算法计算出摘要后把证书上的摘要也给替换掉！这样client拿到证书后计算摘要发现一样，误以为此证书是合法就中招了。</p>
+<p><strong>为啥要先生成摘要再加密呢，不能直接加密？</strong></p>
+<p>因为使用非对称加密是非常耗时的。如果把整个证书内容都加密生成签名的话，客户端验验签也需要把签名解密，证书明文较长，客户端验签就需要很长的时间，而用摘要的话，会把内容很长的明文压缩成小得多的定长字符串，客户端验签的话就会快得多。</p>
+<blockquote>
+<ul>
+<li><strong>端口号</strong>：HTTP默认是80，HTTPS默认是443。</li>
+<li><strong>URL前缀</strong>：HTTP的URL前缀是<code>http://</code>，HTTPS的URL前缀是<code>https://</code>。</li>
+<li><strong>安全性和资源消耗</strong>：HTTP协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份。HTTPS是运行在SSL&#x2F;TLS之上的HTTP协议，SSL&#x2F;TLS运行在TCP之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。所以说，HTTP安全性没有HTTPS高，但是HTTPS比HTTP耗费更多服务器资源。</li>
+</ul>
+</blockquote>
+<h3 id="HTTPS的核心—SSL-x2F-TLS协议"><a href="#HTTPS的核心—SSL-x2F-TLS协议" class="headerlink" title="HTTPS的核心—SSL&#x2F;TLS协议"></a>HTTPS的核心—SSL&#x2F;TLS协议</h3><p>HTTPS之所以能达到较高的安全性要求，就是结合了SSL&#x2F;TLS和TCP协议，对通信数据进行加密，解决了HTTP数据透明的问题。接下来重点介绍一下SSL&#x2F;TLS的工作原理。</p>
+<h4 id="SSL和TLS的区别？"><a href="#SSL和TLS的区别？" class="headerlink" title="SSL和TLS的区别？"></a>SSL和TLS的区别？</h4><p>SSL和TLS没有太大的区别,SSL指安全套接字协议（SecureSocketsLayer），首次发布与1996年。SSL的首次发布其实已经是他的3.0版本，SSL1.0从未面世，SSL2.0则具有较大的缺陷（DROWN缺陷——DecryptingRSAwithObsoleteandWeakenedeNcryption）。很快，在1999年，SSL3.0进一步升级，新版本被命名为TLS1.0。因此，TLS是基于SSL之上的，但由于习惯叫法，通常把HTTPS中的核心加密协议混称为SSL&#x2F;TLS。</p>
+<h4 id="SSL-x2F-TLS的工作原理"><a href="#SSL-x2F-TLS的工作原理" class="headerlink" title="SSL&#x2F;TLS的工作原理"></a>SSL&#x2F;TLS的工作原理</h4><h5 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h5><p>SSL&#x2F;TLS的核心要素是非对称加密。非对称加密采用两个密钥——一个公钥，一个私钥。在通信时，私钥仅由解密者保存，公钥由任何一个想与解密者通信的发送者（加密者）所知。</p>
+<blockquote>
+<p>可以设想一个场景，在某个自助邮局，每个通信信道都是一个邮箱，每一个邮箱所有者都在旁边立了一个牌子，上面挂着一把钥匙：这是我的公钥，发送者请将信件放入我的邮箱，并用公钥锁好。</p>
+<p>但是公钥只能加锁，并不能解锁。解锁只能由邮箱的所有者——因为只有他保存着私钥。</p>
+<p>这样，通信信息就不会被其他人截获了，这依赖于私钥的保密性。</p>
+</blockquote>
+<p>非对称加密的公钥和私钥需要采用一种复杂的数学机制生成（密码学认为，为了较高的安全性，尽量不要自己创造加密方案）。公私钥对的生成算法依赖于单向陷门函数。</p>
+<blockquote>
+<p>单向函数：已知单向函数f，给定任意一个输入x，易计算输出y&#x3D;f(x)；而给定一个输出y，假设存在f(x)&#x3D;y，很难根据f来计算出x。</p>
+<p>单向陷门函数：一个较弱的单向函数。已知单向陷门函数f，陷门h，给定任意一个输入x，易计算出输出y&#x3D;f(x;h)；而给定一个输出y，假设存在f(x;h)&#x3D;y，很难根据f来计算出x，但可以根据f和h来推导出x。</p>
+</blockquote>
+<p>上图就是一个单向函数（不是单项陷门函数），假设有一个绝世秘籍，任何知道了这个秘籍的人都可以把苹果汁榨成苹果，那么这个秘籍就是“陷门”了吧。在这里，函数f的计算方法相当于公钥，陷门h相当于私钥。公钥f是公开的，任何人对已有输入，都可以用f加密，而要想根据加密信息还原出原信息，必须要有私钥才行。</p>
+<h5 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h5><p>使用SSL&#x2F;TLS进行通信的双方需要使用非对称加密方案来通信，但是非对称加密设计了较为复杂的数学算法，在实际通信过程中，计算的代价较高，效率太低，因此，SSL&#x2F;TLS实际对消息的加密使用的是对称加密。</p>
+<blockquote>
+<p>对称加密：通信双方共享唯一密钥k，加解密算法已知，加密方利用密钥k加密，解密方利用密钥k解密，保密性依赖于密钥k的保密性。</p>
+</blockquote>
+<p>对称加密的密钥生成代价比公私钥对的生成代价低得多，那么有的人会问了，为什么SSL&#x2F;TLS还需要使用非对称加密呢？因为对称加密的保密性完全依赖于密钥的保密性。在双方通信之前，需要商量一个用于对称加密的密钥。我们知道网络通信的信道是不安全的，传输报文对任何人是可见的，密钥的交换肯定不能直接在网络信道中传输。因此，使用非对称加密，对对称加密的密钥进行加密，保护该密钥不在网络信道中被窃听。这样，通信双方只需要一次非对称加密，交换对称加密的密钥，在之后的信息通信中，使用绝对安全的密钥，对信息进行对称加密，即可保证传输消息的保密性。</p>
+<h5 id="公钥传输的信赖性"><a href="#公钥传输的信赖性" class="headerlink" title="公钥传输的信赖性"></a>公钥传输的信赖性</h5><p>SSL&#x2F;TLS介绍到这里，了解信息安全的朋友又会想到一个安全隐患，设想一个下面的场景：</p>
+<blockquote>
+<p>客户端C和服务器S想要使用SSL&#x2F;TLS通信，由上述SSL&#x2F;TLS通信原理，C需要先知道S的公钥，而S公钥的唯一获取途径，就是把S公钥在网络信道中传输。要注意网络信道通信中有几个前提：</p>
+<ol>
+<li>任何人都可以捕获通信包</li>
+<li>通信包的保密性由发送者设计</li>
+<li>保密算法设计方案默认为公开，而（解密）密钥默认是安全的</li>
+</ol>
+<p>因此，假设S公钥不做加密，在信道中传输，那么很有可能存在一个攻击者A，发送给C一个诈包，假装是S公钥，其实是诱饵服务器AS的公钥。当C收获了AS的公钥（却以为是S的公钥），C后续就会使用AS公钥对数据进行加密，并在公开信道传输，那么A将捕获这些加密包，用AS的私钥解密，就截获了C本要给S发送的内容，而C和S二人全然不知。</p>
+<p>同样的，S公钥即使做加密，也难以避免这种信任性问题，C被AS拐跑了！</p>
+</blockquote>
+<p>为了公钥传输的信赖性问题，第三方机构应运而生——证书颁发机构（CA，CertificateAuthority）。CA默认是受信任的第三方。CA会给各个服务器颁发证书，证书存储在服务器上，并附有CA的电子签名（见下节）。</p>
+<p>当客户端（浏览器）向服务器发送HTTPS请求时，一定要先获取目标服务器的证书，并根据证书上的信息，检验证书的合法性。一旦客户端检测到证书非法，就会发生错误。客户端获取了服务器的证书后，由于证书的信任性是由第三方信赖机构认证的，而证书上又包含着服务器的公钥信息，客户端就可以放心的信任证书上的公钥就是目标服务器的公钥。</p>
+<h5 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h5><p>数字签名要解决的问题，是防止证书被伪造。第三方信赖机构CA之所以能被信赖，就是靠数字签名技术。数字签名，是CA在给服务器颁发证书时，使用散列+加密的组合技术，在证书上盖个章，以此来提供验伪的功能。具体行为如下：</p>
+<blockquote>
+<p>CA知道服务器的公钥，对证书采用散列技术生成一个摘要。CA使用CA私钥对该摘要进行加密，并附在证书下方，发送给服务器。</p>
+<p>现在服务器将该证书发送给客户端，客户端需要验证该证书的身份。客户端找到第三方机构CA，获知CA的公钥，并用CA公钥对证书的签名进行解密，获得了CA生成的摘要。</p>
+<p>客户端对证书数据（包含服务器的公钥）做相同的散列处理，得到摘要，并将该摘要与之前从签名中解码出的摘要做对比，如果相同，则身份验证成功；否则验证失败。</p>
+</blockquote>
+<p>总结来说，带有证书的公钥传输机制如下：</p>
+<ol>
+<li>设有服务器S，客户端C，和第三方信赖机构CA。</li>
+<li>S信任CA，CA是知道S公钥的，CA向S颁发证书。并附上CA私钥对消息摘要的加密签名。</li>
+<li>S获得CA颁发的证书，将该证书传递给C。</li>
+<li>C获得S的证书，信任CA并知晓CA公钥，使用CA公钥对S证书上的签名解密，同时对消息进行散列处理，得到摘要。比较摘要，验证S证书的真实性。</li>
+<li>如果C验证S证书是真实的，则信任S的公钥（在S证书中）。</li>
+</ol>
+<p>对于数字签名，强烈推荐看看<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18N411X7ty/">数字签名及数字证书原理</a>这个视频，这是我看过最清晰的讲解。</p>
+<p><img src="https://oss.javaguide.cn/github/javaguide/image-20220321121814946.png" alt="img"></p>
+<h5 id="https相关文章"><a href="#https相关文章" class="headerlink" title="https相关文章"></a>https相关文章</h5><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tOHSImjJKiSoGHxJ4pbNeQ">看完这篇HTTPS，和面试官扯皮就没问题了</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2_iPy3-qh_VuzBCLtOFGxQ">终于有人把HTTPS原理讲清楚了！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JNXsBvX32kBQN3UlzfAKHg">硬核！30张图解HTTP常见的面试题</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7rn4ruT2KemKRJRUkCwyfA">漫画：什么是HTTPS协议？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3M0CqFQP2q37XMpDHbjF9g">一个故事讲完https</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/URdOsAiUn_65Zr_eG6CyxQ">用了HTTPS就一定安全吗？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/B7bg0ggzGg4-k-M95-evaA">18张图彻底弄懂HTTPS的原理！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-sD504t5Ebm0Ubwalos8DA">HTTP3到底是个什么鬼</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sYuvL9ucjyaUIhwkHllSsg">几幅图，拿下HTTPS关于加解密、加签验签的那些事</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LhzWXV-xW9elL1TE2RKhDw">Web登录其实没那么简单</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32754315">摘要、数字签名、数字证书区别</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/e4s6TuMJYMbBAv5bpqR79A">https原理</a></td>
+</tr>
+</tbody></table>
+<h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><p>HTTP接口和RPC接口都是生产上常用的接口，顾名思义，HTTP接口使用基于HTTP协议的URL传参调用，而RPC接口则基于远程过程调用。RPC（即<code>Remote Procedure Call</code>，远程过程调用）和HTTP（<code>HyperText Transfer Protocol</code>，超文本传输协议），两者前者是一种方法，后者则是一种协议。两者都常用于实现服务，在这个层面最本质的区别是RPC服务主要工作在TCP协议之上（也可以在HTTP协议），而HTTP服务工作在HTTP协议之上。由于HTTP协议基于TCP协议，所以RPC服务天然比HTTP更轻量，效率更胜一筹。两者都是基于网络实现的，从这一点上，都是基于<code>Client/Server</code>架构。</p>
+<h3 id="RPC（Remote-Procedure-Call）服务"><a href="#RPC（Remote-Procedure-Call）服务" class="headerlink" title="RPC（Remote Procedure Call）服务"></a>RPC（Remote Procedure Call）服务</h3><p>RPC服务基本架构包含了四个核心的组件，分别是Client、Server、Clent Stub以及Server Stub。</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/knmrNHnmCLFUiaP9RbCU7coo2ia2sDNQZ1m4Yf9QPEUQp7bCLJ8QN2xtJPUibyRtiaria4niblrxRjTbhhvGmO3c02bA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<ul>
+<li><strong>Client （客户端）</strong>：服务调用方。</li>
+<li><strong>Server（服务端）</strong>：服务提供方。</li>
+<li><strong>Client Stub（客户端存根）</strong>：存放服务端的地址消息，负责将客户端的请求参数打包成网络消息，然后通过网络发送给服务提供方。</li>
+<li><strong>Server Stub（服务端存根）</strong>：接收客户端发送的消息，再将客户端请求参数打包成网络消息，然后通过网络远程发送给服务方。<br>RPC效率优势明显，在实际开发中，客户端和服务端在技术方案中约定客户端的调用参数和服务端的返回参数之后就可以各自开发，任何客户端只要按照接口定义的规范发送入参都可以调用该RPC服务，服务端也能按接口定义的规范出参返回计算结果。这样既实现了客户端和服务端之间的解耦，也使得RPC接口可以在多个项目中重复利用。<br>RPC调用分为同步方式和异步方式。同步调用即客户端等待调用完成并返回结果；异步调用即客户端不等待调用执行完成返回结果，变成单向调用或者通过回调函数等待接收到返回结果的通知。</li>
+</ul>
+<h3 id="流行的RPC框架"><a href="#流行的RPC框架" class="headerlink" title="流行的RPC框架"></a>流行的RPC框架</h3><p>目前流行的RPC框架有很多，下面介绍常见的三种。</p>
+<ul>
+<li><strong>gRPC</strong>：gRPC是Google公布的开源项目，基于HTTP2.0协议，并支持常见的众多编程语言。HTTP 2.0协议是基于二进制的HTTP协议的升级版本，gRPC底层使用了Netty框架。</li>
+<li><strong>Thrift</strong>：Thrift是Facebook的一个开源项目，主要是一个跨语言的服务开发框架。它有一个代码生成器来对它所定义的IDL文件自动生成服务代码框架。Thrift对于底层的RPC通讯都是透明的，用户只需要对其进行二次开发即可，省去了一系列重复的前置基础开发工作。</li>
+<li><strong>Dubbo</strong>：Dubbo是阿里集团开源的一个极为出名的RPC框架，在很多互联网公司和企业应用中广泛使用。协议和序列化框架都可以插拔是及其鲜明的特色。</li>
+</ul>
+<h3 id="RPC接口和HTTP接口的区别与联系"><a href="#RPC接口和HTTP接口的区别与联系" class="headerlink" title="RPC接口和HTTP接口的区别与联系"></a>RPC接口和HTTP接口的区别与联系</h3><p>RPC接口即相当于调用本地接口一样调用远程服务的接口；HTTP接口是基于http协议的post接口和get接口（等等，2.0版本协议子支持更多）。</p>
+<h4 id="传输协议"><a href="#传输协议" class="headerlink" title="传输协议"></a>传输协议</h4><ul>
+<li>RPC：可以基于TCP协议，也可以基于HTTP协议。</li>
+<li>HTTP：基于HTTP协议。</li>
+</ul>
+<h4 id="传输效率"><a href="#传输效率" class="headerlink" title="传输效率"></a>传输效率</h4><ul>
+<li>RPC：使用自定义的TCP协议，可以让请求报文体积更小，或者使用HTTP2.0协议，也可以很好地减少报文体积，提高传输效率。</li>
+<li>HTTP：如果时基于HTTP1.1的协议，请求中会包含很多无用的内容；如果是基于HTTP2.0，那么简单地封装一下还是可以作为一个RPC使用的，这时标准RPC框架更多是服务治理。</li>
+</ul>
+<h4 id="性能消耗"><a href="#性能消耗" class="headerlink" title="性能消耗"></a>性能消耗</h4><ul>
+<li>RPC：可以基于thrift实现高效的二进制传输</li>
+<li>HTTP：大部分是通过json实现的，字节大小和序列化耗时都比thrift要更消耗性能</li>
+</ul>
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><ul>
+<li>RPC：基本都自带了负载均衡策略</li>
+<li>HTTP：需要配置Nginx，HAProxy实现</li>
+</ul>
+<h4 id="服务治理（下游服务新增，重启，下线时如何不影响上游调用者）"><a href="#服务治理（下游服务新增，重启，下线时如何不影响上游调用者）" class="headerlink" title="服务治理（下游服务新增，重启，下线时如何不影响上游调用者）"></a>服务治理（下游服务新增，重启，下线时如何不影响上游调用者）</h4><ul>
+<li>RPC：能做到自动通知，不影响上游</li>
+<li>HTTP：需要事先通知，修改Nginx&#x2F;HAProxy配置</li>
+</ul>
+<blockquote>
+<p>RPC主要用于公司内部服务调用，性能消耗低，传输效率高，服务治理方便。HTTP主要用于对外的异构环境，浏览器调用，APP接口调用，第三方接口调用等等。</p>
+</blockquote>
+<h3 id="RPC和HTTP都可以用于实现远程过程调用，如何选择？"><a href="#RPC和HTTP都可以用于实现远程过程调用，如何选择？" class="headerlink" title="RPC和HTTP都可以用于实现远程过程调用，如何选择？"></a>RPC和HTTP都可以用于实现远程过程调用，如何选择？</h3><ul>
+<li>从速度上看，RPC比HTTP更快，虽然底层都是TCP，但是http协议的信息往往比较臃肿，不过可以采用gzip压缩</li>
+<li>从难度上看，RPC实现较为复杂，http相对简单</li>
+<li>从灵活性上看，HTTP更胜一筹，因为它不关心实现细节，跨平台，跨语言</li>
+</ul>
+<p><strong>两者有不同的使用场景：</strong></p>
+<ul>
+<li>如果对效率要求更高，并且开发过程使用统一的技术栈，那么RPC还是不错的</li>
+<li>如果需要更加灵活，跨语言、跨平台，显然HTTP更合适</li>
+</ul>
+<p>再插一句，最近新兴的微服务概念更加强调独立、自治、灵活，而RPC限制较多。因此微服务框架中，一般都会采用HTTP的Restful服务，像在公司内部使用hsf协议，对接外部系统使用微服务。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eyXZGlRGaqQ6EPNvGFAgBg">RPC核心，万变不离其宗</a></p>
+</blockquote>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EDsDatrzmY_w09b5s-HrVw">面试官：TCP为什么要三次握手与四次分手？大部分人答不上来！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/108822858?utm_source=wechat_timeline&utm_medium=social&utm_oi=1040923520439672832&from=timeline">一文搞定UDP和TCP高频面试题！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0VtugnDC5V30EZrctpGwKA">近两万字TCP硬核知识，教你吊打面试官！</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P103z3rEmKmSgqenjUi9lQ">万字长文带你解析23个问题TCP疑难杂症！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qf8L52VtGTzWcF0NB5Filg">15张图，了解一下TCP&#x2F;IP必知也必会的10个问题</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ACQz-OZN-oitoMzdvI3RfA">网络篇：朋友面试之TCP&#x2F;IP，回去等通知吧</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rT1O1wYoNEcznSGQ3s9FQA">三次握手和四次挥手到底是个什么鬼东西？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/345263331">带你了解TCP&#x2F;IP，UDP，Socket之间关系</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IDcnAAW-qHDqqH5jq8GcRg">TCP、HTTP、Socket，傻傻分不清？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rbl4WUA8lksfh4s9U9QW3g">理解TCP和UDP协议到底有啥区别？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Rh5BMzZxIYKsHzt-hliKMw">HTTP协议一知半解？这篇帮你全面了解</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tlWDBDu7UBeXaz1LUxA3Jg">大白话告诉你TCP为什么需要三次握手四次挥手</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/upBMDQsc9NfpdAFGZ34O4A">能将三次握手理解到这个深度，面试官拍案叫绝！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Q_A9NGd-2_HKDJKRoMqz1w">字节一面：“为什么网络要分层？每一层的职责、包含哪些协议？”</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EFSYnqOZRAXfHReHTqS5vw">TCP就没什么缺陷吗？</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b_0Q1cAk_z9mYOK32sOz7w">一台服务器最大并发tcp连接数多少？65535？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cvX942T2L66fOh3intIsGQ">36张图，一次性补全网络基础知识</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkzODE3OTI0Ng==&amp;mid=2247491160&amp;idx=1&amp;sn=1ad5d5e6f9dc4f9a44f06114fe97e05c&amp;source=41#wechat_redirect">你应该知道的12道经典计算机网络面试题</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EzLPyNdqTMQvEZyFDhbOyw">在浏览器输入URL回车后，会发生什么？</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/j4zrIHnizAe_36qpjLwwiQ">说一下从url输入到返回请求的过程</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZGYYHLAUHaaRzKwgKvTVTg">如果女朋友突然问你DNS是个啥…</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1a9-mgpakjSNjurI_WJbZw">万字长文爆肝DNS协议！</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/J2GUUQNsH_kWsVEszyWC7A">Java网络编程总结(精华版)</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lG7zmlarjUwjYaGEevVQ1Q">TCP握手两次不行吗？</a></td>
+</tr>
+</tbody></table>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">xmxe</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog-aok.pages.dev/posts/32a593b381de/">https://blog-aok.pages.dev/posts/32a593b381de/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">xmxe</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                    <span class="chip bg-color">计算机</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        
+                            <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                        
+                    </div>
+                    <div id="wechat">
+                        
+                            <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/c98fd7c2aa89/">
+                    <div class="card-image">
+                        
+                        <img src="https://pic1.zhimg.com/v2-9cd48539cd2c998fd21c6b24086b78de_1440w.jpg" class="responsive-img" alt="IO&amp;NIO">
+                        
+                        <span class="card-title">IO&amp;NIO</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            IOIO基础知识总结IO流简介IO即Input&#x2F;Output，输入和输出。数据输入到计算机内存的过程即输入，反之输出到外部存储（比如数据库，文件，远程主机）的过程即输出。数据传输过程类似于水流，因此称为IO流。IO流在Java中分
+                        
+
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-11
+                            -->
+
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/categories/Java/" class="post-category">
+                                        Java
+                                    </a>
+                                
+                            
+
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/dc0180d6f359/">
+                    <div class="card-image">
+                        
+                        <img src="https://picx1.zhimg.com/v2-0fd0ab66a2f190f2f44cf7884a57ad70_1440w.jpg" class="responsive-img" alt="Zookeeper">
+                        
+                        <span class="card-title">Zookeeper</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+zookeeper demo
+
+Zookeeper基本原理ZooKeeper重要概念解读Data model（数据模型）ZooKeeper数据模型采用层次化的多叉树形结构，每个节点上都可以存储数据，这些数据可以是数字、字符串或者是二级制序
+                        
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <!--
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-28
+                            -->
+                            
+                                <i class="fas fa-user fa-fw"></i>
+                                <a href="/about" >
+                                    xmxe
+                                </a>
+                            
+                        </span>
+                        <span class="publish-author">
+                            
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                    <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                        技术栈
+                                    </a>
+                                
+                            
+                                
+                                <a href="/tags/%E5%AE%89%E8%A3%85/">
+                                    <span class="chip bg-color">安装</span>
+                                </a>
+                                
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5, h6'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5, h6').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="569200213"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+            
+                <span id="year">2022-2024
+                </span>
+            
+            
+
+            <a href="/about" target="_blank">
+                xmxe
+            </a>
+            |&nbsp;Powered by&nbsp;
+            <a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+
+            
+            
+            
+            
+            
+            
+
+            
+            <br>
+
+            
+            <br>
+
+            
+        </div>
+        <div class="col s12 m4 l4 social-link2 ">
+    <a href="https://github.com/xmxe" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://gitee.com/xmxe" class="tooltipped" target="_blank" data-tooltip="码云" data-position="top" data-delay="50">
+        <svg width="19" height="19" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: relative; top: 2px; left: 0.5px;">
+            <path d="M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512z m259.2-569.6H480c-12.8 0-25.6 12.8-25.6 25.6v64c0 12.8 12.8 25.6 25.6 25.6h176c12.8 0 25.6 12.8 25.6 25.6v12.8c0 41.6-35.2 76.8-76.8 76.8h-240c-12.8 0-25.6-12.8-25.6-25.6V416c0-41.6 35.2-76.8 76.8-76.8h355.2c12.8 0 25.6-12.8 25.6-25.6v-64c0-12.8-12.8-25.6-25.6-25.6H416c-105.6 0-188.8 86.4-188.8 188.8V768c0 12.8 12.8 25.6 25.6 25.6h374.4c92.8 0 169.6-76.8 169.6-169.6v-144c0-12.8-12.8-25.6-25.6-25.6z" fill="#fff">
+            </path>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+          <a href="/download" class="tooltipped" target="_blank" data-tooltip="下载" data-position="top" data-delay="50">
+            <i class="fas fa-download"></i>
+          </a>
+        
+    
+
+
+
+    <style>
+  .mobiledevice {
+    display: none !important;
+  }
+
+  footer .wechat_qrcode {
+    position: fixed;
+  }
+
+  /*微信二维码*/
+  .wechat_qrcode {
+    position: absolute;
+    margin-left: 10px;
+    bottom: 10px;
+    background: url("/medias/xcx.png");
+    zoom:40%;
+  }
+
+  .wechat:hover .wechat_qrcode {
+    width: 430px;
+    height: 430px;
+    animation: move 0.4s linear 1 normal;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(50px, 0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @media only screen and (max-width: 601px) {
+    .wechat {
+      display: none !important;
+    }
+    .mobiledevice {
+      display: inline-block !important;
+    }
+  }
+</style>
+
+<a href="javascript:;" class="wechat" data-position="top" data-delay="50">
+  <i class="fab fa-weixin"></i>
+  <img class="wechat_qrcode" />
+</a>
+
+<a
+  href="javascript:;"
+  class="tooltipped mobiledevice"
+  data-tooltip="微信: 464817304"
+  data-position="top"
+  data-delay="50"
+>
+  <i class="fab fa-weixin"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+    <div class="stars-con">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>  
+</div>
+
+<!-- 白天和黑夜主题 -->
+
+
+
+<script>
+  function switchNightMode() {
+    
+      setTimeout(function () {
+        $('body').hasClass('DarkMode') 
+        ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+        : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+          
+        setTimeout(function () {
+          $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+            $(this).remove()
+          })
+        }, 2e3)
+      })
+  }
+</script>
+    
+    
+    <script>
+        /* 模式判断 */
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+            $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')
+        } else {
+            document.body.classList.remove('DarkMode');
+            $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')
+        }
+    </script>
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!-- 冒泡 -->
+    
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        // var windowWidth = $(window).width();
+        
+            document.write('<script type="text/javascript" src="/libs/others/bubleAll.js"><\/script>');
+        
+        
+    </script>
+    
+
+    <!-- 弹出文字 -->
+    
+
+</body>
+
+</html>

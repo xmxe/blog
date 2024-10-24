@@ -357,7 +357,7 @@
                     <h1 id="post-title" class="description center-align post-title"></h1>
 
                     
-                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <!-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> -->
                         <script>
                             var typedObj = new Typed("#post-title", {
                                 strings: [ 'MacOS相关' ],
@@ -558,6 +558,22 @@ defaults delete com.navicat.NavicatPremium B966DBD409B87EF577C9BBF3363E9614
 <h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a><a target="_blank" rel="noopener" href="https://brew.sh/zh-cn/">Homebrew</a></h3><blockquote>
 <p>安装Homebrew需要先安装[CommandLineTools](#Command Line Tools)。通过<code>brew install</code>安装软件的路径为<code>/usr/local/Cellar</code>然后将下载的可执行二进制程序软连接到<code>/usr/local/bin</code></p>
 </blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">brew cleanup –prune&#x3D;all</td>
+<td align="center">清除下载的缓存</td>
+</tr>
+<tr>
+<td align="center">brew –cache</td>
+<td align="center">查看缓存路径</td>
+</tr>
+</tbody></table>
 <h3 id="Parallels-Desktop-VMWare-Fusion-Pro"><a href="#Parallels-Desktop-VMWare-Fusion-Pro" class="headerlink" title="Parallels Desktop||VMWare Fusion Pro"></a><a target="_blank" rel="noopener" href="https://www.parallels.cn/products/desktop/">Parallels Desktop</a>||<a target="_blank" rel="noopener" href="https://www.vmware.com/products/desktop-hypervisor.html">VMWare Fusion Pro</a></h3><p><strong>自己构建arm版windows ISO</strong></p>
 <ol>
 <li><p>访问<a target="_blank" rel="noopener" href="https://uupdump.net/">uupdump</a>，选择要构建的版本后下载压缩文件</p>
@@ -772,7 +788,7 @@ create partition primary
 <span class="token comment"># sudo dd if=/path/win10.dmg of=/dev/rdisk2 bs=1m</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li>弹出U盘<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">diskutil <span class="token function">eject</span> /dev/disk2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
-<h3 id="在Ubuntu系统下制作Windows启动盘"><a href="#在Ubuntu系统下制作Windows启动盘" class="headerlink" title="在Ubuntu系统下制作Windows启动盘"></a>在Ubuntu系统下制作Windows启动盘</h3><ol>
+<h3 id="PS-在Ubuntu系统下制作Windows启动盘"><a href="#PS-在Ubuntu系统下制作Windows启动盘" class="headerlink" title="PS:在Ubuntu系统下制作Windows启动盘"></a>PS:在Ubuntu系统下制作Windows启动盘</h3><ol>
 <li>打开磁盘工具，格式化U盘(NTFS)，并记录U盘设备名称<code>/dev/sdb</code></li>
 <li>下载<a target="_blank" rel="noopener" href="https://github.com/WoeUSB/WoeUSB/releases/">woeusb.bash</a>并授权<code>chmod +x woeusb-5.2.4.bash</code></li>
 <li><code>apt install wimtools</code></li>
@@ -1356,7 +1372,7 @@ stack com.baomidou.mybatisplus.extensio
 </div>
 
 <script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script> -->
 
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
@@ -1695,8 +1711,6 @@ $(function () {
     <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
     
 
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
     <!-- 冒泡 -->

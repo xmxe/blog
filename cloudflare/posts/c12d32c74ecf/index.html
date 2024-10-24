@@ -357,7 +357,7 @@
                     <h1 id="post-title" class="description center-align post-title"></h1>
 
                     
-                        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                        <!-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> -->
                         <script>
                             var typedObj = new Typed("#post-title", {
                                 strings: [ 'MySQL相关知识点' ],
@@ -2718,6 +2718,302 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <td align="center"></td>
 </tr>
 </tbody></table>
+<h2 id="MySQL运维"><a href="#MySQL运维" class="headerlink" title="MySQL运维"></a>MySQL运维</h2><h3 id="获取基本配置信息"><a href="#获取基本配置信息" class="headerlink" title="获取基本配置信息"></a>获取基本配置信息</h3><table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">执行语句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">是否区分表名大小写</td>
+<td align="center">SHOW VARIABLES LIKE ‘lower_case_table_names’;</td>
+</tr>
+<tr>
+<td align="center">MySQL服务端口</td>
+<td align="center">SHOW VARIABLES LIKE ‘port’;</td>
+</tr>
+<tr>
+<td align="center">MySQL socket文件路径</td>
+<td align="center">SHOW VARIABLES LIKE ‘socket’;</td>
+</tr>
+<tr>
+<td align="center">是否跳过域名解析</td>
+<td align="center">SHOW VARIABLES LIKE ‘skip_name_resolve’;</td>
+</tr>
+<tr>
+<td align="center">数据库字符集</td>
+<td align="center">SHOW VARIABLES LIKE ‘character_set_server’;</td>
+</tr>
+<tr>
+<td align="center">服务器默认的校对规则</td>
+<td align="center">SHOW VARIABLES LIKE ‘collation_server’;</td>
+</tr>
+<tr>
+<td align="center">交互式连接超时时间(秒)</td>
+<td align="center">SHOW VARIABLES LIKE ‘interactive_timeout’;</td>
+</tr>
+<tr>
+<td align="center">非交互式连接超时时间(秒)</td>
+<td align="center">SHOW VARIABLES LIKE ‘wait_timeout’;</td>
+</tr>
+<tr>
+<td align="center">事务隔离级别</td>
+<td align="center">SHOW VARIABLES LIKE ‘tx_isolation’;</td>
+</tr>
+<tr>
+<td align="center">数据文件存放位置</td>
+<td align="center">SHOW VARIABLES LIKE ‘%datadir%’;</td>
+</tr>
+<tr>
+<td align="center">允许的最大数据包大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘max_allowed_packet’;</td>
+</tr>
+<tr>
+<td align="center">每个线程堆栈的大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘thread_stack’;</td>
+</tr>
+<tr>
+<td align="center">线程缓存的大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘thread_cache_size’;</td>
+</tr>
+<tr>
+<td align="center">可以打开的表的数量</td>
+<td align="center">SHOW VARIABLES LIKE ‘table_open_cache’;</td>
+</tr>
+<tr>
+<td align="center">内部临时表的最大大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘tmp_table_size’;</td>
+</tr>
+<tr>
+<td align="center">内存中HEAP表的最大大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘max_heap_table_size’;</td>
+</tr>
+<tr>
+<td align="center">MySQL主进程文件的位置</td>
+<td align="center">SHOW VARIABLES LIKE ‘pid_file’;</td>
+</tr>
+<tr>
+<td align="center">错误日志文件的位置</td>
+<td align="center">SHOW VARIABLES LIKE ‘log_error’;</td>
+</tr>
+<tr>
+<td align="center">慢查询日志文件的位置</td>
+<td align="center">SHOW VARIABLES LIKE ‘slow_query_log_file’;</td>
+</tr>
+<tr>
+<td align="center">慢查询时间阈值</td>
+<td align="center">SHOW VARIABLES LIKE ‘long_query_time’;</td>
+</tr>
+</tbody></table>
+<h3 id="获取连接数配置信息"><a href="#获取连接数配置信息" class="headerlink" title="获取连接数配置信息"></a>获取连接数配置信息</h3><table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">执行语句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">最大连接数</td>
+<td align="center">SHOW VARIABLES LIKE ‘max_connections’;</td>
+</tr>
+<tr>
+<td align="center">服务器启动以来已使用的最大连接数</td>
+<td align="center">SHOW status LIKE ‘Max_used_connections’;</td>
+</tr>
+<tr>
+<td align="center">达到最大连接数的时间点</td>
+<td align="center">SHOW STATUS LIKE ‘Max_used_connections_time’;</td>
+</tr>
+<tr>
+<td align="center">连接失败次数上限</td>
+<td align="center">SHOW VARIABLES LIKE ‘max_connect_errors’;</td>
+</tr>
+<tr>
+<td align="center">通过MySQLXProtocol已接受的连接数</td>
+<td align="center">SHOW STATUS LIKE ‘Mysqlx_connections_accepted’;</td>
+</tr>
+<tr>
+<td align="center">通过MySQLXProtocol已关闭的连接数</td>
+<td align="center">SHOW STATUS LIKE ‘Mysqlx_connections_closed’;</td>
+</tr>
+</tbody></table>
+<h3 id="获取Binlog配置信息"><a href="#获取Binlog配置信息" class="headerlink" title="获取Binlog配置信息"></a>获取Binlog配置信息</h3><table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">执行语句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Binlog文件列表</td>
+<td align="center">SHOW BINARY LOGS;</td>
+</tr>
+<tr>
+<td align="center">是否启用Binlog</td>
+<td align="center">SHOW VARIABLES LIKE ‘log_bin’;</td>
+</tr>
+<tr>
+<td align="center">Binlog同步频率</td>
+<td align="center">SHOW VARIABLES LIKE ‘sync_binlog’;</td>
+</tr>
+<tr>
+<td align="center">Binlog格式</td>
+<td align="center">SHOW VARIABLES LIKE ‘binlog_format’;</td>
+</tr>
+<tr>
+<td align="center">文件路径</td>
+<td align="center">SHOW VARIABLES LIKE ‘log-bin’;</td>
+</tr>
+<tr>
+<td align="center">Binlog索引文件位置</td>
+<td align="center">SHOW VARIABLES LIKE ‘log_bin_index’;</td>
+</tr>
+<tr>
+<td align="center">单个Binlog最大大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘max_binlog_size’;</td>
+</tr>
+<tr>
+<td align="center">Binlog基本名字</td>
+<td align="center">SHOW VARIABLES LIKE ‘log_bin_basename’;</td>
+</tr>
+<tr>
+<td align="center">Binlog文件过期时间</td>
+<td align="center">SHOW VARIABLES LIKE ‘expire_logs_days’;</td>
+</tr>
+<tr>
+<td align="center">MySQL服务器的唯一ID</td>
+<td align="center">SHOW VARIABLES LIKE ‘server_id’;</td>
+</tr>
+</tbody></table>
+<h3 id="获取GTID配置信息"><a href="#获取GTID配置信息" class="headerlink" title="获取GTID配置信息"></a>获取GTID配置信息</h3><table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">执行语句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">是否开启GTID模式</td>
+<td align="center">SHOW VARIABLES LIKE ‘gtid_mode’;</td>
+</tr>
+<tr>
+<td align="center">是否强制GTID一致性</td>
+<td align="center">SHOW VARIABLES LIKE ‘enforce_gtid_consistency’;</td>
+</tr>
+<tr>
+<td align="center">查询GTID执行的详细情况</td>
+<td align="center">SELECT * FROM mysql.gtid_executed;</td>
+</tr>
+<tr>
+<td align="center">是否开启级联复制</td>
+<td align="center">SHOW VARIABLES LIKE ‘log_slave_updates’;</td>
+</tr>
+</tbody></table>
+<h3 id="InnoDB配置信息"><a href="#InnoDB配置信息" class="headerlink" title="InnoDB配置信息"></a>InnoDB配置信息</h3><table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">执行语句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">InnoDB版本</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_version’;</td>
+</tr>
+<tr>
+<td align="center">是否为每个InnoDB表创建单独的文件</td>
+<td align="center">SHOW VARTABLES LIKE ‘innodb_file_per_table’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB缓存池大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_buffer_pool_size’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB日志文件大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_log_file_size’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB可以有多少线程同时运行</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_thread_concurrency’;</td>
+</tr>
+<tr>
+<td align="center">缓冲池中脏页的最大百分比</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_max_dirty_pages_pct’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB的最大写入IO能力</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_io_capacity_max’;</td>
+</tr>
+<tr>
+<td align="center">日志缓冲区大小</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_log_buffer_size’;</td>
+</tr>
+<tr>
+<td align="center">事务提交时刷新日志的频率</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_flush_log_at_trx_commit’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB IO容量</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_io_capacity’;</td>
+</tr>
+<tr>
+<td align="center">缓冲池实例数</td>
+<td align="center">SHOW VARIABLES LIKE ‘innodb_buffer_pool_instances’;</td>
+</tr>
+</tbody></table>
+<h3 id="监控指标"><a href="#监控指标" class="headerlink" title="监控指标"></a>监控指标</h3><table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">执行语句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">全局状态信息</td>
+<td align="center">SHOW GLOBAL STATUS;</td>
+</tr>
+<tr>
+<td align="center">当前所有线程的信息</td>
+<td align="center">SHOW PROCESSLIST;</td>
+</tr>
+<tr>
+<td align="center">当前打开的连接数</td>
+<td align="center">SHOW STATUS LIKE ‘Threads_connected’;</td>
+</tr>
+<tr>
+<td align="center">当前线程缓存中有多少空闲线程</td>
+<td align="center">SHOW STATUS LIKE ‘Threads_cached’;</td>
+</tr>
+<tr>
+<td align="center">从最近一次服务启动，已创建线程的数量</td>
+<td align="center">SHOW STATUS LIKE ‘Threads_created’;</td>
+</tr>
+<tr>
+<td align="center">当前激活的(非睡眠状态)线程数</td>
+<td align="center">SHOW STATUS LIKE ‘Threads_running’;</td>
+</tr>
+<tr>
+<td align="center">慢查询次数</td>
+<td align="center">SHOW status LIKE ‘Slow_queries’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB读取的行数</td>
+<td align="center">SHOW status LIKE ‘Innodb_rows_read’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB插入的行数</td>
+<td align="center">SHOW status LIKE ‘Innodb_rows_inserted’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB更新的行数</td>
+<td align="center">SHOW status LIKE ‘Innodb_rows_updated’;</td>
+</tr>
+<tr>
+<td align="center">InnoDB删除的行数</td>
+<td align="center">SHOW status LIKE ‘Innodb_rows_deleted’;</td>
+</tr>
+</tbody></table>
 <h2 id="相关文章-5"><a href="#相关文章-5" class="headerlink" title="相关文章"></a>相关文章</h2><h3 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h3><table>
 <thead>
 <tr>
@@ -2813,6 +3109,11 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wSnniPaj5s1-cJp_VICXzw">大白话讲解Mysql中SQL语句的执行流程</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iCZA97Vm-lxDKEcR4EJPRQ">盘点Mysql对SQL语句的一些隐式优化技术！</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZwdcTNXKhOEA-T1qUjw-8w">一文带你快速入门Mysql基础知识</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/edzWAy0A_bTzWWtTzI3q3g">主键使用自增还是UUID?(uuid_to_bin(UUID())</a></td>
+<td align="center"></td>
+<td align="center"></td>
 </tr>
 </tbody></table>
 
@@ -3337,7 +3638,7 @@ var str2 = &#123;name:"cxh",sex
 </div>
 
 <script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script> -->
 
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
@@ -3676,8 +3977,6 @@ $(function () {
     <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
     
 
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
     <!-- 冒泡 -->

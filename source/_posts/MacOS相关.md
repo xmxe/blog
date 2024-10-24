@@ -53,6 +53,13 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 
 > 安装Homebrew需要先安装[CommandLineTools](#Command Line Tools)。通过`brew install`安装软件的路径为`/usr/local/Cellar`然后将下载的可执行二进制程序软连接到`/usr/local/bin`
 
+|           命令           |      备注      |
+| :----------------------: | :------------: |
+| brew cleanup --prune=all | 清除下载的缓存 |
+|       brew --cache       |  查看缓存路径  |
+
+
+
 ### [Parallels Desktop](https://www.parallels.cn/products/desktop/)||[VMWare Fusion Pro](https://www.vmware.com/products/desktop-hypervisor.html)
 
 **自己构建arm版windows ISO**
@@ -250,7 +257,7 @@ sudo dd if=/Users/Downloads/ubuntu.dmg of=/dev/rdisk2 bs=1m
 diskutil eject /dev/disk2
 ```
 
-### 在Ubuntu系统下制作Windows启动盘
+### PS:在Ubuntu系统下制作Windows启动盘
 
 1. 打开磁盘工具，格式化U盘(NTFS)，并记录U盘设备名称`/dev/sdb`
 1. 下载[woeusb.bash](https://github.com/WoeUSB/WoeUSB/releases/)并授权`chmod +x woeusb-5.2.4.bash`

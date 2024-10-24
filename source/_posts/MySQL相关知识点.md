@@ -2828,6 +2828,102 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [MySQL究竟是怎么执行的(explain)](https://mp.weixin.qq.com/s/kYcrHtE82-sOqNOp_qM4Ig) | [EXPLAIN进行索引分析和优化](https://mp.weixin.qq.com/s/-YrZFxTbutLdEbkfa9aOKQ) |                                                              |
 
+## MySQL运维
+
+### 获取基本配置信息
+
+|           说明           |                   执行语句                    |
+| :----------------------: | :-------------------------------------------: |
+|    是否区分表名大小写    | SHOW VARIABLES LIKE 'lower_case_table_names'; |
+|      MySQL服务端口       |          SHOW VARIABLES LIKE 'port';          |
+|   MySQL socket文件路径   |         SHOW VARIABLES LIKE 'socket';         |
+|     是否跳过域名解析     |   SHOW VARIABLES LIKE 'skip_name_resolve';    |
+|       数据库字符集       |  SHOW VARIABLES LIKE 'character_set_server';  |
+|   服务器默认的校对规则   |    SHOW VARIABLES LIKE 'collation_server';    |
+|  交互式连接超时时间(秒)  |  SHOW VARIABLES LIKE 'interactive_timeout';   |
+| 非交互式连接超时时间(秒) |      SHOW VARIABLES LIKE 'wait_timeout';      |
+|       事务隔离级别       |      SHOW VARIABLES LIKE 'tx_isolation';      |
+|     数据文件存放位置     |       SHOW VARIABLES LIKE '%datadir%';        |
+|   允许的最大数据包大小   |   SHOW VARIABLES LIKE 'max_allowed_packet';   |
+|    每个线程堆栈的大小    |      SHOW VARIABLES LIKE 'thread_stack';      |
+|      线程缓存的大小      |   SHOW VARIABLES LIKE 'thread_cache_size';    |
+|    可以打开的表的数量    |    SHOW VARIABLES LIKE 'table_open_cache';    |
+|   内部临时表的最大大小   |     SHOW VARIABLES LIKE 'tmp_table_size';     |
+|  内存中HEAP表的最大大小  |  SHOW VARIABLES LIKE 'max_heap_table_size';   |
+|  MySQL主进程文件的位置   |        SHOW VARIABLES LIKE 'pid_file';        |
+|    错误日志文件的位置    |       SHOW VARIABLES LIKE 'log_error';        |
+|   慢查询日志文件的位置   |  SHOW VARIABLES LIKE 'slow_query_log_file';   |
+|      慢查询时间阈值      |    SHOW VARIABLES LIKE 'long_query_time';     |
+
+### 获取连接数配置信息
+
+|               说明               |                    执行语句                     |
+| :------------------------------: | :---------------------------------------------: |
+|            最大连接数            |     SHOW VARIABLES LIKE 'max_connections';      |
+| 服务器启动以来已使用的最大连接数 |    SHOW status LIKE 'Max_used_connections';     |
+|      达到最大连接数的时间点      |  SHOW STATUS LIKE 'Max_used_connections_time';  |
+|         连接失败次数上限         |    SHOW VARIABLES LIKE 'max_connect_errors';    |
+| 通过MySQLXProtocol已接受的连接数 | SHOW STATUS LIKE 'Mysqlx_connections_accepted'; |
+| 通过MySQLXProtocol已关闭的连接数 |  SHOW STATUS LIKE 'Mysqlx_connections_closed';  |
+
+### 获取Binlog配置信息
+
+|        说明         |                执行语句                 |
+| :-----------------: | :-------------------------------------: |
+|   Binlog文件列表    |            SHOW BINARY LOGS;            |
+|   是否启用Binlog    |     SHOW VARIABLES LIKE 'log_bin';      |
+|   Binlog同步频率    |   SHOW VARIABLES LIKE 'sync_binlog';    |
+|     Binlog格式      |  SHOW VARIABLES LIKE 'binlog_format';   |
+|      文件路径       |     SHOW VARIABLES LIKE 'log-bin';      |
+| Binlog索引文件位置  |  SHOW VARIABLES LIKE 'log_bin_index';   |
+| 单个Binlog最大大小  | SHOW VARIABLES LIKE 'max_binlog_size';  |
+|   Binlog基本名字    | SHOW VARIABLES LIKE 'log_bin_basename'; |
+| Binlog文件过期时间  | SHOW VARIABLES LIKE 'expire_logs_days'; |
+| MySQL服务器的唯一ID |    SHOW VARIABLES LIKE 'server_id';     |
+
+
+### 获取GTID配置信息
+
+|          说明          |                    执行语句                     |
+| :--------------------: | :---------------------------------------------: |
+|    是否开启GTID模式    |        SHOW VARIABLES LIKE 'gtid_mode';         |
+|   是否强制GTID一致性   | SHOW VARIABLES LIKE 'enforce_gtid_consistency'; |
+| 查询GTID执行的详细情况 |       SELECT * FROM mysql.gtid_executed;        |
+|    是否开启级联复制    |    SHOW VARIABLES LIKE 'log_slave_updates';     |
+
+### InnoDB配置信息
+
+|               说明               |                       执行语句                        |
+| :------------------------------: | :---------------------------------------------------: |
+|            InnoDB版本            |         SHOW VARIABLES LIKE 'innodb_version';         |
+| 是否为每个InnoDB表创建单独的文件 |     SHOW VARTABLES LIKE 'innodb_file_per_table';      |
+|         InnoDB缓存池大小         |    SHOW VARIABLES LIKE 'innodb_buffer_pool_size';     |
+|        InnoDB日志文件大小        |      SHOW VARIABLES LIKE 'innodb_log_file_size';      |
+|   InnoDB可以有多少线程同时运行   |   SHOW VARIABLES LIKE 'innodb_thread_concurrency';    |
+|     缓冲池中脏页的最大百分比     |   SHOW VARIABLES LIKE 'innodb_max_dirty_pages_pct';   |
+|      InnoDB的最大写入IO能力      |     SHOW VARIABLES LIKE 'innodb_io_capacity_max';     |
+|          日志缓冲区大小          |     SHOW VARIABLES LIKE 'innodb_log_buffer_size';     |
+|     事务提交时刷新日志的频率     | SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit'; |
+|          InnoDB IO容量           |       SHOW VARIABLES LIKE 'innodb_io_capacity';       |
+|           缓冲池实例数           |  SHOW VARIABLES LIKE 'innodb_buffer_pool_instances';  |
+
+### 监控指标
+
+|                 说明                 |                 执行语句                 |
+| :----------------------------------: | :--------------------------------------: |
+|             全局状态信息             |           SHOW GLOBAL STATUS;            |
+|          当前所有线程的信息          |            SHOW PROCESSLIST;             |
+|           当前打开的连接数           |  SHOW STATUS LIKE 'Threads_connected';   |
+|     当前线程缓存中有多少空闲线程     |    SHOW STATUS LIKE 'Threads_cached';    |
+| 从最近一次服务启动，已创建线程的数量 |   SHOW STATUS LIKE 'Threads_created';    |
+|     当前激活的(非睡眠状态)线程数     |   SHOW STATUS LIKE 'Threads_running';    |
+|              慢查询次数              |     SHOW status LIKE 'Slow_queries';     |
+|           InnoDB读取的行数           |   SHOW status LIKE 'Innodb_rows_read';   |
+|           InnoDB插入的行数           | SHOW status LIKE 'Innodb_rows_inserted'; |
+|           InnoDB更新的行数           | SHOW status LIKE 'Innodb_rows_updated';  |
+|           InnoDB删除的行数           | SHOW status LIKE 'Innodb_rows_deleted';  |
+
+
 
 ## 相关文章
 
@@ -2859,3 +2955,4 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 | [6种MySQL数据库平滑扩容方案剖析](https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing) | [什么是插入意向锁？](https://mp.weixin.qq.com/s/rDdUBw803tvjHkJALY5P2w) | [从MySQL读取100w数据进行处理，应该怎么做](https://mp.weixin.qq.com/s/XbSADUXIz1aw0kqp7p5urQ) |
 | [MySQL误删数据不用跑路了，快速恢复指南来了](https://mp.weixin.qq.com/s/vyrLOH1NRXXQd0oEnv0M1Q) | [MySQL单表数据最大不要超过多少行？为什么](https://mp.weixin.qq.com/s/ZCM2FYzKw24Fk8yv4a9b0w) | [Mysql如何做表分区](https://mp.weixin.qq.com/s/w2wrccywJWM-zXceCR_JXw) |
 | [大白话讲解Mysql中SQL语句的执行流程](https://mp.weixin.qq.com/s/wSnniPaj5s1-cJp_VICXzw) | [盘点Mysql对SQL语句的一些隐式优化技术！](https://mp.weixin.qq.com/s/iCZA97Vm-lxDKEcR4EJPRQ) | [一文带你快速入门Mysql基础知识](https://mp.weixin.qq.com/s/ZwdcTNXKhOEA-T1qUjw-8w) |
+| [主键使用自增还是UUID?(uuid_to_bin(UUID())](https://mp.weixin.qq.com/s/edzWAy0A_bTzWWtTzI3q3g) |                                                              |                                                              |

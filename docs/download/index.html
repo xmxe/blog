@@ -41,7 +41,7 @@
             var str = '';
             for (var i = 0; i < data.length; i++) {
               var obj = data[i];
-              if(obj.appId.indexOf('http') != -1)
+              if(!obj.hasOwnProperty('hidden'))
                 str += '<li><span>' + obj.text + '</span><a href="' + obj.appId + '"><img src="' + obj.src + '"></a></li>';
             }
             document.querySelector("#dock ul").innerHTML = str;

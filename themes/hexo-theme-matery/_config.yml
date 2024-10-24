@@ -696,7 +696,7 @@ navMenu:
 
 # 网页预加载.
 instantpage:
-  enable: true
+  enable: false
 
 # ICP备案信息尾部显示
 icp:

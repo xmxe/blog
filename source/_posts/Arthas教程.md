@@ -285,3 +285,5 @@ quit或exit退出当前连接，完全退出使用stop(所有客户端连接都�
 2. 根据进程ID找到占用CPU高的线程`ps -T -p pid -o tid,cmd | sort -r`
 3. 将指定的线程ID输出为16进制格式`printf “%x\n” tid`
 4. 根据16进制格式的线程ID查找线程堆栈信息`jstack pid |grep tid -A 50`
+
+> [CPU占用过高，死锁，内存泄漏处理方法](https://mp.weixin.qq.com/s/TrLDaaxGupXpCxiEsvEeRw)

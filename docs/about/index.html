@@ -357,9 +357,9 @@
                 
                     <span id="hitokoto" style="font-size: 2rem;"></span>
                     <!-- 打字机 -->
-                    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
+                    <!-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> -->
+                    <!-- <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script> -->
+                    <!-- <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script> -->
                     <script>
                         var hitokotoContent = ''
                         function typed(hitokotoContent) {
@@ -750,7 +750,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ["2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09"]
+            data: ["2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10"]
         },
         yAxis: {
             type: 'value',
@@ -760,7 +760,7 @@
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,1,0,1,0,1,0,3,0,4,0,0],
+                data: [0,1,0,1,0,1,0,3,0,4,0,0,0],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a','#3ecf8e','#82d3f4'],
@@ -1256,7 +1256,7 @@
 </div>
 
 <script src="/blog/libs/aplayer/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script> -->
 
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
@@ -1595,8 +1595,6 @@ $(function () {
     <script type="text/javascript" src="/blog/libs/background/ribbon-dynamic.js" async="async"></script>
     
 
-    
-    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
     <!-- 冒泡 -->

@@ -2,7 +2,8 @@
     {
         "src": "https://picx.zhimg.com/v2-d40103e323d411af13b8ec4324b6e04d_1440w.jpg",
         "text": "跳一跳",
-        "appId": "wx7c8d593b2c3a7703"
+        "appId": "wx7c8d593b2c3a7703",
+        "hidden": true
     },
     {
         "src": "assert/github.jpg",
@@ -12,12 +13,14 @@
     {
         "src": "assert/qywx.jpg",
         "text": "企业微信(3.1.8/2.7.6)",
-        "appId": "https://www.wandoujia.com/apps/6860656/history_v16713"
+        "appId": "https://www.wandoujia.com/apps/6860656/history_v16713",
+        "hidden": true
     },
     {
         "src": "assert/fakelocation.jpg",
         "text": "FakeLocation",
-        "appId": "https://github.com/Lerist/FakeLocation/releases"
+        "appId": "https://github.com/Lerist/FakeLocation/releases",
+        "hidden": true
     },
     {
         "src": "assert/everything.jpg",
@@ -33,5 +36,10 @@
         "src": "assert/ps.jpg",
         "text": "PS CC2019直装版",
         "appId": "https://n459.com/file/5210373-315857187"
+    },
+    {
+        "src": "https://img1.baidu.com/it/u=3666103947,147248250&fm=253&fmt=auto&app=138&f=PNG",
+        "text": "wise-registry-cleaner",
+        "appId": "https://www.wisecleaner.com/wise-registry-cleaner.html"
     }
 ]

@@ -542,7 +542,8 @@
 <span class="token comment"># 查看文件和另一个分支的区别</span>
 <span class="token function">git</span> <span class="token function">diff</span> branch-name file-name
 <span class="token comment"># 查看两次提交的区别</span>
-<span class="token function">git</span> <span class="token function">diff</span> commit-id commit-id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> <span class="token function">diff</span> commit-id commit-id
+<span class="token function">git</span> show commit-id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将未commit的文件移出Staging区(撤销git add)</span>
 <span class="token function">git</span> reset HEAD
@@ -634,13 +635,13 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> rebase <span class="token parameter variable">-i</span> <span class="token parameter variable">--root</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
-<p>git rebase和git merge区别<br>采用merge和rebase后，git log的区别，merge命令不会保留merge的分支的commit，rebase会保留所有的commit：rebase会把你当前分支的commit放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。举例:如果你从master拉了个feature分支出来,然后你提交了几个commit,这个时候刚好有人把他开发的东西合并到master了,这个时候master就比你拉分支的时候多了几个commit,如果这个时候你rebase master的话，就会把你当前的几个commit，放到那个人commit的后面。merge会把公共分支和你当前的commit合并在一起，形成一个新的commit提交<br>处理冲突的方式：（一股脑）使用merge命令合并分支，解决完冲突，执行git add .和git commit -m ‘fix conflict’。这个时候会产生一个commit。（交互式）使用rebase命令合并分支，解决完冲突，执行git add .和git rebase –continue，不会产生额外的commit。这样的好处是干净，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个commit，需要重复处理多次冲突。</p>
+<p><strong>git rebase和git merge区别</strong><br>采用merge和rebase后，git log的区别，merge命令不会保留merge的分支的commit，rebase会保留所有的commit：rebase会把你当前分支的commit放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。举例:如果你从master拉了个feature分支出来,然后你提交了几个commit,这个时候刚好有人把他开发的东西合并到master了,这个时候master就比你拉分支的时候多了几个commit,如果这个时候你rebase master的话，就会把你当前的几个commit，放到那个人commit的后面。merge会把公共分支和你当前的commit合并在一起，形成一个新的commit提交<br>处理冲突的方式：（一股脑）使用merge命令合并分支，解决完冲突，执行git add .和git commit -m ‘fix conflict’。这个时候会产生一个commit。（交互式）使用rebase命令合并分支，解决完冲突，执行git add .和git rebase –continue，不会产生额外的commit。这样的好处是干净，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个commit，需要重复处理多次冲突。</p>
 </blockquote>
 <blockquote>
-<p>git pull和git pull –rebase区别：git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。</p>
+<p><strong>git pull和git pull –rebase区别</strong><br>git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。</p>
 </blockquote>
 <blockquote>
-<p>git merge和git merge –no-ff的区别<br>自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge –no-ff命令,如果不加–no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。</p>
+<p><strong>git merge和git merge –no-ff的区别</strong><br>自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge –no-ff命令,如果不加–no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。</p>
 </blockquote>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ">合并代码还在用git merge？我们都用git rebase！</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CBz0ea6m623GtuTX5UkeQQ">新来个技术总监，禁止我们用Git的rebase</a></p>
@@ -682,7 +683,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 删除最近的一次stash</span>
 <span class="token function">git</span> stash drop
 
-<span class="token comment"># 当有多条 stash，可以指定操作stash，首先使用stash list列出所有记录：</span>
+<span class="token comment"># 当有多条stash，可以指定操作stash，首先使用stash list列出所有记录：</span>
 <span class="token function">git</span> stash list 
 <span class="token comment"># stash@&#123;0&#125;: WIP on ...</span>
 <span class="token comment"># stash@&#123;1&#125;: WIP on ...</span>
@@ -692,7 +693,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> stash apply stash@<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">&#125;</span>
 <span class="token comment"># 删除stash@&#123;1&#125;存储的内容</span>
 <span class="token function">git</span> stash drop stash@<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">&#125;</span>
-<span class="token comment"># pop，drop 同理。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># pop，drop同理。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a>git config</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--gloabl</span> http.postBuffer <span class="token number">524288000</span>
 <span class="token function">git</span> config <span class="token parameter variable">--gloabl</span> http.sslVerify <span class="token string">"false"</span>
@@ -706,19 +707,18 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> config user.name name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 把a分支的一个提交复制到b分支</span>
-<span class="token comment"># 首先复制a分支的commitid 然后切换到b分支执行</span>
+<span class="token comment"># 首先复制a分支的commitid然后切换到b分支执行</span>
 <span class="token function">git</span> cherry-pick commitid
 <span class="token comment"># 一次转移多个提交：将commit1和commit2两个提交应用到当前分支。</span>
 <span class="token function">git</span> cherry-pick commit1 commit2
 <span class="token comment"># 多个连续的commit，也可区间复制：将commit1到commit2这个区间的commit都应用到当前分支（包含commit1、commit2），commit1是最早的提交。</span>
 <span class="token function">git</span> cherry-pick commit1^<span class="token punctuation">..</span>commit2
-<span class="token comment"># 在cherry-pick多个commit时，可能会遇到代码冲突，这时cherry-pick会停下来，让用户决定如何继续操作</span>
-<span class="token comment"># 这时需要解决代码冲突，重新提交到暂存区,然后使用cherry-pick --continue让cherry-pick继续进行下去。</span>
+<span class="token comment"># 在cherry-pick多个commit时，可能会遇到代码冲突，这时cherry-pick会停下来，让用户决定如何继续操作,这时需要解决代码冲突，重新提交到暂存区,然后使用cherry-pick --continue让cherry-pick继续进行下去。</span>
 <span class="token function">git</span> cherry-pick <span class="token parameter variable">--continue</span>
 <span class="token comment"># 但有时候可能需要在代码冲突后，放弃或者退出流程：放弃cherry-pick：</span>
 <span class="token function">git</span> cherry-pick <span class="token parameter variable">--abort</span>
 <span class="token comment"># 回到操作前的样子，就像什么都没发生过。</span>
-<span class="token function">git</span> cherry-pick <span class="token parameter variable">--quit</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> cherry-pick <span class="token parameter variable">--quit</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除远程分支</span>
 <span class="token function">git</span> push origin :master
@@ -734,7 +734,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> push <span class="token parameter variable">--tags</span>
 <span class="token comment"># 推送指定标签</span>
 <span class="token function">git</span> push origin tag-name
-<span class="token comment">#  删除远程标签（需要先删除本地标签）</span>
+<span class="token comment"># 删除远程标签（需要先删除本地标签）</span>
 <span class="token function">git</span> push origin :refs/tags/tag-name
 <span class="token comment"># 将本地dev分支push到远程master分支</span>
 <span class="token function">git</span> push origin dev:master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -767,7 +767,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 </blockquote>
 </li>
 <li>进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。</li>
-<li>推送更新到远程仓库：<code>git push --force</code></li>
+<li>推送更新到远程仓库：<code>git push --force(或git p)</code></li>
 </ol>
 <h3 id="远程分支重命名"><a href="#远程分支重命名" class="headerlink" title="远程分支重命名"></a>远程分支重命名</h3><p>远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方案1:先重命名本地分支，然后推送到远程分支</span>

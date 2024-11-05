@@ -875,7 +875,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 | [详细解读ThreadLocal的内存泄露](https://mp.weixin.qq.com/s/gasR16pjlN3WfuFj9mQxdQ) | [ThreadLocal你怎么动不动就内存泄漏？](https://mp.weixin.qq.com/s/S0IwbXadRgZ86fFLSFObVQ) | [细数ThreadLocal三大坑，内存泄露仅是小儿科](https://mp.weixin.qq.com/s/P2eiSHcyf0xMkQmyhTAfhg) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [内存泄露的原因找到了，罪魁祸首居然是Java TheadLocal](https://mp.weixin.qq.com/s/0Hj4y5lO2Ha4483qluDJ0g) | [线上系统因为一个ThreadLocal直接内存飙升](https://mp.weixin.qq.com/s/CQA-7FG1txi1pzUgdCV6ig) | [ThreadLocal搭配线程池时为什么会造成内存泄漏](https://mp.weixin.qq.com/s/NaPyv6PWEFE0l5kD5PDHCA) |
-| [为什么大家都说ThreadLocal存在内存泄漏的风险？](https://mp.weixin.qq.com/s/N2YBtHf1AutOJYwRaCrfRA) |                                                              |                                                              |
+| [为什么大家都说ThreadLocal存在内存泄漏的风险？](https://mp.weixin.qq.com/s/N2YBtHf1AutOJYwRaCrfRA) | [ThreadLocal源码解读：内存泄露问题分析](https://mp.weixin.qq.com/s/u4kIMdYjhjGkEm1kjcfN5Q) |                                                              |
 
 ### ThreadLocalMap为什么使用弱引用而不是强引用？
 

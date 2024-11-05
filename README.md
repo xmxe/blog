@@ -1,7 +1,8 @@
-## 通过GitHub Pages构建博客
+## 通过GitHub Pages/Cloudflare Pages构建博客
 
-> 构建自己博客的方式有很多种，网上也有很多开源的博客模板，但有的属于动态模板，还有自己的博客后台管理系统，需要关系数据库、缓存、服务器等环境支持，使用GitHub Pages代替服务器构建静态博客则不需要上述环境，写文章的话直接在md里写完后编译成HTML即可。
-> 构建静态博客的主流技术栈有[Hugo](https://gohugo.io/),[Hexo](https://hexo.io/zh-cn/)等。此项目采用了[Hexo](https://hexo.io/zh-cn/)来搭建自己的个人博客。
+> 构建自己博客的方式有很多种，网上也有很多开源的博客模板，但有的属于动态模板，需要搭建后台管理系统，需要数据库、缓存、服务器等环境支持，使用GitHub Pages构建静态博客则不需要上述环境，写文章的话直接在md里写完后编译成HTML即可。
+> 构建静态博客的主流技术栈有[Hugo](https://gohugo.io/),[Hexo](https://hexo.io/zh-cn/)等。
+> 此项目采用了[Hexo](https://hexo.io/zh-cn/)来搭建自己的个人博客。
 
 ### 环境准备
 
@@ -21,14 +22,12 @@ npm install
 # 简写为npx hexo g生成静态文件。-d,--deploy文件生成后立即部署网站，依赖hexo-deployer-git插件
 npx hexo generate
 # 简写为npx hexo s启动服务器。默认情况下，访问网址为:http://localhost:4000/
-npm hexo server
+npx hexo server
 ```
 
 ### 更换主题
 
-下载[hexo主题](https://hexo.io/themes/)后放置在themes路径下,并修改_config.yml内的theme设定，即可切换主题
-
-推荐两款主题[fluid](https://github.com/fluid-dev/hexo-theme-fluid)、[matery](https://blinkfox.github.io/)
+下载[hexo主题](https://hexo.io/themes/)后放置在themes路径下,并修改_config.yml内的theme设定，即可切换主题。推荐两款主题[fluid](https://github.com/fluid-dev/hexo-theme-fluid)、[matery](https://blinkfox.github.io/)
 
 #### fluid
 - [Hexo-Fluid主题美化](https://blog.csdn.net/weixin_43471926/article/details/109798811)

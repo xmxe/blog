@@ -21,6 +21,7 @@ git diff HEAD
 git diff branch-name file-name
 # 查看两次提交的区别
 git diff commit-id commit-id
+git show commit-id
 ```
 
 ### git reset
@@ -139,14 +140,15 @@ git rebase -i commit-id
 git rebase -i --root
 ```
 
-> git rebase和git merge区别
+> **git rebase和git merge区别**
 > 采用merge和rebase后，git log的区别，merge命令不会保留merge的分支的commit，rebase会保留所有的commit：rebase会把你当前分支的commit放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。举例:如果你从master拉了个feature分支出来,然后你提交了几个commit,这个时候刚好有人把他开发的东西合并到master了,这个时候master就比你拉分支的时候多了几个commit,如果这个时候你rebase master的话，就会把你当前的几个commit，放到那个人commit的后面。merge会把公共分支和你当前的commit合并在一起，形成一个新的commit提交
 > 处理冲突的方式：（一股脑）使用merge命令合并分支，解决完冲突，执行git add .和git commit -m 'fix conflict'。这个时候会产生一个commit。（交互式）使用rebase命令合并分支，解决完冲突，执行git add .和git rebase --continue，不会产生额外的commit。这样的好处是干净，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个commit，需要重复处理多次冲突。
 
-> git pull和git pull --rebase区别：git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。
+> **git pull和git pull --rebase区别**
+> git pull做了两个操作分别是‘获取’和合并。所以加了rebase就是以rebase的方式进行合并分支得到一条干净的分支流。
 
-> git merge和git merge --no-ff的区别
-自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge --no-ff命令,如果不加--no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。
+> **git merge和git merge --no-ff的区别**
+> 自己尝试merge命令后，发现merge时并没有产生一个commit。不是说merge时会产生一个merge commit吗？注意：只有在冲突的时候，解决完冲突才会自动产生一个commit。如果想在没有冲突的情况下也自动生成一个commit，记录此次合并就可以用：git merge --no-ff命令,如果不加--no-ff则被合并的分支之前的commit都会被抹去，只会保留一个解决冲突后的merge commit。
 
 > [合并代码还在用git merge？我们都用git rebase！](https://mp.weixin.qq.com/s/T_8bkWI-JSP5ixdVIvVAGQ)
 > [新来个技术总监，禁止我们用Git的rebase](https://mp.weixin.qq.com/s/CBz0ea6m623GtuTX5UkeQQ)
@@ -194,7 +196,7 @@ git stash pop
 # 删除最近的一次stash
 git stash drop
 
-# 当有多条 stash，可以指定操作stash，首先使用stash list列出所有记录：
+# 当有多条stash，可以指定操作stash，首先使用stash list列出所有记录：
 git stash list 
 # stash@{0}: WIP on ...
 # stash@{1}: WIP on ...
@@ -204,7 +206,7 @@ git stash list
 git stash apply stash@{1}
 # 删除stash@{1}存储的内容
 git stash drop stash@{1}
-# pop，drop 同理。
+# pop，drop同理。
 ```
 
 ### git config
@@ -226,14 +228,13 @@ git config user.name name
 
 ```shell
 # 把a分支的一个提交复制到b分支
-# 首先复制a分支的commitid 然后切换到b分支执行
+# 首先复制a分支的commitid然后切换到b分支执行
 git cherry-pick commitid
 # 一次转移多个提交：将commit1和commit2两个提交应用到当前分支。
 git cherry-pick commit1 commit2
 # 多个连续的commit，也可区间复制：将commit1到commit2这个区间的commit都应用到当前分支（包含commit1、commit2），commit1是最早的提交。
 git cherry-pick commit1^..commit2
-# 在cherry-pick多个commit时，可能会遇到代码冲突，这时cherry-pick会停下来，让用户决定如何继续操作
-# 这时需要解决代码冲突，重新提交到暂存区,然后使用cherry-pick --continue让cherry-pick继续进行下去。
+# 在cherry-pick多个commit时，可能会遇到代码冲突，这时cherry-pick会停下来，让用户决定如何继续操作,这时需要解决代码冲突，重新提交到暂存区,然后使用cherry-pick --continue让cherry-pick继续进行下去。
 git cherry-pick --continue
 # 但有时候可能需要在代码冲突后，放弃或者退出流程：放弃cherry-pick：
 git cherry-pick --abort
@@ -258,7 +259,7 @@ git push remote --all
 git push --tags
 # 推送指定标签
 git push origin tag-name
-#  删除远程标签（需要先删除本地标签）
+# 删除远程标签（需要先删除本地标签）
 git push origin :refs/tags/tag-name
 # 将本地dev分支push到远程master分支
 git push origin dev:master
@@ -301,7 +302,7 @@ git push -f origin main
 2. 执行交互式rebase命令：`git rebase -i commit_id`
     > 如果想要删除最近3次历史提交: `git rebase -i HEAD~3`
 3. 进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。
-4. 推送更新到远程仓库：`git push --force`
+4. 推送更新到远程仓库：`git push --force(或git p)`
 
 ### 远程分支重命名
 

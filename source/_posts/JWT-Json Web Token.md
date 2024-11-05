@@ -351,8 +351,7 @@ JWT其中一个很重要的优势是无状态，但实际上，我们想要在�
 
 > [原文链接](https://javaguide.cn/system-design/security/advantages&disadvantages-of-jwt.html)
 
-
 ## 相关文章
 
-- [还分不清Cookie、Session、Token、JWT？](https://mp.weixin.qq.com/s/skZL7RR3SftrB4SNZx59ZA)
-- [JWT实现登录认证+Token自动续期方案](https://mp.weixin.qq.com/s/i73E4zbTh_JCuRCqH_NoVQ)
+| [还分不清Cookie、Session、Token、JWT？](https://mp.weixin.qq.com/s/skZL7RR3SftrB4SNZx59ZA) | [JWT实现登录认证+Token自动续期方案](https://mp.weixin.qq.com/s/i73E4zbTh_JCuRCqH_NoVQ) | [JWT的优势？？？](https://mp.weixin.qq.com/s/61_0c-UG_cHMn3XKYbaTHA) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |

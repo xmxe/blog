@@ -792,11 +792,94 @@ status<span class="token punctuation">)</span>
 <p>这样在控制台就很容易的操作nginx了：查看Nginx当前状态、启动Nginx、停止Nginx、重启Nginx…如果修改了nginx的配置文件nginx.conf，也可以使用上面的命令重新加载新的配置文件并运行，可以将此命令加入到rc.local文件中，这样开机的时候nginx就默认启动了<br><strong>加入到rc.local文件中</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> /etc/rc.local<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>加入一行<code>/etc/init.d/nginx start</code>保存并退出，下次重启会生效。</p>
-<h2 id="Nginx知识点"><a href="#Nginx知识点" class="headerlink" title="Nginx知识点"></a>Nginx知识点</h2><h3 id="nginx判断"><a href="#nginx判断" class="headerlink" title="nginx判断"></a>nginx判断</h3><p>1、正则表达式匹配：</p>
+<h2 id="Nginx语法与变量"><a href="#Nginx语法与变量" class="headerlink" title="Nginx语法与变量"></a>Nginx语法与变量</h2><h3 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h3><p>location [&#x3D; | ~ | ~* | ^~ ] &#x2F;uri&#x2F; { … }</p>
+<ul>
+<li>&#x3D;：表示精确匹配,这个优先级也是最高的</li>
+<li>^~：表示uri以某个常规字符串开头，理解为匹配url路径即可。nginx不对url做编码，因此请求为&#x2F;static&#x2F;20%&#x2F;aa，可以被规则^~ &#x2F;static&#x2F; &#x2F;aa匹配到（注意是空格）。</li>
+<li>~：表示区分大小写的正则匹配</li>
+<li>~*：表示不区分大小写的正则匹配(和上面的唯一区别就是大小写)</li>
+<li>!~和!~*：分别为区分大小写不匹配及不区分大小写不匹配的正则</li>
+<li>&#x2F;：通用匹配，任何请求都会匹配到，默认匹配.</li>
+</ul>
+<p><strong>语法的一些规则和优先级</strong><br>多个location配置的情况下匹配顺序为：首先匹配&#x3D;，其次匹配^~,其次是按文件中顺序的正则匹配，最后是交给&#x2F;通用匹配。当有匹配成功时候，停止匹配，按当前匹配规则处理请求。</p>
+<h4 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h4><ul>
+<li>^ 以什么开始</li>
+<li>$ 以什么结束</li>
+<li>~ 区分大小写匹配</li>
+<li>~* 不区分大小写匹配</li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># ^/api/user$</span>
+<span class="token comment"># 匹配任何以/uri/开头的任务查询并且停止搜索</span>
+location ^~ /uri/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="精准匹配"><a href="#精准匹配" class="headerlink" title="精准匹配"></a>精准匹配</h4><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># =:表示精准匹配,只要完全匹配才能生效</span>
+location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="前缀匹配"><a href="#前缀匹配" class="headerlink" title="前缀匹配"></a>前缀匹配</h4><p>不带任务修饰符,表示前缀匹配</p>
+<h4 id="通用匹配"><a href="#通用匹配" class="headerlink" title="通用匹配"></a>通用匹配</h4><p>任务未匹配到其他location的请求都会匹配到</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location /<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>精准匹配&gt;前缀匹配(若有多个匹配荐匹配成功,那么选择匹配长的并记录)&gt;正则匹配</p>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> xdclass.net</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">location</span> ~^/api/pub$</span> <span class="token punctuation">&#123;</span>
+    ...
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment"># ^/api/pub\$这个正则表达式表示字符串必须以/开始，以b\$结束，中间必须是/api/pub</span>
+<span class="token comment"># http://xdclass.net/api/v1 匹配（完全匹配）</span>
+<span class="token comment"># http://xdclass.net/API/PUB 不匹配，大小写敏感</span>
+<span class="token comment"># http://xdclass.net/api/pub?key1=value1 匹配</span>
+<span class="token comment"># http://xdclass.net/api/pub/ 不匹配</span>
+<span class="token comment"># http://xdclass.net/api/public 不匹配，不能匹配正则表达式</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="nginx判断"><a href="#nginx判断" class="headerlink" title="nginx判断"></a>nginx判断</h4><p>1、正则表达式匹配：</p>
 <p>&#x3D;&#x3D;：等值比较;<br>~：与指定正则表达式模式匹配时返回“真”，判断匹配与否时区分字符大小写；<br>~*：与指定正则表达式模式匹配时返回“真”，判断匹配与否时不区分字符大小写；<br>!~：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时区分字符大小写；<br>!~*：与指定正则表达式模式不匹配时返回“真”，判断匹配与否时不区分字符大小写；</p>
 <p>2、文件及目录匹配判断：</p>
 <p>-f, !-f：判断指定的路径是否为存在且为文件；<br>-d, !-d：判断指定的路径是否为存在且为目录；<br>-e, !-e：判断指定的路径是否存在，文件或目录均可；<br>-x, !-x：判断指定路径的文件是否存在且可执行；</p>
-<h3 id="ngx-http-core-module模块的变量"><a href="#ngx-http-core-module模块的变量" class="headerlink" title="ngx_http_core_module模块的变量"></a>ngx_http_core_module模块的变量</h3><ul>
+<h4 id="if语法"><a href="#if语法" class="headerlink" title="if语法"></a>if语法</h4><ul>
+<li>语法：if (condition) { … }</li>
+<li>默认值：none</li>
+<li>使用字段：server, location</li>
+<li>注意：尽量考虑使用trp_files代替。</li>
+<li>判断的条件可以有以下值：</li>
+</ul>
+<ol>
+<li>一个变量的名称：空字符传”“或者一些“0”开始的字符串为false。</li>
+<li>字符串比较：使用&#x3D;或!&#x3D;运算符</li>
+<li>正则表达式匹配：使用~(区分大小写)和~*(不区分大小写)，取反运算!~和!~*。</li>
+<li>文件是否存在：使用-f和!-f操作符</li>
+<li>目录是否存在：使用-d和!-d操作符</li>
+<li>文件、目录、符号链接是否存在：使用-e和!-e操作符</li>
+<li>文件是否可执行：使用-x和!-x操作符</li>
+</ol>
+<h4 id="return"><a href="#return" class="headerlink" title="return"></a>return</h4><ul>
+<li>语法：return code</li>
+<li>默认值：none</li>
+<li>使用字段：server,location,if</li>
+<li>nginx隐藏版本号</li>
+<li>nginx.conf中修改http zone中的变量值： server_tokens off;</li>
+<li>php-fpm fastcgi.conf中的变量值： fastcgi_param SERVER_SOFTWARE nginx;</li>
+</ul>
+<h4 id="nginx正向代理"><a href="#nginx正向代理" class="headerlink" title="nginx正向代理"></a>nginx正向代理</h4><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">8090</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">resolver</span> 218.85.157.99 218.85.152.99</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">resolver_timeout</span> <span class="token number">30s</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_pass</span> http://<span class="token variable">$host</span><span class="token variable">$request_uri</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token directive"><span class="token keyword">access_log</span> /data/httplogs/proxy-<span class="token variable">$host</span>-aceess.log</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>resolver指令</p>
+<ul>
+<li>语法: resolver address … [valid&#x3D;time];</li>
+<li>默认值: —</li>
+<li>配置段: http, server, location</li>
+<li>配置DNS服务器IP地址。可以指定多个，以轮询方式请求。</li>
+<li>nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响应中的TTL字段的值，可以通过valid参数更改。</li>
+</ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h4 id="ngx-http-core-module模块的变量"><a href="#ngx-http-core-module模块的变量" class="headerlink" title="ngx_http_core_module模块的变量"></a>ngx_http_core_module模块的变量</h4><ul>
 <li><strong>$arg_PARAMETER</strong>：HTTP请求中某个参数的值，如&#x2F;index.php?site&#x3D;<a target="_blank" rel="noopener" href="http://www.domain.com/">www.domain.com</a> 可以用$arg_site取得<a target="_blank" rel="noopener" href="http://www.domain.com/">www.domain.com</a> 这个值。</li>
 <li><strong>$args HTTP</strong>：请求中的完整参数。例如，在请求&#x2F;index.php?width&#x3D;400&amp;height&#x3D;200中，$args表示字符串width&#x3D;400&amp;height&#x3D;200.</li>
 <li><strong>$binary_remote_addr</strong>：二进制格式的客户端地址。例如：\x0A\xE0B\x0E</li>
@@ -830,8 +913,8 @@ status<span class="token punctuation">)</span>
 <li><strong>$server_port</strong>：表示服务器端口</li>
 <li><strong>$server_protocol</strong>：表示服务器向客户端发送响应的协议，如HTTP&#x2F;1.1或HTTP&#x2F;1.0</li>
 </ul>
-<h3 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h3><ul>
-<li><strong>$remote_addr,$http_x_forwarded_for-</strong> ：记录客户端IP地址</li>
+<h4 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h4><ul>
+<li>**$remote_addr,$http_x_forwarded_for-**：记录客户端IP地址</li>
 <li><strong>$remote_user</strong>：记录客户端用户名称</li>
 <li><strong>$request</strong>：记录请求的URL和HTTP协议</li>
 <li><strong>$status</strong>：记录请求状态</li>
@@ -848,49 +931,7 @@ status<span class="token punctuation">)</span>
 <li><strong>$time_iso8601</strong>：ISO8601标准格式下的本地时间。</li>
 <li><strong>$time_local</strong>：通用日志格式下的本地时间。</li>
 </ul>
-<h3 id="if语法"><a href="#if语法" class="headerlink" title="if语法"></a>if语法</h3><ul>
-<li>语法：if (condition) { … }</li>
-<li>默认值：none</li>
-<li>使用字段：server, location</li>
-<li>注意：尽量考虑使用trp_files代替。</li>
-<li>判断的条件可以有以下值：</li>
-</ul>
-<ol>
-<li>一个变量的名称：空字符传”“或者一些“0”开始的字符串为false。</li>
-<li>字符串比较：使用&#x3D;或!&#x3D;运算符</li>
-<li>正则表达式匹配：使用~(区分大小写)和~*(不区分大小写)，取反运算!~和!~*。</li>
-<li>文件是否存在：使用-f和!-f操作符</li>
-<li>目录是否存在：使用-d和!-d操作符</li>
-<li>文件、目录、符号链接是否存在：使用-e和!-e操作符</li>
-<li>文件是否可执行：使用-x和!-x操作符</li>
-</ol>
-<h3 id="return"><a href="#return" class="headerlink" title="return"></a>return</h3><ul>
-<li>语法：return code</li>
-<li>默认值：none</li>
-<li>使用字段：server,location,if</li>
-<li>nginx隐藏版本号</li>
-<li>nginx.conf中修改http zone中的变量值： server_tokens off;</li>
-<li>php-fpm fastcgi.conf中的变量值： fastcgi_param SERVER_SOFTWARE nginx;</li>
-</ul>
-<h3 id="nginx正向代理"><a href="#nginx正向代理" class="headerlink" title="nginx正向代理"></a>nginx正向代理</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
-    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">8090</span></span><span class="token punctuation">;</span>
-    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
-        <span class="token directive"><span class="token keyword">resolver</span> 218.85.157.99 218.85.152.99</span><span class="token punctuation">;</span>
-        <span class="token directive"><span class="token keyword">resolver_timeout</span> <span class="token number">30s</span></span><span class="token punctuation">;</span>
-        <span class="token directive"><span class="token keyword">proxy_pass</span> http://<span class="token variable">$host</span><span class="token variable">$request_uri</span></span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token directive"><span class="token keyword">access_log</span> /data/httplogs/proxy-<span class="token variable">$host</span>-aceess.log</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>resolver指令</p>
-<ul>
-<li>语法: resolver address … [valid&#x3D;time];</li>
-<li>默认值: —</li>
-<li>配置段: http, server, location</li>
-<li>配置DNS服务器IP地址。可以指定多个，以轮询方式请求。</li>
-<li>nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响应中的TTL字段的值，可以通过valid参数更改。</li>
-</ul>
-<h2 id="location-“-x2F-“-的作用"><a href="#location-“-x2F-“-的作用" class="headerlink" title="location “&#x2F;“ 的作用"></a>location “&#x2F;“ 的作用</h2><p><strong>前置测试访问域名</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload">www.test.com/api/upload</a></p>
+<h2 id="location-“-x2F-“的作用"><a href="#location-“-x2F-“的作用" class="headerlink" title="location “&#x2F;“的作用"></a>location “&#x2F;“的作用</h2><p><strong>前置测试访问域名</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload">www.test.com/api/upload</a></p>
 <h3 id="location和proxy-pass都带-x2F-，则真实地址不带location匹配目录"><a href="#location和proxy-pass都带-x2F-，则真实地址不带location匹配目录" class="headerlink" title="location和proxy_pass都带&#x2F;，则真实地址不带location匹配目录"></a>location和proxy_pass都带&#x2F;，则真实地址不带location匹配目录</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080/</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -932,10 +973,11 @@ status<span class="token punctuation">)</span>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/server/upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/server/upload</a></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>proxy_pass代理地址端口后有目录(包括 &#x2F; )，转发后地址：代理地址+访问URL目录部分去除location匹配目录</li>
+<li>proxy_pass代理地址端口后有目录(包括&#x2F;)，转发后地址：代理地址+访问URL目录部分去除location匹配目录</li>
 <li>proxy_pass代理地址端口后无任何，转发后地址：代理地址+访问URL目录部</li>
 </ol>
-<h2 id="Nginx设置黑-x2F-白名单IP限制"><a href="#Nginx设置黑-x2F-白名单IP限制" class="headerlink" title="Nginx设置黑&#x2F;白名单IP限制"></a>Nginx设置黑&#x2F;白名单IP限制</h2><h3 id="第一种方法-allow、deny"><a href="#第一种方法-allow、deny" class="headerlink" title="第一种方法:allow、deny"></a>第一种方法:allow、deny</h3><p>deny和allow指令属于ngx_http_access_module，nginx默认加载此模块，所以可直接使用。这种方式，最简单，最直接。设置类似防火墙iptable，使用方法：直接配置文件中添加：</p>
+<h2 id="Nginx业务需求配置"><a href="#Nginx业务需求配置" class="headerlink" title="Nginx业务需求配置"></a>Nginx业务需求配置</h2><h3 id="Nginx设置黑-x2F-白名单IP限制"><a href="#Nginx设置黑-x2F-白名单IP限制" class="headerlink" title="Nginx设置黑&#x2F;白名单IP限制"></a>Nginx设置黑&#x2F;白名单IP限制</h3><p><strong>第一种方法:allow、deny</strong></p>
+<p>deny和allow指令属于ngx_http_access_module，nginx默认加载此模块，所以可直接使用。这种方式，最简单，最直接。设置类似防火墙iptable，使用方法：直接配置文件中添加：</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># 白名单设置，allow后面为可访问IP</span>
 <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
      <span class="token directive"><span class="token keyword">allow</span> 123.13.123.12</span><span class="token punctuation">;</span>
@@ -970,7 +1012,8 @@ allow <span class="token number">10.1</span>.1.10<span class="token punctuation"
 allow <span class="token number">10.1</span>.1.11<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>白名单设置完成，黑名单设置方法一样。</p>
-<h3 id="第二种方法-ngx-http-geo-module"><a href="#第二种方法-ngx-http-geo-module" class="headerlink" title="第二种方法:ngx_http_geo_module"></a>第二种方法:ngx_http_geo_module</h3><p>默认情况下，一般nginx是有加该模块的，<a target="_blank" rel="noopener" href="https://nginx.org/en/docs/http/ngx_http_geo_module.html">ngx_http_geo_module官方文档</a>。参数需设置在位置在http模块中。此模块可设置IP限制，也可设置国家地区限制。位置在server模块外即可。语法示例：配置文件直接添加</p>
+<p><strong>第二种方法:ngx_http_geo_module</strong></p>
+<p>默认情况下，一般nginx是有加该模块的，<a target="_blank" rel="noopener" href="https://nginx.org/en/docs/http/ngx_http_geo_module.html">ngx_http_geo_module官方文档</a>。参数需设置在位置在http模块中。此模块可设置IP限制，也可设置国家地区限制。位置在server模块外即可。语法示例：配置文件直接添加</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">geo</span> <span class="token variable">$ip_list</span></span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">default</span> <span class="token number">0</span></span><span class="token punctuation">;</span>
     <span class="token comment"># 设置默认值为0</span>
@@ -1020,7 +1063,8 @@ allow <span class="token number">10.1</span>.1.11<span class="token punctuation"
 <span class="token number">192.168</span>.150.0/24 <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>设置完成，ip_list.conf的IP为白名单，不在名单中的，直接返回403页面。黑名单设置方法相同。</p>
-<h3 id="ngx-http-geo-module负载均衡（扩展）"><a href="#ngx-http-geo-module负载均衡（扩展）" class="headerlink" title="ngx_http_geo_module负载均衡（扩展）"></a>ngx_http_geo_module负载均衡（扩展）</h3><p>ngx_http_geo_module，模块还可以做负载均衡使用，如web集群在不同地区都有服务器，某个地区IP段，负载均衡至访问某个地区的服务器。方式类似，IP后面加上自定义值，不仅仅数字，如US,CN等字母。示例：如果三台服务器：122.11.11.11，133.11.12.22，144.11.11.33</p>
+<p><strong>ngx_http_geo_module负载均衡（扩展）</strong></p>
+<p>ngx_http_geo_module，模块还可以做负载均衡使用，如web集群在不同地区都有服务器，某个地区IP段，负载均衡至访问某个地区的服务器。方式类似，IP后面加上自定义值，不仅仅数字，如US,CN等字母。示例：如果三台服务器：122.11.11.11，133.11.12.22，144.11.11.33</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">geo</span> <span class="token variable">$country</span></span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">default</span> default</span><span class="token punctuation">;</span>
     <span class="token directive"><span class="token keyword">111.11.11.0/24</span>   uk</span><span class="token punctuation">;</span>
@@ -1053,14 +1097,16 @@ allow <span class="token number">10.1</span>.1.11<span class="token punctuation"
      <span class="token punctuation">&#125;</span>
  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="国家城市IP访问限制"><a href="#国家城市IP访问限制" class="headerlink" title="国家城市IP访问限制"></a>国家城市IP访问限制</h2><p>有些第三方也提供设置，如cloudflare，设置更简单，防火墙规则里设置。这里讲讲nginx的设置方法。</p>
-<h3 id="安装ngx-http-geoip-module模块"><a href="#安装ngx-http-geoip-module模块" class="headerlink" title="安装ngx_http_geoip_module模块"></a>安装ngx_http_geoip_module模块</h3><p><a target="_blank" rel="noopener" href="https://nginx.org/en/docs/http/ngx_http_geoip_module.html">ngx_http_geoip_module官方文档</a>，参数需设置在位置在http模块中。nginx默认情况下不构建此模块，应使用<code>--with-http_geoip_module</code>配置参数启用它。对于ubuntu系统来说，直接安装nginx-extras组件，包括几乎所有的模块。</p>
+<h3 id="国家城市IP访问限制"><a href="#国家城市IP访问限制" class="headerlink" title="国家城市IP访问限制"></a>国家城市IP访问限制</h3><p>有些第三方也提供设置，如cloudflare，设置更简单，防火墙规则里设置。这里讲讲nginx的设置方法。</p>
+<p><strong>安装ngx_http_geoip_module模块</strong></p>
+<p><a target="_blank" rel="noopener" href="https://nginx.org/en/docs/http/ngx_http_geoip_module.html">ngx_http_geoip_module官方文档</a>，参数需设置在位置在http模块中。nginx默认情况下不构建此模块，应使用<code>--with-http_geoip_module</code>配置参数启用它。对于ubuntu系统来说，直接安装nginx-extras组件，包括几乎所有的模块。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> nginx-extras<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>对于centos系统，安装模块。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> nginx-module-geoip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="下载-IP-数据库"><a href="#下载-IP-数据库" class="headerlink" title="下载 IP 数据库"></a>下载 IP 数据库</h3><p>此模块依赖于IP数据库，所有数据在此数据库中读取，所有还需要下载ip库（dat格式）。MaxMind提供了免费的IP地域数据库，坏消息是MaxMind官方已经停止支持dat格式的ip库。在其他地方可以找到dat格式的文件，或者老版本的，当然数据不可能最新，多少有误差。</p>
+<p><strong>下载IP数据库</strong></p>
+<p>此模块依赖于IP数据库，所有数据在此数据库中读取，所有还需要下载ip库（dat格式）。MaxMind提供了免费的IP地域数据库，坏消息是MaxMind官方已经停止支持dat格式的ip库。在其他地方可以找到dat格式的文件，或者老版本的，当然数据不可能最新，多少有误差。</p>
 <blockquote>
 <p>第三方下载地址：<a target="_blank" rel="noopener" href="https://www.miyuru.lk/geoiplegacy">https://www.miyuru.lk/geoiplegacy</a></p>
 </blockquote>
@@ -1074,7 +1120,8 @@ gunzip maxmind.dat.gz
 gunzip maxmind.dat.gz
 <span class="token function">sudo</span> <span class="token function">mv</span> maxmind.dat /etc/nginx/GeoCity.dat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h3><p>示例：</p>
+<p><strong>配置nginx</strong></p>
+<p>示例：</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">geoip_country</span> /etc/nginx/GeoCountry.dat</span><span class="token punctuation">;</span>
 <span class="token directive"><span class="token keyword">geoip_city</span> /etc/nginx/GeoCity.dat</span><span class="token punctuation">;</span>
 
@@ -1097,7 +1144,7 @@ gunzip maxmind.dat.gz
 <li>国家相关参数：</li>
 </ul>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">$geoip_country_code <span class="token comment"># 两位字符的英文国家码。如：CN,US</span>
-$geoip_country_code3 <span class="token comment"># 三位字符的英文国家码。如：CHN, USA</span>
+$geoip_country_code3 <span class="token comment"># 三位字符的英文国家码。如：CHN,USA</span>
 $geoip_country_name <span class="token comment"># 国家英文全称。如：China,United States</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
@@ -1113,8 +1160,9 @@ $geoip_city_continent_code <span class="token comment"># 不知什么用途，�
 $geoip_latitude <span class="token comment"># 纬度</span>
 $geoip_longitude <span class="token comment"># 经度</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="封禁恶意ip"><a href="#封禁恶意ip" class="headerlink" title="封禁恶意ip"></a>封禁恶意ip</h2><p>单独网站屏蔽IP的方法，把<code>include xxx;</code>放到网址对应的在server{}语句块,虚拟主机所有网站屏蔽IP的方法，把<code>include xxx;</code>放到http{}语句块。</p>
-<h3 id="手动封禁"><a href="#手动封禁" class="headerlink" title="手动封禁"></a>手动封禁</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span><span class="token punctuation">&#123;</span>
+<h3 id="封禁恶意ip"><a href="#封禁恶意ip" class="headerlink" title="封禁恶意ip"></a>封禁恶意ip</h3><p>单独网站屏蔽IP的方法，把<code>include xxx;</code>放到网址对应的在server{}语句块,虚拟主机所有网站屏蔽IP的方法，把<code>include xxx;</code>放到http{}语句块。</p>
+<p><strong>手动封禁</strong></p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span><span class="token punctuation">&#123;</span>
     <span class="token comment"># ....</span>
     <span class="token directive"><span class="token keyword">include</span> blacklist.conf</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
@@ -1131,7 +1179,8 @@ $geoip_longitude <span class="token comment"># 经度</span><span aria-hidden="t
 <span class="token comment"># 重新加载配置，不中断服务</span>
 ./nginx -s reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="自动化封禁"><a href="#自动化封禁" class="headerlink" title="自动化封禁"></a>自动化封禁</h3><p>思路:</p>
+<p><strong>自动化封禁</strong></p>
+<p>思路:</p>
 <ul>
 <li>编写shell脚本</li>
 <li>AWK统计access.log，记录每秒访问超过60次的ip，然后配合nginx或者iptables进行封禁</li>
@@ -1151,50 +1200,11 @@ $geoip_longitude <span class="token comment"># 经度</span><span aria-hidden="t
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h2><p>location [&#x3D; | ~ | ~* | ^~ ] &#x2F;uri&#x2F; { … }</p>
-<ul>
-<li>&#x3D;：表示精确匹配,这个优先级也是最高的</li>
-<li>^~：表示uri以某个常规字符串开头，理解为匹配url路径即可。nginx不对url做编码，因此请求为&#x2F;static&#x2F;20%&#x2F;aa，可以被规则^~ &#x2F;static&#x2F; &#x2F;aa匹配到（注意是空格）。</li>
-<li>~：表示区分大小写的正则匹配</li>
-<li>~*：表示不区分大小写的正则匹配(和上面的唯一区别就是大小写)</li>
-<li>!~和!~*：分别为区分大小写不匹配及不区分大小写不匹配的正则</li>
-<li>&#x2F;：通用匹配，任何请求都会匹配到，默认匹配.</li>
-</ul>
-<p><strong>语法的一些规则和优先级</strong><br>多个location配置的情况下匹配顺序为：首先匹配&#x3D;，其次匹配^~,其次是按文件中顺序的正则匹配，最后是交给&#x2F;通用匹配。当有匹配成功时候，停止匹配，按当前匹配规则处理请求。</p>
-<h3 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h3><ul>
-<li>^ 以什么开始</li>
-<li>$ 以什么结束</li>
-<li>~ 区分大小写匹配</li>
-<li>~* 不区分大小写匹配</li>
-</ul>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># ^/api/user$</span>
-<span class="token comment"># 匹配任何以/uri/开头的任务查询并且停止搜索</span>
-location ^~ /uri/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="精准匹配"><a href="#精准匹配" class="headerlink" title="精准匹配"></a>精准匹配</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># =:表示精准匹配,只要完全匹配才能生效</span>
-location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h3 id="前缀匹配"><a href="#前缀匹配" class="headerlink" title="前缀匹配"></a>前缀匹配</h3><p>不带任务修饰符,表示前缀匹配</p>
-<h3 id="通用匹配"><a href="#通用匹配" class="headerlink" title="通用匹配"></a>通用匹配</h3><p>任务未匹配到其他location的请求都会匹配到</p>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location /<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h3><p>精准匹配&gt;前缀匹配(若有多个匹配荐匹配成功,那么选择匹配长的并记录)&gt;正则匹配</p>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
-    <span class="token directive"><span class="token keyword">server_name</span> xdclass.net</span><span class="token punctuation">;</span>
-    <span class="token directive"><span class="token keyword">location</span> ~^/api/pub$</span> <span class="token punctuation">&#123;</span>
-    ...
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token comment"># ^/api/pub\$这个正则表达式表示字符串必须以/开始，以b\$结束，中间必须是/api/pub</span>
-<span class="token comment"># http://xdclass.net/api/v1 匹配（完全匹配）</span>
-<span class="token comment"># http://xdclass.net/API/PUB 不匹配，大小写敏感</span>
-<span class="token comment"># http://xdclass.net/api/pub?key1=value1 匹配</span>
-<span class="token comment"># http://xdclass.net/api/pub/ 不匹配</span>
-<span class="token comment"># http://xdclass.net/api/public 不匹配，不能匹配正则表达式</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="地址重定向"><a href="#地址重定向" class="headerlink" title="地址重定向"></a>地址重定向</h2><h3 id="rewrite地址重定向，实现URL重定向的重要指令，他根据regex-正则表达式-来匹配内容跳转到"><a href="#rewrite地址重定向，实现URL重定向的重要指令，他根据regex-正则表达式-来匹配内容跳转到" class="headerlink" title="rewrite地址重定向，实现URL重定向的重要指令，他根据regex(正则表达式)来匹配内容跳转到"></a>rewrite地址重定向，实现URL重定向的重要指令，他根据regex(正则表达式)来匹配内容跳转到</h3><p>语法: </p>
+<h3 id="地址重定向"><a href="#地址重定向" class="headerlink" title="地址重定向"></a>地址重定向</h3><p><strong>rewrite地址重定向，实现URL重定向的重要指令，他根据regex(正则表达式)来匹配内容跳转到</strong></p>
+<p>语法: </p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rewrite regex replacement<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这是⼀个正则表达式，匹配完整的域名和后⾯的路径地址,replacement部分<a target="_blank" rel="noopener" href="https://xdclass.net/$1">https://xdclass.net/$1</a>, $1是取自regex部分()里的内容.rewrite ^&#x2F;(.*) <a target="_blank" rel="noopener" href="https://xdclass.net/$1">https://xdclass.net/$1</a> permanent</p>
+<p>这是⼀个正则表达式，匹配完整的域名和后⾯的路径地址,replacement部分<a target="_blank" rel="noopener" href="https://xdclass.net/$1,$1%E6%98%AF%E5%8F%96%E8%87%AAregex%E9%83%A8%E5%88%86()%E9%87%8C%E7%9A%84%E5%86%85%E5%AE%B9.rewrite">https://xdclass.net/$1,$1是取自regex部分()里的内容.rewrite</a> ^&#x2F;(.*) <a target="_blank" rel="noopener" href="https://xdclass.net/$1">https://xdclass.net/$1</a> permanent</p>
 <p>常用正则表达式</p>
 <ul>
 <li>^: 匹配输入字符串的起始位置</li>
@@ -1211,11 +1221,12 @@ location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 <li>redirect: 返回302临时重定向</li>
 <li>permanent: 返回301永久重定向</li>
 </ul>
-<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>– 非法访问跳转,防盗链</p>
+<p><strong>应用场景</strong></p>
+<p>– 非法访问跳转,防盗链</p>
 <p>– 网站更换新域名</p>
 <p>– http跳转https</p>
 <p>– 不同地址访问同⼀个虚拟主机的资源</p>
-<h2 id="配置websocket反向代理"><a href="#配置websocket反向代理" class="headerlink" title="配置websocket反向代理"></a>配置websocket反向代理</h2><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+<h3 id="配置websocket反向代理"><a href="#配置websocket反向代理" class="headerlink" title="配置websocket反向代理"></a>配置websocket反向代理</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
     <span class="token directive"><span class="token keyword">server_name</span> xdclass.net</span><span class="token punctuation">;</span>
     <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
@@ -1232,7 +1243,8 @@ location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><s
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="性能优化-服务端缓存前置"><a href="#性能优化-服务端缓存前置" class="headerlink" title="性能优化-服务端缓存前置"></a>性能优化-服务端缓存前置</h2><ul>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p><strong>服务端缓存前置</strong></p>
+<ul>
 <li><p>&#x2F;root&#x2F;cache<br>本地路径，用来设置Nginx缓存资源的存放地址</p>
 </li>
 <li><p>levels&#x3D;1:2<br>默认所有缓存文件都放在上面指定的根路径中，可能影响缓存的性能，推荐指定为2级目录来存储缓存文件；1和2表示用1位和2位16进制来命名目录名称。第⼀级目录用1位16进制命名，如a；第⼆级目录用2位16进制命名，如3a。所以此例中⼀级目录有16个，⼆级目录有16 * 16&#x3D;256个,总目录数为16 * 256&#x3D;4096个。</p>
@@ -1263,7 +1275,8 @@ location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><s
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h2 id="性能优化-动静分离"><a href="#性能优化-动静分离" class="headerlink" title="性能优化-动静分离"></a>性能优化-动静分离</h2><p>性能优化-静态资源压缩</p>
+<p><strong>动静分离</strong></p>
+<p>性能优化-静态资源压缩</p>
 <p>对文本、js和css文件等进行压缩，⼀般是压缩后的大小是原始大小的25%</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># 开启gzip,减少我们发送的数据量</span>
 <span class="token directive"><span class="token keyword">gzip</span> <span class="token boolean">on</span></span><span class="token punctuation">;</span>
@@ -1299,13 +1312,15 @@ location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 <li><p>压缩后的内容可以获得更快的网络传输速度，时间是得到了优化,所以是双向的</p>
 </li>
 </ul>
-<h2 id="https配置"><a href="#https配置" class="headerlink" title="https配置"></a>https配置</h2><h3 id="1-删除原先的nginx，新增ssl模块"><a href="#1-删除原先的nginx，新增ssl模块" class="headerlink" title="1. 删除原先的nginx，新增ssl模块"></a>1. 删除原先的nginx，新增ssl模块</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure <span class="token parameter variable">--prefix</span><span class="token operator">=</span>/usr/local/nginx --with-http_stub_status_module <span class="token parameter variable">--withhttp_ssl_module</span>
+<h3 id="https配置"><a href="#https配置" class="headerlink" title="https配置"></a>https配置</h3><p><strong>删除原先的nginx，新增ssl模块</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure <span class="token parameter variable">--prefix</span><span class="token operator">=</span>/usr/local/nginx --with-http_stub_status_module <span class="token parameter variable">--withhttp_ssl_module</span>
 <span class="token function">make</span>
 <span class="token function">make</span> <span class="token function">install</span>
 <span class="token comment">#查看是否成功</span>
 /usr/local/nginx/sbin/nginx <span class="token parameter variable">-V</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="2-Nginx配置https证书"><a href="#2-Nginx配置https证书" class="headerlink" title="2. Nginx配置https证书"></a>2. Nginx配置https证书</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+<p><strong>Nginx配置https证书</strong></p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
     <span class="token directive"><span class="token keyword">server_name</span> 16web.net</span><span class="token punctuation">;</span>
     <span class="token directive"><span class="token keyword">ssl_certificate</span> /usr/local/software/biz/key/4383407_16web.net.pem</span><span class="token punctuation">;</span>
@@ -1320,7 +1335,8 @@ location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><s
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-https访问实操"><a href="#3-https访问实操" class="headerlink" title="3. https访问实操"></a>3. https访问实操</h3><ul>
+<p><strong>https访问实操</strong></p>
+<ul>
 <li><p>杀掉原先进程</p>
 </li>
 <li><p>防⽕墙关闭或者开放443端⼝</p>
@@ -1336,7 +1352,7 @@ location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Real-IP <span class="token variable">$remote_addr</span></span><span class="token punctuation">;</span>
 <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-For <span class="token variable">$proxy_add_x_forwarded_for</span></span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><p>LVS+keepalived+nginx架构解决的问题：</p>
+<h3 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h3><p>LVS+keepalived+nginx架构解决的问题：</p>
 <ol>
 <li><p>如果其中keepalived挂了，那就会vip就会分发到另外⼀个keepalived节点，响应正常</p>
 </li>
@@ -1442,15 +1458,15 @@ route del <span class="token variable">$SNS_VIP</span> <span class="token operat
 </li>
 <li><p>常见问题</p>
 <ul>
-<li>vip能ping通，vip监听的端口不通: 第⼀个原因:nginx1和nginx2两台服务器的服务没有正常启动</li>
-<li>vip ping不通: 核对是否出现裂脑,常见原因为防火墙配置所致导致多播心跳失败,核对keepalived的配置是否正确：需要关闭selinux，不然sh脚本可能不生效<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看</span>
+<li>vip能ping通，vip监听的端口不通:第⼀个原因:nginx1和nginx2两台服务器的服务没有正常启动</li>
+<li>vip ping不通:核对是否出现裂脑,常见原因为防火墙配置所致导致多播心跳失败,核对keepalived的配置是否正确：需要关闭selinux，不然sh脚本可能不生效<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看</span>
 getenforce
 <span class="token comment">#关闭</span>
 setenforce <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 </li>
 </ul>
-<h2 id="运维统计"><a href="#运维统计" class="headerlink" title="运维统计"></a>运维统计</h2><ol>
+<h3 id="运维统计"><a href="#运维统计" class="headerlink" title="运维统计"></a>运维统计</h3><ol>
 <li>查看访问最频繁的前100个IP<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">awk</span> <span class="token string">'&#123;print $1&#125;'</span> access_temp.log <span class="token operator">|</span> <span class="token function">sort</span> <span class="token parameter variable">-n</span> <span class="token operator">|</span><span class="token function">uniq</span> <span class="token parameter variable">-c</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token parameter variable">-rn</span> <span class="token operator">|</span> <span class="token function">head</span> <span class="token parameter variable">-n</span> <span class="token number">100</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>统计访问最多的url 前20名<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> access_temp.log <span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'&#123;print $7&#125;'</span><span class="token operator">|</span> <span class="token function">sort</span><span class="token operator">|</span><span class="token function">uniq</span> -c<span class="token operator">|</span> <span class="token function">sort</span> -rn<span class="token operator">|</span> <span class="token function">head</span> <span class="token parameter variable">-20</span> <span class="token operator">|</span> <span class="token function">more</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>自定义日志统计接口性能</li>
@@ -1477,7 +1493,7 @@ setenforce <span class="token number">0</span><span aria-hidden="true" class="li
 <li>统计耗时接口,列出传输时间超过2秒的接口，显示前5条<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#$NF 表示最后⼀列, awk '&#123;print $NF&#125;</span>
 <span class="token function">cat</span> time_temp.log<span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'($NF > 2)&#123;print $7&#125;'</span><span class="token operator">|</span><span class="token function">sort</span> -n<span class="token operator">|</span><span class="token function">uniq</span> -c<span class="token operator">|</span><span class="token function">sort</span> -nr<span class="token operator">|</span><span class="token function">head</span> <span class="token parameter variable">-5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 </ol>
-<h2 id="防止sql注入"><a href="#防止sql注入" class="headerlink" title="防止sql注入"></a>防止sql注入</h2><p>将下面的Nginx配置文件代码放入到server块中，然后重启Nginx即可</p>
+<h3 id="防止sql注入"><a href="#防止sql注入" class="headerlink" title="防止sql注入"></a>防止sql注入</h3><p>将下面的Nginx配置文件代码放入到server块中，然后重启Nginx即可</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">if</span> (<span class="token variable">$request_method</span> !~* GET|POST)</span> <span class="token punctuation">&#123;</span> <span class="token directive"><span class="token keyword">return</span> <span class="token number">444</span></span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
 <span class="token comment"># 使用444错误代码可以更加减轻服务器负载压力。</span>
 <span class="token comment"># 防止SQL注入</span>
@@ -1531,6 +1547,335 @@ if (<span class="token variable">$query_string</span> ~ "</span>GLOBALS(=|\[|\%[
 if ($http_referer ~* WebBench*") <span class="token punctuation">&#123;</span> <span class="token directive"><span class="token keyword">return</span> <span class="token number">509</span></span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
 <span class="token comment"># 拦截WebBench或者类似压力测试工具，其他工具只需要更换名称即可。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="限制连接数量"><a href="#限制连接数量" class="headerlink" title="限制连接数量"></a>限制连接数量</h3><p>Nginx可以通过limit_conn_zone和limit_conn两个组件来对客户端访问目录和文件的访问频率和次数进行限制，两个模块都能够对客户端访问进行限制，具体如何使用要结合公司业务环境进行配置。举个简单的例子：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+  <span class="token directive"><span class="token keyword">limit_conn_zone</span> <span class="token variable">$binary_remote_addr</span> zone=ops:10m</span><span class="token punctuation">;</span>
+  <span class="token comment"># ...</span>
+  <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">listen</span>       <span class="token number">80</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span>  www.javaboy.org</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+      <span class="token directive"><span class="token keyword">limit_conn</span> ops <span class="token number">1</span></span><span class="token punctuation">;</span>  <span class="token comment">#这将指定一个地址只能同时存在一个连接。“one”与上面的对应，也可以自定义命名</span>
+      <span class="token directive"><span class="token keyword">limit_rate</span> <span class="token number">300k</span></span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里涉及到三个配置项：</p>
+<ul>
+<li>limit_zone：是针对每个IP定义一个存储session状态的容器，这个示例中定义了一个10m的容器，假设每个session的大小是32bytes，那么可以处理327680个session。</li>
+<li>limit_conn ops 1：限制每个IP只能发起一个并发连接。</li>
+<li>limit_rate 300k：对每个连接限速300k。注意，这里是对连接限速，而不是对IP限速。如果一个IP允许两个并发连接，那么这个IP就是限速<code>limit_rate × 2</code>。</li>
+</ul>
+<h3 id="限制请求频率"><a href="#限制请求频率" class="headerlink" title="限制请求频率"></a>限制请求频率</h3><p>Nginx可以通过限制请求频率来防止服务器过载，最常见的场景就是登录请求，可以通过限制请求频率防止账号暴力破解。Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
+<ul>
+<li>limit_req_zone：用来限制单位时间内的请求数，即速率限制,采用的漏桶算法”leaky bucket”。</li>
+<li>limit_req_conn：用来限制同一时间连接数，即并发限制。</li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">limit_req_zone</span> <span class="token variable">$binary_remote_addr</span> zone=mylimit:10m rate=1r/s</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">limit_req</span> zone=mylimit burst=5 nodelay</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_pass</span> http://javaboy.org</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>limit_req_zone $binary_remote_addr zone&#x3D;mylimit:10m rate&#x3D;1r&#x2F;s;</strong></p>
+<ul>
+<li>第一个参数：$binary_remote_addr表示通过remote_addr这个标识来做限制，“binary_”的目的是缩写内存占用量，是限制同一客户端ip地址。</li>
+<li>第二个参数：zone&#x3D;mylimit:10m表示生成一个大小为10M，名字为mylimit的内存区域，用来存储访问的频次信息。</li>
+<li>第三个参数：rate&#x3D;1r&#x2F;s表示允许相同标识的客户端的访问频次，这里限制的是每秒1次，还可以有比如30r&#x2F;m的。</li>
+</ul>
+<p><strong>limit_req zone&#x3D;mylimit burst&#x3D;5 nodelay;</strong></p>
+<ul>
+<li>第一个参数：zone&#x3D;one设置使用哪个配置区域来做限制，与上面limit_req_zone里的name对应。</li>
+<li>第二个参数：burst&#x3D;5，重点说明一下这个配置，burst爆发的意思，这个配置的意思是设置一个大小为5的缓冲区，当有大量请求（爆发）过来时，超过了访问频次限制的请求可以先放到这个缓冲区内。</li>
+<li>第三个参数：nodelay，如果设置，超过访问频次而且缓冲区也满了的时候就会直接返回503，如果没有设置，则所有请求会等待排队。</li>
+</ul>
+<h3 id="防止目录遍历"><a href="#防止目录遍历" class="headerlink" title="防止目录遍历"></a>防止目录遍历</h3><p>在Nginx配置中设置<code>autoindex off</code>来防止目录遍历攻击。这个一般是如果你要做文件服务器，根据自己的实际需求，有需要的话这个功能可以打开，否则将之关闭即可。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">autoindex</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="隐藏Nginx版本号"><a href="#隐藏Nginx版本号" class="headerlink" title="隐藏Nginx版本号"></a>隐藏Nginx版本号</h3><p>攻击者如果能够确定服务器使用的Nginx版本，可能会利用这个信息来寻找和利用已知的漏洞进行攻击。因此，隐藏版本信息可以提高服务器的安全性，使攻击者难以通过版本信息推断出服务器可能存在的安全漏洞。要隐藏Nginx版本号，有三个办法，一般来说我们使用第一种方式就可以了。</p>
+<p><strong>修改配置文件</strong></p>
+<p>在Nginx的配置文件中，在<code>http</code>块中添加以下配置：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server_tokens</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样设置后，Nginx将不会在错误页面上显示版本号。配置完成之后，保存配置文件并重新加载Nginx以应用更改：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">nginx -t <span class="token comment"># 测试配置文件是否正确</span>
+nginx -s reload <span class="token comment"># 重新加载Nginx配置</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这种方法可以隐藏错误页面上的版本信息，但可能无法完全隐藏所有响应头中的版本信息。</p>
+<p><strong>修改Nginx源码</strong></p>
+<p>如果想要从根源上修改Nginx版本信息，需要重新编译Nginx，步骤如下：</p>
+<ul>
+<li>修改<code>src/core/nginx.h</code>文件中的版本定义。</li>
+<li>修改<code>src/http/ngx_http_header_filter_module.c</code>文件中的服务器字符串。</li>
+<li>修改<code>src/http/ngx_http_special_response.c</code>文件中的错误页面底部信息。</li>
+</ul>
+<p>修改完这些文件后，需要重新编译Nginx。这样编译安装后，Nginx的版本信息将被彻底修改。</p>
+<p><strong>使用第三方模块</strong></p>
+<p>如果需要动态修改响应头中的版本信息，可以使用如<code>headers-more-nginx-module</code>模块。这个模块允许你动态地添加、修改或删除Nginx的响应头。通过这个模块，可以完全控制<code>Server</code>响应头的内容。选择哪种方法取决于你的具体需求和环境。如果你只是想简单地隐藏版本信息，修改配置文件可能是最简单的方法。如果你需要更彻底地控制版本信息，可能需要考虑修改源码并重新编译Nginx。</p>
+<h3 id="设置超时时间"><a href="#设置超时时间" class="headerlink" title="设置超时时间"></a>设置超时时间</h3><p>设置Nginx的超时配置是非常重要的，因为它可以影响服务器的性能和资源的有效利用。比较常见的超时配置有四个：</p>
+<ol>
+<li><strong>keepalive_timeout</strong>：这个指令设置了与客户端的<code>keep-alive</code>连接超时时间。如果连接在指定时间内没有数据传输，Nginx将关闭该连接。默认值通常是75秒。这个设置对于频繁访问的站点尤其重要，因为它减少了连接建立和断开的开销。</li>
+<li><strong>client_body_timeout</strong>：这个指令指定了客户端与服务端建立连接后发送request body的超时时间。如果客户端在指定时间内没有发送任何内容，Nginx返回HTTP 408（Request Timed Out）。默认值通常是60秒。</li>
+<li><strong>client_header_timeout</strong>：这个指令指定了客户端向服务端发送一个完整的request header的超时时间。如果在指定时间内没有发送一个完整的request header，Nginx返回HTTP 408（Request Timed Out）。默认值通常是60秒。</li>
+<li><strong>send_timeout</strong>：这个指令设置了服务端向客户端传输数据的超时时间。如果在指定时间内客户端没有接收到任何数据，连接将被关闭。默认值通常是60秒。</li>
+</ol>
+<p><strong>keepalive_timeout</strong></p>
+<p>这个指令控制了客户端与服务器之间的连接保持活动状态的时间。这对于减少TCP连接的开销非常有用，特别是在高流量的网站上。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">keepalive_timeout</span> <span class="token number">60s</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">proxy_pass</span> http://javaboy.org</span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_http_version</span> 1.1</span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_set_header</span> Upgrade <span class="token variable">$http_upgrade</span></span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_set_header</span> Connection <span class="token string">"upgrade"</span></span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span></span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个配置中，<code>keepalive_timeout</code>被设置为60秒，意味着如果60秒内没有数据传输，连接将被关闭。</p>
+<p><strong>client_body_timeout</strong></p>
+<p>这个指令设置了客户端发送请求体到服务器的超时时间。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">client_body_timeout</span> <span class="token number">10s</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">location</span> /upload</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">client_max_body_size</span> <span class="token number">100M</span></span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">client_body_timeout</span> <span class="token number">30s</span></span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个配置中，<code>client_body_timeout</code>被设置为10秒，适用于上传大文件的场景，确保如果客户端在30秒内没有完成文件上传，请求将被终止。</p>
+<p><strong>client_header_timeout</strong></p>
+<p>这个指令控制了客户端发送完整的HTTP请求头到服务器的超时时间。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">client_header_timeout</span> <span class="token number">5s</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">proxy_pass</span> http://javaboy.org</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个配置中，<code>client_header_timeout</code>被设置为5秒，意味着如果客户端在5秒内没有发送完整的HTTP请求头，服务器将终止连接。</p>
+<p><strong>send_timeout</strong></p>
+<p>这个指令设置了服务器发送响应到客户端的超时时间。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">send_timeout</span> <span class="token number">10s</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">proxy_pass</span> http://javaboy.org</span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_read_timeout</span> <span class="token number">10s</span></span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个配置中，<code>send_timeout</code>被设置为10秒，适用于后端服务响应慢的场景，确保如果后端服务在10秒内没有发送数据，客户端将收到超时响应。</p>
+<h3 id="仅允许域名访问"><a href="#仅允许域名访问" class="headerlink" title="仅允许域名访问"></a>仅允许域名访问</h3><p>限制仅允许域名访问可以防止未授权的IP直接访问服务器，减少未备案域名解析到服务器IP导致的安全风险。这个也有三种不同的配置方式。</p>
+<p><strong>使用两个<code>server</code>块</strong></p>
+<p>在Nginx配置文件中，你可以设置一个默认的server块，它将捕获所有不明确的域名请求，并返回403错误。然后，为特定的域名设置server块。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span> default_server</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> _</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">return</span> <span class="token number">403</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> www.javaboy.org</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment"># 你的配置</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个配置中，第一个<code>server</code>块会拦截所有不明确域名的请求，并返回403错误。第二个<code>server</code>块则是为特定域名<code>www.javaboy.org</code>提供服务的配置。这个配置有两点需要注意：</p>
+<ol>
+<li>如果没有显式声明default server则第一个server会被隐式的设为default server。</li>
+<li>server_name中的<code>_;</code>，并不是重点.<code>__</code>也可以，<code>___</code>也可以。</li>
+</ol>
+<p><strong>使用<code>if</code>语句</strong></p>
+<p>还可以在特定的<code>server</code>块中使用<code>if</code>语句来检查<code>$host</code>变量，如果它不匹配你的域名，则返回403错误。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">if</span> (<span class="token variable">$host</span> != <span class="token string">'www.javaboy.org'</span>)</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">return</span> <span class="token number">403</span></span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment"># 你的配置</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这种方法允许你在特定域名的server块中直接控制访问权限，只有当<code>$host</code>变量与你的域名匹配时，才会允许访问。</p>
+<p><strong>直接禁止IP</strong></p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> www.javaboy.org</span><span class="token punctuation">;</span>
+        ...
+    <span class="token punctuation">&#125;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> www.itboyhub.com</span><span class="token punctuation">;</span>
+        ...
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment"># 直接指定ip server_name</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> 11.11.11.11</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">return</span> <span class="token number">403</span></span><span class="token punctuation">;</span> <span class="token comment"># 403 forbidden</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这样配置后，只有通过指定的域名才能访问网站，直接通过IP地址访问将会受到限制。</p>
+<h3 id="限制Nginx请求方法"><a href="#限制Nginx请求方法" class="headerlink" title="限制Nginx请求方法"></a>限制Nginx请求方法</h3><p>通过限制特定的HTTP请求方法，可以减少服务器受到自动化攻击的风险，并且可以防止某些类型的Web漏洞，如SQL注入或跨站脚本（XSS）攻击。有两种配置方式，逐一说明。</p>
+<p><strong>只允许GET和POST</strong></p>
+<p>在<code>server</code>或<code>location</code>块中，使用<code>if</code>语句来检查请求方法，并返回403错误码以拒绝其他方法。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">if</span> (<span class="token variable">$request_method</span> !~* (GET|POST))</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">return</span> <span class="token number">403</span></span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment"># 其他配置...</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这种方法会拒绝所有非GET和POST的请求方法。</p>
+<p><strong>使用map模块</strong></p>
+<p>对于更复杂的限制逻辑，可以使用Nginx的<code>map</code>模块来动态设置请求方法的限制。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">map</span> <span class="token variable">$request_method</span> <span class="token variable">$block_request</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">default</span> <span class="token number">0</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">POST</span> <span class="token number">1</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">PUT</span> <span class="token number">1</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">if</span> (<span class="token variable">$block_request</span>)</span> <span class="token punctuation">&#123;</span>
+                <span class="token directive"><span class="token keyword">return</span> <span class="token number">403</span></span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token comment"># 其他配置...</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个例子中，所有POST和PUT请求都会被拒绝。</p>
+<h3 id="错误页面重定向"><a href="#错误页面重定向" class="headerlink" title="错误页面重定向"></a>错误页面重定向</h3><p>在Nginx中配置错误页面重定向，除了安全因素之外，还有很多好处，比如：</p>
+<ol>
+<li><strong>提升用户体验</strong>：通过提供更友好的错误页面，可以减少用户在遇到错误时的困惑和挫败感。</li>
+<li><strong>增强SEO效果</strong>：自定义错误页面可以帮助搜索引擎更好地理解网站结构，避免因错误页面导致的SEO问题。</li>
+<li><strong>维护品牌形象</strong>：错误页面是网站的一部分，通过自定义错误页面，可以保持品牌一致性，提升专业形象。</li>
+<li><strong>提供错误信息</strong>：自定义错误页面可以提供有用的错误信息或解决方案，帮助用户理解问题所在。</li>
+</ol>
+<p>在Nginx配置文件中，可以使用<code>error_page</code>指令来定义特定错误代码的重定向页面。例如，将404错误重定向到自定义的404页面：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> javaboy.org</span><span class="token punctuation">;</span>
+
+    <span class="token directive"><span class="token keyword">error_page</span> <span class="token number">404</span> /404.html</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">location</span> = /404.html</span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">root</span> /path/to/error/pages</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">internal</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个配置中，当Nginx返回404错误时，它会显示位于<code>/path/to/error/pages/404.html</code>的自定义错误页面，而不是默认的错误页面。<code>internal</code>指令确保这个页面只对Nginx内部请求可见，不会被外部直接访问。当然，上面这个配置也可以同时枚举多个错误状态码：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">error_page</span> <span class="token number">500</span> <span class="token number">502</span> <span class="token number">503</span> <span class="token number">504</span> /50x.html</span><span class="token punctuation">;</span>
+<span class="token directive"><span class="token keyword">location</span> = /50x.html</span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">root</span> /usr/share/nginx/html</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个配置会将所有500系列错误重定向到<code>/50x.html</code>，并显示位于<code>/usr/share/nginx/html/50x.html</code>的自定义错误页面。</p>
+<h3 id="日志保留半年"><a href="#日志保留半年" class="headerlink" title="日志保留半年"></a>日志保留半年</h3><p>保留Nginx日志半年的原因有很多，比如：</p>
+<ol>
+<li><strong>安全审计</strong>：日志文件可以用于安全审计，帮助分析和追踪潜在的攻击或异常行为。</li>
+<li><strong>故障排查</strong>：在系统出现故障时，日志文件是诊断问题的重要工具，可以帮助快速定位问题原因。</li>
+<li><strong>性能监控</strong>：通过分析日志，可以了解网站的访问情况和性能瓶颈，从而进行相应的优化。</li>
+<li><strong>合规性要求</strong>：某些行业法规可能要求保留一定期限的日志记录，以满足合规性检查。</li>
+</ol>
+<p>要配置Nginx日志保留半年，通常需要使用<code>logrotate</code>工具来实现日志文件的定期轮换和压缩。在<code>/etc/logrotate.d/</code>目录下创建一个名为<code>nginx</code>的配置文件，内容如下：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">/var/log/nginx/*.log <span class="token punctuation">&#123;</span>
+    daily
+    rotate 180
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+    postrotate
+        [ -f /var/run/nginx.pid ] &amp;&amp; kill -USR1 `cat /var/run/nginx.pid`
+    endscript
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个配置会每天检查Nginx日志文件，并将它们保留180天（约6个月），然后自动压缩旧的日志文件。<code>postrotate</code>部分的命令会在日志轮换后重新打开Nginx日志文件，以便继续记录新的日志信息。通过这些配置，我们可以确保Nginx的日志文件被保留半年，同时旧的日志文件会被压缩以节省磁盘空间。</p>
+<h3 id="设置缓冲区"><a href="#设置缓冲区" class="headerlink" title="设置缓冲区"></a>设置缓冲区</h3><p>Nginx的缓冲区溢出攻击是一种常见的安全漏洞，它发生在程序试图向一个缓冲区写入超出其预分配大小的数据时。这种攻击可能导致数据覆盖了相邻的内存区域，可能破坏程序的执行流程，甚至可以被恶意攻击者利用来执行恶意代码。为了防止缓冲区溢出类攻击事件，可以设置客户端请求体、请求头和客户端最大请求体的缓冲区大小。配置方式如下：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">client_body_buffer_size</span> <span class="token number">1K</span></span><span class="token punctuation">;</span>
+<span class="token directive"><span class="token keyword">client_header_buffer_size</span> <span class="token number">1k</span></span><span class="token punctuation">;</span>
+<span class="token directive"><span class="token keyword">client_max_body_size</span> <span class="token number">1k</span></span><span class="token punctuation">;</span>
+<span class="token directive"><span class="token keyword">large_client_header_buffers</span> <span class="token number">2</span> <span class="token number">1k</span></span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这四行配置含义如下：</p>
+<ul>
+<li><code>client_body_buffer_size1K;</code>：这条指令设置了Nginx用来读取客户端请求体（比如POST请求中的数据）的缓冲区大小。在这个例子中，缓冲区大小被设置为1KB。如果请求体的大小超过了这个缓冲区的大小，Nginx会使用磁盘来暂存超出部分的数据。</li>
+<li><code>client_header_buffer_size1k;</code>：这条指令定义了Nginx用来读取客户端HTTP请求头部的缓冲区大小。这里设置的大小是1KB。如果请求头部的大小超过了这个缓冲区的大小，Nginx会使用<code>large_client_header_buffers</code>定义的缓冲区。</li>
+<li><code>client_max_body_size1k;</code>：这条指令限制了Nginx服务器愿意接收的最大请求体大小。如果客户端发送的请求体超过了这个大小（在这个例子中是1KB），Nginx将返回一个413（RequestEntityTooLarge）错误。</li>
+<li><code>large_client_header_buffers21k;</code>：这条指令定义了Nginx用于处理大于<code>client_header_buffer_size</code>指定大小的请求头的缓冲区数量和大小。这里配置了2个大小为1KB的缓冲区。当请求头的大小超过了<code>client_header_buffer_size</code>定义的缓冲区大小时，Nginx会使用这两个额外的缓冲区来处理请求头。</li>
+</ul>
+<p>这些配置对于防止缓冲区溢出攻击和处理大请求都是非常重要的。</p>
+<h3 id="使用普通用户启动"><a href="#使用普通用户启动" class="headerlink" title="使用普通用户启动"></a>使用普通用户启动</h3><p>在Linux系统中，只有root用户或者具有特定权限的用户才能绑定1024以下的端口，如80端口（HTTP）和443端口（HTTPS）。如果Nginx以root用户运行，它将拥有过高的权限，这可能会带来安全风险。因此，为了最小化权限，通常会创建一个普通用户来运行Nginx，以减少潜在的安全漏洞。配置方式如下：</p>
+<p><strong>创建用户</strong></p>
+<p>首先，你需要创建一个普通用户和用户组，例如<code>nginx</code>。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">groupadd</span> nginx
+<span class="token function">useradd</span> <span class="token parameter variable">-g</span> nginx <span class="token parameter variable">-d</span> /usr/local/nginx nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这里创建了一个名为<code>nginx</code>的用户和组，并设置了用户的家目录。</p>
+<p><strong>授权访问</strong></p>
+<p>确保新用户有权访问Nginx的配置文件、日志文件和服务器文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chown</span> <span class="token parameter variable">-R</span> nginx:nginx /usr/local/nginx/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这条命令将Nginx目录及其所有子目录和文件的所有权更改为新创建的<code>nginx</code>用户和组。</p>
+<p><strong>配置Nginx</strong></p>
+<p>编辑Nginx配置文件（通常位于<code>/etc/nginx/nginx.conf</code>），设置<code>user</code>指令以指定Nginx工作进程的用户。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">user</span> nginx</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这行配置指定Nginx应该以<code>nginx</code>用户的身份运行。</p>
+<p><strong>设置权限</strong></p>
+<p>如果需要，可以使用<code>setcap</code>命令赋予Nginx监听1024以下端口的能力，而不需要以root用户运行。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">setcap <span class="token assign-left variable">cap_net_bind_service</span><span class="token operator">=</span>+ep /usr/local/nginx/sbin/nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这个命令允许Nginx以普通用户身份绑定到80和443端口。</p>
+<p><strong>启动Nginx</strong></p>
+<p>使用普通用户启动Nginx。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">su</span> - nginx
+/usr/local/nginx/sbin/nginx <span class="token parameter variable">-c</span> /usr/local/nginx/conf/nginx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这里首先切换到<code>nginx</code>用户，然后启动Nginx服务。</p>
+<p><strong>验证</strong></p>
+<p>检查Nginx是否以普通用户启动。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ps</span> <span class="token parameter variable">-ef</span> <span class="token operator">|</span> <span class="token function">grep</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这条命令将显示Nginx的进程信息，你可以验证它是否以<code>nginx</code> 用户运行。</p>
 <h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><table>
 <thead>
 <tr>
@@ -1561,7 +1906,7 @@ if ($http_referer ~* WebBench*") <span class="token punctuation">&#123;</span> <
 </tr>
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/---HjW_eobgY-nZI1Kmszw">Nginx配置最全详解(万字图文总结)</a></td>
-<td align="center"></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/g0axq_lTbNyYV-V7W8CP5w">Nginx性能优化的几个方法</a></td>
 <td align="center"></td>
 </tr>
 </tbody></table>

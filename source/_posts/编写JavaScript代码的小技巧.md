@@ -1731,3 +1731,6 @@ function validCss(key, value) {
 <a href="image.png" download>
 
 ```
+
+### 文章
+[非常有用的48个JavaScript代码片段](https://mp.weixin.qq.com/s/uzbelq2TA0Er2QXwdP3wrg)

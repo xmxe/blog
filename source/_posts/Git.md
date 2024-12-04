@@ -362,9 +362,9 @@ git remote add name url
 # 获取指定远程仓库的详细信息
 git remote show origin
 
-git pull --rebase origin master 
-git push origin master
+git pull --rebase origin master
 # git push --set-upstream origin master可以简写成git push -u
+git push -u origin master
 
 # 本地生成ssh密钥
 ssh-keygen -t rsa -C "你的邮箱"生成sshkey

@@ -1646,6 +1646,11 @@ Biggest string found <span class="token string">'"ballcat:oauth:refresh_auth:f6c
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tpb6Xf4Vf6O6gxbZN3pWfA">缓存一致性方案</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RqQ2AyDZ5f8vvcP76TyuAA">如何保证mongodb和数据库双写数据一致性</a></td>
 </tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/flGfjVRAAWNnLoY2Hh14ng">如何下保证MySQL数据库与Redis缓存数据一致性？</a></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
 </tbody></table>
 <h2 id="Redis的key过期策略"><a href="#Redis的key过期策略" class="headerlink" title="Redis的key过期策略"></a>Redis的key过期策略</h2><p>我们在set key的时候，可以给它设置一个过期时间，比如expire key 60。指定这key60s后过期，60s后，redis是如何处理的？我们先来介绍几种过期策略：一般有<strong>定时过期、惰性过期、定期过期</strong>三种。</p>
 <h3 id="定时过期"><a href="#定时过期" class="headerlink" title="定时过期"></a>定时过期</h3><p>每个设置过期时间的key都需要创建一个定时器，到过期时间就会立即对key进行清除。该策略可以立即清除过期的数据，对内存很友好；但是会占用大量的CPU资源去处理过期的数据，从而影响缓存的响应时间和吞吐量。</p>

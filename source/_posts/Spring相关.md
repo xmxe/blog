@@ -492,6 +492,7 @@ Spring框架中用到了哪些设计模式？
 > [原文链接](https://javaguide.cn/system-design/framework/spring/spring-design-patterns-summary.html)
 > [Spring用到了哪些设计模式](https://mp.weixin.qq.com/s/O-gUDExJc5AKwb-t4ZDkNA)
 > [Spring中经典的9种设计模式](https://mp.weixin.qq.com/s/gz2-izPrgW1AGbqqovT0cA)
+> [Spring用到了哪些设计模式？](https://mp.weixin.qq.com/s/QwKaDyn-vHGQlxA15EffjQ)
 
 ## Spring MVC
 

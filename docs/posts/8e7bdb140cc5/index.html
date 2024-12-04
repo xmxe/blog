@@ -1596,9 +1596,14 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <li>非空约束（Not Null Counstraint）:设置非空约束，该字段不能为空。</li>
 </ol>
 <h3 id="select-for-update加锁"><a href="#select-for-update加锁" class="headerlink" title="select for update加锁"></a>select for update加锁</h3><p>总结一下select…for update加锁的情况：</p>
+<ol>
+<li>如果查询条件用了索引&#x2F;主键，那么<code>select ..... for update</code>就会进行行锁。</li>
+<li>如果是普通字段(没有索引&#x2F;主键)，那么<code>select ..... for update</code>就会进行锁表</li>
+</ol>
+<blockquote>
 <p>主键字段：加行锁。<br>唯一索引字段：加行锁。<br>普通索引字段：加间隙锁。<br>主键范围：加多个行锁。<br>唯一索引范围，加多个行锁。<br>普通字段：加间隙锁，看着像表锁。。<br>查询空数据：加间隙锁。<br>如果事务1加了行锁，一直没有释放锁，事务2操作相同行的数据时，会一直等待直到超时。<br>如果事务1加了表锁，一直没有释放锁，事务2不管操作的是哪一行数据，都会一直等待直到超时。</p>
-<p>此外，有些小伙伴，可能会好奇，直接执行update语句，也会加行锁，为什么还需要使用for update关键字加行锁呢？<br>答：for update关键字是加在select语句中的，它从查到那行数据开始，直到事务提交，整个过程中都会加锁。</p>
-<p>而直接执行update语句，是在更新数据的时候加锁，二者有本质的区别。</p>
+</blockquote>
+<p>此外，有些小伙伴，可能会好奇，直接执行update语句，也会加行锁，为什么还需要使用for update关键字加行锁呢？<br>答：for update关键字是加在select语句中的，它从查到那行数据开始，直到事务提交，整个过程中都会加锁。<br>而直接执行update语句，是在更新数据的时候加锁，二者有本质的区别。</p>
 <h3 id="MySQL中的distinct和group-by哪个效率更高？"><a href="#MySQL中的distinct和group-by哪个效率更高？" class="headerlink" title="MySQL中的distinct和group by哪个效率更高？"></a>MySQL中的distinct和group by哪个效率更高？</h3><p>在语义相同，有索引的情况下：group by和distinct都能使用索引，效率相同。<br>在语义相同，无索引的情况下：distinct效率高于group by。原因是distinct和group by都会进行分组操作，但group by可能会进行排序，触发filesort，导致sql执行效率低下。</p>
 <h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><table>
 <thead>
@@ -1851,6 +1856,72 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <td align="center"></td>
 </tr>
 </tbody></table>
+<h2 id="安卓ROOT大法"><a href="#安卓ROOT大法" class="headerlink" title="安卓ROOT大法"></a>安卓ROOT大法</h2><h3 id="线刷"><a href="#线刷" class="headerlink" title="线刷"></a>线刷</h3><ol>
+<li>电脑可以使用fastboot、adb等命令</li>
+<li>下载magisk</li>
+<li>解锁BL</li>
+<li>提取boot.img</li>
+<li>使用magisk制作boot.img，将生成的文件拷贝到电脑，生成路径一般在download文件夹下</li>
+<li>进入fastboot模式（一般在关机状态下长按音量减+电源键）</li>
+<li>使用<code>fastboot flash boot magisk制作的img文件路径.img</code></li>
+<li>使用<code>fastboot reb0ot</code>重启</li>
+<li>完成</li>
+</ol>
+<h3 id="卡刷"><a href="#卡刷" class="headerlink" title="卡刷"></a>卡刷</h3><ol>
+<li>安装第三方recovery如twrp，镜像文件为recovery.img</li>
+<li>手机进入fastboot模式，使用<code>fastboot flash recovery recovery.img</code>并重启手机</li>
+<li>将magisk.apk重命名为magisk.zip</li>
+</ol>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1BY4y1H7Mc/">玩机必看！带你入坑安卓刷机，小白也能看懂的ROOT基础指南来啦！</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="http://wanji.jamcz.com/">各种玩机地址&#x2F;工具&#x2F;命令汇总</a></th>
+<th><a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio/releases/platform-tools?hl=zh-cn">Android SDK（ADB和Fastboot电脑端工具）</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://cz-jam.lanzouj.com/iZICY02v2k8j">ADB&#x2F;Fastboot驱动</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://twrp.me/">TWRP</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk">Magisk</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.miui.com/unlock/index.html">小米解锁工具</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://xiaomirom.com/series/">小米ROM下载</a></td>
+<td><a target="_blank" rel="noopener" href="https://cdn.alsgp0.fds.api.mi-img.com/micomm/MiFlash2020-3-14-0.rar">小米刷机工具</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.oneplus.com/cn/support/softwareupgrade">一加ROM下载</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://odindownload.com/">三星刷机工具</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.sammobile.com/firmwares/">三星ROM下载</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mroot.flyme.cn/">魅族ROOT链接</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.oppo.cn/thread-397164526-1">OPPO解锁</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.coloros.com/rom">OPPO ROM</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.realmebbs.com/post-details/1275426081138028544">Realme解锁</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.realmebbs.com/post-details/1271082970484060160">Realme刷机工具</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.realme.com/support/software-update">Realme ROM</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://developer.sony.com/develop/open-devices/get-started/unlock-bootloader">索尼解锁</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://xperifirm.com/">索尼ROM</a></td>
+<td><a target="_blank" rel="noopener" href="https://motorola-global-portal.custhelp.com/app/standalone/bootloader/unlock-your-device-a">MOTO解锁</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://mirrors.lolinet.com/firmware/motorola/">MOTO ROM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mrzzoxo.lanzouw.com/iR65zpaueyd">payload-dumper解包工具</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.coolapk.com/">酷安（玩机社区）</a></td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://forum.xda-developers.com/">XDA（海外玩机论坛）</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.meizubl.com/">魅族BL解锁</a></td>
+<td><a target="_blank" rel="noopener" href="https://orangefox.download/zh-CN">橙狐</a></td>
+</tr>
+</tbody></table>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>magisk如果收不到其他app授权申请弹窗的话授权magisk悬浮窗和自启动权限</p>
 
                 
             </div>

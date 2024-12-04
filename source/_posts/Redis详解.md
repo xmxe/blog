@@ -1155,6 +1155,7 @@ public Object getObjectInclNullById(Integer id) {
 | [如何保证Redis缓存与数据库双写一致性？](https://mp.weixin.qq.com/s/5I4IQFYZDdeNulSZfEj79A) | [高并发场景下，到底先更新缓存还是先更新数据库？](https://mp.weixin.qq.com/s/JxdAEt4rfZp5KQwpxRPZlA) | [MySQL与Redis缓存的同步方案](https://mp.weixin.qq.com/s/_WCg3TDZCxRKPiVot1dG8Q) |
 | [数据库跟缓存的双写一致性](https://mp.weixin.qq.com/s/bKtVlr9JZ1HCp1tgEEKENA) | [Redis和Mysql如何保证数据一致?](https://mp.weixin.qq.com/s/6WxbY-BOjX_5mwHNgoVl8g) | [高并发先操作数据库，还是先操作缓存？5个方案告诉你！](https://mp.weixin.qq.com/s/BwKTvDig4BjMqXb_O468Uw) |
 | [Redis数据更新，是先更新数据库还是先更新缓存？](https://mp.weixin.qq.com/s/HVPsyNd7XxmxiVQ9Nza_TQ) | [缓存一致性方案](https://mp.weixin.qq.com/s/tpb6Xf4Vf6O6gxbZN3pWfA) | [如何保证mongodb和数据库双写数据一致性](https://mp.weixin.qq.com/s/RqQ2AyDZ5f8vvcP76TyuAA) |
+| [如何下保证MySQL数据库与Redis缓存数据一致性？](https://mp.weixin.qq.com/s/flGfjVRAAWNnLoY2Hh14ng) |                                                              |                                                              |
 
 ## Redis的key过期策略
 

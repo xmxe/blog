@@ -713,6 +713,7 @@ brew <span class="token function">install</span> aria2<span aria-hidden="true" c
 <li>r：表示以递归方式处理目录及其子目录中的文件。</li>
 <li>d：表示删除指定文件的扩展属性。com.apple.quarantine：是指要删除的扩展属性的名称，即“quarantine”。</li>
 <li>sudo xattr -rc &#x2F;Applications&#x2F;Navicat\ Premium.app。<code>-c</code>是清除属性的选项，它指示<code>xattr</code>命令删除文件或目录中的所有扩展属性。</li>
+<li>当组合使用<code>xattr -rc</code>时，它会递归地清除指定目录及其所有子目录和文件的扩展属性</li>
 </ul>
 </blockquote>
 <h3 id="对应用进行签名"><a href="#对应用进行签名" class="headerlink" title="对应用进行签名"></a>对应用进行签名</h3><p>安装[CommandLineTools](#Command Line Tools)后打开终端，输入<code>sudo codesign --force --deep --sign - 应用路径</code>，注意最后的–后面加一个空格。如遇错误：”&#x2F;文件位置 : replacing existing signature，&#x2F;文件位置 : resource fork,Finder information,or similar detritus not allowed“先在终端执行：<code>xattr -cr 应用路径</code>然后再次执行指令即可：<code>codesign --force --deep --sign - 应用路径</code>,完成后再次打开应用尝试</p>

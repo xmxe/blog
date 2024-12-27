@@ -133,16 +133,16 @@ cp docker/* /usr/bin/
 ```
 vim /etc/systemd/system/docker.service
 ```
+> `vim /etc/systemd/system/docker.service`
+> `lib/systemd/system`、`/usr/lib/systemd/system`、`/etc/systemd/system`三个地方都可以
+> `lib/systemd/system`真实地址是`/usr/lib/system/system`地址
+> `/usr/lib/systemd/system/`软件包安装的单元
+> `/etc/systemd/system/`系统管理员安装的单元,优先级更高
+> 优先级为`/etc/systemd/system`，`/run/systemd/system`，`/lib/systemd/system`
+> 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。
+
 编辑docker.service
 ```shell
-# vim /etc/systemd/system/docker.service
-
-# lib/systemd/system、/usr/lib/systemd/system、/etc/systemd/system都可以，lib/systemd/system真实地址是/usr/lib/system/system地址，
-# /usr/lib/systemd/system/ 软件包安装的单元
-# /etc/systemd/system/ 系统管理员安装的单元,优先级更高
-# 优先级为 /etc/systemd/system，/run/systemd/system，/lib/systemd/system
-# 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。
-
 [Unit]
 Description=Docker Application Container Engine
 Documentation=https://docs.docker.com
@@ -150,7 +150,6 @@ After=network-online.target firewalld.service
 Wants=network-online.target
 
 [Service]
-
 Type=notify
 # the default is not to use systemd for cgroups because the delegate issues still
 # exists and systemd currently does not support the cgroup feature set required
@@ -194,7 +193,6 @@ StartLimitInterval=60s
 
 
 [Install]
-
 WantedBy=multi-user.target
 ```
 

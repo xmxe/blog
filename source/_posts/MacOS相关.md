@@ -154,6 +154,7 @@ img: https://picx.zhimg.com/70/v2-2f28f965ea1e7a2cd668d5a7f6d38fbb_1440w.avis
 > - r：表示以递归方式处理目录及其子目录中的文件。
 > - d：表示删除指定文件的扩展属性。com.apple.quarantine：是指要删除的扩展属性的名称，即“quarantine”。
 > -  sudo xattr -rc /Applications/Navicat\ Premium.app。`-c`是清除属性的选项，它指示`xattr`命令删除文件或目录中的所有扩展属性。
+> - 当组合使用`xattr -rc`时，它会递归地清除指定目录及其所有子目录和文件的扩展属性
 
 ### 对应用进行签名
 

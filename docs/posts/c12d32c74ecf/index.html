@@ -714,8 +714,61 @@ ENDS <span class="token string">'2023-07-21 10:00:00'</span> <span class="token 
 <span class="token keyword">COMMENT</span> <span class="token string">'这是一个定时执行存储过程的事件'</span>
 <span class="token keyword">DO</span>
     <span class="token keyword">CALL</span> my_stored_procedure<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">-- 调用存储过程</span>
-<span class="token comment">-- DO CALL procedure_name('input1', @output1);</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">-- DO CALL procedure_name('input1', @output1);</span>
 
+<span class="token comment">-- 选项</span>
+<span class="token keyword">CREATE</span>
+	<span class="token punctuation">[</span><span class="token keyword">DEFINER</span> <span class="token operator">=</span> &#123; <span class="token keyword">user</span> <span class="token operator">|</span> <span class="token keyword">CURRENT_USER</span> &#125;<span class="token punctuation">]</span>
+    EVENT
+    <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span>
+    event_name
+    <span class="token keyword">ON</span> SCHEDULE schedule
+    <span class="token punctuation">[</span><span class="token keyword">ON</span> COMPLETION <span class="token punctuation">[</span><span class="token operator">NOT</span><span class="token punctuation">]</span> PRESERVE<span class="token punctuation">]</span>
+    <span class="token punctuation">[</span><span class="token keyword">ENABLE</span> <span class="token operator">|</span> <span class="token keyword">DISABLE</span> <span class="token operator">|</span> <span class="token keyword">DISABLE</span> <span class="token keyword">ON</span> SLAVE<span class="token punctuation">]</span>
+    <span class="token punctuation">[</span><span class="token keyword">COMMENT</span> <span class="token string">'comment'</span><span class="token punctuation">]</span>
+    <span class="token keyword">DO</span> event_body<span class="token punctuation">;</span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">sql语法</th>
+<th align="center"><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">definer</td>
+<td align="center"><strong>可选项</strong>，给指定用户使用权限</td>
+</tr>
+<tr>
+<td align="center">if not exists</td>
+<td align="center"><strong>可选项</strong>，用于判断要创建的事件是否存在</td>
+</tr>
+<tr>
+<td align="center">event event_name</td>
+<td align="center"><strong>必选项</strong>，指定事件名称，event_name的最大长度为64个字符，如果为指定event_name，则默认为当前的mysql用户名（不区分大小写）</td>
+</tr>
+<tr>
+<td align="center">on schedule schedule</td>
+<td align="center"><strong>必选项</strong>，这里的schedule用于定义执行的时间和时间间隔，在下面我们详细讲解</td>
+</tr>
+<tr>
+<td align="center">on completion [not] preserve</td>
+<td align="center"><strong>可选项</strong>，配置事件执行完一次后的处理方式；当为on completion preserve 的时候,当event到期了,event会被disable,但是该event还是会存在当为on completion not preserve的时候,当event到期的时候,该event会被自动删除掉.</td>
+</tr>
+<tr>
+<td align="center">enable、disable、disable on slave</td>
+<td align="center"><strong>可选项</strong>，用于指定事件的一种属性。enable表示该事件是开启的，也就是调度器检查事件是否必选调用；disable表示该事件是关闭的，也就是事件的声明存储到目录中，但是调度器不会检查它是否应该调用；disable on slave表示事件在从机中是关闭的。如果不指定这三个选择中的任意一个，则在一个事件创建之后，它立即变为活动的。</td>
+</tr>
+<tr>
+<td align="center">comment ‘comment’</td>
+<td align="center"><strong>可选项</strong>，用于定义事件的注释</td>
+</tr>
+<tr>
+<td align="center">do event_body</td>
+<td align="center"><strong>必选项</strong>，用于指定事件启动时所要执行的代码。可以是任何有效的sql语句、存储过程或者一个计划执行的事件。如果包含多条语句，可以使用begin…end复合结构</td>
+</tr>
+</tbody></table>
 <ol start="4">
 <li>查看事件</li>
 </ol>
@@ -742,270 +795,6 @@ ENDS <span class="token string">'2023-07-21 10:00:00'</span> <span class="token 
 <span class="token comment">-- 删除事件</span>
 <span class="token keyword">drop</span> event event_name<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="关键字、常用操作"><a href="#关键字、常用操作" class="headerlink" title="关键字、常用操作"></a>关键字、常用操作</h3><h4 id="exists"><a href="#exists" class="headerlink" title="exists"></a>exists</h4><p>表A（小表），表B（大表）</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> A <span class="token keyword">where</span> c <span class="token operator">in</span> <span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> B<span class="token punctuation">)</span> <span class="token comment">-- ，用到了A表上c列的索引；</span>
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> A <span class="token keyword">where</span> <span class="token keyword">exists</span><span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> B <span class="token keyword">where</span> c<span class="token operator">=</span>A<span class="token punctuation">.</span>c<span class="token punctuation">)</span> <span class="token comment">-- 效率高，用到了B表上c列的索引。</span>
-<span class="token comment">-- 相反的</span>
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> B <span class="token keyword">where</span> c <span class="token operator">in</span> <span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> A<span class="token punctuation">)</span> <span class="token comment">-- 效率高，用到了B表上c列的索引</span>
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> B <span class="token keyword">where</span> <span class="token keyword">exists</span><span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> A <span class="token keyword">where</span> c<span class="token operator">=</span>B<span class="token punctuation">.</span>c<span class="token punctuation">)</span> <span class="token comment">-- 效率低，用到了A表上c列的索引。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O121Y0sywAtt4jk9vy4b0w">MySQL多表联合查询有何讲究？</a></p>
-</blockquote>
-<h4 id="逃离符escape"><a href="#逃离符escape" class="headerlink" title="逃离符escape"></a>逃离符escape</h4><p>如果要查%或者_，怎么办呢？使用escape，转义字符后面的%或_就不作为通配符了，注意前面没有转义字符的%和_仍然起通配符作用</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> username <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> username <span class="token operator">like</span> <span class="token string">'%xiao/_%'</span> <span class="token keyword">escape</span> <span class="token string">'/'</span><span class="token punctuation">;</span>
-<span class="token keyword">select</span> username <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> username <span class="token operator">like</span> <span class="token string">'%xiao/%%'</span> <span class="token keyword">escape</span> <span class="token string">'/'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h4 id="分组排序"><a href="#分组排序" class="headerlink" title="分组排序"></a>分组排序</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> a<span class="token punctuation">.</span>id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>class<span class="token punctuation">,</span>a<span class="token punctuation">.</span>source
-<span class="token keyword">from</span> student a <span class="token keyword">left</span> <span class="token keyword">join</span> student b <span class="token keyword">on</span> a<span class="token punctuation">.</span>class<span class="token operator">=</span>b<span class="token punctuation">.</span>class <span class="token operator">and</span> a<span class="token punctuation">.</span>source<span class="token operator">&lt;=</span>b<span class="token punctuation">.</span>source
-<span class="token keyword">group</span> <span class="token keyword">by</span> a<span class="token punctuation">.</span>class<span class="token punctuation">,</span>a<span class="token punctuation">.</span>source
-<span class="token keyword">order</span> <span class="token keyword">by</span> a<span class="token punctuation">.</span>class<span class="token punctuation">,</span>a<span class="token punctuation">.</span>source<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/igGKepCsf-SUKChco4P6Lw">阿里二面：group by怎么优化？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zc7_PZxwaQAwwqNsRG2_KQ">MySQL中的distinct和group by哪个效率更高？</a></p>
-</blockquote>
-<h4 id="有就更新-没有就插入"><a href="#有就更新-没有就插入" class="headerlink" title="有就更新,没有就插入"></a>有就更新,没有就插入</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token keyword">table</span> <span class="token punctuation">(</span>name<span class="token punctuation">,</span> gender<span class="token punctuation">)</span>  <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span> <span class="token string">'boy'</span><span class="token punctuation">)</span>  <span class="token keyword">ON</span> <span class="token keyword">DUPLICATE</span> <span class="token keyword">KEY</span> <span class="token keyword">UPDATE</span> name<span class="token operator">=</span><span class="token string">'Jerry'</span>，gender<span class="token operator">=</span><span class="token string">'girl'</span><span class="token punctuation">;</span>
-<span class="token comment">-- 或</span>
-<span class="token keyword">REPLACE</span> <span class="token keyword">INTO</span> <span class="token keyword">table</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> gender<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span> <span class="token string">'girl'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">-- 或</span>
-<span class="token keyword">REPLACE</span> <span class="token keyword">INTO</span> <span class="token keyword">table</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> gender<span class="token punctuation">)</span> <span class="token keyword">SELECT</span> <span class="token string">'Jerry'</span><span class="token punctuation">,</span> <span class="token string">'girl'</span><span class="token punctuation">;</span>
-<span class="token comment">-- 或</span>
-<span class="token keyword">REPLACE</span> <span class="token keyword">INTO</span> test <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span> gender<span class="token operator">=</span><span class="token string">'girl'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 不保留数据</span>
-<span class="token keyword">create</span> <span class="token keyword">table</span> 表名 <span class="token keyword">as</span> <span class="token keyword">select</span> 列名 <span class="token keyword">from</span> 表名 <span class="token keyword">where</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
-<span class="token keyword">create</span> <span class="token keyword">table</span> 表名<span class="token punctuation">(</span>列名<span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">select</span> 列名 <span class="token keyword">from</span> 表名 <span class="token keyword">where</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
-<span class="token comment">-- 保留数据</span>
-<span class="token keyword">insert</span> <span class="token keyword">into</span> 表名 <span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">select</span> a<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">from</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="重复数据"><a href="#重复数据" class="headerlink" title="重复数据"></a>重复数据</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 显示重复</span>
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tablename <span class="token keyword">group</span> <span class="token keyword">by</span> id <span class="token keyword">having</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">1</span>
-<span class="token comment">-- 不显示重复</span>
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tablename <span class="token keyword">group</span> <span class="token keyword">by</span> id <span class="token keyword">having</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_hgA89R6GWwJgxC9KBb63A">避免MySQL插入重复数据的4种方式</a></p>
-</blockquote>
-<h4 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h4><p>limit(start,size) start:从第几条记录开始 size:读取几条记录</p>
-<h4 id="定时备份"><a href="#定时备份" class="headerlink" title="定时备份"></a>定时备份</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#db用户名</span>
-<span class="token assign-left variable">dbuser</span><span class="token operator">=</span>root
-<span class="token comment">#db密码</span>
-<span class="token assign-left variable">dbpasswd</span><span class="token operator">=</span><span class="token string">"123456"</span>
-<span class="token comment">#ip地址</span>
-<span class="token assign-left variable">dbip</span><span class="token operator">=</span><span class="token number">127.0</span>.0.1
-<span class="token comment">#备份的数据库名字前缀</span>
-<span class="token assign-left variable">pre_name</span><span class="token operator">=</span><span class="token string">"test"</span>
-
-<span class="token comment">#备份操作的日志文件</span>
-<span class="token assign-left variable">bakfile</span><span class="token operator">=</span>/data/sqlbak/log.txt
-<span class="token comment">#备份数据的目录</span>
-<span class="token assign-left variable">bakdatadir</span><span class="token operator">=</span>/data/sqlbak/bakdata
-<span class="token comment">#备份数据的目录-持久化备份</span>
-<span class="token assign-left variable">persist_path</span><span class="token operator">=</span>/data/sqlbak/persistdata
-
-<span class="token comment">#备份保存时间,单位:天</span>
-<span class="token assign-left variable">dateoutday</span><span class="token operator">=</span><span class="token number">15</span>
-
-<span class="token comment">#备份单个数据库</span>
-<span class="token function-name function">bak_single</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-  <span class="token comment">#db name</span>
-  <span class="token assign-left variable">sdb</span><span class="token operator">=</span><span class="token variable">$1</span>
-  <span class="token comment">#日期字符串</span>
-  <span class="token assign-left variable">datestr</span><span class="token operator">=</span><span class="token variable">$2</span>
-
-  <span class="token builtin class-name">echo</span> <span class="token string">"bak_single <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql.gz BEGIN..."</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
-  <span class="token comment">#备份</span>
-  mysqldump -u<span class="token variable">$&#123;dbuser&#125;</span> <span class="token parameter variable">-h</span> <span class="token variable">$&#123;dbip&#125;</span> -p<span class="token variable">$&#123;dbpasswd&#125;</span> --single-transaction  --no-create-db <span class="token parameter variable">-R</span> <span class="token parameter variable">-C</span> <span class="token parameter variable">-B</span> <span class="token variable">$&#123;sdb&#125;</span> <span class="token operator">></span> <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql
-  <span class="token comment">#注释掉sql脚本中 USE DATABASE 语句</span>
-  <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s/USE/-- USE/"</span> <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql
-  <span class="token comment">#压缩</span>
-  <span class="token function">gzip</span> <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql
-  <span class="token comment">#记录日志</span>
-  <span class="token builtin class-name">echo</span> <span class="token string">"bak_single <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql.gz  COMPLETE..."</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token comment">#备份所有数据库</span>
-<span class="token function-name function">bak_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-  <span class="token comment">#日期字符串</span>
-  <span class="token assign-left variable">all_datestr</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y_%m_%d_%H_%M_%S"</span><span class="token variable">)</span></span>
-
-  <span class="token assign-left variable">date_dir</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y%m%d"</span><span class="token variable">)</span></span>
-
-  <span class="token builtin class-name">echo</span> <span class="token string">"bak_all begin <span class="token variable">$&#123;all_datestr&#125;</span> ===================="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
-  <span class="token comment">#所有的数据库</span>
-  <span class="token assign-left variable">alldb</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span>mysql -u$<span class="token punctuation">&#123;</span>dbuser<span class="token punctuation">&#125;</span> <span class="token parameter variable">-h</span> $<span class="token punctuation">&#123;</span>dbip<span class="token punctuation">&#125;</span> -p$<span class="token punctuation">&#123;</span>dbpasswd<span class="token punctuation">&#125;</span> <span class="token parameter variable">-e</span> <span class="token string">"show databases"</span><span class="token variable">`</span></span>
-  <span class="token keyword">for</span> <span class="token for-or-select variable">dbname</span> <span class="token keyword">in</span> <span class="token variable">$&#123;alldb&#125;</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-    <span class="token punctuation">&#123;</span>
-    <span class="token comment">#只备份指定前缀的数据库</span>
-    <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable">$&#123;dbname&#125;</span> <span class="token operator">=~</span> <span class="token variable">$&#123;pre_name&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-      bak_single <span class="token variable">$&#123;dbname&#125;</span> <span class="token variable">$&#123;all_datestr&#125;</span> 
-      <span class="token keyword">fi</span>
-    <span class="token punctuation">&#125;</span><span class="token operator">&amp;</span>
-    <span class="token keyword">done</span>
-           
-    <span class="token comment">#等待所有数据库备份完成</span>
-    <span class="token function">wait</span>
-    <span class="token comment">#压缩</span>
-    <span class="token function">tar</span> czvf dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
-    <span class="token comment">#删除</span>
-    <span class="token function">rm</span> *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
-    <span class="token comment">#是否存在当天日期命名的目录</span>
-    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> <span class="token parameter variable">-d</span> <span class="token variable">$&#123;bakdatadir&#125;</span>/<span class="token variable">$&#123;date_dir&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-      <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token variable">$&#123;bakdatadir&#125;</span>/<span class="token variable">$&#123;date_dir&#125;</span>
-      <span class="token keyword">fi</span>
-      <span class="token comment">#移动到当天日期命名的目录中</span>
-      <span class="token function">mv</span> dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar <span class="token variable">$&#123;bakdatadir&#125;</span>/<span class="token variable">$&#123;date_dir&#125;</span>
-      <span class="token builtin class-name">echo</span> <span class="token string">"bak_all finish dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar ==============="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token comment">#备份所有数据库-不会定时删除</span>
-<span class="token function-name function">bak_all_persist</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-  <span class="token comment">#日期字符串</span>
-  <span class="token assign-left variable">all_datestr</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y_%m_%d_%H_%M_%S"</span><span class="token variable">)</span></span>
-
-  <span class="token builtin class-name">echo</span> <span class="token string">"bak_all_persist begin <span class="token variable">$&#123;all_datestr&#125;</span> ===================="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
-  <span class="token comment">#所有的数据库</span>
-  <span class="token assign-left variable">alldb</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span>mysql -u$<span class="token punctuation">&#123;</span>dbuser<span class="token punctuation">&#125;</span> <span class="token parameter variable">-h</span> $<span class="token punctuation">&#123;</span>dbip<span class="token punctuation">&#125;</span> -p$<span class="token punctuation">&#123;</span>dbpasswd<span class="token punctuation">&#125;</span> <span class="token parameter variable">-e</span> <span class="token string">"show databases"</span><span class="token variable">`</span></span>
-    <span class="token keyword">for</span> <span class="token for-or-select variable">dbname</span> <span class="token keyword">in</span> <span class="token variable">$&#123;alldb&#125;</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-      <span class="token punctuation">&#123;</span>
-        <span class="token comment">#只备份指定前缀的数据库</span>
-        <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable">$&#123;dbname&#125;</span> <span class="token operator">==</span> <span class="token variable">$&#123;pre_name&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-          bak_single <span class="token variable">$&#123;dbname&#125;</span> <span class="token variable">$&#123;all_datestr&#125;</span>
-          <span class="token keyword">fi</span>
-      <span class="token punctuation">&#125;</span><span class="token operator">&amp;</span>
-      <span class="token keyword">done</span>
-           
-      <span class="token comment">#等待所有数据库备份完成</span>
-      <span class="token function">wait</span>
-
-      <span class="token comment">#压缩</span>
-      <span class="token function">tar</span> czvf dbpersistbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
-      <span class="token comment">#删除</span>
-      <span class="token function">rm</span> *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
-      <span class="token comment">#是否存在当天日期命名的目录</span>
-      <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> <span class="token parameter variable">-d</span> <span class="token variable">$&#123;persist_path&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-        <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token variable">$&#123;persist_path&#125;</span>
-        <span class="token keyword">fi</span>
-        <span class="token comment">#移动持久化备份的目录中</span>
-        <span class="token function">mv</span> dbpersistbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar <span class="token variable">$&#123;persist_path&#125;</span>
-        <span class="token comment">#</span>
-        <span class="token builtin class-name">echo</span> <span class="token string">"bak_all_persist finish dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar ===================="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token comment">#检查过期备份</span>
-<span class="token function-name function">check_date_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-  <span class="token comment">#当前目录</span>
-  <span class="token assign-left variable">curpath</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
-  <span class="token comment">#当前日期</span>
-  <span class="token assign-left variable">curdate</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y%m%d"</span><span class="token variable">)</span></span>
-  <span class="token comment">#最早的保存日期</span>
-  <span class="token assign-left variable">lastdate</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">date</span> <span class="token parameter variable">-d</span> <span class="token string">"<span class="token variable">$&#123;curdate&#125;</span> - <span class="token variable">$&#123;dateoutday&#125;</span> day"</span> +%Y%m%d<span class="token variable">`</span></span>
-  <span class="token comment">#进入备份目录</span>
-  <span class="token builtin class-name">cd</span> <span class="token variable">$&#123;bakdatadir&#125;</span>
-  <span class="token comment">#目录列表</span>
-  <span class="token assign-left variable">pathlst</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">ls</span><span class="token variable">`</span></span>
-  <span class="token comment">#检查目录是否过期，删除已过期的目录</span>
-  <span class="token keyword">for</span> <span class="token for-or-select variable">tmpdate</span> <span class="token keyword">in</span> <span class="token variable">$&#123;pathlst<span class="token punctuation">[</span>*<span class="token punctuation">]</span>&#125;</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-    <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable">$&#123;tmpdate&#125;</span> <span class="token parameter variable">-le</span> <span class="token variable">$&#123;lastdate&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-      <span class="token function">rm</span> <span class="token parameter variable">-rf</span> <span class="token variable">$&#123;tmpdate&#125;</span>
-      <span class="token builtin class-name">echo</span> <span class="token string">"check_date_out, curdate:<span class="token variable">$&#123;curdate&#125;</span> delete <span class="token variable">$&#123;tmpdate&#125;</span> "</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
-      <span class="token keyword">fi</span>
-      <span class="token keyword">done</span>
-      <span class="token comment">#回到当前目录</span>
-      <span class="token builtin class-name">cd</span> <span class="token variable">$&#123;curpath&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-   s<span class="token punctuation">)</span>
-      bak_single <span class="token variable">$2</span> <span class="token variable">$3</span>
-      <span class="token punctuation">;</span><span class="token punctuation">;</span>
-   a<span class="token punctuation">)</span>
-      bak_all
-      <span class="token punctuation">;</span><span class="token punctuation">;</span>
-   p<span class="token punctuation">)</span>
-      bak_all_persist
-      <span class="token punctuation">;</span><span class="token punctuation">;</span>
-  chk<span class="token punctuation">)</span> 
-      check_date_out
-      <span class="token punctuation">;</span><span class="token punctuation">;</span>
-   *<span class="token punctuation">)</span>
-    <span class="token builtin class-name">echo</span> <span class="token string">"Please use correct command..."</span>
-      <span class="token punctuation">;</span><span class="token punctuation">;</span>
-<span class="token keyword">esac</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>函数功能</strong><br>备份是以数据库为单位进行备份的，先备份单个数据库，然后再把所有的备份数据库打包一起</p>
-<p>bak_single函数表示备份单个数据，传入参数是需要备份的数据库名字和日期字符串，备份文件名由这两个参数构成，也就是说，备份的文件名由数据库名+日期组成，比如test1_2021_08_16_10_05_30.sql表示test1数据库的备份文件，备份的时间2021_08_16_10_05_30</p>
-<p>bak_all函数表示备份所有的数据库，不需要传入参数，先执行SQL语句show databases查询出所有的数据库，然后过滤出我们需要备份的数据库，脚本中需要备份的数据库名都是以test开头的，具体的过滤规则可以按照各自的需求自行修改</p>
-<p>bak_all函数for循环体中{和}以及它们后面的&amp;表示启动一个新进程并执行大括号中间的命令，也即每个数据库启动一个进程进行备份，for循环结束之后的wait命令表示等待for循环中所有进程结束，也就是等待所有数据库备份全部完成之后，才会执行wait后面的命令,全部备份完成之后，会创建一个以当前日期命名的目录，并打包所有备份的数据库的SQL脚本，放到此目录中，同时删除原始的备份文件</p>
-<p>这里采用的是分库备份，分库备份的好处是：如果所有库都备份成一个备份文件时，恢复其中一个库的数据是比较麻烦的，所以采用分库备份，利于恢复单库数据</p>
-<p>check_date_out函数是检查备份目录是否过期，如果过期的话，直接删除过期的目录，脚本开头的变量dateoutday指定了备份保留的天数</p>
-<p>bak_all_persist函数是持久备份，备份过程和bak_all函数一样，只不过这里是备份到另一个持久数据的目录中，脚本开头的变量persist_path指定了持久备份目录，目录里面的备份文件不会自动删除，需要手工去删除</p>
-<p>持久化目录的主要应用场景：有时线上数据库表有数据校正或者表格结构有变动，为了防止误操作，再执行操作之前，先调用bak_all_persist函数备份下数据库，这样，即使出现误操作，还能恢复数据</p>
-<p>备份参数说明<br>–single-transaction<br>此选项会将隔离级别设置为可重复读(REPEATABLE READ),让整个数据在dump过程中保证数据的一致性，且不会锁表，这个选项对导出InnoDB的数据表很有用</p>
-<p>–no-create-db<br>正常导出的SQL脚本中会有类似CREATE DATABASE语句，加了–no-create-db选项之后就没有此语句了</p>
-<p>-C<br>服务器传给客户端的过程中先压缩再传递</p>
-<p>-R<br>导出存储过程以及自定义函数</p>
-<p>在mysqldump导出数据库SQL脚本之后，sed -i “s&#x2F;USE&#x2F;– USE&#x2F;“ ${sdb}_${datestr}.sql命令的作用是注释掉SQL脚本中的USE DATABASE XXX语句，这个也比较实用的，有时候线上数据会导入到内网，重现线上的一些BUG，但是内网可能已经有一个同名的数据库了，如果注释了这行语句，就可以导入到其他数据库，否则，需要先手工处理SQL脚本，然后再导入</p>
-<p><strong>如何使用</strong><br>假如备份MySQL脚本的名字是bak.sh,下面是脚本的使用方法</p>
-<p>备份对单个数据库</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 备份logindb数据库</span>
-./bak.sh logindb <span class="token string">"2021_08_16_10_05_30"</span>
-<span class="token comment"># 执行上述命令后，会在当前目录下生成名为logindb_2021_08_16_10_05_30.sql.gz的文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>备份所有数据库<br><code>./bak.sh a</code><br>检查备份保留时间<br><code>./bak.sh chk</code><br>持久化备份<br><code>./bak.sh p</code><br>添加定时任务<br>要实现自动备份功能，还需要添加定时任务，间隔指定时间调用备份脚本，执行ctrontab -e命令，输入以下语句</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">*/10 * * * * /data/sqlbak/bak.sh a
-*/15 * * * * /data/sqlbak/bak.sh chk<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>上述定时任务是每10分钟备份一次所有数据库，每15分钟检查一次过期的备份，当然，具体的备份策略根据具体的场景不同，可以根据实际情况调整</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/427491577">一个自动备份MySQL的脚本</a></p>
-</blockquote>
-<h4 id="查看数据大小"><a href="#查看数据大小" class="headerlink" title="查看数据大小"></a>查看数据大小</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 进入information_schema数据库（存放了其他的数据库的信息）</span>
-<span class="token keyword">use</span> information_schema<span class="token punctuation">;</span>
-
-mysql<span class="token operator">></span> <span class="token keyword">use</span> information_schema
-Reading <span class="token keyword">table</span> information <span class="token keyword">for</span> completion <span class="token keyword">of</span> <span class="token keyword">table</span> <span class="token operator">and</span> <span class="token keyword">column</span> names
-You can turn <span class="token keyword">off</span> this feature <span class="token keyword">to</span> get a quicker startup <span class="token keyword">with</span> <span class="token operator">-</span>A
-
-<span class="token comment">-- 查询所有数据库数据大小</span>
-<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">data</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span><span class="token punctuation">;</span>
-
-<span class="token comment">-- 查看指定数据库数据的大小</span>
-<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">data</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">where</span> table_schema<span class="token operator">=</span><span class="token string">'database_name'</span><span class="token punctuation">;</span>
-
-<span class="token comment">-- 查看所有数据库的大小,以MB为单位</span>
-<span class="token keyword">SELECT</span> table_schema <span class="token keyword">AS</span> <span class="token string">"Database"</span><span class="token punctuation">,</span><span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span>data_length <span class="token operator">+</span> index_length<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1024</span> <span class="token operator">/</span> <span class="token number">1024</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token string">"Size (MB)"</span>
-<span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> table_schema<span class="token punctuation">;</span>
-
-<span class="token comment">-- 查看指定数据库的某个表的数据大小</span>
-<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">data</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">where</span> table_schema<span class="token operator">=</span><span class="token string">'database_name'</span> <span class="token operator">and</span> table_name<span class="token operator">=</span><span class="token string">'table_name'</span><span class="token punctuation">;</span>
-
-<span class="token comment">-- 查询索引+数据大小</span>
-<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'数据大小'</span> <span class="token punctuation">,</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>index_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'索引大小'</span><span class="token punctuation">,</span> <span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>index_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'all'</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">where</span> table_schema<span class="token operator">=</span><span class="token string">'数据库名称'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="分析CPU使用率过高"><a href="#分析CPU使用率过高" class="headerlink" title="分析CPU使用率过高"></a>分析CPU使用率过高</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 1. 使用SHOW VARIABLES LIKE 'performance_schema'; 确保performance_schema是开启的。这个模式可以为你提供关于服务器内部操作的详细信息，这对于诊断性能问题非常有用。</span>
-<span class="token comment">-- 2. 查看数据库连接数</span>
-<span class="token keyword">show</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'%threads_connected%'</span><span class="token punctuation">;</span>
-<span class="token comment">-- 3. 查看进程,高CPU使用的查询可能会在这里显示。</span>
-<span class="token keyword">SHOW</span> PROCESSLIST<span class="token punctuation">;</span> <span class="token comment">-- 或SHOW FULL PROCESSLIST</span>
-<span class="token comment">-- 4. EXPLAIN执行计划</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>使用慢查询日志。请注意，慢查询日志可能会对数据库性能产生一定的影响，因为它需要记录和写入日志文件。因此，在生产环境中使用慢查询日志时，应该谨慎考虑其影响，并根据需要进行适当的调整。要使用MySQL的慢查询日志，可以按照以下步骤进行操作：</p>
-<ol>
-<li>首先，确保MySQL的慢查询日志功能已经启用。你可以通过编辑MySQL的配置文件（通常是my.cnf或my.ini）来实现。在[mysqld]部分下添加或修改以下行：</li>
-</ol>
-<pre class="line-numbers language-none"><code class="language-none"># slow_query_log参数用于启用或禁用慢查询日志功能。1表示启用，0表示禁用
-slow_query_log &#x3D; 1
-# slow_query_log_file参数用于指定慢查询日志文件的路径
-slow_query_log_file &#x3D; &#x2F;path&#x2F;to&#x2F;your&#x2F;logfile.log
-# long_query_time参数用于设置查询执行时间的阈值（以秒为单位）
-long_query_time &#x3D; 2  # 设置阈值为2秒，你可以根据需要调整这个值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol start="2">
-<li>重启MySQL服务：修改配置文件后，需要重启MySQL服务以使更改生效。根据你的操作系统和MySQL的安装方式，可以使用相应的命令来重启MySQL服务。</li>
-<li>记录慢查询日志：一旦慢查询日志功能启用，MySQL将会记录执行时间超过阈值的查询。这些查询将被写入你在配置文件中指定的日志文件中。你可以使用任何文本编辑器或日志查看工具来查看和查看慢查询日志文件。</li>
-<li>分析慢查询日志：一旦你有了慢查询日志文件，可以使用工具如mysqldumpslow来分析日志文件，找出执行缓慢的查询。mysqldumpslow是一个Perl脚本，可以用来分析慢查询日志文件并统计各种查询的执行情况。你可以在终端中运行以下命令来使用mysqldumpslow：</li>
-</ol>
-<pre class="line-numbers language-perl" data-language="perl"><code class="language-perl">mysqldumpslow <span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>your<span class="token operator">/</span>logfile<span class="token operator">.</span>log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这将显示慢查询日志中的统计信息，包括执行次数、总执行时间、平均执行时间等。你可以根据这些信息找出需要优化的查询。</p>
 <h2 id="MySQL函数"><a href="#MySQL函数" class="headerlink" title="MySQL函数"></a>MySQL函数</h2><h3 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h3><blockquote>
 <p>对于针对字符串位置的操作，第一个位置被标记为1。</p>
 </blockquote>
@@ -3014,6 +2803,292 @@ b. 先找出学生中年龄18岁的学生，然后再查询姓名为“张三”
 <td align="center">SHOW status LIKE ‘Innodb_rows_deleted’;</td>
 </tr>
 </tbody></table>
+<h3 id="关键字、常用操作"><a href="#关键字、常用操作" class="headerlink" title="关键字、常用操作"></a>关键字、常用操作</h3><h4 id="exists"><a href="#exists" class="headerlink" title="exists"></a>exists</h4><p>表A（小表），表B（大表）</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> A <span class="token keyword">where</span> c <span class="token operator">in</span> <span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> B<span class="token punctuation">)</span> <span class="token comment">-- ，用到了A表上c列的索引；</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> A <span class="token keyword">where</span> <span class="token keyword">exists</span><span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> B <span class="token keyword">where</span> c<span class="token operator">=</span>A<span class="token punctuation">.</span>c<span class="token punctuation">)</span> <span class="token comment">-- 效率高，用到了B表上c列的索引。</span>
+<span class="token comment">-- 相反的</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> B <span class="token keyword">where</span> c <span class="token operator">in</span> <span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> A<span class="token punctuation">)</span> <span class="token comment">-- 效率高，用到了B表上c列的索引</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> B <span class="token keyword">where</span> <span class="token keyword">exists</span><span class="token punctuation">(</span><span class="token keyword">select</span> c <span class="token keyword">from</span> A <span class="token keyword">where</span> c<span class="token operator">=</span>B<span class="token punctuation">.</span>c<span class="token punctuation">)</span> <span class="token comment">-- 效率低，用到了A表上c列的索引。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O121Y0sywAtt4jk9vy4b0w">MySQL多表联合查询有何讲究？</a></p>
+</blockquote>
+<h4 id="逃离符escape"><a href="#逃离符escape" class="headerlink" title="逃离符escape"></a>逃离符escape</h4><p>如果要查%或者_，怎么办呢？使用escape，转义字符后面的%或_就不作为通配符了，注意前面没有转义字符的%和_仍然起通配符作用</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> username <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> username <span class="token operator">like</span> <span class="token string">'%xiao/_%'</span> <span class="token keyword">escape</span> <span class="token string">'/'</span><span class="token punctuation">;</span>
+<span class="token keyword">select</span> username <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> username <span class="token operator">like</span> <span class="token string">'%xiao/%%'</span> <span class="token keyword">escape</span> <span class="token string">'/'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="分组排序"><a href="#分组排序" class="headerlink" title="分组排序"></a>分组排序</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> a<span class="token punctuation">.</span>id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>class<span class="token punctuation">,</span>a<span class="token punctuation">.</span>source
+<span class="token keyword">from</span> student a <span class="token keyword">left</span> <span class="token keyword">join</span> student b <span class="token keyword">on</span> a<span class="token punctuation">.</span>class<span class="token operator">=</span>b<span class="token punctuation">.</span>class <span class="token operator">and</span> a<span class="token punctuation">.</span>source<span class="token operator">&lt;=</span>b<span class="token punctuation">.</span>source
+<span class="token keyword">group</span> <span class="token keyword">by</span> a<span class="token punctuation">.</span>class<span class="token punctuation">,</span>a<span class="token punctuation">.</span>source
+<span class="token keyword">order</span> <span class="token keyword">by</span> a<span class="token punctuation">.</span>class<span class="token punctuation">,</span>a<span class="token punctuation">.</span>source<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/igGKepCsf-SUKChco4P6Lw">阿里二面：group by怎么优化？</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zc7_PZxwaQAwwqNsRG2_KQ">MySQL中的distinct和group by哪个效率更高？</a></p>
+</blockquote>
+<h4 id="有就更新-没有就插入"><a href="#有就更新-没有就插入" class="headerlink" title="有就更新,没有就插入"></a>有就更新,没有就插入</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token keyword">table</span> <span class="token punctuation">(</span>name<span class="token punctuation">,</span> gender<span class="token punctuation">)</span>  <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span> <span class="token string">'boy'</span><span class="token punctuation">)</span>  <span class="token keyword">ON</span> <span class="token keyword">DUPLICATE</span> <span class="token keyword">KEY</span> <span class="token keyword">UPDATE</span> name<span class="token operator">=</span><span class="token string">'Jerry'</span>，gender<span class="token operator">=</span><span class="token string">'girl'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 或</span>
+<span class="token keyword">REPLACE</span> <span class="token keyword">INTO</span> <span class="token keyword">table</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> gender<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span> <span class="token string">'girl'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">-- 或</span>
+<span class="token keyword">REPLACE</span> <span class="token keyword">INTO</span> <span class="token keyword">table</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> gender<span class="token punctuation">)</span> <span class="token keyword">SELECT</span> <span class="token string">'Jerry'</span><span class="token punctuation">,</span> <span class="token string">'girl'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 或</span>
+<span class="token keyword">REPLACE</span> <span class="token keyword">INTO</span> test <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span> gender<span class="token operator">=</span><span class="token string">'girl'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 不保留数据</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> 表名 <span class="token keyword">as</span> <span class="token keyword">select</span> 列名 <span class="token keyword">from</span> 表名 <span class="token keyword">where</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> 表名<span class="token punctuation">(</span>列名<span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">select</span> 列名 <span class="token keyword">from</span> 表名 <span class="token keyword">where</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token comment">-- 保留数据</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> 表名 <span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">select</span> a<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">from</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="重复数据"><a href="#重复数据" class="headerlink" title="重复数据"></a>重复数据</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 显示重复</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tablename <span class="token keyword">group</span> <span class="token keyword">by</span> id <span class="token keyword">having</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">1</span>
+<span class="token comment">-- 不显示重复</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tablename <span class="token keyword">group</span> <span class="token keyword">by</span> id <span class="token keyword">having</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_hgA89R6GWwJgxC9KBb63A">避免MySQL插入重复数据的4种方式</a></p>
+</blockquote>
+<h4 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h4><p>limit(start,size) start:从第几条记录开始 size:读取几条记录</p>
+<h4 id="定时备份"><a href="#定时备份" class="headerlink" title="定时备份"></a>定时备份</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#db用户名</span>
+<span class="token assign-left variable">dbuser</span><span class="token operator">=</span>root
+<span class="token comment">#db密码</span>
+<span class="token assign-left variable">dbpasswd</span><span class="token operator">=</span><span class="token string">"123456"</span>
+<span class="token comment">#ip地址</span>
+<span class="token assign-left variable">dbip</span><span class="token operator">=</span><span class="token number">127.0</span>.0.1
+<span class="token comment">#备份的数据库名字前缀</span>
+<span class="token assign-left variable">pre_name</span><span class="token operator">=</span><span class="token string">"test"</span>
+
+<span class="token comment">#备份操作的日志文件</span>
+<span class="token assign-left variable">bakfile</span><span class="token operator">=</span>/data/sqlbak/log.txt
+<span class="token comment">#备份数据的目录</span>
+<span class="token assign-left variable">bakdatadir</span><span class="token operator">=</span>/data/sqlbak/bakdata
+<span class="token comment">#备份数据的目录-持久化备份</span>
+<span class="token assign-left variable">persist_path</span><span class="token operator">=</span>/data/sqlbak/persistdata
+
+<span class="token comment">#备份保存时间,单位:天</span>
+<span class="token assign-left variable">dateoutday</span><span class="token operator">=</span><span class="token number">15</span>
+
+<span class="token comment">#备份单个数据库</span>
+<span class="token function-name function">bak_single</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token comment">#db name</span>
+  <span class="token assign-left variable">sdb</span><span class="token operator">=</span><span class="token variable">$1</span>
+  <span class="token comment">#日期字符串</span>
+  <span class="token assign-left variable">datestr</span><span class="token operator">=</span><span class="token variable">$2</span>
+
+  <span class="token builtin class-name">echo</span> <span class="token string">"bak_single <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql.gz BEGIN..."</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
+  <span class="token comment">#备份</span>
+  mysqldump -u<span class="token variable">$&#123;dbuser&#125;</span> <span class="token parameter variable">-h</span> <span class="token variable">$&#123;dbip&#125;</span> -p<span class="token variable">$&#123;dbpasswd&#125;</span> --single-transaction  --no-create-db <span class="token parameter variable">-R</span> <span class="token parameter variable">-C</span> <span class="token parameter variable">-B</span> <span class="token variable">$&#123;sdb&#125;</span> <span class="token operator">></span> <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql
+  <span class="token comment">#注释掉sql脚本中 USE DATABASE 语句</span>
+  <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s/USE/-- USE/"</span> <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql
+  <span class="token comment">#压缩</span>
+  <span class="token function">gzip</span> <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql
+  <span class="token comment">#记录日志</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"bak_single <span class="token variable">$&#123;sdb&#125;</span>_<span class="token variable">$&#123;datestr&#125;</span>.sql.gz  COMPLETE..."</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">#备份所有数据库</span>
+<span class="token function-name function">bak_all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token comment">#日期字符串</span>
+  <span class="token assign-left variable">all_datestr</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y_%m_%d_%H_%M_%S"</span><span class="token variable">)</span></span>
+
+  <span class="token assign-left variable">date_dir</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y%m%d"</span><span class="token variable">)</span></span>
+
+  <span class="token builtin class-name">echo</span> <span class="token string">"bak_all begin <span class="token variable">$&#123;all_datestr&#125;</span> ===================="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
+  <span class="token comment">#所有的数据库</span>
+  <span class="token assign-left variable">alldb</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span>mysql -u$<span class="token punctuation">&#123;</span>dbuser<span class="token punctuation">&#125;</span> <span class="token parameter variable">-h</span> $<span class="token punctuation">&#123;</span>dbip<span class="token punctuation">&#125;</span> -p$<span class="token punctuation">&#123;</span>dbpasswd<span class="token punctuation">&#125;</span> <span class="token parameter variable">-e</span> <span class="token string">"show databases"</span><span class="token variable">`</span></span>
+  <span class="token keyword">for</span> <span class="token for-or-select variable">dbname</span> <span class="token keyword">in</span> <span class="token variable">$&#123;alldb&#125;</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+    <span class="token punctuation">&#123;</span>
+    <span class="token comment">#只备份指定前缀的数据库</span>
+    <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable">$&#123;dbname&#125;</span> <span class="token operator">=~</span> <span class="token variable">$&#123;pre_name&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+      bak_single <span class="token variable">$&#123;dbname&#125;</span> <span class="token variable">$&#123;all_datestr&#125;</span> 
+      <span class="token keyword">fi</span>
+    <span class="token punctuation">&#125;</span><span class="token operator">&amp;</span>
+    <span class="token keyword">done</span>
+           
+    <span class="token comment">#等待所有数据库备份完成</span>
+    <span class="token function">wait</span>
+    <span class="token comment">#压缩</span>
+    <span class="token function">tar</span> czvf dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
+    <span class="token comment">#删除</span>
+    <span class="token function">rm</span> *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
+    <span class="token comment">#是否存在当天日期命名的目录</span>
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> <span class="token parameter variable">-d</span> <span class="token variable">$&#123;bakdatadir&#125;</span>/<span class="token variable">$&#123;date_dir&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+      <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token variable">$&#123;bakdatadir&#125;</span>/<span class="token variable">$&#123;date_dir&#125;</span>
+      <span class="token keyword">fi</span>
+      <span class="token comment">#移动到当天日期命名的目录中</span>
+      <span class="token function">mv</span> dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar <span class="token variable">$&#123;bakdatadir&#125;</span>/<span class="token variable">$&#123;date_dir&#125;</span>
+      <span class="token builtin class-name">echo</span> <span class="token string">"bak_all finish dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar ==============="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">#备份所有数据库-不会定时删除</span>
+<span class="token function-name function">bak_all_persist</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token comment">#日期字符串</span>
+  <span class="token assign-left variable">all_datestr</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y_%m_%d_%H_%M_%S"</span><span class="token variable">)</span></span>
+
+  <span class="token builtin class-name">echo</span> <span class="token string">"bak_all_persist begin <span class="token variable">$&#123;all_datestr&#125;</span> ===================="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
+  <span class="token comment">#所有的数据库</span>
+  <span class="token assign-left variable">alldb</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span>mysql -u$<span class="token punctuation">&#123;</span>dbuser<span class="token punctuation">&#125;</span> <span class="token parameter variable">-h</span> $<span class="token punctuation">&#123;</span>dbip<span class="token punctuation">&#125;</span> -p$<span class="token punctuation">&#123;</span>dbpasswd<span class="token punctuation">&#125;</span> <span class="token parameter variable">-e</span> <span class="token string">"show databases"</span><span class="token variable">`</span></span>
+    <span class="token keyword">for</span> <span class="token for-or-select variable">dbname</span> <span class="token keyword">in</span> <span class="token variable">$&#123;alldb&#125;</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token comment">#只备份指定前缀的数据库</span>
+        <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable">$&#123;dbname&#125;</span> <span class="token operator">==</span> <span class="token variable">$&#123;pre_name&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+          bak_single <span class="token variable">$&#123;dbname&#125;</span> <span class="token variable">$&#123;all_datestr&#125;</span>
+          <span class="token keyword">fi</span>
+      <span class="token punctuation">&#125;</span><span class="token operator">&amp;</span>
+      <span class="token keyword">done</span>
+           
+      <span class="token comment">#等待所有数据库备份完成</span>
+      <span class="token function">wait</span>
+
+      <span class="token comment">#压缩</span>
+      <span class="token function">tar</span> czvf dbpersistbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
+      <span class="token comment">#删除</span>
+      <span class="token function">rm</span> *_<span class="token variable">$&#123;all_datestr&#125;</span>.sql.gz
+      <span class="token comment">#是否存在当天日期命名的目录</span>
+      <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> <span class="token parameter variable">-d</span> <span class="token variable">$&#123;persist_path&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token variable">$&#123;persist_path&#125;</span>
+        <span class="token keyword">fi</span>
+        <span class="token comment">#移动持久化备份的目录中</span>
+        <span class="token function">mv</span> dbpersistbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar <span class="token variable">$&#123;persist_path&#125;</span>
+        <span class="token comment">#</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"bak_all_persist finish dbbak_<span class="token variable">$&#123;all_datestr&#125;</span>.tar ===================="</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">#检查过期备份</span>
+<span class="token function-name function">check_date_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token comment">#当前目录</span>
+  <span class="token assign-left variable">curpath</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+  <span class="token comment">#当前日期</span>
+  <span class="token assign-left variable">curdate</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">"+%Y%m%d"</span><span class="token variable">)</span></span>
+  <span class="token comment">#最早的保存日期</span>
+  <span class="token assign-left variable">lastdate</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">date</span> <span class="token parameter variable">-d</span> <span class="token string">"<span class="token variable">$&#123;curdate&#125;</span> - <span class="token variable">$&#123;dateoutday&#125;</span> day"</span> +%Y%m%d<span class="token variable">`</span></span>
+  <span class="token comment">#进入备份目录</span>
+  <span class="token builtin class-name">cd</span> <span class="token variable">$&#123;bakdatadir&#125;</span>
+  <span class="token comment">#目录列表</span>
+  <span class="token assign-left variable">pathlst</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">ls</span><span class="token variable">`</span></span>
+  <span class="token comment">#检查目录是否过期，删除已过期的目录</span>
+  <span class="token keyword">for</span> <span class="token for-or-select variable">tmpdate</span> <span class="token keyword">in</span> <span class="token variable">$&#123;pathlst<span class="token punctuation">[</span>*<span class="token punctuation">]</span>&#125;</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+    <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable">$&#123;tmpdate&#125;</span> <span class="token parameter variable">-le</span> <span class="token variable">$&#123;lastdate&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+      <span class="token function">rm</span> <span class="token parameter variable">-rf</span> <span class="token variable">$&#123;tmpdate&#125;</span>
+      <span class="token builtin class-name">echo</span> <span class="token string">"check_date_out, curdate:<span class="token variable">$&#123;curdate&#125;</span> delete <span class="token variable">$&#123;tmpdate&#125;</span> "</span> <span class="token operator">>></span> <span class="token variable">$&#123;bakfile&#125;</span>
+      <span class="token keyword">fi</span>
+      <span class="token keyword">done</span>
+      <span class="token comment">#回到当前目录</span>
+      <span class="token builtin class-name">cd</span> <span class="token variable">$&#123;curpath&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
+   s<span class="token punctuation">)</span>
+      bak_single <span class="token variable">$2</span> <span class="token variable">$3</span>
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+   a<span class="token punctuation">)</span>
+      bak_all
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+   p<span class="token punctuation">)</span>
+      bak_all_persist
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+  chk<span class="token punctuation">)</span> 
+      check_date_out
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+   *<span class="token punctuation">)</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"Please use correct command..."</span>
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">esac</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>函数功能</strong><br>备份是以数据库为单位进行备份的，先备份单个数据库，然后再把所有的备份数据库打包一起</p>
+<p>bak_single函数表示备份单个数据，传入参数是需要备份的数据库名字和日期字符串，备份文件名由这两个参数构成，也就是说，备份的文件名由数据库名+日期组成，比如test1_2021_08_16_10_05_30.sql表示test1数据库的备份文件，备份的时间2021_08_16_10_05_30</p>
+<p>bak_all函数表示备份所有的数据库，不需要传入参数，先执行SQL语句show databases查询出所有的数据库，然后过滤出我们需要备份的数据库，脚本中需要备份的数据库名都是以test开头的，具体的过滤规则可以按照各自的需求自行修改</p>
+<p>bak_all函数for循环体中{和}以及它们后面的&amp;表示启动一个新进程并执行大括号中间的命令，也即每个数据库启动一个进程进行备份，for循环结束之后的wait命令表示等待for循环中所有进程结束，也就是等待所有数据库备份全部完成之后，才会执行wait后面的命令,全部备份完成之后，会创建一个以当前日期命名的目录，并打包所有备份的数据库的SQL脚本，放到此目录中，同时删除原始的备份文件</p>
+<p>这里采用的是分库备份，分库备份的好处是：如果所有库都备份成一个备份文件时，恢复其中一个库的数据是比较麻烦的，所以采用分库备份，利于恢复单库数据</p>
+<p>check_date_out函数是检查备份目录是否过期，如果过期的话，直接删除过期的目录，脚本开头的变量dateoutday指定了备份保留的天数</p>
+<p>bak_all_persist函数是持久备份，备份过程和bak_all函数一样，只不过这里是备份到另一个持久数据的目录中，脚本开头的变量persist_path指定了持久备份目录，目录里面的备份文件不会自动删除，需要手工去删除</p>
+<p>持久化目录的主要应用场景：有时线上数据库表有数据校正或者表格结构有变动，为了防止误操作，再执行操作之前，先调用bak_all_persist函数备份下数据库，这样，即使出现误操作，还能恢复数据</p>
+<p>备份参数说明<br>–single-transaction<br>此选项会将隔离级别设置为可重复读(REPEATABLE READ),让整个数据在dump过程中保证数据的一致性，且不会锁表，这个选项对导出InnoDB的数据表很有用</p>
+<p>–no-create-db<br>正常导出的SQL脚本中会有类似CREATE DATABASE语句，加了–no-create-db选项之后就没有此语句了</p>
+<p>-C<br>服务器传给客户端的过程中先压缩再传递</p>
+<p>-R<br>导出存储过程以及自定义函数</p>
+<p>在mysqldump导出数据库SQL脚本之后，sed -i “s&#x2F;USE&#x2F;– USE&#x2F;“ ${sdb}_${datestr}.sql命令的作用是注释掉SQL脚本中的USE DATABASE XXX语句，这个也比较实用的，有时候线上数据会导入到内网，重现线上的一些BUG，但是内网可能已经有一个同名的数据库了，如果注释了这行语句，就可以导入到其他数据库，否则，需要先手工处理SQL脚本，然后再导入</p>
+<p><strong>如何使用</strong><br>假如备份MySQL脚本的名字是bak.sh,下面是脚本的使用方法</p>
+<p>备份对单个数据库</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 备份logindb数据库</span>
+./bak.sh logindb <span class="token string">"2021_08_16_10_05_30"</span>
+<span class="token comment"># 执行上述命令后，会在当前目录下生成名为logindb_2021_08_16_10_05_30.sql.gz的文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>备份所有数据库<br><code>./bak.sh a</code><br>检查备份保留时间<br><code>./bak.sh chk</code><br>持久化备份<br><code>./bak.sh p</code><br>添加定时任务<br>要实现自动备份功能，还需要添加定时任务，间隔指定时间调用备份脚本，执行ctrontab -e命令，输入以下语句</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">*/10 * * * * /data/sqlbak/bak.sh a
+*/15 * * * * /data/sqlbak/bak.sh chk<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>上述定时任务是每10分钟备份一次所有数据库，每15分钟检查一次过期的备份，当然，具体的备份策略根据具体的场景不同，可以根据实际情况调整</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/427491577">一个自动备份MySQL的脚本</a></p>
+</blockquote>
+<h4 id="查看数据大小"><a href="#查看数据大小" class="headerlink" title="查看数据大小"></a>查看数据大小</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 进入information_schema数据库（存放了其他的数据库的信息）</span>
+<span class="token keyword">use</span> information_schema<span class="token punctuation">;</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">use</span> information_schema
+Reading <span class="token keyword">table</span> information <span class="token keyword">for</span> completion <span class="token keyword">of</span> <span class="token keyword">table</span> <span class="token operator">and</span> <span class="token keyword">column</span> names
+You can turn <span class="token keyword">off</span> this feature <span class="token keyword">to</span> get a quicker startup <span class="token keyword">with</span> <span class="token operator">-</span>A
+
+<span class="token comment">-- 查询所有数据库数据大小</span>
+<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">data</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- 查看指定数据库数据的大小</span>
+<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">data</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">where</span> table_schema<span class="token operator">=</span><span class="token string">'database_name'</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- 查看所有数据库的大小,以MB为单位</span>
+<span class="token keyword">SELECT</span> table_schema <span class="token keyword">AS</span> <span class="token string">"Database"</span><span class="token punctuation">,</span><span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span>data_length <span class="token operator">+</span> index_length<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1024</span> <span class="token operator">/</span> <span class="token number">1024</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token string">"Size (MB)"</span>
+<span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> table_schema<span class="token punctuation">;</span>
+
+<span class="token comment">-- 查看指定数据库的某个表的数据大小</span>
+<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">data</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">where</span> table_schema<span class="token operator">=</span><span class="token string">'database_name'</span> <span class="token operator">and</span> table_name<span class="token operator">=</span><span class="token string">'table_name'</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- 查询索引+数据大小</span>
+<span class="token keyword">select</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'数据大小'</span> <span class="token punctuation">,</span> concat<span class="token punctuation">(</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>index_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'MB'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'索引大小'</span><span class="token punctuation">,</span> <span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>data_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span>index_length<span class="token operator">/</span><span class="token number">1024</span><span class="token operator">/</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">'all'</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span><span class="token keyword">tables</span> <span class="token keyword">where</span> table_schema<span class="token operator">=</span><span class="token string">'数据库名称'</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- 查看数据表的大小并根据大小排序</span>
+<span class="token comment">-- 查询所有表的空间使用情况</span>
+<span class="token keyword">SELECT</span> 
+    table_schema <span class="token keyword">AS</span> <span class="token identifier"><span class="token punctuation">`</span>Database<span class="token punctuation">`</span></span><span class="token punctuation">,</span>
+    table_name <span class="token keyword">AS</span> <span class="token identifier"><span class="token punctuation">`</span>Table<span class="token punctuation">`</span></span><span class="token punctuation">,</span>
+    <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>data_length <span class="token operator">+</span> index_length<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1024</span> <span class="token operator">/</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token identifier"><span class="token punctuation">`</span>Size (MB)<span class="token punctuation">`</span></span>
+<span class="token keyword">FROM</span> 
+    information_schema<span class="token punctuation">.</span><span class="token keyword">TABLES</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> 
+    <span class="token punctuation">(</span>data_length <span class="token operator">+</span> index_length<span class="token punctuation">)</span> <span class="token keyword">DESC</span>
+<span class="token comment">-- 针对特定数据库查询</span>
+<span class="token keyword">SELECT</span> 
+    table_name <span class="token keyword">AS</span> <span class="token identifier"><span class="token punctuation">`</span>Table<span class="token punctuation">`</span></span><span class="token punctuation">,</span>
+    <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>data_length <span class="token operator">+</span> index_length<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1024</span> <span class="token operator">/</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token identifier"><span class="token punctuation">`</span>Size (MB)<span class="token punctuation">`</span></span>
+<span class="token keyword">FROM</span> 
+    information_schema<span class="token punctuation">.</span><span class="token keyword">TABLES</span>
+<span class="token keyword">WHERE</span> 
+    table_schema <span class="token operator">=</span> <span class="token string">'your_database_name'</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> 
+    <span class="token punctuation">(</span>data_length <span class="token operator">+</span> index_length<span class="token punctuation">)</span> <span class="token keyword">DESC</span>
+<span class="token comment">-- 或者`SHOW TABLE STATUS FROM your_database_name;``</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="分析CPU使用率过高"><a href="#分析CPU使用率过高" class="headerlink" title="分析CPU使用率过高"></a>分析CPU使用率过高</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 1. 使用SHOW VARIABLES LIKE 'performance_schema'; 确保performance_schema是开启的。这个模式可以为你提供关于服务器内部操作的详细信息，这对于诊断性能问题非常有用。</span>
+<span class="token comment">-- 2. 查看数据库连接数</span>
+<span class="token keyword">show</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'%threads_connected%'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 3. 查看进程,高CPU使用的查询可能会在这里显示。</span>
+<span class="token keyword">SHOW</span> PROCESSLIST<span class="token punctuation">;</span> <span class="token comment">-- 或SHOW FULL PROCESSLIST</span>
+<span class="token comment">-- 4. EXPLAIN执行计划</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用慢查询日志。请注意，慢查询日志可能会对数据库性能产生一定的影响，因为它需要记录和写入日志文件。因此，在生产环境中使用慢查询日志时，应该谨慎考虑其影响，并根据需要进行适当的调整。要使用MySQL的慢查询日志，可以按照以下步骤进行操作：</p>
+<ol>
+<li>首先，确保MySQL的慢查询日志功能已经启用。你可以通过编辑MySQL的配置文件（通常是my.cnf或my.ini）来实现。在[mysqld]部分下添加或修改以下行：</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none"># slow_query_log参数用于启用或禁用慢查询日志功能。1表示启用，0表示禁用
+slow_query_log &#x3D; 1
+# slow_query_log_file参数用于指定慢查询日志文件的路径
+slow_query_log_file &#x3D; &#x2F;path&#x2F;to&#x2F;your&#x2F;logfile.log
+# long_query_time参数用于设置查询执行时间的阈值（以秒为单位）
+long_query_time &#x3D; 2  # 设置阈值为2秒，你可以根据需要调整这个值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>重启MySQL服务：修改配置文件后，需要重启MySQL服务以使更改生效。根据你的操作系统和MySQL的安装方式，可以使用相应的命令来重启MySQL服务。</li>
+<li>记录慢查询日志：一旦慢查询日志功能启用，MySQL将会记录执行时间超过阈值的查询。这些查询将被写入你在配置文件中指定的日志文件中。你可以使用任何文本编辑器或日志查看工具来查看和查看慢查询日志文件。</li>
+<li>分析慢查询日志：一旦你有了慢查询日志文件，可以使用工具如mysqldumpslow来分析日志文件，找出执行缓慢的查询。mysqldumpslow是一个Perl脚本，可以用来分析慢查询日志文件并统计各种查询的执行情况。你可以在终端中运行以下命令来使用mysqldumpslow：</li>
+</ol>
+<pre class="line-numbers language-perl" data-language="perl"><code class="language-perl">mysqldumpslow <span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>your<span class="token operator">/</span>logfile<span class="token operator">.</span>log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这将显示慢查询日志中的统计信息，包括执行次数、总执行时间、平均执行时间等。你可以根据这些信息找出需要优化的查询。</p>
 <h2 id="相关文章-5"><a href="#相关文章-5" class="headerlink" title="相关文章"></a>相关文章</h2><h3 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h3><table>
 <thead>
 <tr>

@@ -620,23 +620,17 @@ yum list docker-ce <span class="token parameter variable">--showduplicates</span
 
 <p>(4) 将docker注册为service</p>
 <pre class="line-numbers language-none"><code class="language-none">vim &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
+<p><code>vim /etc/systemd/system/docker.service</code><br><code>lib/systemd/system</code>、<code>/usr/lib/systemd/system</code>、<code>/etc/systemd/system</code>三个地方都可以<br><code>lib/systemd/system</code>真实地址是<code>/usr/lib/system/system</code>地址<br><code>/usr/lib/systemd/system/</code>软件包安装的单元<br><code>/etc/systemd/system/</code>系统管理员安装的单元,优先级更高<br>优先级为<code>/etc/systemd/system</code>，<code>/run/systemd/system</code>，<code>/lib/systemd/system</code><br>如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。</p>
+</blockquote>
 <p>编辑docker.service</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># vim /etc/systemd/system/docker.service</span>
-
-<span class="token comment"># lib/systemd/system、/usr/lib/systemd/system、/etc/systemd/system都可以，lib/systemd/system真实地址是/usr/lib/system/system地址，</span>
-<span class="token comment"># /usr/lib/systemd/system/ 软件包安装的单元</span>
-<span class="token comment"># /etc/systemd/system/ 系统管理员安装的单元,优先级更高</span>
-<span class="token comment"># 优先级为 /etc/systemd/system，/run/systemd/system，/lib/systemd/system</span>
-<span class="token comment"># 如果同一选项三个地方都配置了，优先级高的会覆盖优先级低的。</span>
-
-<span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
 <span class="token assign-left variable">Description</span><span class="token operator">=</span>Docker Application Container Engine
 <span class="token assign-left variable">Documentation</span><span class="token operator">=</span>https://docs.docker.com
 <span class="token assign-left variable">After</span><span class="token operator">=</span>network-online.target firewalld.service
 <span class="token assign-left variable">Wants</span><span class="token operator">=</span>network-online.target
 
 <span class="token punctuation">[</span>Service<span class="token punctuation">]</span>
-
 <span class="token assign-left variable">Type</span><span class="token operator">=</span>notify
 <span class="token comment"># the default is not to use systemd for cgroups because the delegate issues still</span>
 <span class="token comment"># exists and systemd currently does not support the cgroup feature set required</span>
@@ -680,8 +674,7 @@ yum list docker-ce <span class="token parameter variable">--showduplicates</span
 
 
 <span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
-
-<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>(5) 添加文件权限并启动docker</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x /etc/systemd/system/docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>

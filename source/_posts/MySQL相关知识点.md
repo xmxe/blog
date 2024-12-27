@@ -247,7 +247,31 @@ COMMENT '这是一个定时执行存储过程的事件'
 DO
     CALL my_stored_procedure(); -- 调用存储过程
 -- DO CALL procedure_name('input1', @output1);
+
+-- 选项
+CREATE
+	[DEFINER = { user | CURRENT_USER }]
+    EVENT
+    [IF NOT EXISTS]
+    event_name
+    ON SCHEDULE schedule
+    [ON COMPLETION [NOT] PRESERVE]
+    [ENABLE | DISABLE | DISABLE ON SLAVE]
+    [COMMENT 'comment']
+    DO event_body; 
+
 ```
+
+|              sql语法              |                           **说明**                           |
+| :-------------------------------: | :----------------------------------------------------------: |
+|              definer              |                **可选项**，给指定用户使用权限                |
+|           if not exists           |           **可选项**，用于判断要创建的事件是否存在           |
+|         event event_name          | **必选项**，指定事件名称，event_name的最大长度为64个字符，如果为指定event_name，则默认为当前的mysql用户名（不区分大小写） |
+|       on schedule schedule        | **必选项**，这里的schedule用于定义执行的时间和时间间隔，在下面我们详细讲解 |
+|   on completion [not] preserve    | **可选项**，配置事件执行完一次后的处理方式；当为on completion preserve 的时候,当event到期了,event会被disable,但是该event还是会存在当为on completion not preserve的时候,当event到期的时候,该event会被自动删除掉. |
+| enable、disable、disable on slave | **可选项**，用于指定事件的一种属性。enable表示该事件是开启的，也就是调度器检查事件是否必选调用；disable表示该事件是关闭的，也就是事件的声明存储到目录中，但是调度器不会检查它是否应该调用；disable on slave表示事件在从机中是关闭的。如果不指定这三个选择中的任意一个，则在一个事件创建之后，它立即变为活动的。 |
+|         comment ‘comment’         |                **可选项**，用于定义事件的注释                |
+|           do event_body           | **必选项**，用于指定事件启动时所要执行的代码。可以是任何有效的sql语句、存储过程或者一个计划执行的事件。如果包含多条语句，可以使用begin…end复合结构 |
 
 4. 查看事件
 
@@ -276,348 +300,6 @@ ALTER EVENT demo.event_name RENAME TO test.event_name;
 -- 删除事件
 drop event event_name;
 ```
-
-### 关键字、常用操作
-
-#### exists
-
-表A（小表），表B（大表）
-```sql
-select * from A where c in (select c from B) -- ，用到了A表上c列的索引；
-select * from A where exists(select c from B where c=A.c) -- 效率高，用到了B表上c列的索引。
--- 相反的
-select * from B where c in (select c from A) -- 效率高，用到了B表上c列的索引
-select * from B where exists(select c from A where c=B.c) -- 效率低，用到了A表上c列的索引。
-```
-> [MySQL多表联合查询有何讲究？](https://mp.weixin.qq.com/s/O121Y0sywAtt4jk9vy4b0w)
-
-#### 逃离符escape
-
-如果要查%或者\_，怎么办呢？使用escape，转义字符后面的%或\_就不作为通配符了，注意前面没有转义字符的%和\_仍然起通配符作用
-
-```sql
-select username from user where username like '%xiao/_%' escape '/';
-select username from user where username like '%xiao/%%' escape '/';
-```
-
-#### 分组排序
-
-```sql
-select a.id,a.class,a.source
-from student a left join student b on a.class=b.class and a.source<=b.source
-group by a.class,a.source
-order by a.class,a.source
-```
-> [阿里二面：group by怎么优化？](https://mp.weixin.qq.com/s/igGKepCsf-SUKChco4P6Lw)
-> [MySQL中的distinct和group by哪个效率更高？](https://mp.weixin.qq.com/s/zc7_PZxwaQAwwqNsRG2_KQ)
-
-
-#### 有就更新,没有就插入
-
-```sql
-INSERT INTO table (name, gender)  VALUES ('Jerry', 'boy')  ON DUPLICATE KEY UPDATE name='Jerry'，gender='girl';
--- 或
-REPLACE INTO table(name, gender) VALUES ('Jerry', 'girl');
--- 或
-REPLACE INTO table(name, gender) SELECT 'Jerry', 'girl';
--- 或
-REPLACE INTO test SET name='Jerry', gender='girl';
-```
-
-#### 复制表
-
-```sql
--- 不保留数据
-create table 表名 as select 列名 from 表名 where 1=2;
-create table 表名(列名) as select 列名 from 表名 where 1=2;
--- 保留数据
-insert into 表名 ( ) select a.* from ()a
-```
-
-#### 重复数据
-```sql
--- 显示重复
-select * from tablename group by id having count(*)>1
--- 不显示重复
-select * from tablename group by id having count(*)=1
-```
-> [避免MySQL插入重复数据的4种方式](https://mp.weixin.qq.com/s/_hgA89R6GWwJgxC9KBb63A)
-
-#### 分页
-
-limit(start,size) start:从第几条记录开始 size:读取几条记录
-
-
-#### 定时备份
-
-```shell
-#db用户名
-dbuser=root
-#db密码
-dbpasswd="123456"
-#ip地址
-dbip=127.0.0.1
-#备份的数据库名字前缀
-pre_name="test"
-
-#备份操作的日志文件
-bakfile=/data/sqlbak/log.txt
-#备份数据的目录
-bakdatadir=/data/sqlbak/bakdata
-#备份数据的目录-持久化备份
-persist_path=/data/sqlbak/persistdata
-
-#备份保存时间,单位:天
-dateoutday=15
-
-#备份单个数据库
-bak_single()
-{
-  #db name
-  sdb=$1
-  #日期字符串
-  datestr=$2
-
-  echo "bak_single ${sdb}_${datestr}.sql.gz BEGIN..." >> ${bakfile}
-  #备份
-  mysqldump -u${dbuser} -h ${dbip} -p${dbpasswd} --single-transaction  --no-create-db -R -C -B ${sdb} > ${sdb}_${datestr}.sql
-  #注释掉sql脚本中 USE DATABASE 语句
-  sed -i "s/USE/-- USE/" ${sdb}_${datestr}.sql
-  #压缩
-  gzip ${sdb}_${datestr}.sql
-  #记录日志
-  echo "bak_single ${sdb}_${datestr}.sql.gz  COMPLETE..." >> ${bakfile}
-}
-
-#备份所有数据库
-bak_all()
-{
-  #日期字符串
-  all_datestr=$(date "+%Y_%m_%d_%H_%M_%S")
-
-  date_dir=$(date "+%Y%m%d")
-
-  echo "bak_all begin ${all_datestr} ====================" >> ${bakfile}
-  #所有的数据库
-  alldb=`mysql -u${dbuser} -h ${dbip} -p${dbpasswd} -e "show databases"`
-  for dbname in ${alldb}; do
-    {
-    #只备份指定前缀的数据库
-    if [[ ${dbname} =~ ${pre_name} ]]; then
-      bak_single ${dbname} ${all_datestr} 
-      fi
-    }&
-    done
-           
-    #等待所有数据库备份完成
-    wait
-    #压缩
-    tar czvf dbbak_${all_datestr}.tar *_${all_datestr}.sql.gz
-    #删除
-    rm *_${all_datestr}.sql.gz
-    #是否存在当天日期命名的目录
-    if [ ! -d ${bakdatadir}/${date_dir} ]; then
-      mkdir -p ${bakdatadir}/${date_dir}
-      fi
-      #移动到当天日期命名的目录中
-      mv dbbak_${all_datestr}.tar ${bakdatadir}/${date_dir}
-      echo "bak_all finish dbbak_${all_datestr}.tar ===============" >> ${bakfile}
-}
-
-#备份所有数据库-不会定时删除
-bak_all_persist()
-{
-  #日期字符串
-  all_datestr=$(date "+%Y_%m_%d_%H_%M_%S")
-
-  echo "bak_all_persist begin ${all_datestr} ====================" >> ${bakfile}
-  #所有的数据库
-  alldb=`mysql -u${dbuser} -h ${dbip} -p${dbpasswd} -e "show databases"`
-    for dbname in ${alldb}; do
-      {
-        #只备份指定前缀的数据库
-        if [[ ${dbname} == ${pre_name} ]]; then
-          bak_single ${dbname} ${all_datestr}
-          fi
-      }&
-      done
-           
-      #等待所有数据库备份完成
-      wait
-
-      #压缩
-      tar czvf dbpersistbak_${all_datestr}.tar *_${all_datestr}.sql.gz
-      #删除
-      rm *_${all_datestr}.sql.gz
-      #是否存在当天日期命名的目录
-      if [ ! -d ${persist_path} ]; then
-        mkdir -p ${persist_path}
-        fi
-        #移动持久化备份的目录中
-        mv dbpersistbak_${all_datestr}.tar ${persist_path}
-        #
-        echo "bak_all_persist finish dbbak_${all_datestr}.tar ====================" >> ${bakfile}
-}
-
-#检查过期备份
-check_date_out()
-{
-  #当前目录
-  curpath=`pwd`
-  #当前日期
-  curdate=$(date "+%Y%m%d")
-  #最早的保存日期
-  lastdate=`date -d "${curdate} - ${dateoutday} day" +%Y%m%d`
-  #进入备份目录
-  cd ${bakdatadir}
-  #目录列表
-  pathlst=`ls`
-  #检查目录是否过期，删除已过期的目录
-  for tmpdate in ${pathlst[*]}; do
-    if [[ ${tmpdate} -le ${lastdate} ]]; then
-      rm -rf ${tmpdate}
-      echo "check_date_out, curdate:${curdate} delete ${tmpdate} " >> ${bakfile}
-      fi
-      done
-      #回到当前目录
-      cd ${curpath}
-}
-
-case "$1" in
-   s)
-      bak_single $2 $3
-      ;;
-   a)
-      bak_all
-      ;;
-   p)
-      bak_all_persist
-      ;;
-  chk) 
-      check_date_out
-      ;;
-   *)
-    echo "Please use correct command..."
-      ;;
-esac
-
-```
-**函数功能**
-备份是以数据库为单位进行备份的，先备份单个数据库，然后再把所有的备份数据库打包一起
-
-bak_single函数表示备份单个数据，传入参数是需要备份的数据库名字和日期字符串，备份文件名由这两个参数构成，也就是说，备份的文件名由数据库名+日期组成，比如test1_2021_08_16_10_05_30.sql表示test1数据库的备份文件，备份的时间2021_08_16_10_05_30
-
-bak_all函数表示备份所有的数据库，不需要传入参数，先执行SQL语句show databases查询出所有的数据库，然后过滤出我们需要备份的数据库，脚本中需要备份的数据库名都是以test开头的，具体的过滤规则可以按照各自的需求自行修改
-
-bak_all函数for循环体中{和}以及它们后面的&表示启动一个新进程并执行大括号中间的命令，也即每个数据库启动一个进程进行备份，for循环结束之后的wait命令表示等待for循环中所有进程结束，也就是等待所有数据库备份全部完成之后，才会执行wait后面的命令,全部备份完成之后，会创建一个以当前日期命名的目录，并打包所有备份的数据库的SQL脚本，放到此目录中，同时删除原始的备份文件
-
-这里采用的是分库备份，分库备份的好处是：如果所有库都备份成一个备份文件时，恢复其中一个库的数据是比较麻烦的，所以采用分库备份，利于恢复单库数据
-
-check_date_out函数是检查备份目录是否过期，如果过期的话，直接删除过期的目录，脚本开头的变量dateoutday指定了备份保留的天数
-
-bak_all_persist函数是持久备份，备份过程和bak_all函数一样，只不过这里是备份到另一个持久数据的目录中，脚本开头的变量persist_path指定了持久备份目录，目录里面的备份文件不会自动删除，需要手工去删除
-
-持久化目录的主要应用场景：有时线上数据库表有数据校正或者表格结构有变动，为了防止误操作，再执行操作之前，先调用bak_all_persist函数备份下数据库，这样，即使出现误操作，还能恢复数据
-
-备份参数说明
---single-transaction
-此选项会将隔离级别设置为可重复读(REPEATABLE READ),让整个数据在dump过程中保证数据的一致性，且不会锁表，这个选项对导出InnoDB的数据表很有用
-
---no-create-db
-正常导出的SQL脚本中会有类似CREATE DATABASE语句，加了--no-create-db选项之后就没有此语句了
-
--C
-服务器传给客户端的过程中先压缩再传递
-
--R
-导出存储过程以及自定义函数
-
-在mysqldump导出数据库SQL脚本之后，sed -i "s/USE/-- USE/" ${sdb}_${datestr}.sql命令的作用是注释掉SQL脚本中的USE DATABASE XXX语句，这个也比较实用的，有时候线上数据会导入到内网，重现线上的一些BUG，但是内网可能已经有一个同名的数据库了，如果注释了这行语句，就可以导入到其他数据库，否则，需要先手工处理SQL脚本，然后再导入
-
-**如何使用**
-假如备份MySQL脚本的名字是bak.sh,下面是脚本的使用方法
-
-备份对单个数据库
-```shell
-# 备份logindb数据库
-./bak.sh logindb "2021_08_16_10_05_30"
-# 执行上述命令后，会在当前目录下生成名为logindb_2021_08_16_10_05_30.sql.gz的文件
-```
-备份所有数据库
-```./bak.sh a```
-检查备份保留时间
-```./bak.sh chk```
-持久化备份
-```./bak.sh p```
-添加定时任务
-要实现自动备份功能，还需要添加定时任务，间隔指定时间调用备份脚本，执行ctrontab -e命令，输入以下语句
-
-```shell
-*/10 * * * * /data/sqlbak/bak.sh a
-*/15 * * * * /data/sqlbak/bak.sh chk
-```
-上述定时任务是每10分钟备份一次所有数据库，每15分钟检查一次过期的备份，当然，具体的备份策略根据具体的场景不同，可以根据实际情况调整
-
-> [一个自动备份MySQL的脚本](https://zhuanlan.zhihu.com/p/427491577)
-
-#### 查看数据大小
-
-```sql
--- 进入information_schema数据库（存放了其他的数据库的信息）
-use information_schema;
-
-mysql> use information_schema
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-
--- 查询所有数据库数据大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables;
-
--- 查看指定数据库数据的大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables where table_schema='database_name';
-
--- 查看所有数据库的大小,以MB为单位
-SELECT table_schema AS "Database",ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS "Size (MB)"
-FROM information_schema.tables GROUP BY table_schema;
-
--- 查看指定数据库的某个表的数据大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables where table_schema='database_name' and table_name='table_name';
-
--- 查询索引+数据大小
-select concat(round(sum(data_length/1024/1024),2),'MB') as '数据大小' , concat(round(sum(index_length/1024/1024),2),'MB') as '索引大小', round(sum(data_length/1024/1024),2)+round(sum(index_length/1024/1024),2) as 'all' from information_schema.tables where table_schema='数据库名称';
-```
-
-#### 分析CPU使用率过高
-
-```sql
--- 1. 使用SHOW VARIABLES LIKE 'performance_schema'; 确保performance_schema是开启的。这个模式可以为你提供关于服务器内部操作的详细信息，这对于诊断性能问题非常有用。
--- 2. 查看数据库连接数
-show status like '%threads_connected%';
--- 3. 查看进程,高CPU使用的查询可能会在这里显示。
-SHOW PROCESSLIST; -- 或SHOW FULL PROCESSLIST
--- 4. EXPLAIN执行计划
-```
-使用慢查询日志。请注意，慢查询日志可能会对数据库性能产生一定的影响，因为它需要记录和写入日志文件。因此，在生产环境中使用慢查询日志时，应该谨慎考虑其影响，并根据需要进行适当的调整。要使用MySQL的慢查询日志，可以按照以下步骤进行操作：
-1. 首先，确保MySQL的慢查询日志功能已经启用。你可以通过编辑MySQL的配置文件（通常是my.cnf或my.ini）来实现。在[mysqld]部分下添加或修改以下行：
-
-```
-# slow_query_log参数用于启用或禁用慢查询日志功能。1表示启用，0表示禁用
-slow_query_log = 1
-# slow_query_log_file参数用于指定慢查询日志文件的路径
-slow_query_log_file = /path/to/your/logfile.log
-# long_query_time参数用于设置查询执行时间的阈值（以秒为单位）
-long_query_time = 2  # 设置阈值为2秒，你可以根据需要调整这个值
-```
-
-2. 重启MySQL服务：修改配置文件后，需要重启MySQL服务以使更改生效。根据你的操作系统和MySQL的安装方式，可以使用相应的命令来重启MySQL服务。
-3. 记录慢查询日志：一旦慢查询日志功能启用，MySQL将会记录执行时间超过阈值的查询。这些查询将被写入你在配置文件中指定的日志文件中。你可以使用任何文本编辑器或日志查看工具来查看和查看慢查询日志文件。
-4. 分析慢查询日志：一旦你有了慢查询日志文件，可以使用工具如mysqldumpslow来分析日志文件，找出执行缓慢的查询。mysqldumpslow是一个Perl脚本，可以用来分析慢查询日志文件并统计各种查询的执行情况。你可以在终端中运行以下命令来使用mysqldumpslow：
-
-```perl
-mysqldumpslow /path/to/your/logfile.log
-```
-这将显示慢查询日志中的统计信息，包括执行次数、总执行时间、平均执行时间等。你可以根据这些信息找出需要优化的查询。
-
 
 ## MySQL函数
 
@@ -2923,7 +2605,368 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 |           InnoDB更新的行数           | SHOW status LIKE 'Innodb_rows_updated';  |
 |           InnoDB删除的行数           | SHOW status LIKE 'Innodb_rows_deleted';  |
 
+### 关键字、常用操作
 
+#### exists
+
+表A（小表），表B（大表）
+```sql
+select * from A where c in (select c from B) -- ，用到了A表上c列的索引；
+select * from A where exists(select c from B where c=A.c) -- 效率高，用到了B表上c列的索引。
+-- 相反的
+select * from B where c in (select c from A) -- 效率高，用到了B表上c列的索引
+select * from B where exists(select c from A where c=B.c) -- 效率低，用到了A表上c列的索引。
+```
+> [MySQL多表联合查询有何讲究？](https://mp.weixin.qq.com/s/O121Y0sywAtt4jk9vy4b0w)
+
+#### 逃离符escape
+
+如果要查%或者\_，怎么办呢？使用escape，转义字符后面的%或\_就不作为通配符了，注意前面没有转义字符的%和\_仍然起通配符作用
+
+```sql
+select username from user where username like '%xiao/_%' escape '/';
+select username from user where username like '%xiao/%%' escape '/';
+```
+
+#### 分组排序
+
+```sql
+select a.id,a.class,a.source
+from student a left join student b on a.class=b.class and a.source<=b.source
+group by a.class,a.source
+order by a.class,a.source
+```
+> [阿里二面：group by怎么优化？](https://mp.weixin.qq.com/s/igGKepCsf-SUKChco4P6Lw)
+> [MySQL中的distinct和group by哪个效率更高？](https://mp.weixin.qq.com/s/zc7_PZxwaQAwwqNsRG2_KQ)
+
+
+#### 有就更新,没有就插入
+
+```sql
+INSERT INTO table (name, gender)  VALUES ('Jerry', 'boy')  ON DUPLICATE KEY UPDATE name='Jerry'，gender='girl';
+-- 或
+REPLACE INTO table(name, gender) VALUES ('Jerry', 'girl');
+-- 或
+REPLACE INTO table(name, gender) SELECT 'Jerry', 'girl';
+-- 或
+REPLACE INTO test SET name='Jerry', gender='girl';
+```
+
+#### 复制表
+
+```sql
+-- 不保留数据
+create table 表名 as select 列名 from 表名 where 1=2;
+create table 表名(列名) as select 列名 from 表名 where 1=2;
+-- 保留数据
+insert into 表名 ( ) select a.* from ()a
+```
+
+#### 重复数据
+```sql
+-- 显示重复
+select * from tablename group by id having count(*)>1
+-- 不显示重复
+select * from tablename group by id having count(*)=1
+```
+> [避免MySQL插入重复数据的4种方式](https://mp.weixin.qq.com/s/_hgA89R6GWwJgxC9KBb63A)
+
+#### 分页
+
+limit(start,size) start:从第几条记录开始 size:读取几条记录
+
+
+#### 定时备份
+
+```shell
+#db用户名
+dbuser=root
+#db密码
+dbpasswd="123456"
+#ip地址
+dbip=127.0.0.1
+#备份的数据库名字前缀
+pre_name="test"
+
+#备份操作的日志文件
+bakfile=/data/sqlbak/log.txt
+#备份数据的目录
+bakdatadir=/data/sqlbak/bakdata
+#备份数据的目录-持久化备份
+persist_path=/data/sqlbak/persistdata
+
+#备份保存时间,单位:天
+dateoutday=15
+
+#备份单个数据库
+bak_single()
+{
+  #db name
+  sdb=$1
+  #日期字符串
+  datestr=$2
+
+  echo "bak_single ${sdb}_${datestr}.sql.gz BEGIN..." >> ${bakfile}
+  #备份
+  mysqldump -u${dbuser} -h ${dbip} -p${dbpasswd} --single-transaction  --no-create-db -R -C -B ${sdb} > ${sdb}_${datestr}.sql
+  #注释掉sql脚本中 USE DATABASE 语句
+  sed -i "s/USE/-- USE/" ${sdb}_${datestr}.sql
+  #压缩
+  gzip ${sdb}_${datestr}.sql
+  #记录日志
+  echo "bak_single ${sdb}_${datestr}.sql.gz  COMPLETE..." >> ${bakfile}
+}
+
+#备份所有数据库
+bak_all()
+{
+  #日期字符串
+  all_datestr=$(date "+%Y_%m_%d_%H_%M_%S")
+
+  date_dir=$(date "+%Y%m%d")
+
+  echo "bak_all begin ${all_datestr} ====================" >> ${bakfile}
+  #所有的数据库
+  alldb=`mysql -u${dbuser} -h ${dbip} -p${dbpasswd} -e "show databases"`
+  for dbname in ${alldb}; do
+    {
+    #只备份指定前缀的数据库
+    if [[ ${dbname} =~ ${pre_name} ]]; then
+      bak_single ${dbname} ${all_datestr} 
+      fi
+    }&
+    done
+           
+    #等待所有数据库备份完成
+    wait
+    #压缩
+    tar czvf dbbak_${all_datestr}.tar *_${all_datestr}.sql.gz
+    #删除
+    rm *_${all_datestr}.sql.gz
+    #是否存在当天日期命名的目录
+    if [ ! -d ${bakdatadir}/${date_dir} ]; then
+      mkdir -p ${bakdatadir}/${date_dir}
+      fi
+      #移动到当天日期命名的目录中
+      mv dbbak_${all_datestr}.tar ${bakdatadir}/${date_dir}
+      echo "bak_all finish dbbak_${all_datestr}.tar ===============" >> ${bakfile}
+}
+
+#备份所有数据库-不会定时删除
+bak_all_persist()
+{
+  #日期字符串
+  all_datestr=$(date "+%Y_%m_%d_%H_%M_%S")
+
+  echo "bak_all_persist begin ${all_datestr} ====================" >> ${bakfile}
+  #所有的数据库
+  alldb=`mysql -u${dbuser} -h ${dbip} -p${dbpasswd} -e "show databases"`
+    for dbname in ${alldb}; do
+      {
+        #只备份指定前缀的数据库
+        if [[ ${dbname} == ${pre_name} ]]; then
+          bak_single ${dbname} ${all_datestr}
+          fi
+      }&
+      done
+           
+      #等待所有数据库备份完成
+      wait
+
+      #压缩
+      tar czvf dbpersistbak_${all_datestr}.tar *_${all_datestr}.sql.gz
+      #删除
+      rm *_${all_datestr}.sql.gz
+      #是否存在当天日期命名的目录
+      if [ ! -d ${persist_path} ]; then
+        mkdir -p ${persist_path}
+        fi
+        #移动持久化备份的目录中
+        mv dbpersistbak_${all_datestr}.tar ${persist_path}
+        #
+        echo "bak_all_persist finish dbbak_${all_datestr}.tar ====================" >> ${bakfile}
+}
+
+#检查过期备份
+check_date_out()
+{
+  #当前目录
+  curpath=`pwd`
+  #当前日期
+  curdate=$(date "+%Y%m%d")
+  #最早的保存日期
+  lastdate=`date -d "${curdate} - ${dateoutday} day" +%Y%m%d`
+  #进入备份目录
+  cd ${bakdatadir}
+  #目录列表
+  pathlst=`ls`
+  #检查目录是否过期，删除已过期的目录
+  for tmpdate in ${pathlst[*]}; do
+    if [[ ${tmpdate} -le ${lastdate} ]]; then
+      rm -rf ${tmpdate}
+      echo "check_date_out, curdate:${curdate} delete ${tmpdate} " >> ${bakfile}
+      fi
+      done
+      #回到当前目录
+      cd ${curpath}
+}
+
+case "$1" in
+   s)
+      bak_single $2 $3
+      ;;
+   a)
+      bak_all
+      ;;
+   p)
+      bak_all_persist
+      ;;
+  chk) 
+      check_date_out
+      ;;
+   *)
+    echo "Please use correct command..."
+      ;;
+esac
+
+```
+**函数功能**
+备份是以数据库为单位进行备份的，先备份单个数据库，然后再把所有的备份数据库打包一起
+
+bak_single函数表示备份单个数据，传入参数是需要备份的数据库名字和日期字符串，备份文件名由这两个参数构成，也就是说，备份的文件名由数据库名+日期组成，比如test1_2021_08_16_10_05_30.sql表示test1数据库的备份文件，备份的时间2021_08_16_10_05_30
+
+bak_all函数表示备份所有的数据库，不需要传入参数，先执行SQL语句show databases查询出所有的数据库，然后过滤出我们需要备份的数据库，脚本中需要备份的数据库名都是以test开头的，具体的过滤规则可以按照各自的需求自行修改
+
+bak_all函数for循环体中{和}以及它们后面的&表示启动一个新进程并执行大括号中间的命令，也即每个数据库启动一个进程进行备份，for循环结束之后的wait命令表示等待for循环中所有进程结束，也就是等待所有数据库备份全部完成之后，才会执行wait后面的命令,全部备份完成之后，会创建一个以当前日期命名的目录，并打包所有备份的数据库的SQL脚本，放到此目录中，同时删除原始的备份文件
+
+这里采用的是分库备份，分库备份的好处是：如果所有库都备份成一个备份文件时，恢复其中一个库的数据是比较麻烦的，所以采用分库备份，利于恢复单库数据
+
+check_date_out函数是检查备份目录是否过期，如果过期的话，直接删除过期的目录，脚本开头的变量dateoutday指定了备份保留的天数
+
+bak_all_persist函数是持久备份，备份过程和bak_all函数一样，只不过这里是备份到另一个持久数据的目录中，脚本开头的变量persist_path指定了持久备份目录，目录里面的备份文件不会自动删除，需要手工去删除
+
+持久化目录的主要应用场景：有时线上数据库表有数据校正或者表格结构有变动，为了防止误操作，再执行操作之前，先调用bak_all_persist函数备份下数据库，这样，即使出现误操作，还能恢复数据
+
+备份参数说明
+--single-transaction
+此选项会将隔离级别设置为可重复读(REPEATABLE READ),让整个数据在dump过程中保证数据的一致性，且不会锁表，这个选项对导出InnoDB的数据表很有用
+
+--no-create-db
+正常导出的SQL脚本中会有类似CREATE DATABASE语句，加了--no-create-db选项之后就没有此语句了
+
+-C
+服务器传给客户端的过程中先压缩再传递
+
+-R
+导出存储过程以及自定义函数
+
+在mysqldump导出数据库SQL脚本之后，sed -i "s/USE/-- USE/" ${sdb}_${datestr}.sql命令的作用是注释掉SQL脚本中的USE DATABASE XXX语句，这个也比较实用的，有时候线上数据会导入到内网，重现线上的一些BUG，但是内网可能已经有一个同名的数据库了，如果注释了这行语句，就可以导入到其他数据库，否则，需要先手工处理SQL脚本，然后再导入
+
+**如何使用**
+假如备份MySQL脚本的名字是bak.sh,下面是脚本的使用方法
+
+备份对单个数据库
+```shell
+# 备份logindb数据库
+./bak.sh logindb "2021_08_16_10_05_30"
+# 执行上述命令后，会在当前目录下生成名为logindb_2021_08_16_10_05_30.sql.gz的文件
+```
+备份所有数据库
+```./bak.sh a```
+检查备份保留时间
+```./bak.sh chk```
+持久化备份
+```./bak.sh p```
+添加定时任务
+要实现自动备份功能，还需要添加定时任务，间隔指定时间调用备份脚本，执行ctrontab -e命令，输入以下语句
+
+```shell
+*/10 * * * * /data/sqlbak/bak.sh a
+*/15 * * * * /data/sqlbak/bak.sh chk
+```
+上述定时任务是每10分钟备份一次所有数据库，每15分钟检查一次过期的备份，当然，具体的备份策略根据具体的场景不同，可以根据实际情况调整
+
+> [一个自动备份MySQL的脚本](https://zhuanlan.zhihu.com/p/427491577)
+
+#### 查看数据大小
+
+```sql
+-- 进入information_schema数据库（存放了其他的数据库的信息）
+use information_schema;
+
+mysql> use information_schema
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+-- 查询所有数据库数据大小
+select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables;
+
+-- 查看指定数据库数据的大小
+select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables where table_schema='database_name';
+
+-- 查看所有数据库的大小,以MB为单位
+SELECT table_schema AS "Database",ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS "Size (MB)"
+FROM information_schema.tables GROUP BY table_schema;
+
+-- 查看指定数据库的某个表的数据大小
+select concat(round(sum(data_length/1024/1024),2),'MB') as data from information_schema.tables where table_schema='database_name' and table_name='table_name';
+
+-- 查询索引+数据大小
+select concat(round(sum(data_length/1024/1024),2),'MB') as '数据大小' , concat(round(sum(index_length/1024/1024),2),'MB') as '索引大小', round(sum(data_length/1024/1024),2)+round(sum(index_length/1024/1024),2) as 'all' from information_schema.tables where table_schema='数据库名称';
+
+-- 查看数据表的大小并根据大小排序
+-- 查询所有表的空间使用情况
+SELECT 
+    table_schema AS `Database`,
+    table_name AS `Table`,
+    ROUND(((data_length + index_length) / 1024 / 1024), 2) AS `Size (MB)`
+FROM 
+    information_schema.TABLES
+ORDER BY 
+    (data_length + index_length) DESC
+-- 针对特定数据库查询
+SELECT 
+    table_name AS `Table`,
+    ROUND(((data_length + index_length) / 1024 / 1024), 2) AS `Size (MB)`
+FROM 
+    information_schema.TABLES
+WHERE 
+    table_schema = 'your_database_name'
+ORDER BY 
+    (data_length + index_length) DESC
+-- 或者`SHOW TABLE STATUS FROM your_database_name;``
+```
+
+#### 分析CPU使用率过高
+
+```sql
+-- 1. 使用SHOW VARIABLES LIKE 'performance_schema'; 确保performance_schema是开启的。这个模式可以为你提供关于服务器内部操作的详细信息，这对于诊断性能问题非常有用。
+-- 2. 查看数据库连接数
+show status like '%threads_connected%';
+-- 3. 查看进程,高CPU使用的查询可能会在这里显示。
+SHOW PROCESSLIST; -- 或SHOW FULL PROCESSLIST
+-- 4. EXPLAIN执行计划
+```
+使用慢查询日志。请注意，慢查询日志可能会对数据库性能产生一定的影响，因为它需要记录和写入日志文件。因此，在生产环境中使用慢查询日志时，应该谨慎考虑其影响，并根据需要进行适当的调整。要使用MySQL的慢查询日志，可以按照以下步骤进行操作：
+1. 首先，确保MySQL的慢查询日志功能已经启用。你可以通过编辑MySQL的配置文件（通常是my.cnf或my.ini）来实现。在[mysqld]部分下添加或修改以下行：
+
+```
+# slow_query_log参数用于启用或禁用慢查询日志功能。1表示启用，0表示禁用
+slow_query_log = 1
+# slow_query_log_file参数用于指定慢查询日志文件的路径
+slow_query_log_file = /path/to/your/logfile.log
+# long_query_time参数用于设置查询执行时间的阈值（以秒为单位）
+long_query_time = 2  # 设置阈值为2秒，你可以根据需要调整这个值
+```
+
+2. 重启MySQL服务：修改配置文件后，需要重启MySQL服务以使更改生效。根据你的操作系统和MySQL的安装方式，可以使用相应的命令来重启MySQL服务。
+3. 记录慢查询日志：一旦慢查询日志功能启用，MySQL将会记录执行时间超过阈值的查询。这些查询将被写入你在配置文件中指定的日志文件中。你可以使用任何文本编辑器或日志查看工具来查看和查看慢查询日志文件。
+4. 分析慢查询日志：一旦你有了慢查询日志文件，可以使用工具如mysqldumpslow来分析日志文件，找出执行缓慢的查询。mysqldumpslow是一个Perl脚本，可以用来分析慢查询日志文件并统计各种查询的执行情况。你可以在终端中运行以下命令来使用mysqldumpslow：
+
+```perl
+mysqldumpslow /path/to/your/logfile.log
+```
+这将显示慢查询日志中的统计信息，包括执行次数、总执行时间、平均执行时间等。你可以根据这些信息找出需要优化的查询。
 
 ## 相关文章
 

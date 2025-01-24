@@ -661,7 +661,7 @@ mysql <span class="token parameter variable">-uroot</span> <span class="token pa
 <span class="token comment">#update mysql.user set password=password('新密码') where host='localhost' and user='root';</span>
 update mysql.user <span class="token builtin class-name">set</span> <span class="token assign-left variable">authentication_string</span><span class="token operator">=</span>password<span class="token punctuation">(</span><span class="token string">'password'</span><span class="token punctuation">)</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'hostname'</span><span class="token punctuation">;</span>
 
-<span class="token comment"># 使用SET PASSWORD命令修改当前用户密码</span>
+<span class="token comment"># 使用SET PASSWORD命令修改当前用户密码 //xx</span>
 <span class="token builtin class-name">set</span> <span class="token assign-left variable">password</span><span class="token operator">=</span>password<span class="token punctuation">(</span><span class="token string">"new-password"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment"># 使用SET PASSWORD命令修改其他用户密码</span>
 <span class="token builtin class-name">set</span> password <span class="token keyword">for</span> <span class="token string">'user'</span>@<span class="token string">'hostname'</span> <span class="token operator">=</span> password<span class="token punctuation">(</span><span class="token string">'新密码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -713,6 +713,30 @@ flush <span class="token keyword">privileges</span><span class="token punctuatio
 日志文件：&#x2F;var&#x2F;log&#x2F;var&#x2F;log&#x2F;mysqld.log
 服务启动脚本：&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;mysqld.service
 socket文件：&#x2F;var&#x2F;run&#x2F;mysqld&#x2F;mysqld.pid<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="10-注册systemd-查看第5步延申"><a href="#10-注册systemd-查看第5步延申" class="headerlink" title="10. 注册systemd(查看第5步延申)"></a>10. 注册systemd(查看第5步延申)</h4><p>如果想要使用<code>systemctl</code>替代<code>service</code>命令，需要注册<code>mysql.service</code>服务，具体如下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">1</span>. <span class="token function">vim</span> /etc/systemd/system/myssql.service
+
+<span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
+<span class="token assign-left variable">Description</span><span class="token operator">=</span>MySQL Server
+<span class="token assign-left variable">After</span><span class="token operator">=</span>network.target
+<span class="token assign-left variable">After</span><span class="token operator">=</span>syslog.target
+
+<span class="token punctuation">[</span>Service<span class="token punctuation">]</span>
+<span class="token assign-left variable">User</span><span class="token operator">=</span>mysql
+<span class="token assign-left variable">Group</span><span class="token operator">=</span>mysql
+<span class="token assign-left variable">ExecStart</span><span class="token operator">=</span>/usr/sbin/mysqld --defaults-file<span class="token operator">=</span>/etc/my.cnf
+<span class="token comment"># ExecStart=service mysql start</span>
+<span class="token assign-left variable">PIDFile</span><span class="token operator">=</span>/var/run/mysqld/mysqld.pid
+LimitNOFILE <span class="token operator">=</span> <span class="token number">5000</span>
+
+<span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
+<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target
+
+<span class="token number">2</span>. <span class="token function">chmod</span> +x /etc/systemd/system/mysql.service
+<span class="token number">3</span>. systemctl daemon-reload
+<span class="token number">4</span>. systemctl start mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h3><h4 id="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"><a href="#一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包" class="headerlink" title="一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包"></a>一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包</h4><p>(1) 把上面的rpm文件下载下来放到服务器上,或者在linux系统中通过wget命令下载</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -1810,7 +1834,7 @@ Dock
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2024
+                <span id="year">2022-2025
                 </span>
             
             

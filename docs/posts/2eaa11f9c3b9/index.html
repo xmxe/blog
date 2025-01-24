@@ -1277,12 +1277,18 @@ max-size&#x3D;500m，意味着一个容器日志大小上限是500M，max-file&#
 <span class="token comment">#例 在jre8镜像基础上创建自己镜像。</span>
 <span class="token instruction"><span class="token keyword">FROM</span> livingobjects/jre8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>最简单的命令，指定在哪个基础镜像上创建镜像</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">FROM</span> scratch</span>
+<span class="token comment"># 接下来的指令将在这个“空白”的基础上构建镜像</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><code>scratch</code>并不是一个实际的镜像，而是一个特殊的占位符，表示一个空白的起点。使用<code>scratch</code>作为基础镜像时，你需要提供构建镜像所需的所有内容，包括操作系统内核（如果适用）、文件系统、应用程序及其依赖等。这通常用于构建非常轻量级的、只包含必要组件的镜像，例如某些静态网站或单个可执行文件的服务。</p>
 <h4 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h4><p>它接受命令作为参数并用于创建镜像,RUN命令用于创建镜像。在镜像构建的过程中执行,这个指令有两种格式</p>
 <p>第一种形式：</p>
-<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">RUN</span> chown user2:user2 /home/webapi #以shell形式执行命令，等同于/bin/sh -c</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token comment"># 以shell形式执行命令，等同于/bin/sh -c</span>
+<span class="token instruction"><span class="token keyword">RUN</span> chown user2:user2 /home/webapi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>第二种形式：</p>
-<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">RUN</span> [<span class="token string">"executable"</span>,<span class="token string">"param1"</span>, <span class="token string">"param2"</span>] # (等同于exec命令形式)，注意此处必须是双引号(")，因为这种格式被解析为JSON数组。</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token comment"># (等同于exec命令形式)，注意此处必须是双引号(")，因为这种格式被解析为JSON数组。</span>
+<span class="token instruction"><span class="token keyword">RUN</span> [<span class="token string">"executable"</span>,<span class="token string">"param1"</span>, <span class="token string">"param2"</span>]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h4 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h4><p>语法：</p>
 <pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> [<span class="token string">"executable"</span>, <span class="token string">"param1"</span>, <span class="token string">"param2"</span>?]</span>
@@ -1293,13 +1299,21 @@ max-size&#x3D;500m，意味着一个容器日志大小上限是500M，max-file&#
 <li>在镜像构建容器后执行</li>
 <li>只能存在一条CMD命令</li>
 </ol>
+<p><strong>RUN与CMD区别</strong></p>
+<ul>
+<li><code>RUN</code>指令用于在镜像构建过程中执行命令，生成新的镜像层。</li>
+<li><code>CMD</code>指令用于指定容器启动时的默认命令和参数，但可以在<code>docker run</code>时被覆盖。</li>
+</ul>
 <h4 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h4><p>语法：</p>
 <pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">ENTRYPOINT</span> [<span class="token string">"executable"</span>, <span class="token string">"param1"</span>, <span class="token string">"param2"</span>?]</span>
 <span class="token comment"># 例</span>
 <span class="token instruction"><span class="token keyword">ENTRYPOINT</span> [<span class="token string">"java"</span>,<span class="token string">"-Djava.security.egd=file:/dev/./urandom"</span>,<span class="token string">"-jar"</span>,<span class="token string">"/app.jar"</span>]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>这个命令和CMD功能一样。区别在于ENTRYPOINT后面携带的参数不会被docker run提供的参数覆盖，而CMD会被覆盖。</p>
-<h5 id="扩展CMD与ENTRYPOINT"><a href="#扩展CMD与ENTRYPOINT" class="headerlink" title="扩展CMD与ENTRYPOINT"></a>扩展CMD与ENTRYPOINT</h5><p>二者的区别看：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010900754/article/details/78526443">docker CMD ENTRYPOINT区别终极解读</a></p>
-<p>从根本上说, ENTRYPOINT和CMD都是让用户指定一个可执行程序, 这个可执行程序在container启动后自动启动。实际上, 如果你想让自己制作的镜像自动运行程序(不需要在docker run后面添加命令行指定运行的命令), 你必须在Dockerfile里面，使用ENTRYPOINT或者CMD命令。在命令行启动docker镜像时, 执行其他命令行参数，覆盖默认的CMD。和CMD类似, 默认的ENTRYPOINT也在docker run时, 也可以被覆盖. 在运行时, 用–entrypoint覆盖默认的ENTRYPOINT。</p>
+<p><strong>扩展CMD与ENTRYPOINT</strong></p>
+<p>二者的区别看：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010900754/article/details/78526443">docker CMD ENTRYPOINT区别终极解读</a></p>
+<p>从根本上说,<code>ENTRYPOINT和</code>CMD都是让用户指定一个可执行程序,这个可执行程序在container启动后自动启动。实际上,如果你想让自己制作的镜像自动运行程序(不需要在docker run后面添加命令行指定运行的命令),你必须在Dockerfile里面，使用ENTRYPOINT或者CMD命令。在命令行启动docker镜像时,执行其他命令行参数，覆盖默认的CMD。和CMD类似,默认的ENTRYPOINT也在docker run时,也可以被覆盖.在运行时,用–entrypoint覆盖默认的ENTRYPOINT。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token parameter variable">--entrypoint</span> /bin/bash image_name
+<span class="token comment"># 这表明容器r运行时不在使用Dockerfile中的ENTRYPOINT中定义的命令 而是使用/bin/bash覆盖</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>dockerfile中的CMD命令被覆盖：</p>
 <p><img src="https://pic4.zhimg.com/v2-4a8d016349ee808822659ca2bf66fab3_r.jpg" alt="img"></p>
 <p><strong>CMD</strong>：提供了容器默认的执行命令。Dockerfile只允许使用一次CMD指令。使用多个CMD会抵消之前所有的指令，只有最后一个指令生效。CMD有三种形式：</p>
@@ -1326,7 +1340,7 @@ max-size&#x3D;500m，意味着一个容器日志大小上限是500M，max-file&#
 <p>shell格式用法：</p>
 <pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">ADD</span> &lt;src>... &lt;dest></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>对于从远程URL获取资源的情况，由于ADD指令不支持认证，如果从远程获取资源需要认证，则只能使用RUN wget或RUN curl替代。另外，如果源路径的资源发生变化，则该ADD指令将使Docker Cache失效，Dockerfile中后续的所有指令都不能使用缓存。因此尽量将ADD指令放在Dockerfile的后面。</p>
+<p>对于从远程URL获取资源的情况，由于ADD指令不支持认证，如果从远程获取资源需要认证，则只能使用<code>RUN wget</code>或<code>RUN curl</code>替代。另外，如果源路径的资源发生变化，则该ADD指令将使Docker Cache失效，Dockerfile中后续的所有指令都不能使用缓存。因此尽量将ADD指令放在Dockerfile的后面。</p>
 <h4 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h4><p>COPY指令能够将构建命令所在的主机本地的文件或目录，复制到镜像文件系统。</p>
 <p>exec格式用法（推荐）：</p>
 <pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> [<span class="token string">"&lt;src>"</span>,... <span class="token string">"&lt;dest>"</span>]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1335,21 +1349,34 @@ max-size&#x3D;500m，意味着一个容器日志大小上限是500M，max-file&#
 <p>shell格式用法：</p>
 <pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> &lt;src>... &lt;dest></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p><strong>ADD和COPY什么区别</strong></p>
+<ol>
+<li>功能差异<br>COPY：纯粹地将从构建上下文（即执行<code>docker build</code>命令时指定的目录及其子目录）中的文件或目录复制到镜像中指定的路径。它不支持自动解压压缩文件，也不支持从URL复制文件。<br>ADD：除了具备COPY的基本复制功能外，还提供了额外的功能。如果遇到压缩文件（如.tar,.tar.gz,.zip等），ADD指令会自动解压这些文件到目标路径。此外，ADD还支持从URL来源复制文件，这意味着可以直接从互联网上下载文件并将其添加到镜像中。</li>
+<li>构建缓存<br>COPY：当使用COPY指令时，如果源文件没有发生变化，Docker会利用构建缓存来加快构建过程。这意味着如果源文件和镜像层没有变化，Docker将重用之前的构建结果。<br>ADD：由于其额外的功能（如解压缩和下载），ADD指令通常不利用构建缓存。这是因为ADD指令可能会改变文件的内容（例如解压缩），即使源文件没有变化，Docker也可能重新执行ADD指令。</li>
+<li>使用场景<br>COPY：对于大多数仅需复制文件或目录的场景，推荐使用COPY。它更简单且构建缓存效率更高。此外，COPY被认为是更安全且易于理解的选择，因为它行为直接，没有隐含的额外处理逻辑。<br>ADD：当你需要利用ADD的额外功能（如解压或从URL下载）时，才应选择使用ADD。然而，由于ADD可能引入更多潜在问题（如不期望的解压行为或网络下载失败），所以在不需要这些特性时，避免使用ADD可以减少复杂性和潜在错误。</li>
+</ol>
 <h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p>语法：</p>
 <pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">EXPOSE</span> [port] #暴露容器内部端口</span>
 <span class="token comment"># 例</span>
 <span class="token instruction"><span class="token keyword">EXPOSE</span> 5000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>暴露的是容器内部端口，不是主机端口，如果外部想使用这个端口需要在运行时映射，如下：<strong>docker run -d -p 127.0.0.1:8080:5000 hello-world</strong>。指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，docker run命令如果没有带上响应的端口映射参数，docker并不会将端口映射到宿主机。</p>
+<p>暴露的是容器内部端口，不是主机端口，如果外部想使用这个端口需要在运行时映射，如下：<strong>docker run -d -p 127.0.0.1:8080:5000 hello-world</strong>。指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，<code>docker run</code>命令如果没有带上响应的端口映射参数，docker并不会将端口映射到宿主机。</p>
 <h4 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h4><p>语法：</p>
-<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">MAINTAINER</span> 作者名 #申明作者，辅助使用，放在FROM命令后面</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token comment"># 申明作者，辅助使用，放在FROM命令后面</span>
+<span class="token instruction"><span class="token keyword">MAINTAINER</span> 作者名</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h4><p>语法：</p>
-<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">WORKDIR</span> /path # 指定容器工作目录</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h4><p><code>WORKDIR</code>用于设置容器内的工作目录，即容器启动时默认进入的目录，或者在执行<code>RUN</code>、<code>CMD</code>、<code>ENTRYPOINT</code>、<code>COPY</code>和<code>ADD</code>指令时作为这些指令的默认路径。</p>
+<p>语法：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token comment"># 指定容器工作目录</span>
+<span class="token instruction"><span class="token keyword">WORKDIR</span> /path/to/directory</span>
+<span class="token comment"># 其中/path/to/directory是容器内的目录路径，可以是绝对路径或相对路径。如果是相对路径，它将相对于前一个WORKDIR指令的路径（如果存在的话）。如果不存在前一个WORKDIR，则相对于镜像的根目录。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h4><p>语法：</p>
-<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">VOLUME</span> [<span class="token string">"/dir_1"</span>, <span class="token string">"/dir_2"</span> ..] # 可以将本地文件夹或者其他container的文件夹挂载到container中，容器即可以访问该目录</span>
-<span class="token instruction"><span class="token keyword">VOLUME</span> [<span class="token string">"/data"</span>] (exec格式指令)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token comment"># 将容器内的/usr/share/nginx/html/data目录设置为存储卷</span>
+<span class="token instruction"><span class="token keyword">VOLUME</span> /usr/share/nginx/html/data</span>
+<span class="token comment"># 可以将本地文件夹或者其他container的文件夹挂载到container中，容器即可以访问该目录</span>
+<span class="token instruction"><span class="token keyword">VOLUME</span> [<span class="token string">"/dir_1"</span>, <span class="token string">"/dir_2"</span> ..]</span>
+<span class="token instruction"><span class="token keyword">VOLUME</span> [<span class="token string">"/data"</span>] (exec格式指令)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>VOLUME指令创建一个可以从本地主机或其他容器挂载的挂载点。经常用到的是<strong>docker run -ti -v &#x2F;data:&#x2F;data nginx:1.12 bash</strong>时指定本地路径和容器内路径的映射。</p>
 <p>相信大部分人对<code>docker run -v</code>这个参数都比较熟悉，无非就是把宿主机目录和容器目录做映射，以便于容器中的某些文件可以直接保存在宿主机上，实现容器被删除之后数据还在，比如我们把mysql装在容器中，肯定不能说容器被删mysql所有的数据也都不在了。第二个作用是也可以用来实现多容器共享同一份文件。但如果玩过dockerfile的话就知道dockerfile还有个VOLUME指令，如</p>
@@ -1361,13 +1388,13 @@ max-size&#x3D;500m，意味着一个容器日志大小上限是500M，max-file&#
 <span class="token instruction"><span class="token keyword">EXPOSE</span> 6379</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个指令很容易和启动时的-v指令搞混淆，他们之间到底有什么区别呢，什么时候需要使用volume呢？volume指令指定的位置在容器被删除以后数据文件会被删除吗？如果-v和volume指定了同一个位置，会发生什么事呢？</p>
 <ol>
-<li><p>volume和run -v的区别，什么时候需要使用volume<br> 容器运行时应该尽量保持容器存储层不发生写操作，对于数据库类需要保存动态数据的应用，其数据库文件应该保存于卷(volume)中。为了防止运行时用户忘记将动态文件所保存目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。</p>
+<li><p>volume和run -v的区别，什么时候需要使用volume<br>容器运行时应该尽量保持容器存储层不发生写操作，对于数据库类需要保存动态数据的应用，其数据库文件应该保存于卷(volume)中。为了防止运行时用户忘记将动态文件所保存目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。</p>
 </li>
-<li><p>那么Dockerfile中的VOLUME指令实际使用中是不是就是跟docker run中的-v参数一样是将宿主机的一个目录绑定到容器中的目录以达到共享目录的作用呢？<br> 并不然，其实VOLUME指令只是起到了声明了容器中的目录作为匿名卷，但是并没有将匿名卷绑定到宿主机指定目录的功能。当我们生成镜像的Dockerfile中以Volume声明了匿名卷，并且我们以这个镜像run了一个容器的时候，docker会在安装目录下的指定目录下面生成一个目录来绑定容器的匿名卷（这个指定目录不同版本的docker会有所不同），我当前的目录为：&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;{容器ID}。<br> <strong>总结</strong>：volume只是指定了一个目录，用以在用户忘记启动时指定-v参数也可以保证容器的正常运行。比如mysql，你不能说用户启动时没有指定-v，然后删了容器，就把mysql的数据文件都删了，那样生产上是会出大事故的，所以mysql的dockerfile里面就需要配置volume，这样即使用户没有指定-v，容器被删后也不会导致数据文件都不在了。还是可以恢复的。</p>
+<li><p>那么Dockerfile中的VOLUME指令实际使用中是不是就是跟docker run中的-v参数一样是将宿主机的一个目录绑定到容器中的目录以达到共享目录的作用呢？<br>并不然，其实VOLUME指令只是起到了声明了容器中的目录作为匿名卷，但是并没有将匿名卷绑定到宿主机指定目录的功能。当我们生成镜像的Dockerfile中以Volume声明了匿名卷，并且我们以这个镜像run了一个容器的时候，docker会在安装目录下的指定目录下面生成一个目录来绑定容器的匿名卷（这个指定目录不同版本的docker会有所不同），我当前的目录为：&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;{容器ID}。<br><strong>总结</strong>：volume只是指定了一个目录，用以在用户忘记启动时指定-v参数也可以保证容器的正常运行。比如mysql，你不能说用户启动时没有指定-v，然后删了容器，就把mysql的数据文件都删了，那样生产上是会出大事故的，所以mysql的dockerfile里面就需要配置volume，这样即使用户没有指定-v，容器被删后也不会导致数据文件都不在了。还是可以恢复的。</p>
 </li>
-<li><p>volume指令指定的位置在容器被删除以后数据文件会被删除吗<br> volume与-v指令一样，容器被删除以后映射在主机上的文件不会被删除。</p>
+<li><p>volume指令指定的位置在容器被删除以后数据文件会被删除吗<br>volume与-v指令一样，容器被删除以后映射在主机上的文件不会被删除。</p>
 </li>
-<li><p>如果-v和volume指定了同一个位置，会发生什么事呢？<br> 会以-v设定的目录为准，其实volume指令的设定的目的就是为了避免用户忘记指定-v的时候导致的数据丢失，那么如果用户指定了-v，自然而然就不需要volume指定的位置了。<br> <strong>总结</strong>：其实一般的dockfile如果不是数据库类的这种需要持久化数据到磁盘上的应用，都是无需指定volume的。指定volume只是为了避免用户忘记指定-v时导致的数据全部在容器中，这样的话容器一旦被删除所有的数据都丢失了。</p>
+<li><p>如果-v和volume指定了同一个位置，会发生什么事呢？<br>会以-v设定的目录为准，其实volume指令的设定的目的就是为了避免用户忘记指定-v的时候导致的数据丢失，那么如果用户指定了-v，自然而然就不需要volume指定的位置了。<br><strong>总结</strong>：其实一般的dockfile如果不是数据库类的这种需要持久化数据到磁盘上的应用，都是无需指定volume的。指定volume只是为了避免用户忘记指定-v时导致的数据全部在容器中，这样的话容器一旦被删除所有的数据都丢失了。</p>
 </li>
 </ol>
 <p>那么为什么dockerfile中不提供一个能够映射为主机目录:容器目录这样的指令呢？其实这样的设计是有道理的，如果在dockerfile中指定了主机目录，这样dockerfile就不具备了可移植性了，毕竟每个人所需要映射的目录可能是不同的，那么最好的办法就是把这个权利交给每个运行这个dockerfile的人，所以才会有<code>run -v主机目录:容器目录</code>这样的指令。</p>
@@ -1383,19 +1410,16 @@ max-size&#x3D;500m，意味着一个容器日志大小上限是500M，max-file&#
 
 <h4 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h4><pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">ARG</span> &lt;name>[=&lt;default value>]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>ARG指令设置一些创建镜像时的参数，这些参数可以在执行docker build命令时通过<code>--build-arg= </code>设置，如果指定的创建参数在Dockerfile中没有指定，创建时会输出错误信息: One or more build-args were not consumed, failing build.</p>
+<p>ARG指令设置一些创建镜像时的参数，这些参数可以在执行docker build命令时通过<code>--build-arg= </code>设置，如果指定的创建参数在Dockerfile中没有指定，创建时会输出错误信息: <code>One or more build-args were not consumed, failing build.</code></p>
 <p>Dockerfile作者可以为ARG设置一个默认参数值，当创建镜像时如果没有传入参数就会使用默认值：</p>
 <p>我们可以使用ARG或者ENV指令来指定RUN指令使用的变量。我们可以使用ENV定义与ARG定义名称相同的变量来覆盖ARG定义的变量值。如下示例，我们执行</p>
-<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker">docker build --build-arg CONT_IMG_VER=v2.0.1 Dockerfile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build --build-arg <span class="token assign-left variable">CONT_IMG_VER</span><span class="token operator">=</span>v2.0.1 Dockerfile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>后将获取到的CONTIMGVER变量值为v2.0.0:</p>
 <pre class="line-numbers language-dockefile" data-language="dockefile"><code class="language-dockefile">ARG CONT_IMG_VER
-ENV MY_SECRET_KEY&#x3D;$CONT_IMG_VER
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+ENV MY_SECRET_KEY&#x3D;$CONT_IMG_VER<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="WORKDIR-1"><a href="#WORKDIR-1" class="headerlink" title="WORKDIR"></a>WORKDIR</h4><pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">WORKDIR</span> /path/to/workdir</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>WORKDIR指令用来设置Dockerfile中任何使用目录的命令(包括RUN、CMD、ENTRYPOINT、COPY、ADD等指令)的当前工作目录，此目录如果不存在就会被自动创建，即使这个目录不被使用</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">FROM</span> anapsix/alpine-java:8_server-jre_unlimited</span>
 <span class="token instruction"><span class="token keyword">VOLUME</span> /tmp</span>
 <span class="token instruction"><span class="token keyword">ENV</span> TZ=Asia/Shanghai</span>
@@ -2187,7 +2211,7 @@ portainer/portainer-ce
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2024
+                <span id="year">2022-2025
                 </span>
             
             

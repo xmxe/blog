@@ -896,6 +896,13 @@ FROM livingobjects/jre8
 ```
 最简单的命令，指定在哪个基础镜像上创建镜像
 
+```dockerfile
+FROM scratch
+# 接下来的指令将在这个“空白”的基础上构建镜像
+```
+
+`scratch`并不是一个实际的镜像，而是一个特殊的占位符，表示一个空白的起点。使用`scratch`作为基础镜像时，你需要提供构建镜像所需的所有内容，包括操作系统内核（如果适用）、文件系统、应用程序及其依赖等。这通常用于构建非常轻量级的、只包含必要组件的镜像，例如某些静态网站或单个可执行文件的服务。
+
 #### RUN
 
 它接受命令作为参数并用于创建镜像,RUN命令用于创建镜像。在镜像构建的过程中执行,这个指令有两种格式
@@ -903,13 +910,15 @@ FROM livingobjects/jre8
 第一种形式：
 
 ```dockerfile
-RUN chown user2:user2 /home/webapi #以shell形式执行命令，等同于/bin/sh -c
+# 以shell形式执行命令，等同于/bin/sh -c
+RUN chown user2:user2 /home/webapi
 ```
 
 第二种形式：
 
 ```dockerfile
-RUN ["executable","param1", "param2"] # (等同于exec命令形式)，注意此处必须是双引号(")，因为这种格式被解析为JSON数组。
+# (等同于exec命令形式)，注意此处必须是双引号(")，因为这种格式被解析为JSON数组。
+RUN ["executable","param1", "param2"]
 ```
 
 #### CMD
@@ -925,6 +934,11 @@ CMD exec java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
 1. 在镜像构建容器后执行
 2. 只能存在一条CMD命令
 
+**RUN与CMD区别**
+
+- `RUN`指令用于在镜像构建过程中执行命令，生成新的镜像层。
+- `CMD`指令用于指定容器启动时的默认命令和参数，但可以在`docker run`时被覆盖。
+
 #### ENTRYPOINT
 
 语法：
@@ -936,12 +950,15 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 ```
 这个命令和CMD功能一样。区别在于ENTRYPOINT后面携带的参数不会被docker run提供的参数覆盖，而CMD会被覆盖。
 
-##### 扩展CMD与ENTRYPOINT
+**扩展CMD与ENTRYPOINT**
 
 二者的区别看：[docker CMD ENTRYPOINT区别终极解读](https://blog.csdn.net/u010900754/article/details/78526443)
 
-从根本上说, ENTRYPOINT和CMD都是让用户指定一个可执行程序, 这个可执行程序在container启动后自动启动。实际上, 如果你想让自己制作的镜像自动运行程序(不需要在docker run后面添加命令行指定运行的命令), 你必须在Dockerfile里面，使用ENTRYPOINT或者CMD命令。在命令行启动docker镜像时, 执行其他命令行参数，覆盖默认的CMD。和CMD类似, 默认的ENTRYPOINT也在docker run时, 也可以被覆盖. 在运行时, 用--entrypoint覆盖默认的ENTRYPOINT。
-
+从根本上说,`ENTRYPOINT和`CMD都是让用户指定一个可执行程序,这个可执行程序在container启动后自动启动。实际上,如果你想让自己制作的镜像自动运行程序(不需要在docker run后面添加命令行指定运行的命令),你必须在Dockerfile里面，使用ENTRYPOINT或者CMD命令。在命令行启动docker镜像时,执行其他命令行参数，覆盖默认的CMD。和CMD类似,默认的ENTRYPOINT也在docker run时,也可以被覆盖.在运行时,用--entrypoint覆盖默认的ENTRYPOINT。
+```shell
+docker run -it --entrypoint /bin/bash image_name
+# 这表明容器r运行时不在使用Dockerfile中的ENTRYPOINT中定义的命令 而是使用/bin/bash覆盖
+```
 dockerfile中的CMD命令被覆盖：
 
 ![img](https://pic4.zhimg.com/v2-4a8d016349ee808822659ca2bf66fab3_r.jpg)
@@ -989,7 +1006,7 @@ shell格式用法：
 ADD <src>... <dest>
 ```
 
-对于从远程URL获取资源的情况，由于ADD指令不支持认证，如果从远程获取资源需要认证，则只能使用RUN wget或RUN curl替代。另外，如果源路径的资源发生变化，则该ADD指令将使Docker Cache失效，Dockerfile中后续的所有指令都不能使用缓存。因此尽量将ADD指令放在Dockerfile的后面。
+对于从远程URL获取资源的情况，由于ADD指令不支持认证，如果从远程获取资源需要认证，则只能使用`RUN wget`或`RUN curl`替代。另外，如果源路径的资源发生变化，则该ADD指令将使Docker Cache失效，Dockerfile中后续的所有指令都不能使用缓存。因此尽量将ADD指令放在Dockerfile的后面。
 
 #### COPY
 
@@ -1009,6 +1026,17 @@ shell格式用法：
 COPY <src>... <dest>
 ```
 
+**ADD和COPY什么区别**
+1. 功能差异
+COPY：纯粹地将从构建上下文（即执行`docker build`命令时指定的目录及其子目录）中的文件或目录复制到镜像中指定的路径。它不支持自动解压压缩文件，也不支持从URL复制文件。
+ADD：除了具备COPY的基本复制功能外，还提供了额外的功能。如果遇到压缩文件（如.tar,.tar.gz,.zip等），ADD指令会自动解压这些文件到目标路径。此外，ADD还支持从URL来源复制文件，这意味着可以直接从互联网上下载文件并将其添加到镜像中。
+2. 构建缓存
+COPY：当使用COPY指令时，如果源文件没有发生变化，Docker会利用构建缓存来加快构建过程。这意味着如果源文件和镜像层没有变化，Docker将重用之前的构建结果。
+ADD：由于其额外的功能（如解压缩和下载），ADD指令通常不利用构建缓存。这是因为ADD指令可能会改变文件的内容（例如解压缩），即使源文件没有变化，Docker也可能重新执行ADD指令。
+3. 使用场景
+COPY：对于大多数仅需复制文件或目录的场景，推荐使用COPY。它更简单且构建缓存效率更高。此外，COPY被认为是更安全且易于理解的选择，因为它行为直接，没有隐含的额外处理逻辑。
+ADD：当你需要利用ADD的额外功能（如解压或从URL下载）时，才应选择使用ADD。然而，由于ADD可能引入更多潜在问题（如不期望的解压行为或网络下载失败），所以在不需要这些特性时，避免使用ADD可以减少复杂性和潜在错误。
+
 #### EXPOSE
 
 语法：
@@ -1019,22 +1047,27 @@ EXPOSE [port] #暴露容器内部端口
 EXPOSE 5000
 ```
 
-暴露的是容器内部端口，不是主机端口，如果外部想使用这个端口需要在运行时映射，如下：**docker run -d -p 127.0.0.1:8080:5000 hello-world**。指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，docker run命令如果没有带上响应的端口映射参数，docker并不会将端口映射到宿主机。
+暴露的是容器内部端口，不是主机端口，如果外部想使用这个端口需要在运行时映射，如下：**docker run -d -p 127.0.0.1:8080:5000 hello-world**。指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，`docker run`命令如果没有带上响应的端口映射参数，docker并不会将端口映射到宿主机。
 
 #### MAINTAINER
 
 语法：
 
 ```dockerfile
-MAINTAINER 作者名 #申明作者，辅助使用，放在FROM命令后面
+# 申明作者，辅助使用，放在FROM命令后面
+MAINTAINER 作者名
 ```
 
 #### WORKDIR
 
+`WORKDIR`用于设置容器内的工作目录，即容器启动时默认进入的目录，或者在执行`RUN`、`CMD`、`ENTRYPOINT`、`COPY`和`ADD`指令时作为这些指令的默认路径。
+
 语法：
 
 ```dockerfile
-WORKDIR /path # 指定容器工作目录
+# 指定容器工作目录
+WORKDIR /path/to/directory
+# 其中/path/to/directory是容器内的目录路径，可以是绝对路径或相对路径。如果是相对路径，它将相对于前一个WORKDIR指令的路径（如果存在的话）。如果不存在前一个WORKDIR，则相对于镜像的根目录。
 ```
 
 #### VOLUME
@@ -1042,7 +1075,10 @@ WORKDIR /path # 指定容器工作目录
 语法：
 
 ```dockerfile
-VOLUME ["/dir_1", "/dir_2" ..] # 可以将本地文件夹或者其他container的文件夹挂载到container中，容器即可以访问该目录
+# 将容器内的/usr/share/nginx/html/data目录设置为存储卷
+VOLUME /usr/share/nginx/html/data
+# 可以将本地文件夹或者其他container的文件夹挂载到container中，容器即可以访问该目录
+VOLUME ["/dir_1", "/dir_2" ..]
 VOLUME ["/data"] (exec格式指令)
 ```
 
@@ -1060,18 +1096,18 @@ EXPOSE 6379
 这个指令很容易和启动时的-v指令搞混淆，他们之间到底有什么区别呢，什么时候需要使用volume呢？volume指令指定的位置在容器被删除以后数据文件会被删除吗？如果-v和volume指定了同一个位置，会发生什么事呢？
 
 1. volume和run -v的区别，什么时候需要使用volume
-    容器运行时应该尽量保持容器存储层不发生写操作，对于数据库类需要保存动态数据的应用，其数据库文件应该保存于卷(volume)中。为了防止运行时用户忘记将动态文件所保存目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。
+容器运行时应该尽量保持容器存储层不发生写操作，对于数据库类需要保存动态数据的应用，其数据库文件应该保存于卷(volume)中。为了防止运行时用户忘记将动态文件所保存目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。
 
 2. 那么Dockerfile中的VOLUME指令实际使用中是不是就是跟docker run中的-v参数一样是将宿主机的一个目录绑定到容器中的目录以达到共享目录的作用呢？
-    并不然，其实VOLUME指令只是起到了声明了容器中的目录作为匿名卷，但是并没有将匿名卷绑定到宿主机指定目录的功能。当我们生成镜像的Dockerfile中以Volume声明了匿名卷，并且我们以这个镜像run了一个容器的时候，docker会在安装目录下的指定目录下面生成一个目录来绑定容器的匿名卷（这个指定目录不同版本的docker会有所不同），我当前的目录为：/var/lib/docker/volumes/{容器ID}。
-    **总结**：volume只是指定了一个目录，用以在用户忘记启动时指定-v参数也可以保证容器的正常运行。比如mysql，你不能说用户启动时没有指定-v，然后删了容器，就把mysql的数据文件都删了，那样生产上是会出大事故的，所以mysql的dockerfile里面就需要配置volume，这样即使用户没有指定-v，容器被删后也不会导致数据文件都不在了。还是可以恢复的。
+并不然，其实VOLUME指令只是起到了声明了容器中的目录作为匿名卷，但是并没有将匿名卷绑定到宿主机指定目录的功能。当我们生成镜像的Dockerfile中以Volume声明了匿名卷，并且我们以这个镜像run了一个容器的时候，docker会在安装目录下的指定目录下面生成一个目录来绑定容器的匿名卷（这个指定目录不同版本的docker会有所不同），我当前的目录为：/var/lib/docker/volumes/{容器ID}。
+**总结**：volume只是指定了一个目录，用以在用户忘记启动时指定-v参数也可以保证容器的正常运行。比如mysql，你不能说用户启动时没有指定-v，然后删了容器，就把mysql的数据文件都删了，那样生产上是会出大事故的，所以mysql的dockerfile里面就需要配置volume，这样即使用户没有指定-v，容器被删后也不会导致数据文件都不在了。还是可以恢复的。
 
 3. volume指令指定的位置在容器被删除以后数据文件会被删除吗
-    volume与-v指令一样，容器被删除以后映射在主机上的文件不会被删除。
+volume与-v指令一样，容器被删除以后映射在主机上的文件不会被删除。
 
 4. 如果-v和volume指定了同一个位置，会发生什么事呢？
-    会以-v设定的目录为准，其实volume指令的设定的目的就是为了避免用户忘记指定-v的时候导致的数据丢失，那么如果用户指定了-v，自然而然就不需要volume指定的位置了。
-    **总结**：其实一般的dockfile如果不是数据库类的这种需要持久化数据到磁盘上的应用，都是无需指定volume的。指定volume只是为了避免用户忘记指定-v时导致的数据全部在容器中，这样的话容器一旦被删除所有的数据都丢失了。
+会以-v设定的目录为准，其实volume指令的设定的目的就是为了避免用户忘记指定-v的时候导致的数据丢失，那么如果用户指定了-v，自然而然就不需要volume指定的位置了。
+**总结**：其实一般的dockfile如果不是数据库类的这种需要持久化数据到磁盘上的应用，都是无需指定volume的。指定volume只是为了避免用户忘记指定-v时导致的数据全部在容器中，这样的话容器一旦被删除所有的数据都丢失了。
 
 那么为什么dockerfile中不提供一个能够映射为主机目录:容器目录这样的指令呢？其实这样的设计是有道理的，如果在dockerfile中指定了主机目录，这样dockerfile就不具备了可移植性了，毕竟每个人所需要映射的目录可能是不同的，那么最好的办法就是把这个权利交给每个运行这个dockerfile的人，所以才会有`run -v主机目录:容器目录`这样的指令。
 
@@ -1096,14 +1132,14 @@ ENV abc=bye def=$abc
 ARG <name>[=<default value>]
 ```
 
-ARG指令设置一些创建镜像时的参数，这些参数可以在执行docker build命令时通过`--build-arg= `设置，如果指定的创建参数在Dockerfile中没有指定，创建时会输出错误信息: One or more build-args were not consumed, failing build.
+ARG指令设置一些创建镜像时的参数，这些参数可以在执行docker build命令时通过`--build-arg= `设置，如果指定的创建参数在Dockerfile中没有指定，创建时会输出错误信息: `One or more build-args were not consumed, failing build.`
 
 Dockerfile作者可以为ARG设置一个默认参数值，当创建镜像时如果没有传入参数就会使用默认值：
 
 
 我们可以使用ARG或者ENV指令来指定RUN指令使用的变量。我们可以使用ENV定义与ARG定义名称相同的变量来覆盖ARG定义的变量值。如下示例，我们执行
 
-```dockerfile
+```shell
 docker build --build-arg CONT_IMG_VER=v2.0.1 Dockerfile
 ```
 
@@ -1112,16 +1148,7 @@ docker build --build-arg CONT_IMG_VER=v2.0.1 Dockerfile
 ```dockefile
 ARG CONT_IMG_VER
 ENV MY_SECRET_KEY=$CONT_IMG_VER
-
 ```
-
-#### WORKDIR
-
-```dockerfile
-WORKDIR /path/to/workdir
-```
-
-WORKDIR指令用来设置Dockerfile中任何使用目录的命令(包括RUN、CMD、ENTRYPOINT、COPY、ADD等指令)的当前工作目录，此目录如果不存在就会被自动创建，即使这个目录不被使用
 
 
 ### 示例

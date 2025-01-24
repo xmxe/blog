@@ -612,7 +612,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> checkout <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 创建+切换分支</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
-<span class="token comment"># 创建本地分支并关联远程分支</span>
+<span class="token comment"># 本地没有分支的情况下拉取远程分支,此命令意思为创建本地分支并关联远程分支</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> local-branch origin/remote-branch
 <span class="token comment"># 丢弃某个文件工作区的修改（还原修改过的文件）</span>
 <span class="token function">git</span> checkout -- <span class="token function">file</span>
@@ -625,7 +625,104 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 将某个文件回滚到某个版本</span>
 <span class="token function">git</span> checkout commitid <span class="token punctuation">[</span>file<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="git-merge-amp-git-rebase"><a href="#git-merge-amp-git-rebase" class="headerlink" title="git merge&amp;git rebase"></a>git merge&amp;git rebase</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 合并指定分支到当前分支</span>
+<h3 id="git-switch"><a href="#git-switch" class="headerlink" title="git switch"></a>git switch</h3><blockquote>
+<p><code>git switch</code>命令是在Git 2.23.0版本中引入的，以解决<code>git checkout</code>命令职责过重的问题，并使得Git的命令更加直观和易于理解。在Git 2.23之前，<code>git checkout</code>既用于切换分支，也用于还原文件内容，很容易引起混淆。通过将<code>git checkout</code>的功能拆分，Git团队创建了两个新的、更专业的命令：<br><code>git switch</code>：专门用于在分支之间进行切换。<br><code>git restore</code>：专门用于还原文件内容。</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 切换到已存在的分支</span>
+<span class="token function">git</span> switch <span class="token operator">&lt;</span>branch-name<span class="token operator">></span>
+<span class="token comment"># 创建并切换到新分支</span>
+<span class="token function">git</span> switch <span class="token parameter variable">-c</span> <span class="token operator">&lt;</span>new-branch-name<span class="token operator">></span>
+<span class="token comment"># 从远程仓库创建并跟踪一个本地分支</span>
+<span class="token function">git</span> switch <span class="token parameter variable">-c</span> <span class="token operator">&lt;</span>new-branch-name<span class="token operator">></span> <span class="token parameter variable">--track</span> <span class="token operator">&lt;</span>remote<span class="token operator">></span>/<span class="token operator">&lt;</span>branch-name<span class="token operator">></span>
+<span class="token comment"># 返回到上一个分支</span>
+<span class="token function">git</span> switch -<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git-restore"><a href="#git-restore" class="headerlink" title="git restore"></a>git restore</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># git restore命令在工作区是不会起作用的</span>
+<span class="token comment"># 取消暂存区的更改（类似于git reset HEAD &lt;file>）.此命令将暂存区中的文件恢复到最后一次提交的状态，并将其从暂存区中移除，但保留工作目录中的修改。这意味着该文件的修改将不会包含在下一次的提交</span>
+<span class="token function">git</span> restore <span class="token parameter variable">--staged</span> <span class="token function">file</span>
+<span class="token comment"># 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。</span>
+<span class="token function">git</span> restore <span class="token function">file</span>
+<span class="token comment"># 从指定的提交中恢复文件到工作目录</span>
+<span class="token function">git</span> restore <span class="token parameter variable">--source</span><span class="token operator">=</span><span class="token operator">&lt;</span>commit<span class="token operator">></span> <span class="token operator">&lt;</span>file<span class="token operator">></span>
+<span class="token comment"># 恢复所有文件到指定的提交状态</span>
+<span class="token function">git</span> restore <span class="token parameter variable">--source</span><span class="token operator">=</span><span class="token operator">&lt;</span>commit<span class="token operator">></span> <span class="token builtin class-name">.</span>
+<span class="token comment"># 恢复所有已删除的文件</span>
+<span class="token function">git</span> restore <span class="token parameter variable">-w</span> -- *
+<span class="token comment"># 丢弃暂存区和工作目录中的更改（即恢复到指定的提交状态）</span>
+<span class="token function">git</span> restore <span class="token parameter variable">--staged</span> <span class="token parameter variable">--worktree</span> <span class="token operator">&lt;</span>file<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git-worktree"><a href="#git-worktree" class="headerlink" title="git worktree"></a>git worktree</h3><blockquote>
+<p><code>git worktree</code>命令是在Git 2.5版本中引入的，它允许在同一个仓库中创建多个工作目录（worktrees），每个工作目录可以检出不同的分支或提交。这为开发者提供了同时处理多个任务的能力，比如在不同的分支上进行开发、测试，而不需要来回切换分支</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 添加一个新的工作目录，并检出指定分支</span>
+<span class="token function">git</span> worktree <span class="token function">add</span> <span class="token operator">&lt;</span>path<span class="token operator">></span> <span class="token punctuation">[</span><span class="token operator">&lt;</span>branch<span class="token operator">></span><span class="token punctuation">]</span>
+<span class="token comment"># 列出所有的工作目录</span>
+<span class="token function">git</span> worktree list
+<span class="token comment"># 移除一个工作目录（必须先确保该目录没有未提交的更改）</span>
+<span class="token function">git</span> worktree remove <span class="token operator">&lt;</span>path<span class="token operator">></span>
+<span class="token comment"># 移动一个工作目录到新的位置</span>
+<span class="token function">git</span> worktree move <span class="token operator">&lt;</span>current-path<span class="token operator">></span> <span class="token operator">&lt;</span>new-path<span class="token operator">></span>
+<span class="token comment"># 例如，如果想要添加一个新的工作目录来检出名为feature-branch的分支，可以这样做：</span>
+<span class="token function">git</span> worktree <span class="token function">add</span> <span class="token punctuation">..</span>/my-feature-worktree feature-branch
+<span class="token comment"># 这将在../my-feature-worktree目录下创建一个新的工作目录，并检出feature-branch分支。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git-sparse-checkout"><a href="#git-sparse-checkout" class="headerlink" title="git sparse-checkout"></a>git sparse-checkout</h3><blockquote>
+<p><code>git sparse-checkout</code>是在Git 2.25.0版本中引入的，这个功能是对之前存在的稀疏检出机制的一个重大改进。通过<code>git sparse-checkout</code>，开发者可以更高效地克隆大型仓库，只检出部分文件或目录，而不是整个项目</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 要启用sparse-checkout，首先需要设置仓库以使用稀疏检出模式：</span>
+<span class="token comment"># 启用sparse-checkout模式</span>
+<span class="token function">git</span> sparse-checkout init
+<span class="token comment"># 设置你想要包括的模式或路径</span>
+<span class="token function">git</span> sparse-checkout <span class="token builtin class-name">set</span> <span class="token operator">&lt;</span>pattern<span class="token operator">></span><span class="token punctuation">..</span>.
+<span class="token comment"># 例如，如果只想检出src目录及其子目录中的文件，可以这样做：</span>
+<span class="token function">git</span> sparse-checkout <span class="token builtin class-name">set</span> src/
+<span class="token comment"># 如果想添加多个模式或路径，可以在set命令后列出所有路径，或者分多次调用该命令。除了set命令，还可以使用add和list来管理稀疏检出模式：</span>
+<span class="token comment"># 添加额外的路径到稀疏检出模式</span>
+<span class="token function">git</span> sparse-checkout <span class="token function">add</span> <span class="token operator">&lt;</span>pattern<span class="token operator">></span><span class="token punctuation">..</span>.
+<span class="token comment"># 列出现有的稀疏检出模式</span>
+<span class="token function">git</span> sparse-checkout list
+<span class="token comment"># 如果不再需要稀疏检出模式，可以通过以下命令禁用它，并恢复完整的检出状态：</span>
+<span class="token comment"># 禁用sparse-checkout模式并恢复完整检出</span>
+<span class="token function">git</span> sparse-checkout disable<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git-range-diff"><a href="#git-range-diff" class="headerlink" title="git range-diff"></a>git range-diff</h3><blockquote>
+<p><code>git range-diff</code>是在Git 2.19.0版本中引入的，用于比较两个提交范围之间的差异。它可以帮助开发者理解在一次变基（rebase）、合并（merge）或历史改写操作后，一系列提交发生了哪些变化</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 比较两个分支上的最近n个提交</span>
+<span class="token function">git</span> range-diff A~n<span class="token punctuation">..</span>A B~n<span class="token punctuation">..</span>B
+<span class="token comment"># 或者更常见的用法是直接指定两个范围</span>
+<span class="token function">git</span> range-diff A<span class="token punctuation">..</span>B C<span class="token punctuation">..</span>D
+<span class="token comment"># 假设origin/feature是变基之前的远程分支状态,而feature是变基之后的本地分支状态</span>
+<span class="token function">git</span> range-diff origin/feature<span class="token punctuation">..</span>feature~n feature~n<span class="token punctuation">..</span>feature<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git-maintenance"><a href="#git-maintenance" class="headerlink" title="git maintenance"></a>git maintenance</h3><blockquote>
+<p><code>git maintenance</code>是在Git 2.30.0版本中引入的，用于管理和自动化各种维护任务的命令。这个命令旨在简化和优化仓库的维护工作，通过提供一组预定义的任务来帮助保持仓库的健康状态和高效性能。常见的维护任务包括：<br>gc：运行完整的垃圾收集，包括压缩对象数据库。<br>commit-graph：构建或更新提交图文件以加速提交历史查询。<br>loose-objects：清理松散对象并将其打包。<br>incremental-repack：逐步重新打包对象以优化存储。<br>prefetch：预先获取远程分支的新数据，以加速未来的克隆和拉取操作。</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启用自动维护</span>
+<span class="token function">git</span> maintenance start
+<span class="token comment"># 禁用自动维护</span>
+<span class="token function">git</span> maintenance stop
+<span class="token comment"># 执行所有配置的维护任务</span>
+<span class="token function">git</span> maintenance run
+<span class="token comment"># 执行特定类型的维护任务</span>
+<span class="token function">git</span> maintenance run <span class="token parameter variable">--task</span><span class="token operator">=</span><span class="token operator">&lt;</span>task<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>配置自动维护计划：可以通过配置文件设置哪些任务应该被定期执行以及它们的执行频率。例如，在<code>.git/config</code>文件中添加如下内容：</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">[maintenance &quot;daily&quot;]
+    task &#x3D; prefetch
+    task &#x3D; loose-objects
+[maintenance &quot;hourly&quot;]
+    task &#x3D; commit-graph
+[maintenance &quot;weekly&quot;]
+    task &#x3D; incremental-repack
+[maintenance &quot;monthly&quot;]
+    task &#x3D; gc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后启用这些计划：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> maintenance start <span class="token parameter variable">--schedule</span><span class="token operator">=</span>daily
+<span class="token function">git</span> maintenance start <span class="token parameter variable">--schedule</span><span class="token operator">=</span>hourly
+<span class="token function">git</span> maintenance start <span class="token parameter variable">--schedule</span><span class="token operator">=</span>weekly
+<span class="token function">git</span> maintenance start <span class="token parameter variable">--schedule</span><span class="token operator">=</span>monthly<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="git-merge-amp-git-rebase"><a href="#git-merge-amp-git-rebase" class="headerlink" title="git merge &amp; git rebase"></a>git merge &amp; git rebase</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 合并指定分支到当前分支</span>
 <span class="token function">git</span> merge <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 将指定分支合并到当前分支</span>
 <span class="token function">git</span> rebase branch-name
@@ -721,9 +818,13 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> cherry-pick <span class="token parameter variable">--quit</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除远程分支</span>
-<span class="token function">git</span> push origin :master
+<span class="token function">git</span> push origin :beanch-name
+<span class="token comment"># 使用git push命令并加上--delete 选项来删除指定的远程分支</span>
+<span class="token function">git</span> push origin <span class="token parameter variable">--delete</span> branch-name
 <span class="token comment">#  删除远程标签</span>
-<span class="token function">git</span> push origin <span class="token parameter variable">--delete</span> tag tag-name
+<span class="token function">git</span> push origin <span class="token parameter variable">--delete</span> tag-name
+<span class="token comment"># 删除远程标签（需要先删除本地标签）</span>
+<span class="token function">git</span> push origin :refs/tags/tag-name
 <span class="token comment"># 上传本地仓库到远程分支</span>
 <span class="token function">git</span> push remote branch-name
 <span class="token comment"># 强行推送当前分支到远程分支</span>
@@ -734,16 +835,8 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> push <span class="token parameter variable">--tags</span>
 <span class="token comment"># 推送指定标签</span>
 <span class="token function">git</span> push origin tag-name
-<span class="token comment"># 删除远程标签（需要先删除本地标签）</span>
-<span class="token function">git</span> push origin :refs/tags/tag-name
 <span class="token comment"># 将本地dev分支push到远程master分支</span>
-<span class="token function">git</span> push origin dev:master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="git-restore"><a href="#git-restore" class="headerlink" title="git restore"></a>git restore</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># git restore命令在工作区是不会起作用的</span>
-<span class="token comment"># 此命令将暂存区中的文件恢复到最后一次提交的状态，并将其从暂存区中移除，但保留工作目录中的修改。这意味着该文件的修改将不会包含在下一次的提交</span>
-<span class="token function">git</span> restore <span class="token parameter variable">--staged</span> <span class="token function">file</span>
-<span class="token comment"># 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。</span>
-<span class="token function">git</span> restore <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> push origin dev:master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><h3 id="删除全部历史提交记录"><a href="#删除全部历史提交记录" class="headerlink" title="删除全部历史提交记录"></a>删除全部历史提交记录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
@@ -769,7 +862,7 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <li>进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。</li>
 <li>推送更新到远程仓库：<code>git push --force(或git p)</code></li>
 </ol>
-<h3 id="远程分支重命名"><a href="#远程分支重命名" class="headerlink" title="远程分支重命名"></a>远程分支重命名</h3><p>远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</p>
+<h3 id="远程分支重命名"><a href="#远程分支重命名" class="headerlink" title="远程分支重命名"></a>远程分支重命名</h3><p>假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方案1:先重命名本地分支，然后推送到远程分支</span>
 <span class="token comment"># 1.先重命名本地分支</span>
 <span class="token function">git</span> branch <span class="token parameter variable">-m</span> 旧分支名称 新分支名称
@@ -1415,7 +1508,7 @@ wget https://www.openssl.org/sou
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2024
+                <span id="year">2022-2025
                 </span>
             
             

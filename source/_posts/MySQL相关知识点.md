@@ -2998,4 +2998,4 @@ mysqldumpslow /path/to/your/logfile.log
 | [6种MySQL数据库平滑扩容方案剖析](https://mp.weixin.qq.com/s/LvJCi-8cF6HuLo6UXY0Ing) | [什么是插入意向锁？](https://mp.weixin.qq.com/s/rDdUBw803tvjHkJALY5P2w) | [从MySQL读取100w数据进行处理，应该怎么做](https://mp.weixin.qq.com/s/XbSADUXIz1aw0kqp7p5urQ) |
 | [MySQL误删数据不用跑路了，快速恢复指南来了](https://mp.weixin.qq.com/s/vyrLOH1NRXXQd0oEnv0M1Q) | [MySQL单表数据最大不要超过多少行？为什么](https://mp.weixin.qq.com/s/ZCM2FYzKw24Fk8yv4a9b0w) | [Mysql如何做表分区](https://mp.weixin.qq.com/s/w2wrccywJWM-zXceCR_JXw) |
 | [大白话讲解Mysql中SQL语句的执行流程](https://mp.weixin.qq.com/s/wSnniPaj5s1-cJp_VICXzw) | [盘点Mysql对SQL语句的一些隐式优化技术！](https://mp.weixin.qq.com/s/iCZA97Vm-lxDKEcR4EJPRQ) | [一文带你快速入门Mysql基础知识](https://mp.weixin.qq.com/s/ZwdcTNXKhOEA-T1qUjw-8w) |
-| [主键使用自增还是UUID?(uuid_to_bin(UUID())](https://mp.weixin.qq.com/s/edzWAy0A_bTzWWtTzI3q3g) |                                                              |                                                              |
+| [主键使用自增还是UUID?(uuid_to_bin(UUID())](https://mp.weixin.qq.com/s/edzWAy0A_bTzWWtTzI3q3g) | [突然忘记Mysql登陆密码，怎么办？](https://mp.weixin.qq.com/s/1YQvVj2Uv7yKjk_nuvwLRQ) |                                                              |

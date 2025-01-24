@@ -32,7 +32,7 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 | [微信支付、支付宝最全接入指引，看完立刻就可以上手](https://mp.weixin.qq.com/s/emU6QyhRFXaBlkj9jerOMg) | [如何防止你的jar被反编译](https://mp.weixin.qq.com/s/AB1GN6UAsHW_nvctH_tuRQ) | [PageHelper使用中的一些坑](https://mp.weixin.qq.com/s/2FR4lmNdGmLP4qnD2F0Krw) |
 | [一文参透分布式存储系统Ceph的架构设计、集群搭建](https://mp.weixin.qq.com/s/bt5Df-sY3QETgvGp3Kp8Yw) | [电商系统架构，常见的9个大坑](https://mp.weixin.qq.com/s/RnR3OyNA8PSz9CrCMP48kw) | [给定一个接口，要用户自定义动态实现并上传热部署](https://mp.weixin.qq.com/s/4Yr0J5MPvUQmDTseoJAILQ) |
 | [说说布隆过滤器与布谷鸟过滤器及应用场景](https://mp.weixin.qq.com/s/q5p0v2R_FeYq2HwlrqL_xA) | [轻松实现word、excel、ppt、txt等办公文件在线预览功能](https://mp.weixin.qq.com/s/m2e8dgW0NLgB9jzYd7nS2A) | [Twitter工程师从0到1教你设计百万级并发应用](https://mp.weixin.qq.com/s/RRBFnIsxp4zXd1_Wq67ivQ) |
-| [前端Chrome调试技巧最全汇总](https://mp.weixin.qq.com/s/pGFU_UILyoSFJtcdY3e9QQ) |                                                              |                                                              |
+| [前端Chrome调试技巧最全汇总](https://mp.weixin.qq.com/s/pGFU_UILyoSFJtcdY3e9QQ) | [万字详解高可用架构设计](https://mp.weixin.qq.com/s/LZyLg2-FIbfW4hixD9bNdQ) |                                                              |
 
 ## 下载
 

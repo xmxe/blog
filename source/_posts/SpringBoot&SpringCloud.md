@@ -67,13 +67,10 @@ img: https://picx.zhimg.com/70/v2-ba4a778fbecaa7d0169b8c379cf1f392_1440w.avis
 
 **other**
 
-| [Spring Boot关于日期时间格式化处理方式总结](https://mp.weixin.qq.com/s/jn5BTbddcwDm1UptzG-zAA) | [Spring Boot请求路径可以定义成/**/**这种格式吗？](https://mp.weixin.qq.com/s/Bvn6JUaP53dPJRlrplEKSQ) | [一个依赖搞定Spring Boot反爬虫，防止接口盗刷！](https://mp.weixin.qq.com/s/kCWIT_61PFOYw-GMGXVTZQ) |
+| [优雅的实现Spring Boot异步线程间数据传递](https://mp.weixin.qq.com/s/vWZu_pjJIrqHzCyBcM70rg) | [Spring Boot请求路径可以定义成/**/**这种格式吗？](https://mp.weixin.qq.com/s/Bvn6JUaP53dPJRlrplEKSQ) | [你绝对不知道的SpringBoot的外部化配置特性！](https://mp.weixin.qq.com/s/9zSrUGMmXbU6rW1LaoUFvQ) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| [SpringBoot+Filter实现Gzip压缩超大json对象，传输耗时大大减少](https://mp.weixin.qq.com/s/zBeHyIzR1b4I2x3LU40ceQ) | [SpringBoot玩一玩代码混淆，防止反编译代码泄露](https://mp.weixin.qq.com/s/v26j08vCqpH-O9jZaNKPDA) | [优雅的实现Spring Boot异步线程间数据传递](https://mp.weixin.qq.com/s/vWZu_pjJIrqHzCyBcM70rg) |
-| [Spring Boot + Canal实现数据库变化的实时监控](https://mp.weixin.qq.com/s/2Pjjj-_bkLLAO-IkWfoPcg) | [你绝对不知道的SpringBoot的外部化配置特性！](https://mp.weixin.qq.com/s/9zSrUGMmXbU6rW1LaoUFvQ) | [Spring Boot如何实现插件化开发模式](https://mp.weixin.qq.com/s/x3NMF8AdyJ0Bf15B4yS5Kw) |
-| [Spring Boot业务组件化开发，维护起来很香](https://mp.weixin.qq.com/s/bpmT30Nymm5Iz5Gt-EbX9w) | [Spring Boot + Spring Batch实现批处理任务](https://mp.weixin.qq.com/s/3pjRUugA56Yqwfm4geeadg) | [Spring Boot别再用Date作为入参了，LocalDateTime、LocalDate真香！](https://mp.weixin.qq.com/s/nEeStkLgSvFdwCt56WNvcg) |
-| [try-catch这样写才足够优雅](https://mp.weixin.qq.com/s/j1LSUJiYFvj9VxLn3hFcww) | [SpringBoot 优雅停机的正确姿势](https://mp.weixin.qq.com/s/vknu8fy7JXxectA2zcW_mQ) | [Spring Boot配置日志输出的正确姿势！](https://mp.weixin.qq.com/s/Ai23Q6BsBqE12yT3wg6M7w) |
-| [Spring Boot实现服务热部署的正确姿势](https://mp.weixin.qq.com/s/xjPdcTST-UxnNb8yNw1isQ) | [请不要自己写，Spring Boot非常实用的内置功能](https://mp.weixin.qq.com/s/mNMYLKLLtvYlwpKD9XdKcQ) |                                                              |
+| [Spring Boot如何实现插件化开发模式](https://mp.weixin.qq.com/s/x3NMF8AdyJ0Bf15B4yS5Kw) | [Spring Boot业务组件化开发，维护起来很香](https://mp.weixin.qq.com/s/bpmT30Nymm5Iz5Gt-EbX9w) | [try-catch这样写才足够优雅](https://mp.weixin.qq.com/s/j1LSUJiYFvj9VxLn3hFcww) |
+| [请不要自己写，Spring Boot非常实用的内置功能](https://mp.weixin.qq.com/s/mNMYLKLLtvYlwpKD9XdKcQ) |                                                              |                                                              |
 
 **模式**
 
@@ -89,7 +86,11 @@ img: https://picx.zhimg.com/70/v2-ba4a778fbecaa7d0169b8c379cf1f392_1440w.avis
 | [SpringBoot+Vue实现微信扫码支付、退款功能](https://mp.weixin.qq.com/s/9rs-2khxngoojE_0Y6G3cA) | [Spring Boot应用该如何预防XSS攻击 ？](https://mp.weixin.qq.com/s/hBRcsLN_u6ciW1tgBp7a5A) | [Spring Boot整合Canal+RabbitMQ监听数据变更](https://mp.weixin.qq.com/s/ze6JYUCQ75jOIUz9OoCfXA) |
 | [SpringBoot整合RocketMQ，尝尝几大高级特性！](https://mp.weixin.qq.com/s/Kwp3CTAhF2ewW-cFoROPrQ) | [Spring Boot实现MySQL百万级数据量导出并避免OOM的解决方案](https://mp.weixin.qq.com/s/97sSiT3kVvJFQ0aCW_Blxg) | [SpringBoot整合MinIO实现视频的分片上传/断点续传](https://mp.weixin.qq.com/s/R4ZXK_FRNuFpl0d6hOD_Zg) |
 | [Spring Boot项目Jar包加密，防止反编译](https://mp.weixin.qq.com/s/HWO0263J3p097Odr63s9zA) | [Spring Boot接口防抖(防重复提交)，轻松搞定](https://mp.weixin.qq.com/s/6V-_nEqAUhZxREQp6ZNdQw) | [SpringBoot+mail轻松实现各类邮件自动推送](https://mp.weixin.qq.com/s/bKniveockhmRgts89RNu4Q) |
-| [SpringBoot + AOP编程，轻松搞定审计日志](https://mp.weixin.qq.com/s/Wf0-9jXnkKfyEYdKuMvL-w) | [SpringBoot实战：文件上传之秒传、断点续传、分片上传](https://mp.weixin.qq.com/s/qoMEaRXIdNGIRKpBbigBTQ) |                                                              |
+| [SpringBoot + AOP编程，轻松搞定审计日志](https://mp.weixin.qq.com/s/Wf0-9jXnkKfyEYdKuMvL-w) | [SpringBoot实战：文件上传之秒传、断点续传、分片上传](https://mp.weixin.qq.com/s/qoMEaRXIdNGIRKpBbigBTQ) | [Spring Boot+Bucket4j实现API请求限流](https://mp.weixin.qq.com/s/dlKA4EBlee7YkXxQ0neHNQ) |
+| [Spring Boot + Canal实现数据库变化的实时监控](https://mp.weixin.qq.com/s/2Pjjj-_bkLLAO-IkWfoPcg) | [Spring Boot关于日期时间格式化处理方式总结](https://mp.weixin.qq.com/s/jn5BTbddcwDm1UptzG-zAA) | [一个依赖搞定Spring Boot反爬虫，防止接口盗刷！](https://mp.weixin.qq.com/s/kCWIT_61PFOYw-GMGXVTZQ) |
+| [Spring Boot实现服务热部署的正确姿势](https://mp.weixin.qq.com/s/xjPdcTST-UxnNb8yNw1isQ) | [SpringBoot 优雅停机的正确姿势](https://mp.weixin.qq.com/s/vknu8fy7JXxectA2zcW_mQ) | [Spring Boot别再用Date作为入参了，LocalDateTime、LocalDate真香！](https://mp.weixin.qq.com/s/nEeStkLgSvFdwCt56WNvcg) |
+| [SpringBoot玩一玩代码混淆，防止反编译代码泄露](https://mp.weixin.qq.com/s/v26j08vCqpH-O9jZaNKPDA) | [Spring Boot + Spring Batch实现批处理任务](https://mp.weixin.qq.com/s/3pjRUugA56Yqwfm4geeadg) | [SpringBoot+Filter实现Gzip压缩超大json对象，传输耗时大大减少](https://mp.weixin.qq.com/s/zBeHyIzR1b4I2x3LU40ceQ) |
+| [Spring Boot配置日志输出的正确姿势！](https://mp.weixin.qq.com/s/Ai23Q6BsBqE12yT3wg6M7w) |                                                              |                                                              |
 
 **retry**
 
@@ -484,6 +485,7 @@ ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException;
 | [Spring Boot过滤器、拦截器、监听器对比及使用场景](https://mp.weixin.qq.com/s/aUgTwv4iQNr3BFku_qhwvw) | [手把手教你在SpringBoot中自定义参数解析器](https://mp.weixin.qq.com/s/mbstcEEtwOS9ZRSSjusbfA) | [SpringBoot初始化几大招式，看了终于明白了](https://mp.weixin.qq.com/s/YNFFBuokPHfQxcWTbdVfwQ) |
 | [Spring Boot中如何统一API接口响应格式？--HandlerMethodReturnValueHandler](https://mp.weixin.qq.com/s/TMleRgC5CSPIByoDpUaatw) | [如何优雅记录HTTP请求/响应数据？](https://mp.weixin.qq.com/s/fYCnSSe00AOJJi02Rj2z6w) | [聊聊Spring中最常用的11个扩展点](https://mp.weixin.qq.com/s/lxpCNGChQUsN9etLONXdoQ) |
 | [16个有用的SpringBoot扩展接口](https://mp.weixin.qq.com/s/dj9pRBy5EIpJiJHVDuXkIw) | [HandlerMethod](https://mp.weixin.qq.com/s/LfIDxs8Pr1GhsSk3vsS5QA) | [Spring MVC中处理Request和Response的策略](https://mp.weixin.qq.com/s/VCBy5eLlqL6nbIURW8iDDA) |
+| [Spring中的@EventListener注解](https://mp.weixin.qq.com/s/uJWbW6AREpyN8fG7_r46-w) |                                                              |                                                              |
 
 ## springboot-starter
 
@@ -531,6 +533,7 @@ com.spring4all.swagger.SwaggerAutoConfiguration
 | [Spring Boot+Netty+Websocket实现后台向前端推送信息](https://mp.weixin.qq.com/s/z4a1DFpZtnd4kwPcPTS7VQ) | [Spring Boot + Web Socket打造实时监控异常](https://mp.weixin.qq.com/s/NtzdkexNfmuwdth32Q9lZQ) | [实现web实时消息推送的方案，7种！](https://mp.weixin.qq.com/s/-48eec9vNKyU1cJpCRIwmQ) |
 | [Spring Boot整合Socket实战案例,实现单点发送、广播群发，1对1，1对多](https://mp.weixin.qq.com/s/7UkyiILNpwPSe4uNWr02pA) | [基于ChatGPT API和WebSocket的实时机器人聊天应用](https://mp.weixin.qq.com/s/GEFYyyz7fj0pQ8Mm8JftFQ) | [实现web实时消息推送的方案总结](https://mp.weixin.qq.com/s/yBK5UG3Xkr5YMF-0jCbSjA) |
 | [Spring Boot整合Socket实战案例，实现单点发送、广播群发，1对1，1对多](https://mp.weixin.qq.com/s/-lCSSYyr1KR4-aP1by22CQ) | [WebSocket的6种集成方式](https://mp.weixin.qq.com/s/lLCjXKUshXe_LYMjoywwBw) | [万字详解，带你彻底掌握WebSocket用法](https://mp.weixin.qq.com/s/F5bg9bAe3H6hLQ4XLeex4A) |
+| [Spring Boot + WebSocket实现实时通知功能](https://mp.weixin.qq.com/s/YLqBw4wnbuKy29bkxRZ1HA) |                                                              |                                                              |
 
 ## SpringBoot
 
@@ -752,7 +755,7 @@ Set<Method> = HandlerMethodSelector.selectMethods(userType, new ReflectionUtils.
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [Spring Boot手动配置@Enable的秘密](https://mp.weixin.qq.com/s/w1zRHJqayRycIAxmnonrTA) | [Spring Boot源码分析(2.1.0.RELEASE)](https://github.com/yuanmabiji/spring-boot-2.1.0.RELEASE) | [Spring Boot相关漏洞学习资料](https://github.com/LandGrey/SpringBootVulExploit) |
 | [springboot源码解析(一)：启动过程](https://mp.weixin.qq.com/s/y1GQ6hrZ3MOEozj25MBknw) | [3分钟了解SpringBoot的启动流程](https://mp.weixin.qq.com/s/eT2A76G-42MvvN6RMZcPMg) | [Spring Boot面试：说说自动配置的原理？](https://mp.weixin.qq.com/s/sjn847TZ814FcKCF3MPBqA) |
-| [Spring Boot启动注解分析](https://mp.weixin.qq.com/s/n0BdIl6KGSuwxMqy77iugg) | [SpringBoot启动原理详解(图文全面总结)](https://mp.weixin.qq.com/s/iprPno-RbOyLPfZiKFfReQ) |                                                              |
+| [Spring Boot启动注解分析](https://mp.weixin.qq.com/s/n0BdIl6KGSuwxMqy77iugg) | [SpringBoot启动原理详解(图文全面总结)](https://mp.weixin.qq.com/s/iprPno-RbOyLPfZiKFfReQ) | [如何加快Spring Boot启动速度？](https://mp.weixin.qq.com/s/b66It1YGytbbShYSjFSoTA) |
 
 ## springcloud-config
 

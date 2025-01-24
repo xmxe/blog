@@ -28,23 +28,11 @@ nohup command >/dev/null 2>&1 &
 nohup java -jar abc.jar >/dev/null 2>&1 &
 
 # command >/dev/null 2>&1 & == command 1>/dev/null 2>&1 &
-# 1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。2>&1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.所以可以看出">/dev/null 2>&1 &"常用来避免shell命令或者程序等运行中有内容输出
+# 1>/dev/null:表示标准输出重定向到空设备文件,也就是不输出任何信息到终端,不显示任何信息。
+# 2>&1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.所以可以看出">/dev/null 2>&1 &"常用来避免shell命令或者程序等运行中有内容输出
 # 将错误日志输出到文件
 nohup command 2>error.log &
 ```
-
-### 安装ifconfig
-
-```shell
-# centos
-yum -y install net-tools
-# ubuntu
-apt install net-tools
-```
-
-> **apt与apt-get的区别**: apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt
-> [centos7更换yum源](https://mirrors.cnnic.cn/help/centos/)
-
 
 ### 配置jdk环境变量
 
@@ -104,6 +92,19 @@ service iptables save
 >> 和内核的关系：iptables和firewalld都通过内核的netfilter来实现防火墙功能。但firewalld自身并不具备防火墙的功能，而是作为一个封装，使得管理iptables规则更加容易。
 >> 此外，firewalld还提供了支持网络区域所定义的网络连接以及接口安全等级的动态防火墙管理工具，支持IPv4、IPv6防火墙设置以及以太网桥（在某些高级服务可能会用到，比如云计算），并且拥有两种配置模式∶ 运行时配置与永久配置。
 
+**安装ifconfig**
+
+```shell
+# centos
+yum -y install net-tools
+# ubuntu
+apt install net-tools
+```
+
+> **apt与apt-get的区别**: apt可以看作apt-get和apt-cache命令的子集,可以为包管理提供必要的命令选项。apt-get虽然没被弃用，但作为普通用户，还是应该首先使用apt
+> [centos7更换yum源](https://mirrors.cnnic.cn/help/centos/)
+
+
 ### 查看开机启动的服务列表
 
 ```shell
@@ -147,7 +148,20 @@ sudo ufw allow from 192.168.0.1
 # 重启防火墙
 sudo ufw reload
 ```
-### 创建文件
+### 文件操作
+
+**清空文件内容**
+
+```shell
+> filename
+echo -n > filename
+# truncate命令可以用来缩小或扩展文件大小。要清空文件，可以将其大小设置为0
+truncate -s 0 filename
+cat /dev/null > filename
+: > filename
+```
+
+**创建文件**
 
 `>`直接把内容生成到指定文件，会覆盖源文件中的内容，还有一种用途是直接生成一个空白文件，相当于touch命令
 
@@ -155,7 +169,7 @@ sudo ufw reload
 echo 1 > a.txt 输出1
 # >>尾部追加，不会覆盖掉文件中原有的内容
 echo 2 >> a.txt 输出1 2
-
+touch file
 cat file1 >> file2 # 把file1的文档内容输入file2这个文档里
 ```
 
@@ -166,13 +180,14 @@ cat file1 >> file2 # 把file1的文档内容输入file2这个文档里
 # 输出一条消息到屏幕上，并同时将其写入一个名为output.txt的文件 -a选项告诉tee命令追加输出到文件，而不是覆盖它。
 echo "This is a message" | tee -a output.txt
 ```
-tee命令
+**tee命令**
+
 ```bash
 tee file.txt
 ```
 在运行这个命令后，你可以开始在命令行输入文本。当你按下Ctrl+D（EOF）时，你的输入会被写入file.txt并显示在屏幕上。
 
-### 查看文件
+**查看文件**
 
 ```shell
 # "hello"过滤掉特定字符串,效率低，因为有管道
@@ -199,6 +214,38 @@ tail -n +3
 tail -f finename
 # 如果文件不存在，会继续尝试
 tail -F filename
+
+more example.txt
+# 从文件的第20行开始显示
+more +20 example.txt
+# 设置每页显示20行
+more -n 20 example.txt
+# 搜索文件中的某个字符串,进入more命令后，按/键并输入要搜索的字符串，然后按回车。例如：
+/search_string
+# 跳转到文件中的某一行,进入more命令后，按:键，然后输入行号并按回车。例如：
+:100
+```
+
+**重命名文件**
+
+```shell
+# 例:把a替换为xxx
+rename “a” “xxx” *.txt
+# 或者使用mv命令
+```
+
+**目录**
+
+```shell
+# 递归复制
+cp -r
+# 查看隐藏目录
+ls -a
+```
+
+### 图形化页面卡死重启
+```shell
+kill -9 gnome-shell pid
 ```
 
 ### 用户/用户组
@@ -212,11 +259,31 @@ cut -d : -f 1 /etc/group
 # 用户名：查看用户所在用户组
 groups
 
-# 修改文件所属用户和用户组(`chown`)
-# 修改a.txt文件所属用户为jay，所属用户组为fefjay
+# 修改文件所属用户和用户组(`chown`) 修改a.txt文件所属用户为jay，所属用户组为fefjay
 chown jay:fefjay a.txt
 # 递归修改文件夹my及包含的所有子文件（夹）的所属用户和用户组
 chown -R jay:fefjay my
+
+# 创建用户
+useradd newuser
+# 设置密码
+passwd newuser
+# 如果你希望新用户能够执行需要管理员权限的命令，你可以将用户添加到wheel组中。CentOS通常使用wheel组来代替sudo组，所以你需要将用户添加到wheel组。这可以通过usermod命令完成
+usermod -aG wheel newuser
+# 创建用户时，可以根据需要指定用户的主目录、默认Shell等参数。例如，使用useradd -d /home/newuser -s /bin/bash newuser命令可以创建一个主目录为/home/newuser、默认Shell为/bin/bash的新用户。如果不再需要某个用户，可以使用userdel命令删除该用户。如果需要同时删除用户的主目录和邮件目录，可以使用userdel -r命令。
+
+# 添加用户组。如果需要指定用户组的GID（Group ID），可以使用-g选项。例如，要创建一个GID为1001的用户组，可以执行：groupadd -g 1001 mygroup
+groupadd mygroup
+# 将用户myuser添加到mygroup用户组中,这里的-a选项表示“追加”（append），意味着将用户添加到指定组，而不是替换用户的现有组。如果用户已经属于其他组，使用-a选项可以确保用户不会丢失这些组的信息。
+usermod -aG mygroup myuser
+# 如果需要修改现有用户组的名称，可以使用groupmod命令。例如，要将mygroup的名称更改为newgroupname，可以执行：
+groupmod -n newgroupname mygroup
+# 如果不再需要某个用户组，可以使用groupdel命令删除该用户组。例如，要删除mygroup用户组，可以执行：
+groupdel mygroup
+
+# chmod命令有两种主要的权限表示方法：数字模式和符号模式。数字模式：每个数字代表一个权限组（所有者、用户组、其他用户），数字由r（读权限，值为4）、w（写权限，值为2）、x（执行权限，值为1）组合而成。例如，7表示读、写和执行权限（4+2+1），6表示读和写权限（4+2），5表示读和执行权限（4+1）等。符号模式：使用“+”和“-”来添加或删除权限，“r”表示读权限，“w”表示写权限，“x”表示执行权限，“u”表示所有者，“g”表示用户组，“o”表示其他用户。
+
+# 要为用户组分配读权限，可以使用chmod g+r <文件或目录>命令。要为用户组分配写权限，可以使用chmod g+w <文件或目录>命令。要为用户组分配执行权限，可以使用chmod g+x <文件或目录>命令。如果要为用户组分配所有权限（读、写、执行），可以使用chmod g+rwx <文件或目录>命令。如果要删除用户组的某个权限，可以使用-代替+。例如，要删除用户组的执行权限，可以使用chmod g-x <文件或目录>命令。
 ```
 
 ### 定时任务(crontab)
@@ -287,31 +354,6 @@ curl -H "Content-Type: application/json" -X POST -d '{"abc":123,"bcd":"nihao"}' 
 chmod +x /etc/rc.d/rc.local
 ```
 
-### 目录
-```shell
-# 递归复制
-cp -r
-# 查看隐藏目录
-ls -a
-```
-
-### 图形化页面卡死重启
-```shell
-kill -9 gnome-shell pid
-```
-
-### 查看centos版本
-```shell
-cat /etc/redhat-release
-```
-
-### 重命名文件
-
-```shell
-# 例:把a替换为xxx
-rename “a” “xxx” *.txt
-# 或者使用mv命令
-```
 
 ### 查看端口
 
@@ -444,7 +486,8 @@ reboot
 > [解决Ubuntu的root账号无法登录SSH问题](https://www.cnblogs.com/yixius/articles/6971054.html)
 
 
-### 查看指定目录大小
+### 查看空间占用
+
 ```shell
 du -h --max-depth=1 /usr
 # 查看指定文件大小
@@ -625,9 +668,15 @@ systemctl set-default multi-user.target  （init 3）
 systemctl set-default graphical.target  (init 5)
 ```
 
-### 查看系统内核 uname -r
+### 查看系统内核及版本
 
 ```shell
+# 查看内核
+uname -r
+# 查看centos版本
+cat /etc/centos-release
+cat /etc/os-release
+cat /etc/redhat-release
 # 全部内核
 rpm -qa | grep kernel
 yum list installed | grep kernel
@@ -640,13 +689,45 @@ yum remove kernel-
 ```shell
 ssh -v -p port username@ip
 # -v 调试模式(会打印日志) -p 指定端口 username可以随意
-
 # 使用 telnet 命令
 telnet ip 端口
-
 # 使用nc命令
 nc -vu ip 端口
 # -v 输出交互或出错信息，新手调试时尤为有用,-u指定nc使用UDP协议，默认为TCP
+```
+
+### telnet
+
+格式: telnet 选项 主机名 端口号
+选项如下：
+
+```
+-8：允许使用8位字符资料，包括输入与输出。
+-a：尝试自动登入远端系统。
+-b：使用别名指定远端主机名称。
+-c：不读取用户专属目录里的.telnetrc文件。
+-d：启动排错模式。
+-e：设置脱离字符。
+-l：指定要登入远端主机的用户名称。
+-x：假设主机有支持数据加密的功能，就使用它。
+```
+
+### tracerouter
+
+```sh
+traceroute ip
+
+traceroute -p port ip
+traceroute -p 443 example.com # 测试目标主机的443端口
+
+tracert ip
+# -n：不解析主机名，只显示IP地址。这有助于加快追踪速度
+# -m或-h：设置最大跳数（默认是30跳）。
+# -w或-t：设置每次探测的等待时间（超时时间，默认是几秒）。
+# -q：指定每个跃点查询的数量（默认是3个）。
+# -I：使用ICMP回显请求而不是UDP数据包（仅适用于Linux上的traceroute）。
+# -T：使用TCP SYN数据包进行追踪（仅适用于Linux上的traceroute）。
+
 ```
 
 ### Linux交换空间(swap space)

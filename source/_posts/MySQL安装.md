@@ -194,7 +194,7 @@ mysql -uroot -proot
 #update mysql.user set password=password('新密码') where host='localhost' and user='root';
 update mysql.user set authentication_string=password('password') where user='root' and host='hostname';
 
-# 使用SET PASSWORD命令修改当前用户密码
+# 使用SET PASSWORD命令修改当前用户密码 //xx
 set password=password("new-password");
 # 使用SET PASSWORD命令修改其他用户密码
 set password for 'user'@'hostname' = password('新密码');
@@ -267,6 +267,36 @@ ln -s /usr/local/mysql/bin/mysql /usr/local/bin/mysql
 服务启动脚本：/usr/lib/systemd/system/mysqld.service
 socket文件：/var/run/mysqld/mysqld.pid
 ```
+
+#### 10. 注册systemd(查看第5步延申)
+
+如果想要使用`systemctl`替代`service`命令，需要注册`mysql.service`服务，具体如下
+
+
+```shell
+1. vim /etc/systemd/system/myssql.service
+
+[Unit]
+Description=MySQL Server
+After=network.target
+After=syslog.target
+
+[Service]
+User=mysql
+Group=mysql
+ExecStart=/usr/sbin/mysqld --defaults-file=/etc/my.cnf
+# ExecStart=service mysql start
+PIDFile=/var/run/mysqld/mysqld.pid
+LimitNOFILE = 5000
+
+[Install]
+WantedBy=multi-user.target
+
+2. chmod +x /etc/systemd/system/mysql.service
+3. systemctl daemon-reload
+4. systemctl start mysql
+```
+
 ### yum安装
 
 #### 一、安装本地YUM源、MySQL在MySQL官网中下载YUM源rpm安装包

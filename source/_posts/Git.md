@@ -113,7 +113,7 @@ git clone -b <branch_name> --single-branch <url>
 git checkout <name>
 # 创建+切换分支
 git checkout -b <name>
-# 创建本地分支并关联远程分支
+# 本地没有分支的情况下拉取远程分支,此命令意思为创建本地分支并关联远程分支
 git checkout -b local-branch origin/remote-branch
 # 丢弃某个文件工作区的修改（还原修改过的文件）
 git checkout -- file
@@ -127,8 +127,136 @@ git checkout develop && git merge feature
 git checkout commitid [file]
 ```
 
-### git merge&git rebase
+### git switch
 
+> `git switch`命令是在Git 2.23.0版本中引入的，以解决`git checkout`命令职责过重的问题，并使得Git的命令更加直观和易于理解。在Git 2.23之前，`git checkout`既用于切换分支，也用于还原文件内容，很容易引起混淆。通过将`git checkout`的功能拆分，Git团队创建了两个新的、更专业的命令：
+> `git switch`：专门用于在分支之间进行切换。
+> `git restore`：专门用于还原文件内容。
+
+```shell
+# 切换到已存在的分支
+git switch <branch-name>
+# 创建并切换到新分支
+git switch -c <new-branch-name>
+# 从远程仓库创建并跟踪一个本地分支
+git switch -c <new-branch-name> --track <remote>/<branch-name>
+# 返回到上一个分支
+git switch -
+```
+
+### git restore
+
+```shell
+# git restore命令在工作区是不会起作用的
+# 取消暂存区的更改（类似于git reset HEAD <file>）.此命令将暂存区中的文件恢复到最后一次提交的状态，并将其从暂存区中移除，但保留工作目录中的修改。这意味着该文件的修改将不会包含在下一次的提交
+git restore --staged file
+# 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。
+git restore file
+# 从指定的提交中恢复文件到工作目录
+git restore --source=<commit> <file>
+# 恢复所有文件到指定的提交状态
+git restore --source=<commit> .
+# 恢复所有已删除的文件
+git restore -w -- *
+# 丢弃暂存区和工作目录中的更改（即恢复到指定的提交状态）
+git restore --staged --worktree <file>
+```
+
+### git worktree
+
+> `git worktree`命令是在Git 2.5版本中引入的，它允许在同一个仓库中创建多个工作目录（worktrees），每个工作目录可以检出不同的分支或提交。这为开发者提供了同时处理多个任务的能力，比如在不同的分支上进行开发、测试，而不需要来回切换分支
+
+```shell
+# 添加一个新的工作目录，并检出指定分支
+git worktree add <path> [<branch>]
+# 列出所有的工作目录
+git worktree list
+# 移除一个工作目录（必须先确保该目录没有未提交的更改）
+git worktree remove <path>
+# 移动一个工作目录到新的位置
+git worktree move <current-path> <new-path>
+# 例如，如果想要添加一个新的工作目录来检出名为feature-branch的分支，可以这样做：
+git worktree add ../my-feature-worktree feature-branch
+# 这将在../my-feature-worktree目录下创建一个新的工作目录，并检出feature-branch分支。
+```
+
+### git sparse-checkout
+
+> `git sparse-checkout`是在Git 2.25.0版本中引入的，这个功能是对之前存在的稀疏检出机制的一个重大改进。通过`git sparse-checkout`，开发者可以更高效地克隆大型仓库，只检出部分文件或目录，而不是整个项目
+
+```shell
+# 要启用sparse-checkout，首先需要设置仓库以使用稀疏检出模式：
+# 启用sparse-checkout模式
+git sparse-checkout init
+# 设置你想要包括的模式或路径
+git sparse-checkout set <pattern>...
+# 例如，如果只想检出src目录及其子目录中的文件，可以这样做：
+git sparse-checkout set src/
+# 如果想添加多个模式或路径，可以在set命令后列出所有路径，或者分多次调用该命令。除了set命令，还可以使用add和list来管理稀疏检出模式：
+# 添加额外的路径到稀疏检出模式
+git sparse-checkout add <pattern>...
+# 列出现有的稀疏检出模式
+git sparse-checkout list
+# 如果不再需要稀疏检出模式，可以通过以下命令禁用它，并恢复完整的检出状态：
+# 禁用sparse-checkout模式并恢复完整检出
+git sparse-checkout disable
+```
+
+### git range-diff
+
+> `git range-diff`是在Git 2.19.0版本中引入的，用于比较两个提交范围之间的差异。它可以帮助开发者理解在一次变基（rebase）、合并（merge）或历史改写操作后，一系列提交发生了哪些变化
+
+```shell
+# 比较两个分支上的最近n个提交
+git range-diff A~n..A B~n..B
+# 或者更常见的用法是直接指定两个范围
+git range-diff A..B C..D
+# 假设origin/feature是变基之前的远程分支状态,而feature是变基之后的本地分支状态
+git range-diff origin/feature..feature~n feature~n..feature
+```
+
+### git maintenance
+
+> `git maintenance`是在Git 2.30.0版本中引入的，用于管理和自动化各种维护任务的命令。这个命令旨在简化和优化仓库的维护工作，通过提供一组预定义的任务来帮助保持仓库的健康状态和高效性能。常见的维护任务包括：
+> gc：运行完整的垃圾收集，包括压缩对象数据库。
+> commit-graph：构建或更新提交图文件以加速提交历史查询。
+> loose-objects：清理松散对象并将其打包。
+> incremental-repack：逐步重新打包对象以优化存储。
+> prefetch：预先获取远程分支的新数据，以加速未来的克隆和拉取操作。
+
+```shell
+# 启用自动维护
+git maintenance start
+# 禁用自动维护
+git maintenance stop
+# 执行所有配置的维护任务
+git maintenance run
+# 执行特定类型的维护任务
+git maintenance run --task=<task>
+```
+配置自动维护计划：可以通过配置文件设置哪些任务应该被定期执行以及它们的执行频率。例如，在`.git/config`文件中添加如下内容：
+
+```config
+[maintenance "daily"]
+    task = prefetch
+    task = loose-objects
+[maintenance "hourly"]
+    task = commit-graph
+[maintenance "weekly"]
+    task = incremental-repack
+[maintenance "monthly"]
+    task = gc
+```
+然后启用这些计划：
+
+```shell
+git maintenance start --schedule=daily
+git maintenance start --schedule=hourly
+git maintenance start --schedule=weekly
+git maintenance start --schedule=monthly
+```
+
+### git merge & git rebase
 ```shell
 # 合并指定分支到当前分支
 git merge <name>
@@ -246,9 +374,13 @@ git cherry-pick --quit
 
 ```shell
 # 删除远程分支
-git push origin :master
+git push origin :beanch-name
+# 使用git push命令并加上--delete 选项来删除指定的远程分支
+git push origin --delete branch-name
 #  删除远程标签
-git push origin --delete tag tag-name
+git push origin --delete tag-name
+# 删除远程标签（需要先删除本地标签）
+git push origin :refs/tags/tag-name
 # 上传本地仓库到远程分支
 git push remote branch-name
 # 强行推送当前分支到远程分支
@@ -259,20 +391,8 @@ git push remote --all
 git push --tags
 # 推送指定标签
 git push origin tag-name
-# 删除远程标签（需要先删除本地标签）
-git push origin :refs/tags/tag-name
 # 将本地dev分支push到远程master分支
 git push origin dev:master
-```
-
-### git restore
-
-```shell
-# git restore命令在工作区是不会起作用的
-# 此命令将暂存区中的文件恢复到最后一次提交的状态，并将其从暂存区中移除，但保留工作目录中的修改。这意味着该文件的修改将不会包含在下一次的提交
-git restore --staged file
-# 此命令将工作目录中的文件恢复到最后一次提交的状态，并且不会对暂存区进行任何操作。它将丢弃工作目录中对文件的修改，恢复到最后提交的版本。
-git restore file
 ```
 
 ## 常用操作
@@ -306,7 +426,7 @@ git push -f origin main
 
 ### 远程分支重命名
 
-远程分支是指：假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
+假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步
 
 ```shell
 # 方案1:先重命名本地分支，然后推送到远程分支

@@ -685,6 +685,9 @@ $<span class="token punctuation">.</span><span class="token function">ajax</span
 </blockquote>
 <h3 id="PostConstruct和-PreDestroy"><a href="#PostConstruct和-PreDestroy" class="headerlink" title="@PostConstruct和@PreDestroy"></a>@PostConstruct和@PreDestroy</h3><p>@PostConstruct该注解被用来修饰一个非静态的void()方法,被@PostConstruct修饰的方法会当bean创建完成的时候，会后置执行@PostConstruct修饰的方法。PostConstruct在构造函数之后执行，bean的init()方法之前执行,相当于init-method,使用在方法上，当Bean初始化时执行,Constructor(构造方法) -&gt; @Autowired(依赖注入) -&gt; @PostConstruct(注释的方法)</p>
 <p>@PreDestroy类似于destory-method在servlet destory()方法之后执行</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/AG6ZLsUt_PnSqI_fzCpMVw">Spring Boot 3+中@PostConstruct和@PreDestroy的替代方案</a></p>
+</blockquote>
 <h3 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ">Spring Boot中条件注解底层如何实现的？</a></p>
 </blockquote>

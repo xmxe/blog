@@ -40,6 +40,7 @@ img: https://pic1.zhimg.com/v2-bdccba68ad2e37f6efc96a15f7897e2d.jpg
   /* 可以给要居中的元素设置一些样式 */
 }
 ```
+> [垂直居中竟有7种写法](https://mp.weixin.qq.com/s/UBNf6Z-R6YDelrCK5L5WFg)
 > [42种前端常用布局方案总结※](https://mp.weixin.qq.com/s/5ZSMlbjcvaMksx4zakhgzA)
 > [如何用一行CSS实现10种现代布局？](https://mp.weixin.qq.com/s/3yToJq5N8-8SXb0nPDL47g)
 

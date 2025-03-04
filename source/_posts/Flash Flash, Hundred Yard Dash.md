@@ -36,14 +36,16 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 
 ## 下载
 
-|        [apache旗下安装包](https://dlcdn.apache.org/)         | [centos rpm包（cat /etc/centos-release）](http://vault.centos.org/) | [PLSQL历史版本下载](https://www.allroundautomations.com/registered-plsqldev/) |
+|        [apache旗下安装包](https://dlcdn.apache.org/)         | [centos rpm包(cat /etc/centos-release)](http://vault.centos.org/) | [PLSQL历史版本下载](https://www.allroundautomations.com/registered-plsqldev/) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| [ClashX](https://clashx.org/) / [github](https://github.com/yichengchen/clashX) |             [ClashX Pro](https://clashxpro.org/)             | [Clash for Windows](https://clashforwindows.org/) / [github](https://github.com/Fndroid/clash_for_windows_pkg) |
-|          [clashN](https://github.com/2dust/clashN)           | [Clash for Android](https://clashforandroid.org/) / [github](https://github.com/Kr328/ClashForAndroid) | [Clash Verge](https://clashverge.org/) / [github](https://github.com/zzzgydi/clash-verge) |
-| [Clash下载](https://clash.top/download/) / [github](https://github.com/clashdownload) |         [Stash(Clash iOS)](https://clashstash.org/)          |         [v2rayNG](https://github.com/2dust/v2rayNG)          |
-|          [v2rayN](https://github.com/2dust/v2rayN)           |          [V2rayU](https://github.com/yanue/V2rayU)           | [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android) |
-| [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows) |    [FakeLocation](https://github.com/Lerist/FakeLocation)    | [surfboard(cfa替代品)](https://apkpure.com/surfboard/com.getsurfboard) / [github](https://github.com/getsurfboard/surfboard) |
-|              [surge](https://www.nssurge.com/)               |                                                              |                                                              |
+| [Clash下载](https://clash.top/download/) / [GitHub](https://github.com/clashdownload) | [Clash Meta for Android](https://clashmeta.org/) / [GitHub](https://github.com/MetaCubeX/ClashMetaForAndroid) |       [FlClash](https://github.com/chen08209/FlClash)        |
+| [ClashX.Meta](https://clashmeta.org/) / [GitHub](https://github.com/MetaCubeX/ClashX.Meta) |      [ClashN](https://github.com/2dust/clashN) 同v2rayN      | [Clash Verge Rev](https://clashvergerev.org/) / [GitHub](https://github.com/clash-verge-rev/clash-verge-rev) |
+| [Clash Verge](https://clashverge.org/) / [GitHub](https://github.com/zzzgydi/clash-verge) ~~已归档~~ | [ClashX](https://clashx.org/) / [GitHub](https://github.com/yichengchen/clashX) ~~已删库~~ |       [ClashX Pro](https://clashxpro.org/) ~~已删库~~        |
+| [Clash for Windows](https://clashforwindows.org/) / [GitHub](https://github.com/Fndroid/clash_for_windows_pkg) ~~已删库~~ | [Clash for Android](https://clashforandroid.org/) / [GitHub](https://github.com/Kr328/ClashForAndroid) ~~已删库~~ |             [OpenClash](https://openclash.org/)              |
+|              [Surge](https://www.nssurge.com/)               | [SurfBoard(cfa替代品)](https://apkpure.com/surfboard/com.getsurfboard) / [GitHub](https://github.com/getsurfboard/surfboard) |         [Stash(Clash iOS)](https://clashstash.org/)          |
+|          [v2rayN](https://github.com/2dust/v2rayN)           |         [v2rayNG](https://github.com/2dust/v2rayNG)          |          [V2rayU](https://github.com/yanue/V2rayU)           |
+| [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android) | [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows) | [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid)  |
+|    [FakeLocation](https://github.com/Lerist/FakeLocation)    |                                                              |                                                              |
 
 ## 工具
 

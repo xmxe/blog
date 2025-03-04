@@ -183,6 +183,8 @@ $.ajax({
 
 @PreDestroy类似于destory-method在servlet destory()方法之后执行
 
+> [Spring Boot 3+中@PostConstruct和@PreDestroy的替代方案](https://mp.weixin.qq.com/s/AG6ZLsUt_PnSqI_fzCpMVw)
+
 ### 条件注解
 > [Spring Boot中条件注解底层如何实现的？](https://mp.weixin.qq.com/s/XhNTfz6nw-rfP2avh0owAQ)
 

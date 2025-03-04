@@ -838,6 +838,19 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 将本地dev分支push到远程master分支</span>
 <span class="token function">git</span> push origin dev:master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 更新所有跟踪的远程分支,这将会从默认的远程仓库(通常是origin)拉取所有新的数据</span>
+<span class="token function">git</span> fetch
+<span class="token comment"># 指定一个不同的远程仓库</span>
+<span class="token function">git</span> fetch <span class="token operator">&lt;</span>远程仓库名<span class="token operator">></span>
+<span class="token comment"># 只获取某个特定的分支而不是所有分支的更新</span>
+<span class="token function">git</span> fetch <span class="token operator">&lt;</span>远程仓库名<span class="token operator">></span> <span class="token operator">&lt;</span>分支名<span class="token operator">></span>
+<span class="token comment"># 当你在远程删除了某些分支后，本地仍然可能保留着对这些已删除分支的引用。使用`--prune` 选项可以在获取最新数据的同时移除那些不再存在于远程仓库中的本地远程跟踪分支</span>
+<span class="token function">git</span> fetch <span class="token parameter variable">--prune</span>
+<span class="token comment"># 或者针对特定远程仓库</span>
+<span class="token function">git</span> fetch <span class="token operator">&lt;</span>远程仓库名<span class="token operator">></span> <span class="token parameter variable">--prune</span>
+<span class="token comment"># 获取更新后，你可以选择将这些更改合并到你的当前分支中，使用`git merge`或者`git rebase`。例如，假设你已经从origin拉取了更新，现在想要将这些更新合并到当前分支</span>
+<span class="token function">git</span> merge origin/目标分支 <span class="token operator">||</span> <span class="token function">git</span> rebase origin/目标分支<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><h3 id="删除全部历史提交记录"><a href="#删除全部历史提交记录" class="headerlink" title="删除全部历史提交记录"></a>删除全部历史提交记录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建孤立分支,没有以前的提交记录</span>
 <span class="token function">git</span> checkout <span class="token parameter variable">--orphan</span> <span class="token operator">&lt;</span>name<span class="token operator">></span>
 <span class="token comment"># 切换到一个脱离主分支的另外一条全新主分支，不用太在意叫什么，因为后面还会修改分支名称</span>

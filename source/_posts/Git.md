@@ -395,6 +395,23 @@ git push origin tag-name
 git push origin dev:master
 ```
 
+### git fetch
+
+```shell
+# 更新所有跟踪的远程分支,这将会从默认的远程仓库(通常是origin)拉取所有新的数据
+git fetch
+# 指定一个不同的远程仓库
+git fetch <远程仓库名>
+# 只获取某个特定的分支而不是所有分支的更新
+git fetch <远程仓库名> <分支名>
+# 当你在远程删除了某些分支后，本地仍然可能保留着对这些已删除分支的引用。使用`--prune` 选项可以在获取最新数据的同时移除那些不再存在于远程仓库中的本地远程跟踪分支
+git fetch --prune
+# 或者针对特定远程仓库
+git fetch <远程仓库名> --prune
+# 获取更新后，你可以选择将这些更改合并到你的当前分支中，使用`git merge`或者`git rebase`。例如，假设你已经从origin拉取了更新，现在想要将这些更新合并到当前分支
+git merge origin/目标分支 || git rebase origin/目标分支
+```
+
 ## 常用操作
 
 ### 删除全部历史提交记录

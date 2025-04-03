@@ -543,9 +543,7 @@ Object.getPrototypeOf(obj)
 
 ### Promise
 
-什么时候用
-回调地狱时使用，当代码难以维护，常常第一个的函数的输出是第二个函数的输入这种现象时使用promise。Promise对象用于表示一个异步操作的最终完成(或失败)及其结果值
-基本用法
+**什么时候用?** 回调地狱时使用，当代码难以维护，常常第一个的函数的输出是第二个函数的输入这种现象时使用promise。Promise对象用于表示一个异步操作的最终完成(或失败)及其结果值
 demo1
 
 ```js
@@ -592,7 +590,7 @@ test('1234').catch(function(err) {
 //promise.then(onFulfilled, onRejected)等价于promise.then(onFulfilled).catch(onRejected)
 ```
 
-| [前端基础进阶（十五）：透彻掌握Promise的使用，读这篇就够了](https://www.jianshu.com/p/fe5f173276bd) | [JavaScript Promise对象](https://www.runoob.com/w3cnote/javascript-promise-object.html) | [mozilla promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) |
+| [前端基透彻掌握Promise的使用，读这篇就够了](https://www.jianshu.com/p/fe5f173276bd) | [JavaScript Promise对象](https://www.runoob.com/w3cnote/javascript-promise-object.html) | [mozilla promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [写给Java程序员的前端Promise教程](https://mp.weixin.qq.com/s/92AHFPWjtH_y2_88mP3CYQ) |                                                              |                                                              |
 

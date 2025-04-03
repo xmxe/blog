@@ -907,7 +907,9 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token comment"># 或者git config --unset core.bare</span>
 <span class="token function">git</span> config <span class="token parameter variable">--bool</span> core.bare <span class="token boolean">false</span>
 <span class="token comment"># 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了</span>
-<span class="token function">git</span> reset <span class="token parameter variable">--hard</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">git</span> reset <span class="token parameter variable">--hard</span>
+<span class="token comment"># 或者切换到指定分支</span>
+<span class="token function">git</span> checkout 指定分支名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="上传git仓库"><a href="#上传git仓库" class="headerlink" title="上传git仓库"></a>上传git仓库</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建.git目录</span>
 <span class="token function">git</span> init
@@ -952,6 +954,26 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
 <span class="token comment"># 把.git里面的修改推上去,这个时候普通的push是不行的，需要强推</span>
 <span class="token function">git</span> push <span class="token parameter variable">--force</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="忽略已经纳入git版本控制的文件更改"><a href="#忽略已经纳入git版本控制的文件更改" class="headerlink" title="忽略已经纳入git版本控制的文件更改"></a>忽略已经纳入git版本控制的文件更改</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 忽略单个文件的更改</span>
+<span class="token function">git</span> update-index --assume-unchanged <span class="token operator">&lt;</span>file<span class="token operator">></span>
+<span class="token comment"># 恢复跟踪更改</span>
+<span class="token function">git</span> update-index --no-assume-unchanged <span class="token operator">&lt;</span>file<span class="token operator">></span>
+<span class="token comment"># 更彻底的忽略</span>
+<span class="token function">git</span> update-index --skip-worktree <span class="token operator">&lt;</span>file<span class="token operator">></span>
+<span class="token function">git</span> update-index --no-skip-worktree <span class="token operator">&lt;</span>file<span class="token operator">></span>
+<span class="token comment"># Linux查看被忽略更改的文件</span>
+<span class="token function">git</span> ls-files <span class="token parameter variable">-v</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">'^[a-z]'</span>
+<span class="token comment"># 小写字母表示被--assume-unchanged忽略的文件，S表示被--skip-worktree忽略的文件。选择哪种方法取决于你的具体需求，--skip-worktree通常比--assume-unchanged更可靠。</span>
+<span class="token comment"># PowerShell版</span>
+<span class="token comment"># 查看所有被assume-unchanged的文件（小写标记）</span>
+<span class="token function">git</span> ls-files <span class="token parameter variable">-v</span> <span class="token operator">|</span> Where-Object <span class="token punctuation">&#123;</span> <span class="token variable">$_</span> <span class="token parameter variable">-match</span> <span class="token string">'^[a-z]'</span> <span class="token punctuation">&#125;</span>
+<span class="token comment"># 查看所有被skip-worktree的文件（S标记）</span>
+<span class="token function">git</span> ls-files <span class="token parameter variable">-v</span> <span class="token operator">|</span> Where-Object <span class="token punctuation">&#123;</span> <span class="token variable">$_</span> <span class="token parameter variable">-match</span> <span class="token string">'^S'</span> <span class="token punctuation">&#125;</span>
+
+<span class="token comment"># --assume-unchanged：告诉Git假设文件未更改，性能优化用</span>
+<span class="token comment"># --skip-worktree：告诉Git完全忽略文件的更改，即使文件确实有变化</span>
+<span class="token comment"># .gitignore:只对未跟踪文件有效，对已跟踪文件需要先git rm --cached.或对于目录：git rm --cached -r &lt;directory></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="设置Git短命令"><a href="#设置Git短命令" class="headerlink" title="设置Git短命令"></a>设置Git短命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方式一</span>
 <span class="token function">git</span> config <span class="token parameter variable">--global</span> alias.ps push

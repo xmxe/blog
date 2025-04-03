@@ -189,21 +189,28 @@ systemctl start mysql
 ```shell
 # 测试进入mysql(注意端口为默认的3306,如果修改过默认端口,使用-P来指定端口)
 mysql -uroot -proot
-
+# 方式1
 # UPDATE直接编辑user表,旧版本中密码字段是password,而不是authentication_string.注意加上user和host的查询条件,因为有可能host不一样,比如user表里查询user='root'有两条记录,一个host为'localhost',一个为'%',意味着相同用户本地登录是一个密码，远程登陆是一个密码
 #update mysql.user set password=password('新密码') where host='localhost' and user='root';
 update mysql.user set authentication_string=password('password') where user='root' and host='hostname';
 
-# 使用SET PASSWORD命令修改当前用户密码 //xx
+# 方式2
+# 5.7版本以前
+# 使用SET PASSWORD命令修改当前用户密码
 set password=password("new-password");
 # 使用SET PASSWORD命令修改其他用户密码
 set password for 'user'@'hostname' = password('新密码');
+# 8.0修改密码
+set password = '123456';
 
+# 方式3
 # 使用mysqladmin修改密码
 ./bin/mysqladmin -hlocalhost.localdomain -uroot -p旧密码 password '新密码'
 
+# 方式4
 # 修改当前用户密码(USER()为获取当前连接用户的函数)
-ALTER user USER() IDENTIFIED BY 'root';
+ALTER user USER() IDENTIFIED BY 'password';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '新密码'
 # 修改其他用户的密码,使用user表中的user,host匹配,如:'root'@'%',mysql8默认WITH mysql_native_password
 ALTER user 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';
 
@@ -211,15 +218,17 @@ ALTER user 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密�
 flush privileges;
 ```
 
-#### 7. 修改远程连接
+#### 7. 修改远程连接(连接Navicat)
 
-改表法
+**改表法**
+
 ```sql
 use mysql
 update user set host='%' where user='root';
 flush privileges;
 ```
-授权法
+**授权法**
+
 ```shell
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '密码' WITH GRANT OPTION;
 # 如果你想允许用户myuser从ip为192.168.1.6的主机连接到mysql服务器，并使用mypassword作为密码
@@ -490,24 +499,25 @@ default-storage-engine=INNODB
 >> --initialize-insecure: 初始化MySQL服务器时不设置任何安全措施，包括不设置root用户的密码。
 >> --console: 将初始化过程的输出重定向到标准输出设备（如终端窗口），以便可以查看执行结果。
 
-(4) 修改密码（5.7版本以前）
+(4) 修改密码
 
 ```shell
 # mysql -uroot -p输入密码后
+# 5.7版本以前
 set password for root@localhost = password('123456');
 # 8.0修改密码
 set password = '123456';
 ```
+(5) 连接Navicat
 
-### 8.0连接navicat
+~~navicat连接8.0需要把mysql用户登录密码加密规则还原成mysql_native_password~~
 
-navicat连接8.0需要把mysql用户登录密码加密规则还原成mysql_native_password
+```sql
+-- ALTER USER 'root'@'localhost' IDENTIFIED BY 'root' PASSWORD EXPIRE NEVER; #修改加密规则
+-- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; #更新一下用户的密码
+-- FLUSH PRIVILEGES; #刷新权限
 
-```shell
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'root' PASSWORD EXPIRE NEVER; #修改加密规则
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; #更新一下用户的密码
-FLUSH PRIVILEGES; #刷新权限
-# 然后use mysql;
+use mysql;
 update user set host = '%' where user = 'root';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '新密码'
 FLUSH PRIVILEGES;

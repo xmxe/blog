@@ -572,7 +572,10 @@ classpath:/
 ```shell
 $ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/override.properties.
 ```
-> Spring Cloud项目加载bootstrap.yml使用`--spring.cloud.bootstrap.location`
+> - Spring Cloud项目加载bootstrap.yml使用`--spring.cloud.bootstrap.location`
+> - 配置classpath路径：`-Xbootclasspath/a:`。末尾的`/a`表示append（追加），即将指定的路径追加到默认的引导类路径（bootstrap classpath）之后。
+> - 用于指定额外的配置文件位置：`spring.config.additional-location`，与`spring.config.location`不同，它不会替换默认的配置搜索路径，而是追加新的路径
+> - 不注册nacos：`--spring.cloud.nacos.discovery.enabled=false`
 
 这样不会去默认位置加载配置⽂件，⽽是加载类路径下default.properties和override.properties的⽂件，override.properties中的同名配置会覆盖default.properties,如果指定的路径是以/结尾则是⽬录配置，会去⽬录下找配置⽂件。
 

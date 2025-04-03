@@ -482,6 +482,8 @@ git clone --bare https://github.com/xx/project.git .git
 git config --bool core.bare false
 # 上面的命令执行完,再执行该命令,就可以看到仓库里面的内容了
 git reset --hard
+# 或者切换到指定分支
+git checkout 指定分支名
 ```
 
 ### 上传git仓库
@@ -538,6 +540,30 @@ git gc --prune=now
 # 把.git里面的修改推上去,这个时候普通的push是不行的，需要强推
 git push --force
 
+```
+
+### 忽略已经纳入git版本控制的文件更改
+
+```shell
+# 忽略单个文件的更改
+git update-index --assume-unchanged <file>
+# 恢复跟踪更改
+git update-index --no-assume-unchanged <file>
+# 更彻底的忽略
+git update-index --skip-worktree <file>
+git update-index --no-skip-worktree <file>
+# Linux查看被忽略更改的文件
+git ls-files -v | grep '^[a-z]'
+# 小写字母表示被--assume-unchanged忽略的文件，S表示被--skip-worktree忽略的文件。选择哪种方法取决于你的具体需求，--skip-worktree通常比--assume-unchanged更可靠。
+# PowerShell版
+# 查看所有被assume-unchanged的文件（小写标记）
+git ls-files -v | Where-Object { $_ -match '^[a-z]' }
+# 查看所有被skip-worktree的文件（S标记）
+git ls-files -v | Where-Object { $_ -match '^S' }
+
+# --assume-unchanged：告诉Git假设文件未更改，性能优化用
+# --skip-worktree：告诉Git完全忽略文件的更改，即使文件确实有变化
+# .gitignore:只对未跟踪文件有效，对已跟踪文件需要先git rm --cached.或对于目录：git rm --cached -r <directory>
 ```
 
 ### 设置Git短命令

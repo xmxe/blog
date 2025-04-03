@@ -989,7 +989,12 @@ classpath:&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span>
 <p>配置文件名可以通过<code>spring.config.name</code>修改，最简单的⽅法是放置⼀个配置⽂件到jar包同层⽬录下，或是同层⽬录下的config⼦⽬录下，启动jar包即可加载配置⽂件实现配置项的覆盖。spring boot指定外部的配置⽂件,可以通过修改启动参数的值来指定加载⽬录或是加载⽂件:<code>spring.config.location</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">java</span> <span class="token parameter variable">-jar</span> myproject.jar <span class="token parameter variable">--spring.config.location</span><span class="token operator">=</span>classpath:/default.properties,classpath:/override.properties.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
-<p>Spring Cloud项目加载bootstrap.yml使用<code>--spring.cloud.bootstrap.location</code></p>
+<ul>
+<li>Spring Cloud项目加载bootstrap.yml使用<code>--spring.cloud.bootstrap.location</code></li>
+<li>配置classpath路径：<code>-Xbootclasspath/a:</code>。末尾的<code>/a</code>表示append（追加），即将指定的路径追加到默认的引导类路径（bootstrap classpath）之后。</li>
+<li>用于指定额外的配置文件位置：<code>spring.config.additional-location</code>，与<code>spring.config.location</code>不同，它不会替换默认的配置搜索路径，而是追加新的路径</li>
+<li>不注册nacos：<code>--spring.cloud.nacos.discovery.enabled=false</code></li>
+</ul>
 </blockquote>
 <p>这样不会去默认位置加载配置⽂件，⽽是加载类路径下default.properties和override.properties的⽂件，override.properties中的同名配置会覆盖default.properties,如果指定的路径是以&#x2F;结尾则是⽬录配置，会去⽬录下找配置⽂件。</p>
 <p><strong>特定配置</strong><br>在开发、测试、发布过程中，这三个场景⽐较固定，通常会定义三份不同的配置application-{profile}.yml，在使⽤时通过profile参数来切换。applicaiton-dev.yml，applicaiton-test.yml，applicaiton-prd.yml启动时，通过指定spring.profiles.active参数来切换配置⽂件</p>

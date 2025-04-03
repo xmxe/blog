@@ -624,6 +624,110 @@ consul agent <span class="token parameter variable">-dev</span>
   <span class="token function">kill</span> <span class="token parameter variable">-9</span> <span class="token variable">$&#123;pId&#125;</span>
   <span class="token builtin class-name">echo</span> <span class="token string">"进程：<span class="token variable">$&#123;pId&#125;</span> 被kill"</span>
 <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="启动nacos-cmd"><a href="#启动nacos-cmd" class="headerlink" title="启动nacos(cmd)"></a>启动nacos(cmd)</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">@echo off
+chcp <span class="token number">65001</span> <span class="token operator">></span>nul
+title Nacos
+rem color 0a
+rem 修改为你的Nacos实际安装路径
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">NACOS_HOME</span><span class="token operator">=</span>C:<span class="token punctuation">\</span>E<span class="token punctuation">\</span>nacos-server-2.2.3
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">START_CMD</span><span class="token operator">=</span>startup.cmd
+
+echo.
+<span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> Starting Nacos <span class="token keyword">in</span> standalone mode<span class="token punctuation">..</span>.
+<span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> Nacos home: %NACOS_HOME%
+echo.
+
+<span class="token keyword">if</span> not exist <span class="token string">"%NACOS_HOME%<span class="token entity" title="\b">\b</span>in\%START_CMD%"</span> <span class="token punctuation">(</span>
+    <span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>ERROR<span class="token punctuation">]</span> Nacos startup script not found at %NACOS_HOME%<span class="token punctuation">\</span>bin<span class="token punctuation">\</span>%START_CMD%
+    <span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>ERROR<span class="token punctuation">]</span> Please check the NACOS_HOME path.
+    pause
+    <span class="token builtin class-name">exit</span> /b <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+rem <span class="token builtin class-name">cd</span> /d <span class="token string">"%NACOS_HOME%<span class="token entity" title="\b">\b</span>in"</span>
+rem call %START_CMD%  <span class="token parameter variable">-m</span> standalone
+rem wt <span class="token parameter variable">-w</span> <span class="token number">0</span> <span class="token parameter variable">-p</span> <span class="token string">"CMD"</span> <span class="token parameter variable">--title</span> <span class="token string">"Nacos"</span> -- <span class="token string">"%COMSPEC%"</span> /c <span class="token string">"chcp 65001 >nul &amp;&amp; "</span>%NACOS_HOME%<span class="token punctuation">\</span>bin<span class="token punctuation">\</span>%START_CMD%<span class="token string">" -m standalone"</span>
+wt <span class="token parameter variable">-w</span> <span class="token number">0</span> <span class="token parameter variable">-p</span> <span class="token string">"CMD"</span> <span class="token parameter variable">--title</span> <span class="token string">"Nacos"</span> -- <span class="token string">"%COMSPEC%"</span> /c <span class="token string">"chcp 65001 >nul &amp;&amp; cd /d "</span>%NACOS_HOME%<span class="token punctuation">\</span>bin<span class="token string">" &amp;&amp; %START_CMD% -m standalone"</span>
+
+
+rem <span class="token builtin class-name">set</span> <span class="token assign-left variable">DERBY_OPTS</span><span class="token operator">=</span>-Dderby.stream.error.file<span class="token operator">=</span><span class="token string">"%NACOS_HOME%<span class="token entity" title="\b">\b</span>in\derby.log"</span>
+rem wt <span class="token parameter variable">-w</span> <span class="token number">0</span> <span class="token parameter variable">-p</span> <span class="token string">"CMD"</span> <span class="token parameter variable">--title</span> <span class="token string">"Nacos"</span> -- <span class="token string">"%COMSPEC%"</span> /c <span class="token string">"chcp 65001 >nul &amp;&amp; set %DERBY_OPTS% &amp;&amp; "</span>%NACOS_HOME%<span class="token punctuation">\</span>bin<span class="token punctuation">\</span>%START_CMD%<span class="token string">" -m standalone"</span>
+
+rem pause<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="启动redis-cmd"><a href="#启动redis-cmd" class="headerlink" title="启动redis(cmd)"></a>启动redis(cmd)</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">@echo off
+chcp <span class="token number">65001</span> <span class="token operator">></span>nul
+title Redis Server
+rem color 0a
+
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+:: 配置部分（根据实际环境修改）
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+:: Redis安装目录
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">REDIS_HOME</span><span class="token operator">=</span>C:<span class="token punctuation">\</span>E<span class="token punctuation">\</span>Redis-x64-3.0.504
+:: Redis服务端程序
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">REDIS_EXE</span><span class="token operator">=</span>redis-server.exe
+:: 配置文件（可选）
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">REDIS_CONF</span><span class="token operator">=</span>redis.windows.conf
+:: 监听端口
+<span class="token builtin class-name">set</span> <span class="token assign-left variable">REDIS_PORT</span><span class="token operator">=</span><span class="token number">6379</span>
+
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+:: 预检查：确保Redis可执行文件存在
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token keyword">if</span> not exist %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_EXE% <span class="token punctuation">(</span>
+    <span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>ERROR<span class="token punctuation">]</span> Redis服务端程序未找到：
+    <span class="token builtin class-name">echo</span> %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_EXE%
+    <span class="token builtin class-name">echo</span> 请检查：
+    <span class="token builtin class-name">echo</span> <span class="token number">1</span>. REDIS_HOME路径是否正确？
+    <span class="token builtin class-name">echo</span> <span class="token number">2</span>. 是否已安装Redis <span class="token keyword">for</span> Windows？
+    pause
+    <span class="token builtin class-name">exit</span> /b <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+:: 检查端口是否被占用
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token function">netstat</span> <span class="token parameter variable">-ano</span> <span class="token operator">|</span> findstr <span class="token string">":%REDIS_PORT%"</span> <span class="token operator">></span>nul
+<span class="token keyword">if</span> %errorlevel% equ <span class="token number">0</span> <span class="token punctuation">(</span>
+    <span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>ERROR<span class="token punctuation">]</span> 端口 %REDIS_PORT% 已被占用！
+    <span class="token builtin class-name">echo</span> 请关闭占用端口的程序或修改Redis配置。
+    pause
+    <span class="token builtin class-name">exit</span> /b <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+:: 启动Redis服务器
+:: <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> 正在启动Redis服务器<span class="token punctuation">..</span>.
+
+:: 方式1：带配置文件启动（如果存在）
+<span class="token keyword">if</span> exist %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_CONF% <span class="token punctuation">(</span>
+    <span class="token builtin class-name">echo</span> 启动命令： %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_EXE% %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_CONF%
+::    call %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_EXE% %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_CONF%
+    wt <span class="token parameter variable">-w</span> <span class="token number">0</span> <span class="token parameter variable">-p</span> <span class="token string">"CMD"</span> <span class="token parameter variable">--title</span> <span class="token string">"Redis"</span> -- <span class="token string">"%COMSPEC%"</span> /c <span class="token string">"chcp 65001 >nul &amp;&amp; %REDIS_HOME%\%REDIS_EXE% %REDIS_HOME%\%REDIS_CONF%"</span>
+<span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token punctuation">(</span>
+    :: 方式2：无配置文件直接启动
+    <span class="token builtin class-name">echo</span> 启动命令: %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_EXE% <span class="token parameter variable">--port</span> %REDIS_PORT%
+::    call %REDIS_HOME%<span class="token punctuation">\</span>%REDIS_EXE% <span class="token parameter variable">--port</span> %REDIS_PORT%
+    wt <span class="token parameter variable">-w</span> <span class="token number">0</span> <span class="token parameter variable">-p</span> <span class="token string">"CMD"</span> <span class="token parameter variable">--title</span> <span class="token string">"Redis"</span> -- <span class="token string">"%COMSPEC%"</span> /c <span class="token string">"chcp 65001 >nul &amp;&amp; %REDIS_HOME%\%REDIS_EXE% --port %REDIS_PORT%"</span>
+<span class="token punctuation">)</span>
+
+:: pause<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="windows-terminal启动jar"><a href="#windows-terminal启动jar" class="headerlink" title="windows terminal启动jar"></a>windows terminal启动jar</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">@echo off
+:: chcp <span class="token number">65001</span> <span class="token operator">></span>nul
+:: start <span class="token string">"Gateway"</span> cmd /c <span class="token string">"java -Dfile.encoding=UTF-8 -jar C:<span class="token entity" title="\E">\E</span>\import\mdjz3\gateway\service-gateway-1.7.1.RELEASE.jar --spring.cloud.bootstrap.location=C:<span class="token entity" title="\E">\E</span>\import\mdjz3\gateway<span class="token entity" title="\b">\b</span>ootstrap.yml &amp; pause"</span>
+:: start <span class="token string">"Auth"</span> cmd /c <span class="token string">"java -Dfile.encoding=UTF-8 -jar C:<span class="token entity" title="\E">\E</span>\import\mdjz3<span class="token entity" title="\a">\a</span>uth\service-auth-1.7.1.RELEASE.jar --spring.cloud.bootstrap.location=C:<span class="token entity" title="\E">\E</span>\import\mdjz3<span class="token entity" title="\a">\a</span>uth<span class="token entity" title="\b">\b</span>ootstrap.yml &amp; pause"</span>
+
+:: 启动Windows Terminal，并在新标签页中运行JAR
+wt <span class="token parameter variable">-w</span> <span class="token number">0</span> <span class="token parameter variable">-p</span> <span class="token string">"CMD"</span> <span class="token parameter variable">--title</span> <span class="token string">"Gateway"</span> -- <span class="token string">"%COMSPEC%"</span> /c  <span class="token string">"chcp 65001 >nul &amp;&amp; java -Dfile.encoding=UTF-8 -Xbootclasspath/a:C:<span class="token entity" title="\E">\E</span>\import\mdjz3\gateway -jar C:<span class="token entity" title="\E">\E</span>\import\mdjz3\gateway\service-gateway-1.7.1.RELEASE.jar &amp; pause"</span>
+wt <span class="token parameter variable">-w</span> <span class="token number">0</span> <span class="token parameter variable">-p</span> <span class="token string">"CMD"</span> <span class="token parameter variable">--title</span> <span class="token string">"Auth"</span> -- <span class="token string">"%COMSPEC%"</span> /c <span class="token string">"chcp 65001 >nul &amp;&amp; java -Dfile.encoding=UTF-8 -Xbootclasspath/a:C:<span class="token entity" title="\E">\E</span>\import\mdjz3<span class="token entity" title="\a">\a</span>uth -jar C:<span class="token entity" title="\E">\E</span>\import\mdjz3<span class="token entity" title="\a">\a</span>uth\service-auth-1.7.1.RELEASE.jar &amp; pause"</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <h4 id="ruoyi脚本"><a href="#ruoyi脚本" class="headerlink" title="ruoyi脚本"></a>ruoyi脚本</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
 <span class="token comment"># ./ry.sh start:启动 stop:停止 restart:重启 status:状态</span>
 <span class="token assign-left variable">AppName</span><span class="token operator">=</span>ruoyi-admin.jar

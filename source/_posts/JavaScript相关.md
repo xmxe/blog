@@ -279,7 +279,7 @@ var jsons=JSON.parse(MapToJson(map));
 
 ### if(obj)判断
 
-if(jsObj){}过滤**undefined不能过,null不能过 ,''不能过 ,0不能过,{}能过,[]能过**。即`jsObj!=undefined && jsObj!=null && jsObj!='' && jsObj!=0`
+if(jsObj){}过滤**undefined不能过,null不能过 ,''不能过 ,0不能过,NaN不能过,{}能过,[]能过**。即`jsObj!=undefined && jsObj!=null && jsObj!='' && jsObj!=0 && jsObj != NaN`
 
 **if(!!jsObj)与上面等价 可以隐式转换类型**
 

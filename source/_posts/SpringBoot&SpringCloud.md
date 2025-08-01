@@ -533,7 +533,7 @@ com.spring4all.swagger.SwaggerAutoConfiguration
 | [Spring Boot+Netty+Websocket实现后台向前端推送信息](https://mp.weixin.qq.com/s/z4a1DFpZtnd4kwPcPTS7VQ) | [Spring Boot + Web Socket打造实时监控异常](https://mp.weixin.qq.com/s/NtzdkexNfmuwdth32Q9lZQ) | [实现web实时消息推送的方案，7种！](https://mp.weixin.qq.com/s/-48eec9vNKyU1cJpCRIwmQ) |
 | [Spring Boot整合Socket实战案例,实现单点发送、广播群发，1对1，1对多](https://mp.weixin.qq.com/s/7UkyiILNpwPSe4uNWr02pA) | [基于ChatGPT API和WebSocket的实时机器人聊天应用](https://mp.weixin.qq.com/s/GEFYyyz7fj0pQ8Mm8JftFQ) | [实现web实时消息推送的方案总结](https://mp.weixin.qq.com/s/yBK5UG3Xkr5YMF-0jCbSjA) |
 | [Spring Boot整合Socket实战案例，实现单点发送、广播群发，1对1，1对多](https://mp.weixin.qq.com/s/-lCSSYyr1KR4-aP1by22CQ) | [WebSocket的6种集成方式](https://mp.weixin.qq.com/s/lLCjXKUshXe_LYMjoywwBw) | [万字详解，带你彻底掌握WebSocket用法](https://mp.weixin.qq.com/s/F5bg9bAe3H6hLQ4XLeex4A) |
-| [Spring Boot + WebSocket实现实时通知功能](https://mp.weixin.qq.com/s/YLqBw4wnbuKy29bkxRZ1HA) |                                                              |                                                              |
+| [Spring Boot + WebSocket实现实时通知功能](https://mp.weixin.qq.com/s/YLqBw4wnbuKy29bkxRZ1HA) | [你还在使用websocket实现实时消息推送吗？(SSE使用)](https://mp.weixin.qq.com/s/R2JTglbbq72ziq-GoSQyug) |                                                              |
 
 ## SpringBoot
 

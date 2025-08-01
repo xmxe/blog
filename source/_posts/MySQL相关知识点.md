@@ -2605,6 +2605,7 @@ sql语句实际执行时使用的索引列，有时候mysql可能会选择优化
 |           InnoDB更新的行数           | SHOW status LIKE 'Innodb_rows_updated';  |
 |           InnoDB删除的行数           | SHOW status LIKE 'Innodb_rows_deleted';  |
 
+
 ### 关键字、常用操作
 
 #### exists
@@ -2934,7 +2935,7 @@ WHERE
     table_schema = 'your_database_name'
 ORDER BY 
     (data_length + index_length) DESC
--- 或者`SHOW TABLE STATUS FROM your_database_name;``
+-- 或者`SHOW TABLE STATUS FROM your_database_name;`
 ```
 
 #### 分析CPU使用率过高
@@ -2967,6 +2968,41 @@ long_query_time = 2  # 设置阈值为2秒，你可以根据需要调整这个�
 mysqldumpslow /path/to/your/logfile.log
 ```
 这将显示慢查询日志中的统计信息，包括执行次数、总执行时间、平均执行时间等。你可以根据这些信息找出需要优化的查询。
+
+#### where条件没有数据就用另一个条件
+
+查询where条件时如果这个没数据就使用另外一个值的数据。比如表t1字段type，当`select * from t1 where type = 1`没数据时就使用`where type=2`
+```sql
+(
+    SELECT *
+    FROM t1
+    WHERE type = 1
+)
+UNION ALL
+(
+    SELECT *
+    FROM t1
+    WHERE type = 2
+    AND NOT EXISTS (
+        SELECT 1
+        FROM t1
+        WHERE type = 1
+    )
+);
+```
+首先查询type = 1的所有数据。如果type = 1没有数据，则查询type = 2的所有数据。这种情况下，可以使用UNION和LIMIT结合的方式来实现。具体思路是：先查询type = 1的数据。如果type = 1没有数据，再查询type = 2的数据。使用UNION将两个查询结果合并，并通过LIMIT控制返回的数据。
+1. EXISTS的作用：EXISTS用于检查子查询是否返回任何结果。如果子查询返回至少一行数据，EXISTS返回true；否则返回false。
+2. NOT EXISTS的作用：NOT EXISTS是EXISTS的反义。如果子查询没有返回任何数据，NOT EXISTS返回true；否则返回false。
+3. SELECT 1的作用：在EXISTS子查询中，SELECT 1是一种常见的写法。它表示“只要子查询返回任何一行数据即可”，具体的值（如1）并不重要
+
+#### MySQL批量终止所有Waiting for handler commit的线程
+
+```sql
+SELECT CONCAT('KILL ', GROUP_CONCAT(ID), ';') AS kill_command
+FROM INFORMATION_SCHEMA.PROCESSLIST
+WHERE STATE = 'Waiting for handler commit';
+```
+执行后，会生成一个KILL命令，例如：KILL 5,10,15;然后手动执行生成的命令。
 
 ## 相关文章
 

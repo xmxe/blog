@@ -1649,33 +1649,6 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h3 id="where条件没有数据就用另一个条件"><a href="#where条件没有数据就用另一个条件" class="headerlink" title="where条件没有数据就用另一个条件"></a>where条件没有数据就用另一个条件</h3><p>查询where条件时如果这个没数据就使用另外一个值的数据。比如表t1字段type，当<code>select * from t1 where type = 1</code>没数据时就使用<code>where type=2</code></p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token punctuation">(</span>
-    <span class="token keyword">SELECT</span> <span class="token operator">*</span>
-    <span class="token keyword">FROM</span> t1
-    <span class="token keyword">WHERE</span> <span class="token keyword">type</span> <span class="token operator">=</span> <span class="token number">1</span>
-<span class="token punctuation">)</span>
-<span class="token keyword">UNION</span> <span class="token keyword">ALL</span>
-<span class="token punctuation">(</span>
-    <span class="token keyword">SELECT</span> <span class="token operator">*</span>
-    <span class="token keyword">FROM</span> t1
-    <span class="token keyword">WHERE</span> <span class="token keyword">type</span> <span class="token operator">=</span> <span class="token number">2</span>
-    <span class="token operator">AND</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">(</span>
-        <span class="token keyword">SELECT</span> <span class="token number">1</span>
-        <span class="token keyword">FROM</span> t1
-        <span class="token keyword">WHERE</span> <span class="token keyword">type</span> <span class="token operator">=</span> <span class="token number">1</span>
-    <span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>首先查询type &#x3D; 1的所有数据。如果type &#x3D; 1没有数据，则查询type &#x3D; 2的所有数据。这种情况下，可以使用UNION和LIMIT结合的方式来实现。具体思路是：先查询type &#x3D; 1的数据。如果type &#x3D; 1没有数据，再查询type &#x3D; 2的数据。使用UNION将两个查询结果合并，并通过LIMIT控制返回的数据。</p>
-<ol>
-<li>EXISTS的作用：EXISTS用于检查子查询是否返回任何结果。如果子查询返回至少一行数据，EXISTS返回true；否则返回false。</li>
-<li>NOT EXISTS的作用：NOT EXISTS是EXISTS的反义。如果子查询没有返回任何数据，NOT EXISTS返回true；否则返回false。</li>
-<li>SELECT 1的作用：在EXISTS子查询中，SELECT 1是一种常见的写法。它表示“只要子查询返回任何一行数据即可”，具体的值（如1）并不重要</li>
-</ol>
-<h3 id="MySQL批量终止所有Waiting-for-handler-commit的线程"><a href="#MySQL批量终止所有Waiting-for-handler-commit的线程" class="headerlink" title="MySQL批量终止所有Waiting for handler commit的线程"></a>MySQL批量终止所有Waiting for handler commit的线程</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> CONCAT<span class="token punctuation">(</span><span class="token string">'KILL '</span><span class="token punctuation">,</span> GROUP_CONCAT<span class="token punctuation">(</span>ID<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">';'</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> kill_command
-<span class="token keyword">FROM</span> INFORMATION_SCHEMA<span class="token punctuation">.</span>PROCESSLIST
-<span class="token keyword">WHERE</span> STATE <span class="token operator">=</span> <span class="token string">'Waiting for handler commit'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>执行后，会生成一个KILL命令，例如：KILL 5,10,15;然后手动执行生成的命令。</p>
 <h2 id="怎么保证幂等性"><a href="#怎么保证幂等性" class="headerlink" title="怎么保证幂等性"></a>怎么保证幂等性</h2><h3 id="幂等性的几种方案"><a href="#幂等性的几种方案" class="headerlink" title="幂等性的几种方案"></a>幂等性的几种方案</h3><ol>
 <li><p>唯一索引，防止新增脏数据</p>
 </li>
@@ -1741,7 +1714,7 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <tr>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3iQB9mx550lLIbfUIs4Hkg">如何防止被恶意刷接口？</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qhCtg-7MSBrin3R0z6286w">SpringBoot实现接口防抖的几种方案，杜绝重复提交</a></td>
-<td align="center"></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JMANcHZohacjFWXFgt7BIA">接口幂等性设计：6种解决方法让重复请求不再成为系统隐患</a></td>
 </tr>
 </tbody></table>
 <h3 id="微服务系统如何设计一个安全的API"><a href="#微服务系统如何设计一个安全的API" class="headerlink" title="微服务系统如何设计一个安全的API"></a>微服务系统如何设计一个安全的API</h3><ol>

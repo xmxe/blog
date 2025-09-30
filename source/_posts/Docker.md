@@ -279,6 +279,17 @@ docker images
 - 拉取镜像
 ```shell
 docker pull name:tag
+# 拉取jdk镜像
+# 指定具体版本（推荐）
+docker pull eclipse-temurin:8u412-b08-jdk
+
+# 基于不同操作系统
+docker pull eclipse-temurin:8-jdk-alpine  # Alpine Linux 版本（更小）
+docker pull eclipse-temurin:8-jdk-centos7 # CentOS 7版本
+docker pull eclipse-temurin:8-jdk-ubuntu  # Ubuntu版本
+
+# 仅JRE运行时（如果只需要运行环境）
+docker pull eclipse-temurin:8-jre
 ```
 
 ### docker push
@@ -903,6 +914,36 @@ FROM scratch
 
 `scratch`并不是一个实际的镜像，而是一个特殊的占位符，表示一个空白的起点。使用`scratch`作为基础镜像时，你需要提供构建镜像所需的所有内容，包括操作系统内核（如果适用）、文件系统、应用程序及其依赖等。这通常用于构建非常轻量级的、只包含必要组件的镜像，例如某些静态网站或单个可执行文件的服务。
 
+PS：由于Oracle对JDK的许可证和分发政策发生了重大变化，**直接使用官方Oracle JDK镜像变得非常复杂，并且通常不推荐用于生产环境**。主要原因如下：
+
+1. **许可证限制**：从Oracle JDK 11开始，Oracle采用了新的许可证模型。**官方Oracle JDK本身是免费的，可以用于开发和测试，但如果你在生产环境中使用，则需要根据Oracle的“Java SE订阅”服务付费**。
+2. **Docker镜像政策**：Oracle**不提供**官方的、可直接在Dockerfile中`FROM`的公共基础镜像。他们提供的官方镜像是一个包含完整安装程序的“安装器镜像”，你需要在其内部运行安装程序并接受许可证，这使得构建过程非常繁琐，并且不符合Docker的最佳实践。
+
+使用其他免费的OpenJDK发行版
+```Dockerfile
+# Eclipse Temurin (由Adoptium项目提供)
+# 使用Java 21 LTS版本
+FROM eclipse-temurin:21-jdk
+# Java 17 LTS版本
+# FROM eclipse-temurin:17-jdk
+# Java 11 LTS版本
+# FROM eclipse-temurin:11-jdk
+# Java 8 LTS版本
+# eclipse-temurin:8-jdk
+# 如果你只需要JRE而不是完整的JDK，可以使用`-jre`标签以减小镜像体积
+# FROM eclipse-temurin:21-jre
+# 如果你的镜像只需要运行一个已有的JAR包（绝大多数生产环境情况），请选择
+# FROM eclipse-temurin:21-jre-alpine。
+# 这是最佳选择，因为它最小、最安全。
+# 如果你需要在容器内进行编译、调试或运行复杂的诊断命令，请选择FROM eclipse-temurin:21-jdk。对于正式项目，强烈推荐使用多阶段构建，它完美地结合了二者的优势。
+
+# IBM主导的、高质量的OpenJDK发行版
+FROM ibm-semeru-runtimes:open-21-jdk
+
+# 亚马逊提供的免费、多平台的OpenJDK发行版
+FROM amazoncorretto:21
+```
+
 #### RUN
 
 它接受命令作为参数并用于创建镜像,RUN命令用于创建镜像。在镜像构建的过程中执行,这个指令有两种格式
@@ -1161,6 +1202,7 @@ EXPOSE 19990
 ADD applet-provider.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
+#### 部署Spring Boot项目
 
 ```shell
 #!/bin/bash
@@ -1183,6 +1225,54 @@ docker build -f /composetest/pc/Dockerfile -t mdjz /composetest/pc/
 #运行容器
 echo "run app docker run -itd --name mdjz --restart always  -p  19901:19901 "
 docker run -itd --name mdjz --network=my-net --restart always -p 19901:19901 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro mdjz
+```
+**优化版本**
+
+```shell
+#!/bin/bash
+# 遇到错误立即退出
+set -e
+echo "自动构建pc包的镜像和运行容器"
+# 配置变量
+CONTAINER_NAME="mdjz"
+IMAGE_NAME="mdjz"
+PROJECT_PATH="/home/pass-base/pc"
+DOCKERFILE_PATH="$PROJECT_PATH/Dockerfile"
+PORT_MAPPING="19901:19901"
+NETWORK="my-net"
+
+# 清理现有容器
+echo "清理现有容器..."
+if docker ps -a | grep -q "$CONTAINER_NAME"; then
+    docker stop "$CONTAINER_NAME" 2>/dev/null || true
+    docker rm "$CONTAINER_NAME" 2>/dev/null || true
+    echo "旧容器已清理"
+fi
+
+# 清理旧镜像
+echo "清理旧镜像..."
+if docker images | grep -q "$IMAGE_NAME"; then
+    docker rmi "$IMAGE_NAME" 2>/dev/null || true
+    echo "旧镜像已清理"
+fi
+
+# 构建新镜像
+echo "构建新镜像..."
+docker build -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" "$PROJECT_PATH"
+
+# 运行新容器
+echo "启动新容器..."
+docker run -itd \
+    --name "$CONTAINER_NAME" \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /etc/timezone:/etc/timezone:ro \
+    -v "${PROJECT_PATH}:${PROJECT_PATH}" \
+    --network="$NETWORK" \
+    --restart always \
+    -p "$PORT_MAPPING" \
+    "$IMAGE_NAME"
+
+echo "部署成功完成!"
 ```
 
 

@@ -32,12 +32,20 @@ nohup java -jar abc.jar >/dev/null 2>&1 &
 # 2>&1:表示标准错误输出重定向等同于标准输出,因为之前标准输出已经重定向到了空设备文件,所以标准错误输出也重定向到空设备文件。这条命令的意思就是在后台执行这个程序,并将错误输出2重定向到标准输出1,然后将标准输出1全部放到/dev/null文件,也就是清空.所以可以看出">/dev/null 2>&1 &"常用来避免shell命令或者程序等运行中有内容输出
 # 将错误日志输出到文件
 nohup command 2>error.log &
+# 重命名日志文件
+nohup java -jar myapp.jar > app_output.log 2>&1 &
+# 标准输出到文件，错误输出到标准输出
+nohup command > custom.log 2>&1 &
+# 标准输出和错误输出到不同文件
+nohup command > output.log 2> error.log &
+
 ```
 
-### 配置jdk环境变量
+### 配置环境变量
 
 ```shell
 vim /etc/profile
+# 配置JDK
 export JAVA_HOME=/usr/jdk1.8.0_121
 # export JRE_HOME=${JAVA_HOME}/jre  
 # export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
@@ -105,7 +113,7 @@ apt install net-tools
 > [centos7更换yum源](https://mirrors.cnnic.cn/help/centos/)
 
 
-### 查看开机启动的服务列表
+### 开机启动/端口开放
 
 ```shell
 # 查看某个服务是否开机启动
@@ -113,6 +121,12 @@ systemctl list-unit-files|grep enabled
 # 查看启动失败的服务列表：systemctl --failed
 systemctl is-enabled firewalld.service
 
+# 设置开机自启
+chkconfig keepalived on
+#chkconfig --add name
+#          --del name
+#          --list
+          
 # 端口开放
 #（--permanent永久生效，没有此参数重启后失效）
 # --zone=public:指定了要查询的防火墙区域。防火墙区域是网络连接的一个逻辑分组，每个区域都有自己的规则集来控制进入和离开该区域的数据包。公共区域（public）通常用于外部网络连接，例如Internet连接。可不加
@@ -154,9 +168,12 @@ sudo ufw reload
 
 ```shell
 > filename
+
 echo -n > filename
+
 # truncate命令可以用来缩小或扩展文件大小。要清空文件，可以将其大小设置为0
 truncate -s 0 filename
+
 cat /dev/null > filename
 : > filename
 ```
@@ -169,7 +186,9 @@ cat /dev/null > filename
 echo 1 > a.txt 输出1
 # >>尾部追加，不会覆盖掉文件中原有的内容
 echo 2 >> a.txt 输出1 2
+
 touch file
+
 cat file1 >> file2 # 把file1的文档内容输入file2这个文档里
 ```
 
@@ -243,8 +262,8 @@ cp -r
 ls -a
 ```
 
-### 图形化页面卡死重启
 ```shell
+# 图形化界面卡死重启
 kill -9 gnome-shell pid
 ```
 
@@ -253,9 +272,11 @@ kill -9 gnome-shell pid
 ```shell
 # 查看linux所有用户
 cut -d : -f 1 /etc/passwd
+
 # 查看linux所有用户组
 # -d:以“：”为分割符进行分割 -f 1展示第一列
 cut -d : -f 1 /etc/group
+
 # 用户名：查看用户所在用户组
 groups
 
@@ -460,15 +481,6 @@ make prefix=/usr/local/redis install
 make uninstall
 ```
 
-### 设置keepalived服务开机启动
-
-```shell
-chkconfig keepalived on
-chkconfig --add name
-          --del name
-          --list
-```
-
 ### Ubuntu图形界面允许root登陆
 
 ```shell
@@ -486,7 +498,7 @@ reboot
 > [解决Ubuntu的root账号无法登录SSH问题](https://www.cnblogs.com/yixius/articles/6971054.html)
 
 
-### 查看空间占用
+### 磁盘占用
 
 ```shell
 du -h --max-depth=1 /usr
@@ -507,7 +519,7 @@ du -sh 文件名
 df -h
 ```
 
-### 查看内存
+### 内存占用
 ```shell
 free -h
 
@@ -525,15 +537,6 @@ chmod 754 filename
 # chmod +x是将文件状态改为可执行，而chmod 777是改变文件读写权限。
 ```
 
-### centos7卸载openjdk
-
-```shell
-rpm -qa|grep jdk  # 查看已有的openjdk -q(query) -a(all)
-rpm -ev --nodeps $(上条命令的查询结果) # 卸载
-
-# ubuntu 
-apt-get remove openjdk*
-```
 ### rpm参数
 
 ```
@@ -620,6 +623,13 @@ apt-get remove openjdk*
 --version　显示版本信息。
 --whatprovides<功能特性>　查询该套件对指定的功能特性所提供的兼容度。
 --whatrequires<功能特性>　查询该套件对指定的功能特性所需要的兼容度。
+
+# Centos卸载openjdk
+rpm -qa|grep jdk  # 查看已有的openjdk -q(query) -a(all)
+rpm -ev --nodeps $(上条命令的查询结果) # 卸载
+
+# ubuntu 
+apt-get remove openjdk*
 ```
 
 ### 从服务器复制文件到本地
@@ -635,7 +645,7 @@ scp /home/myfile/test.txt root@192.168.1.100:/data/
 scp -r /home/myfile/ root@192.168.1.100:/data/
 ```
 
-### ssh双向免密登录服务器A、B
+### ssh双向免密登录服务器
 
 ```shell
 # 生成密钥
@@ -658,8 +668,9 @@ ssh登陆 ssh root@ip
 ```
 > [科普：什么是SSH？](https://mp.weixin.qq.com/s/1e4aGp_cx0E_qCHVuS3GMg)
 
+### 设置默认命令行/图形页面
 
-### centos7/ubuntu通用
+**centos7/ubuntu通用**
 
 ```shell
 # 默认命令行
@@ -668,7 +679,7 @@ systemctl set-default multi-user.target  （init 3）
 systemctl set-default graphical.target  (init 5)
 ```
 
-### 查看系统内核及版本
+### 系统内核及版本
 
 ```shell
 # 查看内核
@@ -684,7 +695,9 @@ yum list installed | grep kernel
 yum remove kernel-
 ```
 
-### 测试端口是否开通
+### 测试网络
+
+**端口是否开通**
 
 ```shell
 ssh -v -p port username@ip
@@ -696,10 +709,9 @@ nc -vu ip 端口
 # -v 输出交互或出错信息，新手调试时尤为有用,-u指定nc使用UDP协议，默认为TCP
 ```
 
-### telnet
+**telnet**
 
-格式: telnet 选项 主机名 端口号
-选项如下：
+格式: telnet 选项 主机名 端口号。选项如下：
 
 ```
 -8：允许使用8位字符资料，包括输入与输出。
@@ -712,14 +724,14 @@ nc -vu ip 端口
 -x：假设主机有支持数据加密的功能，就使用它。
 ```
 
-### tracerouter
+**tracerouter**
 
 ```sh
 traceroute ip
 
 traceroute -p port ip
 traceroute -p 443 example.com # 测试目标主机的443端口
-
+# Windows
 tracert ip
 # -n：不解析主机名，只显示IP地址。这有助于加快追踪速度
 # -m或-h：设置最大跳数（默认是30跳）。
@@ -730,7 +742,7 @@ tracert ip
 
 ```
 
-### Linux交换空间(swap space)
+### 交换空间(swap space)
 
 交换空间是磁盘上的一块区域，可以是一个分区，也可以是一个文件，或者是他们的组合。简单点说，当系统物理内存吃紧时，Linux会将内存中不常访问的数据保存到swap上，这样系统就有更多的物理内存为各个进程服务，而当系统需要访问swap上存储的内容时，再将swap上的数据加载到内存中，这就是我们常说的swap out和swap in
 

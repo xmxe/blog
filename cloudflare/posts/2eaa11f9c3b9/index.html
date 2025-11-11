@@ -736,7 +736,7 @@ yum list docker-ce <span class="token parameter variable">--showduplicates</span
 <span class="token function">docker</span> pull eclipse-temurin:8-jdk-centos7 <span class="token comment"># CentOS 7版本</span>
 <span class="token function">docker</span> pull eclipse-temurin:8-jdk-ubuntu  <span class="token comment"># Ubuntu版本</span>
 
-<span class="token comment"># 仅 JRE 运行时（如果只需要运行环境）</span>
+<span class="token comment"># 仅JRE运行时（如果只需要运行环境）</span>
 <span class="token function">docker</span> pull eclipse-temurin:8-jre<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h3 id="docker-push"><a href="#docker-push" class="headerlink" title="docker push"></a>docker push</h3><ul>
@@ -1305,6 +1305,7 @@ FROM eclipse-temurin:21-jdk
 # FROM eclipse-temurin:17-jdk
 # Java 11 LTS版本
 # FROM eclipse-temurin:11-jdk
+# Java 8 LTS版本
 # eclipse-temurin:8-jdk
 # 如果你只需要JRE而不是完整的JDK，可以使用&#96;-jre&#96;标签以减小镜像体积
 # FROM eclipse-temurin:21-jre
@@ -1317,7 +1318,7 @@ FROM eclipse-temurin:21-jdk
 FROM ibm-semeru-runtimes:open-21-jdk
 
 # 亚马逊提供的免费、多平台的OpenJDK发行版
-FROM amazoncorretto:21<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+FROM amazoncorretto:21<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h4><p>它接受命令作为参数并用于创建镜像,RUN命令用于创建镜像。在镜像构建的过程中执行,这个指令有两种格式</p>
 <p>第一种形式：</p>

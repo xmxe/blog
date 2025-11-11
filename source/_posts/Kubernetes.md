@@ -5,12 +5,6 @@ img: https://img-blog.csdnimg.cn/img_convert/09600fbc706fb977ae53d5524d536ea9.pn
 
 ---
 
-## 引用
-
-> https://k8s-tutorials.pages.dev/
-> https://kuboard.cn/
-> https://k8s.iswbm.com/
-
 ## 准备工作
 
 在开始本教程之前，需要配置好本地环境，以下是需要安装的依赖和包。
@@ -21,9 +15,7 @@ img: https://img-blog.csdnimg.cn/img_convert/09600fbc706fb977ae53d5524d536ea9.pn
 
 #### 推荐安装方法
 
-目前使用 [Docker Desktop](https://www.docker.com/products/docker-desktop/)来安装docker还是最简单的方案，打开官网下载对应你电脑操作系统的包即可(https://www.docker.com/products/docker-desktop/)，
-
-当安装完成后，可以通过`docker run hello-world`来快速校验是否安装成功！
+目前使用[Docker Desktop](https://www.docker.com/products/docker-desktop/)来安装docker，打开[官网](https://www.docker.com/products/docker-desktop/)下载对应你电脑操作系统的包即可。当安装完成后，可以通过`docker run hello-world`来快速校验是否安装成功！
 
 #### 其它安装方法
 
@@ -31,9 +23,7 @@ img: https://img-blog.csdnimg.cn/img_convert/09600fbc706fb977ae53d5524d536ea9.pn
 
 ### 安装minikube
 
-我们还需要搭建一套k8s本地集群(使用云厂商或者其它k8s集群都可)。本地搭建k8s集群的方式推荐使用[minikube](https://minikube.sigs.k8s.io/docs/)。
-
-可以根据[minikube快速安装](https://minikube.sigs.k8s.io/docs/start/)来进行下载安装，这里简单列举MacOS的安装方式，Linux&Windows操作系统可以参考[官方文档](https://minikube.sigs.k8s.io/docs/start/)快速安装。
+我们还需要搭建一套k8s本地集群(使用云厂商或者其它k8s集群都可)。本地搭建k8s集群的方式推荐使用[minikube](https://minikube.sigs.k8s.io/docs/)。可以根据[minikube快速安装](https://minikube.sigs.k8s.io/docs/start/)来进行下载安装，这里简单列举MacOS的安装方式，Linux&Windows操作系统可以参考[官方文档](https://minikube.sigs.k8s.io/docs/start/)快速安装。
 
 ```shell
 brew install minikube
@@ -41,9 +31,7 @@ brew install minikube
 
 #### 启动minikube
 
-因为minikube支持很多容器和虚拟化技术([Docker](https://minikube.sigs.k8s.io/docs/drivers/docker/),[Hyperkit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/),[Hyper-V](https://minikube.sigs.k8s.io/docs/drivers/hyperv/),[KVM](https://minikube.sigs.k8s.io/docs/drivers/kvm2/),[Parallels](https://minikube.sigs.k8s.io/docs/drivers/parallels/),[Podman](https://minikube.sigs.k8s.io/docs/drivers/podman/),[VirtualBox](https://minikube.sigs.k8s.io/docs/drivers/virtualbox/),or[VMware Fusion/Workstation](https://minikube.sigs.k8s.io/docs/drivers/vmware/))，也是问题出现比较多的地方，所以这里还是稍微说明一下。
-
-如果你使用`docker`的方案是上面推荐的[Docker Desktop](https://www.docker.com/products/docker-desktop/)，那么你以下面的命令启动minikube即可，需要耐心等待下载依赖。
+因为minikube支持很多容器和虚拟化技术([Docker](https://minikube.sigs.k8s.io/docs/drivers/docker/),[Hyperkit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/),[Hyper-V](https://minikube.sigs.k8s.io/docs/drivers/hyperv/),[KVM](https://minikube.sigs.k8s.io/docs/drivers/kvm2/),[Parallels](https://minikube.sigs.k8s.io/docs/drivers/parallels/),[Podman](https://minikube.sigs.k8s.io/docs/drivers/podman/),[VirtualBox](https://minikube.sigs.k8s.io/docs/drivers/virtualbox/),[VMware Fusion/Workstation](https://minikube.sigs.k8s.io/docs/drivers/vmware/))，也是问题出现比较多的地方，所以这里还是稍微说明一下。如果你使用`docker`的方案是上面推荐的[Docker Desktop](https://www.docker.com/products/docker-desktop/)，那么你以下面的命令启动minikube即可，需要耐心等待下载依赖。
 
 ```shell
 minikube start --vm-driver docker --container-runtime=docker
@@ -67,31 +55,32 @@ echo "`minikube ip` docker.local" | sudo tee -a /etc/hosts > /dev/null
 docker run hello-world
 ```
 
-**minikube 命令速查**
+#### minikube命令速查
 
-`minikube stop` 不会删除任何数据，只是停止VM和k8s集群。
-
-`minikube delete` 删除所有minikube启动后的数据。
-
-`minikube ip` 查看集群和docker enginer运行的IP地址。
-
-`minikube pause` 暂停当前的资源和k8s集群
-
-`minikube status` 查看当前集群状态
+```sh
+# 不会删除任何数据，只是停止VM和k8s集群。
+minikube stop
+# 删除所有minikube启动后的数据。
+minikube delete
+# 查看集群和docker enginer运行的IP地址。
+minikube ip
+# 暂停当前的资源和k8s集群
+minikube pause
+# 查看当前集群状态
+minikube status
+```
 
 ### 安装kubectl
 
-这一步是可选的，如果不安装的话，后续所有`kubectl`相关的命令，使用`minikube kubectl`命令替代即可。
-
-如果你不想使用`minikube kubectl`或者配置相关环境变量来进行下面的教学的话，可以考虑直接安装`kubectl`。
+这一步是可选的，如果不安装的话，后续所有`kubectl`相关的命令，使用`minikube kubectl`命令替代即可。如果你不想使用`minikube kubectl`或者配置相关环境变量来进行下面的教学的话，可以考虑直接安装`kubectl`。
 
 ```shell
 brew install kubectl
 ```
 
-### 注册docker hub账号登录
+### 注册Docker Hub账号
 
-因为默认minikube使用的镜像地址是DockerHub，所以我们还需要在DockerHub(https://hub.docker.com/)中注册账号，并且使用login命令登录账号。
+因为默认minikube使用的镜像地址是DockerHub，所以我们还需要在[DockerHub](https://hub.docker.com/)中注册账号，并且使用login命令登录账号。
 
 ```shell
 docker login
@@ -119,17 +108,11 @@ func main() {
 }
 ```
 
-上面是一串用[Go](https://go.dev/)写的代码，代码逻辑非常的简单，首先启动HTTP服务器，监听`3000`端口，当访问路由`/`的时候返回字符串`[v1] Hello, Kubernetes!`。
-
-在以前，如果你想将这段代码运行起来并测试一下。你首先需要懂得如何下载golang的安装包进行安装，接着需要懂得`golang module`的基本使用，最后还需要了解golang的编译和运行命令，才能将该代码运行起来。甚至在过程中，可能会因为环境变量问题、操作系统问题、处理器架构等问题导致编译或运行失败。
-
-但是通过Container(容器)技术，只需要上面的代码，附带着对应的容器`Dockerfile`文件，那么你就不需要golang的任何知识，也能将代码顺利运行起来。
+上面是一串用[Go](https://go.dev/)写的代码，代码逻辑非常的简单，首先启动HTTP服务器，监听`3000`端口，当访问路由`/`的时候返回字符串`[v1] Hello, Kubernetes!`。在以前，如果你想将这段代码运行起来并测试一下。你首先需要懂得如何下载golang的安装包进行安装，接着需要懂得`golang module`的基本使用，最后还需要了解golang的编译和运行命令，才能将该代码运行起来。甚至在过程中，可能会因为环境变量问题、操作系统问题、处理器架构等问题导致编译或运行失败。但是通过Container(容器)技术，只需要上面的代码，附带着对应的容器`Dockerfile`文件，那么你就不需要golang的任何知识，也能将代码顺利运行起来。
 
 > Container(容器)是一种沙盒技术。它是基于Linux中Namespace/Cgroups/chroot等技术组合而成，更多技术细节可以参照这个视频[如何自己实现一个容器](https://www.youtube.com/watch?v=8fi7uSYlOdc)。
 
-下面就是Go代码对应的`Dockerfile`，简单的方案是直接使用golang的alpine镜像来打包，但是因为我们后续练习需要频繁的推送镜像到Docker Hub和拉取镜像到k8s集群中，为了优化网络速度，我们选择先在`golang:1.16-buster`中将上述Go代码编译成二进制文件，再将二进制文件复制到`base-debian10`镜像中运行(Dockerfile不理解没有关系，不影响后续学习)。
-
-这样我们可以将300MB大小的镜像变成只有20MB的镜像，甚至压缩上传到DockerHub后大小只有10MB！
+下面就是Go代码对应的`Dockerfile`，简单的方案是直接使用golang的alpine镜像来打包，但是因为我们后续练习需要频繁的推送镜像到Docker Hub和拉取镜像到k8s集群中，为了优化网络速度，我们选择先在`golang:1.16-buster`中将上述Go代码编译成二进制文件，再将二进制文件复制到`base-debian10`镜像中运行。这样我们可以将300MB大小的镜像变成只有20MB的镜像，甚至压缩上传到DockerHub后大小只有10MB！
 
 ```dockerfile
 # Dockerfile
@@ -156,10 +139,7 @@ ENTRYPOINT ["/main"]
 docker build . -t guangzhengli/hellok8s:v1
 # Step 1/11 : FROM golang:1.16-buster AS builder
 # ...
-# ...
-# Step 11/11 : ENTRYPOINT ["/main"]
 # Successfully tagged guangzhengli/hellok8s:v1
-
 
 docker images
 # guangzhengli/hellok8s          v1         f956e8cf7d18   8 days ago      25.4MB
@@ -171,45 +151,29 @@ docker images
 docker run -p 3000:3000 --name hellok8s -d guangzhengli/hellok8s:v1
 ```
 
-运行成功后，可以通过浏览器或者`curl`来访问`http://127.0.0.1:3000`,查看是否成功返回字符串`[v1] Hello, Kubernetes!`。
-
-这里因为我本地只用Docker CLI，而docker runtime是使用`minikube`，所以我需要先调用`minikube ip`来返回minikube IP地址，例如返回了`192.168.59.100`，所以我需要访问`http://192.168.59.100:3000`来判断是否成功返回字符串`[v1] Hello, Kubernetes!`。
-
-最后确认没有问题，使用`docker push`将镜像上传到远程的`DockerHub`仓库当中，这样可以供他人下载使用，也方便后续`Minikube`下载镜像使用。**需要注意将`guangzhengli`替换成自己的`DockerHub`账号名称**。
+运行成功后，可以通过浏览器或者`curl`来访问`http://127.0.0.1:3000`,查看是否成功返回字符串`[v1] Hello, Kubernetes!`。这里因为我本地只用Docker CLI，而docker runtime是使用`minikube`，所以我需要先调用`minikube ip`来返回minikube IP地址，例如返回了`192.168.59.100`，所以我需要访问`http://192.168.59.100:3000`来判断是否成功返回字符串`[v1] Hello, Kubernetes!`。最后确认没有问题，使用`docker push`将镜像上传到远程的`DockerHub`仓库当中，这样可以供他人下载使用，也方便后续`Minikube`下载镜像使用。**需要注意将`guangzhengli`替换成自己的`DockerHub`账号名称**。
 
 ```shell
 docker push guangzhengli/hellok8s:v1
 ```
 
-经过这一节的练习，有没有对容器的强大有一个初步的认识呢？可以想象当你想部署一个更复杂的服务时，例如Nginx，MySQL，Redis。你只需要到[DockerHub搜索](https://hub.docker.com/search?q=)中搜索对应的镜像，通过`docker pull`下载镜像，`docker run`启动服务即可！而无需关心依赖和各种配置！
-
 ## Pod
 
-如果在生产环境中运行的都是独立的单体服务，那么Container(容器)也就够用了，但是在实际的生产环境中，维护着大规模的集群和各种不同的服务，服务之间往往存在着各种各样的关系。而这些关系的处理，才是手动管理最困难的地方。
-
-**Pod**是我们将要创建的第一个k8s资源，也是可以在Kubernetes中创建和管理的、最小的可部署的计算单元。在了解`pod`和`container`的区别之前，我们可以先创建一个简单的pod试试，
-
-我们先创建`nginx.yaml`文件，编写一个可以创建`nginx`的Pod。
+如果在生产环境中运行的都是独立的单体服务，那么Container(容器)也就够用了，但是在实际的生产环境中，维护着大规模的集群和各种不同的服务，服务之间往往存在着各种各样的关系。而这些关系的处理，才是手动管理最困难的地方。**Pod**是我们将要创建的第一个k8s资源，也是可以在Kubernetes中创建和管理的、最小的可部署的计算单元。在了解`pod`和`container`的区别之前，我们可以先创建一个简单的pod试试，我们先创建`nginx.yaml`文件，编写一个可以创建`nginx`的Pod。
 
 ```yaml
 # nginx.yaml
 apiVersion: v1
-kind: Pod
+kind: Pod # 表示我们要创建的资源是Pod类型
 metadata:
-  name: nginx-pod
-spec:
+  name: nginx-pod # 这个名字需要是唯一
+spec: # 要运行的容器的名称和镜像名称
   containers:
     - name: nginx-container
       image: nginx
 ```
 
-其中`kind`表示我们要创建的资源是`Pod`类型，`metadata.name`表示要创建的pod的名字，这个名字需要是唯一的。`spec.containers`表示要运行的容器的名称和镜像名称。镜像默认来源`DockerHub`。
-
-我们运行第一条k8s命令`kubectl apply -f nginx.yaml`命令来创建`nginx`Pod。
-
-接着通过`kubectl get pods`来查看pod是否正常启动。
-
-最后通过`kubectl port-forward nginx-pod 4000:80`命令将`nginx`默认的`80`端口映射到本机的`4000`端口，打开浏览器或者`curl`来访问`http://127.0.0.1:4000`,查看是否成功访问`nginx`默认页面！
+其中`kind`表示我们要创建的资源是`Pod`类型，`metadata.name`表示要创建的pod的名字，这个名字需要是唯一的。`spec.containers`表示要运行的容器的名称和镜像名称。镜像默认来源`DockerHub`。我们运行第一条k8s命令`kubectl apply -f nginx.yaml`命令来创建`nginx`Pod。接着通过`kubectl get pods`来查看pod是否正常启动。最后通过`kubectl port-forward nginx-pod 4000:80`命令将`nginx`默认的`80`端口映射到本机的`4000`端口，打开浏览器或者`curl`来访问`http://127.0.0.1:4000`,查看是否成功访问`nginx`默认页面！
 
 ``` shell
 kubectl apply -f nginx.yaml
@@ -245,23 +209,54 @@ kubectl port-forward nginx-pod 4000:80
 
 ![pod](https://cdn.jsdelivr.net/gh/guangzhengli/PicURL@master/uPic/pod.png)
 
+**为什么Kubernetes要设计Pod这个概念？（为什么区分？）**
+
+这是理解Kubernetes架构的关键。主要原因有以下几点：
+
+1. 管理“亲密关系”容器
+
+有些应用由多个紧密耦合、需要共享资源的进程组成。在Docker的世界里，你可能会把所有进程塞进一个容器（违背了“一个容器一个进程”的最佳实践），或者使用 `--net=container:<id>` 等复杂方式连接多个容器。
+
+**Pod 提供了一个优雅的解决方案**，它将这些紧密关联的容器组合成一个逻辑单元，让它们：
+
+- **共享网络**：Pod内的容器可以通过`localhost`直接通信，因为它们共享同一个IP地址。
+- **共享存储**：可以定义一个存储卷，并将其挂载到Pod内的多个容器中，让它们共享文件。
+
+**经典例子：Sidecar模式**
+一个 Pod 包含两个容器：
+
+- **主容器**：`web-server`，提供Web服务。
+- **边车容器**：`log-collector`，负责收集主容器产生的日志文件，并上传到中央日志系统。
+这两个容器需要共享同一个日志目录（存储卷），并且`log-collector`可能需要通过`localhost`访问`web-server`的健康检查接口。Pod完美地满足了这种需求。
+- **容器也能共享资源，为什么还要pod？因为Pod确保了一组容器总是被调度到同一个节点上，如果分布式系统在不同节点上基本上无法实现共享资源**
+
+2. 抽象与简化
+
+Kubernetes的目标是管理分布式系统，而不是直接管理成千上万个独立的容器。通过将容器分组到Pod中，Kubernetes的调度器、控制器和API只需要与Pod这个更高级的抽象进行交互，大大简化了系统的复杂性。
+
+- **调度**：Kubernetes调度的是整个Pod，而不是单个容器。这意味着Pod内的所有容器总是被调度到**同一个节点**上，确保了它们可以共享资源。
+- **生命周期管理**：Kubernetes以Pod为单位进行扩缩容、滚动更新和健康检查。
+
+3. 提供更丰富的上下文
+
+Pod为容器提供了额外的元数据和环境，例如：
+
+- **标签和注解**：可以附加到Pod上，用于服务发现、负载均衡和自动化。
+- **安全上下文**：可以定义在Pod级别，应用于其内部的所有容器。
+- **资源限制**：可以在Pod级别定义，限制整个Pod所能使用的CPU和内存总量。
+
 ### Pod其它命令
 
 我们可以通过`logs`或者`logs -f`命令查看pod日志，可以通过`exec -it`进入pod或者调用容器命令，通过`delete pod`或者`delete -f nginx.yaml`的方式删除pod资源。这里可以看到[kubectl所有命令](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)。
 
 ```shell
-kubectl logs --follow nginx-pod
-                              
+kubectl logs --follow nginx-pod      
 kubectl exec nginx-pod -- ls
-
 kubectl delete pod nginx-pod
 # pod "nginx-pod" deleted
-
 kubectl delete -f nginx.yaml
 # pod "nginx-pod" deleted
 ```
-
-最后，根据我们在`container`的那节构建的`hellok8s:v1`的镜像，同时参考`nginx`pod的资源定义，你能独自编写出`hellok8s:v1`Pod的资源文件吗。并通过`port-forward`到本地的`3000`端口进行访问，最终得到字符串`[v1] Hello, Kubernetes!`。
 
 `hellok8s:v1`Pod资源定义和相应的命令如下所示：
 
@@ -279,19 +274,21 @@ spec:
 
 ```shell
 kubectl apply -f hellok8s.yaml
-
 kubectl get pods
-
 kubectl port-forward hellok8s 3000:3000
 ```
 
 ## Deployment
 
-在生产环境中，我们基本上不会直接管理pod，我们需要`kubernetes`来帮助我们来完成一些自动化操作，例如自动扩容或者自动升级版本。可以想象在生产环境中，我们手动部署了10个`hellok8s:v1`的pod，这个时候我们需要升级成`hellok8s:v2`版本，我们难道需要一个一个的将`hellok8s:v1`的pod手动升级吗？
-
-这个时候就需要我们来看`kubernetes`的另外一个资源`deployment`，来帮助我们管理pod。
+在生产环境中，我们基本上不会直接管理pod，我们需要`kubernetes`来帮助我们来完成一些自动化操作，例如自动扩容或者自动升级版本。可以想象在生产环境中，我们手动部署了10个`hellok8s:v1`的pod，这个时候我们需要升级成`hellok8s:v2`版本，我们难道需要一个一个的将`hellok8s:v1`的pod手动升级吗？这个时候就需要我们来看`kubernetes`的另外一个资源`deployment`，来帮助我们管理pod。简单来说，**Deployment是Kubernetes中用于管理Pod和ReplicaSet的一种高级抽象，它为我们提供了一种声明式的方式来定义和控制应用程序的部署和更新。Deployment管理的是具有相同标签的「一组Pod」，而不是所有Pod**
 
 ### 扩容
+
+这是通过一个叫做**ReplicaSet**的底层对象来实现的。Deployment会自动创建并管理ReplicaSet。
+
+- **ReplicaSet**的唯一职责就是确保指定数量的、完全相同的Pod副本始终处于运行状态。
+- 如果某个Pod因为任何原因（节点故障、容器崩溃等）消失了，ReplicaSet会立刻察觉到并创建一个新的Pod来替代它。
+- **关系链：`Deployment` -> 管理`ReplicaSet` -> 管理`Pod`**
 
 首先可以创建一个`deployment.yaml`的文件。来管理`hellok8s`pod。
 
@@ -301,7 +298,7 @@ kind: Deployment
 metadata:
   name: hellok8s-deployment
 spec:
-  replicas: 1
+  replicas: 3 # 希望始终有3个Pod在运行
   selector:
     matchLabels:
       app: hellok8s
@@ -315,13 +312,7 @@ spec:
           name: hellok8s-container
 ```
 
-其中`kind`表示我们要创建的资源是`deployment`类型，`metadata.name`表示要创建的deployment的名字，这个名字需要是**唯一**的。
-
-在`spec`里面表示，首先`replicas`表示的是部署的pod副本数量，`selector`里面表示的是`deployment`资源和`pod`资源关联的方式，这里表示`deployment`会管理(selector)所有`labels=hellok8s`的pod。
-
-`template`的内容是用来定义`pod`资源的，你会发现和Hellok8s Pod资源的定义是差不多的，唯一的区别是我们需要加上`metadata.labels`来和上面的`selector.matchLabels`对应起来。来表明pod是被deployment管理，不用在`template`里面加上`metadata.name`是因为deployment会自动为我们创建pod的唯一`name`。
-
-接下来输入下面的命令，可以创建`deployment`资源。通过`get`和`delete pod`命令，我们会初步感受deployment的魅力。**每次创建的pod名称都会变化，某些命令记得替换成你的pod的名称**
+其中`kind`表示我们要创建的资源是`deployment`类型，`metadata.name`表示要创建的deployment的名字，这个名字需要是**唯一**的。在`spec`里面表示，首先`replicas`表示的是部署的pod副本数量，`selector`里面表示的是`deployment`资源和`pod`资源关联的方式，这里表示`deployment`会管理(selector)所有`labels=hellok8s`的pod。`template`的内容是用来定义`pod`资源的，你会发现和Hellok8s Pod资源的定义是差不多的，唯一的区别是我们需要加上`metadata.labels`来和上面的`selector.matchLabels`对应起来。来表明pod是被deployment管理，不用在`template`里面加上`metadata.name`是因为deployment会自动为我们创建pod的唯一`name`。接下来输入下面的命令，可以创建`deployment`资源。通过`get`和`delete pod`命令，我们会初步感受deployment的魅力。**每次创建的pod名称都会变化，某些命令记得替换成你的pod的名称**
 
 ```shell
 kubectl apply -f deployment.yaml
@@ -342,9 +333,7 @@ kubectl get pods
 #hellok8s-deployment-77bffb88c5-xp8f7   1/1     Running   0          18s
 ```
 
-我们会发现一个有趣的现象，当手动删除一个`pod`资源后，deployment会自动创建一个新的`pod`，这和我们之前手动创建pod资源有本质的区别！这代表着当生产环境管理着成千上万个pod时，我们不需要关心具体的情况，只需要维护好这份`deployment.yaml`文件的资源定义即可。
-
-接下来我们通过自动扩容来加深这个知识点，当我们想要将`hellok8s:v1`的资源扩容到3个副本时，只需要将`replicas`的值设置成3，接着重新输入`kubectl apply -f deployment.yaml`即可。如下所示：
+我们会发现一个有趣的现象，当手动删除一个`pod`资源后，deployment会自动创建一个新的`pod`，这和我们之前手动创建pod资源有本质的区别！这代表着当生产环境管理着成千上万个pod时，我们不需要关心具体的情况，只需要维护好这份`deployment.yaml`文件的资源定义即可。接下来我们通过自动扩容来加深这个知识点，当我们想要将`hellok8s:v1`的资源扩容到5个副本时，只需要将`replicas`的值设置成3，接着重新输入`kubectl apply -f deployment.yaml`即可。如下所示：
 
 ```yaml
 apiVersion: apps/v1
@@ -352,7 +341,7 @@ kind: Deployment
 metadata:
   name: hellok8s-deployment
 spec:
-  replicas: 3
+  replicas: 5 # 扩容5个pod
   selector:
     matchLabels:
       app: hellok8s
@@ -417,7 +406,7 @@ spec:
         app: hellok8s
     spec:
       containers:
-        - image: guangzhengli/hellok8s:v2
+        - image: guangzhengli/hellok8s:v2 # 镜像修改为v2
           name: hellok8s-container
 ```
 
@@ -444,11 +433,7 @@ curl http://localhost:3000
 
 ### Rolling Update(滚动更新)
 
-如果我们在生产环境上，管理着多个副本的`hellok8s:v1`版本的pod，我们需要更新到`v2`的版本，像上面那样的部署方式是可以的，但是也会带来一个问题，就是所有的副本在同一时间更新，这会导致我们`hellok8s`服务在短时间内是不可用的，因为所有pod都在升级到`v2`版本的过程中，需要等待某个pod升级完成后才能提供服务。
-
-这个时候我们就需要滚动更新(rolling update)，在保证新版本`v2`的pod还没有`ready`之前，先不删除`v1`版本的pod。
-
-在deployment的资源定义中,`spec.strategy.type`有两种选择:
+如果我们在生产环境上，管理着多个副本的`hellok8s:v1`版本的pod，我们需要更新到`v2`的版本，像上面那样的部署方式是可以的，但是也会带来一个问题，就是所有的副本在同一时间更新，这会导致我们`hellok8s`服务在短时间内是不可用的，因为所有pod都在升级到`v2`版本的过程中，需要等待某个pod升级完成后才能提供服务。这个时候我们就需要滚动更新(rolling update)，在保证新版本`v2`的pod还没有`ready`之前，先不删除`v1`版本的pod。在deployment的资源定义中,`spec.strategy.type`有两种选择:
 
 - **RollingUpdate**：逐渐增加新版本的pod，逐渐减少旧版本的pod。
 - **Recreate**：在新版本的pod增加前，先将所有旧版本pod删除。
@@ -476,11 +461,15 @@ kubectl describe pod hellok8s-deployment-77bffb88c5-cvm5c
 除了上面的命令，还可以用`history`来查看历史版本，`--to-revision=2`来回滚到指定版本。
 
 ```shell
+# 查看更新历史
 kubectl rollout history deployment hellok8s-deployment
+# 回滚到上一个版本
+kubectl rollout undo deployment/nginx-deployment
+# 回滚到指定版本
 kubectl rollout undo deployment/hellok8s-deployment --to-revision=2
 ```
 
-接着设置`strategy=rollingUpdate`,`maxSurge=1`,`maxUnavailable=1`和`replicas=3`到deployment.yaml文件中。这个参数配置意味着最大可能会创建4个hellok8s pod (replicas + maxSurge)，最小会有2个hellok8s pod存活(replicas-maxUnavailable)。
+接着设置`strategy=rollingUpdate`,`maxSurge=1`,`maxUnavailable=1`和`replicas=3`到deployment.yaml文件中。这个参数配置意味着最大可能会创建4个hellok8s pod (replicas + maxSurge)，最小会有3个hellok8s pod存活(replicas-maxUnavailable)。
 
 ```yaml
 apiVersion: apps/v1
@@ -490,8 +479,8 @@ metadata:
 spec:
   strategy:
      rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+      maxSurge: 1 # 在更新期间，可以比期望副本数多创建1个Pod
+      maxUnavailable: 0 # 在更新期间，不允许有不可用的Pod（确保全时段服务）
   replicas: 3
   selector:
     matchLabels:
@@ -510,13 +499,18 @@ spec:
 
 ![rollingupdate](https://cdn.jsdelivr.net/gh/guangzhengli/PicURL@master/uPic/rollingupdate.png)
 
+**这个过程是：**
+
+1. 根据新的Pod模板创建一个**新的ReplicaSet**。
+2. 新的ReplicaSet开始逐步创建新的Pod（`v2.0` 版本）。
+3. 同时，旧的ReplicaSet开始逐步终止旧的Pod（`v1.0` 版本）。
+4. 在整个过程中，始终有可用的Pod在处理用户请求，**服务不会中断**。
+
 ### 存活探针 (livenessProb)
 
 > 存活探测器来确定什么时候要重启容器。例如，存活探测器可以探测到应用死锁（应用程序在运行，但是无法继续执行后面的步骤）情况。重启这种状态下的容器有助于提高应用的可用性，即使其中存在缺陷。-- [LivenessProb](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 
-在生产中，有时候因为某些bug导致应用死锁或者线程耗尽了，最终会导致应用无法继续提供服务，这个时候如果没有手段来自动监控和处理这一问题的话，可能会导致很长一段时间无人发现。[kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/)使用存活探测器(livenessProb)来确定什么时候要重启容器。
-
-接下来我们写一个`/healthz`接口来说明`livenessProb`如何使用。`/healthz`接口会在启动成功的15s内正常返回200状态码，在15s后，会一直返回500的状态码。
+在生产中，有时候因为某些bug导致应用死锁或者线程耗尽了，最终会导致应用无法继续提供服务，这个时候如果没有手段来自动监控和处理这一问题的话，可能会导致很长一段时间无人发现。[kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/)使用存活探测器(livenessProb)来确定什么时候要重启容器。接下来我们写一个`/healthz`接口来说明`livenessProb`如何使用。`/healthz`接口会在启动成功的15s内正常返回200状态码，在15s后，会一直返回500的状态码。
 
 ```go
 package main
@@ -640,9 +634,7 @@ kubectl describe pod hellok8s-68f47f657c-zwn6g
 
 > 就绪探测器可以知道容器何时准备好接受请求流量，当一个Pod内的所有容器都就绪时，才能认为该Pod就绪。这种信号的一个用途就是控制哪个Pod作为Service的后端。若Pod尚未就绪，会被从Service的负载均衡器中剔除。--[ReadinessProb](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 
-在生产环境中，升级服务的版本是日常的需求，这时我们需要考虑一种场景，即当发布的版本存在问题，就不应该让它升级成功。kubelet使用就绪探测器可以知道容器何时准备好接受请求流量，当一个pod升级后不能就绪，即不应该让流量进入该pod，在配合`rollingUpate`的功能下，也不能允许升级版本继续下去，否则服务会出现全部升级完成，导致所有服务均不可用的情况。
-
-这里我们把服务回滚到`hellok8s:v2`的版本，可以通过上面学习的方法进行回滚。
+在生产环境中，升级服务的版本是日常的需求，这时我们需要考虑一种场景，即当发布的版本存在问题，就不应该让它升级成功。kubelet使用就绪探测器可以知道容器何时准备好接受请求流量，当一个pod升级后不能就绪，即不应该让流量进入该pod，在配合`rollingUpate`的功能下，也不能允许升级版本继续下去，否则服务会出现全部升级完成，导致所有服务均不可用的情况。这里我们把服务回滚到`hellok8s:v2`的版本，可以通过上面学习的方法进行回滚。
 
 ```shell
 kubectl rollout undo deployment hellok8s-deployment --to-revision=2
@@ -844,9 +836,7 @@ kubectl get service
 # service-hellok8s-clusterip   ClusterIP   10.104.96.153   <none>        3000/TCP   10s
 ```
 
-接着我们可以通过在集群其它应用中访问`service-hellok8s-clusterip`的IP地址`10.104.96.153`来访问`hellok8s:v3`服务。
-
-这里通过在集群内创建一个`nginx`来访问`hellok8s`服务。创建后进入`nginx`容器来用`curl`命令访问`service-hellok8s-clusterip`。
+接着我们可以通过在集群其它应用中访问`service-hellok8s-clusterip`的IP地址`10.104.96.153`来访问`hellok8s:v3`服务。这里通过在集群内创建一个`nginx`来访问`hellok8s`服务。创建后进入`nginx`容器来用`curl`命令访问`service-hellok8s-clusterip`。
 
 ```yaml
 apiVersion: v1
@@ -887,7 +877,7 @@ kubectl exec -it nginx-pod /bin/bash
 除了上述的`ClusterIp`的方式外，Kubernetes`ServiceTypes`允许指定你所需要的Service类型，默认是`ClusterIP`。`Type`的值包括如下：
 
 - `ClusterIP`：通过集群的内部IP暴露服务，选择该值时服务只能够在集群内部访问。这也是默认的`ServiceType`。
-- [`NodePort`](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)：通过每个节点上的IP和静态端口（`NodePort`）暴露服务。`NodePort`服务会路由到自动创建的`ClusterIP`服务。通过请求`<节点 IP>:<节点端口>`，你可以从集群的外部访问一个`NodePort`服务。
+- [`NodePort`](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)：通过每个节点上的IP和静态端口（`NodePort`）暴露服务。`NodePort`服务会路由到自动创建的`ClusterIP`服务。通过请求`<节点IP>:<节点端口>`，你可以从集群的外部访问一个`NodePort`服务。
 - [`LoadBalancer`](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)：使用云提供商的负载均衡器向外部暴露服务。外部负载均衡器可以将流量路由到自动创建的`NodePort`服务和`ClusterIP`服务上。
 - [`ExternalName`](https://kubernetes.io/docs/concepts/services-networking/service/#externalname)：通过返回`CNAME`和对应值，可以将服务映射到`externalName`字段的内容（例如，`foo.bar.example.com`）。无需创建任何类型代理。
 
@@ -944,21 +934,13 @@ curl http://192.168.59.100:30000
 
 ### LoadBalancer
 
-[`LoadBalancer`](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)是使用云提供商的负载均衡器向外部暴露服务。外部负载均衡器可以将流量路由到自动创建的`NodePort`服务和`ClusterIP`服务上，假如你在[AWS](https://aws.amazon.com)的[EKS](https://aws.amazon.com/eks/)集群上创建一个Type为`LoadBalancer`的Service。它会自动创建一个ELB([Elastic Load Balancer](https://aws.amazon.com/elasticloadbalancing))，并可以根据配置的IP池中自动分配一个独立的IP地址，可以供外部访问。
-
-这里因为我们使用的是`minikube`，可以使用`minikube tunnel`来辅助创建LoadBalancer的`EXTERNAL_IP`，具体教程可以查看[官网文档](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access)，但是和实际云提供商的LoadBalancer还是有本质区别，所以[Repository](https://github.com/guangzhengli/kubernetes_workshop)不做更多阐述，有条件的可以使用[AWS](https://aws.amazon.com)的[EKS](https://aws.amazon.com/eks/)集群上创建一个ELB([Elastic Load Balancer](https://aws.amazon.com/elasticloadbalancing))试试。
-
-下图显示LoadBalancer的Service架构图。
+[`LoadBalancer`](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)是使用云提供商的负载均衡器向外部暴露服务。外部负载均衡器可以将流量路由到自动创建的`NodePort`服务和`ClusterIP`服务上，假如你在[AWS](https://aws.amazon.com)的[EKS](https://aws.amazon.com/eks/)集群上创建一个Type为`LoadBalancer`的Service。它会自动创建一个ELB([Elastic Load Balancer](https://aws.amazon.com/elasticloadbalancing))，并可以根据配置的IP池中自动分配一个独立的IP地址，可以供外部访问。这里因为我们使用的是`minikube`，可以使用`minikube tunnel`来辅助创建LoadBalancer的`EXTERNAL_IP`，具体教程可以查看[官网文档](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access)，但是和实际云提供商的LoadBalancer还是有本质区别，所以[Repository](https://github.com/guangzhengli/kubernetes_workshop)不做更多阐述，有条件的可以使用[AWS](https://aws.amazon.com)的[EKS](https://aws.amazon.com/eks/)集群上创建一个ELB([Elastic Load Balancer](https://aws.amazon.com/elasticloadbalancing))试试。下图显示LoadBalancer的Service架构图。
 
 ![service-loadbalancer-fix-name](https://cdn.jsdelivr.net/gh/guangzhengli/PicURL@master/uPic/service-loadbalancer-fix-name.png)
 
 ## ingress
 
-[Ingress](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#ingress-v1beta1-networking-k8s-io)公开从集群外部到集群内[服务](https://kubernetes.io/docs/concepts/services-networking/service/)的HTTP和HTTPS路由。流量路由由Ingress资源上定义的规则控制。Ingress可为Service提供外部可访问的URL、负载均衡流量、SSL/TLS，以及基于名称的虚拟托管。你必须拥有一个[Ingress控制器](https://kubernetes.io/zh-cn/docs/concepts/services-networking/ingress-controllers)才能满足Ingress的要求。仅创建Ingress资源本身没有任何效果。[Ingress控制器](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers)通常负责通过负载均衡器来实现Ingress，例如`minikube`默认使用的是[nginx-ingress](https://minikube.sigs.k8s.io/docs/tutorials/nginx_tcp_udp_ingress/)，目前`minikube`也支持[Kong-Ingress](https://minikube.sigs.k8s.io/docs/handbook/addons/kong-ingress/)。
-
-Ingress可以“简单理解”为服务的网关Gateway，它是所有流量的入口，经过配置的路由规则，将流量重定向到后端的服务。
-
-在`minikube`中，可以通过下面命令开启Ingress-Controller的功能。默认使用的是[nginx-ingress](https://minikube.sigs.k8s.io/docs/tutorials/nginx_tcp_udp_ingress/)。
+[Ingress](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#ingress-v1beta1-networking-k8s-io)公开从集群外部到集群内[服务](https://kubernetes.io/docs/concepts/services-networking/service/)的HTTP和HTTPS路由。流量路由由Ingress资源上定义的规则控制。Ingress可为Service提供外部可访问的URL、负载均衡流量、SSL/TLS，以及基于名称的虚拟托管。你必须拥有一个[Ingress控制器](https://kubernetes.io/zh-cn/docs/concepts/services-networking/ingress-controllers)才能满足Ingress的要求。仅创建Ingress资源本身没有任何效果。[Ingress控制器](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers)通常负责通过负载均衡器来实现Ingress，例如`minikube`默认使用的是[nginx-ingress](https://minikube.sigs.k8s.io/docs/tutorials/nginx_tcp_udp_ingress/)，目前`minikube`也支持[Kong-Ingress](https://minikube.sigs.k8s.io/docs/handbook/addons/kong-ingress/)。Ingress可以“简单理解”为服务的网关Gateway，它是所有流量的入口，经过配置的路由规则，将流量重定向到后端的服务在`minikube`中，可以通过下面命令开启Ingress-Controller的功能。默认使用的是[nginx-ingress](https://minikube.sigs.k8s.io/docs/tutorials/nginx_tcp_udp_ingress/)。
 
 ```shell
 minikube addons enable ingress
@@ -1065,9 +1047,7 @@ kubectl get service
 # service-nginx-clusterip      ClusterIP   10.103.161.247   <none>        4000/TCP   56s
 ```
 
-这样在k8s集群中，就有3个`hellok8s:v3`的pod，2个`nginx`的pod。并且`hellok8s:v3`的端口映射为`3000:3000`，`nginx`的端口映射为`4000:80`。在这个基础上，接下来编写Ingress资源的定义，`nginx.ingress.kubernetes.io/ssl-redirect:"false"`的意思是这里关闭`https`连接，只使用`http`连接。
-
-匹配前缀为`/hello`的路由规则，重定向到`hellok8s:v3`服务，匹配前缀为`/`的跟路径重定向到`nginx`。
+这样在k8s集群中，就有3个`hellok8s:v3`的pod，2个`nginx`的pod。并且`hellok8s:v3`的端口映射为`3000:3000`，`nginx`的端口映射为`4000:80`。在这个基础上，接下来编写Ingress资源的定义，`nginx.ingress.kubernetes.io/ssl-redirect:"false"`的意思是这里关闭`https`连接，只使用`http`连接。匹配前缀为`/hello`的路由规则，重定向到`hellok8s:v3`服务，匹配前缀为`/`的跟路径重定向到`nginx`。
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -1121,13 +1101,7 @@ curl http://192.168.59.100/
 
 ## Namespace
 
-在实际的开发当中，有时候我们需要不同的环境来做开发和测试，例如`dev`环境给开发使用，`test`环境给QA使用，那么k8s能不能在不同环境`dev` `test` `uat` `prod` 中区分资源，让不同环境的资源独立互相不影响呢，答案是肯定的，k8s提供了名为Namespace的资源来帮助隔离资源。
-
-在Kubernetes中，**名字空间（Namespace）**提供一种机制，将同一集群中的资源划分为相互隔离的组。同一名字空间内的资源名称要唯一，但跨名字空间时没有这个要求。名字空间作用域仅针对带有名字空间的对象，例如Deployment、Service等。
-
-前面的教程中，默认使用的namespace是`default`。
-
-下面展示如何创建一个新的namespace，`namespace.yaml`文件定义了两个不同的namespace，分别是`dev`和`test`。
+在实际的开发当中，有时候我们需要不同的环境来做开发和测试，例如`dev`环境给开发使用，`test`环境给QA使用，那么k8s能不能在不同环境`dev` `test` `uat` `prod` 中区分资源，让不同环境的资源独立互相不影响呢，答案是肯定的，k8s提供了名为Namespace的资源来帮助隔离资源。在Kubernetes中，**名字空间（Namespace）**提供一种机制，将同一集群中的资源划分为相互隔离的组。同一名字空间内的资源名称要唯一，但跨名字空间时没有这个要求。名字空间作用域仅针对带有名字空间的对象，例如Deployment、Service等。前面的教程中，默认使用的namespace是`default`。下面展示如何创建一个新的namespace，`namespace.yaml`文件定义了两个不同的namespace，分别是`dev`和`test`。
 
 ``` yaml
 apiVersion: v1
@@ -1172,11 +1146,7 @@ kubectl get pods -n dev
 
 ## Configmap
 
-上面的教程提到，我们在不同环境`dev` `test` `uat` `prod`中区分资源，可以让其资源独立互相不受影响，但是随之而来也会带来一些问题，例如不同环境的数据库的地址往往是不一样的，那么如果在代码中写同一个数据库的地址，就会出现问题。
-
-K8S使用ConfigMap来将你的配置数据和应用程序代码分开，将非机密性的数据保存到键值对中。ConfigMap在设计上不是用来保存大量数据的。在ConfigMap中保存的数据不可超过1MiB。如果你需要保存超出此尺寸限制的数据，你可能考虑挂载存储卷。
-
-下面我们可以来看一个例子，我们修改之前代码，假设不同环境的数据库地址不同，下面代码从环境变量中获取`DB_URL`，并将它返回。
+上面的教程提到，我们在不同环境`dev` `test` `uat` `prod`中区分资源，可以让其资源独立互相不受影响，但是随之而来也会带来一些问题，例如不同环境的数据库的地址往往是不一样的，那么如果在代码中写同一个数据库的地址，就会出现问题。K8S使用ConfigMap来将你的配置数据和应用程序代码分开，将非机密性的数据保存到键值对中。ConfigMap在设计上不是用来保存大量数据的。在ConfigMap中保存的数据不可超过1MiB。如果你需要保存超出此尺寸限制的数据，你可能考虑挂载存储卷。下面我们可以来看一个例子，我们修改之前代码，假设不同环境的数据库地址不同，下面代码从环境变量中获取`DB_URL`，并将它返回。
 
 ```go
 package main
@@ -1498,9 +1468,7 @@ kubectl get pods
 
 ## Helm
 
-经过前面的教程，想必你已经对kubernetes的使用有了一定的理解。但是不知道你是否想过这样一个问题，就是我们前面教程中提到的所有资源，包括用`pod`,`deployment`,`service`,`ingress`,`configmap`,`secret`所有资源来部署一套完整的`hellok8s`服务的话，难道需要一个一个的`kubectl apply -f`来创建吗？如果换一个namespace，或者说换一套kubernetes集群部署的话，又要重复性的操作创建的过程吗？
-
-我们平常使用操作系统时，需要安装一个应用的话，可以直接使用`apt`或者`brew`来直接安装，而不需要关心这个应用需要哪些依赖，哪些配置。在使用kubernetes安装应用服务`hellok8s`时，我们自然也希望能够一个命令就安装完成，而提供这个能力的，就是CNCF的毕业项目[Helm](https://github.com/helm/helm)。
+经过前面的教程，想必你已经对kubernetes的使用有了一定的理解。但是不知道你是否想过这样一个问题，就是我们前面教程中提到的所有资源，包括用`pod`,`deployment`,`service`,`ingress`,`configmap`,`secret`所有资源来部署一套完整的`hellok8s`服务的话，难道需要一个一个的`kubectl apply -f`来创建吗？如果换一个namespace，或者说换一套kubernetes集群部署的话，又要重复性的操作创建的过程吗？我们平常使用操作系统时，需要安装一个应用的话，可以直接使用`apt`或者`brew`来直接安装，而不需要关心这个应用需要哪些依赖，哪些配置。在使用kubernetes安装应用服务`hellok8s`时，我们自然也希望能够一个命令就安装完成，而提供这个能力的，就是CNCF的毕业项目[Helm](https://github.com/helm/helm)。
 
 > Helm帮助您管理Kubernetes应用——Helm Chart，Helm是查找、分享和使用软件构建[Kubernetes](https://kubernetes.io/)的最优方式。
 >
@@ -1521,11 +1489,7 @@ brew install helm
 Helm的使用方式可以解释为：Helm安装*charts*到Kubernetes集群中，每次安装都会创建一个新的*release*。你可以在Helm的chart *repositories* 中寻找新的chart。
 
 ### 用helm安装hellok8s
-开始本节教程前，我们先把之前手动创建的hellok8s相关的资源删除(防止使用helm创建同名的k8s资源失败)。
-
-在尝试自己创建hellok8s helm chart之前，我们可以先来熟悉一下怎么使用helm chart。在这里我先创建好了一个hellok8s（包括会创建deployment,service,ingress,configmaps,secret）的helm chart。通过GitHub actions生成放在了[gh-pages](https://github.com/guangzhengli/k8s-tutorials/tree/gh-pages/)分支下的`index.yaml`文件中。
-
-接着可以使用下面命令进行快速安装，其中`helm repo add`表示将我创建好的hellok8s chart添加到自己本地的仓库当中，`helm install`表示从仓库中安装hellok8s/hello-helm到k8s集群当中。
+开始本节教程前，我们先把之前手动创建的hellok8s相关的资源删除(防止使用helm创建同名的k8s资源失败)。在尝试自己创建hellok8s helm chart之前，我们可以先来熟悉一下怎么使用helm chart。在这里我先创建好了一个hellok8s（包括会创建deployment,service,ingress,configmaps,secret）的helm chart。通过GitHub actions生成放在了[gh-pages](https://github.com/guangzhengli/k8s-tutorials/tree/gh-pages/)分支下的`index.yaml`文件中。接着可以使用下面命令进行快速安装，其中`helm repo add`表示将我创建好的hellok8s chart添加到自己本地的仓库当中，`helm install`表示从仓库中安装hellok8s/hello-helm到k8s集群当中。
 
 ```shell
 helm repo add hellok8s https://guangzhengli.github.io/k8s-tutorials/
@@ -1579,9 +1543,7 @@ curl http://192.168.59.100/hello
 
 ### 创建helm charts
 
-在使用已经创建好的hello-helm charts来创建整个hellok8s资源后，你可能还是有很多的疑惑，包括Chart是如何生成和发布的，如何创建一个新的Chart？在这节教程中，我们会尝试自己来创建hello-helm Chart来完成之前的操作。
-
-首先建议使用`helm create`命令来创建一个初始的Chart，该命令默认会创建一些k8s资源定义的初始文件，并且会生成官网推荐的目录结构，如下所示：
+在使用已经创建好的hello-helm charts来创建整个hellok8s资源后，你可能还是有很多的疑惑，包括Chart是如何生成和发布的，如何创建一个新的Chart？在这节教程中，我们会尝试自己来创建hello-helm Chart来完成之前的操作。首先建议使用`helm create`命令来创建一个初始的Chart，该命令默认会创建一些k8s资源定义的初始文件，并且会生成官网推荐的目录结构，如下所示：
 
 ```shell
 helm create hello-helm
@@ -1652,9 +1614,7 @@ func main() {
 }
 ```
 
-为了让大家更加了解helm charts values的使用和熟悉k8s资源配置，这几个环境变量`MESSAGE`,`NAMESPACE`,`DB_URL`,`DB_PASSWORD`分别有不同的来源。
-
-首先修改根目录下的`values.yaml`文件，定义自定义的配置信息，从之前教程的k8s资源文件中，将一些易于变化的参数提取出来，放在`values.yaml`文件中。全部配置信息如下所示：
+为了让大家更加了解helm charts values的使用和熟悉k8s资源配置，这几个环境变量`MESSAGE`,`NAMESPACE`,`DB_URL`,`DB_PASSWORD`分别有不同的来源。首先修改根目录下的`values.yaml`文件，定义自定义的配置信息，从之前教程的k8s资源文件中，将一些易于变化的参数提取出来，放在`values.yaml`文件中。全部配置信息如下所示：
 
 ```yaml
 application:
@@ -1671,11 +1631,7 @@ application:
     replicas: 2
 ```
 
-那自定义好了这些配置后，如何在k8s资源定义中使用这些配置信息呢？Helm默认使用[Go template的方式](https://helm.sh/zh/docs/howto/charts_tips_and_tricks/)来完成。
-
-例如之前教程中，将环境变量`DB_URL`定义在k8s configmaps中，那么该资源可以定义成如文件所示`hellok8s-configmaps.yaml`。其中`metadata.name`的值是`{{ .Values.application.name }}-config`，意思是从`values.yaml`文件中获取`application.name`的值`hellok8s`，拼接`-config`字符串，这样创建出来的configmaps资源名称就是`hellok8s-config`。
-
-同理`{{ .Values.application.hellok8s.database.url }}`就是获取值为`http://DB_ADDRESS_DEFAULT`放入configmaps对应key为DB_URL的value中。
+那自定义好了这些配置后，如何在k8s资源定义中使用这些配置信息呢？Helm默认使用[Go template的方式](https://helm.sh/zh/docs/howto/charts_tips_and_tricks/)来完成。例如之前教程中，将环境变量`DB_URL`定义在k8s configmaps中，那么该资源可以定义成如文件所示`hellok8s-configmaps.yaml`。其中`metadata.name`的值是`{{ .Values.application.name }}-config`，意思是从`values.yaml`文件中获取`application.name`的值`hellok8s`，拼接`-config`字符串，这样创建出来的configmaps资源名称就是`hellok8s-config`。同理`{{ .Values.application.hellok8s.database.url }}`就是获取值为`http://DB_ADDRESS_DEFAULT`放入configmaps对应key为DB_URL的value中。
 
 ```yaml
 apiVersion: v1
@@ -1686,9 +1642,7 @@ data:
   DB_URL: {{ .Values.application.hellok8s.database.url }}
 ```
 
-上面定义的最终效果和之前在`configmaps`教程中定义的资源没有区别，这种做的好处是可以将所有可变的参数定义在`values.yaml`文件中，使用该helm charts的人无需了解具体k8s的定义，只需改变成自己想要的参数，即可创建自定义的资源！
-
-同样，我们可以根据之前的教程将`DB_PASSWORD`放入secret中，并且通过`b64enc`方法将值Base64编码。
+上面定义的最终效果和之前在`configmaps`教程中定义的资源没有区别，这种做的好处是可以将所有可变的参数定义在`values.yaml`文件中，使用该helm charts的人无需了解具体k8s的定义，只需改变成自己想要的参数，即可创建自定义的资源！同样，我们可以根据之前的教程将`DB_PASSWORD`放入secret中，并且通过`b64enc`方法将值Base64编码。
 
 ```shell
 # hellok8s-secret.yaml
@@ -1700,9 +1654,7 @@ data:
   DB_PASSWORD: {{ .Values.application.hellok8s.database.password | b64enc }}
 ```
 
-最后，修改`hellok8s-deployment`文件，根据前面的教程，将`metadata.name` `replicas` `image` `configMapKeyRef.name` `secretKeyRef.name`等值修改成从`values.yaml`文件中获取。
-
-再添加代码中需要的`NAMESPACE`环境变量，从`.Release.Namespace`[内置对象](https://helm.sh/zh/docs/chart_template_guide/builtin_objects/)中获取。最后添加`MESSAGE`环境变量，直接从`{{ .Values.application.hellok8s.message }}`中获取。
+最后，修改`hellok8s-deployment`文件，根据前面的教程，将`metadata.name` `replicas` `image` `configMapKeyRef.name` `secretKeyRef.name`等值修改成从`values.yaml`文件中获取。再添加代码中需要的`NAMESPACE`环境变量，从`.Release.Namespace`[内置对象](https://helm.sh/zh/docs/chart_template_guide/builtin_objects/)中获取。最后添加`MESSAGE`环境变量，直接从`{{ .Values.application.hellok8s.message }}`中获取。
 
 ```yaml
 apiVersion: apps/v1
@@ -1786,9 +1738,7 @@ version: 0.1.0
 appVersion: "1.16.0"
 ```
 
-定义完成所有的helm资源后，首先**将`hellok8s:v6`镜像打包推送到DockerHub**。
-
-之后即可在`hello-helm`的目录下执行`helm upgrade`命令进行安装，安装成功后，执行curl命令便能直接得到结果！查看pod和service等资源，便会发现helm能一键安装所有资源！
+定义完成所有的helm资源后，首先**将`hellok8s:v6`镜像打包推送到DockerHub**。之后即可在`hello-helm`的目录下执行`helm upgrade`命令进行安装，安装成功后，执行curl命令便能直接得到结果！查看pod和service等资源，便会发现helm能一键安装所有资源！
 
 ```shell
 helm upgrade --install hello-helm --values values.yaml .
@@ -1901,14 +1851,7 @@ kubectl get pods -n dev
 
 ### helm chart打包和发布
 
-上面的例子展示了我们可以用一行命令在一个新的环境中安装所有需要的k8s资源！那么如何将helm chart打包、分发和下载呢？在官网中，提供了两种教程，一种是以[GCS存储的教程](https://helm.sh/zh/docs/howto/chart_repository_sync_example/)，还有一种是以[GitHub Pages存储的教程](https://helm.sh/zh/docs/howto/chart_releaser_action/)。
-
-这里我们使用第二种，并且使用[chart-releaser-action](https://github.com/helm/chart-releaser-action)来做自动发布，该action会默认生成helm chart发布到`gh-pages`分支上，本教程的hellok8s helm chart就发布在了本仓库的[gh-pages](https://github.com/guangzhengli/k8s-tutorials/tree/gh-pages/)分支上的`index.yaml`文件中。
-
-
-在使用action自动生成chart之前，我们可以先熟悉一下如何手动生成，在`hello-helm`目录下，执行`helm package`将chart目录打包到chart归档中。`helm repo index`命令可以基于包含打包chart的目录，生成仓库的索引文件`index.yaml`。
-
-最后，可以使用`helm upgrade --install *.tgz`命令将该指定包进行安装使用。
+上面的例子展示了我们可以用一行命令在一个新的环境中安装所有需要的k8s资源！那么如何将helm chart打包、分发和下载呢？在官网中，提供了两种教程，一种是以[GCS存储的教程](https://helm.sh/zh/docs/howto/chart_repository_sync_example/)，还有一种是以[GitHub Pages存储的教程](https://helm.sh/zh/docs/howto/chart_releaser_action/)。这里我们使用第二种，并且使用[chart-releaser-action](https://github.com/helm/chart-releaser-action)来做自动发布，该action会默认生成helm chart发布到`gh-pages`分支上，本教程的hellok8s helm chart就发布在了本仓库的[gh-pages](https://github.com/guangzhengli/k8s-tutorials/tree/gh-pages/)分支上的`index.yaml`文件中。在使用action自动生成chart之前，我们可以先熟悉一下如何手动生成，在`hello-helm`目录下，执行`helm package`将chart目录打包到chart归档中。`helm repo index`命令可以基于包含打包chart的目录，生成仓库的索引文件`index.yaml`。最后，可以使用`helm upgrade --install *.tgz`命令将该指定包进行安装使用。
 
 ```shell
 helm package hello-helm
@@ -1919,11 +1862,7 @@ helm repo index .
 helm upgrade --install hello-helm hello-helm-0.1.0.tgz
 ```
 
-基于上面的步骤，你可能已经想到，所谓的helm打包和发布，就是`hello-helm-0.1.0.tgz`文件和`index.yaml`生成和上传的一个过程。而helm下载和安装，就是如何将`.tgz`和`index.yaml`文件下载和`helm upgrade --install`的过程。
-
-接下来我们发布生成的hellok8s helm chart，先将手动生成的`hello-helm-0.1.0.tgz`和`index.yaml`文件删除，后续使用GitHub action自动生成和发布这两个文件。
-
-GitHub action的代码可以参考[官网文档](https://helm.sh/zh/docs/howto/chart_releaser_action/)或者本仓库`.github/workflows/release.yml`文件。代表当push代码到远程仓库时，将`helm-charts`目录下的所有charts自动打包和发布到`gh-pages`分支去(需要保证`gh-pages`分支已经存在，否则会报错)。
+基于上面的步骤，你可能已经想到，所谓的helm打包和发布，就是`hello-helm-0.1.0.tgz`文件和`index.yaml`生成和上传的一个过程。而helm下载和安装，就是如何将`.tgz`和`index.yaml`文件下载和`helm upgrade --install`的过程。接下来我们发布生成的hellok8s helm chart，先将手动生成的`hello-helm-0.1.0.tgz`和`index.yaml`文件删除，后续使用GitHub action自动生成和发布这两个文件。GitHub action的代码可以参考[官网文档](https://helm.sh/zh/docs/howto/chart_releaser_action/)或者本仓库`.github/workflows/release.yml`文件。代表当push代码到远程仓库时，将`helm-charts`目录下的所有charts自动打包和发布到`gh-pages`分支去(需要保证`gh-pages`分支已经存在，否则会报错)。
 
 
 ```yaml
@@ -1965,9 +1904,7 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
 
-接着配置仓库的 `Settings -> Pages -> Build and deployment -> Branch`，选择 `gh-pages` 分支，GitHub 会自动在 `https://username.github.io/project` 发布 helm chart。
-
-最后，你可以将自己的helm charts发布到社区中去，可以考虑发布到[ArtifactHub](https://artifacthub.io/)中，像本仓库生成的helm charts即发布在[ArtifactHub hellok8s](https://artifacthub.io/packages/helm/hellok8s/hello-helm)中。
+接着配置仓库的 `Settings -> Pages -> Build and deployment -> Branch`，选择 `gh-pages` 分支，GitHub 会自动在 `https://username.github.io/project` 发布 helm chart。最后，你可以将自己的helm charts发布到社区中去，可以考虑发布到[ArtifactHub](https://artifacthub.io/)中，像本仓库生成的helm charts即发布在[ArtifactHub hellok8s](https://artifacthub.io/packages/helm/hellok8s/hello-helm)中。
 
 ![tnvYFS](https://cdn.jsdelivr.net/gh/guangzhengli/PicURL@master/uPic/tnvYFS.png)
 
@@ -1991,8 +1928,147 @@ minikube dashboard
 
 ![83ybd4](https://cdn.jsdelivr.net/gh/guangzhengli/PicURL@master/uPic/83ybd4.png)
 
+## 常用命令
+
+### 一、基础核心命令 (Pod & 节点)
+
+这些命令用于查看和管理最基本的资源。
+
+1.  **查看资源状态**
+
+`kubectl get nodes` - 查看所有节点状态
+`kubectl get pods` - 查看默认命名空间下的Pod
+`kubectl get pods -A` 或 `kubectl get pods --all-namespaces` - 查看所有命名空间下的Pod
+`kubectl get pods -o wide` - 查看Pod的详细信息（包括所在节点和IP）
+`kubectl get all` - 查看当前命名空间下的所有资源（Pod, Service, Deployment等）
+
+2.  **查看资源详情**
+
+`kubectl describe node <node-name>` - 查看某个节点的详细信息
+`kubectl describe pod <pod-name>` - 查看某个Pod的详细事件和配置
+
+3.  **删除资源**
+
+`kubectl delete pod <pod-name>` - 删除一个Pod
+`kubectl delete deployment <deployment-name>` - 删除一个Deployment
+
+4.  **执行命令与日志**
+
+`kubectl logs <pod-name>` - 查看Pod的日志
+`kubectl logs -f <pod-name>` - 实时流式查看Pod日志（类似`tail -f`）
+`kubectl logs <pod-name> -c <container-name>` - 查看Pod中指定容器的日志
+`kubectl exec -it <pod-name> -- /bin/bash` - 进入Pod的容器内部执行命令（交互式终端）
+
+### 二、部署与工作负载 (Deployment, ReplicaSet)
+
+这些命令用于管理应用的部署和扩展。
+
+1.  **创建资源**
+
+`kubectl create deployment <deployment-name> --image=<image>` - 创建一个 Deployment
+`kubectl apply -f <file.yaml>` - 通过YAML文件创建或更新资源（**声明式命令，推荐**）
+`kubectl create -f <file.yaml>` - 通过YAML文件创建资源（命令式命令）
+
+2.  **扩缩容**
+
+`kubectl scale deployment/<deployment-name> --replicas=<number>` - 扩容或缩容Pod副本数量
+`kubectl autoscale deployment/<deployment-name> --min=2 --max=5 --cpu-percent=80` - 设置Pod水平自动扩缩
+
+3.  **更新与回滚**
+
+`kubectl set image deployment/<deployment-name> <container-name>=<new-image>` - 更新Deployment的镜像，触发滚动更新
+`kubectl rollout status deployment/<deployment-name>` - 查看滚动更新状态
+`kubectl rollout history deployment/<deployment-name>` - 查看部署历史
+`kubectl rollout undo deployment/<deployment-name>` - 回滚到上一个版本
+`kubectl rollout undo deployment/<deployment-name> --to-revision=<number>` - 回滚到指定版本
+
+---
+
+### 三、服务与网络 (Service, Ingress)
+
+这些命令用于管理网络访问。
+
+1.  **查看服务**
+`kubectl get svc` 或 `kubectl get services` - 查看Service
+`kubectl get ingress` - 查看Ingress
+
+2.  **暴露服务**
+`kubectl expose deployment <deployment-name> --type=LoadBalancer --port=80 --target-port=8080` - 为Deployment创建一个Service并暴露出去
+
+3.  **端口转发**
+`kubectl port-forward <pod-name> <local-port>:<pod-port>` - 将本地端口转发到Pod的端口（用于本地调试）
+`kubectl port-forward svc/<service-name> <local-port>:<service-port>` - 将本地端口转发到Service
+
+---
+
+### 四、配置与存储 (ConfigMap, Secret, PVC)
+
+这些命令用于管理应用配置和存储。
+
+1.  **查看配置**
+`kubectl get configmap` - 查看ConfigMap
+`kubectl get secret` - 查看Secret
+`kubectl get pvc` - 查看持久卷声明
+
+2.  **从文件创建配置**
+`kubectl create configmap <name> --from-file=<file-path>` - 从文件创建ConfigMap
+`kubectl create secret generic <name> --from-file=<file-path>` - 从文件创建Secret
+
+---
+
+### 五、命名空间 (Namespace)
+
+用于资源隔离。
+
+`kubectl get ns` - 查看所有命名空间
+`kubectl create namespace <namespace-name>` - 创建一个命名空间
+`kubectl config set-context --current --namespace=<namespace-name>` - 切换当前上下文的默认命名空间（后续命令默认在该命名空间下执行）
+在命令中指定命名空间：在任何`get`, `describe`等命令后加上`-n <namespace-name>`
+
+---
+
+### 六、故障排查与诊断
+
+1.  **资源使用情况**
+`kubectl top nodes` - 查看节点的资源（CPU/Memory）使用情况
+`kubectl top pods` - 查看Pod的资源使用情况（需要安装metrics-server）
+
+2.  **高级诊断**
+`kubectl api-resources` - 查看所有可用的API资源类型
+`kubectl explain <resource>` - 查看某个资源的YAML字段说明，写YAML时的神器
+
+---
+
+### 七、上下文与配置 (Context & Config)
+
+用于管理多个Kubernetes集群。
+
+`kubectl config get-contexts` - 查看所有上下文（集群）
+`kubectl config use-context <context-name>` - 切换到指定上下文（集群）
+`kubectl cluster-info` - 显示集群信息
+
+### 使用技巧与最佳实践
+
+1.  **`-o` 输出格式**：`get`命令配合`-o`参数非常强大。
+`kubectl get pods -o wide` （更宽的信息）
+`kubectl get pods -o yaml` （以YAML格式输出）
+`kubectl get pods -o json` （以JSON格式输出）
+`kubectl get pods -o name` （只输出资源名称）
+
+2.  **`--dry-run=client`**：试运行，不真正创建资源，用于验证命令或生成YAML模板。
+```bash
+kubectl create deployment my-app --image=nginx --dry-run=client -o yaml > deployment.yaml
+```
+
+3.  ** `-l`标签选择器**：根据标签过滤资源。
+`kubectl get pods -l app=nginx`
+
+4.  **`-A` 代替 `--all-namespaces`**：更简洁。
+
+
 ## 文章
 
 | [带着问题学Kubernetes架构！](https://mp.weixin.qq.com/s/6smzsvYSbRvSPcpbfnH98A) | [为什么大家都在学习k8s](https://mp.weixin.qq.com/s/B2tIs6YitA93iYxEZ_8Ovw) | [Kuboard-Kubernetes多集群管理界面](https://kuboard.cn/) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :-----------------------------------------------------: |
-| [图文详解Kubernetes，傻瓜都能看懂！](https://mp.weixin.qq.com/s/WWRp-e9QPcLg8-m-V3UU1Q) | [Kubernetes缺少的多租户功能，你可以通过这些方式实现](https://mp.weixin.qq.com/s/8UJnsx0NJyxlKXeduhg5Yw) |                                                         |
+| [图文详解Kubernetes，傻瓜都能看懂！](https://mp.weixin.qq.com/s/WWRp-e9QPcLg8-m-V3UU1Q) | [Kubernetes缺少的多租户功能，你可以通过这些方式实现](https://mp.weixin.qq.com/s/8UJnsx0NJyxlKXeduhg5Yw) |                 https://k8s.iswbm.com/                  |
+|               https://k8s-tutorials.pages.dev/               |                                                              |                                                         |

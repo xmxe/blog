@@ -1530,6 +1530,7 @@ JVM具有四种类型的GC实现：
 | [JVM夺命连环10问](https://mp.weixin.qq.com/s/_0IANOvyP_UNezDm0bxXmg) | [【干货】JVM完整深入解析！](https://mp.weixin.qq.com/s/vd72d6wqc_fq7YUgA7d1fA) | [如何在面试时搞定Java虚拟机](https://mp.weixin.qq.com/s/6MSezM6g4JPoML0kDtx64Q) |
 | [JAVA虚拟机(JVM)面试题](https://mp.weixin.qq.com/s/eNpHYG9T5DIdh7QNpLg4dQ) | [JVM史上最最最完整深入解析，不看后悔一百次！](https://mp.weixin.qq.com/s/EYUNHXLP9jjTTA1Ig6vCYQ) | [【秒懂！】JVM虚拟机图文详解！一点都不难！](https://mp.weixin.qq.com/s/A4BbKDmy8oe3uBfHfrgGQA) |
 | [从JMM透析volatile与synchronized原理](https://mp.weixin.qq.com/s/s2nnXDY7phqKX07nwZiHyA) | [JVM锁优化和逃逸分析详解](https://mp.weixin.qq.com/s/guITssdS4aYXzDJD3xl4HA) | [浅谈JVM运行期的几种优化手段](https://mp.weixin.qq.com/s/DVkfC48P8he0Z6PqIo_Chw) |
+| [深入探索剖析JVM的启动过程](https://mp.weixin.qq.com/s/XXChi8D7S5w60noWKfQwbg) |                                                              |                                                              |
 
 ### 内存溢出分析
 

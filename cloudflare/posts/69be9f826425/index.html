@@ -1751,7 +1751,7 @@ Setting permissions <span class="token keyword">for</span> user <span class="tok
                 <a href="/posts/33612673cd2d/">
                     <div class="card-image">
                         
-                        <img src="https://img95.699pic.com/photo/32213/1132.jpg_wh860.jpg" class="responsive-img" alt="Web项目中的安全设计">
+                        <img src="https://picx.zhimg.com/v2-bb7faf486653cbbdf0cd7e10e784e2ee_1440w.jpg" class="responsive-img" alt="Web项目中的安全设计">
                         
                         <span class="card-title">Web项目中的安全设计</span>
                     </div>
@@ -1759,11 +1759,8 @@ Setting permissions <span class="token keyword">for</span> user <span class="tok
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            完整性校验描述
-数据传输完整性是指数据在传输过程中，不被未授权的篡改或在篡改后能够被迅速发现。
-防护建议
-
-传输过程中数据做整体加密处理（该方案存在一定风险，若攻击者拥有系统访问权限，可在数据未解密的情况下直接篡改加密数据，进行提权操作，固
+                            uid的生成和传输方案uid的使用场景
+uid作为重放攻击解决方案中计算签名的盐值、也是完整性校验中计算签名的盐值，同时也是用作对称加密的密钥（敏感数据加密传输），因此uid的生成和访问机制尤为重要。本方案综合考虑了uid的传输安全、防止中
                         
 
                     </div>

@@ -1,446 +1,9 @@
 ---
 title: Web项目中的安全设计
 tags: 代码实战
-img: https://img95.699pic.com/photo/32213/1132.jpg_wh860.jpg
+img: https://picx.zhimg.com/v2-bb7faf486653cbbdf0cd7e10e784e2ee_1440w.jpg
 
 ---
-
-## 完整性校验
-
-**描述**
-
-数据传输完整性是指数据在传输过程中，不被未授权的篡改或在篡改后能够被迅速发现。
-
-**防护建议**
-
-1. 传输过程中数据做整体加密处理（该方案存在一定风险，若攻击者拥有系统访问权限，可在数据未解密的情况下直接篡改加密数据，进行提权操作，固未从根本上解决数据完整性问题，建议采用方案2）
-2. 数据签名校验：建立客户端和服务端全流程校验和处理机制，有效解决数据在请求和响应传输过程中被篡改的问题，提高数据双向传输完整性，用以保障信息系统安全。为保证数据的完整性，约定uid为密钥（uid的生成和传输机制详见[uid的生成和传输方案](#uid的生成和传输方案)）用于签名计算。
-
-系统应采用校验码技术或密码技术保证鉴别信息和重要业务数据等敏感信息在传输过程中的完整性。
-    ①等保三级要求：系统鉴别信息和重要业务数据等敏感信息在传输过程中应采用国家密码主管部门要求的加密算法（SM3等）对其进行数据完整性校验
-    ②等保二级要求：系统中的鉴别信息和重要业务数据等敏感信息在传输过程中应采用校验码技术或密码技术（MD5、SHA等）对其进行数据完整性校验
-
-**请求传输完整性校验实现方案**
-
-（1）客户端从localstorage中读取加固参数uid和时间差△timestamp（服务器时间与客户端时间的时间差），并计算请求发送时的服务端当前时间戳为:客户端当前时间+△timestamp。
-（2）客户端使用散列算法对请求数据data和关键加固参数uid，timestamp进行签名计算，以国密算法SM3举例：`clientSM3=SM3(sort(data+salt+timestamp))`,sort的含义是将参数值按照字母字典排序，然后从小到大拼接成一个字符串。
-（3）将签名clientSM3和时间戳以参数或自定义header的形式随请求发送给服务器。
-（4）服务端收到请求，判断请求中是否存在clientSM3和时间戳参数，若不存在则请求无效，并向客户端返回请求无效；若存在，则读取并继续执行。
-（5）服务端验证时间戳参数，服务端当前时间timestamp_now-timestamp是否大于60s或<-5s（默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s）。若大于60s或<-5s，则请求无效；反之为有效请求，。
-（6）服务端验证clientSM3参数，服务端根据请求的会话标识读取该用户的uid参数，并记录请求中的timestamp、请求数据data，调用签名生成算法，得到`serverSM3=SM3(sort(data+uid+timestamp))`，验证serverSM3是否等于clientSM3，若不一致，则请求无效，并向客户端返回数据请求被篡改；若一致说明数据未篡改，进行下一步业务处理。
-
-![](images/请求传输完整性.png)
-
-**响应传输完整性校验实现方案**
-
-（1）服务端返回响应前根据会话标识读取该用户的uid参数，并获取当前服务端时间timestamp
-（2）服务端使用散列算法对响应数据data和salt值进行签名计算，以国密SM3举例：`serverSM3=SM3(sort(data+uid+timestamp))`,sort的含义是将参数值按照字母字典排序，然后从小到大拼接成一个字符串。
-（3）将签名serverSM3和timestamp以参数或自定义header的形式随响应发送给客户端。
-（4）客户端收到响应后判断响应中是否存在serverSM3和timestamp参数，若不存在则响应无效，客户端不再解析该响应；若存在，则读取并继续执行。
-（5）验证timestamp参数，客户端当前时间timestamp_now-timestamp是否大于60s或<-5s（默认一次HTTP响应从发出到到达客户端的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s）。若大于60s或<-5s，则响应无效；反之则继续执行。
-（6）验证serverSM3参数，客户端读取该用户的盐值uid，并记录响应中的timestamp、响应数据data，调用签名生成算法，得到clientSM3=SM3(sort(data+salt+timestamp))，验证clientSM3是否等于serverSM3，若不一致，则响应无效，说明响应数据被篡改；若一致说明数据未篡改，响应正常，则客户端对响应解析并进行下一步处理。
-
-![](images/响应传输完整性.png)
-
-**简明扼要**
-
-1、传输过程中数据加密处理
-2、数据签名校验：为保证数据的完整性，约定uid为密钥（仅一次会话周期有效，且仅客户端和服务端知道，在传输中不可见）用于签名计算，客户端发送请求时，将请求内容与uid结合计算出签名；服务端接收到请求后，也按相同算法计算出签名。如果相等，则请求来自可信任客户端，且请求是完整的。
-    ①客户端使用哈希算法对请求中数据和salt值进行签名计算（本方案中uid取为salt值）sign_client=md5(sort(data+uid)),sort的含义是将参数值按照字母字典排序，然后从小到大拼接成一个字符串。
-    ②将签名sign_client以参数的形式发送给服务器
-    ③服务器收到数据之后，根据用户会话读取uid，对数据使用相同的哈希算法进行签名计算sign_server=md5(sort(data+uid))
-    ④验证sign_client和sign_server是否一致，若一致则说明数据没有经过篡改，执行响应操作，若不一致，则签名校验异常，数据经过篡改视为无效请求。
-
-![](images/完整性校验流程.png)
-
-**代码实现**
-
-```java
-// Spring拦截器实现
-import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.bouncycastle.crypto.digests.SM3Digest;
-import org.bouncycastle.util.encoders.Hex;
-import org.springframework.util.Assert;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import cn.hutool.core.net.URLEncodeUtil;
-
-/**
- * 数据完整性校验
- */
-public class IntegralityCheckInterceptor extends HandlerInterceptorAdapter {// implements HandlerInterceptor
-
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		
-		if (handler instanceof HandlerMethod) {
-//            HandlerMethod handlerMethod = (HandlerMethod) handler;
-		       String [] white ={"downLoadFromFTP"};
-		        String path =request.getServletPath();
-		        for (int i = 0; i < white.length; i++) {
-		            if(path.indexOf(white[i])!=-1){
-		            	return true;
-		            }
-		        }
-        	//客户端时间+△timestamp，即发送请求时的服务端的当前时间
-			try {
-                Long timestamp = Long.valueOf(request.getHeader("timestamp"));
-                // 客户端使用散列算法对请求数据data和关键加固参数uid，timestamp进行签名计算
-                String clientSM3 = request.getHeader("clientSM3");
-                if(Objects.nonNull(timestamp) && Objects.nonNull(clientSM3)){
-                    // 失效时间
-                    int seconds = 60;
-                    // 服务器当前时间
-                    long currentTime = System.currentTimeMillis();
-                    long timeDiff = currentTime - timestamp;
-                    // 默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s
-                    if(timeDiff > seconds * 1000 || timeDiff < -5 * 1000){
-                        return false;
-                    }
-
-                    // 验证clientSM3参数
-                    // 服务端根据请求的会话标识读取该用户的uid参数
-                    String uid = (String) request.getSession().getAttribute("uid");
-                    Assert.notNull(uid);
-
-                    // 请求数据data
-                    String data = "";
-                    Map<String,String[]> paramMap = request.getParameterMap();
-                    if(paramMap!=null && !paramMap.isEmpty()){
-                        StringBuilder sb = new StringBuilder();
-                        for(Map.Entry<String, String[]> entry : paramMap.entrySet()){
-                            String key = entry.getKey();
-                            String[] value = entry.getValue();
-                            for(String paramValue : value){
-                                sb.append(key);
-                                sb.append("=");
-                                String param = paramValue.replaceAll(" ","");
-                                String deparam;
-                                try {
-                                    deparam = URLDecoder.decode(param,"UTF-8");
-                                }catch (Exception e){
-                                    return true;
-                                }
-                                // String deparam = URLDecoder.decode(param,"UTF-8");
-                                sb.append(deparam);
-                                sb.append("&");
-                            }          			
-                        }
-                        String strParam = sb.substring(0, sb.length()-1).toString();
-                        data = URLEncodeUtil.encodeAll(strParam);
-                    }	
-                    // 调用签名算法serverSM3=SM3(sort(data+uid+timestamp))
-                    char[] c = (data+uid+timestamp).toCharArray();
-                    Arrays.sort(c);
-                    String sort = String.valueOf(c);
-                    String serverSM3 = generateSM3HASH(sort);
-                    if(serverSM3.equalsIgnoreCase(clientSM3)){
-                        return true;
-                    }
-                }
-			}catch (Exception e){
-				return true;
-			}
-			StringBuffer url = request.getRequestURL();
-			return false;
-        } else {	
-            return super.preHandle(request, response, handler);
-        }
-	}
-	
-	//摘要计算
-    public static String generateSM3HASH(String src) {
-        byte[] md = new byte[32];
-        byte[] msg1 = src.getBytes();
-        //System.out.println(Util.byteToHex(msg1));
-        SM3Digest sm3 = new SM3Digest();
-        sm3.update(msg1, 0, msg1.length);
-        sm3.doFinal(md, 0);
-        String s = new String(Hex.encode(md));
-        return s.toUpperCase();
-    }
-}
-
-```
-
-```js
-// jQuery ajaxhook.min.js插件实现
-// 接口拦截-数据完整性校验-防重放策略
-(function () {
-    // 字母字典排序
-    const dictSort = (str) => {
-        const strArr = String(str).split('');
-        return strArr.sort().join('');
-    };
-    const randomStr = (len = 36) => {
-        let randStr = function () {
-            var array = new Uint32Array(1);
-            window.crypto.getRandomValues(array);
-            return  array[0].toString();
-        };
-        let str = randStr();
-        do {
-            str += randStr();
-        } while (str.length < len)
-        return str.substr(0, len);
-    };
-    ah.proxy({
-        // 请求发起前进入
-        onRequest: (config, handler) => {
-            if (config.url==="update.do"){
-                handler.next(config);
-            }else if (config.url==="add.do"){
-                handler.next(config);
-            }else {
-                let body = config.body || '';
-                // 兼容formdata上传文件
-                if (body?.constructor.name === 'FormData') {
-                    const formDataStr = {};
-                    body.forEach((val, key) => formDataStr[key] = val);
-                    delete formDataStr.file;
-                    body = Object.keys(formDataStr).map(it => `${it}=${formDataStr[it]}`).join('&');
-                }
-                const url = config.url;
-                let getUrl = url.includes('?') ? url.split('?')[1] : '';
-                let data = ''
-                if(body){
-                    if(getUrl){
-                        body = body + "&" + getUrl;
-                    }
-                }else{
-                    body += getUrl
-                }
-                if(body === '{}') body = ''
-                let decodeURI = decodeURIComponent(body).replace(/\+/g,"")
-                data = encodeURIComponent(decodeURI)
-                const uid = localStorage.getItem('uid');
-                // 获取时间差值
-                const timestamp = localStorage.getItem('timestamp') || 0;
-                // serverTime = now - 差值
-                const serverTimestamp = new Date().getTime() - Number(timestamp);
-                // 参数按字母字典sort排序
-                const clientVal = dictSort(data + uid + serverTimestamp);
-                // sm3加密
-                const clientSM3 = sm3(clientVal);
-                config.headers.clientSM3 = clientSM3;
-                config.headers.timestamp = serverTimestamp;
-                // 防重放策略参数
-                const nonce_client = randomStr();
-                const sign_client = sm3(serverTimestamp + nonce_client + uid);
-                config.headers.nonce_client = nonce_client;
-                config.headers.sign_client = sign_client;
-                handler.next(config);
-            }
-
-        },
-        onError: (err, handler) => {
-            handler.next(err);
-        },
-        onResponse: (response, handler) => {
-            handler.next(response);
-        }
-    })
-})();
-
-```
-## 防重放
-
-**描述**
-
-重放攻击（ReplayAttacks），是指攻击者发送一个目的主机已接收过的包，来达到欺骗系统的目的。
-
-主机A要给服务器B发送数据请求，重放攻击可由发起者A或攻击者C发起。
-※若由发起者A发起，A会恶意重复发送数据请求；
-※若由攻击者C发起，攻击者可利用网络监听或者其他方式盗取用户数据请求，再重发该请求给服务器。
-
-**防护建议**
-
-1. 验证码机制
-设置验证码，一次有效，每次请求更新新的验证码。适用于登录过程。优点：简单易实现。缺点：影响用户使用。
-2. 随机数机制（挑战与应答的机制）
-客户端请求服务器时，服务器生成一个随机数返回给客户端，客户端带上这个随机数访问服务器，服务器比对客户端的这个参数，若相同，说明正确，不是重放攻击。
-方案漏洞：
-将获取随机数的请求和正常数据请求放到请求集合中，并设置全局变量。将响应返回的随机数赋值给全局变量，然后再将全局变量的值赋值给数据请求从而可保证每个请求均带入有效的随机数，重放该请求集合，从而达到重放攻击的目的。
-
-![](images/随机数防重放.png)
-
-3. 时间戳+nonce+签名验证（推荐使用方案）
-客户端发送请求时带上当前时间戳，并生成随机nonce，同时签名（签名是为了防止会话被劫持，时间戳和nonce参数被篡改)，服务端对请求时间戳、nonce及签名进行验证，一致则认为是有效请求，否则视为无效请求。
-
-参数说明
-
-|   参数    |  类型   |                             说明                             |
-| :-------: | :-----: | :----------------------------------------------------------: |
-|   sign    | String  | 请求加密签名，sign的计算结合了请求中的timestamp、nonce、uid以及**加密的消息体**（加入消息体计算sign，可保证请求数据完整性校验）。 |
-| timestamp | Integer | 时间戳，首次访问系统从服务端获取，与nonce结合使用，用于防止请求重放攻击。 |
-|   nonce   | String  |     随机数，与timestamp结合使用，用于防止请求重放攻击。      |
-|    uid    |  Sting  | 用于计算签名和加密数据的key，与用户会话相关且生命周期与之一致，由服务端生成，经加密传输到客户端。 |
-
-**详细解决方案**
-
-1. 用户访问系统，向服务端请求当前系统时间
-2. 客户端接收服务端返回的当前系统时间timestamp_server，并计算出与当前客户端时间的差值△timestamp，将其存入浏览器localstorage中。（加固相关信息存储到localstorage中而不是sessionstorage中，是为了防止客户端浏览器跨页面操作时获取不到相关参数）后续时间戳参数均带入客户端时间+△timestamp，即发送请求时的服务端的当前时间
-3. 客户端生成仅一次有效的随机字符串nonce_client（防止60s内的攻击）
-4. 客户端读取uid（uid由服务端生成，并与用户会话相关，后续完整性校验以及敏感信息传输中均使用到该uid，uid的生成和传输过程详见[uid的生成和传输方案](#uid的生成和传输方案)）
-5. 客户端调用签名算法，`sign_client=hash(timestamp+nonce_client+uid)`，sign_client、timestamp、nonce_client三个参数（一般放到自定义header中）随请求发送到服务端（做签名计算是为了防止nonce和timestamp被篡改，uid字段不随请求发送防止中间人劫持）
-6. 服务端收到请求后，读取参数值timestamp、nonce_client、sign_client,并对这三个参数做非空判断，若不为空则进行步骤7
-7. 验证timestamp参数，服务端当前时间timestamp_now-timestamp是否大于60s或<-5s（默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s）。若大于60s或<-5s，则请求无效；反之为有效请求，则进行步骤8
-8. 验证nonce_client参数，nonce_client在服务端缓存中是否存在，如果存在则请求无效，视为重放攻击；若不存在则进行步骤9，并将nonce_client记录在服务端缓存中，失效时间一般设置为60s
-9. 验证sign_client参数，服务端根据请求的会话标识读取该用户的uid参数，并记录前端传回的timestamp、nonce_client参数，调用签名生成算法，得到`sign_server=hash（timestamp+nonce_client+uid）`，验证sign_server是否等于sign_client，若一致，说明参数未被篡改，请求有效，进行请求业务处理流程；若不一致，说明参数被篡改，将请求丢弃。
-
-防重放机制图示
-![](images/防重放机制图.png)
-
-**代码实现**
-
-```java
-// Spring拦截器实现
-import java.util.Enumeration;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-import com.google.common.cache.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.bouncycastle.crypto.digests.SM3Digest;
-import org.bouncycastle.util.encoders.Hex;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-/**
- * 重放攻击漏洞
- */
-public class ReplayAttackInterceptor extends HandlerInterceptorAdapter {
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		if (handler instanceof HandlerMethod) {	  
-//            HandlerMethod handlerMethod = (HandlerMethod) handler;
-			// 白名单
-			String [] white ={"/update","/add"};
-			Enumeration<String> names = request.getParameterNames();
-			String path =request.getServletPath();
-			for (int i = 0; i < white.length; i++) {
-				if(path.indexOf(white[i])!=-1){
-
-					return true;
-				}
-			}
-            if(!"GET".equalsIgnoreCase(request.getMethod())){
-            	//客户端时间+△timestamp，即发送请求时的服务端的当前时间
-    			Long timestamp = Long.valueOf(request.getHeader("timestamp"));
-    			// 客户端生成的仅一次有效的随机字符串
-    			String nonce_client = request.getHeader("nonce_client");
-    			// 客户端签名算法
-    			String sign_client = request.getHeader("sign_client");
-    			
-    			if(Objects.nonNull(timestamp) && Objects.nonNull(nonce_client) && Objects.nonNull(sign_client)){
-    				// 失效时间
-                	int seconds = 60;
-                	// 服务器当前时间
-                	long currentTime = System.currentTimeMillis();
-                	long timeDiff = currentTime - timestamp;
-                	// 默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s
-                	if(timeDiff > seconds*1000 || timeDiff < -5*1000){
-                		return false;
-                	}
-                	// 验证nonce_client参数
-                	if(Objects.nonNull(GuavaCache.get(nonce_client))){
-                		return false;
-                	}
-                	GuavaCache.put(nonce_client, nonce_client);
-                	// 验证sign_client参数
-                	// 服务端根据请求的会话标识读取该用户的uid参数
-                	String uid = (String)request.getSession().getAttribute("uid");
-                	// 调用签名算法sign_server=hash（timestamp+nonce_client+uid）
-                	String sign_server = generateSM3HASH(timestamp+nonce_client+uid);
-                	
-                	if(sign_server.equalsIgnoreCase(sign_client)) {
-                		return true;
-                	}
-    			}
-    			// StringBuffer url = request.getRequestURL();
-    			return false;   
-            }
-        	return true;
-            
-        } else {
-            return super.preHandle(request, response, handler);
-        }
-	}
-	//摘要计算
-    public static String generateSM3HASH(String src) {
-        byte[] md = new byte[32];
-        byte[] msg1 = src.getBytes();
-        //System.out.println(Util.byteToHex(msg1));
-        SM3Digest sm3 = new SM3Digest();
-        sm3.update(msg1, 0, msg1.length);
-        sm3.doFinal(md, 0);
-        String s = new String(Hex.encode(md));
-        return s.toUpperCase();
-    }
-    static class GuavaCache {
-        // 缓存项最大数量
-        private static final long GUAVA_CACHE_SIZE = 100000;
-        // 缓存时间(秒)
-        private static final long GUAVA_CACHE_SECONDS = 60;
-        // 缓存操作对象
-        private static LoadingCache<String, Object> GLOBAL_CACHE = null;
-        
-        static {
-            GLOBAL_CACHE = loadCache(new CacheLoader<String, Object>() {
-                @Override
-                public String load(String key) {
-                    // get键 值不存在时，加载新值到该键中
-                    return null;
-                }
-            });
-        }
-        
-        private static LoadingCache<String, Object> loadCache(CaceLoader<String, Object> cacheLoader) {
-            LoadingCache<String, Object> cache = CacheBuilder.newBuilder()
-                .maxmumSize(GUAVA_CACHE_SIZE)
-                .expireAfterAccess(GUAVA_CACHE_SECONDS, TimeUnit.SECONDS)
-                .expireAfterWrite(GUAVA_CACHE_SECONDS, TimeUnit.SECONDS)
-                // 移除缓存
-                .removalListener(new RemovalListener<String, Object>() {
-                    @Override
-                    public void onRemoval(RemovalNotification<String, Object> arg0) {
-                        // 相关逻辑
-                    }
-                }).recordStats().build(cacheLoader);
-            
-            return cache;
-        }
-        
-        /**
-         * 添加缓存
-         */
-        public static void put(String key, Object value) {
-            GLOBAL_CACHE.put(key,value);
-        } 
-        
-        /**
-         * 当get键值不存在时，加载CacheLoader load()方法 加载新值到改键中 当return null 时会抛异常
-         */
-        public static Object get(String key) {
-            try{
-                return GLOBAL_CACHE.get(key);
-            }catch(Exception e){
-                return null;
-            }
-        }
-    }
-}
-```
 
 ## uid的生成和传输方案
 
@@ -968,6 +531,451 @@ export function SM4Util() {
 }
 ```
 
+## 数据完整性校验
+
+**描述**
+
+数据传输完整性是指数据在传输过程中，不被未授权的篡改或在篡改后能够被迅速发现。
+
+**防护建议**
+
+1. 传输过程中数据做整体加密处理（该方案存在一定风险，若攻击者拥有系统访问权限，可在数据未解密的情况下直接篡改加密数据，进行提权操作，固未从根本上解决数据完整性问题，建议采用方案2）
+2. 数据签名校验：建立客户端和服务端全流程校验和处理机制，有效解决数据在请求和响应传输过程中被篡改的问题，提高数据双向传输完整性，用以保障信息系统安全。为保证数据的完整性，约定uid为密钥（uid的生成和传输机制详见[uid的生成和传输方案](#uid的生成和传输方案)）用于签名计算。
+
+系统应采用校验码技术或密码技术保证鉴别信息和重要业务数据等敏感信息在传输过程中的完整性。
+    ①等保三级要求：系统鉴别信息和重要业务数据等敏感信息在传输过程中应采用国家密码主管部门要求的加密算法（SM3等）对其进行数据完整性校验
+    ②等保二级要求：系统中的鉴别信息和重要业务数据等敏感信息在传输过程中应采用校验码技术或密码技术（MD5、SHA等）对其进行数据完整性校验
+
+**请求传输完整性校验实现方案**
+
+（1）客户端从localstorage中读取加固参数uid和时间差△timestamp（服务器时间与客户端时间的时间差），并计算请求发送时的服务端当前时间戳为:客户端当前时间+△timestamp。
+（2）客户端使用散列算法对请求数据data和关键加固参数uid，timestamp进行签名计算，以国密算法SM3举例：`clientSM3=SM3(sort(data+salt+timestamp))`,sort的含义是将参数值按照字母字典排序，然后从小到大拼接成一个字符串。
+（3）将签名clientSM3和时间戳以参数或自定义header的形式随请求发送给服务器。
+（4）服务端收到请求，判断请求中是否存在clientSM3和时间戳参数，若不存在则请求无效，并向客户端返回请求无效；若存在，则读取并继续执行。
+（5）服务端验证时间戳参数，服务端当前时间timestamp_now-timestamp是否大于60s或<-5s（默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s）。若大于60s或<-5s，则请求无效；反之为有效请求，。
+（6）服务端验证clientSM3参数，服务端根据请求的会话标识读取该用户的uid参数，并记录请求中的timestamp、请求数据data，调用签名生成算法，得到`serverSM3=SM3(sort(data+uid+timestamp))`，验证serverSM3是否等于clientSM3，若不一致，则请求无效，并向客户端返回数据请求被篡改；若一致说明数据未篡改，进行下一步业务处理。
+
+![](images/请求传输完整性.png)
+
+**响应传输完整性校验实现方案**
+
+（1）服务端返回响应前根据会话标识读取该用户的uid参数，并获取当前服务端时间timestamp
+（2）服务端使用散列算法对响应数据data和salt值进行签名计算，以国密SM3举例：`serverSM3=SM3(sort(data+uid+timestamp))`,sort的含义是将参数值按照字母字典排序，然后从小到大拼接成一个字符串。
+（3）将签名serverSM3和timestamp以参数或自定义header的形式随响应发送给客户端。
+（4）客户端收到响应后判断响应中是否存在serverSM3和timestamp参数，若不存在则响应无效，客户端不再解析该响应；若存在，则读取并继续执行。
+（5）验证timestamp参数，客户端当前时间timestamp_now-timestamp是否大于60s或<-5s（默认一次HTTP响应从发出到到达客户端的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s）。若大于60s或<-5s，则响应无效；反之则继续执行。
+（6）验证serverSM3参数，客户端读取该用户的盐值uid，并记录响应中的timestamp、响应数据data，调用签名生成算法，得到clientSM3=SM3(sort(data+salt+timestamp))，验证clientSM3是否等于serverSM3，若不一致，则响应无效，说明响应数据被篡改；若一致说明数据未篡改，响应正常，则客户端对响应解析并进行下一步处理。
+
+![](images/响应传输完整性.png)
+
+**简明扼要**
+
+1、传输过程中数据加密处理
+2、数据签名校验：为保证数据的完整性，约定uid为密钥（仅一次会话周期有效，且仅客户端和服务端知道，在传输中不可见）用于签名计算，客户端发送请求时，将请求内容与uid结合计算出签名；服务端接收到请求后，也按相同算法计算出签名。如果相等，则请求来自可信任客户端，且请求是完整的。
+    ①客户端使用哈希算法对请求中数据和salt值进行签名计算（本方案中uid取为salt值）sign_client=md5(sort(data+uid)),sort的含义是将参数值按照字母字典排序，然后从小到大拼接成一个字符串。
+    ②将签名sign_client以参数的形式发送给服务器
+    ③服务器收到数据之后，根据用户会话读取uid，对数据使用相同的哈希算法进行签名计算sign_server=md5(sort(data+uid))
+    ④验证sign_client和sign_server是否一致，若一致则说明数据没有经过篡改，执行响应操作，若不一致，则签名校验异常，数据经过篡改视为无效请求。
+
+![](images/完整性校验流程.png)
+
+**代码实现**
+
+```java
+// Spring拦截器实现
+import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.bouncycastle.crypto.digests.SM3Digest;
+import org.bouncycastle.util.encoders.Hex;
+import org.springframework.util.Assert;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import cn.hutool.core.net.URLEncodeUtil;
+
+/**
+ * 数据完整性校验
+ */
+public class IntegralityCheckInterceptor extends HandlerInterceptorAdapter {// implements HandlerInterceptor
+
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		
+		if (handler instanceof HandlerMethod) {
+//            HandlerMethod handlerMethod = (HandlerMethod) handler;
+		       String [] white ={"downLoadFromFTP"};
+		        String path =request.getServletPath();
+		        for (int i = 0; i < white.length; i++) {
+		            if(path.indexOf(white[i])!=-1){
+		            	return true;
+		            }
+		        }
+        	//客户端时间+△timestamp，即发送请求时的服务端的当前时间
+			try {
+                Long timestamp = Long.valueOf(request.getHeader("timestamp"));
+                // 客户端使用散列算法对请求数据data和关键加固参数uid，timestamp进行签名计算
+                String clientSM3 = request.getHeader("clientSM3");
+                if(Objects.nonNull(timestamp) && Objects.nonNull(clientSM3)){
+                    // 失效时间
+                    int seconds = 60;
+                    // 服务器当前时间
+                    long currentTime = System.currentTimeMillis();
+                    long timeDiff = currentTime - timestamp;
+                    // 默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s
+                    if(timeDiff > seconds * 1000 || timeDiff < -5 * 1000){
+                        return false;
+                    }
+
+                    // 验证clientSM3参数
+                    // 服务端根据请求的会话标识读取该用户的uid参数
+                    String uid = (String) request.getSession().getAttribute("uid");
+                    Assert.notNull(uid);
+
+                    // 请求数据data
+                    String data = "";
+                    // 注意：put请求等json格式的接口无法获取参数
+                    Map<String,String[]> paramMap = request.getParameterMap();
+                    if(paramMap!=null && !paramMap.isEmpty()){
+                        StringBuilder sb = new StringBuilder();
+                        for(Map.Entry<String, String[]> entry : paramMap.entrySet()){
+                            String key = entry.getKey();
+                            String[] value = entry.getValue();
+                            for(String paramValue : value){
+                                sb.append(key);
+                                sb.append("=");
+                                String param = paramValue.replaceAll(" ","");
+                                String deparam = null;
+                                try {
+                                    deparam = URLDecoder.decode(param,"UTF-8");
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    // 注意此块内容要符合业务逻辑，当有转义的时候需要怎么处理
+                                    String fixed = param.replaceAll("%(?![0-9A-Fa-f]{2})","%25");
+                                    deparam = URLDecoder.decode(fixed,"UTF-8");
+                                }
+                                // String deparam = URLDecoder.decode(param,"UTF-8");
+                                if(deparam == null){
+                                    return false;
+                                }
+                                sb.append(deparam);
+                                sb.append("&");
+                            }          			
+                        }
+                        // 去掉空格
+                        String strParam = sb.substring(0, sb.length()-1).toString().replaceAll("\\s","");
+                        data = URLEncodeUtil.encodeAll(strParam);
+                    }	
+                    // 调用签名算法serverSM3=SM3(sort(data+uid+timestamp))
+                    char[] c = (data+uid+timestamp).toCharArray();
+                    Arrays.sort(c);
+                    String sort = String.valueOf(c);
+                    String serverSM3 = generateSM3HASH(sort);
+                    if(serverSM3.equalsIgnoreCase(clientSM3)){
+                        return true;
+                    }
+                }
+			}catch (Exception e){
+                e.printStackTrace();
+			}
+			StringBuffer url = request.getRequestURL();
+			return false;
+        } else {	
+            return super.preHandle(request, response, handler);
+        }
+	}
+	
+	//摘要计算
+    public static String generateSM3HASH(String src) {
+        byte[] md = new byte[32];
+        byte[] msg1 = src.getBytes();
+        //System.out.println(Util.byteToHex(msg1));
+        SM3Digest sm3 = new SM3Digest();
+        sm3.update(msg1, 0, msg1.length);
+        sm3.doFinal(md, 0);
+        String s = new String(Hex.encode(md));
+        return s.toUpperCase();
+    }
+}
+
+```
+
+```js
+// jQuery ajaxhook.min.js插件实现
+// 接口拦截-数据完整性校验-防重放策略
+(function () {
+    // 字母字典排序
+    const dictSort = (str) => {
+        const strArr = String(str).split('');
+        return strArr.sort().join('');
+    };
+    const randomStr = (len = 36) => {
+        let randStr = function () {
+            var array = new Uint32Array(1);
+            window.crypto.getRandomValues(array);
+            return  array[0].toString();
+        };
+        let str = randStr();
+        do {
+            str += randStr();
+        } while (str.length < len)
+        return str.substr(0, len);
+    };
+    ah.proxy({
+        // 请求发起前进入
+        onRequest: (config, handler) => {
+            if (config.url==="update.do"){
+                handler.next(config);
+            }else if (config.url==="add.do"){
+                handler.next(config);
+            }else {
+                let body = config.body || '';
+                // 兼容formdata上传文件
+                if (body?.constructor.name === 'FormData') {
+                    const formDataStr = {};
+                    body.forEach((val, key) => formDataStr[key] = val);
+                    delete formDataStr.file;
+                    body = Object.keys(formDataStr).map(it => `${it}=${formDataStr[it]}`).join('&');
+                }
+                const url = config.url;
+                let getUrl = url.includes('?') ? url.split('?')[1] : '';
+                let data = ''
+                if(body){
+                    if(getUrl){
+                        body = body + "&" + getUrl;
+                    }
+                }else{
+                    body += getUrl
+                }
+                if(body === '{}') body = ''
+                let decodeURI = decodeURIComponent(body).replace(/\+/g,"")
+                data = encodeURIComponent(decodeURI)
+                const uid = localStorage.getItem('uid');
+                // 获取时间差值
+                const timestamp = localStorage.getItem('timestamp') || 0;
+                // serverTime = now - 差值
+                const serverTimestamp = new Date().getTime() - Number(timestamp);
+                // 参数按字母字典sort排序
+                const clientVal = dictSort(data + uid + serverTimestamp);
+                // sm3加密
+                const clientSM3 = sm3(clientVal);
+                config.headers.clientSM3 = clientSM3;
+                config.headers.timestamp = serverTimestamp;
+                // 防重放策略参数
+                const nonce_client = randomStr();
+                const sign_client = sm3(serverTimestamp + nonce_client + uid);
+                config.headers.nonce_client = nonce_client;
+                config.headers.sign_client = sign_client;
+                handler.next(config);
+            }
+
+        },
+        onError: (err, handler) => {
+            handler.next(err);
+        },
+        onResponse: (response, handler) => {
+            handler.next(response);
+        }
+    })
+})();
+
+```
+## 防重放攻击
+
+**描述**
+
+重放攻击（ReplayAttacks），是指攻击者发送一个目的主机已接收过的包，来达到欺骗系统的目的。
+
+主机A要给服务器B发送数据请求，重放攻击可由发起者A或攻击者C发起。
+※若由发起者A发起，A会恶意重复发送数据请求；
+※若由攻击者C发起，攻击者可利用网络监听或者其他方式盗取用户数据请求，再重发该请求给服务器。
+
+**防护建议**
+
+1. 验证码机制
+设置验证码，一次有效，每次请求更新新的验证码。适用于登录过程。优点：简单易实现。缺点：影响用户使用。
+2. 随机数机制（挑战与应答的机制）
+客户端请求服务器时，服务器生成一个随机数返回给客户端，客户端带上这个随机数访问服务器，服务器比对客户端的这个参数，若相同，说明正确，不是重放攻击。
+方案漏洞：
+将获取随机数的请求和正常数据请求放到请求集合中，并设置全局变量。将响应返回的随机数赋值给全局变量，然后再将全局变量的值赋值给数据请求从而可保证每个请求均带入有效的随机数，重放该请求集合，从而达到重放攻击的目的。
+
+![](images/随机数防重放.png)
+
+3. 时间戳+nonce+签名验证（推荐使用方案）
+客户端发送请求时带上当前时间戳，并生成随机nonce，同时签名（签名是为了防止会话被劫持，时间戳和nonce参数被篡改)，服务端对请求时间戳、nonce及签名进行验证，一致则认为是有效请求，否则视为无效请求。
+
+参数说明
+
+|   参数    |  类型   |                             说明                             |
+| :-------: | :-----: | :----------------------------------------------------------: |
+|   sign    | String  | 请求加密签名，sign的计算结合了请求中的timestamp、nonce、uid以及**加密的消息体**（加入消息体计算sign，可保证请求数据完整性校验）。 |
+| timestamp | Integer | 时间戳，首次访问系统从服务端获取，与nonce结合使用，用于防止请求重放攻击。 |
+|   nonce   | String  |     随机数，与timestamp结合使用，用于防止请求重放攻击。      |
+|    uid    |  Sting  | 用于计算签名和加密数据的key，与用户会话相关且生命周期与之一致，由服务端生成，经加密传输到客户端。 |
+
+**详细解决方案**
+
+1. 用户访问系统，向服务端请求当前系统时间
+2. 客户端接收服务端返回的当前系统时间timestamp_server，并计算出与当前客户端时间的差值△timestamp，将其存入浏览器localstorage中。（加固相关信息存储到localstorage中而不是sessionstorage中，是为了防止客户端浏览器跨页面操作时获取不到相关参数）后续时间戳参数均带入客户端时间+△timestamp，即发送请求时的服务端的当前时间
+3. 客户端生成仅一次有效的随机字符串nonce_client（防止60s内的攻击）
+4. 客户端读取uid（uid由服务端生成，并与用户会话相关，后续完整性校验以及敏感信息传输中均使用到该uid，uid的生成和传输过程详见[uid的生成和传输方案](#uid的生成和传输方案)）
+5. 客户端调用签名算法，`sign_client=hash(timestamp+nonce_client+uid)`，sign_client、timestamp、nonce_client三个参数（一般放到自定义header中）随请求发送到服务端（做签名计算是为了防止nonce和timestamp被篡改，uid字段不随请求发送防止中间人劫持）
+6. 服务端收到请求后，读取参数值timestamp、nonce_client、sign_client,并对这三个参数做非空判断，若不为空则进行步骤7
+7. 验证timestamp参数，服务端当前时间timestamp_now-timestamp是否大于60s或<-5s（默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s）。若大于60s或<-5s，则请求无效；反之为有效请求，则进行步骤8
+8. 验证nonce_client参数，nonce_client在服务端缓存中是否存在，如果存在则请求无效，视为重放攻击；若不存在则进行步骤9，并将nonce_client记录在服务端缓存中，失效时间一般设置为60s
+9. 验证sign_client参数，服务端根据请求的会话标识读取该用户的uid参数，并记录前端传回的timestamp、nonce_client参数，调用签名生成算法，得到`sign_server=hash（timestamp+nonce_client+uid）`，验证sign_server是否等于sign_client，若一致，说明参数未被篡改，请求有效，进行请求业务处理流程；若不一致，说明参数被篡改，将请求丢弃。
+
+防重放机制图示
+![](images/防重放机制图.png)
+
+**代码实现**
+
+```java
+// Spring拦截器实现
+import java.util.Enumeration;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.cache.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.bouncycastle.crypto.digests.SM3Digest;
+import org.bouncycastle.util.encoders.Hex;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+/**
+ * 重放攻击漏洞
+ */
+public class ReplayAttackInterceptor extends HandlerInterceptorAdapter {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		if (handler instanceof HandlerMethod) {	  
+//            HandlerMethod handlerMethod = (HandlerMethod) handler;
+			// 白名单
+			String [] white ={"/update","/add"};
+			Enumeration<String> names = request.getParameterNames();
+			String path =request.getServletPath();
+			for (int i = 0; i < white.length; i++) {
+				if(path.indexOf(white[i])!=-1){
+
+					return true;
+				}
+			}
+            if(!"GET".equalsIgnoreCase(request.getMethod())){
+            	//客户端时间+△timestamp，即发送请求时的服务端的当前时间
+    			Long timestamp = Long.valueOf(request.getHeader("timestamp"));
+    			// 客户端生成的仅一次有效的随机字符串
+    			String nonce_client = request.getHeader("nonce_client");
+    			// 客户端签名算法
+    			String sign_client = request.getHeader("sign_client");
+    			
+    			if(Objects.nonNull(timestamp) && Objects.nonNull(nonce_client) && Objects.nonNull(sign_client)){
+    				// 失效时间
+                	int seconds = 60;
+                	// 服务器当前时间
+                	long currentTime = System.currentTimeMillis();
+                	long timeDiff = currentTime - timestamp;
+                	// 默认一次HTTP请求从发出到到达服务器的时间是不会超过60s的，且不会小于0，考虑到计算机精度和多网关业务场景，故判断条件为>60s或<-5s
+                	if(timeDiff > seconds*1000 || timeDiff < -5*1000){
+                		return false;
+                	}
+                	// 验证nonce_client参数
+                	if(Objects.nonNull(GuavaCache.get(nonce_client))){
+                		return false;
+                	}
+                	GuavaCache.put(nonce_client, nonce_client);
+                	// 验证sign_client参数
+                	// 服务端根据请求的会话标识读取该用户的uid参数
+                	String uid = (String)request.getSession().getAttribute("uid");
+                	// 调用签名算法sign_server=hash（timestamp+nonce_client+uid）
+                	String sign_server = generateSM3HASH(timestamp+nonce_client+uid);
+                	
+                	if(sign_server.equalsIgnoreCase(sign_client)) {
+                		return true;
+                	}
+    			}
+    			// StringBuffer url = request.getRequestURL();
+    			return false;   
+            }
+        	return true;
+            
+        } else {
+            return super.preHandle(request, response, handler);
+        }
+	}
+	//摘要计算
+    public static String generateSM3HASH(String src) {
+        byte[] md = new byte[32];
+        byte[] msg1 = src.getBytes();
+        //System.out.println(Util.byteToHex(msg1));
+        SM3Digest sm3 = new SM3Digest();
+        sm3.update(msg1, 0, msg1.length);
+        sm3.doFinal(md, 0);
+        String s = new String(Hex.encode(md));
+        return s.toUpperCase();
+    }
+    static class GuavaCache {
+        // 缓存项最大数量
+        private static final long GUAVA_CACHE_SIZE = 100000;
+        // 缓存时间(秒)
+        private static final long GUAVA_CACHE_SECONDS = 60;
+        // 缓存操作对象
+        private static LoadingCache<String, Object> GLOBAL_CACHE = null;
+        
+        static {
+            GLOBAL_CACHE = loadCache(new CacheLoader<String, Object>() {
+                @Override
+                public String load(String key) {
+                    // get键 值不存在时，加载新值到该键中
+                    return null;
+                }
+            });
+        }
+        
+        private static LoadingCache<String, Object> loadCache(CaceLoader<String, Object> cacheLoader) {
+            LoadingCache<String, Object> cache = CacheBuilder.newBuilder()
+                .maxmumSize(GUAVA_CACHE_SIZE)
+                .expireAfterAccess(GUAVA_CACHE_SECONDS, TimeUnit.SECONDS)
+                .expireAfterWrite(GUAVA_CACHE_SECONDS, TimeUnit.SECONDS)
+                // 移除缓存
+                .removalListener(new RemovalListener<String, Object>() {
+                    @Override
+                    public void onRemoval(RemovalNotification<String, Object> arg0) {
+                        // 相关逻辑
+                    }
+                }).recordStats().build(cacheLoader);
+            
+            return cache;
+        }
+        
+        /**
+         * 添加缓存
+         */
+        public static void put(String key, Object value) {
+            GLOBAL_CACHE.put(key,value);
+        } 
+        
+        /**
+         * 当get键值不存在时，加载CacheLoader load()方法 加载新值到改键中 当return null 时会抛异常
+         */
+        public static Object get(String key) {
+            try{
+                return GLOBAL_CACHE.get(key);
+            }catch(Exception e){
+                return null;
+            }
+        }
+    }
+}
+```
+
 ## CORS
 
 **描述**
@@ -1322,12 +1330,9 @@ public class XSSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, 
                          FilterChain chain) throws IOException, ServletException {
-        
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        
         // 创建包装器
         HttpServletRequest wrappedRequest = new XssAndSqlHttpServletRequestWrapper(httpRequest);
-        
         // 继续过滤器链，传递包装后的请求
         chain.doFilter(wrappedRequest, response);
     }

@@ -7,7 +7,7 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 
 ## 下载
 
-|        [apache旗下安装包](https://dlcdn.apache.org/)         | [centos rpm包(cat /etc/centos-release)](http://vault.centos.org/) | [PLSQL历史版本下载](https://www.allroundautomations.com/registered-plsqldev/) |
+| [apache旗下安装包地址1](https://downloads.apache.org/) / [地址2](https://dlcdn.apache.org/) | [centos rpm包(cat /etc/centos-release)](http://vault.centos.org/) | [PLSQL历史版本下载](https://www.allroundautomations.com/registered-plsqldev/) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [Clash下载](https://clash.top/download/) / [GitHub](https://github.com/clashdownload) | [Clash Meta for Android](https://clashmeta.org/) / [GitHub](https://github.com/MetaCubeX/ClashMetaForAndroid) |       [FlClash](https://github.com/chen08209/FlClash)        |
 | [ClashX.Meta](https://clashmeta.org/) / [GitHub](https://github.com/MetaCubeX/ClashX.Meta) |      [ClashN](https://github.com/2dust/clashN) 同v2rayN      | [Clash Verge Rev](https://clashvergerev.org/) / [GitHub](https://github.com/clash-verge-rev/clash-verge-rev) |

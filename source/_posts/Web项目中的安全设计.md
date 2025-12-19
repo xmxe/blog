@@ -976,6 +976,26 @@ public class ReplayAttackInterceptor extends HandlerInterceptorAdapter {
 }
 ```
 
+**简便版解决会话重放攻击demo**
+
+
+```js
+// js代码
+var random = Math.random()*1000000000000000;
+```
+
+```java
+// java代码
+String random = request.getParameter("random");
+List list = (ArrayList)request.getSession().getAttribute("randoms")
+if(list.contains(random)) {
+	return null;
+}
+list.add(random);
+request.getSession().setAttribute("randoms")
+```
+处理流程:请求带一个随机数，后台从session中取出存放这个随机数的list，判断list里面是否包含这个随机数，如果包含，证明请求被重复发送，不做处理，如果不包含，则证明是第一次请求，将随机数放进list放入session里面，之后处理业务逻辑
+
 ## CORS
 
 **描述**
@@ -1008,6 +1028,32 @@ location / {
 ```
 2. @CrossOrigin注解解决跨域问题，在需要允许跨域访问的接口或者类加上该注解就可以，如果用@RequestMapping，则要指定get，或post等才有起效。
 `@CrossOrigin(origins="http://localhost:4000")`
+
+**解决跨域的几种方案**
+
+服务器没有同源策略，浏览器的同源策略是为了保证浏览器的安全性，实际上跨域请求会将请求发送到服务器，只不过在返回数据的时候浏览器发出跨域警告
+
+1. JSONP
+2. CORS：服务器中编写过滤器允许跨域访问
+```java
+HttpServletResponse httpResponse = (HttpServletResponse) response;
+//该字段必填。它的值要么是请求时Origin字段的具体值，要么是一个*，表示接受任意域名的请求
+httpResponse.setHeader("Access-Control-Allow-Origin", "*");
+//该字段必填。它的值是逗号分隔的一个具体的字符串(GET,POST...)或者*，表明服务器支持的所有跨域请求的方法。注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次"预检"请求
+httpResponse.setHeader("Access-Control-Allow-Methods", "*");
+//该字段可选，用来指定本次预检请求的有效期，单位为秒。在有效期间，不用发出另一条预检请求。
+httpResponse.setHeader("Access-Control-Max-Age", "3600");
+httpResponse.setHeader("Access-Control-Allow-Headers",
+"Origin,X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie");
+httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+httpResponse.setHeader("Content-type", "application/json");
+httpResponse.setHeader("Cache-Control", "no-cache, must-revalidate");
+chain.doFilter(request,httpResponse);
+```
+3. 反向代理工具如nginx
+4. 服务器没有同源策略，使用HTTPClient等技术
+5. 控制器添加@CrossOrigin注解
+
 
 ## XSS
 
@@ -1377,6 +1423,13 @@ if($allow_referer = 0){
 ```
 2. 随机token
 对于敏感的网页，可在请求参数或者请求header中增加不可伪造的token等信息用户防护CSRF攻击(可利用防重放攻击中的sign当作token)。
+
+**CSRF和XSS的区别**
+
+1. CSRF是跨站请求伪造;XSS是跨域脚本攻击。
+2. CSRF需要用户先登录网站A,获取cookie;XSS不需要登录。
+3. CSRF是利用网站A本身的漏洞,去请求网站A的api;XSS是向网站A注入JS代码,然后执行JS里的代码,篡改网站A的内容。（XSS利用的是站点内的信任用户，而CSRF则是通过伪装来自受信任用户的请求来利用受信任的网站。你可以这么理解CSRF攻击：攻击者盗用了你的身份，以你的名义向第三方网站发送恶意请求。）
+
 
 ## SQL注入
 

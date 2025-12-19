@@ -1457,6 +1457,19 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p><strong>简便版解决会话重放攻击demo</strong></p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// js代码</span>
+<span class="token keyword">var</span> random <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">1000000000000000</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// java代码</span>
+<span class="token class-name">String</span> random <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"random"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">List</span> list <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">ArrayList</span><span class="token punctuation">)</span>request<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">"randoms"</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>list<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>random<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>random<span class="token punctuation">)</span><span class="token punctuation">;</span>
+request<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">"randoms"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>处理流程:请求带一个随机数，后台从session中取出存放这个随机数的list，判断list里面是否包含这个随机数，如果包含，证明请求被重复发送，不做处理，如果不包含，则证明是第一次请求，将随机数放进list放入session里面，之后处理业务逻辑</p>
 <h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p><strong>描述</strong></p>
 <p>前后端分离的项目，为了保证正常访问，需设置跨域，由于配置不当：	</p>
 <ol>
@@ -1481,6 +1494,27 @@
     <span class="token directive"><span class="token keyword">add_header</span> Access-Control-Allow-Origin <span class="token variable">$allowed_origin</span></span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li>@CrossOrigin注解解决跨域问题，在需要允许跨域访问的接口或者类加上该注解就可以，如果用@RequestMapping，则要指定get，或post等才有起效。<br><code>@CrossOrigin(origins=&quot;http://localhost:4000&quot;)</code></li>
+</ol>
+<p><strong>解决跨域的几种方案</strong></p>
+<p>服务器没有同源策略，浏览器的同源策略是为了保证浏览器的安全性，实际上跨域请求会将请求发送到服务器，只不过在返回数据的时候浏览器发出跨域警告</p>
+<ol>
+<li>JSONP</li>
+<li>CORS：服务器中编写过滤器允许跨域访问<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">HttpServletResponse</span> httpResponse <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">HttpServletResponse</span><span class="token punctuation">)</span> response<span class="token punctuation">;</span>
+<span class="token comment">//该字段必填。它的值要么是请求时Origin字段的具体值，要么是一个*，表示接受任意域名的请求</span>
+httpResponse<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Access-Control-Allow-Origin"</span><span class="token punctuation">,</span> <span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//该字段必填。它的值是逗号分隔的一个具体的字符串(GET,POST...)或者*，表明服务器支持的所有跨域请求的方法。注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次"预检"请求</span>
+httpResponse<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Access-Control-Allow-Methods"</span><span class="token punctuation">,</span> <span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//该字段可选，用来指定本次预检请求的有效期，单位为秒。在有效期间，不用发出另一条预检请求。</span>
+httpResponse<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Access-Control-Max-Age"</span><span class="token punctuation">,</span> <span class="token string">"3600"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+httpResponse<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Access-Control-Allow-Headers"</span><span class="token punctuation">,</span>
+<span class="token string">"Origin,X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+httpResponse<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Access-Control-Allow-Credentials"</span><span class="token punctuation">,</span> <span class="token string">"true"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+httpResponse<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Content-type"</span><span class="token punctuation">,</span> <span class="token string">"application/json"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+httpResponse<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Cache-Control"</span><span class="token punctuation">,</span> <span class="token string">"no-cache, must-revalidate"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+chain<span class="token punctuation">.</span><span class="token function">doFilter</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span>httpResponse<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>反向代理工具如nginx</li>
+<li>服务器没有同源策略，使用HTTPClient等技术</li>
+<li>控制器添加@CrossOrigin注解</li>
 </ol>
 <h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p><strong>描述</strong></p>
 <p>XSS的全称是跨站脚本攻击。它是一种将恶意脚本注入到其他用户信任的网站中的攻击方式。</p>
@@ -1836,6 +1870,12 @@
     return 403
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li>随机token<br>对于敏感的网页，可在请求参数或者请求header中增加不可伪造的token等信息用户防护CSRF攻击(可利用防重放攻击中的sign当作token)。</li>
+</ol>
+<p><strong>CSRF和XSS的区别</strong></p>
+<ol>
+<li>CSRF是跨站请求伪造;XSS是跨域脚本攻击。</li>
+<li>CSRF需要用户先登录网站A,获取cookie;XSS不需要登录。</li>
+<li>CSRF是利用网站A本身的漏洞,去请求网站A的api;XSS是向网站A注入JS代码,然后执行JS里的代码,篡改网站A的内容。（XSS利用的是站点内的信任用户，而CSRF则是通过伪装来自受信任用户的请求来利用受信任的网站。你可以这么理解CSRF攻击：攻击者盗用了你的身份，以你的名义向第三方网站发送恶意请求。）</li>
 </ol>
 <h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><p><strong>代码实现</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Enumeration</span></span><span class="token punctuation">;</span>

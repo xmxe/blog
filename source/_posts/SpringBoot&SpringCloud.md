@@ -812,8 +812,8 @@ config server集成spring-cloud-starter-bus-kafka和spring-boot-starter-actuator
 
 ## springcloud-shenyu
 
-| [GitHub ShenYu](https://github.com/apache/shenyu) | [Apache ShenYu文档](https://shenyu.apache.org/zh/docs/index/) | [ShenYu Admin\BootStrap二进制包下载地址(不使用源码启动的话直接下载包启动)](https://archive.apache.org/dist/incubator/shenyu/) |
-| :-----------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [GitHub ShenYu](https://github.com/apache/shenyu) | [Apache ShenYu文档](https://shenyu.apache.org/zh/docs/) | [ShenYu Admin\BootStrap二进制包下载地址(不使用源码启动的话直接下载包启动)](https://archive.apache.org/dist/incubator/shenyu/) |
+| :-----------------------------------------------: | :-----------------------------------------------------: | :----------------------------------------------------------: |
 
 ## springcloud-tencent
 

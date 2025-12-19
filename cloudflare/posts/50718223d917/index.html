@@ -797,12 +797,70 @@ threadPool<span class="token punctuation">.</span><span class="token function">e
 </blockquote>
 </li>
 </ol>
-<h4 id="为何先入队列再增加线程数？"><a href="#为何先入队列再增加线程数？" class="headerlink" title="为何先入队列再增加线程数？"></a>为何先入队列再增加线程数？</h4><ul>
+<h4 id="为何先入队列再增加线程数"><a href="#为何先入队列再增加线程数" class="headerlink" title="为何先入队列再增加线程数"></a>为何先入队列再增加线程数</h4><ul>
 <li>资源管理与节约成本：Java线程池的设计目标之一是高效地利用系统资源。当任务到来时，如果当前线程数未达到最大线程数限制，优先将任务放入队列等待执行，而不是立即创建新线程。这样可以避免频繁地创建和销毁线程，节约了系统资源和开销。</li>
 <li>避免线程爆炸：如果任务到来速度过快，直接增加线程数可能会导致线程数爆炸式增长，从而消耗过多的系统资源和内存。通过先将任务入队列，可以平滑地控制线程数量的增长，避免线程数量不受控制地增加。</li>
 <li>防止资源竞争：在多线程环境下，线程之间可能会因为竞争资源而导致性能下降甚至死锁。通过将任务先放入队列，可以避免线程之间过度竞争共享资源，减少了竞争的可能性，提高了系统的稳定性和可靠性。</li>
 <li>任务处理的优先级：在任务队列中，可以通过不同的调度策略对任务进行优先级排序，根据任务的重要性和紧急程度来决定执行顺序。这样可以更灵活地控制任务的执行顺序，提高系统的响应速度和效率。</li>
 </ul>
+<h4 id="线程池corePoolSize设置为0会出现什么情况"><a href="#线程池corePoolSize设置为0会出现什么情况" class="headerlink" title="线程池corePoolSize设置为0会出现什么情况"></a>线程池corePoolSize设置为0会出现什么情况</h4><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/TNUwKhV0JpSiaPIJhf9ibjVBibUMjpmPsPiaKxkaw3YGxFhiaoj6ERrMET0LbtIOD3AzLWKRNKiaiamiaIsllfIXA0VGcA/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=2"></p>
+<ol>
+<li>如果线程池中的线程小于核心线程数<strong>corePoolSize</strong>时，则创建新线程直接执行任务。</li>
+<li>如果线程池中的线程大于核心线程数<strong>corePoolSize</strong>时，则暂时把任务存储到工作队列<strong>workQueue</strong>中等待执行。</li>
+<li>如果工作队列<strong>workQueue</strong>也满时：<ul>
+<li>当线程数小于最大线程池数<strong>maximumPoolSize</strong>时，由创建新线程来处理；</li>
+<li>当线程数大于等于最大线程池数<strong>maximumPoolSize</strong>时，则执行拒绝策略；</li>
+</ul>
+</li>
+</ol>
+<p>以下是JDK 21线程池类<strong>ThreadPoolExecutor execute</strong>方法源码：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">execute</span><span class="token punctuation">(</span><span class="token class-name">Runnable</span> command<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 检查传入的任务是否为空，如果为空则抛出NullPointerException</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>command <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        thrownew <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 获取当前线程池的控制状态</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> ctl<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 步骤1: 如果当前运行的线程数少于核心线程数</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">workerCountOf</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token operator">&lt;</span> corePoolSize<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 尝试添加一个新的工作线程来执行提交的任务</span>
+        <span class="token comment">// 如果添加成功，则直接返回</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">addWorker</span><span class="token punctuation">(</span>command<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 再次获取线程池的控制状态，以应对并发变化</span>
+        c <span class="token operator">=</span> ctl<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 步骤2</span>
+    <span class="token comment">// 步骤2.1: 如果线程池处于运行状态并且任务能够成功加入队列</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isRunning</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> workQueue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>command<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 再次检查线程池的状态，确认线程池仍然处于运行状态</span>
+        <span class="token keyword">int</span> recheck <span class="token operator">=</span> ctl<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 2.2 如果线程池不再运行，并且任务能够从队列中移除，则拒绝任务</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isRunning</span><span class="token punctuation">(</span>recheck<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">remove</span><span class="token punctuation">(</span>command<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token function">reject</span><span class="token punctuation">(</span>command<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 2.3 如果当前线程池没有运行的线程</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">workerCountOf</span><span class="token punctuation">(</span>recheck<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token comment">// 尝试添加一个新的非核心工作线程（false表示非核心线程）</span>
+            <span class="token function">addWorker</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 步骤3</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 3.1 尝试添加一个新的非核心工作线程来执行任务</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">addWorker</span><span class="token punctuation">(</span>command<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token comment">// 3.2 如果添加失败，说明线程池已关闭或达到饱和状态，因此拒绝任务</span>
+            <span class="token function">reject</span><span class="token punctuation">(</span>command<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>从源码可以看到，如果往线程池提交任务的时候，当corePoolSize &#x3D; 0时，代码正常情况下会执行到<strong>步骤2</strong>。以下三步是关键步骤：<strong>步骤2.1</strong>：此时，如果线程池处于运行状态，并且任务能够成功加入队列，说明线程池不为空，线程正常执行任务。<strong>步骤2.3</strong>：此时，如果当前线程池没有运行的线程，<strong>则尝试添加一个新的非核心工作线程</strong>，即任务会先进入队列排队再由线程获取任务执行。<strong>步骤3.1</strong>：此时，说明队列满了无法加入任务，<strong>尝试添加一个新的非核心工作线程来执行任务</strong>，如果添加失败，说明线程池已关闭或达到饱和状态，因此拒绝任务。</p>
+<blockquote>
+<p>扩展知识点：这个逻辑在JDK 6之前略有不同，<strong>在JDK 6之前，当corePoolSize &#x3D; 0的时候，先将这个任务放到阻塞队列中，只有等队列满了才创建线程来执行</strong>，而JDK 6+是<strong>直接创建一个非核心线程，在放到队列中来执行</strong>，很显示，JDK 6这个优化动作减小了内存溢出的可能性。</p>
+</blockquote>
 <h3 id="虚拟线程"><a href="#虚拟线程" class="headerlink" title="虚拟线程"></a>虚拟线程</h3><blockquote>
 <p>JDK 19新推出的虚拟线程，或者叫协程，主要是为了解决在读书操作系统中线程需要依赖内核线程的实现，导致有很多额外开销的问题。通过在Java语言层面引入虚拟线程，通过JVM进行调度管理，从而减少上下文切换的成本。<br>虚拟线程是守护线程，所以有可能会没等他执行完虚拟机就会shutdown掉。</p>
 </blockquote>

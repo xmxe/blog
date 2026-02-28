@@ -560,7 +560,7 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Thread</span> thread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token annotation punctuation">@Override</span>
 	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>title<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>title<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span>
  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -576,22 +576,22 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 </table>
 <h3 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h3><h4 id="Retention"><a href="#Retention" class="headerlink" title="@Retention"></a>@Retention</h4><p>表示需要在什么级别保存该注释信息，用于描述注解的生命周期（即：被描述的注解在什么范围内有效）,取值（RetentionPoicy）有：</p>
 <ol>
-<li>SOURCE:在源文件中有效（即源文件保留）</li>
-<li>CLASS:在class文件中有效（即class保留）</li>
-<li>RUNTIME:在运行时有效（即运行时保留）</li>
+<li><strong>SOURCE</strong>:在源文件中有效（即源文件保留）</li>
+<li><strong>CLASS</strong>:在class文件中有效（即class保留）</li>
+<li><strong>RUNTIME</strong>:在运行时有效（即运行时保留）</li>
 </ol>
 <h4 id="Target"><a href="#Target" class="headerlink" title="@Target"></a>@Target</h4><p>用于描述注解的使用范围（即：被描述的注解可以用在什么地方）,取值(ElementType)有：</p>
 <ol>
-<li>CONSTRUCTOR:用于描述构造器</li>
-<li>FIELD:用于描述域</li>
-<li>LOCAL_VARIABLE:用于描述局部变量</li>
-<li>METHOD:用于描述方法</li>
-<li>PACKAGE:用于描述包</li>
-<li>PARAMETER:用于描述参数</li>
-<li>TYPE:用于描述类、接口(包括注解类型)或enum声明</li>
-<li>ANNOTATION_TYPE:标明注解可以用于注解声明(应用于另一个注解上)</li>
-<li>TYPE_PARAMETER:表示该注解能写在类型参数的声明语句中也就是泛型上，类型参数声明如下：&lt;T&gt;，&lt; T extends Person&gt;</li>
-<li>TYPE_USE:表示注解可以在任何用到该类的地方使用</li>
+<li><strong>CONSTRUCTOR</strong>:用于描述构造器</li>
+<li><strong>FIELD</strong>:用于描述域</li>
+<li><strong>LOCAL_VARIABLE</strong>:用于描述局部变量</li>
+<li><strong>METHOD</strong>:用于描述方法</li>
+<li><strong>PACKAGE</strong>:用于描述包</li>
+<li><strong>PARAMETER</strong>:用于描述参数</li>
+<li><strong>TYPE</strong>:用于描述类、接口(包括注解类型)或enum声明</li>
+<li><strong>ANNOTATION_TYPE</strong>:标明注解可以用于注解声明(应用于另一个注解上)</li>
+<li><strong>TYPE_PARAMETER</strong>:表示该注解能写在类型参数的声明语句中也就是泛型上，类型参数声明如下：&lt;T&gt;，&lt; T extends Person&gt;</li>
+<li><strong>TYPE_USE</strong>:表示注解可以在任何用到该类的地方使用</li>
 </ol>
 <h4 id="Inherited"><a href="#Inherited" class="headerlink" title="@Inherited"></a>@Inherited</h4><p>标记这个注解是继承于哪个注解类(默认注解并没有继承于任何子类)</p>
 <h4 id="Documented"><a href="#Documented" class="headerlink" title="@Documented"></a>@Documented</h4><p>标记这些注解是否包含在用户文档中。</p>
@@ -612,7 +612,7 @@ innerClass<span class="token punctuation">.</span><span class="token function">g
 </tbody></table>
 <h3 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a>构建工具</h3><h4 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h4><p><strong>常用命令</strong></p>
 <ul>
-<li><p>mvn package、install、deploy区别<br><strong>package</strong>命令完成了项目编译、单元测试、打包功能，但没有把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库<br><strong>install</strong>命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库，但没有布署到远程maven私服仓库<br><strong>deploy</strong>命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库</p>
+<li><p>mvn package、install、deploy区别<br><strong>package</strong>:完成了项目编译、单元测试、打包功能，但没有把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库<br><strong>install</strong>:完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库，但没有布署到远程maven私服仓库<br><strong>deploy</strong>:完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库</p>
 </li>
 <li><p>compile(编译 打包)<br>compile是默认的范围；如果没有提供一个范围，那该依赖的范围就是编译范围。编译范围依赖在所有的classpath中可用，同时它们也会被打包。</p>
 </li>
@@ -1610,9 +1610,10 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <ol>
 <li>集群环境：采用token加redis（redis单线程的，处理需要排队）</li>
 <li>单JVM环境：采用token加redis或token加jvm内存</li>
-<li>处理流程：请求前先生成token，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码逻辑将生成的token与已生成且保存的token做对比，token一致的话代表已经生成了一次，本次不允许返回），将生成的token放到redis或jvm内存，并设置token的有效时间，返回给客户端</li>
 </ol>
-<p>   <img src="/images/mideng.jpg"><br>    客户端携带token请求服务端，服务端查询redis，如果有的话处理请求并删除token，没有的话代表非法请求不做处理</p>
+</li>
+<li><p>处理流程：请求前先生成token，重复代表处理过.数据提交前向授权系统申请token，系统根据相关信息生成token并判断是否可以返回（根据代码逻辑将生成的token与已生成且保存的token做对比，token一致的话代表已经生成了一次，本次不允许返回），将生成的token放到redis或jvm内存，并设置token的有效时间，返回给客户端</p>
+<p> <img src="/images/mideng.jpg"><br>  客户端携带token请求服务端，服务端查询redis，如果有的话处理请求并删除token，没有的话代表非法请求不做处理</p>
 </li>
 </ol>
 <blockquote>
@@ -1760,7 +1761,7 @@ tasklist <span class="token comment"># 查看所有进程</span><span aria-hidde
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KmPY2NOfpftFi6TpVSW23Q">千万级高并发秒杀系统设计套路</a></td>
 </tr>
 </tbody></table>
-<h2 id="延时队列相关文章"><a href="#延时队列相关文章" class="headerlink" title="延时队列相关文章"></a>延时队列相关文章</h2><table>
+<h2 id="延时队列"><a href="#延时队列" class="headerlink" title="延时队列"></a>延时队列</h2><table>
 <thead>
 <tr>
 <th align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ijv_4_qWTrG-kA9jSbz1iw">生成订单30分钟未支付，则自动取消，该怎么实现?</a></th>
@@ -2430,7 +2431,7 @@ var str2 = &#123;name:"cxh",sex
             Copyright&nbsp;&copy;
             
             
-                <span id="year">2022-2025
+                <span id="year">2022-2026
                 </span>
             
             

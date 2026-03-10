@@ -21,8 +21,8 @@ timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://xmxe.github.io/blog
-# url: https://blog-aok.pages.dev/
+# url: https://xmxe.github.io/blog
+url: https://blog-aok.pages.dev/
 # root: /blog
 permalink: posts/:hash/
 permalink_defaults:
@@ -34,8 +34,8 @@ pretty_urls:
 
 # Directory
 source_dir: source
-public_dir: docs
-# public_dir: cloudflare
+# public_dir: docs
+public_dir: cloudflare
 tag_dir: tags
 archive_dir: archives
 category_dir: categories

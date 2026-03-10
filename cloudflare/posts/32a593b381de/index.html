@@ -671,7 +671,7 @@
 <p>被动方LAST_ACK:这个状态还是比较容易好理解的，它是被动关闭一方在发送FIN报文后，最后等待对方的ACK报文。当收到ACK报文后，也即可以进入到CLOSED可用状态了。「也就是接收到了对方的FIN包,自己发出了ACK以及FIN包之后的状态」</p>
 <p>被动方TIME_WAIT:表示收到了对方的FIN报文，并发送出了ACK报文，就等2MSL后即可回到CLOSED可用状态了。如果FIN_WAIT1状态下，收到了对方同时带FIN标志和ACK标志的报文时，可以直接进入到TIME_WAIT状态，而无须经过FIN_WAIT_2状态。想成为架构师，这份架构师图谱建议看看，少走弯路。</p>
 <p>主动方CLOSED:表示连接中断。</p>
-<h2 id="TCP如何保证传输的可靠性？"><a href="#TCP如何保证传输的可靠性？" class="headerlink" title="TCP如何保证传输的可靠性？"></a>TCP如何保证传输的可靠性？</h2><ol>
+<h2 id="TCP相关问题"><a href="#TCP相关问题" class="headerlink" title="TCP相关问题"></a>TCP相关问题</h2><h3 id="TCP如何保证传输的可靠性？"><a href="#TCP如何保证传输的可靠性？" class="headerlink" title="TCP如何保证传输的可靠性？"></a>TCP如何保证传输的可靠性？</h3><ol>
 <li><strong>基于数据块传输</strong>：应用数据被分割成TCP认为最适合发送的数据块，再传输给网络层，数据块被称为报文段或段。</li>
 <li><strong>对失序数据包重新排序以及去重</strong>：TCP为了保证不发生丢包，就给每个包一个序列号，有了序列号能够将接收到的数据根据序列号排序，并且去掉重复序列号的数据就可以实现数据包去重。</li>
 <li><strong>校验和</strong>:TCP将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP将丢弃这个报文段和不确认收到此报文段。</li>
@@ -679,7 +679,7 @@
 <li><strong>流量控制</strong>:TCP连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP使用的流量控制协议是可变大小的滑动窗口协议（TCP利用滑动窗口实现流量控制）。</li>
 <li><strong>拥塞控制</strong>:当网络拥塞时，减少数据的发送。</li>
 </ol>
-<h2 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h2><p>TCP利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为0，则发送方不能发送数据。</p>
+<h3 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h3><p>TCP利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为0，则发送方不能发送数据。</p>
 <p>为什么需要流量控制?这是因为双方在通信的时候，发送方的速率与接收方的速率是不一定相等，如果发送方的发送速率太快，会导致接收方处理不过来。如果接收方处理不过来的话，就只能把处理不过来的数据存在接收缓冲区(ReceivingBuffers)里（失序的数据包也会被存放在缓存区里）。如果缓存区满了发送方还在狂发数据的话，接收方只能把收到的数据包丢掉。出现丢包问题的同时又疯狂浪费着珍贵的网络资源。因此，我们需要控制发送方的发送速率，让接收方与发送方处于一种动态平衡才好。这里需要注意的是（常见误区）：</p>
 <ul>
 <li>发送端不等同于客户端</li>
@@ -710,7 +710,7 @@
 <p><strong>TCP接收窗口结构图示</strong>：</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-receive-window.png" alt="TCP接收窗口结构"></p>
 <p>接收窗口的大小是根据接收端处理数据的速度动态调整的。如果接收端读取数据快，接收窗口可能会扩大。否则，它可能会缩小。另外，这里的滑动窗口大小只是为了演示使用，实际窗口大小通常会远远大于这个值。</p>
-<h2 id="TCP的拥塞控制是怎么实现的？"><a href="#TCP的拥塞控制是怎么实现的？" class="headerlink" title="TCP的拥塞控制是怎么实现的？"></a>TCP的拥塞控制是怎么实现的？</h2><p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏。这种情况就叫拥塞。拥塞控制就是为了防止过多的数据注入到网络中，这样就可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机，所有的路由器，以及与降低网络传输性能有关的所有因素。相反，流量控制往往是点对点通信量的控制，是个端到端的问题。流量控制所要做到的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
+<h3 id="TCP的拥塞控制是怎么实现的？"><a href="#TCP的拥塞控制是怎么实现的？" class="headerlink" title="TCP的拥塞控制是怎么实现的？"></a>TCP的拥塞控制是怎么实现的？</h3><p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏。这种情况就叫拥塞。拥塞控制就是为了防止过多的数据注入到网络中，这样就可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机，所有的路由器，以及与降低网络传输性能有关的所有因素。相反，流量控制往往是点对点通信量的控制，是个端到端的问题。流量控制所要做到的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
 <p><img src="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-congestion-control.png" alt="TCP的拥塞控制"></p>
 <p>为了进行拥塞控制，TCP发送方要维持一个拥塞窗口(cwnd) 的状态变量。拥塞控制窗口的大小取决于网络的拥塞程度，并且动态变化。发送方让自己的发送窗口取为拥塞窗口和接收方的接受窗口中较小的一个。</p>
 <p>TCP的拥塞控制采用了四种算法，即慢开始、拥塞避免、快重传和快恢复。在网络层也可以使路由器采用适当的分组丢弃策略（如主动队列管理AQM），以减少网络拥塞的发生。</p>
@@ -719,7 +719,7 @@
 <li><strong>拥塞避免</strong>： 拥塞避免算法的思路是让拥塞窗口cwnd缓慢增大，即每经过一个往返时间RTT就把发送方的cwnd加1.</li>
 <li><strong>快重传与快恢复</strong>： 在TCP&#x2F;IP中，快速重传和恢复（fastretransmitandrecovery，FRR）是一种拥塞控制算法，它能快速恢复丢失的数据包。没有FRR，如果数据包丢失了，TCP将会使用定时器来要求传输暂停。在暂停的这段时间内，没有新的或复制的数据包被发送。有了FRR，如果接收机接收到一个不按顺序的数据段，它会立即给发送机发送一个重复确认。如果发送机接收到三个重复确认，它会假定确认件指出的数据段丢失了，并立即重传这些丢失的数据段。有了FRR，就不会因为重传时要求的暂停被耽误。　当有单独的数据包丢失时，快速重传和恢复（FRR）能最有效地工作。当有多个数据信息包在某一段很短的时间内丢失时，它则不能很有效地工作。</li>
 </ul>
-<h2 id="ARQ协议了解吗"><a href="#ARQ协议了解吗" class="headerlink" title="ARQ协议了解吗?"></a>ARQ协议了解吗?</h2><p><strong>自动重传请求</strong>（AutomaticRepeat-reQuest，ARQ）是OSI模型中数据链路层和传输层的错误纠正协议之一。它通过使用确认和超时这两个机制，在不可靠服务的基础上实现可靠的信息传输。如果发送方在发送后一段时间之内没有收到确认信息（Acknowledgements，就是我们常说的ACK），它通常会重新发送，直到收到确认或者重试超过一定的次数。</p>
+<h2 id="ARQ协议"><a href="#ARQ协议" class="headerlink" title="ARQ协议"></a>ARQ协议</h2><p><strong>自动重传请求</strong>（AutomaticRepeat-reQuest，ARQ）是OSI模型中数据链路层和传输层的错误纠正协议之一。它通过使用确认和超时这两个机制，在不可靠服务的基础上实现可靠的信息传输。如果发送方在发送后一段时间之内没有收到确认信息（Acknowledgements，就是我们常说的ACK），它通常会重新发送，直到收到确认或者重试超过一定的次数。</p>
 <p>ARQ包括停止等待ARQ协议和连续ARQ协议。</p>
 <h3 id="停止等待ARQ协议"><a href="#停止等待ARQ协议" class="headerlink" title="停止等待ARQ协议"></a>停止等待ARQ协议</h3><p>停止等待协议是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认（回复ACK）。如果过了一段时间（超时时间后），还是没有收到ACK确认，说明没有发送成功，需要重新发送，直到收到确认后再发下一个分组；</p>
 <p>在停止等待协议中，若接收方收到重复分组，就丢弃该分组，但同时还要发送确认。</p>
@@ -929,6 +929,172 @@
 <td align="center"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lG7zmlarjUwjYaGEevVQ1Q">TCP握手两次不行吗？</a></td>
 </tr>
 </tbody></table>
+<h2 id="家庭网络"><a href="#家庭网络" class="headerlink" title="家庭网络"></a>家庭网络</h2><h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p>负责分配IP地址（DHCP服务器）、决定数据包往哪儿走（NAT转发）、充当防火墙。如果只有路由功能：它只能插网线，发不出WiFi信号。</p>
+<h3 id="DHCP-Dynamic-Host-Configuration-Protocol，动态主机配置协议"><a href="#DHCP-Dynamic-Host-Configuration-Protocol，动态主机配置协议" class="headerlink" title="DHCP(Dynamic Host Configuration Protocol，动态主机配置协议)"></a>DHCP(Dynamic Host Configuration Protocol，动态主机配置协议)</h3><p>简单来说：DHCP就是你家里自动分配IP地址的管家。</p>
+<h3 id="AP-Access-Point，接入点"><a href="#AP-Access-Point，接入点" class="headerlink" title="AP(Access Point，接入点)"></a>AP(Access Point，接入点)</h3><p>负责把有线网络转换成无线WiFi，让手机连接上网。家里的主路由器其实就是“路由功能+AP功能”的结合体。如果再接第二个路由器，如果它只负责发信号（不负责分配IP），那它就是在充当AP模式。所以，AP模式的核心是职责分离。它将复杂的“管理”工作（如IP地址分配、防火墙、NAT）完全交由上游的主路由器负责，自己则专注于做好“信号发射”这一件事。</p>
+<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>交换机的作用，就是让你家多个有线设备（比如台式机、电视、游戏机、NAS）能够互相连接，并且都能访问互联网。通常家用路由器只有4个LAN口（插网线的口）。如果你家需要插网线的设备超过4个（比如台式机+NAS+电视+游戏机+智能家居网关），那就插不下了。解决办法是买一个交换机，接在路由器的一个LAN口上。这样路由器的那一个口瞬间就变成了5个、8个甚至16个口。<br>假设你有一台NAS（家庭私有网盘）插在交换机上，你的电脑也插在同一个交换机上。当你从电脑往NAS拷贝电影时，数据直接走交换机，不经过路由器，速度非常快（可以达到1Gbps甚至10Gbps），而且完全不影响你家人用路由器上网刷网页的速度。这是交换机最核心的价值。</p>
+<p><strong>外面的光纤 –&gt; 光猫（光电翻译） –&gt; 主路由器（管理分配+拨号） –&gt; 交换机（扩展网口） –&gt; 各种有线设备（电脑、电视、AP等）</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">功能</th>
+<th align="center">路由器</th>
+<th align="center">交换机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>核心任务</strong></td>
+<td align="center">连接不同的网络（如家里的内网和外面的互联网），决定数据包怎么走</td>
+<td align="center">连接同一个网络内的设备（如家里的电脑、电视、NAS）</td>
+</tr>
+<tr>
+<td align="center"><strong>分配IP</strong></td>
+<td align="center"><strong>是</strong>（DHCP服务器，分配内网IP地址）</td>
+<td align="center"><strong>否</strong>（没有分配IP的功能，只是透传）</td>
+</tr>
+<tr>
+<td align="center"><strong>上网功能</strong></td>
+<td align="center"><strong>必须的</strong>（需要它拨号才能上网）</td>
+<td align="center"><strong>不需要</strong>（交换机本身不关心能不能上网，只负责转发数据）</td>
+</tr>
+<tr>
+<td align="center"><strong>典型接口</strong></td>
+<td align="center">WAN口（连光猫）、LAN口（连交换机&#x2F;电脑）</td>
+<td align="center">一排全是LAN口（通常叫RJ45口）</td>
+</tr>
+</tbody></table>
+<h3 id="光猫"><a href="#光猫" class="headerlink" title="光猫"></a>光猫</h3><p>外面光纤进来的冷冰冰的光信号，你的电脑&#x2F;路由器只认识电信号。光猫的核心任务就是进行<strong>光电转换</strong>。</p>
+<h3 id="桥接"><a href="#桥接" class="headerlink" title="桥接"></a>桥接</h3><p>一种网络连接技术，可以无线也可以有线，用于连接两个或多个网络段，实现网络资源的共享。把两个（或多个）相隔较远的局域网连接起来，让它们在逻辑上变成同一个网络。纯桥接模式下，往往只传输数据，可能不发射WiFi给手机用（除非额外设置）。</p>
+<table>
+<thead>
+<tr>
+<th align="center">维度</th>
+<th align="center">桥接</th>
+<th align="center">路由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>工作层级</strong></td>
+<td align="center">较低层（物理层&#x2F;数据链路层，可以理解为处理「硬件地址」）</td>
+<td align="center">较高层（网络层，处理「IP地址」）</td>
+</tr>
+<tr>
+<td align="center"><strong>核心思维</strong></td>
+<td align="center"><strong>透明</strong>。桥接设备对于两边的设备来说，几乎是透明的，感觉就像直接连着一样。</td>
+<td align="center"><strong>管理</strong>。路由设备会隔离广播域，会做网络地址转换（NAT），会决定数据包的走向。</td>
+</tr>
+<tr>
+<td align="center"><strong>典型应用</strong></td>
+<td align="center">光猫桥接（让光猫隐身）、无线桥接（延伸网络）、交换机（纯转发）</td>
+<td align="center">家用路由器拨号（NAT转换）、企业核心路由器（连接不同网络）</td>
+</tr>
+</tbody></table>
+<p>VMware桥接模式，就是让你虚拟机直接使用你电脑的物理网卡，像一台独立的真电脑一样，接入你当前的路由器或局域网中(占用IP地址)。</p>
+<table>
+<thead>
+<tr>
+<th align="center">特点</th>
+<th align="center"><strong>桥接模式 (Bridged)</strong></th>
+<th align="center"><strong>NAT模式 (NAT)</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>核心比喻</strong></td>
+<td align="center">独立的<strong>邻居</strong></td>
+<td align="center">家里的<strong>孩子</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>网络身份</strong></td>
+<td align="center">与主机并列，拥有独立的外网&#x2F;局域网IP</td>
+<td align="center">躲在主机后面，拥有私有IP</td>
+</tr>
+<tr>
+<td align="center"><strong>IP地址</strong></td>
+<td align="center">与主机在同一网段（如192.168.1.x）</td>
+<td align="center">在另一个私有网段（如 192.168.137.x）</td>
+</tr>
+<tr>
+<td align="center"><strong>对外可见性</strong></td>
+<td align="center"><strong>完全可见</strong>，可被其他设备直接访问</td>
+<td align="center"><strong>不可见</strong>，无法被外界直接访问</td>
+</tr>
+<tr>
+<td align="center"><strong>联网方式</strong></td>
+<td align="center">直接通过路由器&#x2F;交换机上网</td>
+<td align="center">通过主机转发上网</td>
+</tr>
+</tbody></table>
+<h3 id="中继"><a href="#中继" class="headerlink" title="中继"></a>中继</h3><p>无线中继：是指通过无线信号增强，将信号从一台无线设备传输到另一台设备，以扩展无线网络的覆盖范围。路由器接收上一级路由器的WiFi信号，然后放大并重新发射一个新的WiFi信号出来。</p>
+<h3 id="子网掩码"><a href="#子网掩码" class="headerlink" title="子网掩码"></a>子网掩码</h3><ul>
+<li>子网掩码<code>255.255.255.0</code>的含义<ul>
+<li><code>255</code>表示“这一位属于网络部分，必须固定”。</li>
+<li><code>0</code>表示“这一位属于主机部分，可以变化”。</li>
+</ul>
+</li>
+<li>划分结果<ul>
+<li>网络号：<code>192.168.1</code>(前三段被255锁死)。</li>
+<li>主机号：<code>.100</code>(最后一段是0，允许变化)。</li>
+</ul>
+</li>
+</ul>
+<p>在这个规则下：192.168.1.5是您的邻居（同小区，直接通信）。192.168.2.5是外人（不同小区，必须通过路由器&#x2F;网关转发）。</p>
+<p>A. 255.255.255.0(最常用)</p>
+<ul>
+<li>适用场景：绝大多数家庭路由器（C类网络）。</li>
+<li>含义：前24位是网络号，后8位是主机号。</li>
+<li>可用设备数量：2的8次方−2&#x3D;256−2&#x3D;254台设备。为什么减2？因为<code>.0</code>通常保留作为网络地址，<code>.255</code>保留作为广播地址，不能分配给具体设备。</li>
+<li>对应CIDR写法：<code>/24</code>(例如<code>192.168.1.0/24</code>)。</li>
+</ul>
+<p>B. 255.255.0.0</p>
+<ul>
+<li>适用场景：大型局域网、某些工业网络或旧式B类网络。</li>
+<li>含义：前16位是网络号，后16位是主机号。</li>
+<li>可用设备数量：216−2&#x3D;65,534216−2&#x3D;65,534 台设备。</li>
+<li>对应CIDR写法：&#x2F;16。</li>
+<li>注意：如果在家庭网络错误地使用了这个掩码，可能会导致广播风暴，降低网络效率，一般不建议家用。</li>
+</ul>
+<p><strong>二进制视角（深入理解）</strong></p>
+<p>计算机其实看不懂<code>255.255.255.0</code>这种十进制格式，它看的是二进制。IP地址192.168.1.100的二进制:<code>11000000.10101000.00000001.01100100</code>。子网掩码255.255.255.0的二进制:<code>11111111.11111111.11111111.00000000</code>(<strong>1</strong>代表网络位，<strong>0</strong>代表主机位)</p>
+<p><strong>计算机的运算逻辑</strong>：</p>
+<p>当电脑要访问192.168.1.200时：</p>
+<ol>
+<li>拿目标IP和子网掩码做“与”运算。</li>
+<li>发现自己的网络号是192.168.1。</li>
+<li>发现目标的网络号也是192.168.1。</li>
+<li><strong>结论</strong>：是本地邻居，直接通过交换机&#x2F;ARP广播发送数据，<strong>不需要经过路由器</strong>。</li>
+</ol>
+<p>当电脑要访问<code>8.8.8.8</code>(Google DNS)时：</p>
+<ol>
+<li>运算后发现目标的网络号是<code>8</code>。</li>
+<li><strong>结论</strong>：不是本地邻居，<strong>必须把数据包扔给默认网关（路由器）</strong>，让路由器去处理。</li>
+</ol>
+<h3 id="默认网关"><a href="#默认网关" class="headerlink" title="默认网关"></a>默认网关</h3><p>路由器地址。当电脑要访问互联网（如百度、谷歌）时，数据包会发给这个地址，由路由器转发出去</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><ul>
+<li><p>阿里DNS(推荐)</p>
+<ul>
+<li>首选：<code>223.5.5.5</code></li>
+<li>备用：<code>223.6.6.6</code></li>
+</ul>
+</li>
+<li><p>腾讯DNS</p>
+<ul>
+<li>首选：<code>119.29.29.29</code></li>
+<li>备用：<code>182.254.116.116</code></li>
+</ul>
+</li>
+<li><p>114DNS</p>
+<ul>
+<li>首选：<code>114.114.114.114</code></li>
+<li>备用：<code>114.114.115.115</code></li>
+</ul>
+</li>
+<li><p>Google DNS(国外常用，国内可能慢)</p>
+<ul>
+<li>首选：<code>8.8.8.8</code></li>
+<li>备用：<code>8.8.4.4</code></li>
+</ul>
+</li>
+</ul>
 
                 
             </div>

@@ -16,7 +16,7 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 |              [Surge](https://www.nssurge.com/)               | [SurfBoard(cfa替代品)](https://apkpure.com/surfboard/com.getsurfboard) / [GitHub](https://github.com/getsurfboard/surfboard) |         [Stash(Clash iOS)](https://clashstash.org/)          |
 |          [v2rayN](https://github.com/2dust/v2rayN)           |         [v2rayNG](https://github.com/2dust/v2rayNG)          |          [V2rayU](https://github.com/yanue/V2rayU)           |
 | [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android) | [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows) | [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid)  |
-|    [FakeLocation](https://github.com/Lerist/FakeLocation)    |                                                              |                                                              |
+|    [FakeLocation](https://github.com/Lerist/FakeLocation)    |        [Windows、Office激活](https://massgrave.dev/)         |                                                              |
 
 ## 工具
 

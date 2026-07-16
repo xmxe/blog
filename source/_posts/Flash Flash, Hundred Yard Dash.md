@@ -11,12 +11,13 @@ img: https://pic1.zhimg.com/70/47807b7f97507fdce8535d03dc5dbd4e_1440w.avis
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [Clash下载](https://clash.top/download/) / [GitHub](https://github.com/clashdownload) | [Clash Meta for Android](https://clashmeta.org/) / [GitHub](https://github.com/MetaCubeX/ClashMetaForAndroid) |       [FlClash](https://github.com/chen08209/FlClash)        |
 | [ClashX.Meta](https://clashmeta.org/) / [GitHub](https://github.com/MetaCubeX/ClashX.Meta) |      [ClashN](https://github.com/2dust/clashN) 同v2rayN      | [Clash Verge Rev](https://clashvergerev.org/) / [GitHub](https://github.com/clash-verge-rev/clash-verge-rev) |
-| [Clash Verge](https://clashverge.org/) / [GitHub](https://github.com/zzzgydi/clash-verge) ~~已归档~~ | [ClashX](https://clashx.org/) / [GitHub](https://github.com/yichengchen/clashX) ~~已删库~~ |       [ClashX Pro](https://clashxpro.org/) ~~已删库~~        |
-| [Clash for Windows](https://clashforwindows.org/) / [GitHub](https://github.com/Fndroid/clash_for_windows_pkg) ~~已删库~~ | [Clash for Android](https://clashforandroid.org/) / [GitHub](https://github.com/Kr328/ClashForAndroid) ~~已删库~~ |             [OpenClash](https://openclash.org/)              |
+| ~~[Clash Verge](https://clashverge.org/) / [GitHub](https://github.com/zzzgydi/clash-verge) 已归档~~ | ~~[ClashX](https://clashx.org/) / [GitHub](https://github.com/yichengchen/clashX) 已删库~~ |       ~~[ClashX Pro](https://clashxpro.org/) 已删库~~        |
+| ~~[Clash for Windows](https://clashforwindows.org/) / [GitHub](https://github.com/Fndroid/clash_for_windows_pkg) 已删库~~ | ~~[Clash for Android](https://clashforandroid.org/) / [GitHub](https://github.com/Kr328/ClashForAndroid) 已删库~~ |             [OpenClash](https://openclash.org/)              |
 |              [Surge](https://www.nssurge.com/)               | [SurfBoard(cfa替代品)](https://apkpure.com/surfboard/com.getsurfboard) / [GitHub](https://github.com/getsurfboard/surfboard) |         [Stash(Clash iOS)](https://clashstash.org/)          |
 |          [v2rayN](https://github.com/2dust/v2rayN)           |         [v2rayNG](https://github.com/2dust/v2rayNG)          |          [V2rayU](https://github.com/yanue/V2rayU)           |
 | [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android) | [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows) | [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid)  |
-|    [FakeLocation](https://github.com/Lerist/FakeLocation)    |        [Windows、Office激活](https://massgrave.dev/)         |                                                              |
+|    [FakeLocation](https://github.com/Lerist/FakeLocation)    |        [Windows、Office激活](https://massgrave.dev/)         | [bluescreenview](https://www.nirsoft.net/utils/blue_screen_view.html#DownloadLinks) |
+|             [CrystalDiskInfo](crystalmark.info)              |          [ffmpeg](https://ffmpeg.org/download.html)          |                                                              |
 
 ## 工具
 

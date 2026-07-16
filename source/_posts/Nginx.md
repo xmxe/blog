@@ -349,7 +349,7 @@ location [= | \~ | \~\* | ^\~ ] /uri/ { … }
 
 #### 正则匹配
 
-- ^ 以什么开始
+- ^ 以什么开始 PS:当`^`出现在**字符类（方括号`[]`）的内部**，且紧跟在`[`后面时，它表示“排除”或“取反”。
 - \$ 以什么结束
 - \~ 区分大小写匹配
 - \~\* 不区分大小写匹配
@@ -524,7 +524,7 @@ resolver指令
 
 **前置测试访问域名**：www.test.com/api/upload
 
-### location和proxy\_pass都带/，则真实地址不带location匹配目录
+- **location和proxy\_pass都带/，则真实地址不带location匹配目录**
 
 ```nginx
 location /api/ {
@@ -534,7 +534,7 @@ location /api/ {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/upload
 
-### location不带/，proxy\_pass带/，则真实地址会带/
+- **location不带/，proxy\_pass带/，则真实地址会带/**
 
 ```nginx
 location /api {
@@ -544,7 +544,9 @@ location /api {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/upload
 
-### location带/，proxy\_pass不带/，则真实地址会带location匹配目录/api/
+**区别为匹配范围不同 /api会匹配/api123 /api/不会**
+
+- **location带/，proxy\_pass不带/，则真实地址会带location匹配目录/api/**
 
 ```nginx
 location /api/ {
@@ -554,7 +556,7 @@ location /api/ {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/api/upload
 
-### location和proxy\_pass都不带/，则真实地址会带location匹配目录/api/
+- **location和proxy\_pass都不带/，则真实地址会带location匹配目录/api/**
 
 ```nginx
 location /api {
@@ -564,7 +566,7 @@ location /api {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/api/upload
 
-### location和proxy\_pass都带/，但proxy\_pass带地址(同1)
+- **location和proxy\_pass都带/，但proxy\_pass带地址(同1)**
 
 ```nginx
 location /api/ {
@@ -574,7 +576,7 @@ location /api/ {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/server/upload
 
-### location不带/，proxy\_pass带/，但proxy\_pass带地址，则真实地址会多个/(同2)
+- **location不带/，proxy\_pass带/，但proxy\_pass带地址，则真实地址会多个/(同2)**
 
 ```nginx
 location /api {
@@ -584,7 +586,7 @@ location /api {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/server//upload
 
-### location带/，proxy\_pass不带/，但proxy\_pass带地址，则真实地址会直接连起来(同3)
+- **location带/，proxy\_pass不带/，但proxy\_pass带地址，则真实地址会直接连起来(同3)**
 
 ```nginx
 location /api/ {
@@ -594,7 +596,7 @@ location /api/ {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/serverupload
 
-### location和proxy\_pass都不带/，但proxy\_pass带地址，则真实地址匹配地址会替换location匹配目录(同4)
+- **location和proxy\_pass都不带/，但proxy\_pass带地址，则真实地址匹配地址会替换location匹配目录(同4)**
 
 ```nginx
 location /api {
@@ -604,11 +606,41 @@ location /api {
 
 **访问地址**：www.test.com/api/upload-->http://127.0.0.1:8080/server/upload
 
-### 总结
+**总结**
 
-1. proxy_pass代理地址端口后有目录(包括/)，转发后地址：代理地址+访问URL目录部分去除location匹配目录
-2. proxy_pass代理地址端口后无任何，转发后地址：代理地址+访问URL目录部
+1. proxy_pass代理地址端口后有`/`，转发后地址：代理地址+访问URL目录部分去除location匹配目录
+2. proxy_pass代理地址端口后无`/`，转发后地址：代理地址+访问URL目录部分
 
+## root和alias区别
+
+|        指令        |            作用            |  访问`/static/css/a.css`实际读取  |
+| :----------------: | :------------------------: | :-------------------------------: |
+|  `root /var/www;`  |     **root路径 + URI**     |     /var/www/static/css/a.css     |
+| `alias /var/www/;` | **替换location匹配的部分** | /var/www/css/a.css（去掉/static） |
+
+---
+
+**关键区别：**
+
+- **root**：把完整URI拼在 root 后面
+- **alias**：用指定路径替换掉location匹配的那段
+
+---
+
+**示例：**
+```nginx
+location /static/ {
+    root /var/www;      # 访问 /static/a.css → /var/www/static/a.css
+}
+
+location /static/ {
+    alias /var/www/;    # 访问 /static/a.css → /var/www/a.css
+}
+```
+
+---
+
+**一句话：root追加，alias替换。** alias必须配合location使用，且路径末尾的/ 要特别注意保持一致。
 
 ## Nginx业务需求配置
 

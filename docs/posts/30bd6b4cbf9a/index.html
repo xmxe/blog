@@ -664,7 +664,9 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> worktree move <span class="token operator">&lt;</span>current-path<span class="token operator">></span> <span class="token operator">&lt;</span>new-path<span class="token operator">></span>
 <span class="token comment"># 例如，如果想要添加一个新的工作目录来检出名为feature-branch的分支，可以这样做：</span>
 <span class="token function">git</span> worktree <span class="token function">add</span> <span class="token punctuation">..</span>/my-feature-worktree feature-branch
-<span class="token comment"># 这将在../my-feature-worktree目录下创建一个新的工作目录，并检出feature-branch分支。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># 这将在../my-feature-worktree目录下创建一个新的工作目录，并检出feature-branch分支。</span>
+<span class="token comment"># 切换到主分支并合并worktree的新分支 同分支合并一致</span>
+<span class="token function">git</span> merge feature-auth<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="git-sparse-checkout"><a href="#git-sparse-checkout" class="headerlink" title="git sparse-checkout"></a>git sparse-checkout</h3><blockquote>
 <p><code>git sparse-checkout</code>是在Git 2.25.0版本中引入的，这个功能是对之前存在的稀疏检出机制的一个重大改进。通过<code>git sparse-checkout</code>，开发者可以更高效地克隆大型仓库，只检出部分文件或目录，而不是整个项目</p>
@@ -867,13 +869,17 @@ git commit --amend --author="</span>name <span class="token operator">&lt;</span
 <span class="token function">git</span> push <span class="token parameter variable">-f</span> origin main<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="删除部分历史提交记录"><a href="#删除部分历史提交记录" class="headerlink" title="删除部分历史提交记录"></a>删除部分历史提交记录</h3><ol>
-<li>运行<code>git log</code>来查找你要删除的提交记录的hash值(commit id)，记录下来。</li>
-<li>执行交互式rebase命令：<code>git rebase -i commit_id</code><blockquote>
+<li><p>运行<code>git log</code>来查找你要删除的提交记录的hash值(commit id)，记录下来。</p>
+</li>
+<li><p>执行交互式rebase命令：<code>git rebase -i commit_id</code></p>
+<blockquote>
 <p>如果想要删除最近3次历史提交: <code>git rebase -i HEAD~3</code></p>
 </blockquote>
 </li>
-<li>进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。</li>
-<li>推送更新到远程仓库：<code>git push --force(或git p)</code></li>
+<li><p>进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。</p>
+</li>
+<li><p>推送更新到远程仓库：<code>git push --force(或git p)</code></p>
+</li>
 </ol>
 <h3 id="远程分支重命名"><a href="#远程分支重命名" class="headerlink" title="远程分支重命名"></a>远程分支重命名</h3><p>假设你当前已经将该分支推送到远程了，这种情况修改起来要稍微多几步</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 方案1:先重命名本地分支，然后推送到远程分支</span>

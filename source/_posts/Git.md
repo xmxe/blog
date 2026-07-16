@@ -178,6 +178,8 @@ git worktree move <current-path> <new-path>
 # 例如，如果想要添加一个新的工作目录来检出名为feature-branch的分支，可以这样做：
 git worktree add ../my-feature-worktree feature-branch
 # 这将在../my-feature-worktree目录下创建一个新的工作目录，并检出feature-branch分支。
+# 切换到主分支并合并worktree的新分支 同分支合并一致
+git merge feature-auth
 ```
 
 ### git sparse-checkout
@@ -437,6 +439,7 @@ git push -f origin main
 
 1. 运行`git log`来查找你要删除的提交记录的hash值(commit id)，记录下来。
 2. 执行交互式rebase命令：`git rebase -i commit_id`
+    
     > 如果想要删除最近3次历史提交: `git rebase -i HEAD~3`
 3. 进入编辑模式，将要删除的commit_id前的pick修改为drop。保存并退出编辑模式。
 4. 推送更新到远程仓库：`git push --force(或git p)`

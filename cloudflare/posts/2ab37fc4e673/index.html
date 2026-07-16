@@ -803,7 +803,7 @@ status<span class="token punctuation">)</span>
 </ul>
 <p><strong>语法的一些规则和优先级</strong><br>多个location配置的情况下匹配顺序为：首先匹配&#x3D;，其次匹配^~,其次是按文件中顺序的正则匹配，最后是交给&#x2F;通用匹配。当有匹配成功时候，停止匹配，按当前匹配规则处理请求。</p>
 <h4 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h4><ul>
-<li>^ 以什么开始</li>
+<li>^ 以什么开始 PS:当<code>^</code>出现在<strong>字符类（方括号<code>[]</code>）的内部</strong>，且紧跟在<code>[</code>后面时，它表示“排除”或“取反”。</li>
 <li>$ 以什么结束</li>
 <li>~ 区分大小写匹配</li>
 <li>~* 不区分大小写匹配</li>
@@ -932,50 +932,113 @@ location= /uri<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 <li><strong>$time_local</strong>：通用日志格式下的本地时间。</li>
 </ul>
 <h2 id="location-“-x2F-“的作用"><a href="#location-“-x2F-“的作用" class="headerlink" title="location “&#x2F;“的作用"></a>location “&#x2F;“的作用</h2><p><strong>前置测试访问域名</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload">www.test.com/api/upload</a></p>
-<h3 id="location和proxy-pass都带-x2F-，则真实地址不带location匹配目录"><a href="#location和proxy-pass都带-x2F-，则真实地址不带location匹配目录" class="headerlink" title="location和proxy_pass都带&#x2F;，则真实地址不带location匹配目录"></a>location和proxy_pass都带&#x2F;，则真实地址不带location匹配目录</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
+<ul>
+<li><strong>location和proxy_pass都带&#x2F;，则真实地址不带location匹配目录</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080/</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/upload</a></p>
-<h3 id="location不带-x2F-，proxy-pass带-x2F-，则真实地址会带-x2F"><a href="#location不带-x2F-，proxy-pass带-x2F-，则真实地址会带-x2F" class="headerlink" title="location不带&#x2F;，proxy_pass带&#x2F;，则真实地址会带&#x2F;"></a>location不带&#x2F;，proxy_pass带&#x2F;，则真实地址会带&#x2F;</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
+<ul>
+<li><strong>location不带&#x2F;，proxy_pass带&#x2F;，则真实地址会带&#x2F;</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080/</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/upload</a></p>
-<h3 id="location带-x2F-，proxy-pass不带-x2F-，则真实地址会带location匹配目录-x2F-api-x2F"><a href="#location带-x2F-，proxy-pass不带-x2F-，则真实地址会带location匹配目录-x2F-api-x2F" class="headerlink" title="location带&#x2F;，proxy_pass不带&#x2F;，则真实地址会带location匹配目录&#x2F;api&#x2F;"></a>location带&#x2F;，proxy_pass不带&#x2F;，则真实地址会带location匹配目录&#x2F;api&#x2F;</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
+<p><strong>区别为匹配范围不同 &#x2F;api会匹配&#x2F;api123 &#x2F;api&#x2F;不会</strong></p>
+<ul>
+<li><strong>location带&#x2F;，proxy_pass不带&#x2F;，则真实地址会带location匹配目录&#x2F;api&#x2F;</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/api/upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/api/upload</a></p>
-<h3 id="location和proxy-pass都不带-x2F-，则真实地址会带location匹配目录-x2F-api-x2F"><a href="#location和proxy-pass都不带-x2F-，则真实地址会带location匹配目录-x2F-api-x2F" class="headerlink" title="location和proxy_pass都不带&#x2F;，则真实地址会带location匹配目录&#x2F;api&#x2F;"></a>location和proxy_pass都不带&#x2F;，则真实地址会带location匹配目录&#x2F;api&#x2F;</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
+<ul>
+<li><strong>location和proxy_pass都不带&#x2F;，则真实地址会带location匹配目录&#x2F;api&#x2F;</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/api/upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/api/upload</a></p>
-<h3 id="location和proxy-pass都带-x2F-，但proxy-pass带地址-同1"><a href="#location和proxy-pass都带-x2F-，但proxy-pass带地址-同1" class="headerlink" title="location和proxy_pass都带&#x2F;，但proxy_pass带地址(同1)"></a>location和proxy_pass都带&#x2F;，但proxy_pass带地址(同1)</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
+<ul>
+<li><strong>location和proxy_pass都带&#x2F;，但proxy_pass带地址(同1)</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080/server/</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/server/upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/server/upload</a></p>
-<h3 id="location不带-x2F-，proxy-pass带-x2F-，但proxy-pass带地址，则真实地址会多个-x2F-同2"><a href="#location不带-x2F-，proxy-pass带-x2F-，但proxy-pass带地址，则真实地址会多个-x2F-同2" class="headerlink" title="location不带&#x2F;，proxy_pass带&#x2F;，但proxy_pass带地址，则真实地址会多个&#x2F;(同2)"></a>location不带&#x2F;，proxy_pass带&#x2F;，但proxy_pass带地址，则真实地址会多个&#x2F;(同2)</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
+<ul>
+<li><strong>location不带&#x2F;，proxy_pass带&#x2F;，但proxy_pass带地址，则真实地址会多个&#x2F;(同2)</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080/server/</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/server//upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/server//upload</a></p>
-<h3 id="location带-x2F-，proxy-pass不带-x2F-，但proxy-pass带地址，则真实地址会直接连起来-同3"><a href="#location带-x2F-，proxy-pass不带-x2F-，但proxy-pass带地址，则真实地址会直接连起来-同3" class="headerlink" title="location带&#x2F;，proxy_pass不带&#x2F;，但proxy_pass带地址，则真实地址会直接连起来(同3)"></a>location带&#x2F;，proxy_pass不带&#x2F;，但proxy_pass带地址，则真实地址会直接连起来(同3)</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
+<ul>
+<li><strong>location带&#x2F;，proxy_pass不带&#x2F;，但proxy_pass带地址，则真实地址会直接连起来(同3)</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api/</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080/server</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/serverupload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/serverupload</a></p>
-<h3 id="location和proxy-pass都不带-x2F-，但proxy-pass带地址，则真实地址匹配地址会替换location匹配目录-同4"><a href="#location和proxy-pass都不带-x2F-，但proxy-pass带地址，则真实地址匹配地址会替换location匹配目录-同4" class="headerlink" title="location和proxy_pass都不带&#x2F;，但proxy_pass带地址，则真实地址匹配地址会替换location匹配目录(同4)"></a>location和proxy_pass都不带&#x2F;，但proxy_pass带地址，则真实地址匹配地址会替换location匹配目录(同4)</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
+<ul>
+<li><strong>location和proxy_pass都不带&#x2F;，但proxy_pass带地址，则真实地址匹配地址会替换location匹配目录(同4)</strong></li>
+</ul>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /api</span> <span class="token punctuation">&#123;</span>
     <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080/server</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>访问地址</strong>：<a target="_blank" rel="noopener" href="http://www.test.com/api/upload--&gt;http://127.0.0.1:8080/server/upload">www.test.com/api/upload--&gt;http://127.0.0.1:8080/server/upload</a></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>proxy_pass代理地址端口后有目录(包括&#x2F;)，转发后地址：代理地址+访问URL目录部分去除location匹配目录</li>
-<li>proxy_pass代理地址端口后无任何，转发后地址：代理地址+访问URL目录部</li>
+<p><strong>总结</strong></p>
+<ol>
+<li>proxy_pass代理地址端口后有<code>/</code>，转发后地址：代理地址+访问URL目录部分去除location匹配目录</li>
+<li>proxy_pass代理地址端口后无<code>/</code>，转发后地址：代理地址+访问URL目录部分</li>
 </ol>
+<h2 id="root和alias区别"><a href="#root和alias区别" class="headerlink" title="root和alias区别"></a>root和alias区别</h2><table>
+<thead>
+<tr>
+<th align="center">指令</th>
+<th align="center">作用</th>
+<th align="center">访问<code>/static/css/a.css</code>实际读取</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>root /var/www;</code></td>
+<td align="center"><strong>root路径 + URI</strong></td>
+<td align="center">&#x2F;var&#x2F;www&#x2F;static&#x2F;css&#x2F;a.css</td>
+</tr>
+<tr>
+<td align="center"><code>alias /var/www/;</code></td>
+<td align="center"><strong>替换location匹配的部分</strong></td>
+<td align="center">&#x2F;var&#x2F;www&#x2F;css&#x2F;a.css（去掉&#x2F;static）</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>关键区别：</strong></p>
+<ul>
+<li><strong>root</strong>：把完整URI拼在 root 后面</li>
+<li><strong>alias</strong>：用指定路径替换掉location匹配的那段</li>
+</ul>
+<hr>
+<p><strong>示例：</strong></p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">location</span> /static/</span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">root</span> /var/www</span><span class="token punctuation">;</span>      <span class="token comment"># 访问 /static/a.css → /var/www/static/a.css</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token directive"><span class="token keyword">location</span> /static/</span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">alias</span> /var/www/</span><span class="token punctuation">;</span>    <span class="token comment"># 访问 /static/a.css → /var/www/a.css</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<p><strong>一句话：root追加，alias替换。</strong> alias必须配合location使用，且路径末尾的&#x2F; 要特别注意保持一致。</p>
 <h2 id="Nginx业务需求配置"><a href="#Nginx业务需求配置" class="headerlink" title="Nginx业务需求配置"></a>Nginx业务需求配置</h2><h3 id="Nginx设置黑-x2F-白名单IP限制"><a href="#Nginx设置黑-x2F-白名单IP限制" class="headerlink" title="Nginx设置黑&#x2F;白名单IP限制"></a>Nginx设置黑&#x2F;白名单IP限制</h3><p><strong>第一种方法:allow、deny</strong></p>
 <p>deny和allow指令属于ngx_http_access_module，nginx默认加载此模块，所以可直接使用。这种方式，最简单，最直接。设置类似防火墙iptable，使用方法：直接配置文件中添加：</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># 白名单设置，allow后面为可访问IP</span>
